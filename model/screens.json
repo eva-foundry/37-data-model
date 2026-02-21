@@ -1,0 +1,210 @@
+{
+  "$schema": "../schema/screen.schema.json",
+  "screens": [
+    {
+      "id": "TranslationsPage",
+      "label": "Translations",
+      "app": "admin-face",
+      "route": "/admin/translations",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/TranslationsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/config/translations/{language}"
+      ],
+      "components": ["AdminListPage","EvaButton","EvaBadge","EvaDialog"],
+      "hooks": ["useTranslationsData"],
+      "rbac": ["action.admin.manage_users"],
+      "notes": "Reads locale bundles via config API. WI-5: POST/PATCH/DELETE crud planned."
+    },
+    {
+      "id": "SettingsPage",
+      "label": "Settings",
+      "app": "admin-face",
+      "route": "/admin/settings",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/SettingsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/settings",
+        "PATCH /v1/settings/{key}"
+      ],
+      "components": ["AdminListPage","EvaButton","EvaBadge"],
+      "hooks": ["useSettingsData"],
+      "rbac": [],
+      "notes": "WI-3 DONE 2026-02-19. Mock via VITE_USE_MOCK_BACKEND=true. Real endpoints brain-v2 Sprint 5 (not yet live)."
+    },
+    {
+      "id": "AppsPage",
+      "label": "Apps",
+      "app": "admin-face",
+      "route": "/admin/apps",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/AppsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/apps",
+        "POST /v1/apps/{appId}/disable"
+      ],
+      "components": ["AdminListPage","EvaButton","EvaBadge","EvaDialog"],
+      "hooks": ["useAppsData"],
+      "rbac": [],
+      "notes": "WI-4 DONE 2026-02-19. Mock via VITE_USE_MOCK_BACKEND=true. Real endpoints brain-v2 App Registry (not yet live)."
+    },
+    {
+      "id": "AuditLogsPage",
+      "label": "Audit Logs",
+      "app": "admin-face",
+      "route": "/admin/audit",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/AuditLogsPage.tsx",
+      "status": "stub",
+      "api_calls": [],
+      "components": [],
+      "rbac": ["action.admin.manage_users"],
+      "notes": "Not yet implemented. Planned to consume GET /v1/audit/logs."
+    },
+    {
+      "id": "RbacPage",
+      "label": "RBAC",
+      "app": "admin-face",
+      "route": "/admin/rbac",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/RbacPage.tsx",
+      "status": "stub",
+      "api_calls": [],
+      "components": [],
+      "rbac": ["action.admin.view_groups"],
+      "notes": "Not yet implemented. Planned to consume GET /v1/admin/groups + user management."
+    },
+    {
+      "id": "ChatPane",
+      "label": "Chat",
+      "app": "chat-face",
+      "route": "/",
+      "component_path": "31-eva-faces/chat-face/src/App.tsx",
+      "status": "poc",
+      "api_calls": ["POST /v1/chat"],
+      "components": ["ChatInterface","ChatMessage","EvaButton","EvaSpinner"],
+      "hooks": ["useChatSession","useTranslations"],
+      "test_file": "31-eva-faces/chat-face/src/components/chat/ChatInterface.test.tsx",
+      "notes": "Single-page app. BackendApiClient currently mocks /api/chat dev path. Intended target: POST /v1/chat. Session endpoints (GET/POST/DELETE /v1/sessions) planned when Cosmos backend is live."
+    },
+    {
+      "id": "EVAHomePage",
+      "label": "EVA Portal Home",
+      "app": "portal-face",
+      "route": "/",
+      "component_path": "31-eva-faces/portal-face/src/pages/EVAHomePage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/scrum/summary"
+      ],
+      "components": ["NavHeader","ProductTileGrid","ProductTile","SprintBadge","RecentSprintSummaryBar"],
+      "hooks": [],
+      "rbac": ["viewer"],
+      "notes": "FACES-WI-A / WI-17 IN PROGRESS 2026-02-20. 23 product tiles, 5 categories, mock sprint badges. GC Design System only. WCAG 2.1 AA. Live badges deferred to post-APIM (WI-1 Mar 2026)."
+    },
+    {
+      "id": "SprintBoardPage",
+      "label": "Sprint Board",
+      "app": "portal-face",
+      "route": "/devops/sprint",
+      "component_path": "31-eva-faces/portal-face/src/pages/SprintBoardPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/scrum/dashboard"
+      ],
+      "components": ["NavHeader","SprintSelector","ProjectFilterBar","FeatureSection","WICard","WIDetailDrawer","VelocityPanel"],
+      "hooks": [],
+      "rbac": ["viewer"],
+      "notes": "FACES-WI-B / WI-18 IN PROGRESS 2026-02-20. Full component set, mock data path, WI detail drawer focus-trapped. Live API blocked on WI-0 + WI-1 (APIM, Mar 2026)."
+    },
+    {
+      "id": "IngestionRunsPage",
+      "label": "Ingestion Runs",
+      "app": "admin-face",
+      "route": "/admin/ingestion/runs",
+      "component_path": "31-eva-faces/admin-face/src/IngestionRunsPage.tsx",
+      "status": "implemented",
+      "api_calls": ["GET /v1/admin/ingestion/runs", "POST /v1/admin/ingestion/runs", "PATCH /v1/admin/ingestion/runs/{runId}"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin"],
+      "notes": "WI-12 DONE. Status badges, trigger dialog, cancel action, drawer detail."
+    },
+    {
+      "id": "SearchHealthPage",
+      "label": "Search Health",
+      "app": "admin-face",
+      "route": "/admin/search/health",
+      "component_path": "31-eva-faces/admin-face/src/SearchHealthPage.tsx",
+      "status": "implemented",
+      "api_calls": ["GET /v1/admin/search/health", "POST /v1/admin/search/reindex"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin"],
+      "notes": "WI-13 DONE. Index health tiles, reindex action, detail drawer."
+    },
+    {
+      "id": "SupportTicketsPage",
+      "label": "Support Tickets",
+      "app": "admin-face",
+      "route": "/admin/support/tickets",
+      "component_path": "31-eva-faces/admin-face/src/SupportTicketsPage.tsx",
+      "status": "implemented",
+      "api_calls": ["GET /v1/admin/support/tickets", "PATCH /v1/admin/support/tickets/{ticketId}"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin", "support"],
+      "notes": "WI-14 DONE. Ticket list, status/priority badges, filter, drawer, PATCH update."
+    },
+    {
+      "id": "FeatureFlagsPage",
+      "label": "Feature Flags",
+      "app": "admin-face",
+      "route": "/admin/feature-flags",
+      "component_path": "31-eva-faces/admin-face/src/FeatureFlagsPage.tsx",
+      "status": "implemented",
+      "api_calls": ["GET /v1/admin/feature-flags", "PATCH /v1/admin/feature-flags/{flagKey}", "GET /v1/admin/feature-flags/{flagKey}/history"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin"],
+      "notes": "WI-15 DONE. Toggle per flag, optimistic update, revert on error, change history tab."
+    },
+    {
+      "id": "RbacRolesPage",
+      "label": "RBAC Roles",
+      "app": "admin-face",
+      "route": "/admin/rbac/roles",
+      "component_path": "31-eva-faces/admin-face/src/RbacRolesPage.tsx",
+      "status": "implemented",
+      "api_calls": ["GET /v1/admin/rbac/roles", "POST /v1/admin/rbac/roles", "PATCH /v1/admin/rbac/roles/{roleId}", "DELETE /v1/admin/rbac/roles/{roleId}"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin"],
+      "notes": "WI-16 DONE. Role list, create drawer, permission checkboxes, delete guard."
+    },
+    {
+      "id": "FinOpsDashboardPage",
+      "label": "FinOps Dashboard",
+      "app": "portal-face",
+      "route": "/devops/finops",
+      "component_path": "31-eva-faces/portal-face/src/pages/FinOpsDashboardPage.tsx",
+      "status": "planned",
+      "api_calls": ["GET /v1/finops/summary", "GET /v1/finops/breakdown/services", "GET /v1/finops/breakdown/personas", "GET /v1/finops/breakdown/tenants", "GET /v1/finops/alerts", "GET /v1/finops/export"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin", "auditor"],
+      "notes": "WI-21 PLANNED. Period toggle, bar chart, persona table, tenant heatmap, budget alerts, CSV export."
+    },
+    {
+      "id": "DevopsHealthDashboardPage",
+      "label": "DevOps Health Dashboard",
+      "app": "portal-face",
+      "route": "/devops/health",
+      "component_path": "31-eva-faces/portal-face/src/pages/DevopsHealthDashboardPage.tsx",
+      "status": "planned",
+      "api_calls": ["GET /v1/health/summary", "GET /v1/health/services", "GET /v1/health/pipelines", "GET /v1/health/endpoints", "GET /v1/health/sla", "GET /v1/health/incidents"],
+      "components": [],
+      "hooks": [],
+      "rbac": ["admin", "auditor"],
+      "notes": "WI-22 PLANNED. Health banner + auto-refresh 60s, service grid, pipeline table, SLA widget, incident drawer."
+    }
+  ]
+}

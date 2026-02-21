@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "persona.schema.json",
+  "title": "EVA Persona",
+  "description": "An actor (human role or machine agent) that interacts with EVA",
+  "type": "object",
+  "required": ["id", "label", "type", "services", "feature_flags", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier, kebab-case",
+      "examples": ["admin", "translator", "viewer", "machine-agent"]
+    },
+    "label": { "type": "string" },
+    "type": {
+      "type": "string",
+      "enum": ["human", "machine"],
+      "description": "human = Entra ID user; machine = service principal or API key"
+    },
+    "services": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Service ids this persona interacts with"
+    },
+    "feature_flags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Feature flag ids this persona is allowed to access"
+    },
+    "entra_group": { "type": ["string", "null"], "description": "Entra ID group name or null for machine" },
+    "status": {
+      "type": "string",
+      "enum": ["active", "planned", "deprecated"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,486 @@
+{
+  "schemas": [
+    {
+      "id": "Citation",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": ["POST /v1/chat","POST /v1/chat/rrr","POST /v1/chat/rtr","POST /v1/chat/work","POST /v1/chat/hybrid","POST /v1/chat/read-retrieve-read"],
+      "fields": [
+        {"name": "id",               "type": "str",   "required": true},
+        {"name": "score",            "type": "float", "required": false},
+        {"name": "title",            "type": "str",   "required": false},
+        {"name": "excerpt",          "type": "str",   "required": false},
+        {"name": "relevance_score",  "type": "float", "required": false}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ChatRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": ["POST /v1/chat","POST /v1/chat/rrr","POST /v1/chat/rtr","POST /v1/chat/work","POST /v1/chat/hybrid","POST /v1/chat/ungrounded","POST /v1/chat/read-retrieve-read"],
+      "fields": [
+        {"name": "query",                "type": "str",       "required": true},
+        {"name": "top_k",                "type": "int",       "required": false, "default": 5},
+        {"name": "conversation_history", "type": "list[dict]","required": false},
+        {"name": "indexes",              "type": "list[str]", "required": false},
+        {"name": "cost_tags",            "type": "dict",      "required": false}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ChatResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": ["POST /v1/chat","POST /v1/chat/rrr","POST /v1/chat/rtr","POST /v1/chat/work","POST /v1/chat/hybrid","POST /v1/chat/ungrounded","POST /v1/chat/read-retrieve-read"],
+      "fields": [
+        {"name": "answer",            "type": "str",       "required": true},
+        {"name": "citations",         "type": "list",      "required": false},
+        {"name": "model",             "type": "str",       "required": false},
+        {"name": "tokens_used",       "type": "int",       "required": false},
+        {"name": "indexes_searched",  "type": "list[str]", "required": false},
+        {"name": "approach",          "type": "str",       "required": false},
+        {"name": "explain",           "type": "str",       "required": false}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ApproachInfo",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": ["GET /v1/chat/approaches"],
+      "fields": [
+        {"name": "name",               "type": "str",  "required": true},
+        {"name": "description",        "type": "str",  "required": true},
+        {"name": "requires_retrieval", "type": "bool", "required": true}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ApproachesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": ["GET /v1/chat/approaches"],
+      "fields": [
+        {"name": "approaches", "type": "list[ApproachInfo]", "required": true}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "RetrieveRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "used_by": ["POST /v1/retrieve"],
+      "fields": [
+        {"name": "query",          "type": "str",       "required": true},
+        {"name": "top_k",          "type": "int",       "required": false, "default": 5},
+        {"name": "approach",       "type": "str",       "required": false, "default": "hybrid"},
+        {"name": "indexes",        "type": "list[str]", "required": false},
+        {"name": "include_answer", "type": "bool",      "required": false, "default": true}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "RetrieveResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "used_by": ["POST /v1/retrieve"],
+      "fields": [
+        {"name": "query_hash", "type": "str",       "required": true},
+        {"name": "documents",  "type": "list[dict]","required": true},
+        {"name": "answer",     "type": "str",       "required": false},
+        {"name": "approach",   "type": "str",       "required": true},
+        {"name": "usage",      "type": "dict",      "required": true}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "SessionCreate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["POST /v1/sessions"],
+      "fields": [
+        {"name": "title",    "type": "str",  "required": true},
+        {"name": "metadata", "type": "dict", "required": false}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionUpdate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["PATCH /v1/sessions/{session_id}"],
+      "fields": [
+        {"name": "title",    "type": "str",  "required": false},
+        {"name": "metadata", "type": "dict", "required": false}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["POST /v1/sessions","GET /v1/sessions","GET /v1/sessions/{session_id}","PATCH /v1/sessions/{session_id}"],
+      "fields": [
+        {"name": "id",              "type": "str",      "required": true},
+        {"name": "actor_oid",       "type": "str",      "required": true},
+        {"name": "title",           "type": "str",      "required": true},
+        {"name": "persona",         "type": "str",      "required": true},
+        {"name": "created_at",      "type": "str",      "required": true},
+        {"name": "updated_at",      "type": "str",      "required": true},
+        {"name": "message_count",   "type": "int",      "required": true},
+        {"name": "last_message_at", "type": "str",      "required": false},
+        {"name": "metadata",        "type": "dict",     "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["GET /v1/sessions"],
+      "fields": [
+        {"name": "sessions",    "type": "list[SessionResponse]", "required": true},
+        {"name": "total_count", "type": "int",                   "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionDeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["DELETE /v1/sessions/{session_id}"],
+      "fields": [
+        {"name": "id",      "type": "str", "required": true},
+        {"name": "status",  "type": "str", "required": true},
+        {"name": "message", "type": "str", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "BulkDeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["DELETE /v1/sessions"],
+      "fields": [
+        {"name": "deleted_count", "type": "int", "required": true},
+        {"name": "message",       "type": "str", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "MessageResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["GET /v1/sessions/{session_id}"],
+      "fields": [
+        {"name": "id",         "type": "str",  "required": true},
+        {"name": "session_id", "type": "str",  "required": true},
+        {"name": "role",       "type": "str",  "required": true},
+        {"name": "content",    "type": "str",  "required": true},
+        {"name": "timestamp",  "type": "str",  "required": true},
+        {"name": "metadata",   "type": "dict", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionWithMessagesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": ["GET /v1/sessions/{session_id}"],
+      "fields": [
+        {"name": "session",        "type": "SessionResponse",      "required": true},
+        {"name": "messages",       "type": "list[MessageResponse]", "required": true},
+        {"name": "total_messages", "type": "int",                   "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "DocumentMetadataPatch",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "used_by": ["PATCH /v1/documents/{doc_id}"],
+      "fields": [
+        {"name": "title",         "type": "str",      "required": false},
+        {"name": "tags",          "type": "list[str]","required": false},
+        {"name": "language",      "type": "str",      "required": false},
+        {"name": "custom_fields", "type": "dict",     "required": false}
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "JobResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": ["GET /v1/ingest/jobs/{job_id}","GET /v1/ingest/jobs","POST /v1/ingest/reprocess/{job_id}"],
+      "fields": [
+        {"name": "job_id",        "type": "str",  "required": true},
+        {"name": "filename",      "type": "str",  "required": true},
+        {"name": "content_type",  "type": "str",  "required": true},
+        {"name": "status",        "type": "str",  "required": true},
+        {"name": "created_at",    "type": "str",  "required": true},
+        {"name": "updated_at",    "type": "str",  "required": false},
+        {"name": "error_message", "type": "str",  "required": false},
+        {"name": "progress",      "type": "dict", "required": false},
+        {"name": "metrics",       "type": "dict", "required": false}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "JobListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": ["GET /v1/ingest/jobs"],
+      "fields": [
+        {"name": "jobs",               "type": "list[JobResponse]", "required": true},
+        {"name": "total_count",        "type": "int",               "required": true},
+        {"name": "continuation_token", "type": "str",               "required": false}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "UploadResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": ["POST /v1/ingest/upload","POST /v1/ingest/reprocess/{job_id}"],
+      "fields": [
+        {"name": "job_id",   "type": "str", "required": true},
+        {"name": "filename", "type": "str", "required": true},
+        {"name": "status",   "type": "str", "required": true},
+        {"name": "message",  "type": "str", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "DeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": ["DELETE /v1/ingest/jobs/{job_id}"],
+      "fields": [
+        {"name": "job_id",         "type": "str", "required": true},
+        {"name": "status",         "type": "str", "required": true},
+        {"name": "chunks_deleted", "type": "int", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "StatsResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": ["GET /v1/ingest/stats"],
+      "fields": [
+        {"name": "total_jobs",       "type": "int",   "required": true},
+        {"name": "completed_jobs",   "type": "int",   "required": true},
+        {"name": "failed_jobs",      "type": "int",   "required": true},
+        {"name": "in_progress_jobs", "type": "int",   "required": true},
+        {"name": "total_chunks",     "type": "int",   "required": true},
+        {"name": "total_cost_usd",   "type": "float", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SavedSearchCreate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["POST /v1/search/saved"],
+      "fields": [
+        {"name": "name",         "type": "str",  "required": true},
+        {"name": "description",  "type": "str",  "required": false},
+        {"name": "query_text",   "type": "str",  "required": true},
+        {"name": "filters",      "type": "dict", "required": false}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SavedSearchResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["POST /v1/search/saved","GET /v1/search/saved"],
+      "fields": [
+        {"name": "id",          "type": "str",  "required": true},
+        {"name": "actor_oid",   "type": "str",  "required": true},
+        {"name": "name",        "type": "str",  "required": true},
+        {"name": "description", "type": "str",  "required": true},
+        {"name": "query_text",  "type": "str",  "required": true},
+        {"name": "filters",     "type": "dict", "required": true},
+        {"name": "created_at",  "type": "str",  "required": true},
+        {"name": "updated_at",  "type": "str",  "required": true},
+        {"name": "last_used_at","type": "str",  "required": false},
+        {"name": "use_count",   "type": "int",  "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SavedSearchesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["GET /v1/search/saved"],
+      "fields": [
+        {"name": "searches",    "type": "list[SavedSearchResponse]", "required": true},
+        {"name": "total_count", "type": "int",                       "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SearchHistoryEntry",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["GET /v1/search/history"],
+      "fields": [
+        {"name": "id",                "type": "str",  "required": true},
+        {"name": "query_text",        "type": "str",  "required": true},
+        {"name": "filters",           "type": "dict", "required": true},
+        {"name": "result_count",      "type": "int",  "required": true},
+        {"name": "execution_time_ms", "type": "int",  "required": true},
+        {"name": "timestamp",         "type": "str",  "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SearchHistoryResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["GET /v1/search/history"],
+      "fields": [
+        {"name": "history",     "type": "list[SearchHistoryEntry]", "required": true},
+        {"name": "total_count", "type": "int",                      "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "TopQuery",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["GET /v1/search/analytics"],
+      "fields": [
+        {"name": "query_text", "type": "str", "required": true},
+        {"name": "count",      "type": "int", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SearchAnalyticsResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": ["GET /v1/search/analytics"],
+      "fields": [
+        {"name": "period_days",                  "type": "int",   "required": true},
+        {"name": "total_searches",               "type": "int",   "required": true},
+        {"name": "top_queries",                  "type": "list",  "required": true},
+        {"name": "average_results_per_search",   "type": "float", "required": true},
+        {"name": "generated_at",                 "type": "str",   "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "ServiceInfoResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "used_by": ["GET /v1/config/info"],
+      "fields": [
+        {"name": "name",           "type": "str", "required": true},
+        {"name": "version",        "type": "str", "required": true},
+        {"name": "environment",    "type": "str", "required": true},
+        {"name": "features_count", "type": "int", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "FeaturesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "used_by": ["GET /v1/config/features"],
+      "fields": [
+        {"name": "action", "type": "list", "required": true},
+        {"name": "screen", "type": "list", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "UserCreateRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": ["POST /v1/admin/users"],
+      "fields": [
+        {"name": "user_principal_name", "type": "EmailStr", "required": true},
+        {"name": "display_name",        "type": "str",      "required": true},
+        {"name": "mail_nickname",       "type": "str",      "required": true},
+        {"name": "password",            "type": "str",      "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "UserResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": ["POST /v1/admin/users"],
+      "fields": [
+        {"name": "id",                   "type": "str",  "required": true},
+        {"name": "user_principal_name",  "type": "str",  "required": true},
+        {"name": "display_name",         "type": "str",  "required": true},
+        {"name": "mail",                 "type": "str",  "required": false},
+        {"name": "account_enabled",      "type": "bool", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "GroupResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": ["GET /v1/admin/groups"],
+      "fields": [
+        {"name": "id",               "type": "str",  "required": true},
+        {"name": "display_name",     "type": "str",  "required": true},
+        {"name": "description",      "type": "str",  "required": false},
+        {"name": "mail",             "type": "str",  "required": false},
+        {"name": "mail_enabled",     "type": "bool", "required": true},
+        {"name": "security_enabled", "type": "bool", "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "GroupListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": ["GET /v1/admin/groups"],
+      "fields": [
+        {"name": "groups",      "type": "list[GroupResponse]", "required": true},
+        {"name": "total_count", "type": "int",                 "required": true}
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "CostTags",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/models/cost.py",
+      "used_by": [],
+      "fields": [
+        {"name": "phase",      "type": "str", "required": true},
+        {"name": "task",       "type": "str", "required": true},
+        {"name": "project",    "type": "str", "required": true},
+        {"name": "costcenter", "type": "str", "required": true},
+        {"name": "persona_id", "type": "str", "required": true},
+        {"name": "actor_oid",  "type": "str", "required": true}
+      ],
+      "status": "implemented",
+      "notes": "Mandatory FinOps attribution. Passed to AuditLogger on every agent invocation."
+    },
+    {
+      "id": "ToolInvocation",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/models/agent.py",
+      "used_by": [],
+      "fields": [
+        {"name": "tool_name",       "type": "str",      "required": true},
+        {"name": "intent",          "type": "str",      "required": true},
+        {"name": "invoked_at",      "type": "datetime", "required": false},
+        {"name": "duration_ms",     "type": "int",      "required": true},
+        {"name": "result_summary",  "type": "dict",     "required": false},
+        {"name": "correlation_id",  "type": "str",      "required": true},
+        {"name": "actor_oid",       "type": "str",      "required": true}
+      ],
+      "status": "implemented",
+      "notes": "Lane A-compliant tool invocation record — no raw content/params stored."
+    }
+  ]
+}

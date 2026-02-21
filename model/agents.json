@@ -1,0 +1,41 @@
+{
+  "$schema": "../schema/agent.schema.json",
+  "agents": [
+    {
+      "id": "screen-generator",
+      "label": "Screen Generator",
+      "skill_file": "agents/screen_agent.py",
+      "input_type": "epic",
+      "output_type": "tsx_file",
+      "llm_deployment": "gpt-5.1-chat",
+      "output_screens": [],
+      "endpoints_consumed": [],
+      "status": "active",
+      "notes": "ScreenGeneratorAgent: parses Epic YAML ScreenSpec, queries EVA UI metadata for component examples, calls Azure OpenAI to produce production-ready TypeScript/React screen. Bilingual support enforced. Falls back to template when LLM response is < 100 chars."
+    },
+    {
+      "id": "test-generator",
+      "label": "Test Generator",
+      "skill_file": "agents/test_agent.py",
+      "input_type": "screen_id",
+      "output_type": "test_file",
+      "llm_deployment": "gpt-5.1-chat",
+      "output_screens": [],
+      "endpoints_consumed": [],
+      "status": "active",
+      "notes": "TestGeneratorAgent Phase 2: generates minimal vitest + jest-axe scaffold. Full behavioural + coverage tests using shared/eva-ui examples deferred to Phase 3. Currently a stub that unblocks mode=full piepline."
+    },
+    {
+      "id": "validator",
+      "label": "Validator",
+      "skill_file": "agents/validator_agent.py",
+      "input_type": "source_file",
+      "output_type": "validation_report",
+      "llm_deployment": "none",
+      "output_screens": [],
+      "endpoints_consumed": [],
+      "status": "active",
+      "notes": "ValidatorAgent: runs 4 quality gates — TypeScript compile (npm run type-check), test pass rate + coverage (npm run test:coverage), accessibility (npm run test:a11y), Government of Canada compliance (static analysis). No LLM call — pure subprocess/toolchain. Thresholds loaded from config/quality_gates.py."
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-02-21T00:00:00",
+  "ado_org": "https://dev.azure.com/marcopresta",
+  "ado_project": "eva-poc",
+  "github_repo": "eva-foundry/37-data-model",
+  "project_maturity": "complete",
+
+  "epic": {
+    "skip_if_id_exists": null,
+    "type": "Epic",
+    "title": "EVA Data Model",
+    "description": "Semantic object model for the entire EVA ecosystem. 11/11 layers complete, 0 validation violations. Machine-queryable equivalent of a repository — every service, persona, endpoint, screen, container, agent, and requirement is a typed node with FK-style cross-references. Assembled into eva-model.json.",
+    "tags": "eva-data-model;37",
+    "area_path": "eva-poc"
+  },
+
+  "features": [
+    {
+      "id_hint": "dm-core-layers",
+      "type": "Feature",
+      "title": "Core Model Layers (1–6)",
+      "description": "Services, Endpoints, Schemas, Containers, Personas, Feature Flags. Each layer validated against JSON Schema with zero dangling references.",
+      "tags": "eva-data-model;dm-core-layers",
+      "parent": "epic"
+    },
+    {
+      "id_hint": "dm-extended-layers",
+      "type": "Feature",
+      "title": "Extended Model Layers (7–11)",
+      "description": "Screens, Literals (bilingual), Agents, Requirements, Infrastructure. Fully cross-referenced to core layers.",
+      "tags": "eva-data-model;dm-extended-layers",
+      "parent": "epic"
+    },
+    {
+      "id_hint": "dm-tooling",
+      "type": "Feature",
+      "title": "Model Tooling — Validation & Assembly",
+      "description": "validate-model.ps1 (0 violations gate), assemble-model.ps1 (merges layers into eva-model.json), impact-analysis.ps1. Model is authoritative — no re-reading source files when layer is complete.",
+      "tags": "eva-data-model;dm-tooling",
+      "parent": "epic"
+    }
+  ],
+
+  "user_stories": [
+    {
+      "id_hint": "dm-wi-0",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-0] Layers 1–6 complete — services, endpoints, schemas, containers, personas, feature flags",
+      "acceptance_criteria": "All 6 layers populated. validate-model.ps1 exits 0. Zero dangling references. assemble-model.ps1 produces valid eva-model.json.",
+      "tags": "eva-data-model;dm-wi-0",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "Done",
+      "parent": "dm-core-layers",
+      "evidence": { "test_count": null, "coverage_pct": null, "notes": "Model declared GA 2026-02-20T05:01:00-05:00. 11/11 layers PASS." }
+    },
+    {
+      "id_hint": "dm-wi-1",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-1] Layers 7–11 complete — screens, literals, agents, requirements, infrastructure",
+      "acceptance_criteria": "All 5 extended layers populated. All screen API call references resolve to endpoint IDs. All literal keys have default_en and default_fr. validate-model.ps1 exits 0.",
+      "tags": "eva-data-model;dm-wi-1",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "Done",
+      "parent": "dm-extended-layers",
+      "evidence": { "test_count": null, "coverage_pct": null, "notes": "Model declared GA 2026-02-20T05:01:00-05:00. 0 violations." }
+    },
+    {
+      "id_hint": "dm-wi-2",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-2] Model tooling — validate-model.ps1, assemble-model.ps1, impact-analysis.ps1",
+      "acceptance_criteria": "validate-model.ps1 catches all dangling reference types. assemble-model.ps1 merges all 11 layer files into eva-model.json. impact-analysis.ps1 accepts -field and returns affected endpoints/screens.",
+      "tags": "eva-data-model;dm-wi-2",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "Done",
+      "parent": "dm-tooling",
+      "evidence": { "test_count": null, "coverage_pct": null, "notes": "Tooling operational. Copilot instructions reference canonical query patterns." }
+    },
+    {
+      "id_hint": "dm-wi-3",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-3] ADO-Data Model bidirectional tagging",
+      "acceptance_criteria": "ADO WI tags include entity: tags (e.g. entity:assistant). sprint-context.json maps active WIs to affected entities. On WI Done: last_updated_sprint and last_updated_wi stamped in entity definition.",
+      "tags": "eva-data-model;dm-wi-3",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "parent": "dm-tooling",
+      "evidence": { "test_count": null, "coverage_pct": null, "notes": "Planned Sprint-7. Depends on WI-7 (eva-brain) closed." }
+    }
+  ],
+
+  "sprints_needed": [
+    { "name": "Sprint-Backlog", "start_date": null, "finish_date": null }
+  ]
+}

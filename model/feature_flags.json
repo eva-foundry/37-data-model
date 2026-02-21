@@ -1,0 +1,129 @@
+{
+  "$schema": "../schema/feature_flag.schema.json",
+  "feature_flags": [
+    {
+      "id": "action.chat",
+      "label": "Chat — invoke conversation agent",
+      "personas": ["admin", "legal-researcher", "legal-clerk", "machine-agent"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "endpoints": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "GET /v1/chat/approaches"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_CHAT = 'action.chat'. Source: features.py."
+    },
+    {
+      "id": "action.retrieve",
+      "label": "Retrieve — read sessions and session history",
+      "personas": ["admin", "legal-researcher", "auditor", "machine-agent"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "endpoints": [
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "GET /v1/sessions/{session_id}/messages"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_RETRIEVE = 'action.retrieve'. Source: features.py."
+    },
+    {
+      "id": "action.ingest",
+      "label": "Ingest — upload and process documents",
+      "personas": ["admin", "machine-agent"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "endpoints": [
+        "PATCH /v1/documents/{doc_id}",
+        "DELETE /v1/documents/{doc_id}",
+        "DELETE /v1/documents/{doc_id}/chunks",
+        "POST /v1/documents/{doc_id}/reindex"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_INGEST = 'action.ingest'. Write operations on documents. Source: features.py."
+    },
+    {
+      "id": "action.search",
+      "label": "Search — search documents and tags",
+      "personas": ["admin", "legal-researcher", "legal-clerk", "machine-agent"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "endpoints": [
+        "GET /v1/documents",
+        "GET /v1/documents/{doc_id}",
+        "GET /v1/documents/{doc_id}/content",
+        "GET /v1/documents/{doc_id}/chunks",
+        "GET /v1/tags",
+        "GET /v1/search"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_SEARCH = 'action.search'. Read operations on documents. Source: features.py."
+    },
+    {
+      "id": "action.admin.translations",
+      "label": "Admin — manage UI translation strings",
+      "personas": ["admin"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/translations.py",
+      "endpoints": [
+        "GET /v1/translations",
+        "GET /v1/translations/{key}",
+        "PUT /v1/translations/{key}",
+        "DELETE /v1/translations/{key}",
+        "POST /v1/translations/bulk"
+      ],
+      "status": "planned",
+      "notes": "FeatureID.ACTION_ADMIN_TRANSLATIONS = 'action.admin.translations'. Sprint 5. Route file not yet implemented."
+    },
+    {
+      "id": "action.admin.settings",
+      "label": "Admin — manage application settings",
+      "personas": ["admin"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/settings.py",
+      "endpoints": [
+        "GET /v1/settings",
+        "GET /v1/settings/{key}",
+        "PUT /v1/settings/{key}"
+      ],
+      "status": "planned",
+      "notes": "FeatureID.ACTION_ADMIN_SETTINGS = 'action.admin.settings'. Sprint 5. Route file not yet implemented."
+    },
+    {
+      "id": "action.admin.apps",
+      "label": "Admin — manage app registry",
+      "personas": ["admin"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/apps.py",
+      "endpoints": [
+        "GET /v1/apps",
+        "GET /v1/apps/{app_id}",
+        "POST /v1/apps",
+        "PATCH /v1/apps/{app_id}",
+        "DELETE /v1/apps/{app_id}"
+      ],
+      "status": "planned",
+      "notes": "FeatureID.ACTION_ADMIN_APPS = 'action.admin.apps'. Sprint 6. Route file not yet implemented."
+    },
+    {
+      "id": "action.admin.manage_users",
+      "label": "Admin — create and manage Entra ID users",
+      "personas": ["admin"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "endpoints": [
+        "POST /v1/users"
+      ],
+      "status": "stub",
+      "notes": "Decorator: @require_feature('action.admin.manage_users'). Not in FeatureID enum (features.py); admin.py is an optional/pre-existing router. Prefix /v1/admin TBD."
+    },
+    {
+      "id": "action.admin.view_groups",
+      "label": "Admin — list Entra ID groups",
+      "personas": ["admin"],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "endpoints": [
+        "GET /v1/groups"
+      ],
+      "status": "stub",
+      "notes": "Decorator: @require_feature('action.admin.view_groups'). Not in FeatureID enum (features.py); admin.py is an optional/pre-existing router. Prefix /v1/admin TBD."
+    }
+  ]
+}

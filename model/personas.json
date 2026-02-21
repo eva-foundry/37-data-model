@@ -1,0 +1,80 @@
+{
+  "$schema": "../schema/persona.schema.json",
+  "personas": [
+    {
+      "id": "admin",
+      "label": "Administrator",
+      "type": "human",
+      "services": ["eva-brain-api", "eva-roles-api", "admin-face"],
+      "feature_flags": [
+        "action.chat", "action.retrieve", "action.ingest", "action.search",
+        "action.admin.translations", "action.admin.settings", "action.admin.apps"
+      ],
+      "entra_group": "EVA-Admins",
+      "status": "active",
+      "notes": "Full access including persona management. max_tokens_per_turn: 8000. Source: personas.yml."
+    },
+    {
+      "id": "legal-researcher",
+      "label": "Legal Researcher",
+      "type": "human",
+      "services": ["eva-brain-api", "chat-face"],
+      "feature_flags": ["action.chat", "action.retrieve", "action.search"],
+      "entra_group": "EVA-LegalResearchers",
+      "status": "active",
+      "notes": "Read-only access to case law and statutes. max_tokens_per_turn: 4000. Source: personas.yml."
+    },
+    {
+      "id": "legal-clerk",
+      "label": "Legal Clerk",
+      "type": "human",
+      "services": ["eva-brain-api", "chat-face"],
+      "feature_flags": ["action.chat", "action.search"],
+      "entra_group": "EVA-LegalClerks",
+      "status": "active",
+      "notes": "Limited access — keyword_search and chat_completion only. max_tokens_per_turn: 1000. Source: personas.yml."
+    },
+    {
+      "id": "auditor",
+      "label": "Auditor",
+      "type": "human",
+      "services": ["admin-face", "eva-brain-api"],
+      "feature_flags": ["action.retrieve"],
+      "entra_group": "EVA-Auditors",
+      "status": "planned",
+      "notes": "Read-only audit log access. Required by AuditLogsPage (/admin/audit/logs). Phase 2. Source: EVA-FACES-MASTER-TRACKER.md."
+    },
+    {
+      "id": "support",
+      "label": "Support Agent",
+      "type": "human",
+      "services": ["admin-face", "eva-brain-api"],
+      "feature_flags": ["action.chat", "action.retrieve"],
+      "entra_group": "EVA-Support",
+      "status": "planned",
+      "notes": "Help desk integration. Required by SupportTicketsPage (/admin/support/tickets). Phase 2."
+    },
+    {
+      "id": "machine-agent",
+      "label": "Machine Agent (Service Principal)",
+      "type": "machine",
+      "services": ["eva-brain-api", "eva-roles-api", "agent-fleet"],
+      "feature_flags": [
+        "action.chat", "action.retrieve", "action.ingest", "action.search"
+      ],
+      "entra_group": null,
+      "status": "planned",
+      "notes": "Internal service-to-service calls via Entra app registration / managed identity. Used by agent-fleet and pipeline orchestrators."
+    },
+    {
+      "id": "viewer",
+      "label": "Viewer (Portal User)",
+      "type": "human",
+      "services": ["portal-face", "eva-brain-api"],
+      "feature_flags": ["action.chat"],
+      "entra_group": "EVA-Users",
+      "status": "planned",
+      "notes": "Base authenticated user accessing EVA Portal (/), Sprint Board (/devops/sprint). Lowest privilege role. FACES-WI-C (WI-19) will wire role guard. Source: eva-ado-dashboard.epic.yaml."
+    }
+  ]
+}

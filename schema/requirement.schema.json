@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "requirement.schema.json",
+  "title": "EVA Requirement",
+  "description": "An Epic or requirement — linked to endpoints, screens, and tests for traceability",
+  "type": "object",
+  "required": ["id", "title", "type", "satisfied_by", "test_ids", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier",
+      "examples": ["EPIC-001", "REQ-012", "STORY-034"]
+    },
+    "title": { "type": "string" },
+    "type": {
+      "type": "string",
+      "enum": ["epic", "requirement", "story", "acceptance_criterion"]
+    },
+    "parent": {
+      "type": ["string", "null"],
+      "description": "Parent requirement id (e.g. story belongs to epic)"
+    },
+    "satisfied_by": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Endpoint ids and/or screen ids that implement this requirement"
+    },
+    "test_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Test function names that verify this requirement"
+    },
+    "personas": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Persona ids this requirement concerns"
+    },
+    "sprint": { "type": ["integer", "null"] },
+    "status": {
+      "type": "string",
+      "enum": ["done", "in-progress", "planned", "deferred", "cancelled"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

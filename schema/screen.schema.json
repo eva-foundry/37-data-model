@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "screen.schema.json",
+  "title": "EVA React Screen",
+  "description": "A React page/screen in admin-face or chat-face",
+  "type": "object",
+  "required": ["id", "app", "route", "component_path", "api_calls", "components", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "PascalCase component name",
+      "examples": ["TranslationsPage", "SettingsPage", "ChatInterface"]
+    },
+    "label": { "type": "string" },
+    "app": {
+      "type": "string",
+      "enum": ["admin-face", "chat-face"],
+      "description": "Which React app hosts this screen"
+    },
+    "route": { "type": "string", "examples": ["/admin/translations", "/"] },
+    "component_path": { "type": "string", "description": "Relative path from app src/" },
+    "rbac": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Persona ids that can access this screen"
+    },
+    "api_calls": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Endpoint ids called by this screen"
+    },
+    "components": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "@eva/ui component ids used"
+    },
+    "fields_displayed": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Data fields shown in this screen (container field names)"
+    },
+    "test_file": { "type": ["string", "null"] },
+    "test_count": { "type": ["integer", "null"] },
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "poc", "stub", "planned", "deprecated"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

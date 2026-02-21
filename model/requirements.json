@@ -1,0 +1,248 @@
+{
+  "$schema": "../schema/requirement.schema.json",
+  "requirements": [
+    {
+      "id": "EPIC-001",
+      "title": "EVA Brain v2 runnable and tested API",
+      "type": "epic",
+      "satisfied_by": [
+        "POST /v1/sessions",
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "DELETE /v1/sessions/{session_id}",
+        "POST /v1/chat",
+        "POST /v1/retrieve",
+        "POST /v1/ingest/upload",
+        "GET /v1/config/info",
+        "GET /v1/config/features"
+      ],
+      "test_ids": [],
+      "status": "done",
+      "sprint": 0,
+      "notes": "Sprint 0 completed Feb 19, 2026. Uvicorn starts, all routers mounted, OpenAI + Search connected."
+    },
+    {
+      "id": "EPIC-002",
+      "title": "EVA Faces shared design system",
+      "type": "epic",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "done",
+      "sprint": 1,
+      "personas": ["admin"],
+      "notes": "Phase 1 COMPLETE. Shared component library published. Storybook scaffold in place."
+    },
+    {
+      "id": "EPIC-003",
+      "title": "Admin screens and backend integration",
+      "type": "epic",
+      "satisfied_by": [
+        "TranslationsPage", "SettingsPage", "AppsPage", "AuditLogsPage", "RbacPage"
+      ],
+      "test_ids": [],
+      "status": "in-progress",
+      "sprint": 2,
+      "personas": ["admin"],
+      "notes": "eva-faces Phase 2. Mar 1-17, 2026. SettingsPage and AppsPage still use MockBackendService."
+    },
+    {
+      "id": "EPIC-004",
+      "title": "Chat UI and agent framework integration",
+      "type": "epic",
+      "satisfied_by": ["ChatPane"],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 3,
+      "personas": ["lawyer", "paralegal", "researcher", "compliance-officer", "hr", "student"],
+      "notes": "eva-faces Phase 3. Full ChatPane wired to /v1/sessions + /v1/messages endpoints."
+    },
+    {
+      "id": "EPIC-005",
+      "title": "Testing and Azure SWA deployment",
+      "type": "epic",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 4,
+      "notes": "eva-faces Phase 4. Mar 25-31, 2026. Playwright E2E, WCAG report, SWA deploy, APIM import."
+    },
+    {
+      "id": "REQ-001",
+      "title": "Fix router prefix for sessions, search, config, ingest, admin",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Routers missing /v1 prefix. Affects all auto-generated endpoint ids in model."
+    },
+    {
+      "id": "REQ-002",
+      "title": "Mount tags.py router in main.py",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "tags.py exists and defines route but is not included in app startup."
+    },
+    {
+      "id": "REQ-003",
+      "title": "Add support persona to action.chat feature flag",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "feature_flags.json action.chat only lists lawyer/paralegal — support persona missing."
+    },
+    {
+      "id": "REQ-004",
+      "title": "Granular feature flag IDs for search and ingest groups",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Current flags are action.search/action.ingest — need per-operation flags (e.g. action.search.semantic)."
+    },
+    {
+      "id": "REQ-005",
+      "title": "Wire SettingsPage and AppsPage to real endpoints",
+      "type": "requirement",
+      "parent": "EPIC-003",
+      "satisfied_by": ["SettingsPage", "AppsPage"],
+      "test_ids": [],
+      "status": "in-progress",
+      "sprint": 2,
+      "personas": ["admin"],
+      "notes": "MockBackendService has 82 inline keys. Config and apps endpoints are present in brain-api."
+    },
+    {
+      "id": "REQ-006",
+      "title": "Build AuditLogsPage and RbacPage implementations",
+      "type": "requirement",
+      "parent": "EPIC-003",
+      "satisfied_by": ["AuditLogsPage", "RbacPage"],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": ["admin"],
+      "notes": "Screens scaffolded, real data wiring not started."
+    },
+    {
+      "id": "REQ-007",
+      "title": "Import EVA Brain API into marco-sandbox-apim",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Scheduled Mar 29-30, 2026. OpenAPI spec needs to be finalised first."
+    },
+    {
+      "id": "REQ-008",
+      "title": "Configure Key Vault secrets for all services",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Scheduled Mar 31 - Apr 4, 2026. Includes openai-api-key, search-api-key, cosmos-key, storage-key, appinsights, client-secret."
+    },
+    {
+      "id": "REQ-009",
+      "title": "Scaffold Playwright E2E tests for admin and chat faces",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": ["admin"],
+      "notes": "Playwright config present in eva-faces. E2E test cases to cover TranslationsPage CRUD, ChatPane send."
+    },
+    {
+      "id": "REQ-010",
+      "title": "WCAG 2.1 AA compliance audit and remediation",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 4,
+      "notes": "Accessibility report required before SWA deployment. axe-core integration planned."
+    },
+    {
+      "id": "STORY-001",
+      "title": "As an admin I can create and delete translations",
+      "type": "story",
+      "parent": "EPIC-003",
+      "satisfied_by": ["TranslationsPage"],
+      "test_ids": [],
+      "status": "done",
+      "sprint": 2,
+      "personas": ["admin"]
+    },
+    {
+      "id": "STORY-002",
+      "title": "As an admin I can view ingestion job status",
+      "type": "story",
+      "parent": "EPIC-003",
+      "satisfied_by": ["AuditLogsPage"],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": ["admin"]
+    },
+    {
+      "id": "STORY-003",
+      "title": "As a user I can chat with EVA using my persona",
+      "type": "story",
+      "parent": "EPIC-004",
+      "satisfied_by": ["ChatPane"],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 3,
+      "personas": ["lawyer", "paralegal", "researcher", "compliance-officer", "hr", "student"]
+    },
+    {
+      "id": "STORY-004",
+      "title": "As an admin I can assign roles to users",
+      "type": "story",
+      "parent": "EPIC-003",
+      "satisfied_by": ["RbacPage"],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": ["admin"]
+    },
+    {
+      "id": "AC-001",
+      "title": "Brain API returns 200 on GET /health when all services reachable",
+      "type": "acceptance_criterion",
+      "parent": "EPIC-001",
+      "satisfied_by": ["GET /v1/health"],
+      "test_ids": [],
+      "status": "done"
+    },
+    {
+      "id": "AC-002",
+      "title": "TranslationsPage shows error toast when POST /translations returns 4xx",
+      "type": "acceptance_criterion",
+      "parent": "STORY-001",
+      "satisfied_by": ["TranslationsPage"],
+      "test_ids": [],
+      "status": "planned"
+    },
+    {
+      "id": "AC-003",
+      "title": "ChatPane disables send while awaiting streamed response",
+      "type": "acceptance_criterion",
+      "parent": "STORY-003",
+      "satisfied_by": ["ChatPane"],
+      "test_ids": [],
+      "status": "planned"
+    }
+  ]
+}

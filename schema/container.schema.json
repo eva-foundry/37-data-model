@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "container.schema.json",
+  "title": "EVA Cosmos Container",
+  "description": "A Cosmos DB container — fields, partition key, indexes",
+  "type": "object",
+  "required": ["id", "database", "partition_key", "fields", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Cosmos container name",
+      "examples": ["translations", "sessions", "audit"]
+    },
+    "label": { "type": "string" },
+    "database": { "type": "string", "description": "Cosmos database name" },
+    "partition_key": { "type": "string", "examples": ["/locale", "/persona_id", "/session_id"] },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "required"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "examples": ["str", "int", "bool", "list", "dict", "datetime"] },
+          "required": { "type": "boolean" },
+          "indexed": { "type": "boolean" },
+          "unique": { "type": "boolean" },
+          "default": {},
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "indexes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fields", "kind"],
+        "properties": {
+          "fields": { "type": "array", "items": { "type": "string" } },
+          "kind": { "type": "string", "enum": ["Hash", "Range", "Spatial", "Composite"] }
+        }
+      }
+    },
+    "ttl_seconds": { "type": ["integer", "null"] },
+    "status": {
+      "type": "string",
+      "enum": ["active", "planned", "deprecated"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

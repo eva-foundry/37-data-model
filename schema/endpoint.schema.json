@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "endpoint.schema.json",
+  "title": "EVA HTTP Endpoint",
+  "description": "A single HTTP operation in the EVA API surface",
+  "type": "object",
+  "required": ["id", "method", "path", "service", "auth", "feature_flag", "cosmos_reads", "cosmos_writes", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "'{METHOD} {path}' — canonical identifier",
+      "examples": ["GET /v1/translations", "POST /v1/sessions", "DELETE /v1/translations/{key}"]
+    },
+    "method": {
+      "type": "string",
+      "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    },
+    "path": { "type": "string", "examples": ["/v1/translations", "/v1/sessions/{session_id}"] },
+    "service": { "type": "string", "description": "Service id" },
+    "tag": { "type": ["string", "null"], "description": "OpenAPI tag / router group" },
+    "summary": { "type": ["string", "null"] },
+    "auth": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Persona ids that may call this endpoint"
+    },
+    "feature_flag": {
+      "type": ["string", "null"],
+      "description": "Feature flag id required, or null if unguarded"
+    },
+    "query_params": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "required"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "required": { "type": "boolean" },
+          "default": {}
+        }
+      }
+    },
+    "request_schema": { "type": ["string", "null"], "description": "Schema id for request body, or null" },
+    "response_schema": { "type": ["string", "null"], "description": "Schema id for response body" },
+    "cosmos_reads": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Container ids this endpoint reads from"
+    },
+    "cosmos_writes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Container ids this endpoint writes to"
+    },
+    "implemented_in": { "type": ["string", "null"], "description": "Relative repo path of route handler" },
+    "test_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Test function names that cover this endpoint"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "planned", "deprecated", "stub"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

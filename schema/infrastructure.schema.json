@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "infrastructure.schema.json",
+  "title": "EVA Infrastructure Resource",
+  "description": "An Azure resource or configuration object used by the EVA ecosystem",
+  "type": "object",
+  "required": ["id", "type", "azure_resource_name", "service", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier, kebab-case",
+      "examples": ["cosmos-translations-container", "apim-v1-translations", "kv-cosmos-key"]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "cosmos_account", "cosmos_database", "cosmos_container",
+        "azure_search_index", "storage_account", "storage_container",
+        "container_app", "apim_route", "apim_api",
+        "keyvault_secret", "keyvault_vault",
+        "openai_deployment", "foundry_project",
+        "entra_app_registration", "entra_group"
+      ]
+    },
+    "azure_resource_name": { "type": "string" },
+    "service": { "type": "string", "description": "Service id that owns/uses this resource" },
+    "references": {
+      "type": ["string", "null"],
+      "description": "Model object id this resource corresponds to (e.g. container id for cosmos_container)"
+    },
+    "env_var": { "type": ["string", "null"], "description": "Config env var that holds the connection string/key" },
+    "keyvault_secret_name": { "type": ["string", "null"] },
+    "status": {
+      "type": "string",
+      "enum": ["provisioned", "planned", "deprovisioned"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

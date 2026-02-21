@@ -1,0 +1,5985 @@
+{
+  "meta": {
+    "schema_version": "1.0.0",
+    "last_updated": "2026-02-20",
+    "layers_complete": 11,
+    "total_layers": 11,
+    "generated_by": "scripts/assemble-model.ps1",
+    "note": "DO NOT hand-edit this file. Edit layer files then run assemble-model.ps1."
+  },
+  "services": [
+    {
+      "id": "eva-brain-api",
+      "label": "EVA Brain API v2",
+      "type": "fastapi_backend",
+      "tech_stack": [
+        "Python 3.10",
+        "FastAPI",
+        "Pydantic",
+        "Azure Cosmos DB",
+        "Azure OpenAI",
+        "Azure Search"
+      ],
+      "repo_path": "33-eva-brain-v2/services/eva-brain-api",
+      "port": 8001,
+      "base_url_local": "http://localhost:8001",
+      "base_url_azure": null,
+      "health_endpoint": "/health",
+      "status": "partial",
+      "depends_on": [
+        "eva-roles-api",
+        "azure-cosmos",
+        "azure-openai",
+        "azure-search"
+      ],
+      "notes": "Phase 1-4 implemented (453 tests, 71% coverage). Phase 5-6 (translations, settings, assistants) pending."
+    },
+    {
+      "id": "eva-roles-api",
+      "label": "EVA Roles API",
+      "type": "fastapi_backend",
+      "tech_stack": [
+        "Python 3.10",
+        "FastAPI",
+        "Pydantic"
+      ],
+      "repo_path": "33-eva-brain-v2/services/eva-roles-api",
+      "port": 8002,
+      "base_url_local": "http://localhost:8002",
+      "base_url_azure": null,
+      "health_endpoint": "/health",
+      "status": "running",
+      "depends_on": [],
+      "notes": "RBAC authority. Returns persona feature flags for a given actor OID."
+    },
+    {
+      "id": "admin-face",
+      "label": "EVA Admin Face",
+      "type": "react_spa",
+      "tech_stack": [
+        "React 18",
+        "TypeScript",
+        "Vite",
+        "Fluent UI",
+        "@eva/ui",
+        "@eva/gc-design-system"
+      ],
+      "repo_path": "31-eva-faces/admin-face",
+      "port": 5174,
+      "base_url_local": "http://localhost:5174",
+      "base_url_azure": null,
+      "health_endpoint": null,
+      "status": "partial",
+      "depends_on": [
+        "eva-brain-api",
+        "eva-roles-api"
+      ],
+      "notes": "3/10 screens POC only. 0/29 real backend endpoints wired. Phase 2 target: Mar 1-17 2026."
+    },
+    {
+      "id": "chat-face",
+      "label": "EVA Chat Face",
+      "type": "react_spa",
+      "tech_stack": [
+        "React 18",
+        "TypeScript",
+        "Vite",
+        "Fluent UI",
+        "@eva/ui",
+        "@eva/gc-design-system"
+      ],
+      "repo_path": "31-eva-faces/chat-face",
+      "port": 5173,
+      "base_url_local": "http://localhost:5173",
+      "base_url_azure": null,
+      "health_endpoint": null,
+      "status": "partial",
+      "depends_on": [
+        "eva-brain-api"
+      ],
+      "notes": "ChatInterface.tsx fully implemented (21/21 tests). 4 BackendApiClient endpoints scaffolded with USE_MOCK guard."
+    },
+    {
+      "id": "agent-fleet",
+      "label": "EVA Agent Fleet",
+      "type": "fastapi_agent_fleet",
+      "tech_stack": [
+        "Python 3.10",
+        "FastAPI",
+        "Azure OpenAI gpt-5.1-chat"
+      ],
+      "repo_path": "31-eva-faces/agent-fleet",
+      "port": 8000,
+      "base_url_local": "http://localhost:8000",
+      "base_url_azure": null,
+      "health_endpoint": null,
+      "status": "partial",
+      "depends_on": [
+        "azure-openai"
+      ],
+      "notes": "Generates React screens from Epics. 1/10 agents validated (screen-admin-crud-table)."
+    },
+    {
+      "id": "azure-apim",
+      "label": "Azure API Management",
+      "type": "azure_apim",
+      "tech_stack": [
+        "Azure APIM"
+      ],
+      "repo_path": "17-apim",
+      "port": null,
+      "base_url_local": null,
+      "base_url_azure": "https://marco-sandbox-apim.azure-api.net",
+      "health_endpoint": null,
+      "status": "planned",
+      "depends_on": [
+        "eva-brain-api",
+        "eva-roles-api"
+      ],
+      "notes": "APIM import scheduled Mar 29-30 2026. Key Vault wiring Mar 31 - Apr 4 2026."
+    },
+    {
+      "id": "azure-foundry",
+      "label": "Azure AI Foundry",
+      "type": "azure_foundry",
+      "tech_stack": [
+        "Azure AI Foundry",
+        "gpt-5.1-chat",
+        "gpt-4o"
+      ],
+      "repo_path": "29-foundry",
+      "port": null,
+      "base_url_local": null,
+      "base_url_azure": null,
+      "health_endpoint": null,
+      "status": "running",
+      "depends_on": [],
+      "notes": "Model deployments: gpt-5.1-chat (agent-fleet), gpt-4o (brain-api). Both live in sandbox."
+    },
+    {
+      "id": "eva-jurisprudence",
+      "label": "EVA Jurisprudence / Engineered Case Law",
+      "type": "pipeline",
+      "tech_stack": [
+        "Python",
+        "Azure Functions",
+        "Azure Search"
+      ],
+      "repo_path": "16-engineered-case-law",
+      "port": null,
+      "base_url_local": null,
+      "base_url_azure": null,
+      "health_endpoint": null,
+      "status": "partial",
+      "depends_on": [
+        "azure-search"
+      ],
+      "notes": "Case law ingestion pipeline. Populates case-law and statutes search indexes."
+    },
+    {
+      "id": "assist-me",
+      "label": "AssistMe (Legacy)",
+      "type": "legacy",
+      "tech_stack": [
+        "Python",
+        "Quart"
+      ],
+      "repo_path": "20-AssistMe",
+      "port": null,
+      "base_url_local": null,
+      "base_url_azure": null,
+      "health_endpoint": null,
+      "status": "legacy",
+      "depends_on": [],
+      "notes": "EVA v1.x predecessor. Retained for reference. Not actively developed."
+    }
+  ],
+  "personas": [
+    {
+      "id": "admin",
+      "label": "Administrator",
+      "type": "human",
+      "services": [
+        "eva-brain-api",
+        "eva-roles-api",
+        "admin-face"
+      ],
+      "feature_flags": [
+        "action.chat",
+        "action.retrieve",
+        "action.ingest",
+        "action.search",
+        "action.admin.translations",
+        "action.admin.settings",
+        "action.admin.apps"
+      ],
+      "entra_group": "EVA-Admins",
+      "status": "active",
+      "notes": "Full access including persona management. max_tokens_per_turn: 8000. Source: personas.yml."
+    },
+    {
+      "id": "legal-researcher",
+      "label": "Legal Researcher",
+      "type": "human",
+      "services": [
+        "eva-brain-api",
+        "chat-face"
+      ],
+      "feature_flags": [
+        "action.chat",
+        "action.retrieve",
+        "action.search"
+      ],
+      "entra_group": "EVA-LegalResearchers",
+      "status": "active",
+      "notes": "Read-only access to case law and statutes. max_tokens_per_turn: 4000. Source: personas.yml."
+    },
+    {
+      "id": "legal-clerk",
+      "label": "Legal Clerk",
+      "type": "human",
+      "services": [
+        "eva-brain-api",
+        "chat-face"
+      ],
+      "feature_flags": [
+        "action.chat",
+        "action.search"
+      ],
+      "entra_group": "EVA-LegalClerks",
+      "status": "active",
+      "notes": "Limited access — keyword_search and chat_completion only. max_tokens_per_turn: 1000. Source: personas.yml."
+    },
+    {
+      "id": "auditor",
+      "label": "Auditor",
+      "type": "human",
+      "services": [
+        "admin-face",
+        "eva-brain-api"
+      ],
+      "feature_flags": [
+        "action.retrieve"
+      ],
+      "entra_group": "EVA-Auditors",
+      "status": "planned",
+      "notes": "Read-only audit log access. Required by AuditLogsPage (/admin/audit/logs). Phase 2. Source: EVA-FACES-MASTER-TRACKER.md."
+    },
+    {
+      "id": "support",
+      "label": "Support Agent",
+      "type": "human",
+      "services": [
+        "admin-face",
+        "eva-brain-api"
+      ],
+      "feature_flags": [
+        "action.chat",
+        "action.retrieve"
+      ],
+      "entra_group": "EVA-Support",
+      "status": "planned",
+      "notes": "Help desk integration. Required by SupportTicketsPage (/admin/support/tickets). Phase 2."
+    },
+    {
+      "id": "machine-agent",
+      "label": "Machine Agent (Service Principal)",
+      "type": "machine",
+      "services": [
+        "eva-brain-api",
+        "eva-roles-api",
+        "agent-fleet"
+      ],
+      "feature_flags": [
+        "action.chat",
+        "action.retrieve",
+        "action.ingest",
+        "action.search"
+      ],
+      "entra_group": null,
+      "status": "planned",
+      "notes": "Internal service-to-service calls via Entra app registration / managed identity. Used by agent-fleet and pipeline orchestrators."
+    },
+    {
+      "id": "viewer",
+      "label": "Viewer (Portal User)",
+      "type": "human",
+      "services": [
+        "portal-face",
+        "eva-brain-api"
+      ],
+      "feature_flags": [
+        "action.chat"
+      ],
+      "entra_group": "EVA-Users",
+      "status": "planned",
+      "notes": "Base authenticated user accessing EVA Portal (/), Sprint Board (/devops/sprint). Lowest privilege role. FACES-WI-C (WI-19) will wire role guard. Source: eva-ado-dashboard.epic.yaml."
+    }
+  ],
+  "feature_flags": [
+    {
+      "id": "action.chat",
+      "label": "Chat — invoke conversation agent",
+      "personas": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "endpoints": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "GET /v1/chat/approaches"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_CHAT = 'action.chat'. Source: features.py."
+    },
+    {
+      "id": "action.retrieve",
+      "label": "Retrieve — read sessions and session history",
+      "personas": [
+        "admin",
+        "legal-researcher",
+        "auditor",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "endpoints": [
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "GET /v1/sessions/{session_id}/messages"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_RETRIEVE = 'action.retrieve'. Source: features.py."
+    },
+    {
+      "id": "action.ingest",
+      "label": "Ingest — upload and process documents",
+      "personas": [
+        "admin",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "endpoints": [
+        "PATCH /v1/documents/{doc_id}",
+        "DELETE /v1/documents/{doc_id}",
+        "DELETE /v1/documents/{doc_id}/chunks",
+        "POST /v1/documents/{doc_id}/reindex"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_INGEST = 'action.ingest'. Write operations on documents. Source: features.py."
+    },
+    {
+      "id": "action.search",
+      "label": "Search — search documents and tags",
+      "personas": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "endpoints": [
+        "GET /v1/documents",
+        "GET /v1/documents/{doc_id}",
+        "GET /v1/documents/{doc_id}/content",
+        "GET /v1/documents/{doc_id}/chunks",
+        "GET /v1/tags",
+        "GET /v1/search"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_SEARCH = 'action.search'. Read operations on documents. Source: features.py."
+    },
+    {
+      "id": "action.admin.translations",
+      "label": "Admin — manage UI translation strings",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/translations.py",
+      "endpoints": [
+        "GET /v1/translations",
+        "GET /v1/translations/{key}",
+        "PUT /v1/translations/{key}",
+        "DELETE /v1/translations/{key}",
+        "POST /v1/translations/bulk"
+      ],
+      "status": "planned",
+      "notes": "FeatureID.ACTION_ADMIN_TRANSLATIONS = 'action.admin.translations'. Sprint 5. Route file not yet implemented."
+    },
+    {
+      "id": "action.admin.settings",
+      "label": "Admin — manage application settings",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/settings.py",
+      "endpoints": [
+        "GET /v1/settings",
+        "GET /v1/settings/{key}",
+        "PUT /v1/settings/{key}"
+      ],
+      "status": "planned",
+      "notes": "FeatureID.ACTION_ADMIN_SETTINGS = 'action.admin.settings'. Sprint 5. Route file not yet implemented."
+    },
+    {
+      "id": "action.admin.apps",
+      "label": "Admin — manage app registry",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/apps.py",
+      "endpoints": [
+        "GET /v1/apps",
+        "GET /v1/apps/{app_id}",
+        "POST /v1/apps",
+        "PATCH /v1/apps/{app_id}",
+        "DELETE /v1/apps/{app_id}"
+      ],
+      "status": "planned",
+      "notes": "FeatureID.ACTION_ADMIN_APPS = 'action.admin.apps'. Sprint 6. Route file not yet implemented."
+    },
+    {
+      "id": "action.admin.manage_users",
+      "label": "Admin — create and manage Entra ID users",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "endpoints": [
+        "POST /v1/users"
+      ],
+      "status": "stub",
+      "notes": "Decorator: @require_feature('action.admin.manage_users'). Not in FeatureID enum (features.py); admin.py is an optional/pre-existing router. Prefix /v1/admin TBD."
+    },
+    {
+      "id": "action.admin.view_groups",
+      "label": "Admin — list Entra ID groups",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "endpoints": [
+        "GET /v1/groups"
+      ],
+      "status": "stub",
+      "notes": "Decorator: @require_feature('action.admin.view_groups'). Not in FeatureID enum (features.py); admin.py is an optional/pre-existing router. Prefix /v1/admin TBD."
+    }
+  ],
+  "containers": [
+    {
+      "id": "jobs",
+      "label": "Ingestion Jobs",
+      "database": "statusdb",
+      "partition_key": "/actor_oid",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Unique job UUID"
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "AAD OID of submitting user"
+        },
+        {
+          "name": "file_name",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Original file name"
+        },
+        {
+          "name": "file_type",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "MIME type / extension"
+        },
+        {
+          "name": "blob_url",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Azure Blob URL"
+        },
+        {
+          "name": "indexes",
+          "type": "list",
+          "required": false,
+          "indexed": false,
+          "description": "Target search index names"
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "JobStatus enum value"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "required": true,
+          "indexed": true,
+          "description": "Job creation timestamp"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "required": true,
+          "indexed": false,
+          "description": "Last status update timestamp"
+        },
+        {
+          "name": "started_at",
+          "type": "datetime",
+          "required": false,
+          "indexed": false,
+          "description": "Processing start timestamp"
+        },
+        {
+          "name": "completed_at",
+          "type": "datetime",
+          "required": false,
+          "indexed": false,
+          "description": "Processing completion timestamp"
+        },
+        {
+          "name": "error_message",
+          "type": "str",
+          "required": false,
+          "indexed": false,
+          "description": "Error detail if failed"
+        },
+        {
+          "name": "retry_count",
+          "type": "int",
+          "required": false,
+          "indexed": false,
+          "description": "Number of retry attempts"
+        },
+        {
+          "name": "progress",
+          "type": "dict",
+          "required": false,
+          "indexed": false,
+          "description": "Pipeline stage progress: parsed, enriched, chunked, embedded, indexed"
+        },
+        {
+          "name": "metrics",
+          "type": "dict",
+          "required": false,
+          "indexed": false,
+          "description": "Run metrics: total_chunks, total_tokens, embedding_cost_usd, processing_time_ms"
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false,
+          "indexed": false,
+          "description": "Caller-supplied metadata"
+        }
+      ],
+      "ttl_seconds": null,
+      "status": "active",
+      "notes": "Source: cosmos_service.py. Written by ingestion pipeline, read by ingest routes."
+    },
+    {
+      "id": "extracted_content",
+      "label": "Extracted Document Content",
+      "database": "statusdb",
+      "partition_key": "/job_id",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Content record ID"
+        },
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Parent ingestion job ID"
+        },
+        {
+          "name": "content",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Extracted text content"
+        }
+      ],
+      "ttl_seconds": null,
+      "status": "active",
+      "notes": "Source: cosmos_service.py. Intermediate extraction store; detail fields partially inferred."
+    },
+    {
+      "id": "chunks",
+      "label": "Document Chunks",
+      "database": "statusdb",
+      "partition_key": "/job_id",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Chunk ID"
+        },
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Parent ingestion job ID"
+        },
+        {
+          "name": "content",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Chunk text"
+        },
+        {
+          "name": "embedding",
+          "type": "list",
+          "required": false,
+          "indexed": false,
+          "description": "Vector embedding (float[])"
+        },
+        {
+          "name": "chunk_index",
+          "type": "int",
+          "required": false,
+          "indexed": false,
+          "description": "Ordinal position within document"
+        }
+      ],
+      "ttl_seconds": 2592000,
+      "status": "active",
+      "notes": "Source: cosmos_service.py. TTL = 30 days (2592000 s). Temp store before Azure AI Search indexing. Fields partially inferred."
+    },
+    {
+      "id": "audit_logs",
+      "label": "Audit Logs (Lane A)",
+      "database": "statusdb",
+      "partition_key": "/actor_oid",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Log entry ID"
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "AAD OID of acting user"
+        },
+        {
+          "name": "correlation_id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Request correlation ID"
+        },
+        {
+          "name": "action",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Action performed"
+        },
+        {
+          "name": "result_summary",
+          "type": "dict",
+          "required": false,
+          "indexed": false,
+          "description": "Outcome details"
+        },
+        {
+          "name": "environment",
+          "type": "str",
+          "required": false,
+          "indexed": false,
+          "description": "Deployment environment"
+        },
+        {
+          "name": "timestamp",
+          "type": "datetime",
+          "required": true,
+          "indexed": true,
+          "description": "Audit timestamp"
+        }
+      ],
+      "ttl_seconds": null,
+      "status": "active",
+      "notes": "Source: cosmos_service.py. Permanent audit trail — no TTL. Written by AuditLogger.log_lane_a()."
+    },
+    {
+      "id": "content_access_logs",
+      "label": "Content Access Logs (Break-Glass)",
+      "database": "statusdb",
+      "partition_key": "/actor_oid",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Log entry ID"
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "AAD OID of accessing user"
+        },
+        {
+          "name": "correlation_id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Request correlation ID"
+        },
+        {
+          "name": "document_id",
+          "type": "str",
+          "required": false,
+          "indexed": true,
+          "description": "Accessed document ID"
+        },
+        {
+          "name": "access_type",
+          "type": "str",
+          "required": false,
+          "indexed": false,
+          "description": "read | download | chunk"
+        },
+        {
+          "name": "timestamp",
+          "type": "datetime",
+          "required": true,
+          "indexed": true,
+          "description": "Access timestamp"
+        }
+      ],
+      "ttl_seconds": 86400,
+      "status": "active",
+      "notes": "Source: cosmos_service.py. TTL = 24 h (86400 s). Break-glass / privileged access tracking."
+    },
+    {
+      "id": "sessions",
+      "label": "Chat Sessions",
+      "database": "statusdb",
+      "partition_key": "/actor_oid",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Session UUID"
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Session owner AAD OID"
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Session display title"
+        },
+        {
+          "name": "persona",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "User persona at session creation"
+        },
+        {
+          "name": "created_at",
+          "type": "datetime",
+          "required": true,
+          "indexed": true,
+          "description": "Creation timestamp"
+        },
+        {
+          "name": "updated_at",
+          "type": "datetime",
+          "required": true,
+          "indexed": false,
+          "description": "Last update timestamp"
+        },
+        {
+          "name": "message_count",
+          "type": "int",
+          "required": false,
+          "indexed": false,
+          "description": "Cached message count"
+        },
+        {
+          "name": "last_message_at",
+          "type": "datetime",
+          "required": false,
+          "indexed": false,
+          "description": "Latest message timestamp"
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false,
+          "indexed": false,
+          "description": "Caller-supplied metadata"
+        }
+      ],
+      "ttl_seconds": 2592000,
+      "status": "active",
+      "notes": "Source: sessions.py (sessions_container='sessions'). Partition key inferred as /actor_oid. TTL 30 d inferred from session_service(ttl_days=30)."
+    },
+    {
+      "id": "messages",
+      "label": "Chat Messages",
+      "database": "statusdb",
+      "partition_key": "/session_id",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Message UUID"
+        },
+        {
+          "name": "session_id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Parent session ID"
+        },
+        {
+          "name": "role",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "user | assistant | system"
+        },
+        {
+          "name": "content",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Message text"
+        },
+        {
+          "name": "timestamp",
+          "type": "datetime",
+          "required": true,
+          "indexed": true,
+          "description": "Message timestamp"
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false,
+          "indexed": false,
+          "description": "Token counts, model, latency, etc."
+        }
+      ],
+      "ttl_seconds": 2592000,
+      "status": "active",
+      "notes": "Source: sessions.py (messages_container='messages'). Partition key inferred as /session_id."
+    },
+    {
+      "id": "scrum-cache",
+      "label": "Sprint Data Cache",
+      "database": "eva-foundation",
+      "partition_key": "/sprint_key",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Cache key: {project}-{sprint}"
+        },
+        {
+          "name": "sprint_key",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Partition key matching id"
+        },
+        {
+          "name": "payload",
+          "type": "dict",
+          "required": true,
+          "indexed": false,
+          "description": "ScrumDashboardResponse JSON"
+        },
+        {
+          "name": "generated_at",
+          "type": "datetime",
+          "required": true,
+          "indexed": false,
+          "description": "ADO sync timestamp"
+        }
+      ],
+      "ttl_seconds": 86400,
+      "status": "provisioned",
+      "notes": "PROJECT-39 WI-0. Provisioned 2026-02-20. az cosmosdb sql container create --database-name eva-foundation --name scrum-cache --partition-key-path /sprint_key --ttl 86400"
+    },
+    {
+      "id": "config",
+      "label": "Admin Configuration Settings",
+      "database": "eva-foundation",
+      "partition_key": "/category",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Setting key"
+        },
+        {
+          "name": "category",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Setting category (partition key)"
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Setting value (serialized)"
+        }
+      ],
+      "ttl_seconds": null,
+      "status": "planned",
+      "notes": "admin-face SettingsPage (WI-3). Planned brain-v2 Sprint 5."
+    },
+    {
+      "id": "apps",
+      "label": "App Registry",
+      "database": "eva-foundation",
+      "partition_key": "/appId",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "App identifier (slug)"
+        },
+        {
+          "name": "appId",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "Partition key"
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": true,
+          "indexed": false,
+          "description": "Display name"
+        },
+        {
+          "name": "visibility",
+          "type": "str",
+          "required": true,
+          "indexed": true,
+          "description": "public | private"
+        },
+        {
+          "name": "disabled",
+          "type": "bool",
+          "required": false,
+          "indexed": true,
+          "description": "Whether app is disabled"
+        }
+      ],
+      "ttl_seconds": null,
+      "status": "planned",
+      "notes": "admin-face AppsPage (WI-4). Planned brain-v2 App Registry endpoint."
+    }
+  ],
+  "schemas": [
+    {
+      "id": "Citation",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "POST /v1/chat/read-retrieve-read"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "score",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "excerpt",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "relevance_score",
+          "type": "float",
+          "required": false
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ChatRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "POST /v1/chat/ungrounded",
+        "POST /v1/chat/read-retrieve-read"
+      ],
+      "fields": [
+        {
+          "name": "query",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "top_k",
+          "type": "int",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "conversation_history",
+          "type": "list[dict]",
+          "required": false
+        },
+        {
+          "name": "indexes",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "cost_tags",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ChatResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "POST /v1/chat/ungrounded",
+        "POST /v1/chat/read-retrieve-read"
+      ],
+      "fields": [
+        {
+          "name": "answer",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "citations",
+          "type": "list",
+          "required": false
+        },
+        {
+          "name": "model",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "tokens_used",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "indexes_searched",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "approach",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "explain",
+          "type": "str",
+          "required": false
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ApproachInfo",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "GET /v1/chat/approaches"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "requires_retrieval",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "ApproachesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "GET /v1/chat/approaches"
+      ],
+      "fields": [
+        {
+          "name": "approaches",
+          "type": "list[ApproachInfo]",
+          "required": true
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "RetrieveRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "used_by": [
+        "POST /v1/retrieve"
+      ],
+      "fields": [
+        {
+          "name": "query",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "top_k",
+          "type": "int",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "approach",
+          "type": "str",
+          "required": false,
+          "default": "hybrid"
+        },
+        {
+          "name": "indexes",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "include_answer",
+          "type": "bool",
+          "required": false,
+          "default": true
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "RetrieveResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "used_by": [
+        "POST /v1/retrieve"
+      ],
+      "fields": [
+        {
+          "name": "query_hash",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "documents",
+          "type": "list[dict]",
+          "required": true
+        },
+        {
+          "name": "answer",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "approach",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "usage",
+          "type": "dict",
+          "required": true
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "SessionCreate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "POST /v1/sessions"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionUpdate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "PATCH /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "POST /v1/sessions",
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "PATCH /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "persona",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "created_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "updated_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "message_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "last_message_at",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "GET /v1/sessions"
+      ],
+      "fields": [
+        {
+          "name": "sessions",
+          "type": "list[SessionResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionDeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "DELETE /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "BulkDeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "DELETE /v1/sessions"
+      ],
+      "fields": [
+        {
+          "name": "deleted_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "MessageResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "GET /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "role",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "timestamp",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SessionWithMessagesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "GET /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "session",
+          "type": "SessionResponse",
+          "required": true
+        },
+        {
+          "name": "messages",
+          "type": "list[MessageResponse]",
+          "required": true
+        },
+        {
+          "name": "total_messages",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "DocumentMetadataPatch",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "used_by": [
+        "PATCH /v1/documents/{doc_id}"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "tags",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "language",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "custom_fields",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "JobResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "GET /v1/ingest/jobs/{job_id}",
+        "GET /v1/ingest/jobs",
+        "POST /v1/ingest/reprocess/{job_id}"
+      ],
+      "fields": [
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filename",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "content_type",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "created_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "updated_at",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "error_message",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "progress",
+          "type": "dict",
+          "required": false
+        },
+        {
+          "name": "metrics",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "JobListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "GET /v1/ingest/jobs"
+      ],
+      "fields": [
+        {
+          "name": "jobs",
+          "type": "list[JobResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "continuation_token",
+          "type": "str",
+          "required": false
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "UploadResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "POST /v1/ingest/upload",
+        "POST /v1/ingest/reprocess/{job_id}"
+      ],
+      "fields": [
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filename",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "DeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "DELETE /v1/ingest/jobs/{job_id}"
+      ],
+      "fields": [
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "chunks_deleted",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "StatsResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "GET /v1/ingest/stats"
+      ],
+      "fields": [
+        {
+          "name": "total_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "completed_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "failed_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "in_progress_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "total_chunks",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "total_cost_usd",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SavedSearchCreate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "POST /v1/search/saved"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SavedSearchResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "POST /v1/search/saved",
+        "GET /v1/search/saved"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "dict",
+          "required": true
+        },
+        {
+          "name": "created_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "updated_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "last_used_at",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "use_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SavedSearchesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/saved"
+      ],
+      "fields": [
+        {
+          "name": "searches",
+          "type": "list[SavedSearchResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SearchHistoryEntry",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/history"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "dict",
+          "required": true
+        },
+        {
+          "name": "result_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "execution_time_ms",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "timestamp",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SearchHistoryResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/history"
+      ],
+      "fields": [
+        {
+          "name": "history",
+          "type": "list[SearchHistoryEntry]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "TopQuery",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/analytics"
+      ],
+      "fields": [
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "SearchAnalyticsResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/analytics"
+      ],
+      "fields": [
+        {
+          "name": "period_days",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "total_searches",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "top_queries",
+          "type": "list",
+          "required": true
+        },
+        {
+          "name": "average_results_per_search",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "generated_at",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "ServiceInfoResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "used_by": [
+        "GET /v1/config/info"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "version",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "environment",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "features_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "FeaturesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "used_by": [
+        "GET /v1/config/features"
+      ],
+      "fields": [
+        {
+          "name": "action",
+          "type": "list",
+          "required": true
+        },
+        {
+          "name": "screen",
+          "type": "list",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "UserCreateRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "POST /v1/admin/users"
+      ],
+      "fields": [
+        {
+          "name": "user_principal_name",
+          "type": "EmailStr",
+          "required": true
+        },
+        {
+          "name": "display_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "mail_nickname",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "password",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "UserResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "POST /v1/admin/users"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "user_principal_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "display_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "mail",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "account_enabled",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "GroupResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "GET /v1/admin/groups"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "display_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "mail",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "mail_enabled",
+          "type": "bool",
+          "required": true
+        },
+        {
+          "name": "security_enabled",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "GroupListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "GET /v1/admin/groups"
+      ],
+      "fields": [
+        {
+          "name": "groups",
+          "type": "list[GroupResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub"
+    },
+    {
+      "id": "CostTags",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/models/cost.py",
+      "used_by": [],
+      "fields": [
+        {
+          "name": "phase",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "task",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "project",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "costcenter",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "persona_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "notes": "Mandatory FinOps attribution. Passed to AuditLogger on every agent invocation."
+    },
+    {
+      "id": "ToolInvocation",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/models/agent.py",
+      "used_by": [],
+      "fields": [
+        {
+          "name": "tool_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "intent",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "invoked_at",
+          "type": "datetime",
+          "required": false
+        },
+        {
+          "name": "duration_ms",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "result_summary",
+          "type": "dict",
+          "required": false
+        },
+        {
+          "name": "correlation_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "notes": "Lane A-compliant tool invocation record — no raw content/params stored."
+    }
+  ],
+  "endpoints": [
+    {
+      "id": "GET /v1/health",
+      "method": "GET",
+      "path": "/v1/health",
+      "service": "eva-brain-api",
+      "tag": "health",
+      "summary": "Liveness check",
+      "auth": [],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/health.py",
+      "status": "implemented"
+    },
+    {
+      "id": "GET /v1/health/background",
+      "method": "GET",
+      "path": "/v1/health/background",
+      "service": "eva-brain-api",
+      "tag": "health",
+      "summary": "Background task health",
+      "auth": [],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/health.py",
+      "status": "implemented"
+    },
+    {
+      "id": "GET /v1/config/info",
+      "method": "GET",
+      "path": "/v1/config/info",
+      "service": "eva-brain-api",
+      "tag": "config",
+      "summary": "Service version + environment",
+      "auth": [],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "status": "stub",
+      "notes": "Decorator path is '/info' — router has no prefix and no /v1/config prefix in include_router. Intended path per main.py: /v1/config/info."
+    },
+    {
+      "id": "GET /v1/config/features",
+      "method": "GET",
+      "path": "/v1/config/features",
+      "service": "eva-brain-api",
+      "tag": "config",
+      "summary": "Feature flags catalog",
+      "auth": [],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "status": "stub",
+      "notes": "Decorator path is '/features'. Needs /v1/config prefix in include_router."
+    },
+    {
+      "id": "GET /v1/config/translations/{language}",
+      "method": "GET",
+      "path": "/v1/config/translations/{language}",
+      "service": "eva-brain-api",
+      "tag": "config",
+      "summary": "UI translation strings by locale",
+      "auth": [],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "status": "stub",
+      "notes": "Decorator path is '/translations/{language}'. Needs /v1/config prefix in include_router."
+    },
+    {
+      "id": "GET /v1/chat/approaches",
+      "method": "GET",
+      "path": "/v1/chat/approaches",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "List RAG approach names",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat",
+      "method": "POST",
+      "path": "/v1/chat",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat (default approach)",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat/rrr",
+      "method": "POST",
+      "path": "/v1/chat/rrr",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat — read-retrieve-read alias",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat/rtr",
+      "method": "POST",
+      "path": "/v1/chat/rtr",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat — retrieve-then-read approach",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat/work",
+      "method": "POST",
+      "path": "/v1/chat/work",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat — work/agentic approach",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat/hybrid",
+      "method": "POST",
+      "path": "/v1/chat/hybrid",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat — hybrid search approach",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat/ungrounded",
+      "method": "POST",
+      "path": "/v1/chat/ungrounded",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat — ungrounded (no retrieval)",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/chat/read-retrieve-read",
+      "method": "POST",
+      "path": "/v1/chat/read-retrieve-read",
+      "service": "eva-brain-api",
+      "tag": "chat",
+      "summary": "Chat — read-retrieve-read (long form)",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/retrieve",
+      "method": "POST",
+      "path": "/v1/retrieve",
+      "service": "eva-brain-api",
+      "tag": "retrieve",
+      "summary": "Stateless RAG retrieval (no session)",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "auditor",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.retrieve",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "status": "implemented"
+    },
+    {
+      "id": "GET /v1/documents",
+      "method": "GET",
+      "path": "/v1/documents",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "List indexed documents",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "GET /v1/documents/{doc_id}",
+      "method": "GET",
+      "path": "/v1/documents/{doc_id}",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "Get document metadata",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "content_access_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "GET /v1/documents/{doc_id}/content",
+      "method": "GET",
+      "path": "/v1/documents/{doc_id}/content",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "Stream document content",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "content_access_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "GET /v1/documents/{doc_id}/chunks",
+      "method": "GET",
+      "path": "/v1/documents/{doc_id}/chunks",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "List document chunks",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [
+        "chunks"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "PATCH /v1/documents/{doc_id}",
+      "method": "PATCH",
+      "path": "/v1/documents/{doc_id}",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "Update document metadata",
+      "auth": [
+        "admin",
+        "machine-agent"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "DELETE /v1/documents/{doc_id}",
+      "method": "DELETE",
+      "path": "/v1/documents/{doc_id}",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "Delete document and index entries",
+      "auth": [
+        "admin",
+        "machine-agent"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "DELETE /v1/documents/{doc_id}/chunks",
+      "method": "DELETE",
+      "path": "/v1/documents/{doc_id}/chunks",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "Delete document chunk entries only",
+      "auth": [
+        "admin",
+        "machine-agent"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/documents/{doc_id}/reindex",
+      "method": "POST",
+      "path": "/v1/documents/{doc_id}/reindex",
+      "service": "eva-brain-api",
+      "tag": "documents",
+      "summary": "Reindex document into Azure AI Search",
+      "auth": [
+        "admin",
+        "machine-agent"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "audit_logs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "status": "implemented"
+    },
+    {
+      "id": "POST /v1/sessions",
+      "method": "POST",
+      "path": "/v1/sessions",
+      "service": "eva-brain-api",
+      "tag": "sessions",
+      "summary": "Create chat session",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "sessions"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "status": "stub",
+      "notes": "Decorator path is '' — router needs /v1/sessions prefix in include_router."
+    },
+    {
+      "id": "GET /v1/sessions",
+      "method": "GET",
+      "path": "/v1/sessions",
+      "service": "eva-brain-api",
+      "tag": "sessions",
+      "summary": "List user's chat sessions",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [
+        "sessions"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "status": "stub",
+      "notes": "Decorator path is '' — router needs /v1/sessions prefix in include_router."
+    },
+    {
+      "id": "GET /v1/sessions/{session_id}",
+      "method": "GET",
+      "path": "/v1/sessions/{session_id}",
+      "service": "eva-brain-api",
+      "tag": "sessions",
+      "summary": "Get session with messages",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.retrieve",
+      "cosmos_reads": [
+        "sessions",
+        "messages"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "status": "stub",
+      "notes": "Decorator path is '/{session_id}' — router needs /v1/sessions prefix in include_router."
+    },
+    {
+      "id": "PATCH /v1/sessions/{session_id}",
+      "method": "PATCH",
+      "path": "/v1/sessions/{session_id}",
+      "service": "eva-brain-api",
+      "tag": "sessions",
+      "summary": "Update session title / metadata",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [
+        "sessions"
+      ],
+      "cosmos_writes": [
+        "sessions"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "status": "stub",
+      "notes": "Decorator path is '/{session_id}' — router needs /v1/sessions prefix."
+    },
+    {
+      "id": "DELETE /v1/sessions/{session_id}",
+      "method": "DELETE",
+      "path": "/v1/sessions/{session_id}",
+      "service": "eva-brain-api",
+      "tag": "sessions",
+      "summary": "Delete session and messages",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [
+        "sessions"
+      ],
+      "cosmos_writes": [
+        "sessions",
+        "messages"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "status": "stub",
+      "notes": "Decorator path is '/{session_id}' — router needs /v1/sessions prefix."
+    },
+    {
+      "id": "DELETE /v1/sessions",
+      "method": "DELETE",
+      "path": "/v1/sessions",
+      "service": "eva-brain-api",
+      "tag": "sessions",
+      "summary": "Bulk delete all user sessions",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "support",
+        "machine-agent"
+      ],
+      "feature_flag": "action.chat",
+      "cosmos_reads": [
+        "sessions"
+      ],
+      "cosmos_writes": [
+        "sessions",
+        "messages"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "status": "stub",
+      "notes": "Decorator path is '' (DELETE). Router needs /v1/sessions prefix."
+    },
+    {
+      "id": "GET /v1/tags",
+      "method": "GET",
+      "path": "/v1/tags",
+      "service": "eva-brain-api",
+      "tag": "tags",
+      "summary": "List all document tags",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/tags.py",
+      "status": "planned",
+      "notes": "tags.py has no include_router in main.py — not yet mounted. Decorator path is '/tags'."
+    },
+    {
+      "id": "GET /v1/tags/{tag_name}/documents",
+      "method": "GET",
+      "path": "/v1/tags/{tag_name}/documents",
+      "service": "eva-brain-api",
+      "tag": "tags",
+      "summary": "List documents by tag",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/tags.py",
+      "status": "planned",
+      "notes": "tags.py not mounted in main.py."
+    },
+    {
+      "id": "GET /v1/tags/suggestions",
+      "method": "GET",
+      "path": "/v1/tags/suggestions",
+      "service": "eva-brain-api",
+      "tag": "tags",
+      "summary": "Get tag suggestions (autocomplete)",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/tags.py",
+      "status": "planned",
+      "notes": "tags.py not mounted in main.py."
+    },
+    {
+      "id": "POST /v1/search/saved",
+      "method": "POST",
+      "path": "/v1/search/saved",
+      "service": "eva-brain-api",
+      "tag": "search",
+      "summary": "Save a search query",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "status": "stub",
+      "notes": "Granular feature: 'save-search'. Decorator path '/saved' — router needs /v1/search prefix."
+    },
+    {
+      "id": "GET /v1/search/saved",
+      "method": "GET",
+      "path": "/v1/search/saved",
+      "service": "eva-brain-api",
+      "tag": "search",
+      "summary": "List saved searches",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "status": "stub",
+      "notes": "Granular feature: 'view-saved-searches'. Decorator path '/saved'."
+    },
+    {
+      "id": "DELETE /v1/search/saved/{search_id}",
+      "method": "DELETE",
+      "path": "/v1/search/saved/{search_id}",
+      "service": "eva-brain-api",
+      "tag": "search",
+      "summary": "Delete saved search",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "status": "stub",
+      "notes": "Granular feature: 'delete-saved-search'. Decorator path '/saved/{search_id}'."
+    },
+    {
+      "id": "GET /v1/search/history",
+      "method": "GET",
+      "path": "/v1/search/history",
+      "service": "eva-brain-api",
+      "tag": "search",
+      "summary": "User search history (90-day TTL)",
+      "auth": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "status": "stub",
+      "notes": "Granular feature: 'view-search-history'."
+    },
+    {
+      "id": "GET /v1/search/analytics",
+      "method": "GET",
+      "path": "/v1/search/analytics",
+      "service": "eva-brain-api",
+      "tag": "search",
+      "summary": "Aggregated search analytics (admin)",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": "action.search",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "status": "stub",
+      "notes": "Granular feature: 'view-search-analytics'. Admin only per docstring."
+    },
+    {
+      "id": "POST /v1/ingest/upload",
+      "method": "POST",
+      "path": "/v1/ingest/upload",
+      "service": "eva-brain-api",
+      "tag": "ingest",
+      "summary": "Upload document and start ingestion pipeline",
+      "auth": [
+        "admin",
+        "machine-agent",
+        "legal-researcher",
+        "legal-clerk"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "jobs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "status": "stub",
+      "notes": "Granular feature: 'upload-document'. Decorator path '/upload' — router needs /v1/ingest prefix."
+    },
+    {
+      "id": "GET /v1/ingest/jobs/{job_id}",
+      "method": "GET",
+      "path": "/v1/ingest/jobs/{job_id}",
+      "service": "eva-brain-api",
+      "tag": "ingest",
+      "summary": "Get ingestion job status",
+      "auth": [
+        "admin",
+        "machine-agent",
+        "legal-researcher",
+        "legal-clerk"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [
+        "jobs"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "status": "stub",
+      "notes": "Granular feature: 'view-job-status'. Decorator path '/jobs/{job_id}'."
+    },
+    {
+      "id": "GET /v1/ingest/jobs",
+      "method": "GET",
+      "path": "/v1/ingest/jobs",
+      "service": "eva-brain-api",
+      "tag": "ingest",
+      "summary": "List ingestion jobs (actor-filtered for non-admin)",
+      "auth": [
+        "admin",
+        "machine-agent",
+        "legal-researcher",
+        "legal-clerk"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [
+        "jobs"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "status": "stub",
+      "notes": "Granular feature: 'view-job-list'."
+    },
+    {
+      "id": "DELETE /v1/ingest/jobs/{job_id}",
+      "method": "DELETE",
+      "path": "/v1/ingest/jobs/{job_id}",
+      "service": "eva-brain-api",
+      "tag": "ingest",
+      "summary": "Cancel / delete ingestion job",
+      "auth": [
+        "admin",
+        "machine-agent",
+        "legal-researcher",
+        "legal-clerk"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [
+        "jobs"
+      ],
+      "cosmos_writes": [
+        "jobs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "status": "stub",
+      "notes": "Granular feature: 'delete-job'. Also deletes blob and Search index chunks."
+    },
+    {
+      "id": "POST /v1/ingest/reprocess/{job_id}",
+      "method": "POST",
+      "path": "/v1/ingest/reprocess/{job_id}",
+      "service": "eva-brain-api",
+      "tag": "ingest",
+      "summary": "Re-queue failed ingestion job",
+      "auth": [
+        "admin",
+        "machine-agent",
+        "legal-researcher",
+        "legal-clerk"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [
+        "jobs"
+      ],
+      "cosmos_writes": [
+        "jobs"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "status": "stub",
+      "notes": "Granular feature: 'reprocess-job'."
+    },
+    {
+      "id": "GET /v1/ingest/stats",
+      "method": "GET",
+      "path": "/v1/ingest/stats",
+      "service": "eva-brain-api",
+      "tag": "ingest",
+      "summary": "Aggregated ingestion statistics (admin)",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": "action.ingest",
+      "cosmos_reads": [
+        "jobs"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "status": "stub",
+      "notes": "Granular feature: 'view-ingest-stats'. Admin only per docstring."
+    },
+    {
+      "id": "POST /v1/admin/users",
+      "method": "POST",
+      "path": "/v1/admin/users",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Create Entra ID user",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": "action.admin.manage_users",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "status": "stub",
+      "notes": "Decorator path is '/users'. No prefix in include_router; main.py comment says /v1/users. Using /v1/admin/users as canonical intended path. Uses Graph API, not Cosmos."
+    },
+    {
+      "id": "GET /v1/admin/groups",
+      "method": "GET",
+      "path": "/v1/admin/groups",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List Entra ID groups",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": "action.admin.view_groups",
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "status": "stub",
+      "notes": "Decorator path is '/groups'. No prefix in include_router; using /v1/admin/groups as canonical intended path. Uses Graph API, not Cosmos."
+    },
+    {
+      "id": "GET /v1/settings",
+      "method": "GET",
+      "path": "/v1/settings",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List admin settings",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [
+        "config"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/settings.py",
+      "status": "planned",
+      "notes": "WI-3 admin-face SettingsPage. Planned brain-v2 Sprint 5. Mock via VITE_USE_MOCK_BACKEND=true today."
+    },
+    {
+      "id": "PATCH /v1/settings/{key}",
+      "method": "PATCH",
+      "path": "/v1/settings/{key}",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Update a single admin setting",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "config"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/settings.py",
+      "status": "planned",
+      "notes": "WI-3 admin-face SettingsPage. Planned brain-v2 Sprint 5."
+    },
+    {
+      "id": "GET /v1/apps",
+      "method": "GET",
+      "path": "/v1/apps",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List App Registry entries",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [
+        "apps"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/apps.py",
+      "status": "planned",
+      "notes": "WI-4 admin-face AppsPage. Planned brain-v2 App Registry endpoint."
+    },
+    {
+      "id": "POST /v1/apps/{appId}/disable",
+      "method": "POST",
+      "path": "/v1/apps/{appId}/disable",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Disable an app in the registry",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [
+        "apps"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/apps.py",
+      "status": "planned",
+      "notes": "WI-4 admin-face AppsPage. Planned brain-v2 App Registry endpoint."
+    },
+    {
+      "id": "GET /v1/scrum/summary",
+      "method": "GET",
+      "path": "/v1/scrum/summary",
+      "service": "eva-brain-api",
+      "tag": "scrum",
+      "summary": "Sprint badge summary for all products (light projection from dashboard)",
+      "auth": [
+        "viewer"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [
+        "scrum-cache"
+      ],
+      "cosmos_writes": [],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/scrum.py",
+      "status": "coded",
+      "notes": "PROJECT-39 WI-0. Router registered in main.py Sprint 6 block. Pending deploy + Cosmos container creation. APIM registration blocked on WI-1."
+    },
+    {
+      "id": "GET /v1/scrum/dashboard",
+      "method": "GET",
+      "path": "/v1/scrum/dashboard",
+      "service": "eva-brain-api",
+      "tag": "scrum",
+      "summary": "Full sprint dashboard — features, work items, velocity per project/sprint",
+      "auth": [
+        "viewer"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [
+        "scrum-cache"
+      ],
+      "cosmos_writes": [
+        "scrum-cache"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/scrum.py",
+      "status": "coded",
+      "notes": "PROJECT-39 WI-0. Cache-aside pattern; TTL 86400s. Params: project (default=all), sprint (default=all). APIM registration blocked on WI-1."
+    },
+    {
+      "id": "GET /v1/admin/ingestion/runs",
+      "method": "GET",
+      "path": "/v1/admin/ingestion/runs",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List ingestion runs",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-12"
+    },
+    {
+      "id": "POST /v1/admin/ingestion/runs",
+      "method": "POST",
+      "path": "/v1/admin/ingestion/runs",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Trigger ingestion run",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-12"
+    },
+    {
+      "id": "PATCH /v1/admin/ingestion/runs/{runId}",
+      "method": "PATCH",
+      "path": "/v1/admin/ingestion/runs/{runId}",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Cancel / update ingestion run",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-12"
+    },
+    {
+      "id": "GET /v1/admin/search/health",
+      "method": "GET",
+      "path": "/v1/admin/search/health",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Search index health tiles",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-13"
+    },
+    {
+      "id": "POST /v1/admin/search/reindex",
+      "method": "POST",
+      "path": "/v1/admin/search/reindex",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Trigger full reindex",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-13"
+    },
+    {
+      "id": "GET /v1/admin/support/tickets",
+      "method": "GET",
+      "path": "/v1/admin/support/tickets",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List support tickets",
+      "auth": [
+        "admin",
+        "support"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-14"
+    },
+    {
+      "id": "PATCH /v1/admin/support/tickets/{ticketId}",
+      "method": "PATCH",
+      "path": "/v1/admin/support/tickets/{ticketId}",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Update support ticket status",
+      "auth": [
+        "admin",
+        "support"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-14"
+    },
+    {
+      "id": "GET /v1/admin/feature-flags",
+      "method": "GET",
+      "path": "/v1/admin/feature-flags",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List feature flags",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-15"
+    },
+    {
+      "id": "PATCH /v1/admin/feature-flags/{flagKey}",
+      "method": "PATCH",
+      "path": "/v1/admin/feature-flags/{flagKey}",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Toggle feature flag",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-15"
+    },
+    {
+      "id": "GET /v1/admin/feature-flags/{flagKey}/history",
+      "method": "GET",
+      "path": "/v1/admin/feature-flags/{flagKey}/history",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Feature flag change history",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-15"
+    },
+    {
+      "id": "GET /v1/admin/rbac/roles",
+      "method": "GET",
+      "path": "/v1/admin/rbac/roles",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "List RBAC roles",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-16"
+    },
+    {
+      "id": "POST /v1/admin/rbac/roles",
+      "method": "POST",
+      "path": "/v1/admin/rbac/roles",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Create RBAC role",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-16"
+    },
+    {
+      "id": "PATCH /v1/admin/rbac/roles/{roleId}",
+      "method": "PATCH",
+      "path": "/v1/admin/rbac/roles/{roleId}",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Update RBAC role permissions",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-16"
+    },
+    {
+      "id": "DELETE /v1/admin/rbac/roles/{roleId}",
+      "method": "DELETE",
+      "path": "/v1/admin/rbac/roles/{roleId}",
+      "service": "eva-brain-api",
+      "tag": "admin",
+      "summary": "Delete RBAC role (guarded when userCount > 0)",
+      "auth": [
+        "admin"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-16"
+    },
+    {
+      "id": "GET /v1/finops/summary",
+      "method": "GET",
+      "path": "/v1/finops/summary",
+      "service": "eva-brain-api",
+      "tag": "finops",
+      "summary": "FinOps period summary",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-21"
+    },
+    {
+      "id": "GET /v1/finops/breakdown/services",
+      "method": "GET",
+      "path": "/v1/finops/breakdown/services",
+      "service": "eva-brain-api",
+      "tag": "finops",
+      "summary": "Cost breakdown by service",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-21"
+    },
+    {
+      "id": "GET /v1/finops/breakdown/personas",
+      "method": "GET",
+      "path": "/v1/finops/breakdown/personas",
+      "service": "eva-brain-api",
+      "tag": "finops",
+      "summary": "Cost breakdown by persona",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-21"
+    },
+    {
+      "id": "GET /v1/finops/breakdown/tenants",
+      "method": "GET",
+      "path": "/v1/finops/breakdown/tenants",
+      "service": "eva-brain-api",
+      "tag": "finops",
+      "summary": "Cost breakdown by tenant",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-21"
+    },
+    {
+      "id": "GET /v1/finops/alerts",
+      "method": "GET",
+      "path": "/v1/finops/alerts",
+      "service": "eva-brain-api",
+      "tag": "finops",
+      "summary": "Budget alerts",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-21"
+    },
+    {
+      "id": "GET /v1/finops/export",
+      "method": "GET",
+      "path": "/v1/finops/export",
+      "service": "eva-brain-api",
+      "tag": "finops",
+      "summary": "Export FinOps data as CSV",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-21"
+    },
+    {
+      "id": "GET /v1/health/summary",
+      "method": "GET",
+      "path": "/v1/health/summary",
+      "service": "eva-brain-api",
+      "tag": "devops",
+      "summary": "DevOps health summary for portal banner",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-22"
+    },
+    {
+      "id": "GET /v1/health/services",
+      "method": "GET",
+      "path": "/v1/health/services",
+      "service": "eva-brain-api",
+      "tag": "devops",
+      "summary": "Service health grid",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-22"
+    },
+    {
+      "id": "GET /v1/health/pipelines",
+      "method": "GET",
+      "path": "/v1/health/pipelines",
+      "service": "eva-brain-api",
+      "tag": "devops",
+      "summary": "Pipeline health table",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-22"
+    },
+    {
+      "id": "GET /v1/health/endpoints",
+      "method": "GET",
+      "path": "/v1/health/endpoints",
+      "service": "eva-brain-api",
+      "tag": "devops",
+      "summary": "Endpoint availability status",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-22"
+    },
+    {
+      "id": "GET /v1/health/sla",
+      "method": "GET",
+      "path": "/v1/health/sla",
+      "service": "eva-brain-api",
+      "tag": "devops",
+      "summary": "SLA metrics widget data",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-22"
+    },
+    {
+      "id": "GET /v1/health/incidents",
+      "method": "GET",
+      "path": "/v1/health/incidents",
+      "service": "eva-brain-api",
+      "tag": "devops",
+      "summary": "Active and resolved incidents",
+      "auth": [
+        "admin",
+        "auditor"
+      ],
+      "feature_flag": null,
+      "cosmos_reads": [],
+      "cosmos_writes": [],
+      "status": "planned",
+      "notes": "WI-22"
+    }
+  ],
+  "screens": [
+    {
+      "id": "TranslationsPage",
+      "label": "Translations",
+      "app": "admin-face",
+      "route": "/admin/translations",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/TranslationsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/config/translations/{language}"
+      ],
+      "components": [
+        "AdminListPage",
+        "EvaButton",
+        "EvaBadge",
+        "EvaDialog"
+      ],
+      "hooks": [
+        "useTranslationsData"
+      ],
+      "rbac": [
+        "action.admin.manage_users"
+      ],
+      "notes": "Reads locale bundles via config API. WI-5: POST/PATCH/DELETE crud planned."
+    },
+    {
+      "id": "SettingsPage",
+      "label": "Settings",
+      "app": "admin-face",
+      "route": "/admin/settings",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/SettingsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/settings",
+        "PATCH /v1/settings/{key}"
+      ],
+      "components": [
+        "AdminListPage",
+        "EvaButton",
+        "EvaBadge"
+      ],
+      "hooks": [
+        "useSettingsData"
+      ],
+      "rbac": [],
+      "notes": "WI-3 DONE 2026-02-19. Mock via VITE_USE_MOCK_BACKEND=true. Real endpoints brain-v2 Sprint 5 (not yet live)."
+    },
+    {
+      "id": "AppsPage",
+      "label": "Apps",
+      "app": "admin-face",
+      "route": "/admin/apps",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/AppsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/apps",
+        "POST /v1/apps/{appId}/disable"
+      ],
+      "components": [
+        "AdminListPage",
+        "EvaButton",
+        "EvaBadge",
+        "EvaDialog"
+      ],
+      "hooks": [
+        "useAppsData"
+      ],
+      "rbac": [],
+      "notes": "WI-4 DONE 2026-02-19. Mock via VITE_USE_MOCK_BACKEND=true. Real endpoints brain-v2 App Registry (not yet live)."
+    },
+    {
+      "id": "AuditLogsPage",
+      "label": "Audit Logs",
+      "app": "admin-face",
+      "route": "/admin/audit",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/AuditLogsPage.tsx",
+      "status": "stub",
+      "api_calls": [],
+      "components": [],
+      "rbac": [
+        "action.admin.manage_users"
+      ],
+      "notes": "Not yet implemented. Planned to consume GET /v1/audit/logs."
+    },
+    {
+      "id": "RbacPage",
+      "label": "RBAC",
+      "app": "admin-face",
+      "route": "/admin/rbac",
+      "component_path": "31-eva-faces/admin-face/src/pages/admin/RbacPage.tsx",
+      "status": "stub",
+      "api_calls": [],
+      "components": [],
+      "rbac": [
+        "action.admin.view_groups"
+      ],
+      "notes": "Not yet implemented. Planned to consume GET /v1/admin/groups + user management."
+    },
+    {
+      "id": "ChatPane",
+      "label": "Chat",
+      "app": "chat-face",
+      "route": "/",
+      "component_path": "31-eva-faces/chat-face/src/App.tsx",
+      "status": "poc",
+      "api_calls": [
+        "POST /v1/chat"
+      ],
+      "components": [
+        "ChatInterface",
+        "ChatMessage",
+        "EvaButton",
+        "EvaSpinner"
+      ],
+      "hooks": [
+        "useChatSession",
+        "useTranslations"
+      ],
+      "test_file": "31-eva-faces/chat-face/src/components/chat/ChatInterface.test.tsx",
+      "notes": "Single-page app. BackendApiClient currently mocks /api/chat dev path. Intended target: POST /v1/chat. Session endpoints (GET/POST/DELETE /v1/sessions) planned when Cosmos backend is live."
+    },
+    {
+      "id": "EVAHomePage",
+      "label": "EVA Portal Home",
+      "app": "portal-face",
+      "route": "/",
+      "component_path": "31-eva-faces/portal-face/src/pages/EVAHomePage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/scrum/summary"
+      ],
+      "components": [
+        "NavHeader",
+        "ProductTileGrid",
+        "ProductTile",
+        "SprintBadge",
+        "RecentSprintSummaryBar"
+      ],
+      "hooks": [],
+      "rbac": [
+        "viewer"
+      ],
+      "notes": "FACES-WI-A / WI-17 IN PROGRESS 2026-02-20. 23 product tiles, 5 categories, mock sprint badges. GC Design System only. WCAG 2.1 AA. Live badges deferred to post-APIM (WI-1 Mar 2026)."
+    },
+    {
+      "id": "SprintBoardPage",
+      "label": "Sprint Board",
+      "app": "portal-face",
+      "route": "/devops/sprint",
+      "component_path": "31-eva-faces/portal-face/src/pages/SprintBoardPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/scrum/dashboard"
+      ],
+      "components": [
+        "NavHeader",
+        "SprintSelector",
+        "ProjectFilterBar",
+        "FeatureSection",
+        "WICard",
+        "WIDetailDrawer",
+        "VelocityPanel"
+      ],
+      "hooks": [],
+      "rbac": [
+        "viewer"
+      ],
+      "notes": "FACES-WI-B / WI-18 IN PROGRESS 2026-02-20. Full component set, mock data path, WI detail drawer focus-trapped. Live API blocked on WI-0 + WI-1 (APIM, Mar 2026)."
+    },
+    {
+      "id": "IngestionRunsPage",
+      "label": "Ingestion Runs",
+      "app": "admin-face",
+      "route": "/admin/ingestion/runs",
+      "component_path": "31-eva-faces/admin-face/src/IngestionRunsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/admin/ingestion/runs",
+        "POST /v1/admin/ingestion/runs",
+        "PATCH /v1/admin/ingestion/runs/{runId}"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin"
+      ],
+      "notes": "WI-12 DONE. Status badges, trigger dialog, cancel action, drawer detail."
+    },
+    {
+      "id": "SearchHealthPage",
+      "label": "Search Health",
+      "app": "admin-face",
+      "route": "/admin/search/health",
+      "component_path": "31-eva-faces/admin-face/src/SearchHealthPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/admin/search/health",
+        "POST /v1/admin/search/reindex"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin"
+      ],
+      "notes": "WI-13 DONE. Index health tiles, reindex action, detail drawer."
+    },
+    {
+      "id": "SupportTicketsPage",
+      "label": "Support Tickets",
+      "app": "admin-face",
+      "route": "/admin/support/tickets",
+      "component_path": "31-eva-faces/admin-face/src/SupportTicketsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/admin/support/tickets",
+        "PATCH /v1/admin/support/tickets/{ticketId}"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin",
+        "support"
+      ],
+      "notes": "WI-14 DONE. Ticket list, status/priority badges, filter, drawer, PATCH update."
+    },
+    {
+      "id": "FeatureFlagsPage",
+      "label": "Feature Flags",
+      "app": "admin-face",
+      "route": "/admin/feature-flags",
+      "component_path": "31-eva-faces/admin-face/src/FeatureFlagsPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/admin/feature-flags",
+        "PATCH /v1/admin/feature-flags/{flagKey}",
+        "GET /v1/admin/feature-flags/{flagKey}/history"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin"
+      ],
+      "notes": "WI-15 DONE. Toggle per flag, optimistic update, revert on error, change history tab."
+    },
+    {
+      "id": "RbacRolesPage",
+      "label": "RBAC Roles",
+      "app": "admin-face",
+      "route": "/admin/rbac/roles",
+      "component_path": "31-eva-faces/admin-face/src/RbacRolesPage.tsx",
+      "status": "implemented",
+      "api_calls": [
+        "GET /v1/admin/rbac/roles",
+        "POST /v1/admin/rbac/roles",
+        "PATCH /v1/admin/rbac/roles/{roleId}",
+        "DELETE /v1/admin/rbac/roles/{roleId}"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin"
+      ],
+      "notes": "WI-16 DONE. Role list, create drawer, permission checkboxes, delete guard."
+    },
+    {
+      "id": "FinOpsDashboardPage",
+      "label": "FinOps Dashboard",
+      "app": "portal-face",
+      "route": "/devops/finops",
+      "component_path": "31-eva-faces/portal-face/src/pages/FinOpsDashboardPage.tsx",
+      "status": "planned",
+      "api_calls": [
+        "GET /v1/finops/summary",
+        "GET /v1/finops/breakdown/services",
+        "GET /v1/finops/breakdown/personas",
+        "GET /v1/finops/breakdown/tenants",
+        "GET /v1/finops/alerts",
+        "GET /v1/finops/export"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin",
+        "auditor"
+      ],
+      "notes": "WI-21 PLANNED. Period toggle, bar chart, persona table, tenant heatmap, budget alerts, CSV export."
+    },
+    {
+      "id": "DevopsHealthDashboardPage",
+      "label": "DevOps Health Dashboard",
+      "app": "portal-face",
+      "route": "/devops/health",
+      "component_path": "31-eva-faces/portal-face/src/pages/DevopsHealthDashboardPage.tsx",
+      "status": "planned",
+      "api_calls": [
+        "GET /v1/health/summary",
+        "GET /v1/health/services",
+        "GET /v1/health/pipelines",
+        "GET /v1/health/endpoints",
+        "GET /v1/health/sla",
+        "GET /v1/health/incidents"
+      ],
+      "components": [],
+      "hooks": [],
+      "rbac": [
+        "admin",
+        "auditor"
+      ],
+      "notes": "WI-22 PLANNED. Health banner + auto-refresh 60s, service grid, pipeline table, SLA widget, incident drawer."
+    }
+  ],
+  "literals": [
+    {
+      "key": "chat.welcome.title",
+      "default_en": "Welcome to EVA Chat",
+      "default_fr": "Bienvenue au clavardage EVA",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "chat.welcome.subtitle",
+      "default_en": "Ask questions about Employment Insurance",
+      "default_fr": "Posez des questions sur l'assurance-emploi",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "chat.input.placeholder",
+      "default_en": "Type your question here...",
+      "default_fr": "Tapez votre question ici...",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "placeholder",
+      "status": "active"
+    },
+    {
+      "key": "chat.input.label",
+      "default_en": "Message input",
+      "default_fr": "Saisie du message",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.input.hint",
+      "default_en": "Press Enter to send, Shift+Enter for new line",
+      "default_fr": "Appuyez sur Entree pour envoyer, Maj+Entree pour nouvelle ligne",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.button.send",
+      "default_en": "Send",
+      "default_fr": "Envoyer",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "chat.input.clear",
+      "default_en": "Clear chat",
+      "default_fr": "Effacer la conversation",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "chat.button.clear",
+      "default_en": "Clear",
+      "default_fr": "Effacer",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "chat.message.you",
+      "default_en": "You",
+      "default_fr": "Vous",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.message.generating",
+      "default_en": "Generating response...",
+      "default_fr": "Generation de la reponse...",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.loading",
+      "default_en": "Loading...",
+      "default_fr": "Chargement...",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.empty.title",
+      "default_en": "Start a conversation",
+      "default_fr": "Commencez une conversation",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "chat.empty.subtitle",
+      "default_en": "Ask me anything about Employment Insurance, case law, or legal questions.",
+      "default_fr": "Demandez-moi n'importe quoi sur l'assurance-emploi, la jurisprudence ou les questions juridiques.",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.empty.suggestions",
+      "default_en": "Try asking:",
+      "default_fr": "Essayez de demander:",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.example.1",
+      "default_en": "How do I apply for Employment Insurance?",
+      "default_fr": "Comment puis-je faire une demande d'assurance-emploi?",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.example.2",
+      "default_en": "What are the eligibility requirements?",
+      "default_fr": "Quelles sont les conditions d'admissibilite?",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.example.3",
+      "default_en": "Find case law about reasonable cause",
+      "default_fr": "Trouvez la jurisprudence sur le motif valable",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.interface.label",
+      "default_en": "Chat with EVA",
+      "default_fr": "Discuter avec EVA",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.messages.label",
+      "default_en": "Conversation messages",
+      "default_fr": "Messages de la conversation",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.message.aria.user",
+      "default_en": "Your message",
+      "default_fr": "Votre message",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.message.aria.assistant",
+      "default_en": "EVA response",
+      "default_fr": "Reponse d'EVA",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.status.sending",
+      "default_en": "Sending...",
+      "default_fr": "Envoi en cours...",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "chat.error.network",
+      "default_en": "Network error. Please try again.",
+      "default_fr": "Erreur reseau. Veuillez reessayer.",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "error",
+      "status": "active"
+    },
+    {
+      "key": "chat.error.server",
+      "default_en": "Server error. Please contact support.",
+      "default_fr": "Erreur du serveur. Veuillez contacter le support.",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "error",
+      "status": "active"
+    },
+    {
+      "key": "chat.error.send_failed",
+      "default_en": "Failed to send message. Please try again.",
+      "default_fr": "Impossible d'envoyer le message. Veuillez reessayer.",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "error",
+      "status": "active"
+    },
+    {
+      "key": "chat.error.retry",
+      "default_en": "Try again",
+      "default_fr": "Reessayer",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "app.lang_toggle_aria",
+      "default_en": "Switch to French",
+      "default_fr": "Passer a l'anglais",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "app.footer",
+      "default_en": "EVA Chat Face v1.0.0 | Powered by Azure OpenAI",
+      "default_fr": "EVA Chat Face v1.0.0 | Propulse par Azure OpenAI",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "app.tagline",
+      "default_en": "Ask a question to begin.",
+      "default_fr": "Posez une question pour commencer.",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "app.send",
+      "default_en": "Send",
+      "default_fr": "Envoyer",
+      "screens": [
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "nav.chat",
+      "default_en": "Chat",
+      "default_fr": "Clavardage",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "nav",
+      "status": "active"
+    },
+    {
+      "key": "nav.documents",
+      "default_en": "Documents",
+      "default_fr": "Documents",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "nav",
+      "status": "active"
+    },
+    {
+      "key": "nav.admin",
+      "default_en": "Admin",
+      "default_fr": "Admin",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "nav",
+      "status": "active"
+    },
+    {
+      "key": "nav.settings",
+      "default_en": "Settings",
+      "default_fr": "Parametres",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "nav",
+      "status": "active"
+    },
+    {
+      "key": "nav.logout",
+      "default_en": "Logout",
+      "default_fr": "Deconnexion",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "nav",
+      "status": "active"
+    },
+    {
+      "key": "common.loading",
+      "default_en": "Loading...",
+      "default_fr": "Chargement...",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "common.save",
+      "default_en": "Save",
+      "default_fr": "Enregistrer",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.cancel",
+      "default_en": "Cancel",
+      "default_fr": "Annuler",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.delete",
+      "default_en": "Delete",
+      "default_fr": "Supprimer",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.edit",
+      "default_en": "Edit",
+      "default_fr": "Modifier",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.close",
+      "default_en": "Close",
+      "default_fr": "Fermer",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.yes",
+      "default_en": "Yes",
+      "default_fr": "Oui",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.no",
+      "default_en": "No",
+      "default_fr": "Non",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "common.languages.en",
+      "default_en": "English",
+      "default_fr": "Anglais",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "common.languages.fr",
+      "default_en": "French",
+      "default_fr": "Francais",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage",
+        "ChatPane"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.title",
+      "default_en": "Content Management",
+      "default_fr": "Gestion du contenu",
+      "screens": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.translations.title",
+      "default_en": "Translations",
+      "default_fr": "Traductions",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.translations.key",
+      "default_en": "Key",
+      "default_fr": "Cle",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.translations.english",
+      "default_en": "English",
+      "default_fr": "Anglais",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.translations.french",
+      "default_en": "French",
+      "default_fr": "Francais",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.translations.category",
+      "default_en": "Category",
+      "default_fr": "Categorie",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.translations.search",
+      "default_en": "Search translations...",
+      "default_fr": "Rechercher des traductions...",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "placeholder",
+      "status": "active"
+    },
+    {
+      "key": "admin.bulk.import",
+      "default_en": "Import CSV",
+      "default_fr": "Importer CSV",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.bulk.export",
+      "default_en": "Export CSV",
+      "default_fr": "Exporter CSV",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.kicker",
+      "default_en": "Operations",
+      "default_fr": "Operations",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.title",
+      "default_en": "Multilingual Glossary",
+      "default_fr": "Glossaire multilingue",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.subtitle",
+      "default_en": "Review, filter, and update the keys powering every EVA experience.",
+      "default_fr": "Passez en revue, filtrez et mettez a jour les cles qui alimentent toutes les experiences EVA.",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.languageToggle",
+      "default_en": "Switch to {locale}",
+      "default_fr": "Passer en {locale}",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.ariaLabel",
+      "default_en": "Filter translations",
+      "default_fr": "Filtrer les traductions",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.category",
+      "default_en": "Category",
+      "default_fr": "Categorie",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.categoryPlaceholder",
+      "default_en": "Select category",
+      "default_fr": "Choisir une categorie",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "placeholder",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.categoryAll",
+      "default_en": "All categories",
+      "default_fr": "Toutes les categories",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.key",
+      "default_en": "Key contains",
+      "default_fr": "Cle contient",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.keyPlaceholder",
+      "default_en": "Search by key",
+      "default_fr": "Rechercher par cle",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "placeholder",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.apply",
+      "default_en": "Apply filters",
+      "default_fr": "Appliquer les filtres",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.filters.reset",
+      "default_en": "Reset",
+      "default_fr": "Reinitialiser",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.import.label",
+      "default_en": "Import CSV",
+      "default_fr": "Importer un CSV",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.import.progress",
+      "default_en": "Importing...",
+      "default_fr": "Importation...",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.import.ariaLabel",
+      "default_en": "Upload CSV file with translations",
+      "default_fr": "Televerser un fichier CSV de traductions",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.translationsPage.export.label",
+      "default_en": "Download CSV",
+      "default_fr": "Telecharger le CSV",
+      "screens": [
+        "TranslationsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.title",
+      "default_en": "Settings",
+      "default_fr": "Parametres",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.description",
+      "default_en": "View and manage application configuration settings.",
+      "default_fr": "Afficher et gerer les parametres de configuration de l'application.",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.column.category",
+      "default_en": "Category",
+      "default_fr": "Categorie",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.column.key",
+      "default_en": "Key",
+      "default_fr": "Cle",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.column.description",
+      "default_en": "Description",
+      "default_fr": "Description",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.column.value",
+      "default_en": "Value",
+      "default_fr": "Valeur",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.column.valueType",
+      "default_en": "Type",
+      "default_fr": "Type",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.column.isPublic",
+      "default_en": "Visibility",
+      "default_fr": "Visibilite",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.filter.category",
+      "default_en": "Category",
+      "default_fr": "Categorie",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.filter.category.all",
+      "default_en": "All categories",
+      "default_fr": "Toutes les categories",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.action.edit",
+      "default_en": "Edit",
+      "default_fr": "Modifier",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.badge.public",
+      "default_en": "Public",
+      "default_fr": "Public",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.badge.internal",
+      "default_en": "Internal",
+      "default_fr": "Interne",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.state.empty",
+      "default_en": "No settings found.",
+      "default_fr": "Aucun parametre trouve.",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.settings.error.fetch",
+      "default_en": "Failed to load settings. Please try again.",
+      "default_fr": "Echec du chargement des parametres. Veuillez reessayer.",
+      "screens": [
+        "SettingsPage"
+      ],
+      "category": "error",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.title",
+      "default_en": "App Registry",
+      "default_fr": "Registre des applications",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.description",
+      "default_en": "Manage registered AI assistant applications.",
+      "default_fr": "Gerez les applications d'assistant IA enregistrees.",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.column.title",
+      "default_en": "Title",
+      "default_fr": "Titre",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.column.description",
+      "default_en": "Description",
+      "default_fr": "Description",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.column.visibility",
+      "default_en": "Visibility",
+      "default_fr": "Visibilite",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.column.costCenter",
+      "default_en": "Cost Centre",
+      "default_fr": "Centre de couts",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.column.disabled",
+      "default_en": "Status",
+      "default_fr": "Statut",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.column.updatedAt",
+      "default_en": "Updated",
+      "default_fr": "Mis a jour",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "column_header",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.filter.q",
+      "default_en": "Search",
+      "default_fr": "Rechercher",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.filter.q.placeholder",
+      "default_en": "Search by title, ID or description...",
+      "default_fr": "Rechercher par titre, ID ou description...",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "placeholder",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.filter.visibility",
+      "default_en": "Visibility",
+      "default_fr": "Visibilite",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.filter.visibility.all",
+      "default_en": "All",
+      "default_fr": "Tous",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.filter.visibility.public",
+      "default_en": "Public",
+      "default_fr": "Public",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.filter.visibility.private",
+      "default_en": "Private",
+      "default_fr": "Prive",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.action.add",
+      "default_en": "Add App",
+      "default_fr": "Ajouter une application",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.action.edit",
+      "default_en": "Edit",
+      "default_fr": "Modifier",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.action.disable",
+      "default_en": "Disable",
+      "default_fr": "Desactiver",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.action.cancel",
+      "default_en": "Cancel",
+      "default_fr": "Annuler",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.action.export",
+      "default_en": "Export JSON",
+      "default_fr": "Exporter JSON",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.confirm.disable",
+      "default_en": "Disable application?",
+      "default_fr": "Desactiver l'application ?",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.confirm.disable.description",
+      "default_en": "This will prevent users from accessing the application. You can re-enable it later.",
+      "default_fr": "Cela empechera les utilisateurs d'acceder a l'application. Vous pouvez la reactiver plus tard.",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.badge.public",
+      "default_en": "Public",
+      "default_fr": "Public",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.badge.private",
+      "default_en": "Private",
+      "default_fr": "Prive",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.badge.active",
+      "default_en": "Active",
+      "default_fr": "Actif",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.badge.disabled",
+      "default_en": "Disabled",
+      "default_fr": "Desactive",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.state.empty",
+      "default_en": "No applications found.",
+      "default_fr": "Aucune application trouvee.",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "admin.apps.error.fetch",
+      "default_en": "Failed to load applications. Please try again.",
+      "default_fr": "Echec du chargement des applications. Veuillez reessayer.",
+      "screens": [
+        "AppsPage"
+      ],
+      "category": "error",
+      "status": "active"
+    },
+    {
+      "key": "portal.brand.name",
+      "default_en": "EVA Portal",
+      "default_fr": "Portail EVA",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "portal.brand.gov",
+      "default_en": "Government of Canada",
+      "default_fr": "Gouvernement du Canada",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.nav.skipLink",
+      "default_en": "Skip to main content",
+      "default_fr": "Passer au contenu principal",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.nav.home",
+      "default_en": "Home",
+      "default_fr": "Accueil",
+      "screens": [
+        "EVAHomePage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.nav.sprintBoard",
+      "default_en": "Sprint Board",
+      "default_fr": "Tableau de sprint",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.nav.primaryLabel",
+      "default_en": "Primary navigation",
+      "default_fr": "Navigation principale",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.badge.active",
+      "default_en": "Active",
+      "default_fr": "Actif",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.badge.done",
+      "default_en": "Done",
+      "default_fr": "Termine",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.badge.blocked",
+      "default_en": "Blocked",
+      "default_fr": "Bloque",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.home.loading",
+      "default_en": "Loading sprint data...",
+      "default_fr": "Chargement des donnees de sprint...",
+      "screens": [
+        "EVAHomePage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.home.error",
+      "default_en": "Could not load sprint badges.",
+      "default_fr": "Impossible de charger les badges.",
+      "screens": [
+        "EVAHomePage"
+      ],
+      "category": "error",
+      "status": "active"
+    },
+    {
+      "key": "portal.sprint.loading",
+      "default_en": "Loading sprint board...",
+      "default_fr": "Chargement du tableau de sprint...",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.sprint.filterAll",
+      "default_en": "All Projects",
+      "default_fr": "Tous les projets",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.sprint.allSprints",
+      "default_en": "All Sprints",
+      "default_fr": "Tous les sprints",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.sprint.velocity",
+      "default_en": "Velocity",
+      "default_fr": "Velocite",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.wiState.active",
+      "default_en": "Active",
+      "default_fr": "Actif",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.wiState.done",
+      "default_en": "Done",
+      "default_fr": "Termine",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.wiState.blocked",
+      "default_en": "Blocked",
+      "default_fr": "Bloque",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.wiState.planned",
+      "default_en": "Planned",
+      "default_fr": "Planifie",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.wiState.closed",
+      "default_en": "Closed",
+      "default_fr": "Ferme",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.auth.unauthorized.title",
+      "default_en": "Access restricted",
+      "default_fr": "Acces restreint",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "portal.auth.unauthorized.body",
+      "default_en": "You don't have permission to view this page.",
+      "default_fr": "Vous n'avez pas la permission de voir cette page.",
+      "screens": [
+        "EVAHomePage",
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    },
+    {
+      "key": "portal.auth.verifying",
+      "default_en": "Verifying access...",
+      "default_fr": "Verification de l'acces...",
+      "screens": [
+        "SprintBoardPage"
+      ],
+      "category": "label",
+      "status": "active"
+    }
+  ],
+  "agents": [
+    {
+      "id": "screen-generator",
+      "label": "Screen Generator",
+      "skill_file": "agents/screen_agent.py",
+      "input_type": "epic",
+      "output_type": "tsx_file",
+      "llm_deployment": "gpt-5.1-chat",
+      "output_screens": [],
+      "endpoints_consumed": [],
+      "status": "active",
+      "notes": "ScreenGeneratorAgent: parses Epic YAML ScreenSpec, queries EVA UI metadata for component examples, calls Azure OpenAI to produce production-ready TypeScript/React screen. Bilingual support enforced. Falls back to template when LLM response is < 100 chars."
+    },
+    {
+      "id": "test-generator",
+      "label": "Test Generator",
+      "skill_file": "agents/test_agent.py",
+      "input_type": "screen_id",
+      "output_type": "test_file",
+      "llm_deployment": "gpt-5.1-chat",
+      "output_screens": [],
+      "endpoints_consumed": [],
+      "status": "active",
+      "notes": "TestGeneratorAgent Phase 2: generates minimal vitest + jest-axe scaffold. Full behavioural + coverage tests using shared/eva-ui examples deferred to Phase 3. Currently a stub that unblocks mode=full piepline."
+    },
+    {
+      "id": "validator",
+      "label": "Validator",
+      "skill_file": "agents/validator_agent.py",
+      "input_type": "source_file",
+      "output_type": "validation_report",
+      "llm_deployment": "none",
+      "output_screens": [],
+      "endpoints_consumed": [],
+      "status": "active",
+      "notes": "ValidatorAgent: runs 4 quality gates — TypeScript compile (npm run type-check), test pass rate + coverage (npm run test:coverage), accessibility (npm run test:a11y), Government of Canada compliance (static analysis). No LLM call — pure subprocess/toolchain. Thresholds loaded from config/quality_gates.py."
+    }
+  ],
+  "infrastructure": [
+    {
+      "id": "openai-brain-deployment",
+      "type": "openai_deployment",
+      "azure_resource_name": "marco-sandbox-openai-v2",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_OPENAI_ENDPOINT",
+      "keyvault_secret_name": "eva-openai-api-key",
+      "status": "provisioned",
+      "notes": "gpt-5.1-chat deployment. Endpoint: https://marco-sandbox-openai-v2.openai.azure.com/"
+    },
+    {
+      "id": "openai-agent-deployment",
+      "type": "openai_deployment",
+      "azure_resource_name": "esdaicoe-ai-foundry-openai",
+      "service": "agent-fleet",
+      "env_var": "AZURE_OPENAI_ENDPOINT",
+      "keyvault_secret_name": "agent-fleet-openai-api-key",
+      "status": "provisioned",
+      "notes": "gpt-5.1-chat deployment for agent-fleet. Endpoint: https://esdaicoe-ai-foundry-openai.openai.azure.com/"
+    },
+    {
+      "id": "ai-search-index",
+      "type": "azure_search_index",
+      "azure_resource_name": "marco-sandbox-search",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_SEARCH_ENDPOINT",
+      "keyvault_secret_name": "eva-search-api-key",
+      "status": "provisioned",
+      "notes": "Index: proj10-index. Env var AZURE_SEARCH_INDEX holds the index name."
+    },
+    {
+      "id": "cosmos-account",
+      "type": "cosmos_account",
+      "azure_resource_name": "eva-cosmos-account",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_COSMOS_ENDPOINT",
+      "keyvault_secret_name": "eva-cosmos-key",
+      "status": "provisioned",
+      "notes": "Azure Cosmos DB for NoSQL. Shared by eva-brain-api and eva-roles-api."
+    },
+    {
+      "id": "cosmos-database",
+      "type": "cosmos_database",
+      "azure_resource_name": "eva-db",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_COSMOS_DATABASE",
+      "status": "provisioned",
+      "notes": "Parent database for all EVA Cosmos containers."
+    },
+    {
+      "id": "cosmos-container-jobs",
+      "type": "cosmos_container",
+      "azure_resource_name": "jobs",
+      "service": "eva-brain-api",
+      "references": "jobs",
+      "status": "provisioned",
+      "notes": "Ingest job tracker. Partition key: /actor_oid."
+    },
+    {
+      "id": "cosmos-container-statusdb",
+      "type": "cosmos_container",
+      "azure_resource_name": "statusdb",
+      "service": "eva-brain-api",
+      "references": "statusdb",
+      "status": "provisioned",
+      "notes": "Service health and operational status. Partition key: /service_id."
+    },
+    {
+      "id": "cosmos-container-documents",
+      "type": "cosmos_container",
+      "azure_resource_name": "documents",
+      "service": "eva-brain-api",
+      "references": "documents",
+      "status": "provisioned",
+      "notes": "Document metadata records. Partition key: /actor_oid."
+    },
+    {
+      "id": "cosmos-container-chunks",
+      "type": "cosmos_container",
+      "azure_resource_name": "chunks",
+      "service": "eva-brain-api",
+      "references": "chunks",
+      "status": "provisioned",
+      "notes": "Text chunks + embeddings. Partition key: /document_id. TTL: 90 days."
+    },
+    {
+      "id": "cosmos-container-tags",
+      "type": "cosmos_container",
+      "azure_resource_name": "tags",
+      "service": "eva-brain-api",
+      "references": "tags",
+      "status": "provisioned",
+      "notes": "Document tags and taxonomy. Partition key: /actor_oid."
+    },
+    {
+      "id": "cosmos-container-sessions",
+      "type": "cosmos_container",
+      "azure_resource_name": "sessions",
+      "service": "eva-brain-api",
+      "references": "sessions",
+      "status": "planned",
+      "notes": "Conversation sessions. Partition key: /actor_oid. TTL: 90 days."
+    },
+    {
+      "id": "cosmos-container-messages",
+      "type": "cosmos_container",
+      "azure_resource_name": "messages",
+      "service": "eva-brain-api",
+      "references": "messages",
+      "status": "planned",
+      "notes": "Chat messages within sessions. Partition key: /session_id."
+    },
+    {
+      "id": "storage-account",
+      "type": "storage_account",
+      "azure_resource_name": "eva-storage",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_STORAGE_ACCOUNT_NAME",
+      "keyvault_secret_name": "eva-storage-account-key",
+      "status": "provisioned",
+      "notes": "Azure Blob Storage for document uploads and processed content."
+    },
+    {
+      "id": "storage-container-upload",
+      "type": "storage_container",
+      "azure_resource_name": "documents-upload",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_STORAGE_CONTAINER_UPLOAD",
+      "status": "provisioned",
+      "notes": "Blob container for raw document uploads before ingest processing."
+    },
+    {
+      "id": "appinsights",
+      "type": "foundry_project",
+      "azure_resource_name": "eva-appinsights",
+      "service": "eva-brain-api",
+      "env_var": "APPINSIGHTS_CONNECTION_STRING",
+      "keyvault_secret_name": "eva-appinsights-connection-string",
+      "status": "planned",
+      "notes": "Application Insights for telemetry. Connection string empty in dev .env."
+    },
+    {
+      "id": "entra-app-registration",
+      "type": "entra_app_registration",
+      "azure_resource_name": "eva-brain-api-sp",
+      "service": "eva-brain-api",
+      "env_var": "AZURE_CLIENT_ID",
+      "keyvault_secret_name": "eva-azure-client-secret",
+      "status": "planned",
+      "notes": "Service principal. AZURE_TENANT_ID + AZURE_CLIENT_ID + AZURE_CLIENT_SECRET. Dev bypasses via DEV_BYPASS_OID."
+    },
+    {
+      "id": "apim-instance",
+      "type": "apim_api",
+      "azure_resource_name": "marco-sandbox-apim",
+      "service": "eva-brain-api",
+      "status": "planned",
+      "notes": "Azure API Management gateway fronting all /v1/* EVA Brain endpoints. Import scheduled Mar 29-30, 2026."
+    },
+    {
+      "id": "brain-api-container-app",
+      "type": "container_app",
+      "azure_resource_name": "eva-brain-api",
+      "service": "eva-brain-api",
+      "status": "planned",
+      "notes": "Container App running uvicorn on port 8001. All AZURE_* env vars injected at runtime."
+    },
+    {
+      "id": "roles-api-container-app",
+      "type": "container_app",
+      "azure_resource_name": "eva-roles-api",
+      "service": "eva-roles-api",
+      "env_var": "ROLES_API_URL",
+      "status": "planned",
+      "notes": "Container App running the roles/RBAC service on port 8002."
+    },
+    {
+      "id": "agent-fleet-container-app",
+      "type": "container_app",
+      "azure_resource_name": "eva-agent-fleet",
+      "service": "agent-fleet",
+      "status": "planned",
+      "notes": "Container App running the agent-fleet FastAPI orchestrator on port 8003."
+    },
+    {
+      "id": "admin-static-web-app",
+      "type": "container_app",
+      "azure_resource_name": "eva-admin-face",
+      "service": "admin-face",
+      "env_var": "VITE_API_BASE_URL",
+      "status": "planned",
+      "notes": "Azure Static Web App for admin-face. Deployment scheduled Phase 4 (Mar 25-31, 2026)."
+    },
+    {
+      "id": "chat-static-web-app",
+      "type": "container_app",
+      "azure_resource_name": "eva-chat-face",
+      "service": "chat-face",
+      "env_var": "VITE_API_BASE_URL",
+      "status": "planned",
+      "notes": "Azure Static Web App for chat-face. Deployment scheduled Phase 4 (Mar 25-31, 2026)."
+    },
+    {
+      "id": "keyvault",
+      "type": "keyvault_vault",
+      "azure_resource_name": "eva-keyvault",
+      "service": "eva-brain-api",
+      "status": "planned",
+      "notes": "Azure Key Vault. Secrets configuration scheduled Mar 31 - Apr 4, 2026."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "EPIC-001",
+      "title": "EVA Brain v2 runnable and tested API",
+      "type": "epic",
+      "satisfied_by": [
+        "POST /v1/sessions",
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "DELETE /v1/sessions/{session_id}",
+        "POST /v1/chat",
+        "POST /v1/retrieve",
+        "POST /v1/ingest/upload",
+        "GET /v1/config/info",
+        "GET /v1/config/features"
+      ],
+      "test_ids": [],
+      "status": "done",
+      "sprint": 0,
+      "notes": "Sprint 0 completed Feb 19, 2026. Uvicorn starts, all routers mounted, OpenAI + Search connected."
+    },
+    {
+      "id": "EPIC-002",
+      "title": "EVA Faces shared design system",
+      "type": "epic",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "done",
+      "sprint": 1,
+      "personas": [
+        "admin"
+      ],
+      "notes": "Phase 1 COMPLETE. Shared component library published. Storybook scaffold in place."
+    },
+    {
+      "id": "EPIC-003",
+      "title": "Admin screens and backend integration",
+      "type": "epic",
+      "satisfied_by": [
+        "TranslationsPage",
+        "SettingsPage",
+        "AppsPage",
+        "AuditLogsPage",
+        "RbacPage"
+      ],
+      "test_ids": [],
+      "status": "in-progress",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ],
+      "notes": "eva-faces Phase 2. Mar 1-17, 2026. SettingsPage and AppsPage still use MockBackendService."
+    },
+    {
+      "id": "EPIC-004",
+      "title": "Chat UI and agent framework integration",
+      "type": "epic",
+      "satisfied_by": [
+        "ChatPane"
+      ],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 3,
+      "personas": [
+        "lawyer",
+        "paralegal",
+        "researcher",
+        "compliance-officer",
+        "hr",
+        "student"
+      ],
+      "notes": "eva-faces Phase 3. Full ChatPane wired to /v1/sessions + /v1/messages endpoints."
+    },
+    {
+      "id": "EPIC-005",
+      "title": "Testing and Azure SWA deployment",
+      "type": "epic",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 4,
+      "notes": "eva-faces Phase 4. Mar 25-31, 2026. Playwright E2E, WCAG report, SWA deploy, APIM import."
+    },
+    {
+      "id": "REQ-001",
+      "title": "Fix router prefix for sessions, search, config, ingest, admin",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Routers missing /v1 prefix. Affects all auto-generated endpoint ids in model."
+    },
+    {
+      "id": "REQ-002",
+      "title": "Mount tags.py router in main.py",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "tags.py exists and defines route but is not included in app startup."
+    },
+    {
+      "id": "REQ-003",
+      "title": "Add support persona to action.chat feature flag",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "feature_flags.json action.chat only lists lawyer/paralegal — support persona missing."
+    },
+    {
+      "id": "REQ-004",
+      "title": "Granular feature flag IDs for search and ingest groups",
+      "type": "requirement",
+      "parent": "EPIC-001",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Current flags are action.search/action.ingest — need per-operation flags (e.g. action.search.semantic)."
+    },
+    {
+      "id": "REQ-005",
+      "title": "Wire SettingsPage and AppsPage to real endpoints",
+      "type": "requirement",
+      "parent": "EPIC-003",
+      "satisfied_by": [
+        "SettingsPage",
+        "AppsPage"
+      ],
+      "test_ids": [],
+      "status": "in-progress",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ],
+      "notes": "MockBackendService has 82 inline keys. Config and apps endpoints are present in brain-api."
+    },
+    {
+      "id": "REQ-006",
+      "title": "Build AuditLogsPage and RbacPage implementations",
+      "type": "requirement",
+      "parent": "EPIC-003",
+      "satisfied_by": [
+        "AuditLogsPage",
+        "RbacPage"
+      ],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ],
+      "notes": "Screens scaffolded, real data wiring not started."
+    },
+    {
+      "id": "REQ-007",
+      "title": "Import EVA Brain API into marco-sandbox-apim",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Scheduled Mar 29-30, 2026. OpenAPI spec needs to be finalised first."
+    },
+    {
+      "id": "REQ-008",
+      "title": "Configure Key Vault secrets for all services",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "notes": "Scheduled Mar 31 - Apr 4, 2026. Includes openai-api-key, search-api-key, cosmos-key, storage-key, appinsights, client-secret."
+    },
+    {
+      "id": "REQ-009",
+      "title": "Scaffold Playwright E2E tests for admin and chat faces",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ],
+      "notes": "Playwright config present in eva-faces. E2E test cases to cover TranslationsPage CRUD, ChatPane send."
+    },
+    {
+      "id": "REQ-010",
+      "title": "WCAG 2.1 AA compliance audit and remediation",
+      "type": "requirement",
+      "parent": "EPIC-005",
+      "satisfied_by": [],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 4,
+      "notes": "Accessibility report required before SWA deployment. axe-core integration planned."
+    },
+    {
+      "id": "STORY-001",
+      "title": "As an admin I can create and delete translations",
+      "type": "story",
+      "parent": "EPIC-003",
+      "satisfied_by": [
+        "TranslationsPage"
+      ],
+      "test_ids": [],
+      "status": "done",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ]
+    },
+    {
+      "id": "STORY-002",
+      "title": "As an admin I can view ingestion job status",
+      "type": "story",
+      "parent": "EPIC-003",
+      "satisfied_by": [
+        "AuditLogsPage"
+      ],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ]
+    },
+    {
+      "id": "STORY-003",
+      "title": "As a user I can chat with EVA using my persona",
+      "type": "story",
+      "parent": "EPIC-004",
+      "satisfied_by": [
+        "ChatPane"
+      ],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 3,
+      "personas": [
+        "lawyer",
+        "paralegal",
+        "researcher",
+        "compliance-officer",
+        "hr",
+        "student"
+      ]
+    },
+    {
+      "id": "STORY-004",
+      "title": "As an admin I can assign roles to users",
+      "type": "story",
+      "parent": "EPIC-003",
+      "satisfied_by": [
+        "RbacPage"
+      ],
+      "test_ids": [],
+      "status": "planned",
+      "sprint": 2,
+      "personas": [
+        "admin"
+      ]
+    },
+    {
+      "id": "AC-001",
+      "title": "Brain API returns 200 on GET /health when all services reachable",
+      "type": "acceptance_criterion",
+      "parent": "EPIC-001",
+      "satisfied_by": [
+        "GET /v1/health"
+      ],
+      "test_ids": [],
+      "status": "done"
+    },
+    {
+      "id": "AC-002",
+      "title": "TranslationsPage shows error toast when POST /translations returns 4xx",
+      "type": "acceptance_criterion",
+      "parent": "STORY-001",
+      "satisfied_by": [
+        "TranslationsPage"
+      ],
+      "test_ids": [],
+      "status": "planned"
+    },
+    {
+      "id": "AC-003",
+      "title": "ChatPane disables send while awaiting streamed response",
+      "type": "acceptance_criterion",
+      "parent": "STORY-003",
+      "satisfied_by": [
+        "ChatPane"
+      ],
+      "test_ids": [],
+      "status": "planned"
+    }
+  ]
+}
