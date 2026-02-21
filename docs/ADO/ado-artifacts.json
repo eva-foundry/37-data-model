@@ -1,0 +1,188 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-02-21T23:49:24",
+  "generated_by": "ado-generate-artifacts.ps1 (skill 07-ado-idea-intake)",
+  "ado_org": "https://dev.azure.com/marcopresta",
+  "ado_project": "eva-poc",
+  "github_repo": "eva-foundry/37-data-model",
+  "project_maturity": "idea",
+  "epic": {
+    "skip_if_id_exists": null,
+    "type": "Epic",
+    "title": "EVA Data Model — Maintenance & Extension Phase",
+    "description": "**Component:** 37-data-model",
+    "tags": "eva-data-model-maintenance-exten",
+    "area_path": "eva-poc"
+  },
+  "features": [
+    {
+      "parent": "epic",
+      "id_hint": "feature-1-ci-gate-samepr-enforce",
+      "description": "**Goal:** validate-model.ps1 runs automatically on every PR that touches model/**",
+      "title": "Feature 1 — CI Gate & Same-PR Enforcement (Sprint-8)",
+      "tags": "eva-data-model-maintenance-exten;feature-1-ci-gate-samepr-enforce",
+      "type": "Feature"
+    },
+    {
+      "parent": "epic",
+      "id_hint": "feature-2-automated-drift-detect",
+      "description": "**Goal:** Weekly scheduled workflow runs sync-from-source.ps1 against the mounted",
+      "title": "Feature 2 — Automated Drift Detection (Sprint-8)",
+      "tags": "eva-data-model-maintenance-exten;feature-2-automated-drift-detect",
+      "type": "Feature"
+    },
+    {
+      "parent": "epic",
+      "id_hint": "feature-3-coverage-gaps-surface-",
+      "description": "Coverage-gaps.ps1 is captured in DM-MAINT-WI-0 (Feature 1, same sprint).",
+      "title": "Feature 3 — Coverage Gaps Surface (Sprint-8)",
+      "tags": "eva-data-model-maintenance-exten;feature-3-coverage-gaps-surface-",
+      "type": "Feature"
+    },
+    {
+      "parent": "epic",
+      "id_hint": "feature-4-modelsync-agent-sprint",
+      "description": "**Goal:** When `29-foundry` session-workflow-agent completes the Do phase for a",
+      "title": "Feature 4 — Model-Sync Agent (Sprint-9)",
+      "tags": "eva-data-model-maintenance-exten;feature-4-modelsync-agent-sprint",
+      "type": "Feature"
+    },
+    {
+      "parent": "epic",
+      "id_hint": "summary-table",
+      "description": "| Story ID | Title | Feature | Sprint | Points |",
+      "title": "Summary Table",
+      "tags": "eva-data-model-maintenance-exten;summary-table",
+      "type": "Feature"
+    }
+  ],
+  "user_stories": [
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-1-ci-gate-samepr-enforce",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-0",
+      "title": "[EVA--WI-0] [DM-MAINT-WI-0] coverage-gaps.ps1 — requirements with zero test coverage",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-0"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-1-ci-gate-samepr-enforce",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-1",
+      "title": "[EVA--WI-1] [DM-MAINT-WI-1] GitHub Action — validate-model on every PR",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-1"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-1-ci-gate-samepr-enforce",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-2",
+      "title": "[EVA--WI-2] [DM-MAINT-WI-2] Same-PR enforcement — source change without model update = blocking comment",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-2"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-2-automated-drift-detect",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-3",
+      "title": "[EVA--WI-3] [DM-MAINT-WI-3] Scheduled sync-from-source workflow",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-3"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-2-automated-drift-detect",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-4",
+      "title": "[EVA--WI-4] [DM-MAINT-WI-4] sync-from-source.ps1 — add JSON output mode",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-4"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-3-coverage-gaps-surface-",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-5",
+      "title": "[EVA--WI-5] [DM-MAINT-WI-5] Wire coverage-gaps.ps1 into drift-detection workflow",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-5"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-4-modelsync-agent-sprint",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-6",
+      "title": "[EVA--WI-6] [DM-MAINT-WI-6] model-sync-agent scaffold",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-6"
+    },
+    {
+      "acceptance_criteria": "TBD — add to docs/ADO/idea/ACCEPTANCE.md",
+      "parent": "feature-4-modelsync-agent-sprint",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "New",
+      "evidence": {
+        "notes": "",
+        "test_count": null,
+        "coverage_pct": null
+      },
+      "tags": "eva-data-model-maintenance-exten;EVA--WI-7",
+      "title": "[EVA--WI-7] [DM-MAINT-WI-7] Integrate model-sync-agent into sprint-execute.yml Do phase",
+      "type": "Product Backlog Item",
+      "id_hint": "EVA--WI-7"
+    }
+  ],
+  "sprints_needed": [
+    {
+      "start_date": null,
+      "name": "Sprint-Backlog",
+      "finish_date": null
+    }
+  ]
+}
