@@ -3,7 +3,7 @@
 **Template Version**: 3.2.0
 **Last Updated**: February 25, 2026 10:14 ET
 **Project**: EVA Data Model -- Single source of truth API (port 8010)
-**Path**: `C:\AICOE\eva-foundation\37-data-model\`
+**Path**: `C:\AICOE\eva-foundry\37-data-model\`
 **Stack**: Python, FastAPI, SQLite
 
 > This file is the Copilot operating manual for this repository.
@@ -72,7 +72,7 @@ Loop      --> return to Discover if tasks remain
 > The HTTP API is the only interface. One HTTP call beats ten file reads.
 > The API self-documents: `GET /model/agent-guide` returns the complete operating protocol.
 
-> **Full reference**: `C:\AICOE\eva-foundation\37-data-model\USER-GUIDE.md` (v2.5)
+> **Full reference**: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md` (v2.5)
 > The model is the single source of truth. One HTTP call beats 10 file reads.
 > Never grep source files for something the model already knows.
 
@@ -87,7 +87,7 @@ if (-not $h) {
     $base = "http://localhost:8010"
     $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
     if (-not $h) {
-        $env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
+        $env:PYTHONPATH = "C:\AICOE\eva-foundry\37-data-model"
         Start-Process "C:\AICOE\.venv\Scripts\python.exe" `
             "-m uvicorn api.server:app --port 8010 --reload" -WindowStyle Hidden
         Start-Sleep 4
@@ -314,6 +314,18 @@ az logout; az login --use-device-code --tenant {TENANT_ID}
 
 ## PART 2 -- PROJECT-SPECIFIC: EVA Data Model
 
+### Project Lock
+
+This file is the copilot-instructions for **37-data-model** (EVA Data Model).
+
+The workspace-level bootstrap rule "Step 1 -- Identify the active project from the currently open file path"
+applies **only at the initial load of this file** (first read at session start).
+Once this file has been loaded, the active project is locked to **37-data-model** for the entire session.
+Do NOT re-evaluate project identity from editorContext or terminal CWD on each subsequent request.
+Work state and sprint context are read from `STATUS.md` and `PLAN.md` at bootstrap -- not from this file.
+
+---
+
 <!--
   AUTO-LOADED by VS Code Copilot at every session start for this workspace.
   These rules apply to any agent reading or writing the EVA Data Model.
@@ -361,7 +373,7 @@ if (-not $h) {
     $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
     if (-not $h) {
         # Start local API if not running
-        $env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
+        $env:PYTHONPATH = "C:\AICOE\eva-foundry\37-data-model"
         Start-Process "C:\AICOE\.venv\Scripts\python.exe" `
             "-m uvicorn api.server:app --port 8010 --reload" -WindowStyle Hidden
         Start-Sleep 4
@@ -372,7 +384,7 @@ if (-not $h) {
 # Option C -- file fallback (offline / CI -- no HTTP API available)
 if (-not $h) {
     Write-Warning "No HTTP API reachable -- loading from file (read-only, no audit trail)"
-    $m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
+    $m = Get-Content C:\AICOE\eva-foundry\37-data-model\model\eva-model.json | ConvertFrom-Json
     $m.meta | Select-Object last_updated, layers_complete, total_layers
 } else {
     # Readiness check (ACA store=cosmos is always reachable; local checks Cosmos connectivity)
@@ -399,7 +411,7 @@ No PowerShell, no file I/O -- any language can consume the model.
 ### Start (local dev / MemoryStore)
 
 ```powershell
-cd C:\AICOE\eva-foundation\37-data-model
+cd C:\AICOE\eva-foundry\37-data-model
 $env:PYTHONPATH = $PWD
 C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 ```
@@ -527,11 +539,11 @@ $ep = Invoke-RestMethod "$base/model/endpoints/GET /v1/health"
 
 # Navigation: jump directly to route decorator in VS Code
 $ep = Invoke-RestMethod "$base/model/endpoints/GET /v1/health"
-code --goto "C:\AICOE\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
+code --goto "C:\AICOE\eva-foundry\$($ep.implemented_in):$($ep.repo_line)"
 
 # Same for a React hook or component:
 $h = Invoke-RestMethod "$base/model/hooks/useTranslations"
-code --goto "C:\AICOE\eva-foundation\$($h.repo_path):$($h.repo_line)"
+code --goto "C:\AICOE\eva-foundry\$($h.repo_path):$($h.repo_line)"
 ```
 
 ---
@@ -721,6 +733,6 @@ All must pass before merging a PR:
 
 ---
 
-*Source template*: `C:\AICOE\eva-foundation\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.2.0
-*Project 07 README*: `C:\AICOE\eva-foundation\07-foundation-layer\README.md`
-*EVA Data Model USER-GUIDE*: `C:\AICOE\eva-foundation\37-data-model\USER-GUIDE.md`
+*Source template*: `C:\AICOE\eva-foundry\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.2.0
+*Project 07 README*: `C:\AICOE\eva-foundry\07-foundation-layer\README.md`
+*EVA Data Model USER-GUIDE*: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md`
