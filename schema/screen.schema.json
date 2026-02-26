@@ -15,11 +15,12 @@
     "label": { "type": "string" },
     "app": {
       "type": "string",
-      "enum": ["admin-face", "chat-face"],
+      "enum": ["admin-face", "chat-face", "portal-face", "eva-devbench", "eva-jp-spark"],
       "description": "Which React app hosts this screen"
     },
     "route": { "type": "string", "examples": ["/admin/translations", "/"] },
     "component_path": { "type": "string", "description": "Relative path from app src/" },
+    "repo_line": { "type": ["integer", "null"], "description": "1-based line of the screen component export declaration" },
     "rbac": {
       "type": "array",
       "items": { "type": "string" },
@@ -35,10 +36,24 @@
       "items": { "type": "string" },
       "description": "@eva/ui component ids used"
     },
+    "hooks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Custom React hook ids used by this screen"
+    },
     "fields_displayed": {
       "type": "array",
       "items": { "type": "string" },
       "description": "Data fields shown in this screen (container field names)"
+    },
+    "i18n_system": {
+      "type": "string",
+      "enum": ["i18next", "t-object", "none"],
+      "description": "i18n system used by this screen"
+    },
+    "i18n_namespace": {
+      "type": "string",
+      "description": "i18n namespace key (e.g. admin, chat, jp, devbench, portal)"
     },
     "test_file": { "type": ["string", "null"] },
     "test_count": { "type": ["integer", "null"] },

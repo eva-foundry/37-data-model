@@ -1,0 +1,33 @@
+Drive already SUBSTed
+]633;P;IsWindows=TrueEVA Data Model - Assembler
+Root: C:\AICOE\eva-foundation\37-data-model
+
+Assembled: C:\AICOE\eva-foundation\37-data-model\model/eva-model.json
+Layers populated: 27 / 27
+  [OK] agents           4 items
+  [OK] components       32 items
+  [OK] connections      3 items
+  [OK] containers       13 items
+  [OK] cp_agents        4 items
+  [OK] cp_policies      3 items
+  [OK] cp_skills        7 items
+  [OK] cp_workflows     2 items
+  [OK] endpoints        136 items
+  [OK] environments     3 items
+  [OK] feature_flags    15 items
+  [OK] hooks            18 items
+  [OK] infrastructure   23 items
+  [OK] literals         375 items
+  [OK] mcp_servers      3 items
+  [OK] personas         10 items
+  [OK] planes           3 items
+  [OK] projects         45 items
+  [OK] prompts          5 items
+  [OK] requirements     22 items
+  [OK] runbooks         4 items
+  [OK] schemas          36 items
+  [OK] screens          28 items
+  [OK] security_controls 10 items
+  [OK] services         22 items
+  [OK] ts_types         26 items
+  [OK] wbs              13 items

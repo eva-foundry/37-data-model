@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "milestone.schema.json",
+  "title": "EVA Milestone",
+  "description": "A waterfall phase gate or governance checkpoint. Links to deliverables and sign-off evidence.",
+  "type": "object",
+  "required": ["id", "project_id", "label", "target_date", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Milestone id, e.g. 33-eva-brain-v2-m1-deploy",
+      "examples": ["33-eva-brain-v2-m1-deploy", "44-eva-jp-spark-m0-inception"]
+    },
+    "label": { "type": "string", "description": "Short gate name" },
+    "project_id": { "type": "string", "description": "Project id from projects layer" },
+    "target_date": { "type": "string", "format": "date" },
+    "actual_date": { "type": ["string", "null"], "format": "date" },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "at_risk", "missed"]
+    },
+    "deliverables": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of deliverable descriptions or WBS story ids"
+    },
+    "sign_off_by": {
+      "type": ["string", "null"],
+      "description": "Person or role responsible for approval"
+    },
+    "evidence_path": {
+      "type": ["string", "null"],
+      "description": "Path to signed-off document or ADO work item link"
+    },
+    "wbs_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "WBS story/feature ids included in this milestone"
+    },
+    "phase": {
+      "type": ["string", "null"],
+      "enum": ["inception", "elaboration", "construction", "transition", "production", null],
+      "description": "Waterfall phase (RUP-flavoured)"
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

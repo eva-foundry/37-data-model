@@ -20,7 +20,10 @@
         "container_app", "apim_route", "apim_api",
         "keyvault_secret", "keyvault_vault",
         "openai_deployment", "foundry_project",
-        "entra_app_registration", "entra_group"
+        "entra_app_registration", "entra_group",
+        "functions_app", "static_web_app",
+        "vnet", "private_endpoint", "nsg", "private_dns_zone",
+        "terraform_module", "tf_state_backend", "ci_cd_pipeline"
       ]
     },
     "azure_resource_name": { "type": "string" },
@@ -31,6 +34,16 @@
     },
     "env_var": { "type": ["string", "null"], "description": "Config env var that holds the connection string/key" },
     "keyvault_secret_name": { "type": ["string", "null"] },
+    "provision_order": {
+      "type": "integer",
+      "description": "IaC provisioning order — lower numbers are created first (default 99)",
+      "default": 99
+    },
+    "iac_type": {
+      "type": "string",
+      "enum": ["resource", "vnet", "private-endpoint", "nsg", "terraform-module", "ci-cd", "dns-zone", "iac-state"],
+      "description": "Infrastructure-as-Code category for topology sorting and impact analysis"
+    },
     "status": {
       "type": "string",
       "enum": ["provisioned", "planned", "deprovisioned"]

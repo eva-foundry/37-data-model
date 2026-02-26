@@ -47,6 +47,15 @@
       "type": "string",
       "enum": ["active", "planned", "deprecated"]
     },
+    "data_function_type": {
+      "type": ["string", "null"],
+      "enum": ["ILF", "EIF", null],
+      "description": "IFPUG data function type: ILF = Internal Logical File (owned), EIF = External Interface File (referenced). Used by GET /model/fp/estimate."
+    },
+    "det_count": {
+      "type": ["integer", "null"],
+      "description": "IFPUG Data Element Type count — derived from fields array length if null"
+    },
     "notes": { "type": ["string", "null"] }
   }
 }

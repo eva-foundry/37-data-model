@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "generated_at": "2026-02-25T20:47:22.662Z",
+    "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
+    "base_url": "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+  },
+  "summary": {
+    "active_features": 5,
+    "ready": 4,
+    "partial": 0,
+    "blocked": 1,
+    "failing_gates": 4,
+    "warning_gates": 0
+  },
+  "features": [
+    {
+      "id": "F37-01",
+      "label": "Guiding Principle",
+      "done": false,
+      "raw_deps": [],
+      "blockers": [],
+      "verdict": "READY",
+      "blocking_gates": [],
+      "warning_gates": [],
+      "relevant_gates": 2
+    },
+    {
+      "id": "F37-02",
+      "label": "Layer Build Order",
+      "done": false,
+      "raw_deps": [],
+      "blockers": [],
+      "verdict": "READY",
+      "blocking_gates": [],
+      "warning_gates": [],
+      "relevant_gates": 2
+    },
+    {
+      "id": "F37-09",
+      "label": "Dependencies",
+      "done": false,
+      "raw_deps": [],
+      "blockers": [],
+      "verdict": "READY",
+      "blocking_gates": [],
+      "warning_gates": [],
+      "relevant_gates": 2
+    },
+    {
+      "id": "F37-10",
+      "label": "Sprint 8-9 -- IFPUG FP Stamping + Sprint Seeds",
+      "done": false,
+      "raw_deps": [],
+      "blockers": [],
+      "verdict": "BLOCKED",
+      "blocking_gates": [
+        "G-FP-ENDPOINT fp/estimate endpoint on ACA",
+        "G-STORYIDS Endpoints have story_ids (MTI 4th component)",
+        "G-SPRINTS L27 sprints seeded (>=8 records)"
+      ],
+      "warning_gates": [],
+      "relevant_gates": 7
+    },
+    {
+      "id": "F37-API",
+      "label": "Core API Endpoints",
+      "done": false,
+      "raw_deps": [],
+      "blockers": [],
+      "verdict": "READY",
+      "blocking_gates": [],
+      "warning_gates": [],
+      "relevant_gates": 2
+    }
+  ],
+  "gates": [
+    {
+      "id": "G-ACA",
+      "label": "ACA reachable + Cosmos-backed",
+      "features": [
+        "ALL"
+      ],
+      "status": "PASS",
+      "detail": "v=1.0.0 store=cosmos"
+    },
+    {
+      "id": "G-VIOLATIONS",
+      "label": "validate-model violations=0",
+      "features": [
+        "ALL"
+      ],
+      "status": "PASS",
+      "detail": "violations=0 exported=4006"
+    },
+    {
+      "id": "G-FP-ENDPOINT",
+      "label": "fp/estimate endpoint on ACA",
+      "features": [
+        "F31-DM-FP1",
+        "F37-10"
+      ],
+      "status": "FAIL",
+      "detail": "GET /model/fp/estimate -> 404 -- ACA image predates DPDCA sprint",
+      "fix": "Redeploy 37-data-model to ACA from current main branch"
+    },
+    {
+      "id": "G-TFT",
+      "label": "Endpoints stamped (transaction_function_type)",
+      "features": [
+        "F31-DM-FP1",
+        "F31-DM-VERITAS1",
+        "F37-10"
+      ],
+      "status": "PASS",
+      "detail": "76/76 stamped"
+    },
+    {
+      "id": "G-STORYIDS",
+      "label": "Endpoints have story_ids (MTI 4th component)",
+      "features": [
+        "F31-DM-VERITAS1",
+        "F37-10"
+      ],
+      "status": "FAIL",
+      "detail": "0/76 have story_ids -- complexity_coverage=0; veritas uses 3-component formula",
+      "fix": "F37-10-001: stamp story_ids alongside transaction_function_type"
+    },
+    {
+      "id": "G-DFT",
+      "label": "Containers stamped (data_function_type)",
+      "features": [
+        "F31-DM-FP1",
+        "F37-10"
+      ],
+      "status": "PASS",
+      "detail": "13/13 stamped"
+    },
+    {
+      "id": "G-SPRINTS",
+      "label": "L27 sprints seeded (>=8 records)",
+      "features": [
+        "F31-DM-PMLIVE1",
+        "F31-PM3",
+        "F37-10"
+      ],
+      "status": "FAIL",
+      "detail": "L27 layer not on ACA -- DPDCA sprint not deployed",
+      "fix": "Redeploy 37-data-model ACA from main branch"
+    },
+    {
+      "id": "G-L28L30",
+      "label": "L28-L30 reachable (milestones/risks/decisions)",
+      "features": [
+        "F31-DM-PMLIVE1"
+      ],
+      "status": "FAIL",
+      "detail": "Not reachable: milestones(L28), risks(L29), decisions(L30) -- DPDCA sprint not deployed",
+      "fix": "Redeploy 37-data-model ACA from main branch"
+    },
+    {
+      "id": "G-GRAPH",
+      "label": "Graph endpoint on ACA (F31-DM-GRAPH1 gate)",
+      "features": [
+        "F31-DM-GRAPH1",
+        "F31-DM-GRAPH2",
+        "F31-DM-EXP1"
+      ],
+      "status": "PASS",
+      "detail": "graph/edge-types reachable"
+    }
+  ]
+}

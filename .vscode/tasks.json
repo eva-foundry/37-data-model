@@ -1,0 +1,72 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "model-api: ensure running",
+      "type": "shell",
+      "command": "try { Invoke-RestMethod 'http://localhost:8010/health' | Out-Null; Write-Host '[INFO] model-api already running on :8010' } catch { Write-Host '[INFO] Starting model-api on :8010...'; $env:PYTHONPATH='C:\\AICOE\\eva-foundation\\37-data-model'; C:\\AICOE\\.venv\\Scripts\\python.exe -m uvicorn api.server:app --port 8010 --log-level error }",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^\\[FAIL\\](.*)$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "\\[INFO\\]",
+          "endsPattern": "Application startup complete"
+        }
+      },
+      "presentation": {
+        "reveal": "silent",
+        "panel": "dedicated",
+        "group": "model-api"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "label": "model-api: start (foreground)",
+      "type": "shell",
+      "command": "$env:PYTHONPATH='C:\\AICOE\\eva-foundation\\37-data-model'; C:\\AICOE\\.venv\\Scripts\\python.exe -m uvicorn api.server:app --port 8010 --log-level info",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "model-api"
+      }
+    },
+    {
+      "label": "model-api: commit (export+assemble+validate)",
+      "type": "shell",
+      "command": "Invoke-RestMethod 'http://localhost:8010/model/admin/commit' -Method POST -Headers @{'Authorization'='Bearer dev-admin'} | ConvertTo-Json -Depth 3",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "model-api: agent-summary",
+      "type": "shell",
+      "command": "Invoke-RestMethod 'http://localhost:8010/model/agent-summary' | ConvertTo-Json -Depth 2",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "model-api: validate only",
+      "type": "shell",
+      "command": "Invoke-RestMethod 'http://localhost:8010/model/admin/validate' -Headers @{'Authorization'='Bearer dev-admin'} | Select-Object status, count | ConvertTo-Json",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}

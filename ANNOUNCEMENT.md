@@ -1,5 +1,9 @@
 # EVA Data Model — General Availability Announcement
 
+> **HISTORICAL DOCUMENT.** Issued 2026-02-20 when the original 11 application layers
+> reached GA. The model now has 27/27 layers and 27 screens. See [STATUS.md](STATUS.md)
+> for current authoritative state.
+
 **Date:** February 20, 2026 — 5:01 AM ET  
 **From:** AI Centre of Excellence  
 **To:** EVA Project Stakeholders, EVA Development Teams, AI Engineering Leads  

@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-02-22T00:00:00",
+  "ado_org": "https://dev.azure.com/marcopresta",
+  "ado_project": "eva-poc",
+  "github_repo": "eva-foundry/37-data-model",
+  "project_maturity": "planned",
+
+  "epic": {
+    "skip_if_id_exists": 164,
+    "ado_id": 164,
+    "type": "Epic",
+    "title": "EVA Data Model — Maintenance & Extension Tooling",
+    "description": "Zero-drift model — every source change that affects a model object is automatically detected, flagged, and either auto-patched (agent path) or surfaced as an ADO bug (manual path) — within one sprint cycle.\n\nThree gaps block the model from staying accurate without manual effort:\n1. No CI gate — validate-model.ps1 is not run on every PR.\n2. No drift detection — sync-from-source.ps1 exists but is never automatically triggered.\n3. No coverage signal — coverage-gaps.ps1 does not exist yet.\nA fourth gap: no model-sync agent (Sprint-9).\n\nDepends on: EVA Data Model initial build epic (COMPLETE, all WIs Done, id=30).",
+    "tags": "eva-data-model;37;maintenance;drift-detection",
+    "area_path": "eva-poc"
+  },
+
+  "features": [
+    {
+      "id_hint": "dm-maint-f1",
+      "ado_id": 165,
+      "type": "Feature",
+      "title": "CI Gate & Same-PR Enforcement",
+      "description": "GitHub Actions run validate-model.ps1 on every PR that touches model/** or schema/**. Merge is blocked if exit code != 0. A second job checks that assemble-model.ps1 was run before the PR was opened (same-PR rule). Includes coverage-gaps.ps1 script (DM-MAINT-WI-0).",
+      "tags": "eva-data-model;dm-maint-f1",
+      "parent": "epic"
+    },
+    {
+      "id_hint": "dm-maint-f2",
+      "ado_id": 166,
+      "type": "Feature",
+      "title": "Automated Drift Detection",
+      "description": "Scheduled workflow (Mondays 06:00 UTC) runs sync-from-source.ps1 -OutputFormat json and opens an ADO bug for every IN_SOURCE_ONLY, STATUS_MISMATCH, or FIELD_DRIFT finding. Drift report uploaded as GitHub Actions artifact. Requires sync-from-source.ps1 JSON output mode (DM-MAINT-WI-4).",
+      "tags": "eva-data-model;dm-maint-f2",
+      "parent": "epic"
+    },
+    {
+      "id_hint": "dm-maint-f3",
+      "ado_id": 167,
+      "type": "Feature",
+      "title": "Coverage Gaps Surface",
+      "description": "coverage-gaps.ps1 lists requirements with zero test_ids and endpoints with no satisfied_by back-reference. Output wired into the drift-detection workflow: each uncovered requirement opens an ADO work item tagged [COVERAGE].",
+      "tags": "eva-data-model;dm-maint-f3",
+      "parent": "epic"
+    },
+    {
+      "id_hint": "dm-maint-f4",
+      "ado_id": 168,
+      "type": "Feature",
+      "title": "Model-Sync Agent",
+      "description": "Agent-fleet agent that accepts a structured diff (source_repo, layer, operation, object) and produces an RFC 6902 JSON Patch for the target layer file plus the validate command. Integrated into sprint-execute.yml Do phase so that WIs tagged same-pr-required:37-data-model auto-raise a 37-data-model PR.",
+      "tags": "eva-data-model;dm-maint-f4",
+      "parent": "epic"
+    }
+  ],
+
+  "user_stories": [
+    {
+      "id_hint": "dm-maint-wi-0",
+      "ado_id": 169,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-0] coverage-gaps.ps1 — requirements with zero test coverage",
+      "description": "Write scripts/coverage-gaps.ps1. Reads eva-model.json and outputs two pipeline-friendly arrays:\n1. Requirements where test_ids is empty or missing.\n2. Endpoints where no requirement's satisfied_by lists them.\nOutput must be PowerShell objects (not plain text) so the drift workflow can pipe them.",
+      "acceptance_criteria": "- .\\scripts\\coverage-gaps.ps1 exits 0 from repo root\n- | Where-Object { $_.kind -eq 'requirement' } returns all zero-coverage requirements\n- | Where-Object { $_.kind -eq 'endpoint' } returns all endpoints with no satisfied_by back-ref\n- Script listed in README.md scripts table\n- validate-model.ps1 still PASS after script addition",
+      "tags": "eva-data-model;dm-maint-wi-0;Sprint-8",
+      "iteration_path": "eva-poc\\Sprint-8",
+      "story_points": 1,
+      "state": "New",
+      "parent": "dm-maint-f1"
+    },
+    {
+      "id_hint": "dm-maint-wi-1",
+      "ado_id": 170,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-1] GitHub Action — validate-model on every PR",
+      "description": "Create .github/workflows/validate-model.yml. Triggers on pull_request paths: model/**, schema/**, scripts/**.\nSteps: (1) checkout, (2) pwsh scripts/assemble-model.ps1, (3) pwsh scripts/validate-model.ps1 — fails if exit != 0, (4) upload model/eva-model.json as artifact eva-model-pr-<PR_NUMBER>.\nRuns on ubuntu-latest using pwsh.",
+      "acceptance_criteria": "- PR modifying model/endpoints.json -> workflow runs and passes\n- Deliberate dangling reference -> workflow fails with DANGLING_REF message\n- Workflow passes actionlint with 0 warnings\n- Badge added to README.md",
+      "tags": "eva-data-model;dm-maint-wi-1;Sprint-8",
+      "iteration_path": "eva-poc\\Sprint-8",
+      "story_points": 2,
+      "state": "New",
+      "parent": "dm-maint-f1"
+    },
+    {
+      "id_hint": "dm-maint-wi-4",
+      "ado_id": 171,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-4] sync-from-source.ps1 — add -OutputFormat json mode",
+      "description": "Add -OutputFormat parameter to scripts/sync-from-source.ps1: 'text' (default, existing behaviour) or 'json' (outputs array of drift objects). Each object: { object_id, layer, status, source_value, model_value }. Prerequisite for DM-MAINT-WI-3.",
+      "acceptance_criteria": "- .\\scripts\\sync-from-source.ps1 -OutputFormat json | ConvertFrom-Json parses without error\n- Each object has: object_id, layer, status (IN_MODEL_ONLY / IN_SOURCE_ONLY / STATUS_MISMATCH / FIELD_DRIFT / SYNC), source_value, model_value\n- Default text behaviour unchanged — no regression",
+      "tags": "eva-data-model;dm-maint-wi-4;Sprint-8",
+      "iteration_path": "eva-poc\\Sprint-8",
+      "story_points": 1,
+      "state": "New",
+      "parent": "dm-maint-f2"
+    },
+    {
+      "id_hint": "dm-maint-wi-3",
+      "ado_id": 172,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-3] Scheduled drift-detection workflow",
+      "description": "Create .github/workflows/drift-detection.yml. Trigger: schedule cron '0 6 * * 1' (Mondays 06:00 UTC) + workflow_dispatch.\nSteps: (1) checkout 37-data-model + companion repos, (2) sync-from-source.ps1 -OutputFormat json > drift-report.json, (3) for each non-SYNC entry open ADO bug tagged eva-data-model;drift;auto, (4) upload drift-report.json as artifact.\nGraceful if ADO_PAT secret not set.",
+      "acceptance_criteria": "- workflow_dispatch run completes without error\n- drift-report.json artifact present\n- Deliberate STATUS_MISMATCH -> ADO bug created within 2 minutes\n- No drift -> 0 new ADO WIs created\n- Missing ADO_PAT -> exits 0 with log message 'ADO_PAT not set — skipping bug creation'",
+      "tags": "eva-data-model;dm-maint-wi-3;Sprint-8",
+      "iteration_path": "eva-poc\\Sprint-8",
+      "story_points": 3,
+      "state": "New",
+      "parent": "dm-maint-f2"
+    },
+    {
+      "id_hint": "dm-maint-wi-2",
+      "ado_id": 173,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-2] Same-PR enforcement — source change without model update = blocking comment",
+      "description": "Add scripts/check-same-pr.ps1 and a same-pr-check job to validate-model.yml. The script diffs HEAD vs base branch, identifies layer files touched, and checks that eva-model.json mtime > all sourced JSON files (i.e. assemble was run). Exit 1 if not assembled.",
+      "acceptance_criteria": "- PR: updates model/endpoints.json but skips assemble -> same-pr-check fails\n- PR: updates model/endpoints.json and runs assemble -> same-pr-check passes\n- PR touching only README.md -> same-pr-check job skipped\n- check-same-pr.ps1 documented in README.md scripts table",
+      "tags": "eva-data-model;dm-maint-wi-2;Sprint-8",
+      "iteration_path": "eva-poc\\Sprint-8",
+      "story_points": 2,
+      "state": "New",
+      "parent": "dm-maint-f1"
+    },
+    {
+      "id_hint": "dm-maint-wi-5",
+      "ado_id": 174,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-5] Wire coverage-gaps.ps1 into drift-detection workflow",
+      "description": "Add step to drift-detection.yml after sync-from-source: run coverage-gaps.ps1 -OutputFormat json > coverage-report.json. For each requirement with zero test_ids, open ADO WI: '[COVERAGE] <requirement_id> — no test coverage'. Upload coverage-report.json as artifact.",
+      "acceptance_criteria": "- Requirement with zero test_ids -> ADO WI created on next run\n- No gaps -> 0 WIs created, workflow exits 0\n- coverage-report.json artifact present on every run",
+      "tags": "eva-data-model;dm-maint-wi-5;Sprint-8",
+      "iteration_path": "eva-poc\\Sprint-8",
+      "story_points": 1,
+      "state": "New",
+      "parent": "dm-maint-f3"
+    },
+    {
+      "id_hint": "dm-maint-wi-6",
+      "ado_id": 175,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-6] model-sync-agent scaffold",
+      "description": "New agent: accepts { source_repo, layer, operation, object } and returns { patch: [RFC 6902 ops], validate_command, pr_title, pr_body }. Loads current layer JSON, produces patch via Foundry model (gpt-4.1 or FOUNDRY_MODEL_DEPLOYMENT_NAME env var). Register in model/agents.json.",
+      "acceptance_criteria": "- POST { source_repo: '33-eva-brain-v2', layer: 'endpoints', operation: 'add', object: {...} } -> valid RFC 6902 patch; applying it passes validate-model.ps1\n- Model configurable via FOUNDRY_MODEL_DEPLOYMENT_NAME\n- Agent registered in model/agents.json\n- Unsupported layer -> 422 with clear message",
+      "tags": "eva-data-model;dm-maint-wi-6;Sprint-9",
+      "iteration_path": "eva-poc\\Sprint-9",
+      "story_points": 3,
+      "state": "New",
+      "parent": "dm-maint-f4"
+    },
+    {
+      "id_hint": "dm-maint-wi-7",
+      "ado_id": 176,
+      "type": "Product Backlog Item",
+      "title": "[DM-MAINT-WI-7] Integrate model-sync-agent into sprint-execute.yml Do phase",
+      "description": "When sprint-execute.yml labels a WI with same-pr-required:37-data-model, the Do phase POSTs to model-sync-agent, applies the returned patch, and opens a PR on 37-data-model. The Act phase is triggered by that PR's validate-model.yml CI. Requires new tool: model-sync in 29-foundry skill registry.",
+      "acceptance_criteria": "- WI tagged same-pr-required:37-data-model completes Do phase -> PR opened on 37-data-model with JSON patch\n- validate-model.yml runs on that PR and passes\n- WI without the tag -> no 37-data-model PR created\n- PR description contains resolves #<source-wi-id>",
+      "tags": "eva-data-model;dm-maint-wi-7;Sprint-9",
+      "iteration_path": "eva-poc\\Sprint-9",
+      "story_points": 2,
+      "state": "New",
+      "parent": "dm-maint-f4"
+    }
+  ],
+
+  "sprints_needed": [
+    { "name": "Sprint-8", "start_date": "2026-03-01", "finish_date": "2026-03-14" },
+    { "name": "Sprint-9", "start_date": "2026-03-15", "finish_date": "2026-03-28" }
+  ]
+}

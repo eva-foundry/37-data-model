@@ -37,6 +37,11 @@
       "description": "Persona ids this requirement concerns"
     },
     "sprint": { "type": ["integer", "null"] },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Requirement ids that must be completed before this one can start (precedence chain)"
+    },
     "status": {
       "type": "string",
       "enum": ["done", "in-progress", "planned", "deferred", "cancelled"]

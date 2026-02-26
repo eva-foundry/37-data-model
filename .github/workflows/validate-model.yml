@@ -1,0 +1,42 @@
+name: Validate EVA Data Model
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'model/**'
+      - 'schema/**'
+      - 'scripts/assemble-model.ps1'
+      - 'scripts/validate-model.ps1'
+  push:
+    branches:
+      - main
+    paths:
+      - 'model/**'
+      - 'schema/**'
+      - 'scripts/assemble-model.ps1'
+      - 'scripts/validate-model.ps1'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Assemble + Validate Model
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Assemble eva-model.json (27 layers → single file)
+        shell: pwsh
+        run: pwsh scripts/assemble-model.ps1
+
+      - name: Validate cross-references (must exit 0)
+        shell: pwsh
+        run: |
+          pwsh scripts/validate-model.ps1
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "::error::validate-model.ps1 reported violations — see output above"
+            exit 1
+          }

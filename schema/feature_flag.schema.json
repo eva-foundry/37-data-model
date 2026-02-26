@@ -27,6 +27,11 @@
       "items": { "type": "string" },
       "description": "Endpoint ids that require this flag"
     },
+    "priority": {
+      "type": "integer",
+      "description": "Evaluation priority — lower numbers are evaluated first when multiple flags apply (default 50)",
+      "default": 50
+    },
     "status": {
       "type": "string",
       "enum": ["active", "planned", "deprecated"]

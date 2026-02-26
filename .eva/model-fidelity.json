@@ -1,0 +1,1133 @@
+{
+  "schema": "eva.model-fidelity.v1",
+  "generated_at": "2026-02-25T05:28:52.039Z",
+  "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
+  "model_fidelity_score": 81,
+  "declared_total": 279,
+  "verified_total": 225,
+  "drifted": [
+    {
+      "entity": "JpSparkLayout",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/layout/Layout.tsx"
+    },
+    {
+      "entity": "JpSparkChatPage",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/chat/Chat.tsx"
+    },
+    {
+      "entity": "JpSparkContentPage",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/content/Content.tsx"
+    },
+    {
+      "entity": "JpSparkTranslatorPage",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/translator/Translator.tsx"
+    },
+    {
+      "entity": "JpSparkUrlScrapperPage",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/urlscrapper/UrlScrapper.tsx"
+    },
+    {
+      "entity": "JpSparkTDAPage",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/tda/TDA.tsx"
+    },
+    {
+      "entity": "JpSparkTutorPage",
+      "type": "screen",
+      "declared_status": "repo_path_declared",
+      "actual_status": "not_found",
+      "gap": "Screen file not on disk: 44-eva-jp-spark/src/pages/tutor/Tutor.tsx"
+    },
+    {
+      "entity": "eva-brain-api",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-brain-api"
+    },
+    {
+      "entity": "eva-roles-api",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-roles-api"
+    },
+    {
+      "entity": "admin-face",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: admin-face"
+    },
+    {
+      "entity": "chat-face",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: chat-face"
+    },
+    {
+      "entity": "agent-fleet",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: agent-fleet"
+    },
+    {
+      "entity": "azure-apim",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: azure-apim"
+    },
+    {
+      "entity": "azure-foundry",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: azure-foundry"
+    },
+    {
+      "entity": "eva-jurisprudence",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-jurisprudence"
+    },
+    {
+      "entity": "assist-me",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: assist-me"
+    },
+    {
+      "entity": "model-api",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: model-api"
+    },
+    {
+      "entity": "eva-foundry-lib",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-foundry-lib"
+    },
+    {
+      "entity": "eva-red-teaming",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-red-teaming"
+    },
+    {
+      "entity": "eva-ui-bench",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-ui-bench"
+    },
+    {
+      "entity": "eva-ado-command-center",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-ado-command-center"
+    },
+    {
+      "entity": "eva-ado-dashboard",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-ado-dashboard"
+    },
+    {
+      "entity": "eva-control-plane",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-control-plane"
+    },
+    {
+      "entity": "eva-devbench",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-devbench"
+    },
+    {
+      "entity": "eva-cli",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-cli"
+    },
+    {
+      "entity": "eva-spark",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-spark"
+    },
+    {
+      "entity": "eva-jp-spark",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-jp-spark"
+    },
+    {
+      "entity": "eva-cdc",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-cdc"
+    },
+    {
+      "entity": "eva-system-analysis",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: eva-system-analysis"
+    },
+    {
+      "entity": "model-explorer-ui",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Explorer UI"
+    },
+    {
+      "entity": "model-graph-explorer",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Graph Explorer"
+    },
+    {
+      "entity": "model-admin-panel",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Admin Panel"
+    },
+    {
+      "entity": "model-drift-dashboard",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Drift Dashboard"
+    },
+    {
+      "entity": "model-impact-view",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Impact Analysis View"
+    },
+    {
+      "entity": "model-sync-agent",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Sync Agent"
+    },
+    {
+      "entity": "model-drift-agent",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Drift Detection Agent"
+    },
+    {
+      "entity": "model-doc-generator-agent",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Documentation Generator Agent"
+    },
+    {
+      "entity": "model-diagram-agent",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Architecture Diagram Agent"
+    },
+    {
+      "entity": "model-status-agent",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: PoC Status Agent"
+    },
+    {
+      "entity": "model-trust-linker",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Model Trust Linker"
+    },
+    {
+      "entity": "maf-orchestration",
+      "type": "service",
+      "declared_status": "is_active:true",
+      "actual_status": "not_found",
+      "gap": "No docker-compose or Dockerfile references service name: Azure MAF Orchestration Agent"
+    },
+    {
+      "entity": "jobs",
+      "type": "container",
+      "declared_status": "16 declared fields",
+      "actual_status": "0% found (0/16)",
+      "gap": "Schema coverage < 50% -- only 0/16 field names found in repo"
+    },
+    {
+      "entity": "extracted_content",
+      "type": "container",
+      "declared_status": "3 declared fields",
+      "actual_status": "0% found (0/3)",
+      "gap": "Schema coverage < 50% -- only 0/3 field names found in repo"
+    },
+    {
+      "entity": "chunks",
+      "type": "container",
+      "declared_status": "5 declared fields",
+      "actual_status": "0% found (0/5)",
+      "gap": "Schema coverage < 50% -- only 0/5 field names found in repo"
+    },
+    {
+      "entity": "audit_logs",
+      "type": "container",
+      "declared_status": "7 declared fields",
+      "actual_status": "0% found (0/7)",
+      "gap": "Schema coverage < 50% -- only 0/7 field names found in repo"
+    },
+    {
+      "entity": "content_access_logs",
+      "type": "container",
+      "declared_status": "6 declared fields",
+      "actual_status": "0% found (0/6)",
+      "gap": "Schema coverage < 50% -- only 0/6 field names found in repo"
+    },
+    {
+      "entity": "sessions",
+      "type": "container",
+      "declared_status": "9 declared fields",
+      "actual_status": "0% found (0/9)",
+      "gap": "Schema coverage < 50% -- only 0/9 field names found in repo"
+    },
+    {
+      "entity": "messages",
+      "type": "container",
+      "declared_status": "6 declared fields",
+      "actual_status": "0% found (0/6)",
+      "gap": "Schema coverage < 50% -- only 0/6 field names found in repo"
+    },
+    {
+      "entity": "scrum-cache",
+      "type": "container",
+      "declared_status": "4 declared fields",
+      "actual_status": "0% found (0/4)",
+      "gap": "Schema coverage < 50% -- only 0/4 field names found in repo"
+    },
+    {
+      "entity": "config",
+      "type": "container",
+      "declared_status": "3 declared fields",
+      "actual_status": "0% found (0/3)",
+      "gap": "Schema coverage < 50% -- only 0/3 field names found in repo"
+    },
+    {
+      "entity": "apps",
+      "type": "container",
+      "declared_status": "5 declared fields",
+      "actual_status": "0% found (0/5)",
+      "gap": "Schema coverage < 50% -- only 0/5 field names found in repo"
+    },
+    {
+      "entity": "model_objects",
+      "type": "container",
+      "declared_status": "9 declared fields",
+      "actual_status": "0% found (0/9)",
+      "gap": "Schema coverage < 50% -- only 0/9 field names found in repo"
+    },
+    {
+      "entity": "translations",
+      "type": "container",
+      "declared_status": "6 declared fields",
+      "actual_status": "0% found (0/6)",
+      "gap": "Schema coverage < 50% -- only 0/6 field names found in repo"
+    },
+    {
+      "entity": "content_logs",
+      "type": "container",
+      "declared_status": "5 declared fields",
+      "actual_status": "0% found (0/5)",
+      "gap": "Schema coverage < 50% -- only 0/5 field names found in repo"
+    }
+  ],
+  "impacts": [
+    {
+      "container": "jobs",
+      "impact": {
+        "container": "jobs",
+        "field": null,
+        "impact": {
+          "total": 7,
+          "endpoints": [
+            {
+              "id": "POST /v1/ingest/upload",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "jobs"
+              ]
+            },
+            {
+              "id": "GET /v1/ingest/jobs/{job_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "jobs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/ingest/jobs",
+              "status": "implemented",
+              "cosmos_reads": [
+                "jobs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "DELETE /v1/ingest/jobs/{job_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "jobs"
+              ],
+              "cosmos_writes": [
+                "jobs"
+              ]
+            },
+            {
+              "id": "POST /v1/ingest/reprocess/{job_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "jobs"
+              ],
+              "cosmos_writes": [
+                "jobs"
+              ]
+            },
+            {
+              "id": "GET /v1/ingest/stats",
+              "status": "stub",
+              "cosmos_reads": [
+                "jobs"
+              ],
+              "cosmos_writes": []
+            }
+          ],
+          "screens": [],
+          "schemas": [],
+          "agents": [],
+          "requirements": [
+            {
+              "id": "EPIC-001",
+              "title": "EVA Brain v2 runnable and tested API"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "container": "extracted_content",
+      "impact": {
+        "container": "extracted_content",
+        "field": null,
+        "impact": {
+          "total": 0,
+          "endpoints": [],
+          "screens": [],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "chunks",
+      "impact": {
+        "container": "chunks",
+        "field": null,
+        "impact": {
+          "total": 1,
+          "endpoints": [
+            {
+              "id": "GET /v1/documents/{doc_id}/chunks",
+              "status": "implemented",
+              "cosmos_reads": [
+                "chunks"
+              ],
+              "cosmos_writes": []
+            }
+          ],
+          "screens": [],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "audit_logs",
+      "impact": {
+        "container": "audit_logs",
+        "field": null,
+        "impact": {
+          "total": 19,
+          "endpoints": [
+            {
+              "id": "POST /v1/chat",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/chat/rrr",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/chat/rtr",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/chat/work",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/chat/hybrid",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/chat/ungrounded",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/chat/read-retrieve-read",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/retrieve",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "PATCH /v1/documents/{doc_id}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "DELETE /v1/documents/{doc_id}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "DELETE /v1/documents/{doc_id}/chunks",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "POST /v1/documents/{doc_id}/reindex",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "audit_logs"
+              ]
+            },
+            {
+              "id": "GET /v1/logs/audit",
+              "status": "implemented",
+              "cosmos_reads": [
+                "audit_logs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/logs/audit/{log_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "audit_logs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/logs/audit/export",
+              "status": "implemented",
+              "cosmos_reads": [
+                "audit_logs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/logs/audit/stats",
+              "status": "implemented",
+              "cosmos_reads": [
+                "audit_logs"
+              ],
+              "cosmos_writes": []
+            }
+          ],
+          "screens": [
+            {
+              "id": "AuditLogsPage",
+              "route": "/admin/audit/logs",
+              "status": "implemented"
+            },
+            {
+              "id": "ChatPane",
+              "route": "/",
+              "status": "implemented"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": [
+            {
+              "id": "EPIC-001",
+              "title": "EVA Brain v2 runnable and tested API"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "container": "content_access_logs",
+      "impact": {
+        "container": "content_access_logs",
+        "field": null,
+        "impact": {
+          "total": 2,
+          "endpoints": [
+            {
+              "id": "GET /v1/documents/{doc_id}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "content_access_logs"
+              ]
+            },
+            {
+              "id": "GET /v1/documents/{doc_id}/content",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "content_access_logs"
+              ]
+            }
+          ],
+          "screens": [],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "sessions",
+      "impact": {
+        "container": "sessions",
+        "field": null,
+        "impact": {
+          "total": 9,
+          "endpoints": [
+            {
+              "id": "POST /v1/sessions",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "sessions"
+              ]
+            },
+            {
+              "id": "GET /v1/sessions",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/sessions/{session_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions",
+                "messages"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "PATCH /v1/sessions/{session_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions"
+              ],
+              "cosmos_writes": [
+                "sessions"
+              ]
+            },
+            {
+              "id": "DELETE /v1/sessions/{session_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions"
+              ],
+              "cosmos_writes": [
+                "sessions",
+                "messages"
+              ]
+            },
+            {
+              "id": "DELETE /v1/sessions",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions"
+              ],
+              "cosmos_writes": [
+                "sessions",
+                "messages"
+              ]
+            }
+          ],
+          "screens": [
+            {
+              "id": "ChatPane",
+              "route": "/",
+              "status": "implemented"
+            },
+            {
+              "id": "EvaDAChatPage",
+              "route": "/portal/eva-da/chat",
+              "status": "planned"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": [
+            {
+              "id": "EPIC-001",
+              "title": "EVA Brain v2 runnable and tested API"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "container": "messages",
+      "impact": {
+        "container": "messages",
+        "field": null,
+        "impact": {
+          "total": 6,
+          "endpoints": [
+            {
+              "id": "GET /v1/sessions/{session_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions",
+                "messages"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "DELETE /v1/sessions/{session_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions"
+              ],
+              "cosmos_writes": [
+                "sessions",
+                "messages"
+              ]
+            },
+            {
+              "id": "DELETE /v1/sessions",
+              "status": "implemented",
+              "cosmos_reads": [
+                "sessions"
+              ],
+              "cosmos_writes": [
+                "sessions",
+                "messages"
+              ]
+            }
+          ],
+          "screens": [
+            {
+              "id": "ChatPane",
+              "route": "/",
+              "status": "implemented"
+            },
+            {
+              "id": "EvaDAChatPage",
+              "route": "/portal/eva-da/chat",
+              "status": "planned"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": [
+            {
+              "id": "EPIC-001",
+              "title": "EVA Brain v2 runnable and tested API"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "container": "scrum-cache",
+      "impact": {
+        "container": "scrum-cache",
+        "field": null,
+        "impact": {
+          "total": 5,
+          "endpoints": [
+            {
+              "id": "GET /v1/scrum/summary",
+              "status": "coded",
+              "cosmos_reads": [
+                "scrum-cache"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/scrum/dashboard",
+              "status": "coded",
+              "cosmos_reads": [
+                "scrum-cache"
+              ],
+              "cosmos_writes": [
+                "scrum-cache"
+              ]
+            }
+          ],
+          "screens": [
+            {
+              "id": "EVAHomePage",
+              "route": "/",
+              "status": "implemented"
+            },
+            {
+              "id": "SprintBoardPage",
+              "route": "/devops/sprint",
+              "status": "implemented"
+            },
+            {
+              "id": "ADOCommandCenterPage",
+              "route": "/portal/ado",
+              "status": "planned"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "config",
+      "impact": {
+        "container": "config",
+        "field": null,
+        "impact": {
+          "total": 6,
+          "endpoints": [
+            {
+              "id": "GET /v1/config/translations/{language}",
+              "status": "planned",
+              "cosmos_reads": [
+                "config"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/settings",
+              "status": "implemented",
+              "cosmos_reads": [
+                "config"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "PATCH /v1/settings/{key}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "config"
+              ]
+            }
+          ],
+          "screens": [
+            {
+              "id": "TranslationsPage",
+              "route": "/admin/translations",
+              "status": "implemented"
+            },
+            {
+              "id": "SettingsPage",
+              "route": "/admin/settings",
+              "status": "implemented"
+            },
+            {
+              "id": "AdminI18nByScreenPage",
+              "route": "/admin/i18n/by-screen",
+              "status": "planned"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "apps",
+      "impact": {
+        "container": "apps",
+        "field": null,
+        "impact": {
+          "total": 8,
+          "endpoints": [
+            {
+              "id": "GET /v1/apps",
+              "status": "implemented",
+              "cosmos_reads": [
+                "apps"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "POST /v1/apps/{appId}/disable",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "apps"
+              ]
+            },
+            {
+              "id": "POST /v1/apps",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "apps"
+              ]
+            },
+            {
+              "id": "GET /v1/apps/{appId}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "apps"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "PATCH /v1/apps/{appId}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "apps"
+              ],
+              "cosmos_writes": [
+                "apps"
+              ]
+            },
+            {
+              "id": "DELETE /v1/apps/{appId}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "apps"
+              ]
+            },
+            {
+              "id": "GET /v1/apps/{appId}/export",
+              "status": "implemented",
+              "cosmos_reads": [
+                "apps"
+              ],
+              "cosmos_writes": []
+            }
+          ],
+          "screens": [
+            {
+              "id": "AppsPage",
+              "route": "/admin/app-registry",
+              "status": "implemented"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "model_objects",
+      "impact": {
+        "container": "model_objects",
+        "field": null,
+        "impact": {
+          "total": 0,
+          "endpoints": [],
+          "screens": [],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "translations",
+      "impact": {
+        "container": "translations",
+        "field": null,
+        "impact": {
+          "total": 3,
+          "endpoints": [
+            {
+              "id": "PUT /v1/config/translations/{language}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "translations"
+              ]
+            },
+            {
+              "id": "DELETE /v1/config/translations/{language}",
+              "status": "implemented",
+              "cosmos_reads": [],
+              "cosmos_writes": [
+                "translations"
+              ]
+            }
+          ],
+          "screens": [
+            {
+              "id": "TranslationsPage",
+              "route": "/admin/translations",
+              "status": "implemented"
+            }
+          ],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    },
+    {
+      "container": "content_logs",
+      "impact": {
+        "container": "content_logs",
+        "field": null,
+        "impact": {
+          "total": 4,
+          "endpoints": [
+            {
+              "id": "GET /v1/logs/content",
+              "status": "implemented",
+              "cosmos_reads": [
+                "content_logs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/logs/content/{log_id}",
+              "status": "implemented",
+              "cosmos_reads": [
+                "content_logs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/logs/content/export",
+              "status": "implemented",
+              "cosmos_reads": [
+                "content_logs"
+              ],
+              "cosmos_writes": []
+            },
+            {
+              "id": "GET /v1/logs/content/stats",
+              "status": "implemented",
+              "cosmos_reads": [
+                "content_logs"
+              ],
+              "cosmos_writes": []
+            }
+          ],
+          "screens": [],
+          "schemas": [],
+          "agents": [],
+          "requirements": []
+        }
+      }
+    }
+  ]
+}

@@ -55,14 +55,49 @@
       "description": "Container ids this endpoint writes to"
     },
     "implemented_in": { "type": ["string", "null"], "description": "Relative repo path of route handler" },
+    "repo_line": { "type": ["integer", "null"], "description": "1-based line number of the route handler declaration in implemented_in" },
     "test_ids": {
       "type": "array",
       "items": { "type": "string" },
       "description": "Test function names that cover this endpoint"
     },
+    "auth_mode": {
+      "type": "string",
+      "enum": ["any", "all"],
+      "description": "'any' = at least one auth persona must match; 'all' = all listed personas must be present (default 'any')",
+      "default": "any"
+    },
+    "transport": {
+      "type": "string",
+      "enum": ["http", "sse", "websocket"],
+      "description": "Protocol transport for this endpoint (default http)",
+      "default": "http"
+    },
+    "mock_key": {
+      "type": ["string", "null"],
+      "description": "VITE env var that enables mock mode, e.g. VITE_USE_MOCK_BACKEND"
+    },
+    "mock_fixture": {
+      "type": ["string", "null"],
+      "description": "Relative path to MSW/JSON fixture file for this endpoint"
+    },
     "status": {
       "type": "string",
       "enum": ["implemented", "planned", "deprecated", "stub"]
+    },
+    "story_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "WBS story ids that this endpoint satisfies (cross-ref to wbs layer)"
+    },
+    "transaction_function_type": {
+      "type": ["string", "null"],
+      "enum": ["EI", "EO", "EQ", null],
+      "description": "IFPUG transaction function type: EI=External Input (mutates data), EO=External Output (derived result), EQ=External Inquiry (pass-through read). Used by GET /model/fp/estimate."
+    },
+    "ftr_count": {
+      "type": ["integer", "null"],
+      "description": "IFPUG File Types Referenced \u2014 derived from cosmos_reads+cosmos_writes length if null"
     },
     "notes": { "type": ["string", "null"] }
   }

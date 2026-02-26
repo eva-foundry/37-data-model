@@ -1,0 +1,11 @@
+Work Item Type,Title,Parent,Description,Acceptance Criteria,Tags,Evidence Sources
+Epic,EVA Data Model,,,,eva,
+Feature,F37-01 Guiding Principle,EVA Data Model,,,eva;feature,
+Feature,F37-02 Layer Build Order,EVA Data Model,,,eva;feature,
+Feature,F37-03 Sprint 1 — Foundation Layers (L0–L2) ✅ DONE,EVA Data Model,,,eva;feature,
+Feature,F37-04 Sprint 2 — Data and API Layers (L3–L5) ✅ DONE,EVA Data Model,,,eva;feature,
+Feature,F37-05 Sprint 3 — UI Layers (L6–L7) ✅ DONE,EVA Data Model,,,eva;feature,
+Feature,F37-06 Sprint 4 — Agent Fleet + Infrastructure Layers (L8–L9) ✅ DONE,EVA Data Model,,,eva;feature,
+Feature,F37-07 Sprint 5 — Requirements Traceability Layer (L10) ✅ DONE,EVA Data Model,,,eva;feature,
+Feature,F37-08 Ongoing — How the Model Grows and Is Maintained,EVA Data Model,,,eva;feature,
+Feature,F37-09 Dependencies,EVA Data Model,,,eva;feature,

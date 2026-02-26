@@ -29,6 +29,16 @@
       "description": "Feature flag ids this persona is allowed to access"
     },
     "entra_group": { "type": ["string", "null"], "description": "Entra ID group name or null for machine" },
+    "rank": {
+      "type": "integer",
+      "description": "Priority rank for persona ordering in UI and precedence decisions (lower = higher priority, default 99)",
+      "default": 99
+    },
+    "supersedes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Persona ids that this persona replaces or supersedes"
+    },
     "status": {
       "type": "string",
       "enum": ["active", "planned", "deprecated"]

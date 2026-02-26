@@ -39,6 +39,14 @@
       "description": "validate-model.ps1 (0 violations gate), assemble-model.ps1 (merges layers into eva-model.json), impact-analysis.ps1. Model is authoritative — no re-reading source files when layer is complete.",
       "tags": "eva-data-model;dm-tooling",
       "parent": "epic"
+    },
+    {
+      "id_hint": "dm-model-api",
+      "type": "Feature",
+      "title": "Model API — HTTP Service (FastAPI, port 8010)",
+      "description": "FastAPI service that exposes all 11 model layers over HTTP with structured audit columns (row_version, is_active, created_by/at, modified_by/at), dual-mode store (MemoryStore auto-seeds from disk / CosmosStore partition key /layer), dual-mode cache (MemoryCache / RedisCache), cross-layer impact analysis (GET /model/impact), rich endpoint filter (GET /model/endpoints/filter), and admin routes (seed, cache-flush, audit trail, in-process validation). 24/24 pytest + 21/21 smoke tests passing.",
+      "tags": "eva-data-model;dm-model-api;model-api",
+      "parent": "epic"
     }
   ],
 
@@ -75,6 +83,39 @@
       "state": "Done",
       "parent": "dm-tooling",
       "evidence": { "test_count": null, "coverage_pct": null, "notes": "Tooling operational. Copilot instructions reference canonical query patterns." }
+    },
+    {
+      "id_hint": "dm-wi-4",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-4] Model API core — FastAPI port 8010, dual-mode store/cache, EVA audit columns",
+      "acceptance_criteria": "uvicorn api.server:app --port 8010 starts with 0 errors. GET /health returns store/cache mode. All 11 layers accessible as GET/PUT/DELETE /model/{layer}/{id}. Auto-seeds from disk JSON on MemoryStore startup. Every object carries: created_by, created_at, modified_by, modified_at, row_version (+1 per write), is_active (soft-delete). GET one returns 404 on soft-deleted objects.",
+      "tags": "eva-data-model;dm-wi-4;model-api",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "Done",
+      "parent": "dm-model-api",
+      "evidence": { "test_count": 24, "coverage_pct": null, "notes": "Completed 2026-02-21. 23 Python files under api/. 24/24 pytest passing. 21/21 smoke tests PASS. validate-model.ps1 PASS 0 violations." }
+    },
+    {
+      "id_hint": "dm-wi-5",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-5] Cross-layer impact analysis — GET /model/impact?container=X",
+      "acceptance_criteria": "Returns endpoints that read/write the container, screens that call those endpoints, agents with overlapping input_endpoints, requirements satisfied_by those endpoints. Optional field param narrows by cosmos field name. Response includes per-category arrays and total count.",
+      "tags": "eva-data-model;dm-wi-5;model-api",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "Done",
+      "parent": "dm-model-api",
+      "evidence": { "test_count": 5, "coverage_pct": null, "notes": "Completed 2026-02-21. Tests T20–T24 all passing. Equivalent of impact-analysis.ps1 over HTTP." }
+    },
+    {
+      "id_hint": "dm-wi-6",
+      "type": "Product Backlog Item",
+      "title": "[DM-WI-6] Endpoint filter — GET /model/endpoints/filter?status=stub&cosmos_writes=jobs&auth=admin",
+      "acceptance_criteria": "Filter by any combination of: status, cosmos_writes, cosmos_reads, auth, feature_flag, service. Returns only active endpoints matching all supplied predicates. Served from cache if available.",
+      "tags": "eva-data-model;dm-wi-6;model-api",
+      "iteration_path": "eva-poc\\Sprint-Backlog",
+      "state": "Done",
+      "parent": "dm-model-api",
+      "evidence": { "test_count": 3, "coverage_pct": null, "notes": "Completed 2026-02-21. Tests T09 (filter by status), T10 (filter by cosmos_writes), T11 (filter by auth) all passing." }
     },
     {
       "id_hint": "dm-wi-3",

@@ -1,0 +1,2836 @@
+{
+  "meta": {
+    "schema": "eva.discovery.v2",
+    "generated_at": "2026-02-25T06:37:39.796Z",
+    "repo": "C:\\AICOE\\eva-foundation\\37-data-model"
+  },
+  "project": null,
+  "planned": {
+    "epic": {
+      "title": "EVA Data Model",
+      "source": "README.md"
+    },
+    "features": [
+      {
+        "id": "F37-01",
+        "title": "OBJ_IDPATH API [ID=F37-OBJ_IDPATH]",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-02",
+        "title": "Layer Build Order",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03",
+        "title": "Sprint 1 ? Foundation Layers (L0?L2) ? DONE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04",
+        "title": "Sprint 2 ? Data and API Layers (L3?L5) ? DONE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05",
+        "title": "Sprint 3 ? UI Layers (L6?L7) ? DONE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06",
+        "title": "Sprint 4 ? Agent Fleet + Infrastructure Layers (L8?L9) ? DONE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07",
+        "title": "Sprint 5 ? Requirements Traceability Layer (L10) ? DONE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08",
+        "title": "Ongoing ? How the Model Grows and Is Maintained",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-09",
+        "title": "Dependencies",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH",
+        "title": "HEALTH API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-READY",
+        "title": "READY API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-MODEL",
+        "title": "MODEL API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-SEED",
+        "title": "SEED API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-EXPORT",
+        "title": "EXPORT API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-CACHE",
+        "title": "CACHE API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-BACKFILL",
+        "title": "BACKFILL API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-AUDIT",
+        "title": "AUDIT API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-VALIDATE",
+        "title": "VALIDATE API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-COMMIT",
+        "title": "COMMIT API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-AUDITREPO",
+        "title": "AUDITREPO API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API",
+        "title": "API API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-FILTER",
+        "title": "FILTER API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-EDGETYPES",
+        "title": "EDGETYPES API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-OBJ_IDPATH",
+        "title": "OBJ_IDPATH API",
+        "source": "veritas-plan.json"
+      }
+    ],
+    "stories": [
+      {
+        "id": "F37-01-001",
+        "title": "GET /{obj_id:path} [ID=F37-OBJ_IDPATH-001]",
+        "feature_id": "F37-01",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-01-002",
+        "title": "PUT /{obj_id:path} [ID=F37-OBJ_IDPATH-002]",
+        "feature_id": "F37-01",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-01-003",
+        "title": "DELETE /{obj_id:path} [ID=F37-OBJ_IDPATH-003]",
+        "feature_id": "F37-01",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001",
+        "title": "Deliverables",
+        "feature_id": "F37-03",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-002",
+        "title": "Acceptance",
+        "feature_id": "F37-03",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001",
+        "title": "Deliverables",
+        "feature_id": "F37-04",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-002",
+        "title": "Acceptance",
+        "feature_id": "F37-04",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-001",
+        "title": "Deliverables",
+        "feature_id": "F37-05",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-002",
+        "title": "Acceptance",
+        "feature_id": "F37-05",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-001",
+        "title": "Deliverables",
+        "feature_id": "F37-06",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-002",
+        "title": "Acceptance",
+        "feature_id": "F37-06",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07-001",
+        "title": "Deliverables",
+        "feature_id": "F37-07",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07-002",
+        "title": "Acceptance",
+        "feature_id": "F37-07",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-001",
+        "title": "Growth Path 1 ? Same-PR Rule (day-to-day)",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-002",
+        "title": "Growth Path 2 ? Sprint-Close Audit (every sprint)",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-003",
+        "title": "Growth Path 3 ? Ecosystem Expansion (new service or repository)",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-004",
+        "title": "Growth Path 4 ? New Model Layer (extending the schema)",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-005",
+        "title": "Validation Gate (all paths)",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-006",
+        "title": "Drift Signals ? How to Know the Model Is Stale",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-08-007",
+        "title": "Governance",
+        "feature_id": "F37-08",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH-001",
+        "title": "GET /health",
+        "feature_id": "F37-HEALTH",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH-002",
+        "title": "GET /v1/health",
+        "feature_id": "F37-HEALTH",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH-003",
+        "title": "GET /v1/health",
+        "feature_id": "F37-HEALTH",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH-001",
+        "title": "GET /health",
+        "feature_id": "F37-HEALTH",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH-002",
+        "title": "GET /v1/health",
+        "feature_id": "F37-HEALTH",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-HEALTH-003",
+        "title": "GET /v1/health",
+        "feature_id": "F37-HEALTH",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-READY-001",
+        "title": "GET /ready",
+        "feature_id": "F37-READY",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-READY-001",
+        "title": "GET /ready",
+        "feature_id": "F37-READY",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-MODEL-001",
+        "title": "GET /model/agent-summary",
+        "feature_id": "F37-MODEL",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-MODEL-002",
+        "title": "GET /model/agent-guide",
+        "feature_id": "F37-MODEL",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-MODEL-001",
+        "title": "GET /model/agent-summary",
+        "feature_id": "F37-MODEL",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-MODEL-002",
+        "title": "GET /model/agent-guide",
+        "feature_id": "F37-MODEL",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-SEED-001",
+        "title": "POST /seed",
+        "feature_id": "F37-SEED",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-SEED-001",
+        "title": "POST /seed",
+        "feature_id": "F37-SEED",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-EXPORT-001",
+        "title": "POST /export",
+        "feature_id": "F37-EXPORT",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-EXPORT-001",
+        "title": "POST /export",
+        "feature_id": "F37-EXPORT",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-CACHE-001",
+        "title": "POST /cache/flush",
+        "feature_id": "F37-CACHE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-CACHE-001",
+        "title": "POST /cache/flush",
+        "feature_id": "F37-CACHE",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-BACKFILL-001",
+        "title": "POST /backfill",
+        "feature_id": "F37-BACKFILL",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-BACKFILL-001",
+        "title": "POST /backfill",
+        "feature_id": "F37-BACKFILL",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-AUDIT-001",
+        "title": "GET /audit",
+        "feature_id": "F37-AUDIT",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-AUDIT-001",
+        "title": "GET /audit",
+        "feature_id": "F37-AUDIT",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-VALIDATE-001",
+        "title": "GET /validate",
+        "feature_id": "F37-VALIDATE",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-VALIDATE-001",
+        "title": "GET /validate",
+        "feature_id": "F37-VALIDATE",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-COMMIT-001",
+        "title": "POST /commit",
+        "feature_id": "F37-COMMIT",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-COMMIT-001",
+        "title": "POST /commit",
+        "feature_id": "F37-COMMIT",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-AUDITREPO-001",
+        "title": "POST /audit-repo",
+        "feature_id": "F37-AUDITREPO",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-AUDITREPO-001",
+        "title": "POST /audit-repo",
+        "feature_id": "F37-AUDITREPO",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API-001",
+        "title": "GET /",
+        "feature_id": "F37-API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API-002",
+        "title": "GET /",
+        "feature_id": "F37-API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API-003",
+        "title": "GET /",
+        "feature_id": "F37-API",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API-001",
+        "title": "GET /",
+        "feature_id": "F37-API",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API-002",
+        "title": "GET /",
+        "feature_id": "F37-API",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-API-003",
+        "title": "GET /",
+        "feature_id": "F37-API",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-FILTER-001",
+        "title": "GET /filter",
+        "feature_id": "F37-FILTER",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-FILTER-001",
+        "title": "GET /filter",
+        "feature_id": "F37-FILTER",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-EDGETYPES-001",
+        "title": "GET /edge-types",
+        "feature_id": "F37-EDGETYPES",
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-EDGETYPES-001",
+        "title": "GET /edge-types",
+        "feature_id": "F37-EDGETYPES",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-OBJ_IDPATH-001",
+        "title": "GET /{obj_id:path}",
+        "feature_id": "F37-OBJ_IDPATH",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-OBJ_IDPATH-002",
+        "title": "PUT /{obj_id:path}",
+        "feature_id": "F37-OBJ_IDPATH",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-OBJ_IDPATH-003",
+        "title": "DELETE /{obj_id:path}",
+        "feature_id": "F37-OBJ_IDPATH",
+        "done": false,
+        "source": "veritas-plan.json"
+      }
+    ],
+    "tasks": [
+      {
+        "id": "F37-03-001-T01",
+        "title": "`schema/service.schema.json`",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T02",
+        "title": "`schema/persona.schema.json`",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T03",
+        "title": "`schema/feature_flag.schema.json`",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T04",
+        "title": "`model/services.json` ? 9 services",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T05",
+        "title": "`model/personas.json` ? 6 personas",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T06",
+        "title": "`model/feature_flags.json` ? 9 flags",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T07",
+        "title": "`scripts/validate-model.ps1`",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-03-001-T08",
+        "title": "`scripts/assemble-model.ps1`",
+        "story_id": "F37-03-001",
+        "feature_id": "F37-03",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T01",
+        "title": "`schema/container.schema.json`",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T02",
+        "title": "`schema/endpoint.schema.json`",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T03",
+        "title": "`schema/schema.schema.json`",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T04",
+        "title": "`model/containers.json` ? 7 containers",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T05",
+        "title": "`model/endpoints.json` ? 44 endpoints",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T06",
+        "title": "`model/schemas.json` ? 36 schemas",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T07",
+        "title": "`scripts/impact-analysis.ps1`",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-04-001-T08",
+        "title": "Cross-reference validated",
+        "story_id": "F37-04-001",
+        "feature_id": "F37-04",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-001-T01",
+        "title": "`schema/screen.schema.json`",
+        "story_id": "F37-05-001",
+        "feature_id": "F37-05",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-001-T02",
+        "title": "`schema/literal.schema.json`",
+        "story_id": "F37-05-001",
+        "feature_id": "F37-05",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-001-T03",
+        "title": "`model/screens.json` ? 27 screens (Phase 5 wave added eva-devbench ?5, eva-jp-spark ?7; admin-face 10 + chat-face 1 + portal-face 3 all implemented; devbench/jp-spark stubs pending population per `20260226-to-be-cataloged.md`)",
+        "story_id": "F37-05-001",
+        "feature_id": "F37-05",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-001-T04",
+        "title": "`model/literals.json` ? 232 literal keys (+96 added Feb 22 for WI-9/10/12?16)",
+        "story_id": "F37-05-001",
+        "feature_id": "F37-05",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-05-001-T05",
+        "title": "Cross-reference validated",
+        "story_id": "F37-05-001",
+        "feature_id": "F37-05",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-001-T01",
+        "title": "`schema/agent.schema.json`",
+        "story_id": "F37-06-001",
+        "feature_id": "F37-06",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-001-T02",
+        "title": "`schema/infrastructure.schema.json`",
+        "story_id": "F37-06-001",
+        "feature_id": "F37-06",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-001-T03",
+        "title": "`model/agents.json` ? 3 agents",
+        "story_id": "F37-06-001",
+        "feature_id": "F37-06",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-001-T04",
+        "title": "`model/infrastructure.json` ? 23 resources",
+        "story_id": "F37-06-001",
+        "feature_id": "F37-06",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-06-001-T05",
+        "title": "Cross-reference: agents reference output screens and input endpoints",
+        "story_id": "F37-06-001",
+        "feature_id": "F37-06",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07-001-T01",
+        "title": "`schema/requirement.schema.json`",
+        "story_id": "F37-07-001",
+        "feature_id": "F37-07",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07-001-T02",
+        "title": "`model/requirements.json` ? 22 items (5 epics, 10 requirements, 4 stories, 3 ACs)",
+        "story_id": "F37-07-001",
+        "feature_id": "F37-07",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07-001-T03",
+        "title": "Every requirement cross-referenced to endpoints[] and screens[]",
+        "story_id": "F37-07-001",
+        "feature_id": "F37-07",
+        "done": false,
+        "source": "veritas-plan.json"
+      },
+      {
+        "id": "F37-07-001-T04",
+        "title": "`scripts/coverage-gaps.ps1` ? endpoints/screens with no test coverage *(planned)*",
+        "story_id": "F37-07-001",
+        "feature_id": "F37-07",
+        "done": false,
+        "source": "veritas-plan.json"
+      }
+    ],
+    "acceptance": [],
+    "declared_status": {
+      "STORY:F37-03-001": "done",
+      "STORY:F37-03-002": "done",
+      "STORY:F37-04-001": "done",
+      "STORY:F37-04-002": "done",
+      "STORY:F37-05-001": "done",
+      "STORY:F37-05-002": "done",
+      "STORY:F37-06-001": "done",
+      "STORY:F37-06-002": "done",
+      "STORY:F37-07-001": "done",
+      "STORY:F37-07-002": "done",
+      "STORY:F37-08-001": "done",
+      "STORY:F37-08-002": "done",
+      "STORY:F37-08-003": "done",
+      "STORY:F37-08-004": "done",
+      "STORY:F37-08-005": "done",
+      "STORY:F37-08-006": "done",
+      "STORY:F37-08-007": "done"
+    }
+  },
+  "actual": {
+    "artifacts": [
+      {
+        "path": ".env",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": ".env.example",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "ACCEPTANCE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "acr-build-cosmos.log",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "acr-build.log",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "ado-artifacts.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "ado-import.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "ANNOUNCEMENT.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "assemble-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "Dockerfile",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "export-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "infra-list.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-api-openapi.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "patch-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "PLAN.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "PLAN.md.bak",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "prime-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "pytest.ini",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "README.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "requirements-dev.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "requirements.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "smoke_test.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "STATUS.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "tmp_len.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "USER-GUIDE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "validate-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "verify-scaffold.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "verify.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": ".github/copilot-instructions.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": ".pytest_cache/.gitignore",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": ".pytest_cache/CACHEDIR.TAG",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": ".pytest_cache/README.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": ".vscode/tasks.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "api/config.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/dependencies.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/server.py",
+        "type": "code",
+        "story_tags": [
+          "F37-01-001",
+          "F37-01-002",
+          "F37-01-003",
+          "F37-API-001",
+          "F37-API-002",
+          "F37-API-003",
+          "F37-AUDIT-001",
+          "F37-AUDITREPO-001",
+          "F37-BACKFILL-001",
+          "F37-CACHE-001",
+          "F37-COMMIT-001",
+          "F37-EDGETYPES-001",
+          "F37-EXPORT-001",
+          "F37-FILTER-001",
+          "F37-HEALTH-001",
+          "F37-HEALTH-002",
+          "F37-HEALTH-003",
+          "F37-MODEL-001",
+          "F37-MODEL-002",
+          "F37-OBJ_IDPATH-001",
+          "F37-OBJ_IDPATH-002",
+          "F37-OBJ_IDPATH-003",
+          "F37-READY-001",
+          "F37-SEED-001",
+          "F37-VALIDATE-001"
+        ]
+      },
+      {
+        "path": "api/__init__.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "evidence/F37-08-001.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-08-002.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-08-003.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-003"
+        ]
+      },
+      {
+        "path": "evidence/F37-08-004.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-004"
+        ]
+      },
+      {
+        "path": "evidence/F37-08-005.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-005"
+        ]
+      },
+      {
+        "path": "evidence/F37-08-006.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-006"
+        ]
+      },
+      {
+        "path": "evidence/F37-08-007.py",
+        "type": "evidence",
+        "story_tags": [
+          "F37-08-007"
+        ]
+      },
+      {
+        "path": "evidence/F37-sprints1-5.yaml",
+        "type": "evidence",
+        "story_tags": [
+          "F37-03-001",
+          "F37-03-002",
+          "F37-04-001",
+          "F37-04-002",
+          "F37-05-001",
+          "F37-05-002",
+          "F37-06-001",
+          "F37-06-002",
+          "F37-07-001",
+          "F37-07-002"
+        ]
+      },
+      {
+        "path": "model/agents.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/components.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/connections.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/containers.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/cp_agents.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/cp_policies.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/cp_skills.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/cp_workflows.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/endpoints.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/environments.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/eva-model.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/feature_flags.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/hooks.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/infrastructure.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/literals.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/mcp_servers.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/personas.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/planes.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/projects.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/prompts.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/requirements.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/runbooks.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/schemas.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/screens.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/security_controls.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/services.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/ts_types.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/wbs.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/agent.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/component.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/container.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/endpoint.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/feature_flag.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/hook.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/infrastructure.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/literal.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/mcp_server.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/persona.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/prompt.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/requirement.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/screen.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/security_control.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/service.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/ts_type.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/add-missing-ep.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/add-precedence-fields.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/ado-generate-artifacts.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/assemble-model.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/backfill-metadata.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/backfill-repo-lines.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/coverage-gaps.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/fix-portal-catalog-validation.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/impact-analysis.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/patch-cosmos-fields.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/patch-endpoint-fields.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/patch-registry-table.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/patch-wbs-pm-fields.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/prime-project-scaffolding.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/query-model.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/README.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/register-portal-full-catalog.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/register-uiux-agentic.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/seed-cosmos.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/seed-missing-projects.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/sync-from-source.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/sync-output.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/update-brain-v2-reality.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/validate-model.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "tests/conftest.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/test_admin.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/test_cosmos_roundtrip.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/test_crud.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/test_graph.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/test_impact.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/test_provenance.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": "tests/__init__.py",
+        "type": "test",
+        "story_tags": [],
+        "is_test": true
+      },
+      {
+        "path": ".github/copilot-skills/00-skill-index.skill.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": ".github/workflows/ado-idea-intake.yml",
+        "type": "config",
+        "story_tags": []
+      },
+      {
+        "path": ".github/workflows/validate-model.yml",
+        "type": "config",
+        "story_tags": []
+      },
+      {
+        "path": "api/cache/base.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/cache/memory.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/cache/redis_cache.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/cache/__init__.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/models/base.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/models/graph.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/models/__init__.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/admin.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/base_layer.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/filter_endpoints.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/graph.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/impact.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/layers.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/routers/__init__.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/store/base.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/store/cosmos.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/store/memory.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "api/store/__init__.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/20260222-ai-gov-dependencies.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/00-EVA-OVERVIEW.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/01-AGENTIC-STATE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/02-ARCHITECTURE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/03-DATA-MODEL-REFERENCE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/04-PORTAL-SCREENS.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/05-GOVERNANCE-MODEL.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/06-EVA-JP-REBUILD.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/07-PROJECT-LIFECYCLE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/08-EVA-VERITAS-INTEGRATION.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/README.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": ".pytest_cache/v/cache/lastfailed",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": ".pytest_cache/v/cache/nodeids",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": ".pytest_cache/v/cache/stepwise",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/20260222-1933-provenance-graph.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/20260222-catalog-wave.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/20260222-enhancement.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/README.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/_archived/20260222/20260221-MODEL-IDEAS.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/_archived/20260222/ACCEPTANCE.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/_archived/20260222/ado-artifacts.json",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/_archived/20260222/ado-import.ps1",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/_archived/20260222/PLAN.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/ADO/idea/_archived/20260222/README.md",
+        "type": "doc",
+        "story_tags": []
+      }
+    ],
+    "story_artifact_map": {
+      "F37-01-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-01-002": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-01-003": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-API-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-API-002": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-API-003": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-AUDIT-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-AUDITREPO-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-BACKFILL-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-CACHE-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-COMMIT-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-EDGETYPES-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-EXPORT-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-FILTER-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-HEALTH-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-HEALTH-002": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-HEALTH-003": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-MODEL-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-MODEL-002": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-OBJ_IDPATH-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-OBJ_IDPATH-002": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-OBJ_IDPATH-003": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-READY-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-SEED-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-VALIDATE-001": {
+        "artifacts": [
+          {
+            "path": "api/server.py",
+            "type": "code",
+            "story_tags": [
+              "F37-01-001",
+              "F37-01-002",
+              "F37-01-003",
+              "F37-API-001",
+              "F37-API-002",
+              "F37-API-003",
+              "F37-AUDIT-001",
+              "F37-AUDITREPO-001",
+              "F37-BACKFILL-001",
+              "F37-CACHE-001",
+              "F37-COMMIT-001",
+              "F37-EDGETYPES-001",
+              "F37-EXPORT-001",
+              "F37-FILTER-001",
+              "F37-HEALTH-001",
+              "F37-HEALTH-002",
+              "F37-HEALTH-003",
+              "F37-MODEL-001",
+              "F37-MODEL-002",
+              "F37-OBJ_IDPATH-001",
+              "F37-OBJ_IDPATH-002",
+              "F37-OBJ_IDPATH-003",
+              "F37-READY-001",
+              "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          }
+        ]
+      },
+      "F37-08-001": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-001.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-001"
+            ]
+          }
+        ]
+      },
+      "F37-08-002": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-002.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-002"
+            ]
+          }
+        ]
+      },
+      "F37-08-003": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-003.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-003"
+            ]
+          }
+        ]
+      },
+      "F37-08-004": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-004.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-004"
+            ]
+          }
+        ]
+      },
+      "F37-08-005": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-005.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-005"
+            ]
+          }
+        ]
+      },
+      "F37-08-006": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-006.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-006"
+            ]
+          }
+        ]
+      },
+      "F37-08-007": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-08-007.py",
+            "type": "evidence",
+            "story_tags": [
+              "F37-08-007"
+            ]
+          }
+        ]
+      },
+      "F37-03-001": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-03-002": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-04-001": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-04-002": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-05-001": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-05-002": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-06-001": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-06-002": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-07-001": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      },
+      "F37-07-002": {
+        "artifacts": [
+          {
+            "path": "evidence/F37-sprints1-5.yaml",
+            "type": "evidence",
+            "story_tags": [
+              "F37-03-001",
+              "F37-03-002",
+              "F37-04-001",
+              "F37-04-002",
+              "F37-05-001",
+              "F37-05-002",
+              "F37-06-001",
+              "F37-06-002",
+              "F37-07-001",
+              "F37-07-002"
+            ]
+          }
+        ]
+      }
+    },
+    "commit_evidence_map": {}
+  }
+}

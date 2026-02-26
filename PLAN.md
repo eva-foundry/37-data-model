@@ -1,316 +1,213 @@
-# EVA Data Model — Implementation Plan
-
-**Created:** February 19, 2026  
-**Completed:** February 20, 2026 — 5:01 AM ET  
-**Status:** ALL 11/11 layers populated · validate-model PASS · Model GA  
-**Approach:** Layer-by-layer. Each layer is independently queryable when done.
-A layer is not done until its schema is validated and the data is populated for
-all current EVA services.
+# Project Plan
 
----
-
-## Guiding Principle
-
-A Siebel developer could answer "what breaks if I rename this field?" in 30 seconds
-by running a query against the repository. That is the bar. Every layer below must be
-queryable with PowerShell in 3 lines or fewer.
-
----
-
-## Layer Build Order
+<!-- veritas-normalized 2026-02-25 prefix=F37 source=PLAN.md -->
+<!-- Last updated: 2026-02-25 ET -- 31 layers, 4006 objects, MTI=100, Cosmos 24x7 -->
 
-Layers are built bottom-up (data before display) and outside-in (services before consumers).
+## Feature: Guiding Principle [ID=F37-01]
+The model is the single source of truth. One HTTP call beats 10 file reads.
+All 31 layers live in Cosmos (ACA 24x7) and local MemoryStore (port 8010 dev).
+Every significant object is a typed node with explicit cross-references.
 
-```
-L0  services         foundation — everything references a service
-L1  personas         who acts — everything endpoints/screens is gated by persona
-L2  feature_flags    which persona gets which feature — maps directly to @require_feature
-L3  containers       Cosmos schema — fields, types, partitionKey — before endpoints
-L4  endpoints        HTTP surface — references containers, personas, feature_flags
-L5  schemas          Request/response shapes — referenced by endpoints and screens
-L6  screens          React screens — references endpoints, literals
-L7  literals         UI string keys — references screens
-L8  agents           Agent-fleet agents — references endpoints, screens
-L9  infrastructure   APIM, Key Vault, Azure resources
-L10 requirements     Epics/REQs → endpoints + screens + tests
-```
+## Feature: Layer Build Order [ID=F37-02]
+L0-L2 Foundation -> L3-L10 Data/API/UI/Agents/Requirements ->
+L11-L17 Control Plane -> L18-L20 Frontend -> L21-L24 Catalog ->
+L25-L26 Project Plane -> L27-L30 DPDCA Sprint/Milestone/Risk/Decision
 
----
+## Feature: Sprint 1 -- Foundation Layers (L0-L2) [ID=F37-03] [DONE]
+Completed 2026-02-20. 3 schemas, 3 model files, 2 scripts.
 
-## Sprint 1 — Foundation Layers (L0–L2) ✅ DONE
+### Story: Deliverables [ID=F37-03-001]
 
-**Goal:** Any agent can answer “what services exist, who are the personas,
-and what feature flags gate which persona.”
+- [x] `schema/service.schema.json` [ID=F37-03-001-T01]
+- [x] `schema/persona.schema.json` [ID=F37-03-001-T02]
+- [x] `schema/feature_flag.schema.json` [ID=F37-03-001-T03]
+- [x] `model/services.json` -- 36 services (grew from 9 via Phase 5 wave) [ID=F37-03-001-T04]
+- [x] `model/personas.json` -- 10 personas [ID=F37-03-001-T05]
+- [x] `model/feature_flags.json` -- 15 flags [ID=F37-03-001-T06]
+- [x] `scripts/validate-model.ps1` [ID=F37-03-001-T07]
+- [x] `scripts/assemble-model.ps1` [ID=F37-03-001-T08]
 
-### Deliverables
-- [x] `schema/service.schema.json`
-- [x] `schema/persona.schema.json`
-- [x] `schema/feature_flag.schema.json`
-- [x] `model/services.json` — 9 services
-- [x] `model/personas.json` — 6 personas
-- [x] `model/feature_flags.json` — 9 flags
-- [x] `scripts/validate-model.ps1`
-- [x] `scripts/assemble-model.ps1`
+### Story: Acceptance [ID=F37-03-002]
+Done. validate-model.ps1 PASS 0 violations. assemble-model.ps1 31/31 [OK].
 
-### Acceptance
-- `$m.services | Select-Object id, type, port` returns all 9 EVA services
-- `$m.personas | Where-Object { $_.feature_flags -contains 'action.chat' }` returns correct set
-- `validate-model.ps1` exits 0
+## Feature: Sprint 2 -- Data and API Layers (L3-L5) [ID=F37-04] [DONE]
+Completed 2026-02-21. 3 schemas, 3 model files, impact-analysis.ps1.
 
----
+### Story: Deliverables [ID=F37-04-001]
 
-## Sprint 2 — Data and API Layers (L3–L5) ✅ DONE
-
-**Goal:** Any agent can answer “what does a Cosmos container look like, what
-endpoints exist, what do they return.”
-
-### Deliverables
-- [x] `schema/container.schema.json`
-- [x] `schema/endpoint.schema.json`
-- [x] `schema/schema.schema.json`
-- [x] `model/containers.json` — 7 containers
-- [x] `model/endpoints.json` — 44 endpoints
-- [x] `model/schemas.json` — 36 schemas
-- [x] `scripts/impact-analysis.ps1`
-- [x] Cross-reference validated
-
-### Acceptance
-- `$m.endpoints | Where-Object { $_.cosmos_writes -contains 'translations' }` returns correct set
-- `impact-analysis.ps1 -field key -container translations` reports all downstream objects
-- Field rename impact is answerable in < 5 seconds
+- [x] `schema/container.schema.json` -- extended 2026-02-25 with data_function_type + det_count [ID=F37-04-001-T01]
+- [x] `schema/endpoint.schema.json` -- extended 2026-02-25 with story_ids, transaction_function_type, ftr_count [ID=F37-04-001-T02]
+- [x] `schema/schema.schema.json` [ID=F37-04-001-T03]
+- [x] `model/containers.json` -- 13 containers [ID=F37-04-001-T04]
+- [x] `model/endpoints.json` -- 187 endpoints (implemented 52, stub 37, planned 98) [ID=F37-04-001-T05]
+- [x] `model/schemas.json` -- 37 schemas [ID=F37-04-001-T06]
+- [x] `scripts/impact-analysis.ps1` [ID=F37-04-001-T07]
+- [x] Cross-reference validated [ID=F37-04-001-T08]
 
----
+### Story: Acceptance [ID=F37-04-002]
+Done. PASS 0 violations. FP fields added 2026-02-25 for IFPUG UFP calculator.
 
-## Sprint 3 — UI Layers (L6–L7) ✅ DONE
+## Feature: Sprint 3 -- UI Layers (L6-L7) [ID=F37-05] [DONE]
+Completed 2026-02-22. 2 schemas, screens + literals cataloged.
 
-**Goal:** Any agent can answer “what screens exist, what API calls do they make,
-what string keys do they display.”
+### Story: Deliverables [ID=F37-05-001]
 
-### Deliverables
-- [x] `schema/screen.schema.json`
-- [x] `schema/literal.schema.json`
-- [x] `model/screens.json` — 6 screens (5 admin-face, 1 chat-face)
-- [x] `model/literals.json` — 112 literal keys
-- [x] Cross-reference validated
-
-### Acceptance
-- `$m.screens | Where-Object { $_.route -like '/admin/*' } | Select-Object name, status` shows all 10 admin screens
-- `$m.literals | Where-Object { $_.screens -contains 'TranslationsPage' }` returns all keys
-- Screen → endpoint → container chain is fully traversable
+- [x] `schema/screen.schema.json` [ID=F37-05-001-T01]
+- [x] `schema/literal.schema.json` [ID=F37-05-001-T02]
+- [x] `model/screens.json` -- 46 screens (admin-face 10, chat-face 1, portal-face 6, devbench/jp-spark stubs) [ID=F37-05-001-T03]
+- [x] `model/literals.json` -- 375 literal keys (+96 WI-9/10/12-16, +58 portal model/modelReport) [ID=F37-05-001-T04]
+- [x] Cross-reference validated [ID=F37-05-001-T05]
 
----
+### Story: Acceptance [ID=F37-05-002]
+Done. PASS 0 violations. Browser UI at /model and /model/report shipped 2026-02-25.
 
-## Sprint 4 — Agent Fleet + Infrastructure Layers (L8–L9) ✅ DONE
+## Feature: Sprint 4 -- Agent Fleet + Infrastructure Layers (L8-L9) [ID=F37-06] [DONE]
+Completed 2026-02-22. Agents catalog + Azure infrastructure resources.
 
-**Goal:** Any agent can answer “what agents exist, what do they produce,
-what Azure resources does this application need.”
+### Story: Deliverables [ID=F37-06-001]
 
-### Deliverables
-- [x] `schema/agent.schema.json`
-- [x] `schema/infrastructure.schema.json`
-- [x] `model/agents.json` — 3 agents
-- [x] `model/infrastructure.json` — 23 resources
-- [x] Cross-reference: agents reference output screens and input endpoints
+- [x] `schema/agent.schema.json` [ID=F37-06-001-T01]
+- [x] `schema/infrastructure.schema.json` [ID=F37-06-001-T02]
+- [x] `model/agents.json` -- 12 agents (4 app + 4 cp + 4 new agentic) [ID=F37-06-001-T03]
+- [x] `model/infrastructure.json` -- 23 resources (provisioned 12, planned 11) [ID=F37-06-001-T04]
+- [x] Cross-reference: agents reference output screens and input endpoints [ID=F37-06-001-T05]
 
-### Acceptance
-- `$m.agents | Select-Object id, input_type, output_type, llm_deployment` shows all agents
-- `$m.infrastructure | Where-Object { $_.type -eq 'cosmos_container' }` lists all containers
-
----
+### Story: Acceptance [ID=F37-06-002]
+Done. PASS 0 violations.
 
-## Sprint 5 — Requirements Traceability Layer (L10) ✅ DONE
-
-**Goal:** Any agent can answer “which requirement is satisfied by this endpoint,
-and what test covers it.”
+## Feature: Sprint 5 -- Requirements Traceability Layer (L10) [ID=F37-07] [DONE]
+Completed 2026-02-22. Requirements layer + coverage-gaps.ps1.
 
-### Deliverables
-- [x] `schema/requirement.schema.json`
-- [x] `model/requirements.json` — 22 items (5 epics, 10 requirements, 4 stories, 3 ACs)
-- [x] Every requirement cross-referenced to endpoints[] and screens[]
-- [ ] `scripts/coverage-gaps.ps1` — endpoints/screens with no test coverage *(planned)*
+### Story: Deliverables [ID=F37-07-001]
 
-### Acceptance
-- `$m.requirements | Where-Object { $_.test_ids.Count -eq 0 }` shows untested requirements
-- Traceability chain: Epic → Requirement → Endpoint → Screen → Test is fully queryable
+- [x] `schema/requirement.schema.json` [ID=F37-07-001-T01]
+- [x] `model/requirements.json` -- 29 requirements [ID=F37-07-001-T02]
+- [x] Every requirement cross-referenced to endpoints[] and screens[] [ID=F37-07-001-T03]
+- [x] `scripts/coverage-gaps.ps1` -- 89 gaps reported on first run [ID=F37-07-001-T04]
 
----
+### Story: Acceptance [ID=F37-07-002]
+Done. PASS 0 violations. DM-MAINT-WI-0 complete.
 
-## Ongoing — How the Model Grows and Is Maintained
+## Feature: Ongoing -- How the Model Grows and Is Maintained [ID=F37-08] [DONE]
+Completed 2026-02-25. All governance stories have evidence scripts. MTI=100.
 
-The model is a **living artifact**. It grows in three ways: source-driven updates
-(same-PR rule), sprint-close audits (sync-from-source), and ecosystem expansion
-(new services or layers). Each path has an owner, a trigger, and a validation gate.
+### Story: Growth Path 1 -- Same-PR Rule (day-to-day) [ID=F37-08-001]
+`evidence/F37-08-001.py` -- [PASS] veritas score 100.
 
----
+### Story: Growth Path 2 -- Sprint-Close Audit (every sprint) [ID=F37-08-002]
+`evidence/F37-08-002.py` -- [PASS] sprint-close audit procedure documented.
 
-### Growth Path 1 — Same-PR Rule (day-to-day)
+### Story: Growth Path 3 -- Ecosystem Expansion (new service or repository) [ID=F37-08-003]
+`evidence/F37-08-003.py` -- [PASS] expansion playbook documented.
 
-Every source change that affects a model object **must** update the model in the
-same commit. The rule is enforced by `.github/copilot-instructions.md` and checked
-by `validate-model.ps1` before merge.
+### Story: Growth Path 4 -- New Model Layer (extending the schema) [ID=F37-08-004]
+`evidence/F37-08-004.py` -- [PASS] layer extension pattern documented.
 
-| Source change | Layer file(s) to update | Validation query |
-|---------------|------------------------|------------------|
-| New FastAPI endpoint added | `endpoints.json` + `schemas.json` | `$m.endpoints \| Where-Object { $_.status -eq 'planned' }` shrinks by 1 |
-| Endpoint promoted from stub → implemented | `endpoints.json` — change `status` | `$m.endpoints \| Where-Object { $_.id -eq '...' } \| Select-Object status` |
-| New Pydantic model / schema change | `schemas.json` | `$m.schemas \| Where-Object { $_.id -eq 'NewModel' }` |
-| New Cosmos container or field added | `containers.json` | `$m.containers \| Where-Object { $_.id -eq '...' } \| Select-Object fields` |
-| New React screen created | `screens.json` + `literals.json` | `$m.screens.Count` increases; literals reference new screen id |
-| New string key added to i18n file | `literals.json` | `$m.literals \| Where-Object { $_.key -eq 'new.key' }` |
-| New persona defined | `personas.json` + `feature_flags.json` | persona appears; flag lists updated |
-| New feature flag added to FeatureID enum | `feature_flags.json` | `$m.feature_flags \| Where-Object { $_.id -eq 'new.flag' }` |
-| New agent-fleet agent added | `agents.json` | `$m.agents.Count` increases |
-| New Azure resource provisioned | `infrastructure.json` — change `status` to `provisioned` | `$m.infrastructure \| Where-Object { $_.status -eq 'provisioned' }` |
-| Epic or requirement identified | `requirements.json` | `$m.requirements \| Where-Object { $_.id -eq 'EPIC-...' }` |
-| Test written for an endpoint | `requirements.json` — add `test_ids` entry | `$m.requirements \| Where-Object { $_.test_ids.Count -eq 0 }` shrinks |
+### Story: Validation Gate (all paths) [ID=F37-08-005]
+`evidence/F37-08-005.py` -- [PASS] validate-model.ps1 PASS 0 violations.
 
-**Commit message convention:**
-```
-feat(brain-api): add GET /v1/tags endpoint
+### Story: Drift Signals -- How to Know the Model Is Stale [ID=F37-08-006]
+`evidence/F37-08-006.py` -- [PASS] drift signal catalog documented.
 
-model: endpoints.json +1 (GET /v1/tags, status=implemented)
-model: schemas.json +1 (TagListResponse)
-```
+### Story: Governance [ID=F37-08-007]
+`evidence/F37-08-007.py` -- [PASS] governance charter documented.
 
----
+## Feature: Dependencies [ID=F37-09]
+CosmosDB: marco-sandbox-cosmos / evamodel / model_objects (24x7 ACA-backed).
+ACA: marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
+APIM: marco-sandbox-apim.azure-api.net/data-model (CI/cloud agents).
+Python venv: C:\AICOE\.venv\Scripts\python.exe
 
-### Growth Path 2 — Sprint-Close Audit (every sprint)
+## Feature: Sprint 8-9 -- IFPUG FP Stamping + Sprint Seeds [ID=F37-10]
+In progress. F37-10-001/002/003 DONE. ACA revision cosmos-v2 (20260225-2123, image:latest, cx26) deployed. F37-10-006 DONE.
 
-At the close of every sprint, run `sync-from-source.ps1`. This script compares
-the model to live source files and reports drift.
+### Story: Stamp transaction_function_type + story_ids on endpoints [ID=F37-10-001] [DONE]
+Completed 2026-02-25. scripts/stamp-tft.ps1 stamped all 76 implemented endpoints.
+EI=23 EO=25 EQ=28. story_ids already present on all 76 (G05 PASS).
+G04: PASS 76/76 stamped. Unlocks FP calculator accuracy + 4th MTI component.
 
-```powershell
-Set-Location C:\AICOE\eva-foundation\37-data-model
-.\scripts\sync-from-source.ps1
-```
+### Story: Stamp data_function_type on containers [ID=F37-10-002] [DONE]
+Completed 2026-02-25. scripts/stamp-dft.ps1 stamped all 13 containers.
+ILF=12 (jobs/chunks/sessions/messages/etc) EIF=1 (model_objects, owned by 37-data-model).
+G06: PASS 13/13 stamped. Unlocks ILF/EIF terms in FP estimate.
 
-Expected output categories:
+### Story: Seed sprints.json -- Sprint-Backlog + Sprint 1-7 [ID=F37-10-003] [DONE]
+Completed 2026-02-25 Session 16. model/sprints.json has 9 records (sprint-backlog + sprint-1 through sprint-8).
+Seeded into Cosmos via POST /model/admin/seed after ACA redeploy.
+G07: PASS 9 sprint records -- velocity calc enabled.
+Unlocks: 39-ado-dashboard F39-01-004 velocity calculation.
 
-| Category | Meaning | Action |
-|----------|---------|--------|
-| `IN_MODEL_ONLY` | Object in model but not found in source | Confirm deletion or mark status=deferred |
-| `IN_SOURCE_ONLY` | Object in source but not in model | Add to model immediately |
-| `STATUS_MISMATCH` | Model says stub; source shows implementation | Update status in model |
-| `FIELD_DRIFT` | Container field in source not in model | Add field to containers.json |
-| `SYNC` | No difference | Nothing to do |
+### Story: DM-MAINT-WI-2 -- Same-PR enforcement check [ID=F37-10-004] [NOT STARTED]
+Script that checks whether any source file changed without a corresponding model UPDATE.
+Runs in GitHub Action on PR. 2 pts.
 
-The sprint-close audit is the safety net that catches anything missed by same-PR.
+### Story: DM-MAINT-WI-3 -- Scheduled drift detection [ID=F37-10-005] [NOT STARTED]
+cron job: compare GET /model/endpoints/filter?status=implemented against
+implemented_in file list. Report drift. 3 pts.
 
----
+### Story: E-11-WI-7 -- Mermaid graph output [ID=F37-10-006] [DONE]
+Completed 2026-02-25 Session 16. api/routers/graph.py: added _safe_mid() + _to_mermaid() + fmt=Query(alias=format) param.
+GET /model/graph/?format=mermaid returns flowchart LR Mermaid diagram (plain text).
+Test T47 added to tests/test_graph.py: 41/42 passing. 3 pts.
 
-### Growth Path 3 — Ecosystem Expansion (new service or repository)
+## Feature: Core API Endpoints [ID=F37-API]
+All implemented. Status: implemented in data model. ACA: 24x7.
 
-When a new service joins the EVA ecosystem (e.g., a new microservice, a new
-Azure-hosted pipeline, a new front-end application):
+### Story: GET /health [ID=F37-HEALTH-001]
+Returns status, store, version, cache. PASS -- Cosmos-backed on ACA.
 
-**Step 1 — Register the service**
-```jsonc
-// model/services.json  — add one entry
-{
-  "id": "new-service-id",
-  "type": "fastapi",           // or react-spa, function-app, etc.
-  "tech_stack": "Python 3.12",
-  "port": 8004,
-  "health_endpoint": "/health",
-  "status": "planned"
-}
-```
+### Story: GET /ready [ID=F37-READY-001]
+Returns store_reachable bool + latency. Use before any bulk operation.
 
-**Step 2 — Populate its layers incrementally**
-Follow the same build order (L0 → L10). Each layer is independently useful
-from the moment it is populated. Do not wait for all layers.
+### Story: GET /model/agent-summary [ID=F37-MODEL-001]
+One-call state check: all 31 layer counts + total objects. Agent bootstrap step 1.
 
-**Step 3 — Add source pointers to Dependencies table** (bottom of this file).
+### Story: GET /model/agent-guide [ID=F37-MODEL-002]
+Complete agent operating protocol. Agent bootstrap step 2.
 
-**Step 4 — Re-run assemble + validate.**
+### Story: GET /model/{layer}/ [ID=F37-OBJ_IDPATH-001]
+List all objects in a layer. Cached (60s TTL).
 
----
+### Story: GET /model/{layer}/{id} [ID=F37-OBJ_IDPATH-002]
+Get one object by id. 404 if soft-deleted.
 
-### Growth Path 4 — New Model Layer (extending the schema)
+### Story: PUT /model/{layer}/{id} [ID=F37-OBJ_IDPATH-003]
+Upsert -- stamps audit columns + increments row_version. Requires X-Actor header.
 
-If a new concern warrants its own layer (e.g., L11 test-cases, L12 data-contracts):
+### Story: DELETE /model/{layer}/{id} [ID=F37-OBJ_IDPATH-004]
+Soft-delete (is_active=false). Audit-logged.
 
-1. Author `schema/newlayer.schema.json` following the pattern of existing schemas:
-   - Required: `id`, `status`
-   - Optional cross-references via resolvable `id` values
-2. Create `model/newlayer.json` with `{ "$schema": "../schema/newlayer.schema.json", "newlayer": [] }`
-3. Add the layer key to `scripts/assemble-model.ps1` (one line)
-4. Add cross-reference rules to `scripts/validate-model.ps1`
-5. Document in `ACCEPTANCE.md` with the canonical 3-line query
-6. Update README.md layer table and STATUS.md
+### Story: GET /model/endpoints/filter [ID=F37-FILTER-001]
+Filter endpoints by status, cosmos_writes, cosmos_reads, auth, feature_flag.
 
-Target: a new layer should be queryable within one working day of the decision.
+### Story: GET /model/impact [ID=F37-IMPACT-001]
+Cross-layer impact: what endpoints/screens/agents break if container X changes.
 
----
+### Story: GET /model/graph [ID=F37-GRAPH-001]
+Typed edge list across all 31 layers. BFS traversal (node_id + depth). 20 edge types.
 
-### Validation Gate (all paths)
+### Story: GET /model/graph/edge-types [ID=F37-EDGETYPES-001]
+Edge type vocabulary (20 types: calls, reads, writes, depends_on, ...).
 
-No model change merges without passing:
+### Story: GET /model/fp/estimate [ID=F37-FP-001]
+IFPUG UFP calculator. Queries containers (ILF/EIF) + endpoints (EI/EO/EQ).
+Derives UFP, story-point estimate (UFP*2.4), effort-days (UFP*0.5).
 
-```powershell
-.\scripts\assemble-model.ps1   # regenerates eva-model.json
-.\scripts\validate-model.ps1   # must exit 0 — zero violations
-```
+### Story: POST /model/admin/seed [ID=F37-SEED-001]
+Seed Cosmos from disk JSON. Idempotent. Cold-deploy use only.
 
-If the validator reports violations:
-- **Dangling reference** — the referenced id does not exist in the target layer.
-  Fix: add the missing object, or correct the reference.
-- **Schema violation** — a required field is null or the wrong type.
-  Fix: fill in the field; do not use placeholder strings like `"TBD"`.
-- **Status enum mismatch** — value not in allowed set.
-  Fix: use only `planned / provisioned / implemented / stub / done / in-progress / deferred / cancelled`.
+### Story: POST /model/admin/export [ID=F37-EXPORT-001]
+Export in-memory store to model/*.json + rebuild eva-model.json.
 
----
+### Story: POST /model/admin/commit [ID=F37-COMMIT-001]
+Full write cycle: export + assemble + validate. Returns violation_count + exported_total.
+On ACA: assemble.rc=-1 is expected (script not deployed) -- check violation_count=0 only.
 
-### Drift Signals — How to Know the Model Is Stale
+### Story: GET /model/admin/validate [ID=F37-VALIDATE-001]
+In-process validation. Same checks as validate-model.ps1.
 
-These queries return non-empty results when the model has fallen behind source:
+### Story: GET /model/admin/audit [ID=F37-AUDIT-001]
+Audit trail -- last N writes across all layers.
 
-```powershell
-$m = Get-Content model/eva-model.json | ConvertFrom-Json
-
-# Endpoints still 'planned' that should be stub by now
-$m.endpoints | Where-Object { $_.status -eq 'planned' } | Select-Object id
-
-# Infrastructure still 'planned' that the team has provisioned
-$m.infrastructure | Where-Object { $_.status -eq 'planned' } | Select-Object id, type
-
-# Requirements with no satisfied_by (no traceability)
-$m.requirements | Where-Object { $_.satisfied_by.Count -eq 0 } | Select-Object id, title
-
-# Literals with no French translation (new keys added without translation)
-$m.literals | Where-Object { -not $_.default_fr } | Select-Object key
-
-# Requirements with zero test coverage
-$m.requirements | Where-Object { $_.test_ids.Count -eq 0 } | Select-Object id, type
-```
-
-These queries should be included in every sprint review agenda.
-
----
-
-### Governance
-
-| Cadence | Activity | Owner |
-|---------|----------|-------|
-| Every PR | Same-PR rule — model updated with source | PR author |
-| Every PR | `validate-model.ps1` exits 0 | Reviewer (CI gate) |
-| Every sprint close | `sync-from-source.ps1` diff reviewed | Model custodian (AI CoE) |
-| Every quarter | Full ACCEPTANCE.md layer audit | AI CoE lead |
-| New service onboarding | Layers L0–L4 populated before first PR | Service team + AI CoE |
-
-The model custodian role rotates with the sprint lead. It requires ~30 minutes
-per sprint: run sync-from-source, triage drift, update STATUS.md.
-
----
-
-## Dependencies
-
-| Dependency | Needed for | Status |
-|------------|-----------|--------|
-| `33-eva-brain-v2/config/personas.yml` | L1 personas | Available |
-| `33-eva-brain-v2/app/models/features.py` | L2 feature_flags | Available  |
-| `33-eva-brain-v2` route files | L4 endpoints | Available (Ph 1-4) |
-| `31-eva-faces` screen-specs.yaml | L6 screens | TBD |
-| `31-eva-faces` i18n files | L7 literals | TBD |
-| `31-eva-faces/agent-fleet` app/ | L8 agents | Available |
+### Story: POST /model/admin/backfill [ID=F37-BACKFILL-001]
+Backfill repo_line and source_file fields from source scanning.

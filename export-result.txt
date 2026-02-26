@@ -1,0 +1,7 @@
+
+exported : @{services=22; personas=10; feature_flags=15; containers=13; endpoints=136; schemas=36; screens=28; literals=375; agents=4; infrastructure=23; requirements=22; planes=3; connections=3; environments=3; cp_skills=7; cp_agents=4; runbooks=4; cp_workflows=2; cp_policies=3; mcp_servers=3; prompts=5; security_controls=10; components=32; hooks=18; ts_types=26; projects=45; wbs=13}
+total    : 865
+errors   : {}
+actor    : admin:dev-admi
+note     : Run assemble-model.ps1 to rebuild eva-model.json after export
+

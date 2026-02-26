@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "sprint.schema.json",
+  "title": "EVA Sprint",
+  "description": "An agile sprint (timebox) for a project. Tracks planned vs actual velocity and story completion.",
+  "type": "object",
+  "required": ["id", "project_id", "start_date", "end_date", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Sprint identifier, e.g. 33-eva-brain-v2-sprint-9",
+      "examples": ["33-eva-brain-v2-sprint-9", "31-eva-faces-sprint-6"]
+    },
+    "label": { "type": ["string", "null"], "description": "Display name, e.g. Sprint 9" },
+    "project_id": { "type": "string", "description": "Project id from projects layer" },
+    "start_date": { "type": "string", "format": "date", "examples": ["2026-02-17"] },
+    "end_date": { "type": "string", "format": "date", "examples": ["2026-02-28"] },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "completed", "cancelled"]
+    },
+    "goal": { "type": ["string", "null"], "description": "Sprint goal statement" },
+    "velocity_planned": {
+      "type": ["integer", "null"],
+      "description": "Story points planned for this sprint"
+    },
+    "velocity_actual": {
+      "type": ["integer", "null"],
+      "description": "Story points actually completed"
+    },
+    "story_count": {
+      "type": ["integer", "null"],
+      "description": "Total stories committed to this sprint"
+    },
+    "stories_completed": {
+      "type": ["integer", "null"],
+      "description": "Stories in done state at sprint close"
+    },
+    "ado_iteration_path": {
+      "type": ["string", "null"],
+      "description": "ADO iteration path, e.g. eva-poc\\Sprint 9"
+    },
+    "mti_at_close": {
+      "type": ["number", "null"],
+      "description": "Veritas MTI score captured at sprint close (0-100)"
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

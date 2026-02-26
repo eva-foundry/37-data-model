@@ -15,7 +15,12 @@
     "label": { "type": "string", "description": "Human-readable name" },
     "type": {
       "type": "string",
-      "enum": ["fastapi_backend", "react_spa", "fastapi_agent_fleet", "azure_apim", "azure_foundry", "pipeline", "legacy"]
+      "enum": [
+        "fastapi_backend", "react_spa", "fastapi_agent_fleet",
+        "azure_apim", "azure_foundry", "pipeline", "legacy", "internal_api",
+        "cli_tool", "test_harness", "automation", "copilot_library", "security_framework",
+        "react_component_library"
+      ]
     },
     "tech_stack": {
       "type": "array",
@@ -39,6 +44,16 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "Service ids this service calls at runtime"
+    },
+    "boot_order": {
+      "type": "integer",
+      "description": "Start-up ordering weight — lower numbers boot first (default 99)",
+      "default": 99
+    },
+    "deploy_order": {
+      "type": "integer",
+      "description": "Deployment ordering weight — lower numbers deploy first (default 99)",
+      "default": 99
     },
     "notes": { "type": ["string", "null"] }
   }

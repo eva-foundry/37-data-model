@@ -27,8 +27,20 @@ $root     = Split-Path $PSScriptRoot -Parent
 $modelDir = Join-Path $root "model"
 
 $violations = [System.Collections.Generic.List[string]]::new()
+$warnings   = [System.Collections.Generic.List[string]]::new()
 
 function Fail([string]$msg) { $violations.Add("  [FAIL] $msg") }
+function Warn([string]$msg) { $warnings.Add("  [WARN] $msg") }
+
+# Safely access an optional property on a PSCustomObject (avoids strict-mode throws)
+function HasProp([psobject]$obj, [string]$name) {
+  $p = $obj.PSObject.Properties[$name]
+  return ($null -ne $p) -and ($null -ne $p.Value)
+}
+function GetProp([psobject]$obj, [string]$name) {
+  $p = $obj.PSObject.Properties[$name]
+  if ($null -ne $p) { return $p.Value } else { return $null }
+}
 
 Write-Host "EVA Data Model — Validator" -ForegroundColor Cyan
 
@@ -86,10 +98,11 @@ foreach ($ep in $m.endpoints) {
       Fail "endpoint '$($ep.id)' cosmos_writes references unknown container '$cid'"
     }
   }
-  if ($ep.feature_flag -and $ep.feature_flag -notin $featureFlagIds) {
-    Fail "endpoint '$($ep.id)' feature_flag '$($ep.feature_flag)' not in feature_flags"
+  $epFF = GetProp $ep 'feature_flag'
+  if ($epFF -and $epFF -notin $featureFlagIds) {
+    Fail "endpoint '$($ep.id)' feature_flag '$epFF' not in feature_flags"
   }
-  foreach ($personaId in $ep.auth) {
+  foreach ($personaId in (GetProp $ep 'auth')) {
     if ($personaId -and $personaId -notin $personaIds) {
       Fail "endpoint '$($ep.id)' auth references unknown persona '$personaId'"
     }
@@ -121,14 +134,59 @@ foreach ($req in $m.requirements) {
   }
 }
 
+# ── E-10: repo_line coverage warnings (non-blocking) ──────────────────────────
+
+foreach ($ep in $m.endpoints) {
+  $rl = $ep.PSObject.Properties["repo_line"]
+  if ($ep.status -eq "implemented" -and (HasProp $ep "implemented_in") -and
+      ((-not $rl) -or $null -eq $rl.Value)) {
+    Warn "endpoint '$($ep.id)' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)"
+  }
+}
+
+foreach ($cmp in $m.components) {
+  $rl = $cmp.PSObject.Properties["repo_line"]
+  if ($cmp.status -eq "implemented" -and (HasProp $cmp "repo_path") -and
+      ((-not $rl) -or $null -eq $rl.Value)) {
+    Warn "component '$($cmp.id)' is implemented but missing repo_line"
+  }
+}
+
+foreach ($hk in $m.hooks) {
+  $rl = $hk.PSObject.Properties["repo_line"]
+  if ($hk.status -eq "implemented" -and (HasProp $hk "repo_path") -and
+      ((-not $rl) -or $null -eq $rl.Value)) {
+    Warn "hook '$($hk.id)' is implemented but missing repo_line"
+  }
+}
+
+foreach ($sc in $m.screens) {
+  $rl = $sc.PSObject.Properties["repo_line"]
+  if ($sc.status -eq "implemented" -and (HasProp $sc "component_path") -and
+      ((-not $rl) -or $null -eq $rl.Value)) {
+    Warn "screen '$($sc.id)' is implemented but missing repo_line"
+  }
+}
+
 # ── Report ──────────────────────────────────────────────────────────────────
 
 Write-Host ""
 if ($violations.Count -eq 0) {
-  Write-Host "PASS — 0 violations" -ForegroundColor Green
-  exit 0
+  Write-Host "PASS -- 0 violations" -ForegroundColor Green
 } else {
-  Write-Host "FAIL — $($violations.Count) violation(s):" -ForegroundColor Red
+  Write-Host "FAIL -- $($violations.Count) violation(s):" -ForegroundColor Red
   $violations | ForEach-Object { Write-Host $_ -ForegroundColor Yellow }
+}
+
+if ($warnings.Count -gt 0) {
+  Write-Host ""
+  Write-Host "$($warnings.Count) repo_line coverage gap(s):" -ForegroundColor Cyan
+  $warnings | ForEach-Object { Write-Host $_ -ForegroundColor Cyan }
+  Write-Host "  => Run: python scripts/backfill-repo-lines.py" -ForegroundColor Cyan
+}
+
+if ($violations.Count -gt 0) {
   exit 1
+} else {
+  exit 0
 }

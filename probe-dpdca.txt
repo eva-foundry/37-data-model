@@ -1,0 +1,19 @@
+Drive already SUBSTed
+]633;P;IsWindows=True
+=== EVA Data Model -- Readiness Probe 2026-02-25 16:52 ===
+
+ID    Gate                                                Status  Detail
+----------------------------------------------------------------------------------------------------
+G01   ACA reachable + Cosmos-backed                       PASS  store=cosmos version=1.0.0
+G02   validate-model violations=0                         PASS  violations=0 exported=4055
+G04   Endpoints stamped (transaction_function_type)       PASS  74/74 stamped (100%)
+G05   Endpoints have story_ids (MTI 4th component)        PASS  74/74 have story_ids
+G06   Containers stamped (data_function_type)             PASS  13/13 stamped
+G07   L27 sprints seeded (>=8 records)                    PASS  9 sprint records -- velocity calc enabled
+G08   L28-L30 layers reachable (milestones/risks/decisions)  PASS  All three DPDCA layers reachable
+G09   Veritas MTI >= 95                                   WARN  MTI=86 (below 95 target) formula=n/a
+      FIX: Run: eva audit --repo C:\AICOE\eva-foundation\37-data-model
+G10   Graph endpoint accessible (ACA image)               PASS  20 edge types registered
+
+[PASS] All gates pass -- no blockers detected.
+

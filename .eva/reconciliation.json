@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "schema": "eva.reconciliation.v2",
+    "generated_at": "2026-02-25T06:37:39.811Z",
+    "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
+    "discovery_path": "C:\\AICOE\\eva-foundation\\37-data-model\\.eva\\discovery.json"
+  },
+  "coverage": {
+    "stories_total": 61,
+    "stories_with_artifacts": 61,
+    "stories_with_evidence": 17,
+    "consistency_score": 1
+  },
+  "features": [
+    {
+      "id": "F37-01",
+      "title": "OBJ_IDPATH API [ID=F37-OBJ_IDPATH]",
+      "story_count": 3,
+      "stories_with_artifacts": 3,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-02",
+      "title": "Layer Build Order",
+      "story_count": 0,
+      "stories_with_artifacts": 0,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-03",
+      "title": "Sprint 1 ? Foundation Layers (L0?L2) ? DONE",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 2,
+      "consistency_score": 1,
+      "mti": 100,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-04",
+      "title": "Sprint 2 ? Data and API Layers (L3?L5) ? DONE",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 2,
+      "consistency_score": 1,
+      "mti": 100,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-05",
+      "title": "Sprint 3 ? UI Layers (L6?L7) ? DONE",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 2,
+      "consistency_score": 1,
+      "mti": 100,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-06",
+      "title": "Sprint 4 ? Agent Fleet + Infrastructure Layers (L8?L9) ? DONE",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 2,
+      "consistency_score": 1,
+      "mti": 100,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-07",
+      "title": "Sprint 5 ? Requirements Traceability Layer (L10) ? DONE",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 2,
+      "consistency_score": 1,
+      "mti": 100,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-08",
+      "title": "Ongoing ? How the Model Grows and Is Maintained",
+      "story_count": 7,
+      "stories_with_artifacts": 7,
+      "stories_with_evidence": 7,
+      "consistency_score": 1,
+      "mti": 100,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-09",
+      "title": "Dependencies",
+      "story_count": 0,
+      "stories_with_artifacts": 0,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-API",
+      "title": "API API",
+      "story_count": 6,
+      "stories_with_artifacts": 6,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-AUDIT",
+      "title": "AUDIT API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-AUDITREPO",
+      "title": "AUDITREPO API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-BACKFILL",
+      "title": "BACKFILL API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-CACHE",
+      "title": "CACHE API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-COMMIT",
+      "title": "COMMIT API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-EDGETYPES",
+      "title": "EDGETYPES API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-EXPORT",
+      "title": "EXPORT API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-FILTER",
+      "title": "FILTER API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-HEALTH",
+      "title": "HEALTH API",
+      "story_count": 6,
+      "stories_with_artifacts": 6,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-MODEL",
+      "title": "MODEL API",
+      "story_count": 4,
+      "stories_with_artifacts": 4,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-OBJ_IDPATH",
+      "title": "OBJ_IDPATH API",
+      "story_count": 3,
+      "stories_with_artifacts": 3,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-READY",
+      "title": "READY API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-SEED",
+      "title": "SEED API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    },
+    {
+      "id": "F37-VALIDATE",
+      "title": "VALIDATE API",
+      "story_count": 2,
+      "stories_with_artifacts": 2,
+      "stories_with_evidence": 0,
+      "consistency_score": 0,
+      "mti": 50,
+      "gap_count": 0
+    }
+  ],
+  "gaps": []
+}

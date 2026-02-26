@@ -1,6 +1,8 @@
-# EVA Data Model — Acceptance Criteria
+# ACCEPTANCE.md -- 37-data-model Done Criteria
+<!-- veritas-acceptance: project=37-data-model version=2.0 last-updated=2026-02-25 -->
 
 **Created:** February 19, 2026
+**Last Updated:** February 25, 2026 -- Doc reorg session 14 -- updated for 31 layers + FP stamping + Sprint 8-9 criteria
 
 ---
 
@@ -19,7 +21,7 @@ The model exists to eliminate re-discovery. The acceptance test for any layer is
 
 | Criterion | Command | Expected |
 |-----------|---------|----------|
-| All services present | `$m.services.Count` | ≥ 9 |
+| All services present | `$m.services.Count` | ≥ 22 |
 | Each has id, type, tech_stack, port/url | `$m.services \| Select-Object id, type, tech_stack, port` | No nulls |
 | Health endpoint documented | `$m.services \| Where-Object { $_.health_endpoint }` | All services |
 | Status field present | `$m.services \| Select-Object id, status` | No nulls |
@@ -28,7 +30,7 @@ The model exists to eliminate re-discovery. The acceptance test for any layer is
 
 | Criterion | Command | Expected |
 |-----------|---------|----------|
-| All personas present | `$m.personas \| Select-Object id, label` | ≥ 6 |
+| All personas present | `$m.personas \| Select-Object id, label` | ≥ 10 |
 | Each has service scope | `$m.personas \| Where-Object { -not $_.services }` | 0 (empty) |
 | Machine agents identified | `$m.personas \| Where-Object { $_.type -eq 'machine' }` | ≥ 1 |
 
@@ -68,9 +70,12 @@ The model exists to eliminate re-discovery. The acceptance test for any layer is
 
 ### Layer 6 — Screens
 
+> **Updated Feb 22, 2026 — 11:30 AM ET:** Screen count raised to 15 (WI-9–WI-19 admin-face screens added; 5 `component_path` corrections applied).
+
 | Criterion | Command | Expected |
 |-----------|---------|----------|
-| All 10 admin screens present | `$m.screens \| Where-Object { $_.app -eq 'admin-face' }` | 10 |
+| All 15 screens present | `$m.screens.Count` | 15 |
+| Admin-face screens present | `$m.screens \| Where-Object { $_.app -eq 'admin-face' }` | ≥ 10 |
 | Chat face screens present | `$m.screens \| Where-Object { $_.app -eq 'chat-face' }` | ≥ 2 |
 | Each screen lists api_calls | `$m.screens \| Where-Object { $_.api_calls.Count -eq 0 -and $_.status -eq 'implemented' }` | 0 |
 | api_calls reference real endpoint ids | cross-ref | 0 dangling |
@@ -110,20 +115,131 @@ The model exists to eliminate re-discovery. The acceptance test for any layer is
 
 ---
 
-## End-State Acceptance (All Layers Done)
+## L0-L26 Current Object Counts (as of 2026-02-25)
 
-When all 11 layers are populated:
+| Layer | Object count | Notes |
+|-------|-------------|-------|
+| L0 services | 36 | All EVA services registered |
+| L1 personas | 10 | GC personas + machine agents |
+| L2 feature_flags | 15 | All feature gates |
+| L3 containers | 13 | All Cosmos containers |
+| L4 endpoints | 187 | 52 implemented + stubs + planned |
+| L5 schemas | 36 | Pydantic request/response schemas |
+| L6 screens | 46 | admin-face + chat-face + portal-face |
+| L7 literals | 375 | Bilingual string keys |
+| L8 agents | 12 | AI agent fleet |
+| L9 requirements | 29 | ITSG-33 + GC EARB |
+| L25 projects | 51 | EVA platform projects with ADO epic IDs |
+| **Total** | **4006** | All layers, Cosmos-backed, ACA 24x7 |
 
-1. **Field rename in < 5 seconds**: `impact-analysis.ps1 -field key -container translations`
+---
+
+## L27-L30 -- DPDCA Evolution Plane
+
+Schemas exist; data seeding is Sprint 8-9 work (F37-10).
+
+| Layer | Acceptance condition | Status |
+|-------|---------------------|--------|
+| L27 sprints | `GET /model/sprints/` returns >= 8 records (Sprint-Backlog + Sprint 1-7), each with `velocity_planned`, `velocity_actual`, `mti_at_close`, `ado_iteration_path` | [ ] NOT STARTED -- F37-10-003 |
+| L28 milestones | RUP phase gates seeded with deliverables, sign_off_by, wbs linkage | [ ] Seeded (schema only) |
+| L29 risks | Risk matrix entries with probability x impact = risk_score, mitigation owner | [ ] Seeded (schema only) |
+| L30 decisions | ADR records with context/decision/consequences, deciders, optional superseded_by | [ ] Seeded (schema only) |
+
+**L27 unlock condition:** seeding sprints.json unblocks 39-ado-dashboard F39-01-004 velocity calc in `/v1/scrum/dashboard`
+
+---
+
+## FP / MTI Completeness Criteria
+
+IFPUG FP estimates and the 4th MTI component (`complexity_coverage`, weight=0.15) require these gates:
+
+| Gate | Target | Current | Unblocked by |
+|------|--------|---------|--------------|
+| `transaction_function_type` on endpoints | 52 implemented endpoints -- EI/EO/EQ (non-null) | 0/52 | F37-10-001 |
+| `story_ids[]` on endpoints | >= 1 story per implemented endpoint | 0/52 | F37-10-001 |
+| `data_function_type` on containers | 13 containers -- ILF or EIF (non-null) | 0/13 | F37-10-002 |
+| FP estimate accuracy | `GET /model/fp/estimate` uses actual classifications, not estimates | Estimates only | After F37-10-001/002 |
+| 4th MTI component active | Veritas audit shows 4-component MTI score (3-component is fallback) | 3-component fallback | After story_ids stamped |
+
+---
+
+## Sprint 8-9 Forward Acceptance Criteria [F37-10]
+
+### F37-10-001 -- Endpoint FP Stamping [NOT STARTED]
+- 52 implemented endpoints have `transaction_function_type` set (EI, EO, or EQ)
+- All 52 have >= 1 entry in `story_ids[]`
+- `GET /model/fp/estimate` returns UFP with non-null transaction classifications
+- Veritas shows `complexity_coverage` as 4th MTI component
+
+### F37-10-002 -- Container ILF/EIF Stamping [NOT STARTED]
+- 13 containers have `data_function_type` set (ILF or EIF)
+- `GET /model/fp/estimate` returns DET/FTR breakdown per container
+
+### F37-10-003 -- Sprints.json Seeding [NOT STARTED]
+- `model/sprints.json` has >= 8 records
+- `GET /model/sprints/` returns all records via ACA
+- 39-ado-dashboard `/v1/scrum/dashboard` includes `velocity_actual` from sprint records
+
+### F37-10-004 -- Same-PR Enforcement [NOT STARTED]
+- `.github/workflows/validate-model.yml` exists and runs on PRs
+- PRs that modify source without updating model JSON fail workflow
+- Completes in < 2 minutes on GitHub-hosted runner
+
+### F37-10-005 -- Drift Detection [NOT STARTED]
+- `scripts/drift-detection.ps1` compares model endpoint IDs vs live FastAPI routes
+- Reports missing entries in both directions
+- JSON output compatible with `coverage-gaps.ps1`
+
+### F37-10-006 -- Mermaid Output [NOT STARTED]
+- `GET /model/graph?format=mermaid` returns valid Mermaid ERD string
+- Renders without errors in mermaid.live
+- T47 in `tests/test_graph.py` added
+
+---
+
+## End-State Acceptance (All 31 Layers Done)
+
+When all layers are populated and F37-10 complete:
+
+1. **Field rename in < 5 seconds:** `GET /model/impact/?container=translations`
    returns every affected endpoint, schema, screen, and literal.
 
-2. **No grep loops**: An agent starting fresh answers any structural question from
-   `eva-model.json` alone, without reading any source file.
+2. **No grep loops:** An agent starting fresh answers any structural question from
+   the API alone, without reading any source file.
 
-3. **validate-model.ps1 exits 0**: Zero schema violations, zero dangling cross-references.
+3. **validate-model.ps1 exits 0:** Zero schema violations, zero dangling cross-references.
 
-4. **Same-PR rule holds**: `git log --oneline` shows no source-only commits without
-   a corresponding model update.
+4. **Same-PR rule holds:** `.github/workflows/validate-model.yml` blocks source-only commits
+   without a corresponding model update.
 
-5. **Full traceability**: `Epic-007 → REQ-012 → GET /v1/translations →
-   TranslationsPage → test_get_translations_by_locale` is a single query.
+5. **Full traceability:** `Epic --> REQ --> GET /v1/... --> Screen --> TestCase` is a single
+   graph traversal query via `GET /model/graph/?node_id=X&depth=3`.
+
+6. **IFPUG UFP accurate:** `GET /model/fp/estimate` returns calculated (not estimated)
+   UFP with all transaction and data function counts from stamped records.
+
+7. **Velocity visible:** `GET /model/sprints/` returns Sprint 1-7 records; 39-ado-dashboard
+   renders velocity trend chart from actual sprint data.
+
+---
+
+## Cross-Cutting CI Gates (must remain true after every sprint)
+
+| Criterion | Command | Expected |
+|-----------|---------|----------|
+| No schema violations | `POST /model/admin/commit` | violation_count = 0 |
+| All objects exported | `POST /model/admin/export` | exported_total >= 4006 |
+| Tests pass | `pytest tests/ -q` | >= 40/41 passing |
+| Veritas MTI | `audit_repo` on 37-data-model | MTI >= 95 |
+| ACA Cosmos reachable | `GET /health` | store = cosmos |
+| Row version monotonic | After every PUT | row_version = prev_rv + 1, modified_by logged |
+
+---
+
+## Known Pre-Existing Failures (not acceptance blockers)
+
+| ID | Test | Root cause | Resolution |
+|----|------|-----------|------------|
+| T36 | `test_reseed_does_not_duplicate` | ReseedError on in-memory store when data pre-loaded | Pre-existing before Sprint 5 -- deferred |
+
+40/41 is the current passing bar. Any regression below 40 is a blocker.

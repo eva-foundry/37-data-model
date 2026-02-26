@@ -1,0 +1,58 @@
+# EVA-STORY: F37-03-001
+# EVA-STORY: F37-03-002
+# EVA-STORY: F37-04-001
+# EVA-STORY: F37-04-002
+# EVA-STORY: F37-05-001
+# EVA-STORY: F37-05-002
+# EVA-STORY: F37-06-001
+# EVA-STORY: F37-06-002
+# EVA-STORY: F37-07-001
+# EVA-STORY: F37-07-002
+---
+feature: F37-03-to-F37-07
+title: "Sprints 1-5 - Foundation through Requirements Traceability Layer"
+sprint: Sprint-5
+date: "2026-02-24"
+delivered_by: "agent:copilot"
+status: delivered
+
+stories:
+  - id: F37-03-001
+    title: "Sprint 1 - L0 Services layer"
+    artifacts: [api/server.py, model/services.json]
+
+  - id: F37-03-002
+    title: "Sprint 1 - L1 Endpoints layer"
+    artifacts: [api/server.py, model/endpoints.json]
+
+  - id: F37-04-001
+    title: "Sprint 2 - L3 Schemas layer"
+    artifacts: [model/schemas.json]
+
+  - id: F37-04-002
+    title: "Sprint 2 - L4 Containers layer"
+    artifacts: [model/containers.json]
+
+  - id: F37-05-001
+    title: "Sprint 3 - L5 Screens layer"
+    artifacts: [model/screens.json]
+
+  - id: F37-05-002
+    title: "Sprint 3 - L6/L7 UI layers"
+    artifacts: [model/screens.json, model/components.json]
+
+  - id: F37-06-001
+    title: "Sprint 4 - L8 Agent Fleet layer"
+    artifacts: [model/agents.json]
+
+  - id: F37-06-002
+    title: "Sprint 4 - L9 Infrastructure layer"
+    artifacts: [model/mcp_servers.json]
+
+  - id: F37-07-001
+    title: "Sprint 5 - L10 Requirements Traceability"
+    artifacts: [model/projects.json, api/server.py]
+
+  - id: F37-07-002
+    title: "Sprint 5 - Impact + Graph endpoints"
+    artifacts: [api/server.py]

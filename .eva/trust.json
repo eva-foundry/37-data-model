@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "schema": "eva.trust.v2",
+    "generated_at": "2026-02-25T06:37:39.820Z",
+    "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
+    "reconciliation_path": "C:\\AICOE\\eva-foundation\\37-data-model\\.eva\\reconciliation.json"
+  },
+  "score": 86,
+  "stale": false,
+  "sparkline": "71 -> 71 -> 71 -> 100 -> 100 -> 100 -> 100 -> 61 -> 50 -> 86",
+  "sparkline_delta": "+36",
+  "components": {
+    "coverage": 1,
+    "evidenceCompleteness": 0.28,
+    "consistencyScore": 1
+  },
+  "actions": [
+    "test",
+    "review",
+    "merge-with-approval"
+  ]
+}

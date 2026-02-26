@@ -1,0 +1,102 @@
+Drive already SUBSTed
+]633;P;IsWindows=True[INFO] Loaded 45 project records from model
+[PASS] CI patched  : 01-documentation-generator (added skills reference)
+[PASS] CS created  : 01-documentation-generator
+[PASS] CI created : 02-poc-agent-skills
+[PASS] CS created  : 02-poc-agent-skills
+[PASS] CI created : 03-poc-enhanced-docs
+[PASS] CS created  : 03-poc-enhanced-docs
+[PASS] CI created : 04-os-vnext
+[PASS] CS created  : 04-os-vnext
+[PASS] CI created : 05-extract-cases
+[PASS] CS created  : 05-extract-cases
+[PASS] CI created : 06-jp-auto-extraction
+[PASS] CS created  : 06-jp-auto-extraction
+[PASS] CI patched  : 07-foundation-layer (added skills reference)
+[PASS] CS created  : 07-foundation-layer
+[PASS] CI created : 08-cds-rag
+[PASS] CS created  : 08-cds-rag
+[PASS] CI created : 09-eva-repo-documentation
+[PASS] CS created  : 09-eva-repo-documentation
+[PASS] CI patched  : 10-mkdocs-poc (added skills reference)
+[PASS] CS created  : 10-mkdocs-poc
+[PASS] CI patched  : 11-ms-infojp (added skills reference)
+[PASS] CS created  : 11-ms-infojp
+[PASS] CI created : 12-work-spc-reorg
+[PASS] CS created  : 12-work-spc-reorg
+[PASS] CI created : 13-vscode-tools
+[PASS] CS created  : 13-vscode-tools
+[PASS] CI created : 14-az-finops
+[PASS] CS created  : 14-az-finops
+[PASS] CI created : 15-cdc
+[PASS] CS created  : 15-cdc
+[PASS] CI created : 16-engineered-case-law
+[PASS] CS created  : 16-engineered-case-law
+[PASS] CI created : 17-apim
+[PASS] CS created  : 17-apim
+[SKIP] CI exists   : 18-azure-best
+[PASS] CS created  : 18-azure-best
+[SKIP] CI exists   : 19-ai-gov
+[PASS] CS created  : 19-ai-gov
+[PASS] CI created : 20-AssistMe
+[PASS] CS created  : 20-AssistMe
+[PASS] CI created : 21-habit-tracker
+[PASS] CS created  : 21-habit-tracker
+[PASS] CI created : 22-rg-sandbox
+[PASS] CS created  : 22-rg-sandbox
+[PASS] CI patched  : 23-ei-dsst-rewrite (added skills reference)
+[PASS] CS created  : 23-ei-dsst-rewrite
+[PASS] CI patched  : 24-eva-brain (added skills reference)
+[PASS] CS created  : 24-eva-brain
+[PASS] CI created : 25-eva-suite
+[PASS] CS created  : 25-eva-suite
+[PASS] CI created : 26-eva-gh
+[PASS] CS created  : 26-eva-gh
+[PASS] CI created : 27-devbench
+[PASS] CS created  : 27-devbench
+[PASS] CI created : 28-rbac
+[PASS] CS created  : 28-rbac
+[SKIP] CI exists   : 29-foundry
+[PASS] CS created  : 29-foundry
+[PASS] CI created : 30-ui-bench
+[PASS] CS created  : 30-ui-bench
+[SKIP] CI exists   : 31-eva-faces
+[PASS] CS indexed  : 31-eva-faces (added 00-skill-index.skill.md)
+[PASS] CI created : 32-logging
+[PASS] CS created  : 32-logging
+[SKIP] CI exists   : 33-eva-brain-v2
+[PASS] CS indexed  : 33-eva-brain-v2 (added 00-skill-index.skill.md)
+[PASS] CI created : 34-eva-agents
+[PASS] CS created  : 34-eva-agents
+[PASS] CI created : 35-agentic-code-fixing
+[PASS] CS created  : 35-agentic-code-fixing
+[SKIP] CI exists   : 36-red-teaming
+[PASS] CS created  : 36-red-teaming
+[SKIP] CI exists   : 37-data-model
+[PASS] CS created  : 37-data-model
+[SKIP] CI exists   : 38-ado-poc
+[PASS] CS created  : 38-ado-poc
+[SKIP] CI exists   : 39-ado-dashboard
+[PASS] CS created  : 39-ado-dashboard
+[SKIP] CI exists   : 40-eva-control-plane
+[PASS] CS created  : 40-eva-control-plane
+[PASS] CI created : 41-eva-cli
+[PASS] CS created  : 41-eva-cli
+[PASS] CI created : 42-learn-foundry
+[PASS] CS created  : 42-learn-foundry
+[SKIP] CI exists   : 43-spark
+[PASS] CS created  : 43-spark
+[SKIP] CI exists   : 44-eva-jp-spark
+[PASS] CS created  : 44-eva-jp-spark
+[PASS] CI created : 45-aicoe-page
+[PASS] CS created  : 45-aicoe-page
+[PASS] CI created : 46-accelerator
+[PASS] CS created  : 46-accelerator
+
+--- DONE ---
+  CI created/patched : 34
+  CI already OK      : 12
+  CS created         : 46
+  CS already OK      : 0
+
+Next: verify a few spot-checks, then prime PLAN/STATUS/ACCEPTANCE templates.

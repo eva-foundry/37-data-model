@@ -1,0 +1,67 @@
+Drive already SUBSTed
+]633;P;IsWindows=TrueEVA Data Model - Validator
+
+PASS -- 0 violations
+
+60 repo_line coverage gap(s):
+  [WARN] endpoint 'GET /v1/config/info' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/config/features' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/config/translations/{language}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'PUT /v1/config/translations/{language}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'PATCH /v1/config/translations/{language}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'DELETE /v1/config/translations/{language}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/sessions' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/sessions' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/sessions/{session_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'PATCH /v1/sessions/{session_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'DELETE /v1/sessions/{session_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'DELETE /v1/sessions' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/tags' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/tags/{tag_name}/documents' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/search/saved' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/search/saved' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'DELETE /v1/search/saved/{search_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/search/history' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/ingest/upload' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/ingest/jobs/{job_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/ingest/jobs' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'DELETE /v1/ingest/jobs/{job_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/ingest/reprocess/{job_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/admin/users' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/admin/groups' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/audit' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/audit/{log_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/audit/export' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/audit/stats' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/content' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/content/{log_id}' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/content/export' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'GET /v1/logs/content/stats' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/math/solve' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/math/explain' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/math/convert' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/tabular/analyze' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/tabular/summarize' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/tabular/compare' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] endpoint 'POST /v1/assistant/tabular/extract' is implemented but missing repo_line (run scripts/backfill-repo-lines.py)
+  [WARN] component 'AdminListPage' is implemented but missing repo_line
+  [WARN] component 'EvaBadge' is implemented but missing repo_line
+  [WARN] component 'EvaButton' is implemented but missing repo_line
+  [WARN] component 'EvaDialog' is implemented but missing repo_line
+  [WARN] component 'EvaThemeProvider' is implemented but missing repo_line
+  [WARN] component 'NavHeader' is implemented but missing repo_line
+  [WARN] component 'ProductTileGrid' is implemented but missing repo_line
+  [WARN] component 'SprintBadge' is implemented but missing repo_line
+  [WARN] component 'WIDetailDrawer' is implemented but missing repo_line
+  [WARN] hook 'useRbacData' is implemented but missing repo_line
+  [WARN] hook 'useRbacRolesData' is implemented but missing repo_line
+  [WARN] hook 'useFeatureFlagsData' is implemented but missing repo_line
+  [WARN] hook 'useIngestionRunsData' is implemented but missing repo_line
+  [WARN] hook 'useSearchHealthData' is implemented but missing repo_line
+  [WARN] hook 'useSupportTicketsData' is implemented but missing repo_line
+  [WARN] hook 'useAuditLogsData' is implemented but missing repo_line
+  [WARN] hook 'useChatSession' is implemented but missing repo_line
+  [WARN] hook 'useSettingsData' is implemented but missing repo_line
+  [WARN] hook 'useAppsData' is implemented but missing repo_line
+  [WARN] screen 'ChatPane' is implemented but missing repo_line
+  => Run: python scripts/backfill-repo-lines.py
