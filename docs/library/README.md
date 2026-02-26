@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-02-24 @ 15:45 ET -- 07: Azure MAF + sprint workplan; 34 services
+ Updated: 2026-02-26 -- 09: EVA Orchestrator narrative; 31 layers; 4055 objects
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -72,6 +72,24 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 ADO, GitHub Actions, 29-foundry skills, heartbeats,
                                 evidence packs, MTI gate. Naming conventions.
                                 Notes for agents (mandatory rules).
+
+  08-EVA-VERITAS-INTEGRATION.md EVA Veritas <-> Data Model API wiring.
+                                POST /model/admin/audit-repo protocol.
+                                MTI gates for merge/deploy decisions.
+                                Veritas as the evidence plane of EVA.
+
+  09-EVA-ORCHESTRATOR.md        THE PROJECT INTELLIGENCE NARRATIVE.
+                                How 37-data-model + 48-eva-veritas evolved
+                                from catalog to live intelligence layer.
+                                THE KEY INSIGHT: the data model as dependency
+                                orchestrator -- untangling blocked sessions via
+                                HTTP when all imperative tools are unavailable.
+                                Full evolution chronology (Feb 20-26).
+                                Current snapshot: 31 layers, 4055 objects,
+                                76 stamped endpoints, 3234 WBS records,
+                                9 sprints, MTI 4-component formula.
+                                Near/medium/long-arc roadmap.
+                                READ THIS to understand the architectural intent.
 
 --------------------------------------------------------------------------------
  FOUNDING REFERENCE

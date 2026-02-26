@@ -1,8 +1,8 @@
 ================================================================================
- EVA DATA MODEL -- 27-LAYER REFERENCE
+ EVA DATA MODEL -- 31-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-02-24 @ 15:30 ET -- Two-portal split; face field on all 46 screens
- Source: http://localhost:8010  (store=cosmos, validated PASS 0 violations)
+ Updated: 2026-02-26 -- 31 layers; 4055 objects; 9 sprints; DPDCA+WBS+FP live
+ Source: https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
 ================================================================================
 
   GOLDEN RULE
@@ -15,7 +15,7 @@
   Bootstrap sequence for any agent:
     GET /health                -> confirms store=cosmos, gives agent_guide link
     GET /model/agent-guide     -> complete operating protocol in JSON
-    GET /model/agent-summary   -> all 27 layer counts in one call
+    GET /model/agent-summary   -> all 31 layer counts in one call
 
   WRITE CYCLE (3-step preferred)
   --------------------------------
