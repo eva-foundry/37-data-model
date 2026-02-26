@@ -1,8 +1,8 @@
 {
   "meta": {
     "schema": "eva.discovery.v2",
-    "generated_at": "2026-02-25T06:37:39.796Z",
-    "repo": "C:\\AICOE\\eva-foundation\\37-data-model"
+    "generated_at": "2026-02-26T23:57:04.557Z",
+    "repo": "C:\\AICOE\\eva-foundry\\37-data-model"
   },
   "project": null,
   "planned": {
@@ -798,12 +798,22 @@
         "story_tags": []
       },
       {
+        "path": ".gitignore",
+        "type": "other",
+        "story_tags": []
+      },
+      {
         "path": "ACCEPTANCE.md",
         "type": "doc",
         "story_tags": []
       },
       {
         "path": "acr-build-cosmos.log",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "acr-build-dpdca.log",
         "type": "other",
         "story_tags": []
       },
@@ -833,12 +843,22 @@
         "story_tags": []
       },
       {
+        "path": "commit-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
         "path": "Dockerfile",
         "type": "other",
         "story_tags": []
       },
       {
         "path": "export-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "health-check.txt",
         "type": "other",
         "story_tags": []
       },
@@ -873,6 +893,16 @@
         "story_tags": []
       },
       {
+        "path": "probe-dpdca.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "push-out.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
         "path": "pytest.ini",
         "type": "other",
         "story_tags": []
@@ -893,8 +923,18 @@
         "story_tags": []
       },
       {
+        "path": "seed-result.txt",
+        "type": "other",
+        "story_tags": []
+      },
+      {
         "path": "smoke_test.py",
         "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "sprints-check.txt",
+        "type": "other",
         "story_tags": []
       },
       {
@@ -999,6 +1039,27 @@
         "story_tags": []
       },
       {
+        "path": "evidence/F37-01-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-01-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-01-002.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-01-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-01-003.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-01-003"
+        ]
+      },
+      {
         "path": "evidence/F37-08-001.py",
         "type": "evidence",
         "story_tags": [
@@ -1048,6 +1109,153 @@
         ]
       },
       {
+        "path": "evidence/F37-API-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-API-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-API-002.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-API-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-API-003.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-API-003"
+        ]
+      },
+      {
+        "path": "evidence/F37-AUDIT-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-AUDIT-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-AUDITREPO-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-AUDITREPO-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-BACKFILL-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-BACKFILL-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-CACHE-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-CACHE-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-COMMIT-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-COMMIT-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-EDGETYPES-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-EDGETYPES-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-EXPORT-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-EXPORT-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-FILTER-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-FILTER-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-HEALTH-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-HEALTH-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-HEALTH-002.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-HEALTH-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-HEALTH-003.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-HEALTH-003"
+        ]
+      },
+      {
+        "path": "evidence/F37-MODEL-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-MODEL-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-MODEL-002.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-MODEL-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-OBJ_IDPATH-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-OBJ_IDPATH-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-OBJ_IDPATH-002.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-OBJ_IDPATH-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-OBJ_IDPATH-003.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-OBJ_IDPATH-003"
+        ]
+      },
+      {
+        "path": "evidence/F37-READY-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-READY-001"
+        ]
+      },
+      {
+        "path": "evidence/F37-SEED-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-SEED-001"
+        ]
+      },
+      {
         "path": "evidence/F37-sprints1-5.yaml",
         "type": "evidence",
         "story_tags": [
@@ -1061,6 +1269,13 @@
           "F37-06-002",
           "F37-07-001",
           "F37-07-002"
+        ]
+      },
+      {
+        "path": "evidence/F37-VALIDATE-001.json",
+        "type": "evidence",
+        "story_tags": [
+          "F37-VALIDATE-001"
         ]
       },
       {
@@ -1100,6 +1315,11 @@
       },
       {
         "path": "model/cp_workflows.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/decisions.json",
         "type": "data",
         "story_tags": []
       },
@@ -1144,6 +1364,11 @@
         "story_tags": []
       },
       {
+        "path": "model/milestones.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
         "path": "model/personas.json",
         "type": "data",
         "story_tags": []
@@ -1165,6 +1390,11 @@
       },
       {
         "path": "model/requirements.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model/risks.json",
         "type": "data",
         "story_tags": []
       },
@@ -1194,6 +1424,11 @@
         "story_tags": []
       },
       {
+        "path": "model/sprints.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
         "path": "model/ts_types.json",
         "type": "data",
         "story_tags": []
@@ -1215,6 +1450,11 @@
       },
       {
         "path": "schema/container.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/decision.schema.json",
         "type": "data",
         "story_tags": []
       },
@@ -1249,6 +1489,11 @@
         "story_tags": []
       },
       {
+        "path": "schema/milestone.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
         "path": "schema/persona.schema.json",
         "type": "data",
         "story_tags": []
@@ -1264,6 +1509,11 @@
         "story_tags": []
       },
       {
+        "path": "schema/risk.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
         "path": "schema/screen.schema.json",
         "type": "data",
         "story_tags": []
@@ -1275,6 +1525,11 @@
       },
       {
         "path": "schema/service.schema.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "schema/sprint.schema.json",
         "type": "data",
         "story_tags": []
       },
@@ -1359,6 +1614,11 @@
         "story_tags": []
       },
       {
+        "path": "scripts/readiness-probe.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
         "path": "scripts/README.md",
         "type": "doc",
         "story_tags": []
@@ -1380,6 +1640,16 @@
       },
       {
         "path": "scripts/seed-missing-projects.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/stamp-dft.ps1",
+        "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "scripts/stamp-tft.ps1",
         "type": "code",
         "story_tags": []
       },
@@ -1517,6 +1787,11 @@
         "story_tags": []
       },
       {
+        "path": "api/routers/fp.py",
+        "type": "code",
+        "story_tags": []
+      },
+      {
         "path": "api/routers/graph.py",
         "type": "code",
         "story_tags": []
@@ -1562,6 +1837,11 @@
         "story_tags": []
       },
       {
+        "path": "docs/ADO/ado-artifacts.json",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
         "path": "docs/library/00-EVA-OVERVIEW.md",
         "type": "doc",
         "story_tags": []
@@ -1603,6 +1883,11 @@
       },
       {
         "path": "docs/library/08-EVA-VERITAS-INTEGRATION.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/library/09-EVA-ORCHESTRATOR.md",
         "type": "doc",
         "story_tags": []
       },
@@ -1710,6 +1995,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-01-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-01-001"
+            ]
           }
         ]
       },
@@ -1744,6 +2036,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-01-002.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-01-002"
             ]
           }
         ]
@@ -1780,6 +2079,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-01-003.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-01-003"
+            ]
           }
         ]
       },
@@ -1814,6 +2120,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-API-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-API-001"
             ]
           }
         ]
@@ -1850,6 +2163,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-API-002.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-API-002"
+            ]
           }
         ]
       },
@@ -1884,6 +2204,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-API-003.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-API-003"
             ]
           }
         ]
@@ -1920,6 +2247,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-AUDIT-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-AUDIT-001"
+            ]
           }
         ]
       },
@@ -1954,6 +2288,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-AUDITREPO-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-AUDITREPO-001"
             ]
           }
         ]
@@ -1990,6 +2331,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-BACKFILL-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-BACKFILL-001"
+            ]
           }
         ]
       },
@@ -2024,6 +2372,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-CACHE-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-CACHE-001"
             ]
           }
         ]
@@ -2060,6 +2415,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-COMMIT-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-COMMIT-001"
+            ]
           }
         ]
       },
@@ -2094,6 +2456,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-EDGETYPES-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-EDGETYPES-001"
             ]
           }
         ]
@@ -2130,6 +2499,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-EXPORT-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-EXPORT-001"
+            ]
           }
         ]
       },
@@ -2164,6 +2540,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-FILTER-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-FILTER-001"
             ]
           }
         ]
@@ -2200,6 +2583,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-HEALTH-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-HEALTH-001"
+            ]
           }
         ]
       },
@@ -2234,6 +2624,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-HEALTH-002.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-HEALTH-002"
             ]
           }
         ]
@@ -2270,6 +2667,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-HEALTH-003.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-HEALTH-003"
+            ]
           }
         ]
       },
@@ -2304,6 +2708,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-MODEL-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-MODEL-001"
             ]
           }
         ]
@@ -2340,6 +2751,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-MODEL-002.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-MODEL-002"
+            ]
           }
         ]
       },
@@ -2374,6 +2792,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-OBJ_IDPATH-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-OBJ_IDPATH-001"
             ]
           }
         ]
@@ -2410,6 +2835,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-OBJ_IDPATH-002.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-OBJ_IDPATH-002"
+            ]
           }
         ]
       },
@@ -2444,6 +2876,13 @@
               "F37-READY-001",
               "F37-SEED-001",
               "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-OBJ_IDPATH-003.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-OBJ_IDPATH-003"
             ]
           }
         ]
@@ -2480,6 +2919,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-READY-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-READY-001"
+            ]
           }
         ]
       },
@@ -2515,6 +2961,13 @@
               "F37-SEED-001",
               "F37-VALIDATE-001"
             ]
+          },
+          {
+            "path": "evidence/F37-SEED-001.json",
+            "type": "evidence",
+            "story_tags": [
+              "F37-SEED-001"
+            ]
           }
         ]
       },
@@ -2548,6 +3001,13 @@
               "F37-OBJ_IDPATH-003",
               "F37-READY-001",
               "F37-SEED-001",
+              "F37-VALIDATE-001"
+            ]
+          },
+          {
+            "path": "evidence/F37-VALIDATE-001.json",
+            "type": "evidence",
+            "story_tags": [
               "F37-VALIDATE-001"
             ]
           }
@@ -2831,6 +3291,7 @@
         ]
       }
     },
-    "commit_evidence_map": {}
+    "commit_evidence_map": {},
+    "code_complexity": null
   }
 }

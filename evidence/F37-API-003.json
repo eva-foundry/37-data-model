@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-API-003",
+  "feature_id": "F37-API",
+  "title": "GET /",
+  "status": "implemented",
+  "source_file": "api/server.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-API-003 API root handler v3 fallback"
+}

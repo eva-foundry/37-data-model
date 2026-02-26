@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-MODEL-002",
+  "feature_id": "F37-MODEL",
+  "title": "GET /model/agent-guide",
+  "status": "implemented",
+  "source_file": "api/routers/base_layer.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-MODEL-002 returns full agent operating protocol JSON"
+}

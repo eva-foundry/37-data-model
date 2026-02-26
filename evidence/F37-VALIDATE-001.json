@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-VALIDATE-001",
+  "feature_id": "F37-VALIDATE",
+  "title": "GET /model/admin/validate",
+  "status": "implemented",
+  "source_file": "api/routers/admin.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-VALIDATE-001 validates model against schema and cross-references"
+}

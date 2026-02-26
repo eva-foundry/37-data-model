@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-HEALTH-002",
+  "feature_id": "F37-HEALTH",
+  "title": "GET /v1/health",
+  "status": "implemented",
+  "source_file": "api/server.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-HEALTH-002 v1 health check endpoint"
+}

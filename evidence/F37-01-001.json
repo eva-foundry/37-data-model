@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-01-001",
+  "feature_id": "F37-01",
+  "title": "GET /{obj_id:path}",
+  "status": "implemented",
+  "source_file": "api/routers/layers.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-01-001 generic object GET handler -- reads any layer object by id path"
+}

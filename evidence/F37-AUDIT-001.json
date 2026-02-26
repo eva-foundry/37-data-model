@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-AUDIT-001",
+  "feature_id": "F37-AUDIT",
+  "title": "GET /model/admin/audit",
+  "status": "implemented",
+  "source_file": "api/routers/admin.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-AUDIT-001 runs cross-reference violation audit across all layers"
+}

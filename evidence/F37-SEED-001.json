@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-SEED-001",
+  "feature_id": "F37-SEED",
+  "title": "POST /model/admin/seed",
+  "status": "implemented",
+  "source_file": "api/routers/admin.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-SEED-001 bulk seeds all model/*.json objects into Cosmos"
+}

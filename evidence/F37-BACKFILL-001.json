@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-BACKFILL-001",
+  "feature_id": "F37-BACKFILL",
+  "title": "POST /model/admin/backfill",
+  "status": "implemented",
+  "source_file": "api/routers/admin.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-BACKFILL-001 backfills missing fields across all objects in a layer"
+}

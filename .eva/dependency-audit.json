@@ -1,7 +1,7 @@
 {
   "meta": {
-    "generated_at": "2026-02-25T20:47:22.662Z",
-    "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
+    "generated_at": "2026-02-26T23:35:09.092Z",
+    "repo": "C:\\AICOE\\eva-foundry\\37-data-model",
     "base_url": "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
   },
   "summary": {
@@ -9,7 +9,7 @@
     "ready": 4,
     "partial": 0,
     "blocked": 1,
-    "failing_gates": 4,
+    "failing_gates": 1,
     "warning_gates": 0
   },
   "features": [
@@ -54,9 +54,7 @@
       "blockers": [],
       "verdict": "BLOCKED",
       "blocking_gates": [
-        "G-FP-ENDPOINT fp/estimate endpoint on ACA",
-        "G-STORYIDS Endpoints have story_ids (MTI 4th component)",
-        "G-SPRINTS L27 sprints seeded (>=8 records)"
+        "G-STORYIDS Endpoints have story_ids (MTI 4th component)"
       ],
       "warning_gates": [],
       "relevant_gates": 7
@@ -90,7 +88,7 @@
         "ALL"
       ],
       "status": "PASS",
-      "detail": "violations=0 exported=4006"
+      "detail": "violations=0 exported=4056"
     },
     {
       "id": "G-FP-ENDPOINT",
@@ -99,9 +97,8 @@
         "F31-DM-FP1",
         "F37-10"
       ],
-      "status": "FAIL",
-      "detail": "GET /model/fp/estimate -> 404 -- ACA image predates DPDCA sprint",
-      "fix": "Redeploy 37-data-model to ACA from current main branch"
+      "status": "PASS",
+      "detail": "fp/estimate reachable"
     },
     {
       "id": "G-TFT",
@@ -143,9 +140,8 @@
         "F31-PM3",
         "F37-10"
       ],
-      "status": "FAIL",
-      "detail": "L27 layer not on ACA -- DPDCA sprint not deployed",
-      "fix": "Redeploy 37-data-model ACA from main branch"
+      "status": "PASS",
+      "detail": "9 sprint records"
     },
     {
       "id": "G-L28L30",
@@ -153,9 +149,8 @@
       "features": [
         "F31-DM-PMLIVE1"
       ],
-      "status": "FAIL",
-      "detail": "Not reachable: milestones(L28), risks(L29), decisions(L30) -- DPDCA sprint not deployed",
-      "fix": "Redeploy 37-data-model ACA from main branch"
+      "status": "PASS",
+      "detail": "L28 milestones + L29 risks + L30 decisions reachable"
     },
     {
       "id": "G-GRAPH",

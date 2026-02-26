@@ -1,8 +1,25 @@
 ﻿# EVA Data Model -- Status
 
-**Last Updated:** February 25, 2026 -- Session 16c: DPDCA seed + cx26 ACR rebuild + cosmos-v2 ACA revision -- all gates PASS
+**Last Updated:** February 26, 2026 @ 18:56 ET -- Session 17: brain-v2 housekeeping PUTs + evidence files added
 **Phase:** ACTIVE -- COSMOS 24x7 -- validate-model PASS 0 violations -- 31 layers registered -- MTI=100
-**Snapshot (2026-02-25 S16c):** 31 layers -- 4055 exported objects -- Tests: 41/42 (T36 pre-existing only) -- Readiness: 9/9 gates PASS (G09 WARN: consumer MTI)
+**Snapshot (2026-02-26 S17):** 31 layers -- 4057 exported objects -- Tests: 41/42 (T36 pre-existing only) -- Readiness: 9/9 gates PASS (G09 WARN: consumer MTI)
+
+> **Session note (2026-02-26 Session 17 -- brain-v2 housekeeping + evidence batch):**
+>
+> DISCOVER: eva-roles-api service record had sprint=null, test_count=null, base_url_azure=null.
+>   6 roles-api endpoints had sprint=null, implemented_in=null.
+>   scrum/dashboard and scrum/summary were status=coded despite being APIM-live since Sprint-7.
+>   Multiple evidence JSON files untracked since last commit.
+>
+> DO:
+>   - eva-roles-api service: base_url_azure set, notes updated (rv=5)
+>   - GET /v1/scrum/dashboard: coded -> implemented (rv=6)
+>   - GET /v1/scrum/summary: coded -> implemented (rv=5)
+>   - 6 roles-api endpoints: sprint=Sprint-1, implemented_in set (rv=3->4 each)
+>   - POST /model/admin/commit: violation_count=0, exported_total=4057, export_errors=0
+>
+> CHECK: violation_count=0, export_errors=0 -- ACA commit clean.
+> ACT: No remaining data model blockers. 33-eva-brain-v2 Sprint 9 (F33-S9-001) ready to start.
 
 > **Session note (2026-02-25 Session 16c -- DPDCA seed continuation + ACR fix):**
 >

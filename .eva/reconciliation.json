@@ -1,14 +1,14 @@
 {
   "meta": {
     "schema": "eva.reconciliation.v2",
-    "generated_at": "2026-02-25T06:37:39.811Z",
-    "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
-    "discovery_path": "C:\\AICOE\\eva-foundation\\37-data-model\\.eva\\discovery.json"
+    "generated_at": "2026-02-26T23:57:04.583Z",
+    "repo": "C:\\AICOE\\eva-foundry\\37-data-model",
+    "discovery_path": "C:\\AICOE\\eva-foundry\\37-data-model\\.eva\\discovery.json"
   },
   "coverage": {
     "stories_total": 61,
     "stories_with_artifacts": 61,
-    "stories_with_evidence": 17,
+    "stories_with_evidence": 61,
     "consistency_score": 1
   },
   "features": [
@@ -17,9 +17,9 @@
       "title": "OBJ_IDPATH API [ID=F37-OBJ_IDPATH]",
       "story_count": 3,
       "stories_with_artifacts": 3,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 3,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -107,9 +107,9 @@
       "title": "API API",
       "story_count": 6,
       "stories_with_artifacts": 6,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 6,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -117,9 +117,9 @@
       "title": "AUDIT API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -127,9 +127,9 @@
       "title": "AUDITREPO API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -137,9 +137,9 @@
       "title": "BACKFILL API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -147,9 +147,9 @@
       "title": "CACHE API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -157,9 +157,9 @@
       "title": "COMMIT API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -167,9 +167,9 @@
       "title": "EDGETYPES API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -177,9 +177,9 @@
       "title": "EXPORT API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -187,9 +187,9 @@
       "title": "FILTER API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -197,9 +197,9 @@
       "title": "HEALTH API",
       "story_count": 6,
       "stories_with_artifacts": 6,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 6,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -207,9 +207,9 @@
       "title": "MODEL API",
       "story_count": 4,
       "stories_with_artifacts": 4,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 4,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -217,9 +217,9 @@
       "title": "OBJ_IDPATH API",
       "story_count": 3,
       "stories_with_artifacts": 3,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 3,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -227,9 +227,9 @@
       "title": "READY API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -237,9 +237,9 @@
       "title": "SEED API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     },
     {
@@ -247,9 +247,9 @@
       "title": "VALIDATE API",
       "story_count": 2,
       "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
+      "stories_with_evidence": 2,
       "consistency_score": 0,
-      "mti": 50,
+      "mti": 70,
       "gap_count": 0
     }
   ],

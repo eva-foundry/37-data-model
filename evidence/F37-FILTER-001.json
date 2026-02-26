@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-FILTER-001",
+  "feature_id": "F37-FILTER",
+  "title": "GET /model/{layer}/filter",
+  "status": "implemented",
+  "source_file": "api/routers/filter_endpoints.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-FILTER-001 single-field filter on endpoints layer -- status, service, auth_mode"
+}

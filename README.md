@@ -1,8 +1,8 @@
 # EVA Data Model
 
 **Component:** 37-data-model
-**Status:** GA -- validate-model PASS 0 violations - as of 2026-02-25: 31 layers - 187 endpoints - 46 screens - 375 literals - 51 projects - 4006 total objects - ACA deployed (Cosmos 24x7) - MTI=100
-**Last Updated:** February 25, 2026 -- DPDCA sprint: 4 new layers (sprints/milestones/risks/decisions) + FP calculator + veritas enrich + 4th MTI component
+**Status:** GA -- validate-model PASS 0 violations - as of 2026-02-26: 31 layers - 187 endpoints - 46 screens - 375 literals - 52 projects - 4057 total objects - ACA deployed (Cosmos 24x7) - MTI=100
+**Last Updated:** February 26, 2026 -- 51-ACA registered (Azure Cost Advisor, poc, row_version=1, violations=0, exported=4057)
 
 ---
 

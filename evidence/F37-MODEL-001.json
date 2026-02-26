@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-MODEL-001",
+  "feature_id": "F37-MODEL",
+  "title": "GET /model/agent-summary",
+  "status": "implemented",
+  "source_file": "api/routers/base_layer.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-MODEL-001 returns all 31 layer counts + total object count"
+}

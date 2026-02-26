@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-01-002",
+  "feature_id": "F37-01",
+  "title": "PUT /{obj_id:path}",
+  "status": "implemented",
+  "source_file": "api/routers/layers.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-01-002 generic object PUT handler -- upserts any layer object by id path"
+}

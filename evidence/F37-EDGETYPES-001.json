@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-EDGETYPES-001",
+  "feature_id": "F37-EDGETYPES",
+  "title": "GET /model/graph/edge-types",
+  "status": "implemented",
+  "source_file": "api/routers/graph.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-EDGETYPES-001 returns all 20 registered edge types for graph traversal"
+}

@@ -1,0 +1,9 @@
+{
+  "story_id": "F37-01-003",
+  "feature_id": "F37-01",
+  "title": "DELETE /{obj_id:path}",
+  "status": "implemented",
+  "source_file": "api/routers/layers.py",
+  "date": "2026-02-26",
+  "notes": "EVA-STORY: F37-01-003 generic object DELETE handler"
+}
