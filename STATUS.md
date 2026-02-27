@@ -1,8 +1,8 @@
 ﻿# EVA Data Model -- Status
 
-**Last Updated:** February 26, 2026 -- Session 17b: evidence receipts for 25 API stories -- MTI 86 -> 100 -- all 10 readiness gates PASS
+**Last Updated:** February 26, 2026 -- Session 17c: MODEL_DIR override + 51-ACA isolated instance -- services=4 endpoints=14 containers=5 agents=4 total=27
 **Phase:** ACTIVE -- COSMOS 24x7 -- validate-model PASS 0 violations -- 31 layers registered -- MTI=100
-**Snapshot (2026-02-26 S17b):** 31 layers -- 4057 exported objects -- Tests: 41/42 (T36 pre-existing only) -- Readiness: 10/10 gates PASS (G09 PASS: MTI=100 delta=+14)
+**Snapshot (2026-02-26 S17c):** 31 layers -- 4057 exported objects -- Tests: 41/42 (T36 pre-existing only) -- Readiness: 10/10 gates PASS (G09 PASS: MTI=100) -- MODEL_DIR env override: enables isolated per-project instances (e.g. port 8011 for 51-ACA)
 
 > **Session note (2026-02-26 Session 17 -- brain-v2 housekeeping + evidence batch):**
 >

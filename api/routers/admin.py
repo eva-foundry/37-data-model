@@ -88,7 +88,13 @@ _LAYER_FILES: dict[str, str] = {
     "decisions":       "decisions.json",
 }
 
-_MODEL_DIR = Path(__file__).parents[2] / "model"
+def _get_model_dir() -> Path:
+    """Return the model data directory, honouring MODEL_DIR env override."""
+    from api.config import get_settings
+    override = get_settings().model_dir_override
+    if override:
+        return Path(override)
+    return Path(__file__).parents[2] / "model"
 
 
 # ── SEED ──────────────────────────────────────────────────────────────────────
@@ -112,7 +118,7 @@ async def seed(
     errors: list[str] = []
 
     for layer, filename in _LAYER_FILES.items():
-        path = _MODEL_DIR / filename
+        path = _get_model_dir() / filename
         if not path.exists():
             log.warning("Seed: %s not found, skipping", path)
             continue
@@ -185,7 +191,7 @@ async def export_to_disk(
     _STRIP = {"obj_id", "layer", "_rid", "_self", "_etag", "_attachments", "_ts"}
 
     for layer, filename in _LAYER_FILES.items():
-        path = _MODEL_DIR / filename
+        path = _get_model_dir() / filename
         try:
             objects = await store.get_all(layer, active_only=False)
         except Exception as exc:
@@ -526,7 +532,7 @@ async def commit(
     _STRIP = {"obj_id", "layer", "_rid", "_self", "_etag", "_attachments", "_ts"}
 
     for layer, filename in _LAYER_FILES.items():
-        path = _MODEL_DIR / filename
+        path = _get_model_dir() / filename
         try:
             objects = await store.get_all(layer, active_only=False)
         except Exception as exc:

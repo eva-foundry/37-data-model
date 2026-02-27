@@ -126,14 +126,14 @@ async def lifespan(app: FastAPI):
     # object so every record permanently knows which layer file it came from.
     from api.store.memory import MemoryStore as _MS
     if isinstance(store, _MS):
-        from api.routers.admin import _LAYER_FILES, _MODEL_DIR
+        from api.routers.admin import _LAYER_FILES, _get_model_dir
         import json
         total = 0
         for layer, filename in _LAYER_FILES.items():
-            path = _MODEL_DIR / filename
+            path = _get_model_dir() / filename
             if not path.exists():
                 continue
-            raw = json.loads(path.read_text(encoding="utf-8"))
+            raw = json.loads(path.read_text(encoding="utf-8-sig"))
             objects = raw.get(layer, [])
             if not objects:
                 for v in raw.values():
@@ -163,11 +163,11 @@ async def lifespan(app: FastAPI):
         log.info("Shutdown: exporting MemoryStore to disk JSON layer files...")
         try:
             import json as _json
-            from api.routers.admin import _LAYER_FILES, _MODEL_DIR
+            from api.routers.admin import _LAYER_FILES, _get_model_dir
             _STRIP = {"obj_id", "layer", "_rid", "_self", "_etag", "_attachments", "_ts"}
             _total = 0
             for _layer, _filename in _LAYER_FILES.items():
-                _path = _MODEL_DIR / _filename
+                _path = _get_model_dir() / _filename
                 try:
                     _objects = await store.get_all(_layer, active_only=False)
                 except Exception:
@@ -175,7 +175,7 @@ async def lifespan(app: FastAPI):
                 _schema_url = ""
                 if _path.exists():
                     try:
-                        _existing = _json.loads(_path.read_text(encoding="utf-8"))
+                        _existing = _json.loads(_path.read_text(encoding="utf-8-sig"))
                         _schema_url = _existing.get("$schema", "")
                     except Exception:
                         pass

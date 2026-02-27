@@ -1,13 +1,14 @@
 """
-Configuration — loaded from environment variables.
+Configuration -- loaded from environment variables.
 All settings have defaults so the API works with zero config (in-memory mode).
 """
 from __future__ import annotations
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore", populate_by_name=True)
 
     # --- Cosmos DB (optional — if not set, MemoryStore is used) ---
     cosmos_url: str = ""
@@ -33,10 +34,16 @@ class Settings(BaseSettings):
     # Set DEV_MODE=false in production .env or container environment.
     dev_mode: bool = True
 
-    # Path to the model directory (resolved relative to this file's parent)
+    # Path to the model directory.
+    # Override with MODEL_DIR env var to run an isolated instance pointing at a
+    # different model data folder (e.g. a side project with its own layer JSON files).
+    model_dir_override: str = Field(default="", validation_alias="MODEL_DIR")
+
     @property
     def model_dir(self) -> str:
         from pathlib import Path
+        if self.model_dir_override:
+            return str(Path(self.model_dir_override))
         return str(Path(__file__).parents[1] / "model")
 
     @property
