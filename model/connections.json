@@ -25,6 +25,30 @@
       "row_version": 1
     },
     {
+      "id": "connection-ado-51aca",
+      "label": "Azure DevOps — 51-aca project",
+      "plane": "plane-ado",
+      "type": "ado",
+      "auth_mode": "oidc",
+      "endpoint": "https://dev.azure.com/marcopresta",
+      "scopes": [
+        "work_items:read",
+        "work_items:write",
+        "build:read",
+        "build:execute"
+      ],
+      "workspace_id": "51-aca",
+      "status": "active",
+      "notes": "Dedicated ADO project for Azure Cost Advisor commercial SaaS.",
+      "source_file": "model/connections.json",
+      "is_active": true,
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-28T18:20:00.000000+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-28T18:20:00.000000+00:00",
+      "row_version": 1
+    },
+    {
       "id": "connection-github",
       "label": "GitHub — eva-foundation org",
       "plane": "plane-github",

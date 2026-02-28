@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-02-26 -- 09: EVA Orchestrator narrative; 31 layers; 4055 objects
+ Updated: 2026-02-28 -- 10: FK Enhancement (Opus 4.6 reviewed); 31 layers; 4061 objects
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -91,6 +91,16 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 Near/medium/long-arc roadmap.
                                 READ THIS to understand the architectural intent.
 
+  10-FK-ENHANCEMENT.md          FK ENHANCEMENT: SIEBEL-STYLE RELATIONAL INTEGRITY.
+                                Opus 4.6 reviewed, CONDITIONAL GO, 403h/12 sprints.
+                                27 edge types, cascade policy matrix, 14-risk matrix.
+                                Phase 0 (Mar 2026): string-array FK validation.
+                                Phase 1A-5 (May 2026 - Feb 2027): full FK schema,
+                                  scenarios (saga merge), IaC generation,
+                                  pipeline generation, cascade rules, migration.
+                                Agent quick reference, API route catalog.
+                                READ THIS for the FK enhancement roadmap.
+
 --------------------------------------------------------------------------------
  FOUNDING REFERENCE
 --------------------------------------------------------------------------------
@@ -106,16 +116,17 @@ No Mermaid. No emoji. ASCII only. Printable.
   Berlin paper = vision. EVA = running implementation with governance.
 
 --------------------------------------------------------------------------------
- KEY NUMBERS (2026-02-24)
+ KEY NUMBERS (2026-02-28)
 --------------------------------------------------------------------------------
 
-  27 layers   PASS 0 violations   184 endpoints   46 screens
+  31 layers   PASS 0 violations   187 endpoints   50 screens
   Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
-  375 literals   34 services   48 projects   10 personas
+  458 literals   36 services   53 projects   10 personas
   15 feature flags   12 governance domains   6 MTI subscores
   9-step decision engine   2 audit log lanes   7 authority planes
-  60 pre-existing coverage WARNs (non-blocking)
-  doc-generator service: planned -- auto-generate docs from 27 layers -> Azure Blob
+  4061 total objects   27 edge types (20 existing + 7 new CI/CD)
+  FK Enhancement: Opus 4.6 CONDITIONAL GO, 403h/12 sprints, Phase 0 Mar 2026
+  doc-generator service: planned -- auto-generate docs from 31 layers -> Azure Blob
 
 --------------------------------------------------------------------------------
  QUICK REFERENCE: WHAT TO ASK THE MODEL
