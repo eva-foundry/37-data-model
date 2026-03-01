@@ -599,9 +599,15 @@ def write_evidence(story: dict, test_result: str, lint_result: str,
 
 def run_checks() -> tuple[str, str]:
     """Run ruff lint and pytest collect. Return (lint_status, test_status)."""
-    lint = _run(["ruff", "check", "api/", "scripts/", "tests/", "--quiet"])
-    lint_out = (lint.stdout + lint.stderr).strip()
-    lint_status = "PASS" if lint.returncode == 0 else "WARN"
+    # Try to run ruff if available, gracefully degrade if not installed
+    try:
+        lint = _run(["ruff", "check", "api/", "scripts/", "tests/", "--quiet"])
+        lint_out = (lint.stdout + lint.stderr).strip()
+        lint_status = "PASS" if lint.returncode == 0 else "WARN"
+    except FileNotFoundError:
+        print("[WARN] ruff not found, skipping lint check (install with: pip install ruff)")
+        lint_out = "ruff not installed"
+        lint_status = "SKIP"
 
     test = _run(["python3", "-m", "pytest", "tests/", "--co", "-q"])
     test_out = (test.stdout + test.stderr).strip()

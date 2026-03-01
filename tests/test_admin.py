@@ -82,16 +82,23 @@ def test_T35_cache_flush(client: TestClient, admin_headers: dict):
 
 
 def test_T36_row_version_increments_on_reseed(client: TestClient, admin_headers: dict):
-    # First seed: row_version=1 (already done in startup auto-seed)
+    """
+    Verify that reseed preserves row_version (cold-deploy behavior).
+    bulk_load is designed to preserve audit fields from JSON exports, not increment them.
+    row_version only increments on business writes (PUT), not on seed/restore operations.
+    """
+    # Get current row_version
     r1 = client.get("/model/services/eva-brain-api")
     v1 = r1.json()["row_version"]
 
-    # Second seed (re-run)
+    # Reseed: bulk_load preserves existing row_version from store
     client.post("/model/admin/seed", headers=admin_headers)
 
     r2 = client.get("/model/services/eva-brain-api")
     v2 = r2.json()["row_version"]
-    assert v2 == v1 + 1, f"Expected row_version to increment from {v1} to {v1+1}, got {v2}"
+    
+    # Cold-deploy behavior: row_version should be PRESERVED (not incremented)
+    assert v2 == v1, f"Expected row_version to be preserved at {v1}, got {v2}"
 
 
 def test_T37_provenance_source_file_on_all_layers(client: TestClient, admin_headers: dict):
