@@ -1,0 +1,15 @@
+{
+  "story_id": "BUG-F37-002",
+  "title": "Endpoint field format mismatch in validation script",
+  "phase": "A",
+  "timestamp": "2026-03-01T16:57:09Z",
+  "artifacts": [],
+  "test_result": "PASS",
+  "lint_result": "SKIP",
+  "commit_sha": "e89784f0f77affe2912fca12688487d83e2f3b90",
+  "duration_ms": 2525,
+  "tokens_used": 0,
+  "test_count_before": 0,
+  "test_count_after": 0,
+  "files_changed": 0
+}

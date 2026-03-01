@@ -1,0 +1,15 @@
+{
+  "story_id": "BUG-F37-001",
+  "title": "Row version not incremented on PUT",
+  "phase": "A",
+  "timestamp": "2026-03-01T16:57:06Z",
+  "artifacts": [],
+  "test_result": "PASS",
+  "lint_result": "SKIP",
+  "commit_sha": "a110cb65ada19b86a5793f817f2a33a82c6d4c5f",
+  "duration_ms": 3707,
+  "tokens_used": 0,
+  "test_count_before": 0,
+  "test_count_after": 0,
+  "files_changed": 0
+}
