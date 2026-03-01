@@ -40,10 +40,12 @@ def isolated_client(tmp_path, monkeypatch, settings):
 
     # Clone real model files into a temp directory before the lifespan starts
     dst = tmp_path / "model"
-    shutil.copytree(str(admin_mod._MODEL_DIR), str(dst))
+    # Get the real model directory from the function (not a constant)
+    real_model_dir = admin_mod._get_model_dir()
+    shutil.copytree(str(real_model_dir), str(dst))
 
-    # Redirect admin module to the clone (must happen BEFORE TestClient.__enter__)
-    monkeypatch.setattr(admin_mod, "_MODEL_DIR", dst)
+    # Redirect _get_model_dir to return the clone (must happen BEFORE TestClient.__enter__)
+    monkeypatch.setattr(admin_mod, "_get_model_dir", lambda: dst)
 
     _cfg._settings = settings
     app = create_app()
