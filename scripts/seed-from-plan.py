@@ -37,17 +37,19 @@ VERITAS_FILE    = EVA_DIR / "veritas-plan.json"
 DATA_MODEL_URL = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
 
 # Regex patterns for PLAN.md parsing (37-data-model format)
-# Epic:    "# Epic N -- Title"
-# Feature: "## Feature: Title [ID=F37-NN]"
-# Story:   "### Story: Title [ID=F37-NN-NNN]" (new format) OR "  Story N.M.K [F37-NN-NNN]  title" (old annotated format)
-EPIC_TITLE_RE = re.compile(r"^#\s+Epic\s+(\d+)\s+--\s+(.+)$")
-FEATURE_RE    = re.compile(r"^##\s+Feature:\s+(.+?)\s+\[ID=(F37-\d{2})\]$")
+# Two epic formats:
+#   1. Standard: "# Epic N -- Title" (numeric epic, single #)
+#   2. FK Enhancement: "## Epic FK -- Title" (FK epic code, double ##)
+# Feature: "## Feature: Title [ID=F37-NN]" OR "## Feature: Title [ID=F37-FK-SPRINTN]"
+# Story: "### Story: Title [ID=F37-NN-NNN]" OR "### Story: Title [ID=F37-FK-NNN]"
+EPIC_TITLE_RE = re.compile(r"^#+\s+Epic\s+(\w+)\s+--\s+(.+)$")  # matches # Epic N or ## Epic FK
+FEATURE_RE    = re.compile(r"^##\s+Feature:\s+(.+?)\s+\[ID=(F37-[\w-]+)\]$")  # F37-02 or F37-FK-SPRINT0
 # Story new format (already has canonical ID):
-STORY_NEW_RE  = re.compile(r"^###\s+Story:\s+(.+?)\s+\[ID=(F37-\d{2}-\d{3})\]$")
+STORY_NEW_RE  = re.compile(r"^###\s+Story:\s+(.+?)\s+\[ID=(F37-[\w-]+)\]$")  # F37-02-003 or F37-FK-001
 # Story old format (WBS with optional annotation):
 STORY_OLD_RE  = re.compile(
     r"^(\s{2,6})Story\s+(\d+)\.(\d+)\.(\d+)"
-    r"(?:\s+\[([A-Z]{2,5}-\d{2}-\d{3})\])?"
+    r"(?:\s+\[([A-Z]{2,5}-[\w-]+)\])?"
     r"\s{2,}(.+)$"
 )
 # Status declaration lines under stories:
@@ -105,27 +107,40 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
     epics: list[dict] = []
     current_epic: dict | None = None
     current_feature: dict | None = None
-    story_counters: dict[int, int] = {}  # epic_n -> story count
+    story_counters: dict[str, int] = {}  # epic_code -> story count (FK, 01, 02, etc.)
 
     for line in plan_text.splitlines():
         # Epic line
         m_epic = EPIC_TITLE_RE.match(line)
         if m_epic:
-            ep_n = int(m_epic.group(1))
+            ep_code = m_epic.group(1).strip()  # "FK" or "1", "2", etc.
             ep_title = m_epic.group(2).strip()
-            current_epic = {"epic_n": ep_n, "epic_title": ep_title, "features": []}
+            # Normalize epic code: numeric -> zero-padded, text -> uppercase
+            if ep_code.isdigit():
+                ep_code_norm = f"{int(ep_code):02d}"
+            else:
+                ep_code_norm = ep_code.upper()
+            current_epic = {"epic_code": ep_code_norm, "epic_title": ep_title, "features": []}
             epics.append(current_epic)
             current_feature = None
-            story_counters[ep_n] = 0
+            story_counters[ep_code_norm] = 0
             continue
 
         # Feature line
         m_feat = FEATURE_RE.match(line)
         if m_feat and current_epic:
             feat_title = m_feat.group(1).strip()
-            feat_id = m_feat.group(2)  # "F37-02"
+            feat_id = m_feat.group(2)  # "F37-02" or "F37-FK-SPRINT0"
+            # Extract numeric feature part if possible, else 0
             try:
-                feat_n = int(feat_id.split("-")[1])
+                # For F37-FK-SPRINT0, get 0; for F37-02, get 2
+                parts = feat_id.split("-")
+                if len(parts) >= 3 and parts[2].startswith("SPRINT"):
+                    feat_n = int(parts[2].replace("SPRINT", ""))
+                elif len(parts) >= 2:
+                    feat_n = int(parts[1])
+                else:
+                    feat_n = 0
             except (IndexError, ValueError):
                 feat_n = 0
             current_feature = {
@@ -137,32 +152,34 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
             current_epic["features"].append(current_feature)
             continue
 
-        # Story new format: "### Story: Title [ID=F37-NN-NNN]"
+        # Story new format: "### Story: Title [ID=F37-NN-NNN]" or "### Story: Title [ID=F37-FK-NNN]"
         m_story_new = STORY_NEW_RE.match(line)
         if m_story_new and current_feature:
             story_title = m_story_new.group(1).strip()
-            story_id = m_story_new.group(2)  # "F37-02-017"
-            ep_n = current_epic["epic_n"]
+            story_id = m_story_new.group(2)  # "F37-02-017" or "F37-FK-001"
+            ep_code = current_epic["epic_code"]
             feat_n = current_feature["feature_n"]
             
             # Count this story
-            story_counters[ep_n] = story_counters.get(ep_n, 0) + 1
-            story_seq = story_counters[ep_n]
+            story_counters[ep_code] = story_counters.get(ep_code, 0) + 1
+            story_seq = story_counters[ep_code]
             
-            # Extract WBS from ID: F37-02-017 -> story number 017 within epic 02
+            # Extract story number from ID: F37-02-017 -> 17, F37-FK-001 -> 1
             try:
-                story_n = int(story_id.split("-")[2])
+                last_part = story_id.split("-")[-1]
+                story_n = int(last_part)
             except (IndexError, ValueError):
                 story_n = story_seq
             
-            wbs = f"{ep_n}.{feat_n}.{story_n}"
+            wbs = f"{ep_code}.{feat_n}.{story_n}"
             current_feature["stories"].append({
                 "wbs": wbs,
                 "title": story_title,
                 "status": None,
                 "done": story_id in done_ids,
-                "epic_n": ep_n,
+                "epic_code": ep_code,
                 "feature_n": feat_n,
+                "story_id": story_id,  # preserve canonical ID
             })
             continue
 
@@ -175,10 +192,13 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
             annotation = m_story_old.group(5)  # may be None
             title = m_story_old.group(6).strip()
             
-            # Count this story
-            story_counters[ep_n] = story_counters.get(ep_n, 0) + 1
+            # Epic code for old format is always numeric
+            ep_code = f"{ep_n:02d}"
             
-            wbs = f"{ep_n}.{feat_n}.{story_n}"
+            # Count this story
+            story_counters[ep_code] = story_counters.get(ep_code, 0) + 1
+            
+            wbs = f"{ep_code}.{feat_n}.{story_n}"
             # If annotated, check done roster
             done = annotation in done_ids if annotation else False
             current_feature["stories"].append({
@@ -186,8 +206,9 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
                 "title": title,
                 "status": None,
                 "done": done,
-                "epic_n": ep_n,
+                "epic_code": ep_code,
                 "feature_n": feat_n,
+                "story_id": annotation if annotation else None,  # may be None
             })
             continue
 
@@ -233,16 +254,16 @@ def build_veritas_plan(parsed: dict, done_ids: set[str]) -> dict:
     }
     """
     features: list[dict] = []
-    story_counters: dict[int, int] = {}
+    story_counters: dict[str, int] = {}  # epic_code -> story count
 
     for epic in parsed.get("epics", []):
-        ep_n = epic["epic_n"]
+        ep_code = epic["epic_code"]  # "FK" or "02"
         ep_title = epic["epic_title"]
-        epic_label = f"Epic {ep_n:02d} -- {ep_title}"
-        story_counters[ep_n] = 0
+        epic_label = f"Epic {ep_code} -- {ep_title}"
+        story_counters[ep_code] = 0
 
         for feat in epic.get("features", []):
-            feat_id = feat["feature_id"]  # "F37-02"
+            feat_id = feat["feature_id"]  # "F37-02" or "F37-FK-SPRINT0"
             feat_title = feat["title"]
             feat_entry = {
                 "id": feat_id,
@@ -252,8 +273,12 @@ def build_veritas_plan(parsed: dict, done_ids: set[str]) -> dict:
             }
 
             for story_raw in feat.get("stories", []):
-                story_counters[ep_n] += 1
-                canonical_id = f"F37-{ep_n:02d}-{story_counters[ep_n]:03d}"
+                # Use story_id if already present (FK stories), else generate sequential ID
+                if story_raw.get("story_id"):
+                    canonical_id = story_raw["story_id"]
+                else:
+                    story_counters[ep_code] += 1
+                    canonical_id = f"F37-{ep_code}-{story_counters[ep_code]:03d}"
                 
                 # Determine status: done=True -> "implemented", has status text -> use it, else "planned"
                 st = story_raw.get("status", "")
@@ -271,7 +296,7 @@ def build_veritas_plan(parsed: dict, done_ids: set[str]) -> dict:
                     "title": story_raw["title"],
                     "status": status,
                     "done": story_raw.get("done", False),
-                    "epic_n": ep_n,
+                    "epic_code": ep_code,
                     "feature_id": feat_id,
                     "blockers": [],
                     "size": "M",
@@ -361,7 +386,7 @@ def model_upsert(story: dict, dry_run: bool = False) -> None:
         "id": story["id"],
         "label": story["title"],
         "wbs": story["wbs"],
-        "epic_n": story["epic_n"],
+        "epic_code": story["epic_code"],
         "feature_id": story["feature_id"],
         "status": story["status"],
         "done": story["done"],

@@ -1,869 +1,713 @@
 {
-  "schema": "eva.veritas-plan.v1",
-  "generated_at": "2026-02-25T06:37:39.122Z",
-  "generated_from": [
-    "PLAN.md"
-  ],
-  "format_detected": "veritas",
-  "prefix": "F37",
+  "version": "2.0.0",
+  "project": "37-data-model",
+  "generated": "2026-03-01T13:42:20.410652+00:00",
   "features": [
     {
-      "id": "F37-01",
-      "title": "OBJ_IDPATH API [ID=F37-OBJ_IDPATH]",
-      "source_heading": "## Feature: OBJ_IDPATH API [ID=F37-OBJ_IDPATH]",
+      "id": "F37-FK-SPRINT0",
+      "title": "Sprint 0 -- Phase 0 Validation (48h, 3 stories, 5 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-01-001",
-          "title": "GET /{obj_id:path} [ID=F37-OBJ_IDPATH-001]",
-          "feature_id": "F37-01",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-001",
+          "wbs": "FK.0.1",
+          "title": "Implement string-array validator",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT0",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-01-002",
-          "title": "PUT /{obj_id:path} [ID=F37-OBJ_IDPATH-002]",
-          "feature_id": "F37-01",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-002",
+          "wbs": "FK.0.2",
+          "title": "Integrate validator into PUT routers",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT0",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-01-003",
-          "title": "DELETE /{obj_id:path} [ID=F37-OBJ_IDPATH-003]",
-          "feature_id": "F37-01",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-003",
+          "wbs": "FK.0.3",
+          "title": "Backfill validation + reporting",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT0",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-02",
-      "title": "Layer Build Order",
-      "source_heading": "## Feature: Layer Build Order [ID=F37-02]",
-      "stories": []
-    },
-    {
-      "id": "F37-03",
-      "title": "Sprint 1 ? Foundation Layers (L0?L2) ? DONE",
-      "source_heading": "## Feature: Sprint 1 ? Foundation Layers (L0?L2) ? DONE [ID=F37-03]",
+      "id": "F37-FK-SPRINT1",
+      "title": "Sprint 1 -- Phase 1A Store Interface + Schema (80h, 8 stories, 13 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-03-001",
-          "title": "Deliverables",
-          "feature_id": "F37-03",
-          "source": "heading",
-          "tasks": [
-            {
-              "id": "F37-03-001-T01",
-              "title": "`schema/service.schema.json`",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T02",
-              "title": "`schema/persona.schema.json`",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T03",
-              "title": "`schema/feature_flag.schema.json`",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T04",
-              "title": "`model/services.json` ? 9 services",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T05",
-              "title": "`model/personas.json` ? 6 personas",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T06",
-              "title": "`model/feature_flags.json` ? 9 flags",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T07",
-              "title": "`scripts/validate-model.ps1`",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-03-001-T08",
-              "title": "`scripts/assemble-model.ps1`",
-              "story_id": "F37-03-001",
-              "feature_id": "F37-03",
-              "done": false,
-              "source": "checklist"
-            }
-          ]
+          "id": "F37-FK-101",
+          "wbs": "FK.1.101",
+          "title": "Define RelationshipMeta schema",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-03-002",
-          "title": "Acceptance",
-          "feature_id": "F37-03",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-102",
+          "wbs": "FK.1.102",
+          "title": "Extend AbstractStore interface",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-103",
+          "wbs": "FK.1.103",
+          "title": "Implement MemoryStore adapter",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-104",
+          "wbs": "FK.1.104",
+          "title": "Add /relationships router stub",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-105",
+          "wbs": "FK.1.105",
+          "title": "Update layer registry",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-106",
+          "wbs": "FK.1.106",
+          "title": "Seed initial relationship test data",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-107",
+          "wbs": "FK.1.107",
+          "title": "Update USER-GUIDE",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-108",
+          "wbs": "FK.1.108",
+          "title": "Add relationship validation gate",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT1",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-04",
-      "title": "Sprint 2 ? Data and API Layers (L3?L5) ? DONE",
-      "source_heading": "## Feature: Sprint 2 ? Data and API Layers (L3?L5) ? DONE [ID=F37-04]",
+      "id": "F37-FK-SPRINT2",
+      "title": "Sprint 2 -- Phase 1B Scenarios Layer (40h, 5 stories, 8 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-04-001",
-          "title": "Deliverables",
-          "feature_id": "F37-04",
-          "source": "heading",
-          "tasks": [
-            {
-              "id": "F37-04-001-T01",
-              "title": "`schema/container.schema.json`",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T02",
-              "title": "`schema/endpoint.schema.json`",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T03",
-              "title": "`schema/schema.schema.json`",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T04",
-              "title": "`model/containers.json` ? 7 containers",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T05",
-              "title": "`model/endpoints.json` ? 44 endpoints",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T06",
-              "title": "`model/schemas.json` ? 36 schemas",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T07",
-              "title": "`scripts/impact-analysis.ps1`",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-04-001-T08",
-              "title": "Cross-reference validated",
-              "story_id": "F37-04-001",
-              "feature_id": "F37-04",
-              "done": false,
-              "source": "checklist"
-            }
-          ]
+          "id": "F37-FK-201",
+          "wbs": "FK.2.201",
+          "title": "Define scenarios schema",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT2",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-04-002",
-          "title": "Acceptance",
-          "feature_id": "F37-04",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-202",
+          "wbs": "FK.2.202",
+          "title": "Implement saga pattern for scenario merge",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT2",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-203",
+          "wbs": "FK.2.203",
+          "title": "Add scenarios router",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT2",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-204",
+          "wbs": "FK.2.204",
+          "title": "Seed scenario test data",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT2",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-205",
+          "wbs": "FK.2.205",
+          "title": "Update docs with saga pattern",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT2",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-05",
-      "title": "Sprint 3 ? UI Layers (L6?L7) ? DONE",
-      "source_heading": "## Feature: Sprint 3 ? UI Layers (L6?L7) ? DONE [ID=F37-05]",
+      "id": "F37-FK-SPRINT3",
+      "title": "Sprint 3 -- Phase 1C IaC Layer (30h, 4 stories, 6 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-05-001",
-          "title": "Deliverables",
-          "feature_id": "F37-05",
-          "source": "heading",
-          "tasks": [
-            {
-              "id": "F37-05-001-T01",
-              "title": "`schema/screen.schema.json`",
-              "story_id": "F37-05-001",
-              "feature_id": "F37-05",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-05-001-T02",
-              "title": "`schema/literal.schema.json`",
-              "story_id": "F37-05-001",
-              "feature_id": "F37-05",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-05-001-T03",
-              "title": "`model/screens.json` ? 27 screens (Phase 5 wave added eva-devbench ?5, eva-jp-spark ?7; admin-face 10 + chat-face 1 + portal-face 3 all implemented; devbench/jp-spark stubs pending population per `20260226-to-be-cataloged.md`)",
-              "story_id": "F37-05-001",
-              "feature_id": "F37-05",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-05-001-T04",
-              "title": "`model/literals.json` ? 232 literal keys (+96 added Feb 22 for WI-9/10/12?16)",
-              "story_id": "F37-05-001",
-              "feature_id": "F37-05",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-05-001-T05",
-              "title": "Cross-reference validated",
-              "story_id": "F37-05-001",
-              "feature_id": "F37-05",
-              "done": false,
-              "source": "checklist"
-            }
-          ]
+          "id": "F37-FK-301",
+          "wbs": "FK.3.301",
+          "title": "Define iac_templates schema",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT3",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-05-002",
-          "title": "Acceptance",
-          "feature_id": "F37-05",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-302",
+          "wbs": "FK.3.302",
+          "title": "Implement IaC router",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT3",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-303",
+          "wbs": "FK.3.303",
+          "title": "Seed IaC template library",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT3",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-304",
+          "wbs": "FK.3.304",
+          "title": "Update docs",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT3",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-06",
-      "title": "Sprint 4 ? Agent Fleet + Infrastructure Layers (L8?L9) ? DONE",
-      "source_heading": "## Feature: Sprint 4 ? Agent Fleet + Infrastructure Layers (L8?L9) ? DONE [ID=F37-06]",
+      "id": "F37-FK-SPRINT4",
+      "title": "Sprint 4 -- Phase 1D Pipelines Layer (30h, 4 stories, 6 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-06-001",
-          "title": "Deliverables",
-          "feature_id": "F37-06",
-          "source": "heading",
-          "tasks": [
-            {
-              "id": "F37-06-001-T01",
-              "title": "`schema/agent.schema.json`",
-              "story_id": "F37-06-001",
-              "feature_id": "F37-06",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-06-001-T02",
-              "title": "`schema/infrastructure.schema.json`",
-              "story_id": "F37-06-001",
-              "feature_id": "F37-06",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-06-001-T03",
-              "title": "`model/agents.json` ? 3 agents",
-              "story_id": "F37-06-001",
-              "feature_id": "F37-06",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-06-001-T04",
-              "title": "`model/infrastructure.json` ? 23 resources",
-              "story_id": "F37-06-001",
-              "feature_id": "F37-06",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-06-001-T05",
-              "title": "Cross-reference: agents reference output screens and input endpoints",
-              "story_id": "F37-06-001",
-              "feature_id": "F37-06",
-              "done": false,
-              "source": "checklist"
-            }
-          ]
+          "id": "F37-FK-401",
+          "wbs": "FK.4.401",
+          "title": "Define pipelines schema",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT4",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-06-002",
-          "title": "Acceptance",
-          "feature_id": "F37-06",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-402",
+          "wbs": "FK.4.402",
+          "title": "Implement pipelines router",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT4",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-403",
+          "wbs": "FK.4.403",
+          "title": "Seed pipeline definitions",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT4",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-404",
+          "wbs": "FK.4.404",
+          "title": "Update docs",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT4",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-07",
-      "title": "Sprint 5 ? Requirements Traceability Layer (L10) ? DONE",
-      "source_heading": "## Feature: Sprint 5 ? Requirements Traceability Layer (L10) ? DONE [ID=F37-07]",
+      "id": "F37-FK-SPRINT5",
+      "title": "Sprint 5 -- Phase 1E Workflows Layer (25h, 3 stories, 5 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-07-001",
-          "title": "Deliverables",
-          "feature_id": "F37-07",
-          "source": "heading",
-          "tasks": [
-            {
-              "id": "F37-07-001-T01",
-              "title": "`schema/requirement.schema.json`",
-              "story_id": "F37-07-001",
-              "feature_id": "F37-07",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-07-001-T02",
-              "title": "`model/requirements.json` ? 22 items (5 epics, 10 requirements, 4 stories, 3 ACs)",
-              "story_id": "F37-07-001",
-              "feature_id": "F37-07",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-07-001-T03",
-              "title": "Every requirement cross-referenced to endpoints[] and screens[]",
-              "story_id": "F37-07-001",
-              "feature_id": "F37-07",
-              "done": false,
-              "source": "checklist"
-            },
-            {
-              "id": "F37-07-001-T04",
-              "title": "`scripts/coverage-gaps.ps1` ? endpoints/screens with no test coverage *(planned)*",
-              "story_id": "F37-07-001",
-              "feature_id": "F37-07",
-              "done": false,
-              "source": "checklist"
-            }
-          ]
+          "id": "F37-FK-501",
+          "wbs": "FK.5.501",
+          "title": "Define workflows schema",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT5",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-07-002",
-          "title": "Acceptance",
-          "feature_id": "F37-07",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-502",
+          "wbs": "FK.5.502",
+          "title": "Implement workflows router",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT5",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-503",
+          "wbs": "FK.5.503",
+          "title": "Seed + document workflows",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT5",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-08",
-      "title": "Ongoing ? How the Model Grows and Is Maintained",
-      "source_heading": "## Feature: Ongoing ? How the Model Grows and Is Maintained [ID=F37-08]",
+      "id": "F37-FK-SPRINT6",
+      "title": "Sprint 6 -- Phase 1F Snapshots Layer (20h, 3 stories, 4 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-08-001",
-          "title": "Growth Path 1 ? Same-PR Rule (day-to-day)",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-601",
+          "wbs": "FK.6.601",
+          "title": "Define snapshots schema",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT6",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-08-002",
-          "title": "Growth Path 2 ? Sprint-Close Audit (every sprint)",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-602",
+          "wbs": "FK.6.602",
+          "title": "Implement snapshots router",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT6",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-08-003",
-          "title": "Growth Path 3 ? Ecosystem Expansion (new service or repository)",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-08-004",
-          "title": "Growth Path 4 ? New Model Layer (extending the schema)",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-08-005",
-          "title": "Validation Gate (all paths)",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-08-006",
-          "title": "Drift Signals ? How to Know the Model Is Stale",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-08-007",
-          "title": "Governance",
-          "feature_id": "F37-08",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-603",
+          "wbs": "FK.6.603",
+          "title": "Seed + document snapshots",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT6",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-09",
-      "title": "Dependencies",
-      "source_heading": "## Feature: Dependencies [ID=F37-09]",
-      "stories": []
-    },
-    {
-      "id": "F37-HEALTH",
-      "title": "HEALTH API",
-      "source_heading": "## Feature: HEALTH API [ID=F37-HEALTH]",
+      "id": "F37-FK-SPRINT7",
+      "title": "Sprint 7 -- Phase 2 CosmosStore Implementation (15h, 2 stories, 3 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-HEALTH-001",
-          "title": "GET /health",
-          "feature_id": "F37-HEALTH",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-HEALTH-002",
-          "title": "GET /v1/health",
-          "feature_id": "F37-HEALTH",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-HEALTH-003",
-          "title": "GET /v1/health",
-          "feature_id": "F37-HEALTH",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-HEALTH-001",
-          "title": "GET /health",
-          "feature_id": "F37-HEALTH",
+          "id": "F37-FK-701",
+          "wbs": "FK.7.701",
+          "title": "Implement CosmosStore.put_relationship()",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT7",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-HEALTH-002",
-          "title": "GET /v1/health",
-          "feature_id": "F37-HEALTH",
+          "id": "F37-FK-702",
+          "wbs": "FK.7.702",
+          "title": "Deploy /relationships container to ACA",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        },
-        {
-          "id": "F37-HEALTH-003",
-          "title": "GET /v1/health",
-          "feature_id": "F37-HEALTH",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT7",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-READY",
-      "title": "READY API",
-      "source_heading": "## Feature: READY API [ID=F37-READY]",
+      "id": "F37-FK-SPRINT8",
+      "title": "Sprint 8 -- Phase 3 Migration Utilities (35h, 4 stories, 7 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-READY-001",
-          "title": "GET /ready",
-          "feature_id": "F37-READY",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-801",
+          "wbs": "FK.8.801",
+          "title": "Implement backfill script for endpoints",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT8",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-READY-001",
-          "title": "GET /ready",
-          "feature_id": "F37-READY",
+          "id": "F37-FK-802",
+          "wbs": "FK.8.802",
+          "title": "Backfill script for screens",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT8",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-803",
+          "wbs": "FK.8.803",
+          "title": "Backfill script for services/agents",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT8",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-804",
+          "wbs": "FK.8.804",
+          "title": "Validation report generator",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT8",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-MODEL",
-      "title": "MODEL API",
-      "source_heading": "## Feature: MODEL API [ID=F37-MODEL]",
+      "id": "F37-FK-SPRINT9",
+      "title": "Sprint 9 -- Phase 4 Graph API Enhancement (35h, 5 stories, 8 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-MODEL-001",
-          "title": "GET /model/agent-summary",
-          "feature_id": "F37-MODEL",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-MODEL-002",
-          "title": "GET /model/agent-guide",
-          "feature_id": "F37-MODEL",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-MODEL-001",
-          "title": "GET /model/agent-summary",
-          "feature_id": "F37-MODEL",
+          "id": "F37-FK-901",
+          "wbs": "FK.9.901",
+          "title": "Implement BFS with cycle detection",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT9",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-MODEL-002",
-          "title": "GET /model/agent-guide",
-          "feature_id": "F37-MODEL",
+          "id": "F37-FK-902",
+          "wbs": "FK.9.902",
+          "title": "Add edge type filtering to graph queries",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT9",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-903",
+          "wbs": "FK.9.903",
+          "title": "Implement temporal graph queries",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT9",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-904",
+          "wbs": "FK.9.904",
+          "title": "Add graph visualization endpoint",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT9",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-905",
+          "wbs": "FK.9.905",
+          "title": "Update docs + USER-GUIDE",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT9",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-SEED",
-      "title": "SEED API",
-      "source_heading": "## Feature: SEED API [ID=F37-SEED]",
+      "id": "F37-FK-SPRINT10",
+      "title": "Sprint 10 -- Phase 5 Cascade Engine (35h, 5 stories, 8 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-SEED-001",
-          "title": "POST /seed",
-          "feature_id": "F37-SEED",
-          "source": "heading",
-          "tasks": []
+          "id": "F37-FK-1001",
+          "wbs": "FK.10.1001",
+          "title": "Implement cascade policy engine",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT10",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-SEED-001",
-          "title": "POST /seed",
-          "feature_id": "F37-SEED",
+          "id": "F37-FK-1002",
+          "wbs": "FK.10.1002",
+          "title": "Add cascade matrix to schema",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT10",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-1003",
+          "wbs": "FK.10.1003",
+          "title": "Implement impact analysis endpoint",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT10",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-1004",
+          "wbs": "FK.10.1004",
+          "title": "Add cascade UI to portal face",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT10",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
+        },
+        {
+          "id": "F37-FK-1005",
+          "wbs": "FK.10.1005",
+          "title": "Update docs",
+          "status": "planned",
+          "done": false,
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT10",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     },
     {
-      "id": "F37-EXPORT",
-      "title": "EXPORT API",
-      "source_heading": "## Feature: EXPORT API [ID=F37-EXPORT]",
+      "id": "F37-FK-SPRINT11",
+      "title": "Sprint 11 -- Phase 6 Testing + Documentation (45h, 6 stories, 10 FP)",
+      "epic": "Epic FK -- FK Enhancement (12 Sprints, 403h, 52 Stories, 83 FP)",
       "stories": [
         {
-          "id": "F37-EXPORT-001",
-          "title": "POST /export",
-          "feature_id": "F37-EXPORT",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-EXPORT-001",
-          "title": "POST /export",
-          "feature_id": "F37-EXPORT",
+          "id": "F37-FK-1101",
+          "wbs": "FK.11.1101",
+          "title": "Implement relationship CRUD tests",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-CACHE",
-      "title": "CACHE API",
-      "source_heading": "## Feature: CACHE API [ID=F37-CACHE]",
-      "stories": [
-        {
-          "id": "F37-CACHE-001",
-          "title": "POST /cache/flush",
-          "feature_id": "F37-CACHE",
-          "source": "heading",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT11",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-CACHE-001",
-          "title": "POST /cache/flush",
-          "feature_id": "F37-CACHE",
+          "id": "F37-FK-1102",
+          "wbs": "FK.11.1102",
+          "title": "Implement graph traversal tests",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-BACKFILL",
-      "title": "BACKFILL API",
-      "source_heading": "## Feature: BACKFILL API [ID=F37-BACKFILL]",
-      "stories": [
-        {
-          "id": "F37-BACKFILL-001",
-          "title": "POST /backfill",
-          "feature_id": "F37-BACKFILL",
-          "source": "heading",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT11",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-BACKFILL-001",
-          "title": "POST /backfill",
-          "feature_id": "F37-BACKFILL",
+          "id": "F37-FK-1103",
+          "wbs": "FK.11.1103",
+          "title": "Implement cascade policy tests",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-AUDIT",
-      "title": "AUDIT API",
-      "source_heading": "## Feature: AUDIT API [ID=F37-AUDIT]",
-      "stories": [
-        {
-          "id": "F37-AUDIT-001",
-          "title": "GET /audit",
-          "feature_id": "F37-AUDIT",
-          "source": "heading",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT11",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-AUDIT-001",
-          "title": "GET /audit",
-          "feature_id": "F37-AUDIT",
+          "id": "F37-FK-1104",
+          "wbs": "FK.11.1104",
+          "title": "Update USER-GUIDE.md (v3.0)",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-VALIDATE",
-      "title": "VALIDATE API",
-      "source_heading": "## Feature: VALIDATE API [ID=F37-VALIDATE]",
-      "stories": [
-        {
-          "id": "F37-VALIDATE-001",
-          "title": "GET /validate",
-          "feature_id": "F37-VALIDATE",
-          "source": "heading",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT11",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-VALIDATE-001",
-          "title": "GET /validate",
-          "feature_id": "F37-VALIDATE",
+          "id": "F37-FK-1105",
+          "wbs": "FK.11.1105",
+          "title": "Update library/10-FK-ENHANCEMENT.md (v2.0)",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-COMMIT",
-      "title": "COMMIT API",
-      "source_heading": "## Feature: COMMIT API [ID=F37-COMMIT]",
-      "stories": [
-        {
-          "id": "F37-COMMIT-001",
-          "title": "POST /commit",
-          "feature_id": "F37-COMMIT",
-          "source": "heading",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT11",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         },
         {
-          "id": "F37-COMMIT-001",
-          "title": "POST /commit",
-          "feature_id": "F37-COMMIT",
+          "id": "F37-FK-1106",
+          "wbs": "FK.11.1106",
+          "title": "Update PLAN.md + STATUS.md",
+          "status": "planned",
           "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-AUDITREPO",
-      "title": "AUDITREPO API",
-      "source_heading": "## Feature: AUDITREPO API [ID=F37-AUDITREPO]",
-      "stories": [
-        {
-          "id": "F37-AUDITREPO-001",
-          "title": "POST /audit-repo",
-          "feature_id": "F37-AUDITREPO",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-AUDITREPO-001",
-          "title": "POST /audit-repo",
-          "feature_id": "F37-AUDITREPO",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-API",
-      "title": "API API",
-      "source_heading": "## Feature: API API [ID=F37-API]",
-      "stories": [
-        {
-          "id": "F37-API-001",
-          "title": "GET /",
-          "feature_id": "F37-API",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-API-002",
-          "title": "GET /",
-          "feature_id": "F37-API",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-API-003",
-          "title": "GET /",
-          "feature_id": "F37-API",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-API-001",
-          "title": "GET /",
-          "feature_id": "F37-API",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        },
-        {
-          "id": "F37-API-002",
-          "title": "GET /",
-          "feature_id": "F37-API",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        },
-        {
-          "id": "F37-API-003",
-          "title": "GET /",
-          "feature_id": "F37-API",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-FILTER",
-      "title": "FILTER API",
-      "source_heading": "## Feature: FILTER API [ID=F37-FILTER]",
-      "stories": [
-        {
-          "id": "F37-FILTER-001",
-          "title": "GET /filter",
-          "feature_id": "F37-FILTER",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-FILTER-001",
-          "title": "GET /filter",
-          "feature_id": "F37-FILTER",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-EDGETYPES",
-      "title": "EDGETYPES API",
-      "source_heading": "## Feature: EDGETYPES API [ID=F37-EDGETYPES]",
-      "stories": [
-        {
-          "id": "F37-EDGETYPES-001",
-          "title": "GET /edge-types",
-          "feature_id": "F37-EDGETYPES",
-          "source": "heading",
-          "tasks": []
-        },
-        {
-          "id": "F37-EDGETYPES-001",
-          "title": "GET /edge-types",
-          "feature_id": "F37-EDGETYPES",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        }
-      ]
-    },
-    {
-      "id": "F37-OBJ_IDPATH",
-      "title": "OBJ_IDPATH API",
-      "source": "code-structure",
-      "stories": [
-        {
-          "id": "F37-OBJ_IDPATH-001",
-          "title": "GET /{obj_id:path}",
-          "feature_id": "F37-OBJ_IDPATH",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        },
-        {
-          "id": "F37-OBJ_IDPATH-002",
-          "title": "PUT /{obj_id:path}",
-          "feature_id": "F37-OBJ_IDPATH",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
-        },
-        {
-          "id": "F37-OBJ_IDPATH-003",
-          "title": "DELETE /{obj_id:path}",
-          "feature_id": "F37-OBJ_IDPATH",
-          "done": false,
-          "source": "code-structure",
-          "tasks": []
+          "epic_code": "FK",
+          "feature_id": "F37-FK-SPRINT11",
+          "blockers": [],
+          "size": "M",
+          "fp": 3
         }
       ]
     }
