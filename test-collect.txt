@@ -1,0 +1,84 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.12, pytest-9.0.2, pluggy-1.6.0
+rootdir: /home/runner/work/37-data-model/37-data-model
+configfile: pytest.ini
+plugins: anyio-4.12.1, asyncio-1.3.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 42 items
+
+<Dir 37-data-model>
+  <Package tests>
+    <Module test_admin.py>
+      <Function test_T30_health>
+      <Function test_T31_seed_requires_admin>
+      <Function test_T32_seed_loads_all_layers>
+      <Function test_T33_audit_returns_write_events>
+      <Function test_T34_validate_passes_on_clean_model>
+      <Function test_T35_cache_flush>
+      <Function test_T36_row_version_increments_on_reseed>
+      <Function test_T37_provenance_source_file_on_all_layers>
+      <Function test_T38_provenance_audit_fields_present>
+    <Module test_cosmos_roundtrip.py>
+      <Function test_T60_export_response_format>
+      <Function test_T61_export_is_idempotent>
+      <Function test_T62_put_reflected_in_export>
+      <Function test_T63_fresh_seed_restores_store>
+      <Function test_T64_audit_fields_survive_roundtrip>
+    <Module test_crud.py>
+      <Function test_T01_list_services>
+      <Function test_T02_get_one_service>
+      <Function test_T03_cached_response>
+      <Function test_T04_upsert_new_object>
+      <Function test_T05_upsert_update_increments_row_version>
+      <Function test_T06_soft_delete>
+      <Function test_T07_list_includes_inactive>
+      <Function test_T08_get_soft_deleted_is_404>
+      <Function test_T09_filter_endpoints_by_status>
+      <Function test_T10_filter_endpoints_by_cosmos_writes>
+      <Function test_T11_filter_endpoints_by_auth>
+      <Function test_T12_unknown_object_is_404>
+    <Module test_graph.py>
+      <Function test_T40_screens_to_endpoints_edges>
+      <Function test_T41_reads_edge_type_filter>
+      <Function test_T42_bfs_depth1_returns_direct_neighbours>
+      <Function test_T43_bfs_depth2_includes_second_hop>
+      <Function test_T44_service_depends_on_service>
+      <Function test_T45_edge_types_vocabulary>
+      <Function test_T46_depth_max_enforced>
+      <Function test_T47_mermaid_format_output>
+    <Module test_impact.py>
+      <Function test_T20_impact_finds_endpoints_for_translations>
+      <Function test_T21_impact_includes_screens>
+      <Function test_T22_impact_jobs_container>
+      <Function test_T23_impact_total_is_consistent>
+      <Function test_T24_unknown_container_returns_empty_impact>
+    <Module test_provenance.py>
+      <Function test_T50_repo_line_on_implemented_endpoints>
+      <Function test_T51_repo_line_on_implemented_hooks>
+      <Function test_T52_repo_line_on_implemented_screens>
+
+=============================== warnings summary ===============================
+../../../../../opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/starlette/formparsers.py:12
+  /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/starlette/formparsers.py:12: PendingDeprecationWarning: Please use `import python_multipart` instead.
+    import multipart
+
+../../../../../opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pydantic/_internal/_fields.py:160
+  /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_db_name" has conflict with protected namespace "model_".
+  
+  You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ('settings_',)`.
+    warnings.warn(
+
+../../../../../opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pydantic/_internal/_fields.py:160
+  /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_container_name" has conflict with protected namespace "model_".
+  
+  You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ('settings_',)`.
+    warnings.warn(
+
+../../../../../opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pydantic/_internal/_fields.py:160
+  /opt/hostedtoolcache/Python/3.12.12/x64/lib/python3.12/site-packages/pydantic/_internal/_fields.py:160: UserWarning: Field "model_dir_override" has conflict with protected namespace "model_".
+  
+  You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ('settings_',)`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 42 tests collected in 0.09s ==========================
