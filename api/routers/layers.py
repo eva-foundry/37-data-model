@@ -41,3 +41,4 @@ sprints_router         = make_layer_router("sprints",          "/model/sprints",
 milestones_router      = make_layer_router("milestones",       "/model/milestones",       ["milestones"])
 risks_router           = make_layer_router("risks",            "/model/risks",            ["risks"])
 decisions_router       = make_layer_router("decisions",        "/model/decisions",        ["decisions"])
+traces_router          = make_layer_router("traces",           "/model/traces",           ["traces"])
