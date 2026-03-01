@@ -89,6 +89,12 @@ def _api_call(method: str, path: str, json_data: dict = None) -> dict:
         return {}
 
 
+def _extract_sprint_number(sprint_id: str) -> int:
+    """Extract integer sprint number from ID like 'SPRINT-0.5' -> 0 or 'SPRINT-3' -> 3."""
+    match = re.search(r"SPRINT-(\d+)", sprint_id)
+    return int(match.group(1)) if match else 0
+
+
 def start_sprint(sprint_id: str, manifest: dict) -> bool:
     """
     Update sprint status to in_progress at workflow start.
@@ -103,7 +109,7 @@ def start_sprint(sprint_id: str, manifest: dict) -> bool:
     sprint_obj = {
         "id": sprint_id,
         "project_id": "37-data-model",
-        "sprint_number": int(manifest.get("sprint_id", "SPRINT-0").split("-")[-1]),
+        "sprint_number": _extract_sprint_number(manifest.get("sprint_id", "SPRINT-0")),
         "sprint_title": manifest.get("sprint_title", ""),
         "status": "in_progress",
         "start_timestamp": _now_iso(),
