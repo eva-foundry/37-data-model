@@ -68,18 +68,24 @@ def _run(cmd: list, check: bool = False, capture: bool = True) -> subprocess.Com
 def _api_call(method: str, path: str, json_data: dict = None) -> dict:
     """
     Generic data model API call with error handling.
-    Returns empty dict on failure (graceful degradation).
+    Returns empty dict on failure with detailed error logging.
     """
     if not DATA_MODEL_ENABLED:
         return {}
     headers = {"X-Actor": DATA_MODEL_ACTOR}
     url = f"{DATA_MODEL_API}{path}"
     try:
-        response = requests.request(method, url, json=json_data, headers=headers, timeout=10)
+        print(f"[DEBUG] {method} {url}")
+        response = requests.request(method, url, json=json_data, headers=headers, timeout=10, verify=False)
         response.raise_for_status()
-        return response.json() if response.text else {}
+        result = response.json() if response.text else {}
+        print(f"[DEBUG] Response: {result.get('id', '[no id]')} status=200")
+        return result
+    except requests.exceptions.RequestException as exc:
+        print(f"[WARN] Data model API call failed: {method} {path} -- {type(exc).__name__}: {exc}")
+        return {}
     except Exception as exc:
-        print(f"[WARN] Data model API call failed: {method} {path} -- {exc}")
+        print(f"[WARN] Data model API parsing failed: {method} {path} -- {exc}")
         return {}
 
 
@@ -362,7 +368,7 @@ def _load_story_files(story: dict) -> str:
 
 def extract_sprint_id_from_title(title: str) -> str:
     """Extract sprint ID from issue title, e.g. '[SPRINT-0.5] Bug-Fix Demo' -> 'SPRINT-0.5'."""
-    match = re.search(r"\[([A-Z0-9\-]+)\]", title)
+    match = re.search(r"\[([A-Z0-9\.\-]+)\]", title)
     if match:
         return match.group(1)
     return ""
@@ -374,14 +380,23 @@ def parse_manifest_from_datamodel(sprint_id: str) -> dict:
     Returns the manifest dict if found, or empty dict if not available.
     """
     if not sprint_id or not DATA_MODEL_ENABLED:
+        print(f"[DEBUG] Data model not enabled or no sprint_id: enabled={DATA_MODEL_ENABLED} id={sprint_id}")
         return {}
     
+    print(f"[DEBUG] Querying data model for sprint {sprint_id}")
     try:
         sprint_obj = _api_call("GET", f"/model/sprints/{sprint_id}")
-        if sprint_obj and sprint_obj.get("manifest"):
+        if not sprint_obj:
+            print(f"[DEBUG] No sprint object returned from API")
+            return {}
+        
+        print(f"[DEBUG] Sprint object retrieved: id={sprint_obj.get('id')} has_manifest={bool(sprint_obj.get('manifest'))}")
+        if sprint_obj.get("manifest"):
             manifest = sprint_obj.get("manifest")
             print(f"[INFO] Loaded sprint manifest from data model for {sprint_id}")
             return manifest
+        else:
+            print(f"[DEBUG] Sprint object found but manifest field is empty")
     except Exception as exc:
         print(f"[WARN] Could not load manifest from data model: {exc}")
     
@@ -412,6 +427,7 @@ def parse_manifest_with_fallback(title: str, body: str) -> dict:
       4. Otherwise, fall back to HTML comment parsing (backward compat)
     """
     sprint_id = extract_sprint_id_from_title(title)
+    print(f"[DEBUG] Extracted sprint_id from title: '{sprint_id}' (title='{title}')")
     
     # Try data model first (new path for SPRINT-0.5+)
     if sprint_id:
@@ -420,7 +436,7 @@ def parse_manifest_with_fallback(title: str, body: str) -> dict:
             return manifest
     
     # Fall back to HTML parsing (legacy path for older sprints)
-    print("[INFO] Data model manifest not available, trying HTML parsing")
+    print("[DEBUG] Data model manifest not available, trying HTML parsing")
     return parse_manifest(body)
 
 
