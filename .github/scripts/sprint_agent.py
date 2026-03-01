@@ -360,6 +360,34 @@ def _load_story_files(story: dict) -> str:
 # Parse sprint manifest
 # ---------------------------------------------------------------------------
 
+def extract_sprint_id_from_title(title: str) -> str:
+    """Extract sprint ID from issue title, e.g. '[SPRINT-0.5] Bug-Fix Demo' -> 'SPRINT-0.5'."""
+    match = re.search(r"\[([A-Z0-9\-]+)\]", title)
+    if match:
+        return match.group(1)
+    return ""
+
+
+def parse_manifest_from_datamodel(sprint_id: str) -> dict:
+    """
+    Try to fetch sprint manifest from data model API.
+    Returns the manifest dict if found, or empty dict if not available.
+    """
+    if not sprint_id or not DATA_MODEL_ENABLED:
+        return {}
+    
+    try:
+        sprint_obj = _api_call("GET", f"/model/sprints/{sprint_id}")
+        if sprint_obj and sprint_obj.get("manifest"):
+            manifest = sprint_obj.get("manifest")
+            print(f"[INFO] Loaded sprint manifest from data model for {sprint_id}")
+            return manifest
+    except Exception as exc:
+        print(f"[WARN] Could not load manifest from data model: {exc}")
+    
+    return {}
+
+
 def parse_manifest(body: str) -> dict:
     """Extract the SPRINT_MANIFEST JSON block from the issue body."""
     match = re.search(
@@ -371,6 +399,29 @@ def parse_manifest(body: str) -> dict:
         raise ValueError("[FAIL] No SPRINT_MANIFEST block found in issue body.")
     raw = match.group(1).strip()
     return json.loads(raw)
+
+
+def parse_manifest_with_fallback(title: str, body: str) -> dict:
+    """
+    Try to load sprint manifest from data model first, fall back to HTML parsing.
+    
+    New flow (SPRINT-0.5+):
+      1. Extract sprint_id from issue title: '[SPRINT-0.5] Description'
+      2. Query data model API: GET /model/sprints/{sprint_id}
+      3. If manifest field exists, use it
+      4. Otherwise, fall back to HTML comment parsing (backward compat)
+    """
+    sprint_id = extract_sprint_id_from_title(title)
+    
+    # Try data model first (new path for SPRINT-0.5+)
+    if sprint_id:
+        manifest = parse_manifest_from_datamodel(sprint_id)
+        if manifest:
+            return manifest
+    
+    # Fall back to HTML parsing (legacy path for older sprints)
+    print("[INFO] Data model manifest not available, trying HTML parsing")
+    return parse_manifest(body)
 
 
 # ---------------------------------------------------------------------------
@@ -777,9 +828,9 @@ def run_sprint(issue: int, repo: str) -> None:
     issue_title, issue_body = _gh_issue_body(issue, repo)
     print(f"[INFO] Issue: {issue_title}")
 
-    # Parse sprint manifest
+    # Parse sprint manifest (try data model first, fall back to HTML)
     try:
-        manifest = parse_manifest(issue_body)
+        manifest = parse_manifest_with_fallback(issue_title, issue_body)
     except (ValueError, json.JSONDecodeError) as exc:
         msg = f"[FAIL] Could not parse sprint manifest: {exc}"
         print(msg)
@@ -841,13 +892,43 @@ Working through {len(stories)} stories in sequence. Progress comments will follo
         )
 
         try:
-            # D2 -- Generate and write code (with retry)
-            generated = retry_with_backoff(
-                lambda: _generate_code(story, context),
-                operation_name=f"Code generation for {sid}",
-                max_attempts=MAX_RETRY_ATTEMPTS
-            )
-            written_files = write_files(generated)
+            # Check if this is a BUG story (route to bug-fix-automation skill)
+            if story.get("story_type") == "BUG" or "BUG-" in sid:
+                print(f"[INFO] BUG story detected - routing to bug-fix-automation")
+                # Import bug fix agent
+                try:
+                    from bug_fix_agent import execute_bug_fix_sprint
+                    bug_results = execute_bug_fix_sprint([story])
+                    
+                    # Convert bug-fix results to standard story format
+                    if bug_results.get("stories", {}).get(sid, {}).get("phases", {}).get("C", {}).get("status") == "DONE":
+                        # All 3 phases (A, B, C) completed
+                        written_files = [story.get("affected_code_path", "")]
+                        story_result["status"] = "DONE"
+                        story_result["files"] = written_files
+                        print(f"[PASS] Bug-fix sprint completed for {sid}")
+                    else:
+                        # Partial failure - collect what we got
+                        written_files = []
+                        story_result["status"] = "FAIL"
+                        print(f"[FAIL] Bug-fix sprint incomplete for {sid}")
+                except ImportError:
+                    print(f"[WARN] bug_fix_agent module not found - falling back to standard code generation")
+                    # Fall back to standard generation if module missing
+                    generated = retry_with_backoff(
+                        lambda: _generate_code(story, context),
+                        operation_name=f"Code generation for {sid}",
+                        max_attempts=MAX_RETRY_ATTEMPTS
+                    )
+                    written_files = write_files(generated)
+            else:
+                # D2 -- Generate and write code (with retry)
+                generated = retry_with_backoff(
+                    lambda: _generate_code(story, context),
+                    operation_name=f"Code generation for {sid}",
+                    max_attempts=MAX_RETRY_ATTEMPTS
+                )
+                written_files = write_files(generated)
 
             # C -- Check
             lint_status, test_status = run_checks()
