@@ -1,7 +1,7 @@
 # GitHub Copilot Instructions -- EVA Data Model
 
-**Template Version**: 3.2.0
-**Last Updated**: February 25, 2026 10:14 ET
+**Template Version**: 3.3.2
+**Last Updated**: February 28, 2026
 **Project**: EVA Data Model -- Single source of truth API (port 8010)
 **Path**: `C:\AICOE\eva-foundry\37-data-model\`
 **Stack**: Python, FastAPI, SQLite
@@ -170,14 +170,49 @@ Invoke-RestMethod "$base/model/endpoints/" |
     Where-Object { $_.path -like '*translations*' } | Select-Object id, path
 ```
 
+**Rule 6 -- Never call create_file on a path that already exists**
+create_file on an existing file returns a hard error and makes no change.
+Before any create_file, use Test-Path to check, then use replace_string_in_file or
+multi_replace_string_in_file for edits to existing files.
+
+```powershell
+# Pre-flight check
+if (Test-Path "C:\AICOE\path\to\file.ps1") {
+    # use replace_string_in_file -- do NOT call create_file
+} else {
+    # safe to call create_file
+}
+```
+
+**Rule 7 -- Never use PowerShell backtick (`) for line continuation**
+Backtick continuations break silently when pasted into terminals, cause JSON escaping failures
+in inline strings, and make diffs noisy. Always use splatting (@params) or put the command
+on a single line.
+
+WRONG -- backtick continuation (BANNED):
+```
+Invoke-RestMethod $url `
+    -Method PUT -Body $body
+```
+
+RIGHT -- splatting:
+```powershell
+$p = @{ Method="PUT"; ContentType="application/json"; Body=$body; Headers=@{"X-Actor"="agent:copilot"} }
+Invoke-RestMethod $url @p
+```
+
+RIGHT -- single line (acceptable for short calls):
+```powershell
+Invoke-RestMethod $url -Method POST -Headers @{"Authorization"="Bearer dev-admin"}
+```
+
 #### 3.4  Write Cycle -- Every Model Change
 
 **Preferred -- 3-step (admin/commit = export + assemble + validate in one call):**
 ```powershell
-# Step 1 -- PUT
-Invoke-RestMethod "$base/model/endpoints/GET /v1/tags" `
-    -Method PUT -ContentType "application/json" -Body $body `
-    -Headers @{"X-Actor"="agent:copilot"}
+# Step 1 -- PUT (use splatting per Rule 7)
+$iwr = @{ Method="PUT"; ContentType="application/json"; Body=$body; Headers=@{"X-Actor"="agent:copilot"} }
+Invoke-RestMethod "$base/model/endpoints/GET /v1/tags" @iwr
 
 # Step 2 -- Canonical confirm: assert all three
 $w = Invoke-RestMethod "$base/model/endpoints/GET /v1/tags"
@@ -186,8 +221,7 @@ $w.modified_by   # must equal "agent:copilot"
 $w.status        # must equal the value you PUT
 
 # Step 3 -- Close the cycle
-$c = Invoke-RestMethod "$base/model/admin/commit" `
-    -Method POST -Headers @{"Authorization"="Bearer dev-admin"}
+$c = Invoke-RestMethod "$base/model/admin/commit" -Method POST -Headers @{"Authorization"="Bearer dev-admin"}
 $c.status          # "PASS" = done; "FAIL" = fix violations before merging
 $c.violation_count # 0 = clean
 # ACA note: commit returns status=FAIL with assemble.stderr="Script not found" -- EXPECTED on ACA.
@@ -202,8 +236,7 @@ POST /model/admin/export  ->  scripts/assemble-model.ps1  ->  scripts/validate-m
 
 **Validate only (distinguishes new violations from pre-existing noise):**
 ```powershell
-$v = Invoke-RestMethod "$base/model/admin/validate" `
-       -Headers @{"Authorization"="Bearer dev-admin"}
+$v = Invoke-RestMethod "$base/model/admin/validate" -Headers @{"Authorization"="Bearer dev-admin"}
 $v.count       # 0 = clean; >0 = new violations to fix NOW
 $v.violations  # the cross-reference FAILs -- fix these before commit
 ```
@@ -242,21 +275,36 @@ Invoke-RestMethod "$base/model/endpoints/" |
 
 ### 4. Encoding and Output Safety
 
-**Windows Enterprise Encoding (cp1252) -- ABSOLUTE RULE**
+**ASCII-ONLY -- ABSOLUTE RULE -- NO EXCEPTIONS**
+
+This applies to every file created or edited: .md, .ps1, .py, .ts, .json, .yaml, .txt, every string literal, log line, comment, commit message, copilot-instructions file.
+
+Forbidden output:
+- Emoji (any Unicode codepoint above U+007F)
+- Unicode arrows -- use ASCII -> instead
+- Unicode dashes -- use -- instead
+- Curly quotes -- use " or ' instead
+- Non-breaking spaces
+- PowerShell backtick (`) line continuation -- see Rule 7
+- UTF-8 BOM in any text file
+
+Allowed output tokens: [PASS] / [FAIL] / [WARN] / [INFO]
 
 ```python
 # [FORBIDDEN] -- causes UnicodeEncodeError in enterprise Windows
 print("success")   # with any emoji or unicode
 
 # [REQUIRED] -- ASCII only
-print("[PASS] Done")   print("[FAIL] Failed")   print("[INFO] Wait...")
+print("[PASS] Done")
+print("[FAIL] Failed")
+print("[INFO] Wait...")
 ```
 
-- All Python scripts: `PYTHONIOENCODING=utf-8` in any .bat wrapper
-- All PowerShell output: `[PASS]` / `[FAIL]` / `[WARN]` / `[INFO]` -- never emoji
+- All Python scripts: PYTHONIOENCODING=utf-8 in any .bat wrapper
+- All PowerShell output: [PASS] / [FAIL] / [WARN] / [INFO] -- never emoji
 - Machine-readable outputs (JSON, YAML, evidence files): ASCII-only always
 - Markdown docs (README, STATUS, PLAN, ACCEPTANCE, copilot-instructions): ASCII-only -- no emoji anywhere
-
+- PowerShell scripts: no backtick (`) line continuations -- use splatting or single line (Rule 7)
 ---
 
 ### 5. Context Health Protocol
@@ -733,6 +781,6 @@ All must pass before merging a PR:
 
 ---
 
-*Source template*: `C:\AICOE\eva-foundry\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.2.0
+*Source template*: `C:\AICOE\eva-foundry\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.3.2
 *Project 07 README*: `C:\AICOE\eva-foundry\07-foundation-layer\README.md`
 *EVA Data Model USER-GUIDE*: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md`
