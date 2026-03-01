@@ -81,4 +81,4 @@ collected 42 items
     warnings.warn(
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-========================= 42 tests collected in 0.09s ==========================
+========================= 42 tests collected in 0.03s ==========================
