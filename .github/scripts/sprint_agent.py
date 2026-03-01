@@ -24,7 +24,15 @@ import textwrap
 import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable, Any
+from typing import Callable, Any, Optional
+
+# LM Tracing support (F37-TRACE-002)
+try:
+    from lm_tracer import LMTracer, generate_correlation_id, get_model_for_severity
+    LM_TRACER_AVAILABLE = True
+except ImportError:
+    LM_TRACER_AVAILABLE = False
+    print("[WARN] lm_tracer module not available - cost tracking disabled")
 
 try:
     import requests
@@ -627,9 +635,10 @@ def write_files(generated: dict[str, str]) -> list[str]:
 def write_evidence(story: dict, test_result: str, lint_result: str, 
                    duration_ms: int = 0, tokens_used: int = 0,
                    test_count_before: int = 0, test_count_after: int = 0,
-                   files_changed: int = 0) -> str:
+                   files_changed: int = 0, correlation_id: str = "",
+                   epic_id: str = "", trace_file: Optional[Path] = None) -> str:
     """
-    Write Veritas-compatible evidence receipt.
+    Write Veritas-compatible evidence receipt with LM tracing (F37-TRACE-004).
     
     Args:
         story: Story dict with id, title, files_to_create
@@ -640,6 +649,9 @@ def write_evidence(story: dict, test_result: str, lint_result: str,
         test_count_before: Test count before story
         test_count_after: Test count after story
         files_changed: Number of files created/modified
+        correlation_id: Trace correlation ID (F37-TRACE-001)
+        epic_id: Epic this story belongs to
+        trace_file: Path to LM interaction trace file
     
     Returns:
         Path to receipt file (relative to REPO_ROOT)
@@ -647,11 +659,23 @@ def write_evidence(story: dict, test_result: str, lint_result: str,
     evidence_dir = REPO_ROOT / ".eva" / "evidence"
     evidence_dir.mkdir(parents=True, exist_ok=True)
     receipt_path = evidence_dir / f"{story['id']}-receipt.json"
+    
+    # Enhanced receipt with full traceability (F37-TRACE-004)
     receipt = {
+        "correlation_id": correlation_id,  # TRACE-001: Trace tracking
         "story_id": story["id"],
         "title": story.get("title", ""),
+        "epic_id": epic_id,  # TRACE-004: WBS hierarchy
+        "feature_id": "F37-DPDCA-001",  # TRACE-004: Feature reference
         "phase": "A",  # DPDCA phase: A (Audit/Complete)
-        "timestamp": _now_iso(),
+        "timeline": {  # TRACE-004: 6-point timeline
+            "created_at": _now_iso(),
+            "submitted_to_lm_at": None,  # Would be filled by bug_fix_agent
+            "response_received_at": None,
+            "fix_applied_at": None,
+            "test_passed_at": None,
+            "committed_at": _now_iso()
+        },
         "artifacts": story.get("files_to_create", []),
         "test_result": test_result,
         "lint_result": lint_result,
@@ -662,6 +686,16 @@ def write_evidence(story: dict, test_result: str, lint_result: str,
         "test_count_after": test_count_after,
         "files_changed": files_changed,
     }
+    
+    # Load LM trace if available (TRACE-005: Cost calculation)
+    if trace_file and trace_file.exists():
+        try:
+            trace_data = json.loads(trace_file.read_text())
+            if trace_data.get("lm_calls"):
+                receipt["lm_interaction"] = trace_data["summary"]  # Include cost summary
+        except Exception as e:
+            print(f"[WARN] Could not load trace file {trace_file}: {e}")
+    
     receipt_path.write_text(json.dumps(receipt, indent=2), encoding="utf-8")
     return str(receipt_path.relative_to(REPO_ROOT))
 
@@ -772,6 +806,7 @@ def _sprint_summary_comment(
     branch: str,
     duration_minutes: float = 0.0,
     velocity: float = 0.0,
+    correlation_id: str = "",  # F37-TRACE-005: Cost tracking
 ) -> str:
     total = len(results)
     passed = sum(1 for r in results if r.get("status") == "DONE")
@@ -781,6 +816,17 @@ def _sprint_summary_comment(
     # Calculate aggregate metrics
     total_files = sum(len(r.get("files", [])) for r in results)
     avg_story_duration = duration_minutes / total if total > 0 else 0
+    
+    # Calculate total cost from all trace files (F37-TRACE-005)
+    total_cost_usd = 0.0
+    trace_dir = REPO_ROOT / ".eva" / "traces"
+    if LM_TRACER_AVAILABLE and trace_dir.exists():
+        for trace_file in trace_dir.glob("*-*-lm-calls.json"):
+            try:
+                trace_data = json.loads(trace_file.read_text())
+                total_cost_usd += trace_data.get("summary", {}).get("total_cost_usd", 0.0)
+            except Exception as e:
+                print(f"[WARN] Could not read trace {trace_file}: {e}")
     
     # Build story breakdown table
     story_rows = []
@@ -797,6 +843,9 @@ def _sprint_summary_comment(
     for r in results:
         icon = "[PASS]" if r.get("status") == "DONE" else "[FAIL]"
         story_lines.append(f"{icon} {r['id']} -- {r.get('title', '')} -- `{r.get('sha', 'n/a')[:8]}`")
+    
+    # Build cost section (F37-TRACE-005)
+    cost_section = f"\n**Total LM Cost**: ${total_cost_usd:.6f} USD (GitHub Models free tier)\n**Correlation ID**: `{correlation_id}`" if LM_TRACER_AVAILABLE else ""
 
     return textwrap.dedent(f"""
 ## Sprint Summary -- {sprint.get('sprint_id', 'SPRINT')} COMPLETE
@@ -805,7 +854,7 @@ def _sprint_summary_comment(
 **Branch**: `{branch}`
 **Stories**: {passed}/{total} passed
 **Failed**: {failed}
-**Timestamp**: {_now_iso()}
+**Timestamp**: {_now_iso()}{cost_section}
 
 ### Summary Metrics
 
@@ -844,11 +893,15 @@ def _sprint_summary_comment(
 # ---------------------------------------------------------------------------
 
 def run_sprint(issue: int, repo: str) -> None:
-    print(f"[INFO] Sprint agent starting -- issue #{issue} repo {repo}")
+    # Generate correlation ID for entire sprint execution (F37-TRACE-001)
+    temp_sprint_id = f"SPRINT-{issue}"
+    correlation_id = generate_correlation_id(temp_sprint_id) if LM_TRACER_AVAILABLE else ""
+    
+    print(f"[TRACE:{correlation_id}] [INFO] Sprint agent starting -- issue #{issue} repo {repo}")
 
     # Fetch issue content
     issue_title, issue_body = _gh_issue_body(issue, repo)
-    print(f"[INFO] Issue: {issue_title}")
+    print(f"[TRACE:{correlation_id}] [INFO] Issue: {issue_title}")
 
     # Parse sprint manifest (try data model first, fall back to HTML)
     try:
@@ -916,11 +969,13 @@ Working through {len(stories)} stories in sequence. Progress comments will follo
         try:
             # Check if this is a BUG story (route to bug-fix-automation skill)
             if story.get("story_type") == "BUG" or "BUG-" in sid:
-                print(f"[INFO] BUG story detected - routing to bug-fix-automation")
+                print(f"[TRACE:{correlation_id}] [INFO] BUG story detected - routing to bug-fix-automation")
                 # Import bug fix agent
                 try:
                     from bug_fix_agent import execute_bug_fix_sprint
-                    bug_results = execute_bug_fix_sprint([story])
+                    # Pass correlation_id and model routing info to bug fix agent
+                    preferred_model = get_model_for_severity(story.get("severity", "MEDIUM")) if LM_TRACER_AVAILABLE else "gpt-4o-mini"
+                    bug_results = execute_bug_fix_sprint([story], correlation_id=correlation_id, preferred_model=preferred_model)
                     
                     # Convert bug-fix results to standard story format
                     if bug_results.get("stories", {}).get(sid, {}).get("phases", {}).get("C", {}).get("status") == "DONE":
@@ -959,14 +1014,27 @@ Working through {len(stories)} stories in sequence. Progress comments will follo
             story_start_dt = datetime.fromisoformat(story_result["start_time"].replace("Z", "+00:00"))
             duration_ms = int((datetime.now(timezone.utc) - story_start_dt).total_seconds() * 1000)
             
-            # Write evidence with Veritas-compatible metrics
+            # Collect trace file if available (F37-TRACE-003)
+            trace_file = None
+            if LM_TRACER_AVAILABLE:
+                traces_dir = REPO_ROOT / ".eva" / "traces"
+                if traces_dir.exists():
+                    # Find most recent trace file for this story
+                    matching_traces = list(traces_dir.glob(f"{sid}-*-lm-calls.json"))
+                    if matching_traces:
+                        trace_file = sorted(matching_traces)[-1]  # Latest trace
+            
+            # Write evidence with Veritas-compatible metrics (F37-TRACE-004)
             evidence_path = write_evidence(
                 story, test_status, lint_status,
                 duration_ms=duration_ms,
                 tokens_used=0,  # TODO: Track LLM tokens in _generate_code
                 test_count_before=0,  # TODO: Parse pytest --co before generation
                 test_count_after=0,   # TODO: Parse pytest --co after generation
-                files_changed=len(written_files)
+                files_changed=len(written_files),
+                correlation_id=correlation_id,  # F37-TRACE-001
+                epic_id=manifest.get("epic", ""),  # F37-TRACE-004
+                trace_file=trace_file  # F37-TRACE-003
             )
 
             # A -- Commit
@@ -1036,8 +1104,8 @@ Working through {len(stories)} stories in sequence. Progress comments will follo
         duration_minutes = 0.0
         velocity = 0.0
 
-    # Generate sprint summary with enhanced metrics
-    summary = _sprint_summary_comment(manifest, results, branch, duration_minutes, velocity)
+    # Generate sprint summary with enhanced metrics (F37-TRACE-005)
+    summary = _sprint_summary_comment(manifest, results, branch, duration_minutes, velocity, correlation_id=correlation_id)
     SUMMARY_FILE.write_text(summary, encoding="utf-8")
 
     # Post final summary comment
