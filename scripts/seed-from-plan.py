@@ -9,6 +9,37 @@ Parses PLAN.md into a structured hierarchy (epics -> features -> stories) and wr
 Story IDs are assigned sequentially per epic in the order they appear in PLAN.md.
 Once assigned, IDs are stable (veritas-plan.json is the source of truth).
 
+Enhancement 2 (v2.7 - March 2, 2026): Metadata Extraction
+----------------------------------------------------------
+Automatically extracts sprint, assignee, and blockers metadata from PLAN.md structure:
+
+1. Sprint Context:
+   - Detects sprint headers: "## Sprint 11" or "### Phase 3 Sprint 11-12"
+   - Normalizes: "11" -> "Sprint-11", "ACA-S11" -> "ACA-S11"
+   - All stories under a sprint header inherit that sprint ID
+   - Sprint annotations in story titles override: "(@sprint:ACA-S12)"
+
+2. Assignee Extraction:
+   - Detects assignee lines under stories: "- Assignee: @agent:github-copilot"
+   - Formats: "- Assignee: @marco" or "- **Assignee**: codex-agent"
+   - Strips @ prefix, stores as plain identifier
+
+3. Blockers Extraction:
+   - Detects blocker lines: "- Blockers: ACA-14-003, F37-02-001"
+   - Parses comma/space separated story IDs
+   - Stores as array: ["ACA-14-003", "F37-02-001"]
+
+Example PLAN.md with metadata:
+------------------------------
+## Sprint 11
+
+### Story: Implement auth middleware [ID=F37-FK-001]
+- Assignee: @agent:github-copilot
+- Blockers: F37-FK-004
+- **Status**: planned
+
+Result: sprint="Sprint-11", assignee="agent:github-copilot", blockers=["F37-FK-004"]
+
 Encoding: ascii-only output (no emoji, no unicode).
 
 Usage:
@@ -58,6 +89,16 @@ STATUS_LINE_RE = re.compile(r"^\s*-\s+\*\*Status\*\*:\s*(.+)$")
 # Done roster extraction from STATUS.md -- matches "- F37-NN-NNN (done YYYY-MM-DD)"
 DONE_ROSTER_RE = re.compile(r"^\s*-\s+(F37-\d{2}-\d{3})\s+\(done\s+\d{4}-\d{2}-\d{2}\)\s*$", re.IGNORECASE)
 
+# Metadata extraction patterns (Enhancement 2 - v2.7):
+# Sprint headers: "## Sprint 11" or "### Phase 3 Sprint 11-12"
+SPRINT_HEADER_RE = re.compile(r"^#{2,3}\s+(?:Phase\s+\d+\s+)?Sprint\s+([\w-]+)", re.IGNORECASE)
+# Epic assignments in feature/story headers: "(@sprint:ACA-S11)"
+SPRINT_ANNOTATION_RE = re.compile(r"\(@sprint:([\w-]+)\)")
+# Assignee lines: "- Assignee: @agent:github-copilot" or "- **Assignee**: @marco"
+ASSIGNEE_LINE_RE = re.compile(r"^\s*-\s+\*{0,2}Assignee\*{0,2}:\s*@?([\w:-]+)\s*$", re.IGNORECASE)
+# Blockers lines: "- Blockers: ACA-14-003" or "- **Blockers**: ACA-14-003, F37-02-001"
+BLOCKERS_LINE_RE = re.compile(r"^\s*-\s+\*{0,2}Blockers?\*{0,2}:\s*(.+)$", re.IGNORECASE)
+
 
 def parse_done_roster(status_text: str) -> set[str]:
     """
@@ -103,13 +144,30 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
     
     Story counting: sequential within epic (same as reflect-ids.py).
     New-format stories (with [ID=F37-NN-NNN]) are counted; old-format stories get next number.
+    
+    Enhancement 2 (v2.7): Extracts metadata from PLAN.md structure:
+    - Sprint from headers (## Sprint 11 -> sprint="Sprint-11")
+    - Assignee from task lines (- Assignee: @marco -> assignee="marco")
+    - Blockers from task lines (- Blockers: F37-02-001 -> blockers=["F37-02-001"])
     """
     epics: list[dict] = []
     current_epic: dict | None = None
     current_feature: dict | None = None
+    current_sprint: str | None = None  # tracks current sprint context
     story_counters: dict[str, int] = {}  # epic_code -> story count (FK, 01, 02, etc.)
 
     for line in plan_text.splitlines():
+        # Sprint header detection (## Sprint 11)
+        m_sprint = SPRINT_HEADER_RE.match(line)
+        if m_sprint:
+            sprint_id = m_sprint.group(1).strip()
+            # Normalize: "11" -> "Sprint-11", "ACA-S11" -> "ACA-S11"
+            if sprint_id.isdigit():
+                current_sprint = f"Sprint-{sprint_id}"
+            else:
+                current_sprint = sprint_id
+            continue
+        
         # Epic line
         m_epic = EPIC_TITLE_RE.match(line)
         if m_epic:
@@ -160,6 +218,14 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
             ep_code = current_epic["epic_code"]
             feat_n = current_feature["feature_n"]
             
+            # Extract sprint annotation from title: "(@sprint:ACA-S11)"
+            sprint_annotation = None
+            m_sprint_annot = SPRINT_ANNOTATION_RE.search(story_title)
+            if m_sprint_annot:
+                sprint_annotation = m_sprint_annot.group(1)
+                # Remove annotation from title
+                story_title = SPRINT_ANNOTATION_RE.sub("", story_title).strip()
+            
             # Count this story
             story_counters[ep_code] = story_counters.get(ep_code, 0) + 1
             story_seq = story_counters[ep_code]
@@ -172,7 +238,7 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
                 story_n = story_seq
             
             wbs = f"{ep_code}.{feat_n}.{story_n}"
-            current_feature["stories"].append({
+            story_dict = {
                 "wbs": wbs,
                 "title": story_title,
                 "status": None,
@@ -180,7 +246,11 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
                 "epic_code": ep_code,
                 "feature_n": feat_n,
                 "story_id": story_id,  # preserve canonical ID
-            })
+                "sprint": sprint_annotation or current_sprint,  # use annotation or context
+                "assignee": None,
+                "blockers": [],
+            }
+            current_feature["stories"].append(story_dict)
             continue
 
         # Story old format: "  Story 2.5.4 [F37-02-017]  title"
@@ -201,7 +271,7 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
             wbs = f"{ep_code}.{feat_n}.{story_n}"
             # If annotated, check done roster
             done = annotation in done_ids if annotation else False
-            current_feature["stories"].append({
+            story_dict = {
                 "wbs": wbs,
                 "title": title,
                 "status": None,
@@ -209,13 +279,34 @@ def parse_plan(plan_text: str, done_ids: set[str]) -> dict:
                 "epic_code": ep_code,
                 "feature_n": feat_n,
                 "story_id": annotation if annotation else None,  # may be None
-            })
+                "sprint": current_sprint,
+                "assignee": None,
+                "blockers": [],
+            }
+            current_feature["stories"].append(story_dict)
             continue
 
         # Status declaration under a story
         m_status = STATUS_LINE_RE.match(line)
         if m_status and current_feature and current_feature["stories"]:
             current_feature["stories"][-1]["status"] = m_status.group(1).strip()
+            continue
+        
+        # Assignee line under a story (Enhancement 2)
+        m_assignee = ASSIGNEE_LINE_RE.match(line)
+        if m_assignee and current_feature and current_feature["stories"]:
+            assignee = m_assignee.group(1).strip()
+            current_feature["stories"][-1]["assignee"] = assignee
+            continue
+        
+        # Blockers line under a story (Enhancement 2)
+        m_blockers = BLOCKERS_LINE_RE.match(line)
+        if m_blockers and current_feature and current_feature["stories"]:
+            blockers_text = m_blockers.group(1).strip()
+            # Parse comma/space separated story IDs: "ACA-14-003, F37-02-001" -> ["ACA-14-003", "F37-02-001"]
+            blockers = [b.strip() for b in re.split(r"[,;\s]+", blockers_text) if b.strip()]
+            current_feature["stories"][-1]["blockers"] = blockers
+            continue
 
     return {"epics": epics}
 
@@ -298,7 +389,9 @@ def build_veritas_plan(parsed: dict, done_ids: set[str]) -> dict:
                     "done": story_raw.get("done", False),
                     "epic_code": ep_code,
                     "feature_id": feat_id,
-                    "blockers": [],
+                    "sprint": story_raw.get("sprint"),  # Enhancement 2
+                    "assignee": story_raw.get("assignee"),  # Enhancement 2
+                    "blockers": story_raw.get("blockers", []),  # Enhancement 2 (may be populated from PLAN.md)
                     "size": "M",
                     "fp": 3,
                 })
@@ -390,6 +483,8 @@ def model_upsert(story: dict, dry_run: bool = False) -> None:
         "feature_id": story["feature_id"],
         "status": story["status"],
         "done": story["done"],
+        "sprint": story.get("sprint"),  # Enhancement 2 - may be None
+        "assignee": story.get("assignee"),  # Enhancement 2 - may be None
         "blockers": story["blockers"],
         "size": story["size"],
         "fp": story["fp"],
