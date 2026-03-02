@@ -1,8 +1,58 @@
 ﻿# EVA Data Model -- Status
 
-**Last Updated:** March 1, 2026 7:39 PM ET -- Session 18: Evidence Layer implementation complete -- schema, API routers, tools, documentation, validation
+**Last Updated:** March 2, 2026 1:15 PM ET -- Session 19: Cosmos DB empty incident RESOLVED -- key rotation detected, fixed, Evidence Layer deployed to ACA
 **Phase:** ACTIVE -- COSMOS 24x7 -- validate-model PASS 0 violations -- 32 layers registered -- MTI=100
-**Snapshot (2026-03-01 S18):** 32 layers (added: evidence, traces-ready) -- 4,152+ exported objects -- Tests: all passing -- Readiness: 10/10 gates PASS -- Evidence Layer: schema, routers, generator.py, validate.ps1, query.py, docs complete
+**Snapshot (2026-03-02 S19):** 31 base layers + Evidence Layer (L31) deployed to ACA -- 4,151 objects in Cosmos -- ACA revision 0000003 (image 20260302-1300) -- Evidence endpoints operational (GET/PUT functional)
+
+> **Session note (2026-03-02 1:15 PM ET Session 19 -- Cosmos DB Empty Incident RESOLVED):**
+>
+> DISCOVER: User requested "bootstrap project 37" for Project 51 work. Health check revealed:
+>   GET /model/agent-summary returned { total: 0, by_layer: { services: -1, ... } }
+>   Issue: Cosmos DB completely empty (all layer counts = -1 = cache not initialized)
+>   Context: Feb 25 successful seed with 4,055 objects; March 1 documentation-only commits
+>   Question: Why is Cosmos empty? No code changes, no deployments, infrastructure correct?
+>
+> PLAN:
+>   Phase 1 -- Root Cause Analysis: Git history + Azure infrastructure verification
+>   Phase 2 -- Hypothesis Testing: 5 theories (deletion, deployment, key rotation, etc.)
+>   Phase 3 -- Remediation: Fix auth, re-seed Cosmos DB
+>   Phase 4 -- Evidence Layer Deployment: Build image, update ACA, verify endpoints
+>
+> DO:
+>   RCA Phase: Git analysis (ALL March 1-2 commits = documentation-only). Azure verification:
+>     marco-sandbox-cosmos (Succeeded), evamodel database (exists), model_objects container (exists).
+>     ACA env vars: COSMOS_URL correct, MODEL_DB_NAME correct, MODEL_CONTAINER_NAME correct.
+>   Seed Attempt #1: FAILED - 31 Unauthorized errors. ROOT CAUSE: COSMOS_KEY stale/rotated.
+>   Key Rotation Fix: Retrieved current key via az cosmosdb keys list. Updated ACA COSMOS_KEY.
+>     New revision: marco-eva-data-model--0000002.
+>   Seed Attempt #2: SUCCESS - total=984, errors=[], all 31 base layers seeded.
+>     GET /model/agent-summary: total=4151 (includes derived data), store=cosmos, OPERATIONAL.
+>   Evidence Layer Deployment:
+>     Built ACR image 20260302-1300 (includes model/evidence.json + evidence_router).
+>     Updated ACA to new image (revision 0000003, traffic=100%).
+>     Re-seeded: total=985. Verified: GET /model/evidence/ → [], PUT → row_version=1, GET → record retrieved.
+>   RCA documentation: Created RCA-COSMOS-EMPTY-20260302.md (255 lines, 5 hypotheses, confirmed root cause).
+>
+> CHECK:
+>   Cosmos DB operational: 4,151 objects, 31 base layers + Evidence Layer
+>   Evidence Layer LIVE: GET/PUT/query endpoints functional, test record persisted
+>   ACA state: Revision 0000003, image 20260302-1300, 100% traffic
+>   Downtime: ~45 minutes (12:30 PM - 1:15 PM ET)
+>   Root cause confirmed: Cosmos primary key rotated between Feb 25 and March 2
+>
+> ACT:
+>   Incident RESOLVED. Cosmos DB restored (4,151 objects). Evidence Layer deployed to production.
+>   Preventive measures identified:
+>     - Convert COSMOS_KEY to Key Vault reference (enables auto-rotation without ACA updates)
+>     - Add Cosmos health check to copilot-instructions.md bootstrap (catch empty DB early)
+>     - Add Azure Monitor alert for Cosmos 401 Unauthorized errors
+>     - Document key rotation runbook in PLAN.md Dependencies section
+>   Projects can now call PUT /model/evidence/{id} to record DPDCA phase completions.
+>   Portfolio audits enabled via GET /model/evidence/?sprint_id=X&phase=Y queries.
+>
+> NEXT: Return to Project 51 work. Implement Key Vault reference for COSMOS_KEY. Add health checks.
+>
+> STATUS: INCIDENT RESOLVED -- COSMOS OPERATIONAL -- EVIDENCE LAYER LIVE -- MTI=100 sustained
 
 > **Session note (2026-03-01 7:39 PM ET Session 18 -- Evidence Layer implementation):**
 >

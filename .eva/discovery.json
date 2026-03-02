@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema": "eva.discovery.v2",
-    "generated_at": "2026-03-02T01:25:21.829Z",
+    "generated_at": "2026-03-02T18:17:48.161Z",
     "repo": "C:\\AICOE\\eva-foundry\\37-data-model"
   },
   "project": null,
@@ -1681,8 +1681,18 @@
         "story_tags": []
       },
       {
+        "path": "CODE_OF_CONDUCT.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
         "path": "commit-result.txt",
         "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "type": "doc",
         "story_tags": []
       },
       {
@@ -1708,6 +1718,11 @@
       {
         "path": "INTEGRATION-LM-TRACING.md",
         "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "LICENSE",
+        "type": "other",
         "story_tags": []
       },
       {
@@ -1756,6 +1771,11 @@
         "story_tags": []
       },
       {
+        "path": "RCA-COSMOS-EMPTY-20260302.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
         "path": "README-SPRINT-1.md",
         "type": "doc",
         "story_tags": []
@@ -1773,6 +1793,11 @@
       {
         "path": "requirements.txt",
         "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "SECURITY.md",
+        "type": "doc",
         "story_tags": []
       },
       {
@@ -1904,6 +1929,46 @@
       {
         "path": "api/__init__.py",
         "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "docs/evidence-layer-enhancement-20260301.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-BENEFIT-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-COMPLETE-PLAN-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-EXECUTION-PLAN-2026-03-01.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-OPUS-FINDINGS-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-OPUS-REVIEW-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-RESEARCH-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/SESSION-RECORD-2026-02-27-TO-2026-03-01.md",
+        "type": "doc",
         "story_tags": []
       },
       {
@@ -2145,46 +2210,6 @@
         "story_tags": [
           "F37-VALIDATE-001"
         ]
-      },
-      {
-        "path": "docs/evidence-layer-enhancement-20260301.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-BENEFIT-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-COMPLETE-PLAN-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-EXECUTION-PLAN-2026-03-01.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-OPUS-FINDINGS-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-OPUS-REVIEW-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-RESEARCH-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/SESSION-RECORD-2026-02-27-TO-2026-03-01.md",
-        "type": "doc",
-        "story_tags": []
       },
       {
         "path": "model/agents.json",
@@ -2776,6 +2801,11 @@
         "story_tags": []
       },
       {
+        "path": ".github/workflows/pytest.yml",
+        "type": "config",
+        "story_tags": []
+      },
+      {
         "path": ".github/workflows/sprint-agent.yml",
         "type": "config",
         "story_tags": [
@@ -2785,6 +2815,11 @@
       },
       {
         "path": ".github/workflows/validate-model.yml",
+        "type": "config",
+        "story_tags": []
+      },
+      {
+        "path": ".github/workflows/veritas-audit.yml",
         "type": "config",
         "story_tags": []
       },

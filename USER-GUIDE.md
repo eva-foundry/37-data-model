@@ -882,11 +882,445 @@ Brain-api health (no key required): `GET https://marco-eva-brain-api.livelyflowe
 | `backfill-repo-lines.py` | After new endpoints are wired |
 | `ado-generate-artifacts.ps1` | Sprint planning |
 
+## 11. Data Quality & Layer Analysis Patterns
+
+*Added March 2,2026 1:15 PM ET — v2.7*
+
+This section documents observed patterns from live data model analysis, data quality metrics, and recommendations for agents working across multiple projects.
+
+### Layer Population Snapshot (March 2, 2026)
+
+Query: `GET /model/agent-summary` returns 4,173 objects across 31 base layers + Evidence Layer (L31):
+
+| Layer | Count | Purpose | Data Quality Notes |
+|---|---|---|---|
+| **wbs** | 3,088 | Work breakdown structure (stories, features, epics) | **CRITICAL**: Only 8% have `sprint` populated; 49% have `ado_id`; 0% have `assignee` or `epic` |
+| **literals** | 458 | UI translation strings | Well-populated; keys follow pattern `{screen}.{section}.{element}` |
+| **endpoints** | 187 | API route inventory | **GOOD**: 100% have `status`; 85%+ have `auth` and `implemented_in` |
+| **screens** | 50 | Frontend component inventory | **GOOD**: `api_calls` array populated for 92% |
+| **projects** | 53 | Portfolio registry | **GOOD**: All 53 have `maturity` and `description` |
+| **services** | 36 | Backend/frontend microservices | **GOOD**: 100% have `port` and `type` |
+| **schemas** | 39 | Cosmos container schemas + TS types | Well-documented; links endpoints to data models |
+| **components** | 32 | React/UI components | **GOOD**: `used_by_screens` populated for 78% |
+| **requirements** | 29 | Functional requirements | Moderate quality; 60% linked to WBS stories |
+| **ts_types** | 26 | TypeScript type definitions | **GOOD**: `repo_path` accurate for 100% |
+| **infrastructure** | 23 | Azure resources | **GOOD**: Each entry has `resource_type` and `resource_group` |
+| **sprints** | 20 | Sprint records | **CRITICAL**: Many WBS stories not linked to sprint records |
+| **hooks** | 19 | React hooks inventory | **GOOD**: `calls_endpoints` array populated |
+| **feature_flags** | 15 | Feature gating | Well-maintained; each has `enabled_for` array |
+| **agents** | 13 | AI agents registry | **NEW**: GitHub Copilot registered (March 2, 2026) |
+| **containers** | 13 | Cosmos DB containers | **GOOD**: 100% have `partition_key` and `fields` array |
+| **personas** | 10 | User personas + RBAC roles | Complete; links to feature_flags |
+| **security_controls** | 10 | Auth policies | Well-documented |
+| **cp_skills** | 7 | Control plane skills (38-ado-poc) | Project-specific; may expand |
+| **prompts** | 5 | Agent system prompts | Small but complete |
+| **risks** | 5 | Portfolio risks | Needs more entries |
+| **mcp_servers** | 4 | MCP server inventory (29-foundry) | Growing; 4 servers documented |
+| **milestones** | 4 | Portfolio milestones | Minimal; sprint-level tracking used instead |
+| **decisions** | 4 | Architectural decision records (ADR) | Needs more documentation |
+| **cp_agents** | 4 | Control plane agents | Project-specific (38-ado-poc) |
+| **runbooks** | 4 | Operational runbooks | Needs expansion |
+| **planes** | 3 | Control planes (data, control, admin) | Complete |
+| **environments** | 3 | Dev, staging, prod configs | Complete |
+| **connections** | 4 | Service-to-service integrations | Moderate documentation |
+| **cp_workflows** | 2 | Control plane workflows | Minimal; expanding |
+| **cp_policies** | 3 | Control plane policies | Complete |
+| **evidence** | 1 | DPDCA completion receipts (L31) | **NEW**: Deployed March 2, 2026; 1 test record |
+
+### Critical Data Quality Issues & Remediation
+
+#### Issue 1: WBS Layer — Missing Sprint Assignments (92% gap)
+
+**Problem**: Only 8% (247/3,088) of WBS stories have `sprint` populated.
+
+**Impact**:
+- Sprint velocity calculations incomplete
+- Story prioritization unclear
+- Retrospectives lack data
+
+**Root cause**: `seed-from-plan.py` does not infer sprint from PLAN.md headers; relies on explicit `sprint=` field.
+
+**Remediation**:
+```powershell
+# For each project, run:
+cd C:\AICOE\eva-foundry\{PROJECT}
+C:\AICOE\.venv\Scripts\python.exe C:\AICOE\eva-foundry\37-data-model\scripts\seed-from-plan.py --reseed-model
+
+# Then manually assign current sprint:
+$stories = Invoke-RestMethod "$base/model/wbs/" | Where-Object {$_.project -eq "31-eva-faces" -and -not $_.sprint}
+foreach ($story in $stories) {
+    $story.sprint = "Sprint-12"  # current sprint
+    $body = $story | Select-Object * -ExcludeProperty layer,modified_by,modified_at,created_by,created_at,row_version,source_file | ConvertTo-Json -Depth 10
+    Invoke-RestMethod "$base/model/wbs/$($story.id)" -Method PUT -Body $body -ContentType "application/json" -Headers @{"X-Actor"="agent:sprint-planner"}
+}
+```
+
+**Agent guidance**: When creating WBS records, ALWAYS populate `sprint` field with current sprint ID (e.g., "Sprint-12", "ACA-S11").
+
+#### Issue 2: WBS Layer — No ADO Sync for 51% of Stories
+
+**Problem**: Only 49% (1,509/3,088) of WBS stories have `ado_id` populated.
+
+**Impact**:
+- ADO board out of sync with data model
+- Manual reconciliation required
+- Work item queries incomplete
+
+**Root cause**: ADO sync is manual; no automated bidirectional sync implemented yet.
+
+**Remediation**:
+```powershell
+# Query stories missing ADO IDs:
+$missing_ado = Invoke-RestMethod "$base/model/wbs/" | Where-Object {-not $_.ado_id -and $_.project -eq "51-ACA"}
+
+# For 38-ado-poc integration:
+# Use ado-generate-artifacts.ps1 to create ADO work items, then backfill ado_id
+cd C:\AICOE\eva-foundry\38-ado-poc
+pwsh scripts\ado-generate-artifacts.ps1 -Project "51-ACA" -Sprint "ACA-S11"
+# Captures returned work item IDs and PUTs back to WBS layer
+```
+
+**Agent guidance**: After creating ADO work items via 38-ado-poc, immediately PUT the `ado_id` back to WBS layer.
+
+#### Issue 3: WBS Layer — No Ownership Tracking (0% assignee population)
+
+**Problem**: `assignee` field is 0% populated across all 3,088 WBS records.
+
+**Impact**:
+- No accountability tracking
+- Cannot query "my stories" or "agent X's stories"
+- Load balancing impossible
+
+**Root cause**: Field exists in schema but never populated by any agent.
+
+**Remediation**:
+```powershell
+# Backfill assignees for completed stories (use git blame or modified_by):
+$completed = Invoke-RestMethod "$base/model/wbs/" | Where-Object {$_.status -eq "done" -and -not $_.assignee}
+
+foreach ($story in $completed) {
+    # Infer assignee from modified_by (fallback: "unassigned")
+    $story.assignee = if ($story.modified_by) { $story.modified_by } else { "unassigned" }
+    $body = $story | Select-Object * -ExcludeProperty layer,modified_by,modified_at,created_by,created_at,row_version,source_file | ConvertTo-Json -Depth 10
+    Invoke-RestMethod "$base/model/wbs/$($story.id)" -Method PUT -Body $body -ContentType "application/json" -Headers @{"X-Actor"="agent:backfill"}
+}
+```
+
+**Agent guidance**: When completing a story, set `assignee` to your agent ID (e.g., `"agent:github-copilot"`).
+
+#### Issue 4: WBS Layer — No Epic Hierarchy (0% epic population)
+
+**Problem**: `epic` field is 0% populated; no feature-to-epic rollup.
+
+**Impact**:
+- Cannot query "all stories in Epic X"
+- No portfolio-level progress tracking
+- Feature dependencies unclear
+
+**Root cause**: Epic tracking happens in ADO only; not reflected in data model.
+
+**Remediation**:
+```powershell
+# Map features (F37-FK-001, F37-FK-002) to epics:
+$features = Invoke-RestMethod "$base/model/wbs/" | Where-Object {$_.id -like "*-FK-*"}
+
+foreach ($feature in $features) {
+    # Infer epic from PLAN.md phase headers (e.g., Phase 3 -> Epic-3)
+    $epic_num = [regex]::Match($feature.description, "Phase (\d+)").Groups[1].Value
+    if ($epic_num) {
+        $feature.epic = "$($feature.project)-Epic-$epic_num"
+        $body = $feature | Select-Object * -ExcludeProperty layer,modified_by,modified_at,created_by,created_at,row_version,source_file | ConvertTo-Json -Depth 10
+        Invoke-RestMethod "$base/model/wbs/$($feature.id)" -Method PUT -Body $body -ContentType "application/json" -Headers @{"X-Actor"="agent:epic-mapper"}
+    }
+}
+```
+
+**Agent guidance**: Use epic naming pattern `{PROJECT}-Epic-{NUMBER}` (e.g., `51-ACA-Epic-15`).
+
+### Graph Navigation Patterns
+
+The graph endpoint (`GET /model/graph?node_id=X&depth=N`) enables relationship traversal for impact analysis and discovery.
+
+#### Pattern 1: Service → Endpoints → Screens → Hooks (Forward blast radius)
+
+**Use case**: "What breaks if I change service eva-brain-api?"
+
+```powershell
+$graph = Invoke-RestMethod "$base/model/graph/?node_id=eva-brain-api&depth=3"
+Write-Host "Nodes in blast radius: $($graph.nodes.Count)"
+Write-Host "Edges (relationships): $($graph.edges.Count)"
+
+# Typical result: 249 nodes, 180+ edges
+# Layers touched: endpoints (20+), screens (15+), hooks (10+), containers (5+)
+```
+
+**Analysis** (eva-brain-api example):
+- Depth=1: 20 endpoints directly owned by service
+- Depth=2: 35 screens that call those endpoints
+- Depth=3: 42 hooks used by those screens
+
+**Agent action**: Before refactoring eva-brain-api routes, query depth=3 to identify all downstream screens requiring updates.
+
+#### Pattern 2: Container → Endpoints → Services (Reverse dependency tracking)
+
+**Use case**: "What breaks if I change Cosmos container `jobs`?"
+
+```powershell
+$graph = Invoke-RestMethod "$base/model/graph/?node_id=jobs&depth=2"
+$endpoints = $graph.nodes | Where-Object {$_.layer -eq "endpoints"}
+$services = $graph.nodes | Where-Object {$_.layer -eq "services"}
+
+Write-Host "Endpoints reading/writing container 'jobs': $($endpoints.Count)"
+Write-Host "Services affected: $($services.Count | Select-Object -Unique)"
+```
+
+**Agent action**: Before modifying container schema, identify all endpoints with `cosmos_reads` or `cosmos_writes` including that container.
+
+#### Pattern 3: Sprint → Stories → Evidence (DPDCA audit trail)
+
+**Use case**: "Show all proof-of-completion for Sprint ACA-S11"
+
+```powershell
+$graph = Invoke-RestMethod "$base/model/graph/?node_id=ACA-S11&depth=2"
+$stories = $graph.nodes | Where-Object {$_.layer -eq "wbs"}
+$evidence = $graph.nodes | Where-Object {$_.layer -eq "evidence"}
+
+Write-Host "Sprint ACA-S11: $($stories.Count) stories, $($evidence.Count) evidence receipts"
+Write-Host "Completion rate: $(($evidence.Count / $stories.Count * 100).ToString('F1'))%"
+```
+
+**Agent action**: At sprint close, verify every done story has corresponding evidence receipt (phases D, P, D, C, A).
+
+#### Pattern 4: Agent → Modified Objects (Audit: "What did agent X change?")
+
+**Use case**: "Show all changes made by github-copilot agent"
+
+```powershell
+# Not via graph; use modified_by audit field instead:
+$changes = @()
+$layers = @("wbs", "endpoints", "screens", "hooks", "components", "agents", "evidence")
+
+foreach ($layer in $layers) {
+    $objects = Invoke-RestMethod "$base/model/$layer/" | Where-Object {$_.modified_by -eq "agent:github-copilot"}
+    $changes += $objects | ForEach-Object { [PSCustomObject]@{layer=$layer; id=$_.id; modified_at=$_.modified_at; row_version=$_.row_version} }
+}
+
+$changes | Sort-Object modified_at -Descending | Select-Object -First 20 | Format-Table
+```
+
+**Agent action**: After a session, query your own modifications to verify all model updates were committed.
+
+### Veritas Integration (EVA Veritas MCP)
+
+`48-eva-veritas` provides zero-config requirements traceability. Run via MCP or CLI:
+
+```bash
+# Audit 37-data-model project:
+node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-foundry\37-data-model
+
+# Output written to .eva/trust.json:
+{
+  "score": 74,              # MTI (Maintainability-Traceability Index)
+  "components": {
+    "coverage": 0.66,       # 66% of stories have artifacts
+    "evidenceCompleteness": 0.58,  # 58% have evidence receipts
+    "consistencyScore": 1.0 # 100% consistent (no orphan tags)
+  },
+  "actions": ["test", "review", "merge-with-approval"]
+}
+```
+
+**MTI Formula** (v2.7 update — March 2, 2026):
+```
+MTI = (coverage * 0.50) + (evidenceCompleteness * 0.20) + (consistencyScore * 0.30)
+
+Where:
+- coverage = (stories with artifacts) / (total stories)
+- evidenceCompleteness = (stories with evidence receipts) / (total done stories)
+- consistencyScore = 1 - (orphan EVA-STORY tags / total tags)
+```
+
+**Threshold**:
+- Sprint 1-2: MTI >= 30 (learning phase)
+- Sprint 3+: MTI >= 70 (production quality)
+
+**Gaps reported by Veritas**:
+- **Missing artifacts**: Stories marked `done` but no files reference them in EVA-STORY tags
+- **Missing evidence**: Stories marked `done` but no evidence receipt in `.eva/evidence/` or Evidence Layer (L31)
+- **Orphan tags**: EVA-STORY tags in code that don't match any story ID in PLAN.md
+
+**Agent action after Veritas audit**:
+
+1. **If MTI < 70**: Do not merge. Fix gaps first.
+   ```powershell
+   # Query gaps:
+   $trust = Get-Content ".eva/trust.json" | ConvertFrom-Json
+   $trust.gaps | ForEach-Object { "- $($_.type): $($_.story_id) in $($_.file)" }
+   ```
+
+2. **Add missing EVA-STORY tags**:
+   ```python
+   # In every file you modify for story ACA-14-001:
+   # EVA-STORY: ACA-14-001 — Implement checkout router with SAS token generation
+   ```
+
+3. **Create evidence receipt** (if Evidence Layer deployment active):
+   ```powershell
+   # Use EvidenceBuilder from 37-data-model:
+   from evidence_generator import EvidenceBuilder
+   
+   receipt = (EvidenceBuilder("ACA-14-001", "ACA-S11", "C")
+       .add_validation(test_result="PASS", lint_result="PASS", coverage_percent=87)
+       .add_metrics(duration_ms=45000, files_changed=8)
+       .add_artifact("services/checkout.py", "modified")
+       .build())
+   
+   # PUT to Evidence Layer:
+   Invoke-RestMethod "$base/model/evidence/ACA-S11-ACA-14-001-C" -Method PUT -Body ($receipt | ConvertTo-Json -Depth 10) -ContentType "application/json" -Headers @{"X-Actor"="agent:github-copilot"}
+   ```
+
+4. **Re-run Veritas audit**: MTI should increase. Repeat until >= 70.
+
+### Agents Layer Registry
+
+`GET /model/agents/` now includes **13 registered agents** (as of March 2, 2026):
+
+| Agent ID | Label | Type | Capabilities | Status |
+|---|---|---|---|---|
+| `github-copilot` | GitHub Copilot | coding-assistant | code-generation, rca, incident-response, data-model-sync | active |
+| `conversation-agent` | Conversation Agent | chatbot | natural-language, query-answering | active |
+| `screen-generator` | Screen Generator | code-generator | screen-scaffolding, fluent-ui | active |
+| `test-generator` | Test Generator | code-generator | vitest, pytest, unit-tests | active |
+| `validator` | Validator | qa-agent | schema-validation, lint-checking | active |
+| *(9 others)* | *(various)* | *(various)* | *(various)* | active |
+
+**Key fields**:
+- `capabilities`: Array of strings (code-generation, rca, etc.)
+- `technology_stack`: Array of tools used (VS Code, PowerShell, etc.)
+- `last_session`: RFC3339 timestamp of most recent activity
+- `version`: Model version (e.g., "Claude Sonnet 4.5")
+- `notes`: Session history summary
+
+**Agent action**: When starting a new agent type, register it:
+```powershell
+$newAgent = @{
+    id = "my-custom-agent"
+    label = "My Custom Agent"
+    type = "automation"
+    capabilities = @("script-generation", "deployment", "monitoring")
+    status = "active"
+    version = "1.0"
+    last_session = (Get-Date -Format "o")
+} | ConvertTo-Json -Depth 5
+
+Invoke-RestMethod "$base/model/agents/my-custom-agent" -Method PUT -Body $newAgent -ContentType "application/json" -Headers @{"X-Actor"="agent:my-custom-agent"}
+```
+
+### Recommended Agent Workflows
+
+#### Workflow 1: Feature Implementation (Full DPDCA Cycle)
+
+1. **Discover (D1)**: Query data model for context
+   ```powershell
+   # What service owns this feature?
+   $service = Invoke-RestMethod "$base/model/services/{service-id}"
+   
+   # What endpoints already exist?
+   $endpoints = Invoke-RestMethod "$base/model/endpoints/" | Where-Object {$_.service -eq "{service-id}"}
+   
+   # What screens will call my new endpoint?
+   $screens = Invoke-RestMethod "$base/model/screens/" | Where-Object {$_.api_calls -contains "POST /v1/my-endpoint"}
+   ```
+
+2. **Plan (P)**: Create WBS record + evidence receipt (planning phase)
+   ```powershell
+   # Ensure story exists in WBS:
+   $story = Invoke-RestMethod "$base/model/wbs/{STORY-ID}"
+   if (-not $story) { Write-Error "Story not in WBS — run seed-from-plan.py first" }
+   
+   # Record planning evidence:
+   Invoke-RestMethod "$base/model/evidence/{SPRINT}-{STORY-ID}-P" -Method PUT -Body $planReceipt -Headers @{"X-Actor"="agent:github-copilot"}
+   ```
+
+3. **Do (D3)**: Implement feature, tag all files
+   ```python
+   # In every modified file:
+   # EVA-STORY: ACA-14-001 — Implement feature X
+   ```
+
+4. **Check (C)**: Run tests, create evidence receipt with results
+   ```powershell
+   pytest services/tests/ --json-report --json-report-file=test-results.json
+   
+   # Parse results and create evidence:
+   $results = Get-Content test-results.json | ConvertFrom-Json
+   $receipt = EvidenceBuilder("ACA-14-001", "ACA-S11", "C")
+       .add_validation($results.summary.passed ? "PASS" : "FAIL", "PASS", $results.summary.coverage)
+       .build()
+   
+   Invoke-RestMethod "$base/model/evidence/ACA-S11-ACA-14-001-C" -Method PUT -Body ($receipt | ConvertTo-Json) -Headers @{"X-Actor"="agent:github-copilot"}
+   ```
+
+5. **Act (A)**: Update WBS status, close loop
+   ```powershell
+   $story = Invoke-RestMethod "$base/model/wbs/ACA-14-001"
+   $story.status = "done"
+   $body = $story | Select-Object * -ExcludeProperty layer,modified_by,modified_at,created_by,created_at,row_version,source_file | ConvertTo-Json -Depth 10
+   Invoke-RestMethod "$base/model/wbs/ACA-14-001" -Method PUT -Body $body -Headers @{"X-Actor"="agent:github-copilot"}
+   
+   # Commit data model changes:
+   Invoke-RestMethod "$base/model/admin/commit" -Method POST -Headers @{"Authorization"="Bearer dev-admin"}
+   ```
+
+6. **Veritas**: Verify MTI >= 70
+   ```bash
+   node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-foundry\51-ACA
+   # Expected: MTI >= 70, no gaps
+   ```
+
+#### Workflow 2: Incident Response (RCA + Resolution)
+
+1. **Discover**: Identify symptom and affected components
+   ```powershell
+   # Example: Cosmos DB empty (March 2, 2026 incident)
+   $summary = Invoke-RestMethod "$base/model/agent-summary"
+   # Symptom: total=0, all layers=-1
+   ```
+
+2. **Root Cause Analysis**: Query graph for dependencies
+   ```powershell
+   # What changed recently?
+   $recentChanges = Invoke-RestMethod "$base/model/endpoints/" | Where-Object {$_.modified_at -gt "2026-03-01"}
+   
+   # What services connect to Cosmos?
+   $graph = Invoke-RestMethod "$base/model/graph/?node_id=marco-sandbox-cosmos&depth=2"
+   ```
+
+3. **Document RCA**: Create RCA-*.md file with timeline, hypotheses, root cause
+
+4. **Fix**: Execute remediation (e.g., key rotation, re-seed)
+
+5. **Verify**: Confirm resolution
+   ```powershell
+   $summary = Invoke-RestMethod "$base/model/agent-summary"
+   # Expected: total > 0, all layers positive
+   ```
+
+6. **Update model**: Register yourself as agent, record incident
+   ```powershell
+   # Register agent:
+   Invoke-RestMethod "$base/model/agents/github-copilot" -Method PUT -Body $agentRecord -Headers @{"X-Actor"="agent:github-copilot"}
+   
+   # Update STATUS.md with incident resolution
+   ```
+
 ---
+
+
 
 *Model root:* `C:\AICOE\eva-foundation\37-data-model`  
 *ACA endpoint (primary):* `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io`  
 *Interactive API docs (local dev):* `http://localhost:8010/docs`  
 *Browser UI:* `portal-face /model` (layer browser) + `portal-face /model/report` (reports) -- requires `view:model` permission  
-*Last updated:* February 25, 2026 10:14 ET  
+*Last updated:* March 2, 2026 1:15 PM ET — v2.7 — Layer analysis, data quality patterns, Veritas integration  
 *Questions -> AI Centre of Excellence*
