@@ -1,4 +1,6 @@
 """
+# EVA-STORY: F37-GRAPH-001
+# EVA-STORY: F37-10-006
 Graph endpoint -- typed edge list across all 27 EVA model layers.
 
 GET /model/graph                                  All nodes and edges
