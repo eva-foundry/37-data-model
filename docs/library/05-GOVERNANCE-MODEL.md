@@ -363,7 +363,7 @@ EVA: every run PRODUCES evidence as a first-class output artifact.
     - Assurance Profiles -- defined in spec, no runtime lookup service
 
   What IS running:
-    - 37-data-model API (Cosmos, 27 layers, 184 endpoints, PASS 0 violations)
+    - 37-data-model API (Cosmos-backed entity catalog, PASS 0 violations)
     - Basic RBAC (28-rbac, EVA-JP-v1.2)
     - Basic audit logging in EVA-JP-v1.2
     - APIM gateway with attribution headers (stub, not fully enforced)

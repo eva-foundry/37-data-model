@@ -94,8 +94,9 @@ EVA is designed to address all 12.
   6. Public procurement          (planned -- not yet built)
   -----------------------------------------------
   7. Governance/accountability   19-ai-gov (Governance Plane)
-                                 47-eva-mti (Machine Trust Index)
-                                 40-eva-control-plane (evidence spine)
+                                 48-eva-veritas (Evidence Plane + MTI computation)
+                                 37-data-model L31 Evidence Layer (proof-of-completion)
+                                 40-eva-control-plane (runtime evidence spine)
   -----------------------------------------------
   8. Data and privacy            32-logging (PIPEDA audit lane)
                                  37-data-model (data classification fields)
@@ -170,7 +171,8 @@ The AICOE roadmap is the GC-specific operationalization.
 EVA answer to each Berlin layer:
 
   Citizens:      jp-spark + eva-da (accessible, bilingual, WCAG 2.1 AA)
-  Accountability: evidence-first + MTI + PIPEDA audit lane
+  Accountability: Evidence Layer (L31) captures proof at runtime + MTI gates decisions
+                  + veritas audit enforces traceability + PIPEDA audit lane
   Finance:       APIM attribution + FinOps dashboard
   Security:      red-teaming + RBAC + decision engine hard-stops
   Workforce:     devbench + ADO command center + persona-driven UX

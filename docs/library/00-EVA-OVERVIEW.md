@@ -7,7 +7,7 @@
  DOCUMENTATION GENERATION VISION (registered 2026-02-24)
 --------------------------------------------------------------------------------
 
-  The data model is the single source of truth for all 27 layers.
+  The data model is the single source of truth for all EVA entities.
   Vision: the model generates its own documentation automatically.
 
   Trigger:  POST /model/admin/commit (on every PASS cycle)
@@ -79,8 +79,10 @@ They fall into five bands:
   33-eva-brain-v2        Agentic backend. FastAPI on ACA. Chat, RAG, analysis,
                          translate, feedback. 24 skills registered in Copilot.
   37-data-model          Single source of truth API. FastAPI port 8010 on ACA.
-                         32 layers (L31 Evidence + L32 Traces = L11 Observability).
-                         184 endpoints. 46 screens. Store=Cosmos. Evidence Layer LIVE.
+                         Tracks all EVA entities: endpoints, screens, services, containers,
+                         agents, requirements, sprints, evidence, and more.
+                         Store=Cosmos (24x7 ACA). Evidence Layer LIVE.
+                         See: docs/library/03-DATA-MODEL-REFERENCE.md for complete catalog.
   40-eva-control-plane   Runtime evidence spine. Port 8020. Run records,
                          deployment audit trail, evidence packs.
 
@@ -178,13 +180,13 @@ They fall into five bands:
     C:\AICOE\.venv\Scripts\python.exe -m uvicorn api.server:app --port 8010
 
 --------------------------------------------------------------------------------
- DATA MODEL STATE (2026-02-24)
+ DATA MODEL STATE (2026-03-01)
 --------------------------------------------------------------------------------
 
   Metric                 Count
   -----------------------------------------------
-  Layers                 27 / 27   (PASS 0 violations)
-  Endpoints              184       (52 implemented, 37 stub, 95 planned)
+  Total objects          4,152+    (across all entity types, PASS 0 violations)
+  Endpoints              184       (implemented + planned)
   Screens                46        (assistant-face:20, ops-face:26. WCAG 2.1 AA + i18n)
   Literals               375
   Services               33
@@ -239,7 +241,7 @@ They fall into five bands:
 
   01-AGENTIC-STATE.md            The Berlin paper <-> EVA mapping
   02-ARCHITECTURE.md             ASCII system architecture (DIAGRAM 8: two-portal split)
-  03-DATA-MODEL-REFERENCE.md     All 27 layers + doc-generation vision
+  03-DATA-MODEL-REFERENCE.md     Complete entity catalog + Evidence Layer guide
   04-PORTAL-SCREENS.md           All 46 screens by face (assistant/ops)
   05-GOVERNANCE-MODEL.md         Actor model, MTI, decision engine, domains
 

@@ -55,7 +55,7 @@
   |  33-eva-brain  |    |  37-data-model    |   |  38-ado-poc    |
   |  FastAPI (ACA) |    |  FastAPI port 8010|   |  FastAPI       |
   |  24 skills     |    |  (ACA + Cosmos)   |   |  Sprint/ADO    |
-  |  Chat, RAG     |    |  27 layers        |   |  board         |
+  |  Chat, RAG     |    |  Entity catalog   |   |  board         |
   |  Analysis      |    |  184 endpoints    |   |                |
   |  Translate     |    |  46 screens       |   +----------------+
   |  Feedback      |    |                   |
@@ -79,8 +79,8 @@
   | Blob Storage   |    THREE PLANES OF TRUTH
   | Uploaded docs  |    ==============================
   | Analysis output|    DATA PLANE       37-data-model
-  +----------------+    (what SHOULD be)  27 layers
-                                         184 endpoints
+  +----------------+    (what SHOULD be)  entity catalog
+                                         endpoints/screens/services
                         CONTROL PLANE    40-eva-control-plane
                         (what RAN)        run records
                                          evidence packs
@@ -303,7 +303,7 @@
   PLANE 1: DATA PLANE (declared)
   +----------------------------------------------------------------------+
   | 37-data-model (FastAPI, port 8010, ACA, Cosmos)                      |
-  | What SHOULD exist: 27 layers, 184 endpoints, 46 screens              |
+  | What SHOULD exist: endpoints, screens, services, evidence records    |
   | Written by: developers via PUT /model/{layer}/{id} + admin/commit     |
   | Verified by: validate-model.ps1 -> PASS/FAIL cross-reference check   |
   +----------------------------------------------------------------------+

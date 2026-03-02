@@ -36,7 +36,8 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 (8) Two-portal split: assistant-face (20) vs
                                     ops-face (26) -- face field in Cosmos.
 
-  03-DATA-MODEL-REFERENCE.md    All 27 layers with counts, notes, key fields.
+  03-DATA-MODEL-REFERENCE.md    Complete entity catalog with counts, notes, key fields.
+                                Canonical layer count registry (see header).
                                 Write cycle protocol. Query reference (what API
                                 call to make instead of grepping files).
                                 Validation rules for PASS 0 violations.
@@ -85,9 +86,6 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 orchestrator -- untangling blocked sessions via
                                 HTTP when all imperative tools are unavailable.
                                 Full evolution chronology (Feb 20-26).
-                                Current snapshot: 31 layers, 4055 objects,
-                                76 stamped endpoints, 3234 WBS records,
-                                9 sprints, MTI 4-component formula.
                                 Near/medium/long-arc roadmap.
                                 READ THIS to understand the architectural intent.
 
@@ -124,17 +122,21 @@ No Mermaid. No emoji. ASCII only. Printable.
   Berlin paper = vision. EVA = running implementation with governance.
 
 --------------------------------------------------------------------------------
- KEY NUMBERS (2026-02-28)
+ KEY NUMBERS (2026-03-01 Evidence Layer LIVE)
 --------------------------------------------------------------------------------
 
-  31 layers   PASS 0 violations   187 endpoints   50 screens
+  See: 03-DATA-MODEL-REFERENCE.md for complete entity catalog and layer details.
+  
   Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
+  Entity types: endpoints, screens, services, containers, agents, evidence, traces
+  PASS 0 violations across all entities
   458 literals   36 services   53 projects   10 personas
   15 feature flags   12 governance domains   6 MTI subscores
   9-step decision engine   2 audit log lanes   7 authority planes
-  4061 total objects   27 edge types (20 existing + 7 new CI/CD)
+  4,152+ total objects   27 edge types (20 existing + 7 new CI/CD)
   FK Enhancement: Opus 4.6 CONDITIONAL GO, 403h/12 sprints, Phase 0 Mar 2026
-  doc-generator service: planned -- auto-generate docs from 31 layers -> Azure Blob
+  Evidence Layer: LIVE (L31 + L32 = Observability Plane)
+  doc-generator: planned -- auto-generate docs from entity catalog -> Azure Blob
 
 --------------------------------------------------------------------------------
  QUICK REFERENCE: WHAT TO ASK THE MODEL

@@ -430,8 +430,8 @@ propagated from ADO into WBS model layer. 1869 records updated live.
 
   37-data-model (ACA / Cosmos 24x7, port 8010 local dev)
   |
-  |  31 layers: services, endpoints, screens, containers, agents,
-  |             requirements, wbs, sprints, risks, decisions, ...
+  |  Entity types: services, endpoints, screens, containers, agents,
+  |                requirements, wbs, sprints, evidence, risks, decisions
   |
   |  GET /model/fp/estimate          IFPUG UFP + story-point + effort-days
   |  GET /model/graph/?format=mermaid full cross-layer dependency diagram
