@@ -1,0 +1,53 @@
+name: veritas-audit
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout 37-data-model
+      uses: actions/checkout@v4
+      path: 37-data-model
+      
+    - name: Checkout 48-eva-veritas
+      uses: actions/checkout@v4
+      with:
+        repository: eva-foundry/48-eva-veritas
+        path: 48-eva-veritas
+        
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Install veritas dependencies
+      working-directory: 48-eva-veritas
+      run: npm install
+      
+    - name: Run veritas audit
+      working-directory: 48-eva-veritas
+      run: |
+        node src/cli.js audit --repo ../37-data-model --format json > audit-result.json
+        
+    - name: Check MTI threshold
+      shell: pwsh
+      working-directory: 48-eva-veritas
+      run: |
+        $result = Get-Content audit-result.json | ConvertFrom-Json
+        $mti = $result.mti_score
+        $threshold = 70
+        
+        Write-Host "MTI Score: $mti (threshold: $threshold)"
+        
+        if ($mti -lt $threshold) {
+          Write-Error "❌ MTI=$mti below threshold $threshold - merge BLOCKED"
+          exit 1
+        }
+        
+        Write-Host "✅ MTI=$mti meets threshold $threshold - merge ALLOWED"
