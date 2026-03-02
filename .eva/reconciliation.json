@@ -1,27 +1,17 @@
 {
   "meta": {
     "schema": "eva.reconciliation.v2",
-    "generated_at": "2026-03-02T18:17:48.180Z",
+    "generated_at": "2026-03-02T19:05:19.964Z",
     "repo": "C:\\AICOE\\eva-foundry\\37-data-model",
     "discovery_path": "C:\\AICOE\\eva-foundry\\37-data-model\\.eva\\discovery.json"
   },
   "coverage": {
-    "stories_total": 196,
-    "stories_with_artifacts": 129,
-    "stories_with_evidence": 113,
-    "consistency_score": 1
+    "stories_total": 52,
+    "stories_with_artifacts": 0,
+    "stories_with_evidence": 0,
+    "consistency_score": 0
   },
   "features": [
-    {
-      "id": "F37-10",
-      "title": "Sprint 9 -- Data Model Plus (Observability Foundation)",
-      "story_count": 18,
-      "stories_with_artifacts": 3,
-      "stories_with_evidence": 0,
-      "consistency_score": 0,
-      "mti": 8,
-      "gap_count": 15
-    },
     {
       "id": "F37-FK-SPRINT1",
       "title": "Sprint 1 -- Phase 1A Store Interface + Schema (80h, 8 stories, 13 FP)",
@@ -141,184 +131,9 @@
       "consistency_score": 0,
       "mti": 0,
       "gap_count": 2
-    },
-    {
-      "id": "F37-01",
-      "title": "Guiding Principle + Foundation Setup",
-      "story_count": 6,
-      "stories_with_artifacts": 6,
-      "stories_with_evidence": 6,
-      "consistency_score": 0,
-      "mti": 70,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-03",
-      "title": "Sprint 1 -- Foundation Layers (L0-L2)",
-      "story_count": 6,
-      "stories_with_artifacts": 6,
-      "stories_with_evidence": 6,
-      "consistency_score": 1,
-      "mti": 100,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-04",
-      "title": "Sprint 2 -- Relational Layers (L3-L9)",
-      "story_count": 6,
-      "stories_with_artifacts": 6,
-      "stories_with_evidence": 6,
-      "consistency_score": 1,
-      "mti": 100,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-05",
-      "title": "Sprint 3 -- Frontend Layers (L10-L14)",
-      "story_count": 6,
-      "stories_with_artifacts": 6,
-      "stories_with_evidence": 6,
-      "consistency_score": 1,
-      "mti": 100,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-06",
-      "title": "Sprint 4 -- Backend Layers (L15-L19)",
-      "story_count": 6,
-      "stories_with_artifacts": 6,
-      "stories_with_evidence": 6,
-      "consistency_score": 1,
-      "mti": 100,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-07",
-      "title": "Sprint 5 -- Meta Layers (L20-L26)",
-      "story_count": 6,
-      "stories_with_artifacts": 6,
-      "stories_with_evidence": 6,
-      "consistency_score": 1,
-      "mti": 100,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-08",
-      "title": "Sprint 6/7/8 -- Growth Guidance",
-      "story_count": 21,
-      "stories_with_artifacts": 21,
-      "stories_with_evidence": 21,
-      "consistency_score": 1,
-      "mti": 100,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-API",
-      "title": "Core API Endpoints",
-      "story_count": 65,
-      "stories_with_artifacts": 65,
-      "stories_with_evidence": 56,
-      "consistency_score": 0,
-      "mti": 67,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-DPDCA",
-      "title": "DPDCA Scripts + Automation",
-      "story_count": 2,
-      "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
-      "consistency_score": 0,
-      "mti": 50,
-      "gap_count": 0
-    },
-    {
-      "id": "F37-TRACE",
-      "title": "LM Tracing Utils",
-      "story_count": 2,
-      "stories_with_artifacts": 2,
-      "stories_with_evidence": 0,
-      "consistency_score": 0,
-      "mti": 50,
-      "gap_count": 0
     }
   ],
   "gaps": [
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-001",
-      "title": "Stamp transaction_function_type + story_ids on endpoints"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-002",
-      "title": "Stamp data_function_type on containers"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-003",
-      "title": "Seed sprints.json -- Sprint-Backlog + Sprint 1-7"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-004",
-      "title": "DM-MAINT-WI-2 -- Same-PR enforcement check"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-005",
-      "title": "DM-MAINT-WI-3 -- Scheduled drift detection"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-001",
-      "title": "Stamp transaction_function_type + story_ids on endpoints"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-002",
-      "title": "Stamp data_function_type on containers"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-003",
-      "title": "Seed sprints.json -- Sprint-Backlog + Sprint 1-7"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-004",
-      "title": "DM-MAINT-WI-2 -- Same-PR enforcement check"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-005",
-      "title": "DM-MAINT-WI-3 -- Scheduled drift detection"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-001",
-      "title": "Stamp transaction_function_type + story_ids on endpoints"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-002",
-      "title": "Stamp data_function_type on containers"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-003",
-      "title": "Seed sprints.json -- Sprint-Backlog + Sprint 1-7"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-004",
-      "title": "DM-MAINT-WI-2 -- Same-PR enforcement check"
-    },
-    {
-      "type": "missing_implementation",
-      "story_id": "F37-10-005",
-      "title": "DM-MAINT-WI-3 -- Scheduled drift detection"
-    },
     {
       "type": "missing_implementation",
       "story_id": "F37-FK-001",
@@ -581,7 +396,247 @@
     },
     {
       "type": "orphan_story_tag",
+      "story_id": "F37-01-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-01-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-01-003",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-API-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-API-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-API-003",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-AUDIT-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-AUDITREPO-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-BACKFILL-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-CACHE-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-COMMIT-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-EDGETYPES-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-EXPORT-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-FILTER-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-HEALTH-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-HEALTH-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-HEALTH-003",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-MODEL-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-MODEL-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-OBJ_IDPATH-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-OBJ_IDPATH-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-OBJ_IDPATH-003",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-READY-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-SEED-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-VALIDATE-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-003",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-004",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-005",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-006",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-08-007",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-03-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-03-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-04-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-04-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-05-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-05-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-06-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-06-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-07-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-07-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-DPDCA-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-TRACE-002",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
       "story_id": "F37-NN-NNN",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-FP-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-GRAPH-001",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-10-006",
+      "title": null
+    },
+    {
+      "type": "orphan_story_tag",
+      "story_id": "F37-IMPACT-001",
       "title": null
     }
   ]

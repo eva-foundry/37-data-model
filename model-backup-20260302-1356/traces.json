@@ -1,0 +1,4 @@
+{
+  "$schema": "../schema/trace.schema.json",
+  "traces": []
+}

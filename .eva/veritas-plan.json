@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
   "project": "37-data-model",
-  "generated": "2026-03-02T18:18:36.961757+00:00",
+  "generated": "2026-03-02T18:41:35.403050+00:00",
   "features": [
     {
       "id": "F37-FK-SPRINT0",
@@ -16,6 +16,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT0",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -28,6 +30,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT0",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -40,6 +44,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT0",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -59,6 +65,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -71,6 +79,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -83,6 +93,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -95,6 +107,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -107,6 +121,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -119,6 +135,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -131,6 +149,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -143,6 +163,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT1",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -162,6 +184,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT2",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -174,6 +198,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT2",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -186,6 +212,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT2",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -198,6 +226,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT2",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -210,6 +240,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT2",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -229,6 +261,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT3",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -241,6 +275,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT3",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -253,6 +289,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT3",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -265,6 +303,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT3",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -284,6 +324,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT4",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -296,6 +338,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT4",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -308,6 +352,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT4",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -320,6 +366,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT4",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -339,6 +387,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT5",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -351,6 +401,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT5",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -363,6 +415,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT5",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -382,6 +436,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT6",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -394,6 +450,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT6",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -406,6 +464,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT6",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -425,6 +485,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT7",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -437,6 +499,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT7",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -456,6 +520,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT8",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -468,6 +534,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT8",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -480,6 +548,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT8",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -492,6 +562,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT8",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -511,6 +583,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT9",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -523,6 +597,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT9",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -535,6 +611,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT9",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -547,6 +625,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT9",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -559,6 +639,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT9",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -578,6 +660,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT10",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -590,6 +674,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT10",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -602,6 +688,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT10",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -614,6 +702,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT10",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -626,6 +716,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT10",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -645,6 +737,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT11",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -657,6 +751,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT11",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -669,6 +765,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT11",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -681,6 +779,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT11",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -693,6 +793,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT11",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
@@ -705,6 +807,8 @@
           "done": false,
           "epic_code": "FK",
           "feature_id": "F37-FK-SPRINT11",
+          "sprint": null,
+          "assignee": null,
           "blockers": [],
           "size": "M",
           "fp": 3
