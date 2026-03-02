@@ -1219,6 +1219,8 @@ Where:
 
 #### Enhancement 2: Enrich seed-from-plan.py Metadata Extraction
 
+**Status**: ✅ COMPLETE (March 2, 2026 1:50 PM ET — [Commit c2eccd3](https://github.com/eva-foundry/37-data-model/commit/c2eccd3))
+
 **Problem**: `seed-from-plan.py` extracts minimal metadata (id, title, status only). PLAN.md often contains sprint/epic context in section headers that is ignored.
 
 **Solution**: Enhance parser to infer metadata from PLAN.md structure:
@@ -1255,12 +1257,51 @@ Where:
 
 #### Enhancement 3: Veritas Quality Gates for Field Population
 
+**Status**: ✅ COMPLETE (March 2, 2026 2:10 PM ET — [Commit 6ac756c](https://github.com/eva-foundry/48-eva-veritas/commit/6ac756c))
+
 **Problem**: Stories can be marked `status=done` without sprint/assignee/ado_id populated, breaking workflow integrity.
 
 **Solution**: Add Veritas audit rules to enforce field population before done status:
 
+**Implementation** (48-eva-veritas [6ac756c](https://github.com/eva-foundry/48-eva-veritas/commit/6ac756c)):
+1. **New Module**: `src/lib/wbs-quality-gates.js` (240 lines)
+   - `checkWbsQualityGates()`: Validates sprint, assignee, ado_id for done stories
+   - `computeFieldPopulationScore()`: Calculates avg population rate (sprint+assignee+ado_id)/3 for MTI
+   - Queries data model API for live WBS data (no local file dependency)
+   - Returns violations array with story IDs and missing fields
+
+2. **Audit Integration**: `src/audit.js`
+   - Runs quality gate check after reconcile, before computeTrust
+   - Logs violations (first 10 shown, "+ N more" if > 10)
+   - Writes `quality_gates` object to trust.json for report inclusion
+   - Non-fatal: continues audit even if quality gates fail
+   - Skippable: `--skip-quality-gates` flag to disable check
+
+3. **MTI Formula Upgrade**: `src/lib/trust.js` (4-component → 5-component)
+   - Added `fieldPopulationScore` as 5th component (10% weight)
+   - Formula progression:
+     * 5-component: coverage 35%, evidence 20%, consistency 25%, complexity 10%, field_population 10%
+     * 4-component-field-population: coverage 40%, evidence 20%, consistency 30%, field_population 10%
+     * 4-component-complexity: coverage 40%, evidence 20%, consistency 25%, complexity 15%
+     * 3-component-fallback: coverage 50%, evidence 20%, consistency 30%
+
+4. **Trust Computation**: `src/compute-trust.js`
+   - Fetches field population score from data model API before computing MTI
+   - Passes `fieldPopulationScore` as 3rd parameter to `computeTrustScore()`
+   - Logs: "[INFO] Field population score: 87% (sprint, assignee, ado_id)"
+
+**Test Result** (37-data-model):
+```powershell
+node src/cli.js audit --repo C:\AICOE\eva-foundry\37-data-model
+# [PASS] WBS quality gates: all 0 done stories have required fields
+# [INFO] Field population score: 0% (sprint, assignee, ado_id)
+# MTI Score: 74 (PASS, threshold 70) - formula=3-component-fallback
+```
+
+**Conceptual example of quality gate logic:**
+
 ```javascript
-// In 48-eva-veritas/src/rules/wbs-quality-gates.js:
+// Simplified logic (actual implementation in src/lib/wbs-quality-gates.js):
 
 export const wbsQualityGates = {
   "wbs-field-population": {
