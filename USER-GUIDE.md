@@ -1181,6 +1181,148 @@ Where:
 
 4. **Re-run Veritas audit**: MTI should increase. Repeat until >= 70.
 
+### Veritas-Model-ADO Workflow Enhancements
+
+**Current State**: Data quality analysis (March 2, 2026) revealed critical gaps in WBS field population:
+- 92% of stories missing sprint assignments
+- 51% missing ADO work item sync (ado_id)
+- 0% ownership tracking (assignee field)
+- 0% epic hierarchy (epic field)
+
+**Target State**: Automated Veritas-Model-ADO integration workflow that enforces data quality gates before allowing story completion.
+
+#### Enhancement 1: Automated ADO Bidirectional Sync
+
+**Problem**: Manual ADO sync causes drift between data model WBS layer and ADO work items.
+
+**Solution**: Automate bidirectional sync as part of sprint planning workflow:
+
+```powershell
+# Scheduled sync (runs every 4 hours via GitHub Actions or Azure Function):
+# C:\AICOE\eva-foundry\38-ado-poc\scripts\ado-bidirectional-sync.ps1
+
+# Pull from ADO → Update WBS layer:
+# - Query ADO for all work items in active sprints
+# - For each work item with matching story ID in title/description:
+#   - PUT to /model/wbs/{story-id} with ado_id, sprint, assignee, status from ADO
+# - Track sync operations in sync_log for audit
+
+# Push from WBS layer → Create/Update ADO:
+# - Query /model/wbs/ for stories with sprint != null AND ado_id == null
+# - Create ADO work items via REST API
+# - Capture work item IDs and PUT back to WBS layer
+```
+
+**Integration point**: Add to `38-ado-poc` control plane as automated workflow (CP Workflow: ado-sync).
+
+**Veritas gate**: Before marking story `status=done`, verify `ado_id` is populated. If missing, block completion with error: "Story cannot be marked done without ADO work item linkage."
+
+#### Enhancement 2: Enrich seed-from-plan.py Metadata Extraction
+
+**Problem**: `seed-from-plan.py` extracts minimal metadata (id, title, status only). PLAN.md often contains sprint/epic context in section headers that is ignored.
+
+**Solution**: Enhance parser to infer metadata from PLAN.md structure:
+
+```python
+# Enhancement in scripts/seed-from-plan.py:
+# 1. Detect sprint headers (## Sprint 11, ## Phase 3 Sprint 11-12)
+#    → Set story.sprint = "Sprint-11" for all stories until next sprint header
+# 2. Detect epic headers (## Epic 15: User Management)
+#    → Set story.epic = "PROJECT-Epic-15" for all features/stories under that epic
+# 3. Parse assignee from task descriptions (- [ ] Implement X (@agent:github-copilot))
+#    → Set story.assignee = "agent:github-copilot"
+# 4. Parse blockers from dependency notes (BLOCKED: waiting for Story X)
+#    → Set story.blockers = ["Story-X"]
+```
+
+**Example PLAN.md with metadata:**
+```markdown
+## Phase 3: Backend Foundation
+
+### Epic 15: User Management (@sprint:ACA-S11)
+
+#### [ACA-15-001] User authentication service
+- Assignee: @agent:github-copilot
+- Sprint: ACA-S11
+- Blockers: ACA-14-003 (database schema)
+
+...
+```
+
+**Result**: Stories seeded with pre-populated sprint, epic, assignee, blockers fields → reduces manual backfill by 80%+.
+
+**Integration point**: Update `seed-from-plan.py` with new parser logic; add `--extract-metadata` flag (default: enabled).
+
+#### Enhancement 3: Veritas Quality Gates for Field Population
+
+**Problem**: Stories can be marked `status=done` without sprint/assignee/ado_id populated, breaking workflow integrity.
+
+**Solution**: Add Veritas audit rules to enforce field population before done status:
+
+```javascript
+// In 48-eva-veritas/src/rules/wbs-quality-gates.js:
+
+export const wbsQualityGates = {
+  "wbs-field-population": {
+    severity: "error",
+    check: (story) => {
+      if (story.status !== "done") return { pass: true };
+      
+      const errors = [];
+      if (!story.sprint) errors.push("sprint field required for done stories");
+      if (!story.assignee) errors.push("assignee field required for done stories");
+      if (!story.ado_id) errors.push("ado_id field required for done stories (ADO linkage)");
+      
+      return errors.length === 0 
+        ? { pass: true }
+        : { pass: false, message: `Story ${story.id} cannot be marked done: ${errors.join(", ")}` };
+    }
+  }
+};
+```
+
+**Veritas audit output with gate violations:**
+```bash
+node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-foundry\51-ACA
+
+# [FAIL] WBS Quality Gate Violations (3 stories):
+# - ACA-14-002: status=done but sprint=null, assignee=null, ado_id=null
+# - ACA-14-007: status=done but assignee=null
+# - ACA-14-009: status=done but ado_id=null (no ADO linkage)
+#
+# MTI Score: 62 (FAIL, threshold 70) — blocked by quality gate violations
+# Actions: ["fix-wbs-fields", "blocked"]
+```
+
+**CI/CD Integration**: Add to GitHub Actions merge gate in `.github/workflows/veritas-gate.yml`:
+
+```yaml
+- name: Veritas Quality Gate
+  run: |
+    node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo ${{ github.workspace }}
+    if [ $? -ne 0 ]; then
+      echo "::error::Veritas quality gates failed. Fix WBS field population before merge."
+      exit 1
+    fi
+```
+
+**Result**: PRs cannot merge if stories are marked done without required metadata → enforces workflow discipline.
+
+**Integration point**: Add quality gate rules to `48-eva-veritas/src/rules/`; update MTI calculation to include `fieldPopulationScore` component.
+
+#### Recommended Implementation Order
+
+1. **Week 1**: Enhance `seed-from-plan.py` → immediate improvement for new projects (Enhancement 2)
+2. **Week 2**: Add Veritas quality gates → enforce field population going forward (Enhancement 3)
+3. **Week 3**: Build ADO bidirectional sync → backfill existing stories + automate future sync (Enhancement 1)
+
+**Success Metrics**:
+- WBS `sprint` field population: target 95%+ (current: 8%)
+- WBS `ado_id` field population: target 95%+ (current: 49%)
+- WBS `assignee` field population: target 90%+ (current: 0%)
+- WBS `epic` field population: target 80%+ (current: 0%)
+- MTI score consistently >= 70 across all projects
+
 ### Agents Layer Registry
 
 `GET /model/agents/` now includes **13 registered agents** (as of March 2, 2026):
