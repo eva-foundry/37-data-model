@@ -1193,9 +1193,61 @@ Where:
 
 #### Enhancement 1: Automated ADO Bidirectional Sync
 
+**Status**: ✅ COMPLETE (March 2, 2026 2:15 PM ET — [Script](https://github.com/eva-foundry/38-ado-poc/blob/main/scripts/ado-bidirectional-sync.ps1) + [Workflow](https://github.com/eva-foundry/38-ado-poc/blob/main/.github/workflows/ado-sync.yml))
+
 **Problem**: Manual ADO sync causes drift between data model WBS layer and ADO work items.
 
 **Solution**: Automate bidirectional sync as part of sprint planning workflow:
+
+**Implementation** (38-ado-poc [scripts/ado-bidirectional-sync.ps1](https://github.com/eva-foundry/38-ado-poc/blob/main/scripts/ado-bidirectional-sync.ps1)):
+
+1. **Pull Mode (ADO → WBS)**: Update WBS layer with ADO metadata
+   - Query ADO work items with `Custom.StoryId` field via WIQL
+   - Extract: `ado_id`, `sprint` (from IterationPath), `assignee` (from AssignedTo), `status` (from State)
+   - Map ADO State to WBS status: New→planned, Approved/Committed→in-progress, Done→done
+   - PUT to `/model/wbs/{story-id}` for each matched work item
+   - Idempotency: Skips stories already in sync (compares field values before PUT)
+
+2. **Push Mode (WBS → ADO)**: Create ADO work items for stories with sprint but no ado_id
+   - Query `/model/wbs/` for stories where `sprint != null AND ado_id == null`
+   - Check if work item already exists (WIQL query by title) to avoid duplicates
+   - Create ADO Product Backlog Item with:
+     - Title: `{story-id} - {title}`
+     - Custom.StoryId: `{story-id}` (for Pull sync matching)
+     - IterationPath: Mapped from sprint (e.g., "Sprint-11" → "eva-poc\Sprint 11")
+     - Description: Story description
+   - Backfill `ado_id` in WBS after creation
+
+3. **Scheduling**: GitHub Actions workflow (`.github/workflows/ado-sync.yml`)
+   - Cron: Every 4 hours (`0 */4 * * *`)
+   - Manual trigger: `workflow_dispatch` with mode/project/dry-run parameters
+   - Runs both Pull and Push in sequence (Mode=Both)
+
+4. **Error Handling**:
+   - Graceful failures: Continues if Custom.StoryId field doesn't exist in ADO
+   - Array safety: Ensures all collections wrapped with `@()` for .Count property
+   - Retry logic: HTTP 429/503 retried once with 2s delay
+   - Logs: Transcript saved to `scripts/logs/{timestamp}-ado-sync-{mode}.log`
+
+**Usage Examples**:
+
+```powershell
+# Dry-run both modes on all projects
+.\scripts\ado-bidirectional-sync.ps1 -Mode Both -DryRun
+
+# Pull only for specific project
+.\scripts\ado-bidirectional-sync.ps1 -Mode Pull -Project "37-data-model"
+
+# Push with verbose output
+.\scripts\ado-bidirectional-sync.ps1 -Mode Push -Verbose
+
+# Via GitHub Actions (manual trigger)
+# Go to Actions → ADO Bidirectional Sync → Run workflow
+# Select mode: Both, Pull, or Push
+# Optional: Filter by project
+```
+
+**Conceptual flow (actual implementation in script)**:
 
 ```powershell
 # Scheduled sync (runs every 4 hours via GitHub Actions or Azure Function):
@@ -1213,7 +1265,7 @@ Where:
 # - Capture work item IDs and PUT back to WBS layer
 ```
 
-**Integration point**: Add to `38-ado-poc` control plane as automated workflow (CP Workflow: ado-sync).
+**Integration point**: Added to `38-ado-poc` control plane as automated workflow (CP Workflow: ado-sync).
 
 **Veritas gate**: Before marking story `status=done`, verify `ado_id` is populated. If missing, block completion with error: "Story cannot be marked done without ADO work item linkage."
 
