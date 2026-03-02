@@ -758,6 +758,55 @@ Violations are reported by `scripts/validate-model.ps1`.
 
 ---
 
+## Infrastructure Layer Synchronization
+
+The infrastructure layer (`/model/infrastructure/`) represents all Azure resources available to EVA projects.
+
+### Sync Script: sync-marco-inventory-to-model.py
+
+**Purpose**: One-way sync from MARCO-INVENTORY markdown file to data model infrastructure layer.
+
+**Usage**:
+```powershell
+# Dry-run (no writes)
+python scripts/sync-marco-inventory-to-model.py --dry-run
+
+# Live execution
+python scripts/sync-marco-inventory-to-model.py
+
+# Custom model endpoint
+$env:EVA_MODEL_URL = "http://localhost:8010"
+python scripts/sync-marco-inventory-to-model.py
+```
+
+**Behavior**:
+- Reads: `C:\AICOE\eva-foundry\system-analysis\inventory\.eva-cache\current\MARCO-INVENTORY-*.md`
+- Transforms: Azure resource metadata -> infrastructure layer schema
+- Maps: Resource type -> `infrastructure.type` (openai_acct, cosmos_db, blob_storage, etc.)
+- Assigns: Service bindings (which service uses this resource)
+- Writes: 23 marco* resources via PUT /model/infrastructure/{id}
+- Returns: Success/fail count summary
+
+**Schema mapping**:
+- Name -> id
+- Type (Microsoft.X/Y) -> type (standardized classes)
+- Location, ResourceGroup -> location, resource_group
+- Purpose (from copilot-instructions) -> notes
+- Inferred service -> service
+- Status always: "provisioned"
+- provision_order: 100 (user-provided, takes precedence over auto-provisioned)
+
+**When to run**:
+- After MARCO-INVENTORY is updated (e.g., new Azure resource created)
+- As part of CI/CD (pre-deploy validation)
+- Manual: `python scripts/sync-marco-inventory-to-model.py`
+
+**Related**:
+- Commit: 3a507ae (feat: add infrastructure layer sync script)
+- Workspace copilot-instructions: Section "Marco* Azure Resources" (24 resources)
+
+---
+
 ## Layer Status Reference
 
 Check `STATUS.md` for current layer completeness before any query.
