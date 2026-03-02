@@ -1,8 +1,107 @@
-# EVA Data Model — General Availability Announcement
+# Evidence Layer — Generally Available (GA)
 
-> **HISTORICAL DOCUMENT.** Issued 2026-02-20 when the original 11 application layers
-> reached GA. The model now has 27/27 layers and 27 screens. See [STATUS.md](STATUS.md)
-> for current authoritative state.
+**Date:** March 1, 2026 7:39 PM ET  
+**Service:** Evidence Layer (L31 — Observability Plane)  
+**Endpoints:** ACA 24x7 at `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/evidence/`
+
+---
+
+## Quick Start
+
+### Record Evidence (Python)
+
+```python
+from evidence_generator import EvidenceBuilder
+
+evidence = (
+    EvidenceBuilder(sprint_id="51-ACA-sprint-1", story_id="51-ACA-001", phase="D3")
+    .add_validation(test_result="PASS", lint_result="PASS", coverage_percent=92)
+    .add_metrics(duration_ms=3600000, files_changed=14, lines_added=582)
+    .add_artifact(path="src/extractor.py", action="modified")
+    .build()
+)
+
+# Push to data model
+import requests
+requests.put(
+    f"https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/evidence/{evidence['id']}",
+    json=evidence,
+    headers={"X-Actor": "agent:51-agentic-engine"}
+)
+```
+
+### Record Evidence (PowerShell)
+
+```powershell
+$evidence = @{
+    id = "51-ACA-sprint-1-do-51-ACA-001"
+    sprint_id = "51-ACA-sprint-1"
+    story_id = "51-ACA-001"
+    phase = "D3"
+    validation = @{test_result = "PASS"; lint_result = "PASS"; coverage_percent = 92}
+    metrics = @{duration_ms = 3600000; files_changed = 14; lines_added = 582}
+    artifacts = @(@{path = "src/extractor.py"; action = "modified"})
+} | ConvertTo-Json -Depth 10
+
+Invoke-RestMethod `
+    -Uri "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/evidence/51-ACA-sprint-1-do-51-ACA-001" `
+    -Method PUT `
+    -ContentType "application/json" `
+    -Body $evidence
+```
+
+### Query Evidence
+
+```powershell
+# All evidence for a sprint
+Invoke-RestMethod `
+    "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/evidence/?sprint_id=51-ACA-sprint-1" | 
+    Select-Object id, phase, @{N="test";E={$_.validation.test_result}}
+
+# Query tool (CLI)
+pwsh -File scripts/evidence_query.py --sprint 51-ACA-sprint-1 --format table
+```
+
+---
+
+## Merge Gates
+
+**CI/CD automatically blocks merge if:**
+- `test_result = "FAIL"`
+- `lint_result = "FAIL"`
+
+**Script:** `scripts/evidence_validate.ps1` (runs on every PR)
+
+---
+
+## Schema Fields
+
+| Field | Type | Required | Purpose |
+|-------|------|----------|---------|
+| `id` | string | YES | Unique record ID (format: `{sprint}-{phase}-{story_id}`) |
+| `sprint_id` | string | YES | Which sprint (e.g. `51-ACA-sprint-1`) |
+| `story_id` | string | YES | Which story (e.g. `51-ACA-001`) |
+| `phase` | enum | YES | DPDCA phase: `D1`, `D2`, `P`, `D3`, `A` |
+| `validation.test_result` | enum | YES | `PASS` \| `FAIL` \| `WARN` \| `SKIP` |
+| `validation.lint_result` | enum | YES | `PASS` \| `FAIL` \| `WARN` \| `SKIP` |
+| `validation.coverage_percent` | float | NO | Percent 0-100 |
+| `metrics.duration_ms` | int | NO | Milliseconds |
+| `metrics.files_changed` | int | NO | File count |
+| `metrics.lines_added` | int | NO | Lines added |
+| `metrics.tokens_used` | int | NO | LM tokens |
+| `metrics.cost_usd` | float | NO | Cost in USD |
+| `artifacts` | array | NO | `[{path, type, action}]` |
+| `commits` | array | NO | `[{sha, message, timestamp}]` |
+
+---
+
+## Full Documentation
+
+- **Usage Guide:** [USER-GUIDE.md](USER-GUIDE.md#evidence-layer--proof-of-completion)
+- **Architecture:** [ARCHITECTURE.md](ARCHITECTURE.md#observability-layers-l11)
+- **Library:** `.github/scripts/evidence_generator.py`
+- **Query Tool:** `scripts/evidence_query.py`
+- **Validator:** `scripts/evidence_validate.ps1`
 
 **Date:** February 20, 2026 — 5:01 AM ET  
 **From:** AI Centre of Excellence  

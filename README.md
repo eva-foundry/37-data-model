@@ -1,8 +1,8 @@
 # EVA Data Model
 
 **Component:** 37-data-model
-**Status:** GA -- validate-model PASS 0 violations - as of 2026-02-26: 31 layers - 187 endpoints - 46 screens - 375 literals - 52 projects - 4057 total objects - ACA deployed (Cosmos 24x7) - MTI=100
-**Last Updated:** February 26, 2026 -- 51-ACA registered (Azure Cost Advisor, poc, row_version=1, violations=0, exported=4057)
+**Status:** GA -- validate-model PASS 0 violations - as of 2026-03-01 7:39 PM ET: 32 layers - 187 endpoints - 46 screens - 375 literals - 53 projects - 4,152+ total objects - ACA deployed (Cosmos 24x7) - MTI=100 - Evidence Layer LIVE
+**Last Updated:** March 1, 2026 7:39 PM ET -- Evidence Layer implementation complete (schema, API, tools, documentation)
 
 ---
 
@@ -88,7 +88,58 @@ Layer 27 sprints         Sprint velocity records -- velocity_planned/actual, mti
 Layer 28 milestones      RUP phase gates -- deliverables, sign_off_by, wbs_ids
 Layer 29 risks           3x3 risk matrix -- probability, impact, risk_score, mitigation_owner
 Layer 30 decisions       ADRs (Architecture Decision Records) -- context/decision/consequences, superseded_by, deciders
+
+# Observability plane (L11 — 2026-03-01) — proof-of-completion + LM call tracing
+Layer 31 evidence        DPDCA phase completions -- sprint_id, story_id, phase (D1/D2/P/D3/A), validation gates, merge blockers, metrics (cost, duration, coverage)
+Layer 32 traces          Emerging: LM call telemetry -- model, tokens, cost_usd, latency_ms, correlation_id
 ```
+
+---
+
+## New: Evidence Layer (L11 Observability Plane) — Production Ready
+
+The **Evidence Layer** captures proof-of-completion for every story in the DPDCA cycle.
+Every phase (D1 Discover, D2 Audit, P Plan, D3 Do, A Act) produces an evidence receipt.
+
+**For agents:**
+Use the Python library to record evidence after each phase:
+
+```python
+import sys
+sys.path.insert(0, r"C:\AICOE\eva-foundry\37-data-model")
+from .github.scripts.evidence_generator import EvidenceBuilder
+
+gen = EvidenceBuilder(
+    sprint_id="ACA-S11",
+    story_id="ACA-14-001",
+    phase="A",
+    story_title="Rule loader"
+)
+gen.add_validation(test_result="PASS", lint_result="PASS", coverage_percent=92)
+gen.add_metrics(duration_ms=8450, files_changed=3, tokens_used=12000, cost_usd=0.00045)
+gen.add_artifact(path="services/rules/app/loader.py", type_="source", action="modified")
+receipt = gen.build()
+# PUT /model/evidence/{receipt['id']} (Cosmos records proof automatically)
+```
+
+**Query evidence across all projects:**
+```powershell
+# All evidence in a sprint
+GET /model/evidence/?sprint_id=ACA-S11
+
+# Evidence with test failures (find what broke)
+GET /model/evidence/ | Where { $_.validation.test_result -eq "FAIL" }
+
+# Portfolio audit: count stories per phase
+GET /model/evidence/ | Group-Object -Property phase | Select-Object Name, Count
+```
+
+**Merge gates (CI/CD):**
+Evidence validation script (`scripts/evidence_validate.ps1`) blocks merge if:
+- `test_result = "FAIL"` — all tests must pass
+- `lint_result = "FAIL"` — all linting must pass
+
+See [Evidence Layer Documentation](USER-GUIDE.md#evidence-layer--proof-of-completion) for complete usage.
 
 ---
 

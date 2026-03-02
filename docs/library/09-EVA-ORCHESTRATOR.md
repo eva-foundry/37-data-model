@@ -2,8 +2,8 @@
  09-EVA-ORCHESTRATOR.md
  EVA Data Model + Veritas -- Project Intelligence Narrative
  Location: 37-data-model/docs/library/
- Version:  1.0.0
- Date:     2026-02-26
+ Version:  1.1.0
+ Date:     2026-03-01 7:39 PM ET
  EO-ID:    EO-09-001
 ================================================================================
 
@@ -11,6 +11,9 @@ This document is the authoritative narrative of how 37-data-model and
 48-eva-veritas evolved from compensatory infrastructure into a live project
 intelligence layer -- and how that layer unexpectedly became a dependency
 orchestrator for blocked AI sessions.
+
+UPDATE 2026-03-01: Evidence Layer (L31) now LIVE -- the intelligence substrate
+extends from query-only to write-enabled proof-of-completion across all projects.
 
 ASCII only. No emoji. No Mermaid. Printable.
 
@@ -218,6 +221,64 @@ Two architectural moves sealed the model as a MEASUREMENT PLATFORM.
    WBS records:       3234 (1 program, 4 streams, 51 projects, 751 features,
                             2427 stories -- ADO IDs linked)
    Tests:            41/42 PASS (T36 pre-existing race condition only)
+
+
+ March 1, 2026 Update: Evidence Layer Goes Live (L31)
+ -----------------------------------------------------
+
+The intelligence substrate crossed a new threshold: from read-only catalog to
+write-enabled proof-of-completion registry.
+
+Evidence Layer (L31) + Traces (L32-ready) now registered as L11 Observability
+Plane. This is the next evolution of the orchestrator pattern:
+
+  BEFORE: Agents query the model to avoid grepping source files.
+  AFTER:  Agents query the model AND write back proof-of-completion for every
+          DPDCA phase.
+
+What the Evidence Layer adds:
+
+  - Universal DPDCA schema (D1, D2, P, D3, A phases) works across ALL projects.
+  - Every sprint story can now record:
+      * test_result, lint_result, coverage_percent (merge-blocking gates)
+      * duration_ms, files_changed, lines_added, tokens_used, cost_usd
+      * artifacts created/modified/deleted (with action type)
+      * commits (SHA + message + timestamp)
+      * correlation_id (ties full sprint operations together)
+
+  - CI/CD merge gates enforced:
+      test_result=FAIL or lint_result=FAIL -> PR blocked (exit 1)
+
+  - Portfolio audits enabled:
+      "Which sprints have test failures?"
+      "What is average code coverage across all projects?"
+      "Total AI cost across all sprints?"
+
+  - Python library (evidence_generator.py) provides FluentAPI for agents:
+      EvidenceBuilder(sprint_id, story_id, phase).add_validation(...).build()
+
+  - Validation script (evidence_validate.ps1) runs in all CI/CD pipelines.
+
+  - Query tool (evidence_query.py) enables portfolio audits and drift analysis.
+
+Current state (2026-03-01 7:39 PM ET):
+   Layers:              32  (was 31; added L31 Evidence + L32 Traces)
+   Total objects:     4152+ (was 4055)
+   Evidence records:     0  (schema + model ready, agents begin recording)
+   MTI:                100  (validation PASS 0 violations)
+
+The model moves from static catalog to active runtime proof layer.
+
+Key insight: When evidence has a canonical schema and API, agents can answer
+cross-project questions that were previously impossible:
+  - "Which stories completed the full DPDCA cycle?"
+  - "Which sprints have the highest defect escape rate?"
+  - "What is the ROI (story points per USD) across all AI-assisted work?"
+
+The orchestrator pattern now closes the loop: dependency resolution (query) +
+proof-of-completion (write) + portfolio audits (aggregate).
+
+Full documentation: docs/library/11-EVIDENCE-LAYER.md
 
 
 --------------------------------------------------------------------------------

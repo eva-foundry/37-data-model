@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-02-28 -- 10: FK Enhancement (Opus 4.6 reviewed); 31 layers; 4061 objects
+ Updated: 2026-03-01 7:39 PM ET -- 11: Evidence Layer LIVE; 32 layers; 4,152+ objects
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -98,6 +98,14 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 Phase 1A-5 (May 2026 - Feb 2027): full FK schema,
                                   scenarios (saga merge), IaC generation,
                                   pipeline generation, cascade rules, migration.
+
+  11-EVIDENCE-LAYER.md          EVIDENCE LAYER (L31 -- Observability Plane).
+                                Universal DPDCA proof-of-completion schema.
+                                Python library (EvidenceBuilder), CI/CD merge gates,
+                                query tool, portfolio audits. Correlation IDs tie
+                                evidence + traces + WBS together. Status: LIVE.
+                                Agents record evidence after each DPDCA phase.
+                                Merge blocks: test_result=FAIL, lint_result=FAIL.
                                 Agent quick reference, API route catalog.
                                 READ THIS for the FK enhancement roadmap.
 

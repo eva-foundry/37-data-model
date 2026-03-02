@@ -1,7 +1,7 @@
 ================================================================================
- EVA DATA MODEL -- 31-LAYER REFERENCE
+ EVA DATA MODEL -- 32-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-02-26 -- 31 layers; 4055 objects; 9 sprints; DPDCA+WBS+FP live
+ Updated: 2026-03-01 7:39 PM ET -- 32 layers; 4,152+ objects; Evidence Layer LIVE
  Source: https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
 ================================================================================
 
@@ -32,10 +32,14 @@
 --------------------------------------------------------------------------------
 
   L0-L10   Application Model     (original 11 layers, Sprint 1-5)
-  L11-L17  Control Plane         (automation operating model, Phase 4)
-  L18-L20  Frontend Structural   (components / hooks / ts_types, Phase 5)
-  L21-L24  Catalog Additions     (MCP servers / prompts / security / runbooks)
-  L25-L26  Project Plane         (projects + WBS, E-07/E-08 sprint)
+  L11      Observability Plane   (L31 Evidence + L32 Traces -- proof & telemetry)
+  L12-L18  Control Plane         (automation operating model, Phase 4)
+  L19-L21  Frontend Structural   (components / hooks / ts_types, Phase 5)
+  L22-L25  Catalog Additions     (MCP servers / prompts / security / runbooks)
+  L26-L27  Project Plane         (projects + WBS, E-07/E-08 sprint)
+
+  NOTE: Layer numbering shifted after L11 Observability insertion (Mar 1, 2026).
+        Old L11-L26 layers remain in same logical order but renumbered L12-L27.
 
 --------------------------------------------------------------------------------
  APPLICATION MODEL (L0-L10)
@@ -148,111 +152,187 @@
   Linked to: endpoints (api_calls), screens (route), containers
 
 --------------------------------------------------------------------------------
- CONTROL PLANE LAYERS (L11-L17)
+ CONTROL PLANE LAYERS (L12-L18)
 --------------------------------------------------------------------------------
 
-  L11 planes            3 items
+  L12 planes            3 items
   -----------------------------------------------------------------------
   EVA automation operating model planes.
   Items: plane-ado, plane-github, plane-azure
   Each plane has a DPDCA runner registered in 38-ado-poc.
 
-  L12 connections       3 items
+  L13 connections       3 items
   -----------------------------------------------------------------------
   External system connection records (design-time config).
   Items: ADO org URL, Azure subscription ID, Azure RG + location
   Backfilled 2026-02-22; used by plane agents for authentication.
 
-  L13 environments      3 items
+  L14 environments      3 items
   -----------------------------------------------------------------------
   Items: dev, staging, prod
   Each has: feature_flag defaults, APIM policies, Cosmos connection,
             allowed personas, MTI threshold overrides
 
-  L14 cp_agents         4 items
+  L15 cp_agents         4 items
   -----------------------------------------------------------------------
   Control plane automation agents (not user-facing).
   Items: ADO scrum agent, code review agent, PR merge agent, deploy agent
   Each agent has an assurance profile (from 19-ai-gov).
 
-  L15 cp_policies       3 items
+  L16 cp_policies       3 items
   -----------------------------------------------------------------------
   Items: approval policy, cost policy, compliance policy
   These feed the Decision Engine as policy references.
 
-  L16 cp_skills         7 items
+  L17 cp_skills         7 items
   -----------------------------------------------------------------------
   Orchestration skill catalog (29-foundry inputs).
   Examples: rag-retrieval, answer-generation, evidence-emit,
             redteam-run, sprint-sync, cost-attribution, log-audit
 
-  L17 cp_workflows      2 items
+  L18 cp_workflows      2 items
   -----------------------------------------------------------------------
   Items: sprint-execute (38-ado-poc driven),
          deploy-to-sandbox (17-apim + ACA)
 
 --------------------------------------------------------------------------------
- FRONTEND STRUCTURAL LAYERS (L18-L20)
+ FRONTEND STRUCTURAL LAYERS (L19-L21)
 --------------------------------------------------------------------------------
 
-  L18 components        32 items
+  L19 components        32 items
   -----------------------------------------------------------------------
   React component catalog (31-eva-faces scan, 2026-02-22).
   Examples: ChatPane, CitationCard, PersonaSelector, RAGModeToggle,
             A11yThemeProvider, I18nByScreenEditor, AuditLogViewer,
             ActAsSelector, MTIDashboard, FinOpsTile
 
-  L19 hooks             18 items
+  L20 hooks             18 items
   -----------------------------------------------------------------------
   React hook catalog.
   Examples: usePersona, useRAGMode, useEvidencePack, useA11yTheme,
             useI18nByScreen, useActAs, useFeatureFlag, useFinOps
 
-  L20 ts_types          (items pending population)
+  L21 ts_types          (items pending population)
   -----------------------------------------------------------------------
   TypeScript type definitions shared across faces.
   Planned: Actor, PersonaProfile, RAGMode, EvidenceArtifact, MTIScore,
            DecisionResult, ChatMessage, Citation
 
 --------------------------------------------------------------------------------
- CATALOG ADDITIONS (L21-L24)
+ OBSERVABILITY PLANE (L31-L32) -- L11
 --------------------------------------------------------------------------------
 
-  L21 mcp_servers       (items pending)
+  L31 evidence          0 items (schema + model ready, agents can record now)
+  -----------------------------------------------------------------------
+  Purpose: Capture proof-of-completion for every DPDCA phase across all projects.
+           Universal schema works for 51-ACA, 31-eva-faces, 33-eva-brain-v2, etc.
+
+  Status: LIVE as of 2026-03-01 7:39 PM ET
+  Schema: schema/evidence.schema.json (JSON Schema Draft-07)
+  Model:  model/evidence.json (empty objects array, ready for evidence records)
+  API:    GET /model/evidence/, PUT /model/evidence/{id}, filters by sprint/story/phase
+
+  DPDCA PHASES (record after each):
+    D1 -- Discover (problem statement, blockers documented)
+    D2 -- Discover-Audit (requirements clarified, readiness gates passed)
+    P  -- Plan (sprint manifest committed, team aligned)
+    D3 -- Do (code complete, tests pass, PR merged, evidence collected)
+    A  -- Act (results reflected in model + plan docs, loop closed)
+
+  REQUIRED FIELDS:
+    id, sprint_id, story_id, phase, created_at
+
+  VALIDATION GATES (merge-blocking in CI/CD):
+    test_result = "FAIL"  --> blocks merge (exit 1 in evidence_validate.ps1)
+    lint_result = "FAIL"  --> blocks merge (exit 1 in evidence_validate.ps1)
+
+  METRICS CAPTURED:
+    duration_ms, files_changed, lines_added, lines_deleted,
+    tokens_used, cost_usd, test_count
+
+  ARTIFACTS TRACKED:
+    [{path, type (source|test|schema|config|doc), action (created|modified|deleted)}]
+
+  COMMITS LINKED:
+    [{sha, message, timestamp}]
+
+  TOOLS:
+    Python library:     .github/scripts/evidence_generator.py (EvidenceBuilder class)
+    CI/CD validator:    scripts/evidence_validate.ps1 (runs on every PR)
+    Query tool:         scripts/evidence_query.py (portfolio audits)
+
+  USAGE PATTERN:
+    from evidence_generator import EvidenceBuilder
+    evidence = (
+        EvidenceBuilder(sprint_id="51-ACA-sprint-1", story_id="51-ACA-001", phase="D3")
+        .add_validation(test_result="PASS", lint_result="PASS", coverage_percent=92)
+        .add_metrics(duration_ms=3600000, files_changed=14, lines_added=582)
+        .add_artifact(path="src/extractor.py", action="modified")
+        .build()
+    )
+    # PUT /model/evidence/{id} with evidence object
+
+  QUERY EXAMPLES:
+    GET /model/evidence/?sprint_id=51-ACA-sprint-1  --> all sprint evidence
+    GET /model/evidence/?phase=D3                    --> all completed work
+    GET /model/evidence/?story_id=51-ACA-001        --> all phases for one story
+
+  CORRELATION IDs:
+    Tie together: sprint ops, stories, evidence, traces, transactions
+    One correlation_id links full DPDCA cycle end-to-end
+
+  FULL DOCUMENTATION:
+    USER-GUIDE.md -- Evidence Layer section (comprehensive agent guide)
+    ARCHITECTURE.md -- L11 Observability Plane design
+    ANNOUNCEMENT.md -- Quick-start for agents
+
+  L32 traces            0 items (schema ready, implementation pending)
+  -----------------------------------------------------------------------
+  Purpose: LM call telemetry (tokens, cost, latency, model, prompts)
+  Status: Schema defined, API router registration pending
+  Fields: correlation_id, model, tokens_in, tokens_out, cost_usd,
+          latency_ms, prompt_hash, response_hash, timestamp
+  Integration: Links to evidence via correlation_id for full sprint tracing
+
+--------------------------------------------------------------------------------
+ CATALOG ADDITIONS (L22-L25)
+--------------------------------------------------------------------------------
+
+  L22 mcp_servers       (items pending)
   -----------------------------------------------------------------------
   MCP server catalog (29-foundry).
   Known servers: Azure AI Search MCP, Cosmos DB MCP, Blob Storage MCP,
                  Skill Discovery MCP
 
-  L22 prompts           (items pending)
+  L23 prompts           (items pending)
   -----------------------------------------------------------------------
   Versioned system prompt catalog.
   Each prompt has: id, version, model_target, policy_constraints[],
                    language, last_red_teamed
 
-  L23 security_controls (items pending)
+  L24 security_controls (items pending)
   -----------------------------------------------------------------------
   ITSG-33 / ATLAS control mapping registry.
   Used for ATO artifact generation.
 
-  L24 runbooks          (items pending)
+  L25 runbooks          (items pending)
   -----------------------------------------------------------------------
   Operational runbooks for common platform tasks.
   Examples: Cosmos re-seed, ACA redeploy, APIM policy update,
             evidence pack generation, red team run
 
 --------------------------------------------------------------------------------
- PROJECT PLANE (L25-L26)
+ PROJECT PLANE (L26-L27)
 --------------------------------------------------------------------------------
 
-  L25 projects          48 items
+  L26 projects          48 items
   -----------------------------------------------------------------------
   NOTE: All 27 numbered eva-foundation projects and their maturity.
   Key fields: id, name, maturity, owner, description,
               copilot_instructions, skills_count, wbs_count
   Maturity values: active, poc, idea, empty, retired
 
-  L26 wbs               13 items (1 program | 4 streams | 3 projects | 5 deliverables)
+  L27 wbs               13 items (1 program | 4 streams | 3 projects | 5 deliverables)
   -----------------------------------------------------------------------
   Work breakdown structure. Dual-mode PM: Agile Scrum + classical Gantt/EVM.
   Schema registered: WBSNode (in /model/schemas/WBS)

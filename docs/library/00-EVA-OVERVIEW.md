@@ -1,7 +1,7 @@
 ================================================================================
  EVA FOUNDATION -- MASTER OVERVIEW
  File: docs/library/00-EVA-OVERVIEW.md
- Updated: 2026-02-24 @ 15:30 ET -- Two-portal split ratified; face field on all 46 screens
+ Updated: 2026-03-01 7:39 PM ET -- Evidence Layer LIVE; 32 layers; 4,152+ objects
  Source: 37-data-model (single source of truth, port 8010, store=cosmos)
 --------------------------------------------------------------------------------
  DOCUMENTATION GENERATION VISION (registered 2026-02-24)
@@ -79,7 +79,8 @@ They fall into five bands:
   33-eva-brain-v2        Agentic backend. FastAPI on ACA. Chat, RAG, analysis,
                          translate, feedback. 24 skills registered in Copilot.
   37-data-model          Single source of truth API. FastAPI port 8010 on ACA.
-                         27 layers. 184 endpoints. 46 screens. Store=Cosmos.
+                         32 layers (L31 Evidence + L32 Traces = L11 Observability).
+                         184 endpoints. 46 screens. Store=Cosmos. Evidence Layer LIVE.
   40-eva-control-plane   Runtime evidence spine. Port 8020. Run records,
                          deployment audit trail, evidence packs.
 
