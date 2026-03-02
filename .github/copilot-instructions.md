@@ -102,7 +102,7 @@ Invoke-RestMethod "$base/model/agent-guide"
 # One-call state check -- all 32 layer counts + total objects
 Invoke-RestMethod "$base/model/agent-summary"
 
-# Evidence Layer check -- NEW in v3.4.0 (competitive moat: immutable proof-of-completion)
+# Evidence Layer check -- NEW in v3.4.0 (immutable audit trail for all DPDCA phases)
 Invoke-RestMethod "$base/model/evidence/" | Select-Object -First 3
 ```
 
@@ -770,7 +770,7 @@ If a layer is COMPLETE, the model is authoritative -- do not re-read source.
 - API endpoints: GET /model/evidence/, PUT /model/evidence/{id}
 - Partition key: correlation_id
 - Use case: Immutable proof-of-completion for every DPDCA phase of every story in any project
-- See: USER-GUIDE.md section 9 (Evidence Layer -- The Billion-Dollar Moat)
+- See: USER-GUIDE.md section 9 (Evidence Layer -- Immutable Audit Trail API)
 
 ---
 

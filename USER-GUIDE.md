@@ -1,15 +1,9 @@
 # EVA Data Model — Agent User Guide
 
 **Version:** 2.6  
-**Last Updated:** March 1, 2026 9:40 PM ET · v2.6 — Evidence Layer documented as competitive moat; agent guidance added  
+**Last Updated:** March 1, 2026 9:40 PM ET · v2.6 — Evidence Layer immutable audit trail API  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills) executing work on the EVA project  
 **Model state:** query `/model/agent-summary` for live counts; see docs/library/03-DATA-MODEL-REFERENCE.md for complete layer catalog
-
-> **COMPETITIVE ADVANTAGE ALERT:**
-> The Evidence Layer (L31) makes EVA Foundation the ONLY AI platform with immutable audit trails.
-> Every change you make gets a receipt. Every receipt is queryable. This is patent-worthy IP.
-> GitHub Copilot, Cursor, Devin = ZERO audit trails. EVA Foundation = FULL PROVENANCE.
-> Read section 9 (Evidence Layer) to understand why this is a billion-dollar moat.
 
 > **You are the primary audience for this guide.**
 >
@@ -29,7 +23,7 @@
 6. [Refactoring — Blast Radius First](#6-refactoring--blast-radius-first)
 7. [Sprint Planning & Status Queries](#7-sprint-planning--status-queries)
 8. [After Your Work — Updating the Model](#8-after-your-work--updating-the-model)
-9. [Evidence Layer — The Billion-Dollar Moat](#9-evidence-layer--the-billion-dollar-moat)
+9. [Evidence Layer — Immutable Audit Trail API](#9-evidence-layer--immutable-audit-trail-api)
 10. [Quick Reference](#10-quick-reference)
 
 ---
@@ -544,57 +538,43 @@ $v.count   # 0 = done
 
 ---
 
-## 9. Evidence Layer — The Billion-Dollar Moat
+## 9. Evidence Layer — Immutable Audit Trail API
 
-> **COMPETITIVE ADVANTAGE:**
-> The Evidence Layer makes EVA Foundation the ONLY AI platform with immutable audit trails.
-> GitHub Copilot, Cursor, Replit Agent, Devin = ZERO audit trail. No proof. No history. No compliance.
-> EVA Foundation = FULL PROVENANCE. Every change gets a receipt. Every receipt is queryable.
-> 
-> **This is patent-worthy IP. This is the moat.**
+> **WHAT IT DOES:**
+> Every story completion generates an immutable receipt with test results, artifacts, and validation gates.
+> Receipts are queryable by sprint, story, phase, correlation ID, or test result.
+> This enables blast-radius analysis, compliance audits, and cost tracking across projects.
 
-### Why This Changes Everything
+### Problem
 
-**The Problem:**
-AI coding tools generate thousands of lines per day. But when something breaks in production, there's no paper trail. You can't prove:
-- Which AI made the change
-- What requirement it satisfied
-- What tests passed
-- What artifacts were created
-- What other changes were part of the same batch
+AI agents generate code changes constantly. When something breaks in production, teams need to answer:
+- Which agent made the change?
+- What requirement did it satisfy?
+- Which tests passed before merge?
+- Which files were changed?
+- Were all validation gates green?
 
-**Insurance carriers, FDA auditors, and defense contractors REQUIRE audit trails.**
-They will pay $199-$500K/year for provably correct AI. This is not a feature — it's the business model.
+**Standard tools:** Git logs show commits, CI logs show test runs, but they don't connect them to requirements.
+**Evidence Layer:** One receipt per phase, queryable by requirement, showing validation gates and artifacts atomically.
 
-**The Solution:**
-Every story completion generates an **Evidence Receipt** with:
-- **story_id**: Canonical requirement ID (e.g., ACA-14-001)
-- **correlation_id**: Cross-repo batch ID (e.g., ACA-S11-20260301-285bd914)
+### Solution
+
+**Evidence Receipts** contain:
+- **story_id**: Requirement ID (e.g., ACA-14-001)
+- **correlation_id**: Batch ID linking multi-repo changes (e.g., ACA-S11-20260301-285bd914)
+- **phase**: DPDCA phase (D1, D2, P, D3, C, A)
 - **test_result**: PASS/FAIL gate (merge blocker if FAIL)
-- **artifacts**: Files changed, lines added, tests created
-- **validation**: Test + lint + coverage scores
+- **artifacts**: Files changed, lines added, test files created
+- **validation**: Test coverage, lint status, pass/fail counts
 - **metrics**: Duration, token cost, AI model used
 
-**Receipts are immutable.** Once written, they cannot be changed (Cosmos DB partition key = id, no updates).
-**Receipts are queryable.** Filter by sprint, story, phase, test result, or correlation ID to find related changes.
-**Receipts are compliance-ready.** FDA 21 CFR Part 11, SOX, HIPAA, Basel III — all accept immutable JSON receipts.
-
-### The Patent
-
-**Filed:** March 8, 2026 (provisional)  
-**Claims:** "Immutable Audit Trail for AI-Generated Code with Correlation ID Linking Across Requirements, Tests, and Artifacts"  
-**Prior art distinction:**
-- GitHub Actions logs → narrow (just CI runs, no correlation across repos)
-- JIRA traceability → manual (humans write tickets, AI doesn't self-document)
-- CI/CD logs → ephemeral (rotated after 90 days, no immutable storage)
-
-**What's novel:** AI agent generates receipt automatically, includes correlation ID linking multi-repo changes, stores immutable JSON in Cosmos DB with queryable API, blocks merge if test_result=FAIL.
-
-**Business impact:** 20-year patent protection. Competitors cannot copy without paying licensing fees. Microsoft acquisition premium = $500M+ for patent portfolio alone.
+**Immutable:** Once written, receipts cannot be changed (Cosmos DB enforces this via partition keys).  
+**Queryable:** Filter by sprint, story, phase, test result, or correlation ID to find related changes.  
+**Compliance-ready:** JSON format works with audit log systems and compliance frameworks (SOX, HIPAA, etc.).
 
 ### When to Record Evidence
 
-Record evidence after EACH phase of a story (DPDCA cycle):
+Record evidence after EACH phase of the DPDCA cycle:
 
 | Phase | When | Required fields | Merge gate |
 |---|---|---|---|
@@ -605,7 +585,7 @@ Record evidence after EACH phase of a story (DPDCA cycle):
 | **C** (Check) | Tests green, audit PASS | story_id, phase, validation (coverage_percent >= 60) | YES (coverage must meet threshold) |
 | **A** (Act) | Results recorded, story closed | story_id, phase, metrics (duration_ms, cost_usd) | No |
 
-**Correlation IDs**: Use the same correlation_id for all receipts in a multi-repo batch. This enables blast radius queries (see below).
+**Correlation IDs**: Use the same correlation_id for all receipts in a multi-repo batch. This enables blast-radius queries (see below).
 
 ### Record Evidence (Agent Pattern)
 
