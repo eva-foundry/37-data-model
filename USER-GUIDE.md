@@ -23,7 +23,8 @@
 6. [Refactoring — Blast Radius First](#6-refactoring--blast-radius-first)
 7. [Sprint Planning & Status Queries](#7-sprint-planning--status-queries)
 8. [After Your Work — Updating the Model](#8-after-your-work--updating-the-model)
-9. [Quick Reference](#9-quick-reference)
+9. [Evidence Layer — Proof of Completion](#evidence-layer--proof-of-completion)
+10. [Quick Reference](#9-quick-reference)
 
 ---
 
@@ -533,7 +534,145 @@ $v.count   # 0 = done
 
 ---
 
-## 9. Quick Reference
+## Evidence Layer — Proof of Completion
+
+The **Evidence Layer** captures proof-of-completion for every story in the DPDCA cycle
+(Discover → Plan → Do → Check → Act). Every story completion produces an evidence receipt.
+
+### When to record evidence
+
+Record evidence after each DPDCA phase of a story:
+- **D1** (Discover): Initial context gathering complete
+- **D2** (Discover-Audit): Tests run, audit scanners run
+- **P** (Plan): Design approved, schema validated
+- **D3** (Do): Implementation done, code committed
+- **A** (Act): Results recorded, story closed
+
+### Record evidence (from any project)
+
+Use the Python library:
+
+```python
+import sys
+sys.path.insert(0, r"C:\AICOE\eva-foundry\37-data-model")
+from tools.evidence_generator import EvidenceBuilder
+
+gen = EvidenceBuilder(
+    sprint_id="ACA-S11",
+    story_id="ACA-14-001",
+    story_title="Rule loader for 51-ACA",
+    phase="A",
+    correlation_id="ACA-S11-20260301-abc12345"
+)
+
+# Add validation results (tests, linting, coverage)
+gen.add_validation(test_result="PASS", lint_result="PASS", coverage_percent=92)
+
+# Add metrics (duration, file changes, token cost)
+gen.add_metrics(duration_ms=8450, files_changed=3, lines_added=245, tokens_used=12000, cost_usd=0.00045)
+
+# Add artifacts (files modified)
+gen.add_artifact(path="services/rules/app/loader.py", type_="source", action="modified")
+gen.add_artifact(path="tests/test_loader.py", type_="test", action="created")
+
+# Add commits
+gen.add_commit(sha="f7e9a2b1c", message="feat(ACA-14): rule loader for sprints")
+
+# Validate and build
+gen.validate()   # raises ValueError if test_result=FAIL or lint_result=FAIL
+receipt = gen.build()
+
+# POST to data model
+import json
+import httpx
+
+client = httpx.Client()
+response = client.put(
+    f"https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/evidence/{receipt['id']}",
+    content=json.dumps(receipt),
+    headers={"X-Actor": "agent:copilot"}
+)
+# Expected: 200 OK + {id, row_version, modified_by, created_at, ...}
+```
+
+### Query evidence
+
+Use PowerShell or Python to query recorded evidence:
+
+```powershell
+# List all evidence in a sprint
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+Invoke-RestMethod "$base/model/evidence/?sprint_id=ACA-S11" |
+  Select-Object id, phase, story_id, @{N="test_result";E={$_.validation.test_result}}
+
+# Find evidence with FAIL gates (merge blockers)
+Invoke-RestMethod "$base/model/evidence/" |
+  Where-Object { $_.validation.test_result -eq "FAIL" -or $_.validation.lint_result -eq "FAIL" }
+
+# Count evidence by phase across portfolio
+Invoke-RestMethod "$base/model/evidence/" |
+  Group-Object -Property phase |
+  Select-Object Name, Count   # D1:15, D2:14, P:12, D3:11, A:10 -> shows sprint flow
+```
+
+Or use the Python query tool:
+
+```bash
+# All evidence in a sprint
+python scripts/evidence_query.py --sprint ACA-S11
+
+# All evidence with test failures (find what broke)
+python scripts/evidence_query.py --test-fail --format json
+
+# All evidence with low coverage
+python scripts/evidence_query.py --low-coverage
+
+# All phases of one story
+python scripts/evidence_query.py --story ACA-14-001 --format table
+```
+
+### Validation gates (merge blockers)
+
+Evidence validation is automatic via `scripts/evidence_validate.ps1`:
+
+```powershell
+# Called by CI/CD as a merge gate — must exit 0 to merge
+.\scripts\evidence_validate.ps1
+
+# Exit codes:
+#   0 = all evidence valid, no merge blockers
+#   1 = violations or FAIL gates detected → PR merge blocked
+```
+
+Merge-blocking conditions:
+- `validation.test_result = "FAIL"`  — all tests must pass
+- `validation.lint_result = "FAIL"`  — all linting must pass
+- `validation.coverage_percent < 80` — warns but does not block (informational only)
+
+If a human tries to merge with `test_result=FAIL`, CI blocks the PR. Fix the test and re-run evidence.
+
+### Evidence schema
+
+See `schema/evidence.schema.json` for the complete schema. Key fields:
+
+| Field | Type | Purpose |
+|---|---|---|
+| `id` | string | Business key: `{SPRINT_ID}-{STORY_ID}-{PHASE}` |
+| `sprint_id` | string | Link to sprints layer |
+| `story_id` | string | Story being completed |
+| `phase` | enum | D1, D2, P, D3, A |
+| `created_at` | RFC3339 | When evidence was recorded |
+| `validation.test_result` | enum | PASS, FAIL, WARN, SKIP → blocks merge if FAIL |
+| `validation.lint_result` | enum | PASS, FAIL, WARN, SKIP → blocks merge if FAIL |
+| `validation.coverage_percent` | int | 0-100 (warning if <80%) |
+| `metrics.duration_ms` | int | How long the phase took |
+| `metrics.files_changed` | int | Number of files touched |
+| `metrics.tokens_used` | int | LM tokens if agent-assisted |
+| `metrics.cost_usd` | decimal | Cost in USD |
+| `artifacts` | array | Files created/modified/deleted |
+| `commits` | array | Git commits in this phase |
+
+---
 
 ### Decision table
 

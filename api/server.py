@@ -253,6 +253,8 @@ def create_app() -> FastAPI:
         projects_router, wbs_router,
         sprints_router, milestones_router, risks_router, decisions_router,
         traces_router,
+        # observability plane (L11)
+        evidence_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -277,6 +279,8 @@ def create_app() -> FastAPI:
         projects_router, wbs_router,
         sprints_router, milestones_router, risks_router, decisions_router,
         traces_router,
+        # observability plane (L11)
+        evidence_router,
         fp_router,
         # graph (E-11)
         graph_router,

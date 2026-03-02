@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EVA Evidence Receipt Schema (Unified)",
+  "description": "Complete evidence record for a story execution phase with full traceability",
+  "type": "object",
+  
+  "required": [
+    "correlation_id", "story_id", "phase", "created_at",
+    "status", "test_result"
+  ],
+  
+  "properties": {
+    "correlation_id": {
+      "type": "string",
+      "description": "End-to-end trace ID (SPRINT-{id}-{timestamp}-{uuid[:8]})",
+      "pattern": "^SPRINT-[0-9.]+-(20[0-9]{6})[0-9]+-[a-f0-9]{8}$",
+      "example": "SPRINT-0.5-20260301165702-a1b2c3d4"
+    },
+    
+    "story_id": {
+      "type": "string",
+      "description": "Story/Bug ID",
+      "example": "BUG-F37-001"
+    },
+    
+    "epic_id": {
+      "type": "string",
+      "description": "Parent epic (from data model)",
+      "example": "FK-ENHANCEMENT"
+    },
+    
+    "feature_id": {
+      "type": "string",
+      "description": "Parent feature ID",
+      "example": "F37-DPDCA-001"
+    },
+    
+    "phase": {
+      "type": "string",
+      "enum": ["A", "B", "C"],
+      "description": "Phase: A=RCA, B=Fix, C=Prevention Test"
+    },
+    
+    "phase_name": {
+      "type": "string",
+      "description": "Human-readable phase name",
+      "enum": ["Discover RCA", "Do Fix", "Act Prevent"]
+    },
+    
+    "timeline": {
+      "type": "object",
+      "description": "All state transition timestamps",
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Evidence record created"
+        },
+        "submitted_to_lm_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "response_received_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fix_applied_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "test_passed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "committed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    
+    "lm_interaction": {
+      "type": "object",
+      "description": "LLM call details",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Model ID",
+          "enum": ["gpt-4o-mini", "gpt-4o", "claude-3-5-haiku", "claude-3-5-sonnet"]
+        },
+        "model_tier": {
+          "type": "string",
+          "enum": ["free", "free-limited", "foundry-paid"],
+          "description": "Cost tier"
+        },
+        "tokens_in": {
+          "type": "integer",
+          "description": "Input tokens"
+        },
+        "tokens_out": {
+          "type": "integer",
+          "description": "Output tokens"
+        },
+        "cost_usd": {
+          "type": "number",
+          "description": "Calculated cost in USD",
+          "example": 0.00029
+        },
+        "latency_ms": {
+          "type": "integer",
+          "description": "LM API latency in milliseconds"
+        },
+        "prompt_hash": {
+          "type": "string",
+          "description": "SHA256 hash of system + user prompt",
+          "example": "abc123def456"
+        },
+        "response_hash": {
+          "type": "string",
+          "description": "SHA256 hash of LM response",
+          "example": "def456abc123"
+        }
+      }
+    },
+    
+    "status": {
+      "type": "string",
+      "enum": ["IN_PROGRESS", "DONE", "FAILED"],
+      "description": "Phase execution status"
+    },
+    
+    "test_result": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "SKIP"],
+      "description": "Test suite result"
+    },
+    
+    "lint_result": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "SKIP"],
+      "description": "Lint check result"
+    },
+    
+    "commit_sha": {
+      "type": "string",
+      "description": "Git commit hash",
+      "example": "a110cb65ada19b86a5793f817f2a33a82c6d4c5f"
+    },
+    
+    "files_changed": {
+      "type": "integer",
+      "description": "Number of files created/modified"
+    },
+    
+    "artifacts": {
+      "type": "array",
+      "description": "List of generated artifacts",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path to artifact"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["code", "test", "doc"],
+            "description": "Artifact type"
+          },
+          "lines": {
+            "type": "integer",
+            "description": "Lines of code"
+          }
+        }
+      }
+    }
+  }
+}

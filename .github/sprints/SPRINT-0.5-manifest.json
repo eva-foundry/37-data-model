@@ -1,0 +1,135 @@
+{
+  "sprint_id": "SPRINT-0.5",
+  "sprint_title": "Bug-Fix Automation Demo",
+  "epic": "FK-ENHANCEMENT",
+  "issue_number": 0,
+  "phase": "Phase 0.5 - Bug Discovery & Correction",
+  "status": "ready",
+  "created_at": "2025-01-16T14:00:00Z",
+  "stories": [
+    {
+      "id": "BUG-F37-001",
+      "story_type": "BUG",
+      "title": "Row version not incremented on PUT",
+      "severity": "MEDIUM",
+      "bug_category": "Logic Error",
+      "bug_description": "Custom routers in api/routers/ don't increment row_version on writes, violating FK-ENHANCEMENT spec. Should match base_layer.py behavior.",
+      "affected_code_path": "api/routers/endpoints.py",
+      "affected_code_path_2": "api/routers/screens.py",
+      "target_line": 35,
+      "target_line_2": 33,
+      "failing_test_output": "AssertionError: row_version increments: expected 4, got 3",
+      "failing_test_command": "pytest tests/test_crud.py::test_row_version_increment -v",
+      "a_phase": {
+        "type": "Discover RCA",
+        "goal": "Why don't custom routers increment row_version like base_layer does?",
+        "data_model_query": "GET /model/endpoints/?limit=1 to review actual endpoint schema",
+        "expected_output": "RCA markdown explaining the missing increment logic"
+      },
+      "b_phase": {
+        "type": "Fix Implementation",
+        "goal": "Add row_version += 1 before store.put() call",
+        "changes": "payload_dict['row_version'] += 1",
+        "verify_test": "pytest tests/test_crud.py::test_row_version_increment -v"
+      },
+      "c_phase": {
+        "type": "Prevent Regression",
+        "goal": "Create test that fails if row_version not incremented",
+        "test_location": "tests/test_crud.py",
+        "test_name": "test_row_version_increments_on_put"
+      }
+    },
+    {
+      "id": "BUG-F37-002",
+      "story_type": "BUG",
+      "title": "Endpoint field format mismatch in validation script",
+      "severity": "CRITICAL",
+      "bug_category": "Schema Mismatch",
+      "bug_description": "validate-all-refs.py accesses ep['method'] and ep['path'] which don't exist. Data model endpoints use single 'id' field (e.g., 'GET /v1/health').",
+      "affected_code_path": "scripts/validate-all-refs.py",
+      "target_line": 30,
+      "failing_test_output": "AttributeError: 'dict' object has no attribute 'method'",
+      "failing_test_command": "python scripts/validate-all-refs.py --help",
+      "a_phase": {
+        "type": "Discover RCA",
+        "goal": "Why does the script assume method/path fields that don't exist?",
+        "data_model_query": "GET /model/endpoints/?limit=3 to see actual endpoint structure",
+        "expected_output": "RCA showing endpoint.id = 'GET /v1/health' (not split fields)"
+      },
+      "b_phase": {
+        "type": "Fix Implementation",
+        "goal": "Use endpoint['id'] instead of splitting method/path",
+        "changes": "valid_endpoints = {ep['id'] for ep in endpoints}",
+        "verify_test": "python scripts/validate-all-refs.py --help"
+      },
+      "c_phase": {
+        "type": "Prevent Regression",
+        "goal": "Test endpoint schema access is correct",
+        "test_location": "tests/test_validation_schema.py",
+        "test_name": "test_endpoint_id_field_exists"
+      }
+    },
+    {
+      "id": "BUG-F37-003",
+      "story_type": "BUG",
+      "title": "Missing api.cosmos module import error",
+      "severity": "CRITICAL",
+      "bug_category": "Import/Dependency Error",
+      "bug_description": "Routers import 'from api.cosmos import store' but api.cosmos module doesn't exist in the repo. This makes all routers unimportable.",
+      "affected_code_path": "api/routers/endpoints.py",
+      "affected_code_path_2": "api/routers/screens.py",
+      "target_line": 5,
+      "target_line_2": 5,
+      "failing_test_output": "ModuleNotFoundError: No module named 'api.cosmos'",
+      "failing_test_command": "python -c 'from api.routers.endpoints import router'",
+      "a_phase": {
+        "type": "Discover RCA",
+        "goal": "Does api.cosmos exist? If not, what module should be imported instead?",
+        "data_model_query": "GET /model/services/?label=eva-brain-api to understand store pattern",
+        "expected_output": "RCA identifying whether to create api/cosmos.py or use api.store.base.AbstractStore"
+      },
+      "b_phase": {
+        "type": "Fix Implementation",
+        "goal": "Either create api/cosmos.py with CosmosStore OR update routers to use AbstractStore",
+        "option_1": "Create api/cosmos.py with: class CosmosStore(AbstractStore): ...",
+        "option_2": "Update routers: from api.store.base import AbstractStore; store = AbstractStore()",
+        "verify_test": "python -c 'from api.routers.endpoints import router' (must succeed)"
+      },
+      "c_phase": {
+        "type": "Prevent Regression",
+        "goal": "Test all routers can be imported without module errors",
+        "test_location": "tests/test_router_imports.py",
+        "test_name": "test_all_routers_import_successfully"
+      }
+    }
+  ],
+  "execution_plan": {
+    "trigger": "GitHub issue labeled 'bug-fix' with this manifest",
+    "workflow": ".github/workflows/sprint-agent.yml",
+    "agent": "bug_fix_agent.py (from 29-foundry/.github/scripts/)",
+    "expected_runtime": "45 minutes for 3 bugs",
+    "success_criteria": [
+      "All 3 bugs get RCA analysis (Phase A complete)",
+      "All 3 bugs get fixes applied (Phase B complete)",
+      "All 3 bugs get prevention tests (Phase C complete)",
+      "9 commits created (3 per bug: A, B, C)",
+      "9 evidence receipts in .eva/evidence/",
+      "1 PR created ready to review/merge",
+      "pytest gate: all tests PASS"
+    ]
+  },
+  "comparison_manual_vs_automated": {
+    "manual_effort_hours": 8.5,
+    "automated_effort_minutes": 45,
+    "speedup_factor": "11x",
+    "breakdown": {
+      "BUG-001_manual": "3 hours (RCA 1-2h + Fix 1h + Test 1h)",
+      "BUG-001_automated": "9 minutes (3 min per phase)",
+      "BUG-002_manual": "2 hours (RCA 1h + Fix 30m + Test 30m)",
+      "BUG-002_automated": "9 minutes",
+      "BUG-003_manual": "2-3 hours (RCA 30m + Fix 30m + Test 30m-1h)",
+      "BUG-003_automated": "9 minutes"
+    }
+  },
+  "notes": "Sprint 0.5 is a proof-of-concept for the bug-fix-automation skill. It takes the 3 real bugs from PR #2 review and processes them through the DPDCA loop (Discover RCA → Do Fix → Act Prevent). All work is tracked in .eva/evidence/ for audit trail."
+}

@@ -42,3 +42,5 @@ milestones_router      = make_layer_router("milestones",       "/model/milestone
 risks_router           = make_layer_router("risks",            "/model/risks",            ["risks"])
 decisions_router       = make_layer_router("decisions",        "/model/decisions",        ["decisions"])
 traces_router          = make_layer_router("traces",           "/model/traces",           ["traces"])
+# ── Observability plane (L11) — captures proof-of-completion + call tracing ──────────
+evidence_router        = make_layer_router("evidence",         "/model/evidence",         ["evidence"])
