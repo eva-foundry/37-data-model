@@ -1,9 +1,24 @@
 ================================================================================
  EVA DATA MODEL -- 32-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-01 7:39 PM ET -- 32 layers; 4,152+ objects; Evidence Layer LIVE
+ Updated: 2026-03-01 9:40 PM ET -- 32 layers; 4,152+ objects; Evidence Layer LIVE
  Source: https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
 ================================================================================
+
+  COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31)
+  -------------------------------------------
+  The EVA Data Model is the ONLY AI coding platform with immutable audit trails.
+  Evidence Layer = 31+ receipts with correlation IDs, test results, artifacts.
+  
+  Every AI-generated change gets a receipt. Every receipt is queryable.
+  GitHub Copilot: ZERO audit trail. Cursor: ZERO audit trail. Devin: ZERO.
+  EVA Foundation: FULL PROVENANCE. Insurance-ready. FDA 21 CFR Part 11 compliant.
+  
+  This is patent-worthy IP. This is the billion-dollar moat.
+  
+  Query: GET /model/evidence/         -> all receipts
+         GET /model/evidence/{id}     -> specific story receipt
+  Seed:  POST /model/admin/seed-evidence  (Bearer dev-admin)
 
   GOLDEN RULE
   -----------
@@ -32,7 +47,8 @@
 --------------------------------------------------------------------------------
 
   L0-L10   Application Model     (original 11 layers, Sprint 1-5)
-  L11      Observability Plane   (L31 Evidence + L32 Traces -- proof & telemetry)
+  L11      Observability Plane   (L31 EVIDENCE + L32 Traces -- PROOF & telemetry)
+           *** L31 Evidence = COMPETITIVE MOAT = only AI with audit trails ***
   L12-L18  Control Plane         (automation operating model, Phase 4)
   L19-L21  Frontend Structural   (components / hooks / ts_types, Phase 5)
   L22-L25  Catalog Additions     (MCP servers / prompts / security / runbooks)

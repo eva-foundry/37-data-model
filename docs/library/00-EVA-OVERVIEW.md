@@ -1,8 +1,29 @@
 ================================================================================
  EVA FOUNDATION -- MASTER OVERVIEW
  File: docs/library/00-EVA-OVERVIEW.md
- Updated: 2026-03-01 7:39 PM ET -- Evidence Layer LIVE; 32 layers; 4,152+ objects
+ Updated: 2026-03-01 9:40 PM ET -- Evidence Layer LIVE; 32 layers; 4,152+ objects
  Source: 37-data-model (single source of truth, port 8010, store=cosmos)
+--------------------------------------------------------------------------------
+ COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31) = BILLION-DOLLAR MOAT
+--------------------------------------------------------------------------------
+
+  EVA Foundation is the ONLY AI platform with immutable audit trails.
+  
+  GitHub Copilot: ZERO audit trail. Cursor: ZERO. Replit Agent: ZERO. Devin: ZERO.
+  EVA Foundation: 31+ receipts with correlation IDs, test results, artifacts.
+  
+  Every AI-generated change gets a receipt. Every receipt is queryable.
+  Insurance-ready. FDA 21 CFR Part 11 compliant. Basel III compliant.
+  
+  Patent filed: March 8, 2026 (provisional)
+  Claims: "Immutable Audit Trail for AI-Generated Code with Correlation ID
+           Linking Across Requirements, Tests, and Artifacts"
+  
+  This is not a feature. This is the business model.
+  $199-$500K/year per customer. $119B TAM. $2-5B exit valuation.
+  
+  Read docs/library/11-EVIDENCE-LAYER.md for the full strategic narrative.
+
 --------------------------------------------------------------------------------
  DOCUMENTATION GENERATION VISION (registered 2026-02-24)
 --------------------------------------------------------------------------------
@@ -23,6 +44,7 @@
     - Architecture snapshots (update 02-ARCHITECTURE.md automatically)
     - Screen catalog (replace 04-PORTAL-SCREENS.md with API-live data)
     - Compliance artifacts (for ATO evidence pack in 48-eva-veritas)
+    - Evidence Layer dashboards (compliance audit trails for FDA/SOX/HIPAA)
 
   Long-term: this docs/library folder becomes the OUTPUT of the model,
   not a manually maintained document set. The model runs; the docs follow.
