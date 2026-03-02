@@ -331,7 +331,7 @@ RESULT: Tracing visible locally, costs calculated correctly
 
 PHASE 2: Data Model Integration (2-3 hours, NEXT DAY)
 ├─ Story F37-TRACE-003: Data model trace endpoints
-│   ├─ New layer: `traces` (28 layers total)
+│   ├─ New layer: `traces` (see docs/library/03-DATA-MODEL-REFERENCE.md)
 │   ├─ Endpoints: PUT/GET /model/traces/{correlation_id}
 │   └─ Query: /model/traces/?sprint_id=SPRINT-0.5
 │

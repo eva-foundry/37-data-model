@@ -36,7 +36,7 @@ EVA Data Model applies that principle to the modern cloud stack:
 | 31-eva-faces / admin-face | React SPA | 5174 |
 | 31-eva-faces / chat-face | React SPA | 5173 |
 | 31-eva-faces / agent-fleet | FastAPI agent orchestrator | 8000 |
-| **37-data-model / model-api** | **FastAPI model service -- 31 layers; query `/health` for live counts** | **8010** |
+| **37-data-model / model-api** | **FastAPI model service -- see docs/library/03-DATA-MODEL-REFERENCE.md for layer catalog** | **8010** |
 | 17-apim | Azure API Management | gateway |
 | 29-foundry | Azure AI Foundry | models |
 | 16-engineered-case-law | Jurisprudence pipeline | — |
@@ -145,7 +145,8 @@ See [Evidence Layer Documentation](USER-GUIDE.md#evidence-layer--proof-of-comple
 
 ## Model API
 
-All 31 layers are also available over HTTP on port **8010** (local dev) or via ACA (24x7 Cosmos) -- no PowerShell required.
+All entity layers are available over HTTP on port **8010** (local dev) or via ACA (24x7 Cosmos).
+For complete layer catalog, see [docs/library/03-DATA-MODEL-REFERENCE.md](docs/library/03-DATA-MODEL-REFERENCE.md).
 
 ```powershell
 # Start (local / MemoryStore — auto-seeds from disk JSON)
@@ -165,7 +166,7 @@ C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 | `POST /model/admin/seed` | Seed store from disk JSON (idempotent) |
 | `GET /model/admin/validate` | In-process validation — same checks as `validate-model.ps1` |
 | `GET /model/admin/audit` | Audit trail — last N writes across all layers |
-| `GET /model/graph` | Typed edge list across all 31 layers -- nodes, edges, BFS traversal, filters |
+| `GET /model/graph` | Typed edge list across entity layers -- nodes, edges, BFS traversal, filters |
 | `GET /model/graph/edge-types` | Edge-type vocabulary (20 types: calls, reads, writes, depends_on, …) |
 | `POST /model/admin/export` | Export store → enriched JSON with full audit trail → `model/*.json` |
 
@@ -196,7 +197,7 @@ Two routes are available to any user with the `view:model` permission (admin + a
 
 | Route | Description |
 |-------|-------------|
-| `/model` | **Layer Browser** -- sidebar of all 31 layers, live object count per layer, searchable EvaDataGrid, EvaDrawer detail panel with full JSON viewer |
+| `/model` | **Layer Browser** -- sidebar of all entity layers, live object count per layer, searchable EvaDataGrid, EvaDrawer detail panel with full JSON viewer |
 | `/model/report` | **Data Model Report** — 4-tab dashboard: Overview stats (total objects, ep breakdown, graph node/edge counts), Endpoint Matrix (by service/status), Edge Types, Layer Counts |
 
 **Implementation:**
@@ -282,7 +283,7 @@ code --goto "C:\AICOE\eva-foundation\$($h.repo_path):$($h.repo_line)"
 # Node objects: { id, layer, label, status }
 # Meta:         { node_count, edge_count, depth, duration_ms, ... }
 
-# Full edge type vocabulary (20 types across 31 layers)
+# Full edge type vocabulary (see docs for complete catalog)
 Invoke-RestMethod "http://localhost:8010/model/graph/edge-types" |
   Select-Object edge_type, from_layer, to_layer, cardinality | Format-Table
 
@@ -489,7 +490,7 @@ See [PLAN.md](PLAN.md) F37-10 for full Sprint 8-9 work items.
 
 | Deliverable | Notes |
 |-------------|-------|
-| **E-09 Provenance export** | 636 objects enriched with `source_file`, `created_by`, `row_version` on all 27 layers |
+| **E-09 Provenance export** | 636 objects enriched with `source_file`, `created_by`, `row_version` on all entity layers |
 | **E-10 `repo_line` backfill** | 44 objects stamped · `scripts/backfill-repo-lines.py` · validator WARNs for gaps |
 | **E-11 `GET /model/graph`** | 304 nodes / 533 edges · 20 edge types · BFS traversal · 7/7 tests |
 | **3 PM Plane feature flags** | `action.programme`, `action.ado_sync`, `action.ado_write` (total flags: 13) |

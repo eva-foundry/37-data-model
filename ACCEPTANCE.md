@@ -1,8 +1,8 @@
 # ACCEPTANCE.md -- 37-data-model Done Criteria
-<!-- veritas-acceptance: project=37-data-model version=2.0 last-updated=2026-02-25 -->
+<!-- veritas-acceptance: project=37-data-model version=2.0 last-updated=2026-03-01 -->
 
 **Created:** February 19, 2026
-**Last Updated:** February 25, 2026 -- Doc reorg session 14 -- updated for 31 layers + FP stamping + Sprint 8-9 criteria
+**Last Updated:** March 1, 2026 -- Evidence Layer LIVE, MTI=74, centralized layer catalog to docs/library/03-DATA-MODEL-REFERENCE.md
 
 ---
 
@@ -197,9 +197,9 @@ IFPUG FP estimates and the 4th MTI component (`complexity_coverage`, weight=0.15
 
 ---
 
-## End-State Acceptance (All 31 Layers Done)
+## End-State Acceptance (All Entity Layers Complete)
 
-When all layers are populated and F37-10 complete:
+When all entity layers are populated and F37-10 complete:
 
 1. **Field rename in < 5 seconds:** `GET /model/impact/?container=translations`
    returns every affected endpoint, schema, screen, and literal.

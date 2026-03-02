@@ -1,23 +1,24 @@
 {
   "meta": {
     "schema": "eva.trust.v2",
-    "generated_at": "2026-03-02T01:17:55.678Z",
+    "generated_at": "2026-03-02T01:20:59.130Z",
     "repo": "C:\\AICOE\\eva-foundry\\37-data-model",
     "reconciliation_path": "C:\\AICOE\\eva-foundry\\37-data-model\\.eva\\reconciliation.json"
   },
-  "score": 65,
+  "score": 74,
   "stale": false,
-  "sparkline": "100 -> 61 -> 50 -> 86 -> 86 -> 100 -> 0 -> 53 -> 65 -> 65",
+  "sparkline": "50 -> 86 -> 86 -> 100 -> 0 -> 53 -> 65 -> 65 -> 74 -> 74",
   "sparkline_delta": "no change",
   "components": {
-    "coverage": 0.51,
-    "evidenceCompleteness": 0.5,
+    "coverage": 0.66,
+    "evidenceCompleteness": 0.58,
     "consistencyScore": 1,
     "complexityCoverage": 0,
     "formula": "3-component-fallback"
   },
   "actions": [
-    "review-required",
-    "no-deploy"
+    "test",
+    "review",
+    "merge-with-approval"
   ]
 }

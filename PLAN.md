@@ -1,12 +1,12 @@
 # Project Plan
 
 <!-- veritas-normalized 2026-02-25 prefix=F37 source=PLAN.md -->
-<!-- Last updated: 2026-02-25 ET -- 31 layers, 4006 objects, MTI=100, Cosmos 24x7 -->
+<!-- Last updated: 2026-03-01 ET -- MTI=74, Cosmos 24x7, Evidence Layer LIVE -->
 
 ## Feature: Guiding Principle [ID=F37-01]
 The model is the single source of truth. One HTTP call beats 10 file reads.
-All 31 layers live in Cosmos (ACA 24x7) and local MemoryStore (port 8010 dev).
-Every significant object is a typed node with explicit cross-references.
+All entity layers live in Cosmos (ACA 24x7) and local MemoryStore (port 8010 dev).
+For complete layer catalog, see docs/library/03-DATA-MODEL-REFERENCE.md.
 
 ## Feature: Layer Build Order [ID=F37-02]
 L0-L2 Foundation -> L3-L10 Data/API/UI/Agents/Requirements ->
@@ -184,7 +184,7 @@ Filter endpoints by status, cosmos_writes, cosmos_reads, auth, feature_flag.
 Cross-layer impact: what endpoints/screens/agents break if container X changes.
 
 ### Story: GET /model/graph [ID=F37-GRAPH-001]
-Typed edge list across all 31 layers. BFS traversal (node_id + depth). 20 edge types.
+Typed edge list across entity layers. BFS traversal (node_id + depth). 20 edge types.
 
 ### Story: GET /model/graph/edge-types [ID=F37-EDGETYPES-001]
 Edge type vocabulary (20 types: calls, reads, writes, depends_on, ...).

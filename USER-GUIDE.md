@@ -1,9 +1,9 @@
 # EVA Data Model — Agent User Guide
 
 **Version:** 2.5  
-**Last Updated:** February 25, 2026 10:14 ET · v2.5 — ACA endpoint is now primary (no localhost default); Browser UI shipped in portal-face (/model + /model/report); localhost:8010 demoted to local-dev fallback; veritas model_audit default updated to ACA  
+**Last Updated:** March 1, 2026 7:39 PM ET · v2.5 — Evidence Layer LIVE; layer catalog centralized to docs/library/03-DATA-MODEL-REFERENCE.md  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills) executing work on the EVA project  
-**Model state:** as of 2026-02-25 10:14 ET: 27 layers · 186 endpoints · 46 screens · 375 literals · 960 total objects · query `/model/agent-summary` for live counts
+**Model state:** query `/model/agent-summary` for live counts; see docs/library/03-DATA-MODEL-REFERENCE.md for complete layer catalog
 
 > **You are the primary audience for this guide.**
 >
@@ -709,7 +709,7 @@ No subscription key. No localhost. 24x7 Cosmos-backed.
 
 | URL | Description |
 |---|---|
-| `GET https://marco-sandbox-apim.azure-api.net/data-model/model/agent-summary` | 866 objects, 27 layers |
+| `GET https://marco-sandbox-apim.azure-api.net/data-model/model/agent-summary` | All entity layers + object counts |
 | `GET https://marco-sandbox-apim.azure-api.net/data-model/model/projects/` | 46 active projects |
 | `GET https://marco-sandbox-apim.azure-api.net/data-model/model/{layer}/` | Any layer |
 | `GET https://marco-sandbox-apim.azure-api.net/data-model/model/{layer}/{id}` | Single object |
