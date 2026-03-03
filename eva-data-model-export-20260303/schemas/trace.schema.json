@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "trace.schema.json",
+  "title": "EVA LM Trace",
+  "description": "End-to-end trace of LM calls from a single correlation_id. Captures model, tokens, cost, and latency per call. Partition key for Cosmos: correlation_id.",
+  "type": "object",
+  "required": ["id", "sprint_id", "created_at", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Correlation ID, format: SPRINT-{sprint_id}-{timestamp}-{uuid[:8]}",
+      "examples": ["SPRINT-0.5-20260301143021-a1b2c3d4"]
+    },
+    "sprint_id": {
+      "type": "string",
+      "description": "Reference to sprint.id from sprints layer"
+    },
+    "story_id": {
+      "type": ["string", "null"],
+      "description": "Story/bug ID being traced, e.g. BUG-F37-001"
+    },
+    "phase": {
+      "type": ["string", "null"],
+      "enum": ["A", "B", "C", null],
+      "description": "Bug fix phase: A=RCA, B=Code, C=Prevention. Null if multi-phase aggregate."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When trace was created (RFC3339)"
+    },
+    "lm_calls": {
+      "type": "array",
+      "description": "Array of LM interactions",
+      "items": {
+        "type": "object",
+        "required": ["model"],
+        "properties": {
+          "model": {
+            "type": "string",
+            "enum": ["gpt-4o", "gpt-4o-mini", "claude-3-opus", "claude-3-haiku"],
+            "description": "Model called"
+          },
+          "tokens_in": {
+            "type": ["integer", "null"],
+            "description": "Input tokens consumed"
+          },
+          "tokens_out": {
+            "type": ["integer", "null"],
+            "description": "Output tokens generated"
+          },
+          "cost_usd": {
+            "type": ["number", "null"],
+            "description": "Cost in USD (8 decimal places)"
+          },
+          "latency_ms": {
+            "type": ["integer", "null"],
+            "description": "API call latency in milliseconds"
+          }
+        }
+      }
+    },
+    "total_cost_usd": {
+      "type": ["number", "null"],
+      "description": "Sum of all LM call costs (USD, 8 decimals)"
+    },
+    "total_latency_ms": {
+      "type": ["integer", "null"],
+      "description": "Sum of all LM call latencies (ms)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "archived", "failed"],
+      "description": "Trace lifecycle: active (current), archived (>90d), failed (error during collection)"
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Whether this trace is queryable (false after archival)"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Operator notes or error messages"
+    }
+  }
+}

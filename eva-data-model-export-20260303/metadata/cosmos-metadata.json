@@ -1,0 +1,26 @@
+{
+  "source_endpoint": "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io",
+  "export_date": "2026-03-03 09:15:14Z",
+  "store_version": "1.0.0",
+  "layer_counts": null,
+  "configuration": {
+    "default_values": {
+      "model_db_name": "evamodel",
+      "model_container_name": "model_objects"
+    },
+    "cosmos_key_env": "COSMOS_KEY",
+    "model_db_name_env": "MODEL_DB_NAME",
+    "cosmos_url_env": "COSMOS_URL",
+    "model_container_name_env": "MODEL_CONTAINER_NAME"
+  },
+  "store_type": "cosmos",
+  "cosmos_info": {
+    "partition_key": "layer",
+    "container_name": "model_objects",
+    "database_name": "evamodel",
+    "indexing_policy": "automatic (Cosmos DB default)",
+    "ttl": -1,
+    "throughput": "autoscale (recommended for production)"
+  },
+  "total_objects": 4339
+}

@@ -1,0 +1,24 @@
+{
+  "created_at": "2026-03-01T13:35:00Z",
+  "total_cost_usd": 1.234E-05,
+  "lm_calls": [
+    {
+      "tokens_in": 100,
+      "tokens_out": 50,
+      "model": "gpt-4o-mini",
+      "cost_usd": 1.234E-05,
+      "latency_ms": 850
+    }
+  ],
+  "sprint_id": "37-data-model-sprint-1",
+  "id": "test-trace-001",
+  "is_active": true,
+  "total_latency_ms": 850,
+  "status": "active",
+  "notes": "Phase 3 test trace",
+  "layer": "traces",
+  "modified_by": "agent:copilot",
+  "modified_at": "2026-03-01T13:35:50.901102-05:00",
+  "created_by": "agent:copilot",
+  "row_version": 1
+}
