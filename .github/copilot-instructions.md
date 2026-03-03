@@ -1,10 +1,11 @@
 # GitHub Copilot Instructions -- EVA Data Model
 
-**Template Version**: 3.3.2
-**Last Updated**: February 28, 2026
+**Template Version**: 3.4.0
+**Last Updated**: March 1, 2026
 **Project**: EVA Data Model -- Single source of truth API (port 8010)
 **Path**: `C:\AICOE\eva-foundry\37-data-model\`
-**Stack**: Python, FastAPI, SQLite
+**Stack**: Python, FastAPI, Cosmos DB
+**New in v3.4.0**: Evidence Layer (L31) -- immutable audit trail for all DPDCA phases
 
 > This file is the Copilot operating manual for this repository.
 > PART 1 is universal -- identical across all EVA Foundation projects.
@@ -98,8 +99,11 @@ $r = Invoke-RestMethod "$base/ready" -ErrorAction SilentlyContinue
 if (-not $r.store_reachable) { Write-Warning "Cosmos unreachable -- check COSMOS_URL/KEY" }
 # The API self-documents -- read the agent guide before doing anything
 Invoke-RestMethod "$base/model/agent-guide"
-# One-call state check -- all 27 layer counts + total objects
+# One-call state check -- all 32 layer counts + total objects
 Invoke-RestMethod "$base/model/agent-summary"
+
+# Evidence Layer check -- NEW in v3.4.0 (immutable audit trail for all DPDCA phases)
+Invoke-RestMethod "$base/model/evidence/" | Select-Object -First 3
 ```
 
 **Azure APIM (CI / cloud agents):**
@@ -115,9 +119,12 @@ Invoke-RestMethod "$base/model/agent-summary" -Headers $hdrs
 |---|---|---|
 | Browse all layers + objects visually | portal-face `/model` (requires `view:model` permission) | grep model/*.json |
 | Report: overview / endpoint matrix / edge types | portal-face `/model/report` | build ad-hoc queries |
-| All layer counts | `GET /model/agent-summary` | query each layer separately |
+| All layer counts (32 layers) | `GET /model/agent-summary` | query each layer separately |
 | Object by ID | `GET /model/{layer}/{id}` | grep, file_search |
 | All objects in a layer | `GET /model/{layer}/` | read source files |
+| Evidence receipts for sprint | `GET /model/evidence/?sprint_id=ACA-S11` | -- NEW L31 layer |
+| Evidence receipts for phase | `GET /model/evidence/?phase=A` | filters by DPDCA phase |
+| Evidence by story | `GET /model/evidence/?story_id=ACA-14-001` | proof-of-completion record |
 | All ready-to-call endpoints | `GET /model/endpoints/filter?status=implemented` | grep router files |
 | All unimplemented stubs | `GET /model/endpoints/filter?status=stub` | grep router files |
 | Filter ANY other layer | `GET /model/{layer}/` + `Where-Object` client-side | no server filter on non-endpoint layers |
@@ -751,11 +758,68 @@ Violations are reported by `scripts/validate-model.ps1`.
 
 ---
 
+## Infrastructure Layer Synchronization
+
+The infrastructure layer (`/model/infrastructure/`) represents all Azure resources available to EVA projects.
+
+### Sync Script: sync-marco-inventory-to-model.py
+
+**Purpose**: One-way sync from MARCO-INVENTORY markdown file to data model infrastructure layer.
+
+**Usage**:
+```powershell
+# Dry-run (no writes)
+python scripts/sync-marco-inventory-to-model.py --dry-run
+
+# Live execution
+python scripts/sync-marco-inventory-to-model.py
+
+# Custom model endpoint
+$env:EVA_MODEL_URL = "http://localhost:8010"
+python scripts/sync-marco-inventory-to-model.py
+```
+
+**Behavior**:
+- Reads: `C:\AICOE\eva-foundry\system-analysis\inventory\.eva-cache\current\MARCO-INVENTORY-*.md`
+- Transforms: Azure resource metadata -> infrastructure layer schema
+- Maps: Resource type -> `infrastructure.type` (openai_acct, cosmos_db, blob_storage, etc.)
+- Assigns: Service bindings (which service uses this resource)
+- Writes: 23 marco* resources via PUT /model/infrastructure/{id}
+- Returns: Success/fail count summary
+
+**Schema mapping**:
+- Name -> id
+- Type (Microsoft.X/Y) -> type (standardized classes)
+- Location, ResourceGroup -> location, resource_group
+- Purpose (from copilot-instructions) -> notes
+- Inferred service -> service
+- Status always: "provisioned"
+- provision_order: 100 (user-provided, takes precedence over auto-provisioned)
+
+**When to run**:
+- After MARCO-INVENTORY is updated (e.g., new Azure resource created)
+- As part of CI/CD (pre-deploy validation)
+- Manual: `python scripts/sync-marco-inventory-to-model.py`
+
+**Related**:
+- Commit: 3a507ae (feat: add infrastructure layer sync script)
+- Workspace copilot-instructions: Section "Marco* Azure Resources" (24 resources)
+
+---
+
 ## Layer Status Reference
 
 Check `STATUS.md` for current layer completeness before any query.
 If a layer is NOT STARTED, fall back to reading source files for that layer.
 If a layer is COMPLETE, the model is authoritative -- do not re-read source.
+
+**Evidence Layer (L31) -- Ready for Production**
+- Schema: `schema/evidence.schema.json`
+- Model: `model/evidence.json`
+- API endpoints: GET /model/evidence/, PUT /model/evidence/{id}
+- Partition key: correlation_id
+- Use case: Immutable proof-of-completion for every DPDCA phase of every story in any project
+- See: USER-GUIDE.md section 9 (Evidence Layer -- Immutable Audit Trail API)
 
 ---
 
@@ -783,4 +847,5 @@ All must pass before merging a PR:
 
 *Source template*: `C:\AICOE\eva-foundry\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.3.2
 *Project 07 README*: `C:\AICOE\eva-foundry\07-foundation-layer\README.md`
-*EVA Data Model USER-GUIDE*: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md`
+*EVA Data Model USER-GUIDE*: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md` v2.6
+*Evidence Layer Enhancement*: `C:\AICOE\eva-foundry\37-data-model\docs\evidence-layer-enhancement-20260301.md`

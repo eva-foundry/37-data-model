@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "hook.schema.json",
+  "title": "EVA React Hook",
+  "description": "A custom React hook in the EVA codebase",
+  "type": "object",
+  "required": ["id", "label", "service", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "camelCase hook identifier (without 'use' prefix in id for uniqueness but include it in label)",
+      "examples": ["useRbacData", "useChatSession", "useFeatureFlags"]
+    },
+    "label": { "type": "string", "description": "Human-readable hook name including 'use' prefix" },
+    "repo_path": {
+      "type": ["string", "null"],
+      "description": "Relative path from eva-foundation root to the hook file"
+    },
+    "repo_line": { "type": ["integer", "null"], "description": "1-based line of the hook function declaration" },
+    "service": {
+      "type": "string",
+      "description": "Service id for the app/layer this hook lives in"
+    },
+    "calls_endpoints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Endpoint ids this hook fetches from"
+    },
+    "returns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "TypeScript type ids returned by this hook"
+    },
+    "used_by_screens": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Screen ids that consume this hook"
+    },
+    "data_type": {
+      "type": ["string", "null"],
+      "description": "Primary TypeScript type id for the data returned"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "poc", "stub", "planned", "deprecated"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

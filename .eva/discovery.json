@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema": "eva.discovery.v2",
-    "generated_at": "2026-03-02T01:25:21.829Z",
+    "generated_at": "2026-03-02T19:05:19.949Z",
     "repo": "C:\\AICOE\\eva-foundry\\37-data-model"
   },
   "project": null,
@@ -11,156 +11,6 @@
       "source": "README.md"
     },
     "features": [
-      {
-        "id": "F37-03",
-        "title": "Sprint 1 -- Foundation Layers (L0-L2)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04",
-        "title": "Sprint 2 -- Relational Layers (L3-L9)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05",
-        "title": "Sprint 3 -- Frontend Layers (L10-L14)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06",
-        "title": "Sprint 4 -- Backend Layers (L15-L19)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07",
-        "title": "Sprint 5 -- Meta Layers (L20-L26)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08",
-        "title": "Sprint 6/7/8 -- Growth Guidance",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10",
-        "title": "Sprint 9 -- Data Model Plus (Observability Foundation)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01",
-        "title": "Guiding Principle + Foundation Setup",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API",
-        "title": "Core API Endpoints",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-DPDCA",
-        "title": "DPDCA Scripts + Automation",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-TRACE",
-        "title": "LM Tracing Utils",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03",
-        "title": "Sprint 1 -- Foundation Layers (L0-L2)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04",
-        "title": "Sprint 2 -- Relational Layers (L3-L9)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05",
-        "title": "Sprint 3 -- Frontend Layers (L10-L14)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06",
-        "title": "Sprint 4 -- Backend Layers (L15-L19)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07",
-        "title": "Sprint 5 -- Meta Layers (L20-L26)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08",
-        "title": "Sprint 6/7/8 -- Growth Guidance",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10",
-        "title": "Sprint 9 -- Data Model Plus (Observability Foundation)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01",
-        "title": "Guiding Principle + Foundation Setup",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API",
-        "title": "Core API Endpoints",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-DPDCA",
-        "title": "DPDCA Scripts + Automation",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-TRACE",
-        "title": "LM Tracing Utils",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03",
-        "title": "Sprint 1 -- Foundation Layers (L0-L2)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04",
-        "title": "Sprint 2 -- Relational Layers (L3-L9)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05",
-        "title": "Sprint 3 -- Frontend Layers (L10-L14)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06",
-        "title": "Sprint 4 -- Backend Layers (L15-L19)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07",
-        "title": "Sprint 5 -- Meta Layers (L20-L26)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08",
-        "title": "Sprint 6/7/8 -- Growth Guidance",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10",
-        "title": "Sprint 9 -- Data Model Plus (Observability Foundation)",
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API",
-        "title": "Core API Endpoints",
-        "source": "veritas-plan.json"
-      },
       {
         "id": "F37-FK-SPRINT0",
         "title": "Sprint 0 -- Phase 0 Validation (48h, 3 stories, 5 FP)",
@@ -223,1014 +73,6 @@
       }
     ],
     "stories": [
-      {
-        "id": "F37-03-001",
-        "title": "Deliverables",
-        "feature_id": "F37-03",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03-002",
-        "title": "Acceptance",
-        "feature_id": "F37-03",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04-001",
-        "title": "Deliverables",
-        "feature_id": "F37-04",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04-002",
-        "title": "Acceptance",
-        "feature_id": "F37-04",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05-001",
-        "title": "Deliverables",
-        "feature_id": "F37-05",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05-002",
-        "title": "Acceptance",
-        "feature_id": "F37-05",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06-001",
-        "title": "Deliverables",
-        "feature_id": "F37-06",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06-002",
-        "title": "Acceptance",
-        "feature_id": "F37-06",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07-001",
-        "title": "Deliverables",
-        "feature_id": "F37-07",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07-002",
-        "title": "Acceptance",
-        "feature_id": "F37-07",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-001",
-        "title": "Growth Path 1 -- Same-PR Rule (day-to-day)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-002",
-        "title": "Growth Path 2 -- Sprint-Close Audit (every sprint)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-003",
-        "title": "Growth Path 3 -- Ecosystem Expansion (new service or repository)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-004",
-        "title": "Growth Path 4 -- New Model Layer (extending the schema)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-005",
-        "title": "Validation Gate (all paths)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-006",
-        "title": "Drift Signals -- How to Know the Model Is Stale",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-007",
-        "title": "Governance",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-001",
-        "title": "Stamp transaction_function_type + story_ids on endpoints",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-002",
-        "title": "Stamp data_function_type on containers",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-003",
-        "title": "Seed sprints.json -- Sprint-Backlog + Sprint 1-7",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-004",
-        "title": "DM-MAINT-WI-2 -- Same-PR enforcement check",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-005",
-        "title": "DM-MAINT-WI-3 -- Scheduled drift detection",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-006",
-        "title": "E-11-WI-7 -- Mermaid graph output",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01-001",
-        "title": "FastAPI server foundation + Pydantic models",
-        "feature_id": "F37-01",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01-002",
-        "title": "AbstractStore interface + MemoryStore/CosmosStore",
-        "feature_id": "F37-01",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01-003",
-        "title": "Layer registry + generic router factory",
-        "feature_id": "F37-01",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API-001",
-        "title": "API versioning + OpenAPI docs",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API-002",
-        "title": "Error handling + audit middleware",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API-003",
-        "title": "CORS + health check foundation",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-001",
-        "title": "GET /health",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-002",
-        "title": "GET /health -- Cosmos store check",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-003",
-        "title": "GET /health -- cache stats",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-READY-001",
-        "title": "GET /ready",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-MODEL-001",
-        "title": "GET /model/agent-summary",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-MODEL-002",
-        "title": "GET /model/agent-guide",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-OBJ_IDPATH-001",
-        "title": "GET /model/{layer}/",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-OBJ_IDPATH-002",
-        "title": "GET /model/{layer}/{id}",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-OBJ_IDPATH-003",
-        "title": "PUT /model/{layer}/{id}",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-FILTER-001",
-        "title": "GET /model/endpoints/filter",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-IMPACT-001",
-        "title": "GET /model/impact",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-GRAPH-001",
-        "title": "GET /model/graph",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-EDGETYPES-001",
-        "title": "GET /model/graph/edge-types",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-FP-001",
-        "title": "GET /model/fp/estimate",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-SEED-001",
-        "title": "POST /model/admin/seed",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-EXPORT-001",
-        "title": "POST /model/admin/export",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-COMMIT-001",
-        "title": "POST /model/admin/commit",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-VALIDATE-001",
-        "title": "GET /model/admin/validate",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-AUDIT-001",
-        "title": "GET /model/admin/audit",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-AUDITREPO-001",
-        "title": "GET /model/admin/audit -- repo audit trail",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-BACKFILL-001",
-        "title": "POST /model/admin/backfill",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-CACHE-001",
-        "title": "Cache layer for GET /model/* (60s TTL)",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-DPDCA-001",
-        "title": "seed-from-plan.py + gen-sprint-manifest.py + reflect-ids.py + sprint_agent.py",
-        "feature_id": "F37-DPDCA",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-TRACE-002",
-        "title": "lm_tracer.py -- OpenTelemetry wrapper for EVA",
-        "feature_id": "F37-TRACE",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03-001",
-        "title": "Deliverables",
-        "feature_id": "F37-03",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03-002",
-        "title": "Acceptance",
-        "feature_id": "F37-03",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04-001",
-        "title": "Deliverables",
-        "feature_id": "F37-04",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04-002",
-        "title": "Acceptance",
-        "feature_id": "F37-04",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05-001",
-        "title": "Deliverables",
-        "feature_id": "F37-05",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05-002",
-        "title": "Acceptance",
-        "feature_id": "F37-05",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06-001",
-        "title": "Deliverables",
-        "feature_id": "F37-06",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06-002",
-        "title": "Acceptance",
-        "feature_id": "F37-06",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07-001",
-        "title": "Deliverables",
-        "feature_id": "F37-07",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07-002",
-        "title": "Acceptance",
-        "feature_id": "F37-07",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-001",
-        "title": "Growth Path 1 -- Same-PR Rule (day-to-day)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-002",
-        "title": "Growth Path 2 -- Sprint-Close Audit (every sprint)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-003",
-        "title": "Growth Path 3 -- Ecosystem Expansion (new service or repository)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-004",
-        "title": "Growth Path 4 -- New Model Layer (extending the schema)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-005",
-        "title": "Validation Gate (all paths)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-006",
-        "title": "Drift Signals -- How to Know the Model Is Stale",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-007",
-        "title": "Governance",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-001",
-        "title": "Stamp transaction_function_type + story_ids on endpoints",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-002",
-        "title": "Stamp data_function_type on containers",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-003",
-        "title": "Seed sprints.json -- Sprint-Backlog + Sprint 1-7",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-004",
-        "title": "DM-MAINT-WI-2 -- Same-PR enforcement check",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-005",
-        "title": "DM-MAINT-WI-3 -- Scheduled drift detection",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-006",
-        "title": "E-11-WI-7 -- Mermaid graph output",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01-001",
-        "title": "FastAPI server foundation + Pydantic models",
-        "feature_id": "F37-01",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01-002",
-        "title": "AbstractStore interface + MemoryStore/CosmosStore",
-        "feature_id": "F37-01",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-01-003",
-        "title": "Layer registry + generic router factory",
-        "feature_id": "F37-01",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API-001",
-        "title": "API versioning + OpenAPI docs",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API-002",
-        "title": "Error handling + audit middleware",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-API-003",
-        "title": "CORS + health check foundation",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-001",
-        "title": "GET /health",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-002",
-        "title": "GET /health -- Cosmos store check",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-003",
-        "title": "GET /health -- cache stats",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-READY-001",
-        "title": "GET /ready",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-MODEL-001",
-        "title": "GET /model/agent-summary",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-MODEL-002",
-        "title": "GET /model/agent-guide",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-OBJ_IDPATH-001",
-        "title": "GET /model/{layer}/",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-OBJ_IDPATH-002",
-        "title": "GET /model/{layer}/{id}",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-OBJ_IDPATH-003",
-        "title": "PUT /model/{layer}/{id}",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-FILTER-001",
-        "title": "GET /model/endpoints/filter",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-IMPACT-001",
-        "title": "GET /model/impact",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-GRAPH-001",
-        "title": "GET /model/graph",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-EDGETYPES-001",
-        "title": "GET /model/graph/edge-types",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-FP-001",
-        "title": "GET /model/fp/estimate",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-SEED-001",
-        "title": "POST /model/admin/seed",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-EXPORT-001",
-        "title": "POST /model/admin/export",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-COMMIT-001",
-        "title": "POST /model/admin/commit",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-VALIDATE-001",
-        "title": "GET /model/admin/validate",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-AUDIT-001",
-        "title": "GET /model/admin/audit",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-AUDITREPO-001",
-        "title": "GET /model/admin/audit -- repo audit trail",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-BACKFILL-001",
-        "title": "POST /model/admin/backfill",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-CACHE-001",
-        "title": "Cache layer for GET /model/* (60s TTL)",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-DPDCA-001",
-        "title": "seed-from-plan.py + gen-sprint-manifest.py + reflect-ids.py + sprint_agent.py",
-        "feature_id": "F37-DPDCA",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-TRACE-002",
-        "title": "lm_tracer.py -- OpenTelemetry wrapper for EVA",
-        "feature_id": "F37-TRACE",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03-001",
-        "title": "Deliverables",
-        "feature_id": "F37-03",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-03-002",
-        "title": "Acceptance",
-        "feature_id": "F37-03",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04-001",
-        "title": "Deliverables",
-        "feature_id": "F37-04",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-04-002",
-        "title": "Acceptance",
-        "feature_id": "F37-04",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05-001",
-        "title": "Deliverables",
-        "feature_id": "F37-05",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-05-002",
-        "title": "Acceptance",
-        "feature_id": "F37-05",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06-001",
-        "title": "Deliverables",
-        "feature_id": "F37-06",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-06-002",
-        "title": "Acceptance",
-        "feature_id": "F37-06",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07-001",
-        "title": "Deliverables",
-        "feature_id": "F37-07",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-07-002",
-        "title": "Acceptance",
-        "feature_id": "F37-07",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-001",
-        "title": "Growth Path 1 -- Same-PR Rule (day-to-day)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-002",
-        "title": "Growth Path 2 -- Sprint-Close Audit (every sprint)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-003",
-        "title": "Growth Path 3 -- Ecosystem Expansion (new service or repository)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-004",
-        "title": "Growth Path 4 -- New Model Layer (extending the schema)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-005",
-        "title": "Validation Gate (all paths)",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-006",
-        "title": "Drift Signals -- How to Know the Model Is Stale",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-08-007",
-        "title": "Governance",
-        "feature_id": "F37-08",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-001",
-        "title": "Stamp transaction_function_type + story_ids on endpoints",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-002",
-        "title": "Stamp data_function_type on containers",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-003",
-        "title": "Seed sprints.json -- Sprint-Backlog + Sprint 1-7",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-004",
-        "title": "DM-MAINT-WI-2 -- Same-PR enforcement check",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-005",
-        "title": "DM-MAINT-WI-3 -- Scheduled drift detection",
-        "feature_id": "F37-10",
-        "done": false,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-10-006",
-        "title": "E-11-WI-7 -- Mermaid graph output",
-        "feature_id": "F37-10",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-HEALTH-001",
-        "title": "GET /health",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-READY-001",
-        "title": "GET /ready",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-MODEL-001",
-        "title": "GET /model/agent-summary",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-MODEL-002",
-        "title": "GET /model/agent-guide",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-FILTER-001",
-        "title": "GET /model/endpoints/filter",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-IMPACT-001",
-        "title": "GET /model/impact",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-GRAPH-001",
-        "title": "GET /model/graph",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-EDGETYPES-001",
-        "title": "GET /model/graph/edge-types",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-FP-001",
-        "title": "GET /model/fp/estimate",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-SEED-001",
-        "title": "POST /model/admin/seed",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-EXPORT-001",
-        "title": "POST /model/admin/export",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-COMMIT-001",
-        "title": "POST /model/admin/commit",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-VALIDATE-001",
-        "title": "GET /model/admin/validate",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-AUDIT-001",
-        "title": "GET /model/admin/audit",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
-      {
-        "id": "F37-BACKFILL-001",
-        "title": "POST /model/admin/backfill",
-        "feature_id": "F37-API",
-        "done": true,
-        "source": "veritas-plan.json"
-      },
       {
         "id": "F37-FK-001",
         "title": "Implement string-array validator",
@@ -1681,8 +523,18 @@
         "story_tags": []
       },
       {
+        "path": "CODE_OF_CONDUCT.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
         "path": "commit-result.txt",
         "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "CONTRIBUTING.md",
+        "type": "doc",
         "story_tags": []
       },
       {
@@ -1708,6 +560,11 @@
       {
         "path": "INTEGRATION-LM-TRACING.md",
         "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "LICENSE",
+        "type": "other",
         "story_tags": []
       },
       {
@@ -1756,6 +613,11 @@
         "story_tags": []
       },
       {
+        "path": "RCA-COSMOS-EMPTY-20260302.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
         "path": "README-SPRINT-1.md",
         "type": "doc",
         "story_tags": []
@@ -1773,6 +635,11 @@
       {
         "path": "requirements.txt",
         "type": "other",
+        "story_tags": []
+      },
+      {
+        "path": "SECURITY.md",
+        "type": "doc",
         "story_tags": []
       },
       {
@@ -1841,11 +708,6 @@
         "story_tags": []
       },
       {
-        "path": ".vscode/tasks.json",
-        "type": "data",
-        "story_tags": []
-      },
-      {
         "path": ".pytest_cache/.gitignore",
         "type": "other",
         "story_tags": []
@@ -1858,6 +720,11 @@
       {
         "path": ".pytest_cache/README.md",
         "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": ".vscode/tasks.json",
+        "type": "data",
         "story_tags": []
       },
       {
@@ -1904,6 +771,46 @@
       {
         "path": "api/__init__.py",
         "type": "code",
+        "story_tags": []
+      },
+      {
+        "path": "docs/evidence-layer-enhancement-20260301.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-BENEFIT-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-COMPLETE-PLAN-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-EXECUTION-PLAN-2026-03-01.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-OPUS-FINDINGS-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-OPUS-REVIEW-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/FK-ENHANCEMENT-RESEARCH-2026-02-28.md",
+        "type": "doc",
+        "story_tags": []
+      },
+      {
+        "path": "docs/SESSION-RECORD-2026-02-27-TO-2026-03-01.md",
+        "type": "doc",
         "story_tags": []
       },
       {
@@ -2147,46 +1054,6 @@
         ]
       },
       {
-        "path": "docs/evidence-layer-enhancement-20260301.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-BENEFIT-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-COMPLETE-PLAN-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-EXECUTION-PLAN-2026-03-01.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-OPUS-FINDINGS-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-OPUS-REVIEW-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/FK-ENHANCEMENT-RESEARCH-2026-02-28.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
-        "path": "docs/SESSION-RECORD-2026-02-27-TO-2026-03-01.md",
-        "type": "doc",
-        "story_tags": []
-      },
-      {
         "path": "model/agents.json",
         "type": "data",
         "story_tags": []
@@ -2353,6 +1220,176 @@
       },
       {
         "path": "model/wbs.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/agents.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/components.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/connections.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/containers.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/cp_agents.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/cp_policies.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/cp_skills.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/cp_workflows.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/decisions.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/endpoints.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/environments.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/eva-model.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/evidence.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/feature_flags.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/hooks.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/infrastructure.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/literals.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/mcp_servers.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/milestones.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/personas.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/planes.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/projects.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/prompts.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/requirements.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/risks.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/runbooks.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/schemas.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/screens.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/security_controls.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/services.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/sprints.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/traces.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/ts_types.json",
+        "type": "data",
+        "story_tags": []
+      },
+      {
+        "path": "model-backup-20260302-1356/wbs.json",
         "type": "data",
         "story_tags": []
       },
@@ -2776,6 +1813,11 @@
         "story_tags": []
       },
       {
+        "path": ".github/workflows/pytest.yml",
+        "type": "config",
+        "story_tags": []
+      },
+      {
         "path": ".github/workflows/sprint-agent.yml",
         "type": "config",
         "story_tags": [
@@ -2785,6 +1827,11 @@
       },
       {
         "path": ".github/workflows/validate-model.yml",
+        "type": "config",
+        "story_tags": []
+      },
+      {
+        "path": ".github/workflows/veritas-audit.yml",
         "type": "config",
         "story_tags": []
       },
