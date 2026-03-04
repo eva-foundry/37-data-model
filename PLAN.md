@@ -1,3 +1,13 @@
+<!-- eva-primed-plan -->
+
+## EVA Ecosystem Tools
+
+- Data model: GET http://localhost:8010/model/projects/37-data-model
+- 29-foundry agents: C:\AICOE\eva-foundation\29-foundry\agents\
+- 48-eva-veritas audit: run audit_repo MCP tool
+
+---
+
 # Project Plan
 
 <!-- veritas-normalized 2026-02-25 prefix=F37 source=PLAN.md -->

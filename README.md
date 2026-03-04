@@ -1,5 +1,26 @@
 # EVA Data Model
 
+<!-- eva-primed -->
+<!-- foundation-primer: 2026-03-03 by agent:copilot -->
+
+## EVA Ecosystem Integration
+
+| Tool | Purpose | How to Use |
+|------|---------|------------|
+| 37-data-model | Single source of truth for all project entities | GET http://localhost:8010/model/projects/37-data-model |
+| 29-foundry | Agentic capabilities (search, RAG, eval, observability) | C:\AICOE\eva-foundation\29-foundry |
+| 48-eva-veritas | Trust score and coverage audit | MCP tool: audit_repo / get_trust_score |
+| 07-foundation-layer | Copilot instructions primer + governance templates | MCP tool: apply_primer / audit_project |
+
+**Agent rule**: Query the data model API before reading source files.
+```powershell
+Invoke-RestMethod "http://localhost:8010/model/agent-guide"   # complete protocol
+Invoke-RestMethod "http://localhost:8010/model/agent-summary" # all layer counts
+```
+
+---
+
+
 **Component:** 37-data-model  
 **Status:** GA -- validate-model PASS 0 violations - as of 2026-03-01 9:40 PM ET: 32 layers - 187 endpoints - 46 screens - 375 literals - 53 projects - 4,152+ total objects - ACA deployed (Cosmos 24x7) - MTI=100 - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
 **Last Updated:** March 1, 2026 9:40 PM ET -- Evidence Layer documented as billion-dollar competitive moat
@@ -27,20 +48,20 @@
 
 ## Purpose
 
-The EVA Data Model is the **single source of truth for the entire EVA ecosystem** — a
+The EVA Data Model is the **single source of truth for the entire EVA ecosystem** ? a
 machine-queryable repository of every significant object in the application and how objects
 relate to each other across service, UI, and infrastructure boundaries.
 
 The principle: every significant object in the system is a typed node with explicit
 cross-references. Renaming a field, changing an endpoint, or adding a screen is a
-model operation first — not a grep operation.
+model operation first ? not a grep operation.
 
 EVA Data Model applies that principle to the modern cloud stack:
 
 > **If it is not in the model, agents will rediscover it by reading source files every session.**
 > That is a 10-turn grep spiral. The model makes it a 3-line PowerShell query.
 
-> **Agents: start with [USER-GUIDE.md](USER-GUIDE.md)** — a task-by-task guide covering
+> **Agents: start with [USER-GUIDE.md](USER-GUIDE.md)** ? a task-by-task guide covering
 > bootstrap, context gathering, implementation, debugging, refactoring, and the model write cycle.
 > Every EVA task should open with a model query, not a file read.
 
@@ -58,8 +79,8 @@ EVA Data Model applies that principle to the modern cloud stack:
 | **37-data-model / model-api** | **FastAPI model service -- see docs/library/03-DATA-MODEL-REFERENCE.md for layer catalog** | **8010** |
 | 17-apim | Azure API Management | gateway |
 | 29-foundry | Azure AI Foundry | models |
-| 16-engineered-case-law | Jurisprudence pipeline | — |
-| 20-AssistMe | Legacy assistant | — |
+| 16-engineered-case-law | Jurisprudence pipeline | ? |
+| 20-AssistMe | Legacy assistant | ? |
 
 ---
 
@@ -67,38 +88,38 @@ EVA Data Model applies that principle to the modern cloud stack:
 
 ```
 Layer 0  services        What services exist, their ports, tech stack, health endpoint
-Layer 1  personas        Who can act — admin, translator, viewer, auditor, machine-agent
+Layer 1  personas        Who can act ? admin, translator, viewer, auditor, machine-agent
 Layer 2  feature_flags   What features each persona can access (maps to @require_feature)
-Layer 3  containers      Cosmos DB containers — fields, partitionKey, indexes
-Layer 4  endpoints       Every HTTP endpoint — method, path, auth, request, response, cosmos_reads/writes
-Layer 5  screens         Every React screen — route, components, api_calls, fields_displayed
-Layer 6  literals        Every UI string key — default_en, default_fr, which screen uses it
-Layer 7  agents          Agent-fleet agents — input, output, LLM deployment, skill file
+Layer 3  containers      Cosmos DB containers ? fields, partitionKey, indexes
+Layer 4  endpoints       Every HTTP endpoint ? method, path, auth, request, response, cosmos_reads/writes
+Layer 5  screens         Every React screen ? route, components, api_calls, fields_displayed
+Layer 6  literals        Every UI string key ? default_en, default_fr, which screen uses it
+Layer 7  agents          Agent-fleet agents ? input, output, LLM deployment, skill file
 Layer 8  infrastructure  APIM routes, Key Vault secrets, Azure resource names
-Layer 9  requirements    Epics/REQs → satisfied_by endpoints + screens → test coverage
+Layer 9  requirements    Epics/REQs ? satisfied_by endpoints + screens ? test coverage
 
 # Control-plane catalog (EVA Automation Operating Model)
-Layer 10 planes          Three-plane taxonomy — GitHub / Azure / ADO
-Layer 11 connections     System connections catalog — ADO, GitHub App, Azure Managed Identity
-Layer 12 environments    Environment registry — DEV / STG / PROD with approval gates
+Layer 10 planes          Three-plane taxonomy ? GitHub / Azure / ADO
+Layer 11 connections     System connections catalog ? ADO, GitHub App, Azure Managed Identity
+Layer 12 environments    Environment registry ? DEV / STG / PROD with approval gates
 Layer 13 cp_skills       Control-plane skills catalog (7 skills across 3 planes)
 Layer 14 cp_agents       Control-plane agents (gh-dev, gh-ci, azure-deploy, ado-scrum)
-Layer 15 runbooks        Runbook catalog — RB-001 to RB-004 with steps, evidence, RBAC
-Layer 16 cp_workflows    Compiled workflow definitions — wf-pr-ci-evidence, wf-promote-dev
-Layer 17 cp_policies     Guardrails — PR-only, evidence-required, env-approval-gates
+Layer 15 runbooks        Runbook catalog ? RB-001 to RB-004 with steps, evidence, RBAC
+Layer 16 cp_workflows    Compiled workflow definitions ? wf-pr-ci-evidence, wf-promote-dev
+Layer 17 cp_policies     Guardrails ? PR-only, evidence-required, env-approval-gates
 
 # Frontend object layers (E-01/E-02/E-03)
-Layer 18 components      React component catalog — Fluent UI v9, i18next, WCAG 2.1 AA
-Layer 19 hooks           Custom React hooks — useAnnouncer, useFeatureFlags, useRBAC
-Layer 20 ts_types        TypeScript type definitions — interfaces, enums, union types
+Layer 18 components      React component catalog ? Fluent UI v9, i18next, WCAG 2.1 AA
+Layer 19 hooks           Custom React hooks ? useAnnouncer, useFeatureFlags, useRBAC
+Layer 20 ts_types        TypeScript type definitions ? interfaces, enums, union types
 
 # Catalog & Ops (added post-Phase-4)
-Layer 21 mcp_servers     MCP server catalog — azure-search, cosmos, blob (29-foundry)
-Layer 22 prompts         Prompty template catalog — system prompts, few-shot patterns (29-foundry)
+Layer 21 mcp_servers     MCP server catalog ? azure-search, cosmos, blob (29-foundry)
+Layer 22 prompts         Prompty template catalog ? system prompts, few-shot patterns (29-foundry)
 Layer 23 security_controls OWASP LLM Top 10 + ITSG-33 security controls
-Layer 24 runbooks        Operational runbook catalog — RB-001 to RB-004
+Layer 24 runbooks        Operational runbook catalog ? RB-001 to RB-004
 
-# Project plane (E-07/E-08) — waterfall WBS + agile scrum + CI/CD linkage
+# Project plane (E-07/E-08) ? waterfall WBS + agile scrum + CI/CD linkage
 Layer 25 projects        EVA Platform project catalog -- 19 projects, ADO epic IDs, maturity, goals, phase, dependencies
 Layer 26 wbs             Work Breakdown Structure -- program --> stream --> project --> deliverable --> sprint_block
 
@@ -108,14 +129,14 @@ Layer 28 milestones      RUP phase gates -- deliverables, sign_off_by, wbs_ids
 Layer 29 risks           3x3 risk matrix -- probability, impact, risk_score, mitigation_owner
 Layer 30 decisions       ADRs (Architecture Decision Records) -- context/decision/consequences, superseded_by, deciders
 
-# Observability plane (L11 — 2026-03-01) — proof-of-completion + LM call tracing
+# Observability plane (L11 ? 2026-03-01) ? proof-of-completion + LM call tracing
 Layer 31 evidence        DPDCA phase completions -- sprint_id, story_id, phase (D1/D2/P/D3/A), validation gates, merge blockers, metrics (cost, duration, coverage)
 Layer 32 traces          Emerging: LM call telemetry -- model, tokens, cost_usd, latency_ms, correlation_id
 ```
 
 ---
 
-## New: Evidence Layer (L11 Observability Plane) — Production Ready
+## New: Evidence Layer (L11 Observability Plane) ? Production Ready
 
 The **Evidence Layer** captures proof-of-completion for every story in the DPDCA cycle.
 Every phase (D1 Discover, D2 Audit, P Plan, D3 Do, A Act) produces an evidence receipt.
@@ -155,8 +176,8 @@ GET /model/evidence/ | Group-Object -Property phase | Select-Object Name, Count
 
 **Merge gates (CI/CD):**
 Evidence validation script (`scripts/evidence_validate.ps1`) blocks merge if:
-- `test_result = "FAIL"` — all tests must pass
-- `lint_result = "FAIL"` — all linting must pass
+- `test_result = "FAIL"` ? all tests must pass
+- `lint_result = "FAIL"` ? all linting must pass
 
 See [Evidence Layer Documentation](USER-GUIDE.md#evidence-layer--proof-of-completion) for complete usage.
 
@@ -168,7 +189,7 @@ All entity layers are available over HTTP on port **8010** (local dev) or via AC
 For complete layer catalog, see [docs/library/03-DATA-MODEL-REFERENCE.md](docs/library/03-DATA-MODEL-REFERENCE.md).
 
 ```powershell
-# Start (local / MemoryStore — auto-seeds from disk JSON)
+# Start (local / MemoryStore ? auto-seeds from disk JSON)
 $env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
 C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 # Docs: http://localhost:8010/docs
@@ -178,20 +199,20 @@ C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 |-------|--------------|
 | `GET /model/{layer}/` | List all objects in a layer (cached) |
 | `GET /model/{layer}/{id}` | Get one object; 404 if soft-deleted |
-| `PUT /model/{layer}/{id}` | Upsert — stamps audit columns (`created_*`, `modified_*`, `row_version`) |
+| `PUT /model/{layer}/{id}` | Upsert ? stamps audit columns (`created_*`, `modified_*`, `row_version`) |
 | `DELETE /model/{layer}/{id}` | Soft-delete (`is_active=false`) |
 | `GET /model/endpoints/filter` | Filter by `status`, `cosmos_writes`, `cosmos_reads`, `auth`, `feature_flag` |
 | `GET /model/impact?container=X` | Cross-layer impact: what endpoints/screens/agents break if X changes |
 | `POST /model/admin/seed` | Seed store from disk JSON (idempotent) |
-| `GET /model/admin/validate` | In-process validation — same checks as `validate-model.ps1` |
-| `GET /model/admin/audit` | Audit trail — last N writes across all layers |
+| `GET /model/admin/validate` | In-process validation ? same checks as `validate-model.ps1` |
+| `GET /model/admin/audit` | Audit trail ? last N writes across all layers |
 | `GET /model/graph` | Typed edge list across entity layers -- nodes, edges, BFS traversal, filters |
-| `GET /model/graph/edge-types` | Edge-type vocabulary (20 types: calls, reads, writes, depends_on, …) |
-| `POST /model/admin/export` | Export store → enriched JSON with full audit trail → `model/*.json` |
+| `GET /model/graph/edge-types` | Edge-type vocabulary (20 types: calls, reads, writes, depends_on, ?) |
+| `POST /model/admin/export` | Export store ? enriched JSON with full audit trail ? `model/*.json` |
 
-**Test evidence:** 40/41 pytest (T36 pre-existing only) · 0 violations · 60 `repo_line` coverage warnings (non-blocking)
+**Test evidence:** 40/41 pytest (T36 pre-existing only) ? 0 violations ? 60 `repo_line` coverage warnings (non-blocking)
 
-**Control-plane catalog routes** (layers 10–17):
+**Control-plane catalog routes** (layers 10?17):
 
 | Route | What it does |
 |-------|-------------|
@@ -204,23 +225,23 @@ C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 | `GET /model/cp_workflows` | List compiled workflow definitions |
 | `GET /model/cp_policies` | List guardrail policies |
 
-→ **Runtime records** (runs, step_runs, artifacts, evidence packs): see [40-eva-control-plane](../40-eva-control-plane/README.md) (port 8020)
+? **Runtime records** (runs, step_runs, artifacts, evidence packs): see [40-eva-control-plane](../40-eva-control-plane/README.md) (port 8020)
 
 ---
 
 ## Browser UI
 
-**Shipped:** February 25, 2026 10:14 ET — integrated into `31-eva-faces / portal-face`.
+**Shipped:** February 25, 2026 10:14 ET ? integrated into `31-eva-faces / portal-face`.
 
 Two routes are available to any user with the `view:model` permission (admin + analyst personas):
 
 | Route | Description |
 |-------|-------------|
 | `/model` | **Layer Browser** -- sidebar of all entity layers, live object count per layer, searchable EvaDataGrid, EvaDrawer detail panel with full JSON viewer |
-| `/model/report` | **Data Model Report** — 4-tab dashboard: Overview stats (total objects, ep breakdown, graph node/edge counts), Endpoint Matrix (by service/status), Edge Types, Layer Counts |
+| `/model/report` | **Data Model Report** ? 4-tab dashboard: Overview stats (total objects, ep breakdown, graph node/edge counts), Endpoint Matrix (by service/status), Edge Types, Layer Counts |
 
 **Implementation:**
-- `31-eva-faces/portal-face/src/api/modelApi.ts` — typed HTTP client; default base = ACA endpoint; override with `VITE_DATA_MODEL_URL` env var
+- `31-eva-faces/portal-face/src/api/modelApi.ts` ? typed HTTP client; default base = ACA endpoint; override with `VITE_DATA_MODEL_URL` env var
 - `31-eva-faces/portal-face/src/pages/ModelBrowserPage.tsx`
 - `31-eva-faces/portal-face/src/pages/ModelReportPage.tsx`
 - Permission gate: `view:model` added to `AuthContext.tsx` (`admin` + `analyst` personas)
@@ -238,11 +259,11 @@ Default for all portal-face API calls and veritas `model_audit` tool.
 
 > **Rule: query the HTTP API first. Never read source files when the model has the answer.**
 >
-> **📖 Full agent task guide: [USER-GUIDE.md](USER-GUIDE.md)**
+> **?? Full agent task guide: [USER-GUIDE.md](USER-GUIDE.md)**
 > Task-by-task patterns for bootstrap, context gathering, implementation, debugging,
 > refactoring, and the model write cycle. Read it before your first session.
 
-### Step 1 — Check if the API is up
+### Step 1 ? Check if the API is up
 
 ```powershell
 Invoke-RestMethod http://localhost:8010/health
@@ -256,7 +277,7 @@ $env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
 C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 ```
 
-### Step 2 — Query via HTTP (preferred)
+### Step 2 ? Query via HTTP (preferred)
 
 ```powershell
 # What does GET /v1/translations return?
@@ -280,10 +301,10 @@ Invoke-RestMethod "http://localhost:8010/model/impact/?container=translations"
 Invoke-RestMethod "http://localhost:8010/model/literals/" |
   Where-Object { $_.screens -contains 'TranslationsPage' }
 
-# Filter endpoints — stub only, writing to jobs container
+# Filter endpoints ? stub only, writing to jobs container
 Invoke-RestMethod "http://localhost:8010/model/endpoints/filter?status=stub&cosmos_writes=jobs"
 
-# ── E-09 / E-10 · Provenance ─────────────────────────────────────────────────
+# ?? E-09 / E-10 ? Provenance ?????????????????????????????????????????????????
 # Who created this endpoint and when? (E-09)
 $ep = Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/health"
 Write-Host "Created: $($ep.created_at) by $($ep.created_by)  v$($ep.row_version)"
@@ -297,7 +318,7 @@ code --goto "C:\AICOE\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
 $h = Invoke-RestMethod "http://localhost:8010/model/hooks/useTranslations"
 code --goto "C:\AICOE\eva-foundation\$($h.repo_path):$($h.repo_line)"
 
-# ── E-11 · Graph / DER (live) ────────────────────────────────────────────────
+# ?? E-11 ? Graph / DER (live) ????????????????????????????????????????????????
 # Edge objects: { from_id, from_layer, to_id, to_layer, edge_type, via_field }
 # Node objects: { id, layer, label, status }
 # Meta:         { node_count, edge_count, depth, duration_ms, ... }
@@ -310,7 +331,7 @@ Invoke-RestMethod "http://localhost:8010/model/graph/edge-types" |
 $g = Invoke-RestMethod "http://localhost:8010/model/graph/"
 Write-Host "nodes=$($g.meta.node_count)  edges=$($g.meta.edge_count)  ms=$($g.meta.duration_ms)"
 
-# BFS from TranslationsPage 2 hops deep (screen → endpoint → container)
+# BFS from TranslationsPage 2 hops deep (screen ? endpoint ? container)
 $g = Invoke-RestMethod "http://localhost:8010/model/graph/?node_id=TranslationsPage&depth=2"
 $g.edges | Select-Object from_id, from_layer, to_id, to_layer, edge_type | Format-Table
 
@@ -329,12 +350,12 @@ $callers | Select-Object from_id, to_id
 (Invoke-RestMethod "http://localhost:8010/model/graph/?edge_type=gated_by").edges |
     Where-Object { $_.to_id -eq "action.admin.translations" } | Select-Object from_id
 
-# Filter graph: only screens → endpoints
+# Filter graph: only screens ? endpoints
 Invoke-RestMethod "http://localhost:8010/model/graph/?from_layer=screens&to_layer=endpoints" |
   ForEach-Object { $_.edges } | Format-Table from_id, to_id
 ```
 
-### Fallback — file-based (offline / CI only)
+### Fallback ? file-based (offline / CI only)
 
 ```powershell
 $m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
@@ -346,20 +367,20 @@ $m.literals  | Where-Object { $_.screens -contains 'TranslationsPage' }
 
 ### Decision table
 
-| You want to… | Use |
+| You want to? | Use |
 |---|---|
 | Find an endpoint, screen, container, or persona | `GET /model/{layer}/{id}` |
 | List all objects in a layer | `GET /model/{layer}/` |
-| Filter endpoints by status / auth / cosmos_writes | `GET /model/endpoints/filter?…` |
+| Filter endpoints by status / auth / cosmos_writes | `GET /model/endpoints/filter??` |
 | Know what breaks if a container field changes | `GET /model/impact/?container=X` |
-| **Traverse object relationships (DER/ERD — live)** | **`GET /model/graph`** |
+| **Traverse object relationships (DER/ERD ? live)** | **`GET /model/graph`** |
 | Traverse N hops from a specific node | `GET /model/graph?node_id=X&depth=2` |
 | List all edge types in the model | `GET /model/graph/edge-types` |
 | Filter edges by type, source layer, or target layer | `GET /model/graph?edge_type=calls&from_layer=screens` |
-| Navigate to exact source line (`code --goto`) | `GET /model/{layer}/{id}` → `.repo_path` + `.repo_line` |
+| Navigate to exact source line (`code --goto`) | `GET /model/{layer}/{id}` ? `.repo_path` + `.repo_line` |
 | Who created/modified an object, which file | `.source_file`, `.created_by`, `.created_at`, `.modified_by`, `.row_version` |
 | Update a model object | `PUT /model/{layer}/{id}` (stamps audit columns, increments `row_version`) |
-| Materialise audit trail to disk (cold-deploy artifact) | `POST /model/admin/export` → `assemble-model.ps1` |
+| Materialise audit trail to disk (cold-deploy artifact) | `POST /model/admin/export` ? `assemble-model.ps1` |
 | Audit who changed what | `GET /model/admin/audit` |
 | Validate all cross-refs pass | `GET /model/admin/validate` |
 | Seed Cosmos from disk JSON (first connect) | `POST /model/admin/seed` |
@@ -371,13 +392,13 @@ $m.literals  | Where-Object { $_.screens -contains 'TranslationsPage' }
 ```
 37-data-model/
   README.md                  This file
-  ANNOUNCEMENT.md            GA announcement — what the model contains, accuracy boundaries
+  ANNOUNCEMENT.md            GA announcement ? what the model contains, accuracy boundaries
   USER-GUIDE.md              Agent skills playbook, query examples by audience
   PLAN.md                    Layer-by-layer build plan
   ACCEPTANCE.md              Done criteria per layer
   STATUS.md                  Current state and sprint history
 
-  schema/                    JSON Schema — what each object must look like
+  schema/                    JSON Schema ? what each object must look like
     service.schema.json
     persona.schema.json
     feature_flag.schema.json
@@ -389,7 +410,7 @@ $m.literals  | Where-Object { $_.screens -contains 'TranslationsPage' }
     infrastructure.schema.json
     requirement.schema.json
 
-  model/                     Actual EVA data — populated incrementally
+  model/                     Actual EVA data ? populated incrementally
     services.json
     personas.json
     feature_flags.json
@@ -412,7 +433,7 @@ $m.literals  | Where-Object { $_.screens -contains 'TranslationsPage' }
     eva-model.json            Assembled root (generated by scripts/assemble-model.ps1)
 
   scripts/
-    assemble-model.ps1        Concatenate layer files → eva-model.json
+    assemble-model.ps1        Concatenate layer files ? eva-model.json
     validate-model.ps1        Check model against schema, report violations
     impact-analysis.ps1       Given a field/endpoint/screen, report what else changes
     query-model.ps1           Interactive PowerShell query REPL
@@ -441,8 +462,8 @@ The model is updated **in the same PR that changes the source**. It is never def
 
 ## Relationship to artifacts.json
 
-`33-eva-brain-v2/docs/artifacts.json` is a **file registry** — one service, file-level metadata.
-`37-data-model/model/eva-model.json` is the **application object model** — all services, semantic layer.
+`33-eva-brain-v2/docs/artifacts.json` is a **file registry** ? one service, file-level metadata.
+`37-data-model/model/eva-model.json` is the **application object model** ? all services, semantic layer.
 
 They answer different questions:
 
@@ -451,7 +472,7 @@ They answer different questions:
 | Which Python files have < 70% coverage? | artifacts.json |
 | What does `GET /v1/translations` return? | eva-model.json |
 | Which screens break if I rename a Cosmos field? | eva-model.json |
-| Which route file implements that endpoint? | artifacts.json → endpoints.json cross-ref |
+| Which route file implements that endpoint? | artifacts.json ? endpoints.json cross-ref |
 
 ---
 
@@ -492,7 +513,7 @@ See [PLAN.md](PLAN.md) F37-10 for full Sprint 8-9 work items.
 | DM-MAINT-WI-3 Drift detection | 3 | NOT STARTED |
 | E-11-WI-7 Mermaid output | 3 | NOT STARTED |
 
-### Open Accuracy Gaps (validator passes — not blocking)
+### Open Accuracy Gaps (validator passes ? not blocking)
 
 | Gap | Ticket | Detail |
 |-----|--------|--------|
@@ -500,9 +521,9 @@ See [PLAN.md](PLAN.md) F37-10 for full Sprint 8-9 work items.
 | `cosmos-account.azure_resource_name` = `eva-cosmos-account` | DM-CAT-WI-12 | Actual: `marco-sandbox-cosmos` |
 | `appinsights.type` = `foundry_project` | Pre-existing | Should be `application_insights` |
 | 5 admin-face screens: `components[]` + `hooks[]` empty | Phase 6 | IngestionRunsPage, SearchHealthPage, SupportTicketsPage, FeatureFlagsPage, RbacRolesPage |
-| Route mismatch: `/admin/audit/logs` (model) ≠ `/admin/audit` (App.tsx) | Phase 6 | Same for RbacPage |
+| Route mismatch: `/admin/audit/logs` (model) ? `/admin/audit` (App.tsx) | Phase 6 | Same for RbacPage |
 | 12 eva-devbench + eva-jp-spark screen stubs: `api_calls`/`components` empty | Phase 6 | |
-| `ChatPane` screen: id≠filename (`ChatInterface.tsx`) — repo_line not found | E-10 follow-up | Fix: align id with file name or add explicit `repo_line` field |
+| `ChatPane` screen: id?filename (`ChatInterface.tsx`) ? repo_line not found | E-10 follow-up | Fix: align id with file name or add explicit `repo_line` field |
 | 10 hooks + 18 endpoints missing `repo_line` (files not on this clone) | E-10 follow-up | Run backfill on full monorepo checkout |
 
 ### Delivered Sprint 8
@@ -510,11 +531,11 @@ See [PLAN.md](PLAN.md) F37-10 for full Sprint 8-9 work items.
 | Deliverable | Notes |
 |-------------|-------|
 | **E-09 Provenance export** | 636 objects enriched with `source_file`, `created_by`, `row_version` on all entity layers |
-| **E-10 `repo_line` backfill** | 44 objects stamped · `scripts/backfill-repo-lines.py` · validator WARNs for gaps |
-| **E-11 `GET /model/graph`** | 304 nodes / 533 edges · 20 edge types · BFS traversal · 7/7 tests |
+| **E-10 `repo_line` backfill** | 44 objects stamped ? `scripts/backfill-repo-lines.py` ? validator WARNs for gaps |
+| **E-11 `GET /model/graph`** | 304 nodes / 533 edges ? 20 edge types ? BFS traversal ? 7/7 tests |
 | **3 PM Plane feature flags** | `action.programme`, `action.ado_sync`, `action.ado_write` (total flags: 13) |
-| **`tests/test_graph.py`** T40–T46 | 7 / 7 passing |
-| **`tests/test_provenance.py`** T50–T52 | 3 / 3 passing |
+| **`tests/test_graph.py`** T40?T46 | 7 / 7 passing |
+| **`tests/test_provenance.py`** T50?T52 | 3 / 3 passing |
 | **`scripts/coverage-gaps.ps1`** (DM-MAINT-WI-0) | 89 gaps: 77 ep stubs, 9 unwired flags, 2 screens, 1 component |
 | Seed pipeline fixed: `bulk_load` replaces per-object `upsert` | Prevents `row_version` inflation on restart |
 | `POST /model/admin/export` endpoint | Closes write-cycle gap |
