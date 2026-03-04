@@ -1,0 +1,184 @@
+name: Sync Evidence from 51-ACA
+
+on:
+  # Schedule: Daily at 08:00 UTC
+  schedule:
+    - cron: '0 8 * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      verbose:
+        description: 'Enable verbose logging'
+        required: false
+        default: 'false'
+  
+  # Trigger on PRs merged to 51-ACA (if in same repo)
+  # Note: If 51-ACA is separate repo, use repository dispatch instead
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  sync-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout 37-data-model
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Checkout 51-ACA (as submodule or sibling)
+        run: |
+          # If repos are siblings in eva-foundry workspace
+          cd ..
+          if [ ! -d "51-ACA" ]; then
+            git clone https://github.com/eva-foundry/51-ACA.git 51-ACA
+          fi
+          cd 51-ACA
+          git pull origin main
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsonschema pyyaml
+
+      - name: Run evidence sync
+        id: sync
+        run: |
+          cd $GITHUB_WORKSPACE
+          python scripts/sync-evidence-from-51-aca.py \
+            "../51-ACA" \
+            "." \
+            > sync-output.log 2>&1
+          
+          SYNC_EXIT_CODE=$?
+          echo "exit_code=$SYNC_EXIT_CODE" >> $GITHUB_OUTPUT
+          
+          # Check for changes
+          if git diff --quiet model/evidence.json; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+          
+          # Capture record count
+          RECORD_COUNT=$(python -c "import json; d=json.load(open('model/evidence.json')); print(len(d.get('objects', [])))")
+          echo "record_count=$RECORD_COUNT" >> $GITHUB_OUTPUT
+          
+          cat sync-output.log
+
+      - name: Validate evidence.json schema
+        if: steps.sync.outputs.has_changes == 'true'
+        run: |
+          python -c "
+          import json
+          import jsonschema
+          
+          with open('model/evidence.json') as f:
+              data = json.load(f)
+          
+          with open('schema/evidence.schema.json') as f:
+              schema = json.load(f)
+          
+          errors = []
+          for i, obj in enumerate(data.get('objects', [])):
+              try:
+                  jsonschema.validate(instance=obj, schema=schema)
+              except jsonschema.ValidationError as e:
+                  errors.append(f'Record {i} ({obj.get(\"id\")}): {e.message}')
+          
+          if errors:
+              print(f'[ERROR] {len(errors)} validation errors found:')
+              for err in errors[:10]:
+                  print(f'  {err}')
+              exit(1)
+          else:
+              print(f'[PASS] All {len(data.get(\"objects\", []))} records validated')
+          "
+
+      - name: Check merge-blocking gates
+        if: steps.sync.outputs.has_changes == 'true'
+        run: |
+          python -c "
+          import json
+          
+          with open('model/evidence.json') as f:
+              data = json.load(f)
+          
+          test_fails = []
+          lint_fails = []
+          
+          for obj in data.get('objects', []):
+              validation = obj.get('validation', {})
+              if validation.get('test_result') == 'FAIL':
+                  test_fails.append(obj.get('id'))
+              if validation.get('lint_result') == 'FAIL':
+                  lint_fails.append(obj.get('id'))
+          
+          if test_fails or lint_fails:
+              print('[WARN] Merge-blocking gates detected:')
+              if test_fails:
+                  print(f'  Test failures ({len(test_fails)}): {test_fails[:5]}')
+              if lint_fails:
+                  print(f'  Lint failures ({len(lint_fails)}): {lint_fails[:5]}')
+          else:
+              print('[PASS] No merge-blocking gates (test_result=FAIL or lint_result=FAIL)')
+          "
+
+      - name: Commit changes
+        if: steps.sync.outputs.has_changes == 'true'
+        run: |
+          git config user.name "Evidence Sync Bot"
+          git config user.email "bot@eva-foundry.local"
+          
+          RECORD_COUNT=${{ steps.sync.outputs.record_count }}
+          
+          git add model/evidence.json sync-evidence-report.json
+          git commit -m "chore: sync evidence from 51-ACA ($RECORD_COUNT records)
+          
+          Automated evidence layer synchronization.
+          
+          Evidence Records: $RECORD_COUNT
+          From: 51-ACA/.eva/evidence/
+          To: 37-data-model/model/evidence.json
+          
+          Workflow: sync-51-aca-evidence.yml
+          GitHub: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          
+          [skip ci]"
+
+      - name: Push changes
+        if: steps.sync.outputs.has_changes == 'true'
+        run: |
+          git push origin main
+
+      - name: Report sync results
+        if: always()
+        run: |
+          echo "## Evidence Sync Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: $([[ ${{ steps.sync.outputs.exit_code }} == '0' ]] && echo '✅ PASS' || echo '❌ FAIL')" >> $GITHUB_STEP_SUMMARY
+          echo "**Records**: ${{ steps.sync.outputs.record_count }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Changes**: ${{ steps.sync.outputs.has_changes }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Log" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          tail -50 sync-output.log >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
+      - name: Build notifications (future)
+        if: failure()
+        run: |
+          echo "Future: Send Slack/Teams notification on failure"
+          # Placeholder for Slack/Teams webhook integration
