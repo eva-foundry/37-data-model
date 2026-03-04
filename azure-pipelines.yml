@@ -1,0 +1,475 @@
+# Azure Pipelines Configuration for Evidence Synchronization
+# File: azure-pipelines.yml
+# Purpose: Automated daily sync of evidence records from 51-ACA to 37-data-model
+# Trigger: Daily at 08:00 UTC + Manual via "Run pipeline" button in Azure DevOps UI
+# Status: Phase 2 - Ready for deployment
+
+trigger:
+  schedule:
+  - cron: "0 8 * * *"
+    displayName: "Daily evidence sync (08:00 UTC)"
+    branches:
+      include:
+      - main
+    always: false  # Only run if there are changes on main
+  - cron: "0 */4 * * *"
+    displayName: "4-hourly evidence sync (backup)"
+    branches:
+      include:
+      - main
+    always: false
+
+# Disable CI triggers (only scheduled or manual)
+pr: none
+ci: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+  timeoutInMinutes: 15
+
+variables:
+  pythonVersion: '3.11'
+  buildConfiguration: 'Release'
+  WORK_DIR: $(System.DefaultWorkingDirectory)
+  ARTIFACT_STAGING: $(Build.ArtifactStagingDirectory)
+
+stages:
+- stage: Setup
+  displayName: 'Setup & Validation'
+  jobs:
+  - job: ValidateEnvironment
+    displayName: 'Validate Environment'
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+        addToPath: true
+      displayName: 'Use Python $(pythonVersion)'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Environment Information ==="
+          echo "OS: $(Agent.OS)"
+          echo "Python: $(python --version)"
+          echo "Pip: $(pip --version)"
+          echo "Git: $(git --version)"
+          echo "Working Directory: $(WORK_DIR)"
+          echo ""
+          echo "=== Repository Structure ==="
+          ls -la $(WORK_DIR)/scripts/ 2>/dev/null | grep sync || echo "⚠ Sync scripts not found"
+          ls -la $(WORK_DIR)/model/ 2>/dev/null | head -10
+      displayName: 'Display Environment Info'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "Verifying required files..."
+          [ -f "$(WORK_DIR)/scripts/sync-evidence-from-51-aca.py" ] \
+            && echo "✓ Python sync script found" \
+            || (echo "✗ Python sync script missing" && exit 1)
+          
+          [ -f "$(WORK_DIR)/model/evidence.json" ] \
+            && echo "✓ Evidence model found" \
+            || (echo "✗ Evidence model missing" && exit 1)
+          
+          [ -f "$(WORK_DIR)/schema/evidence.schema.json" ] \
+            && echo "✓ Evidence schema found" \
+            || (echo "✗ Evidence schema missing" && exit 1)
+      displayName: 'Verify Required Files'
+
+- stage: Sync
+  displayName: 'Synchronize Evidence Layer'
+  dependsOn: Setup
+  condition: succeeded()
+  jobs:
+  
+  - job: FetchSources
+    displayName: 'Fetch Source Evidence (51-ACA)'
+    steps:
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Clone sibling repo 51-ACA to parent directory
+          echo "Cloning 51-ACA repository..."
+          cd $(Pipeline.Workspace)
+          if [ -d "51-ACA" ]; then
+            echo "  51-ACA already exists, skipping clone"
+            ls -la 51-ACA/.eva/evidence/ 2>/dev/null | head -5
+          else
+            echo "  Cloning 51-ACA..."
+            # Use the same organization URL as current repo
+            REPO_URL=$(git -C $(WORK_DIR) config --get remote.origin.url)
+            ORG_URL=$(echo "$REPO_URL" | sed 's|/[^/]*$||' | sed 's|/[^/]*$||')
+            
+            git clone --depth=1 \
+              "${ORG_URL}/51-ACA" \
+              "51-ACA" \
+              && echo "✓ Clone successful" \
+              || (echo "✗ Clone failed" && exit 1)
+          fi
+          
+          # Verify evidence directory exists
+          [ -d "51-ACA/.eva/evidence/" ] \
+            && echo "✓ Evidence directory found: $(ls 51-ACA/.eva/evidence/ | wc -l) files" \
+            || (echo "✗ Evidence directory not found" && exit 1)
+      displayName: 'Clone 51-ACA Repository'
+      continueOnError: false
+  
+  - job: RunSync
+    displayName: 'Run Evidence Synchronization'
+    dependsOn: FetchSources
+    condition: succeeded()
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+        addToPath: true
+      displayName: 'Use Python $(pythonVersion)'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Starting Evidence Sync ==="
+          echo "Source: $(Pipeline.Workspace)/51-ACA"
+          echo "Target: $(WORK_DIR)"
+          echo ""
+          
+          cd $(WORK_DIR)
+          
+          # Run sync script
+          python scripts/sync-evidence-from-51-aca.py \
+            "$(Pipeline.Workspace)/51-ACA" \
+            "$(WORK_DIR)" \
+            2>&1 | tee sync.log
+          
+          EXIT_CODE=${PIPESTATUS[0]}
+          
+          echo ""
+          echo "=== Sync Exit Code: $EXIT_CODE ==="
+          
+          exit $EXIT_CODE
+      displayName: 'Execute Sync Script'
+      timeoutInMinutes: 10
+      continueOnError: false
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Sync Report ==="
+          if [ -f "$(WORK_DIR)/sync-evidence-report.json" ]; then
+            cat $(WORK_DIR)/sync-evidence-report.json | jq . || cat $(WORK_DIR)/sync-evidence-report.json
+          else
+            echo "⚠ No sync report found"
+          fi
+      displayName: 'Display Sync Report'
+      condition: always()
+
+- stage: Validate
+  displayName: 'Validate & Quality Checks'
+  dependsOn: Sync
+  condition: succeeded()
+  jobs:
+  
+  - job: SchemaValidation
+    displayName: 'Schema Validation'
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+        addToPath: true
+      displayName: 'Use Python $(pythonVersion)'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          pip install jsonschema
+      displayName: 'Install Dependencies'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Schema Validation ==="
+          python -c "
+          import json
+          from jsonschema import validate, ValidationError
+          
+          try:
+              with open('model/evidence.json') as f:
+                  data = json.load(f)
+              with open('schema/evidence.schema.json') as f:
+                  schema = json.load(f)
+              
+              print(f'Validating {len(data[\"objects\"])} records...')
+              validate(instance=data, schema=schema)
+              print('✓ All records passed schema validation')
+              
+          except ValidationError as e:
+              print(f'✗ Validation failed: {e.message}')
+              print(f'  Path: {list(e.path)}')
+              print(f'  Schema path: {list(e.schema_path)}')
+              raise
+          except Exception as e:
+              print(f'✗ Error: {e}')
+              raise
+          "
+        workingDirectory: '$(WORK_DIR)'
+      displayName: 'Validate JSON Schema'
+      continueOnError: false
+  
+  - job: MergingGates
+    displayName: 'Check Merge-Blocking Gates'
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '$(pythonVersion)'
+        addToPath: true
+      displayName: 'Use Python $(pythonVersion)'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Merge-Blocking Gate Analysis ==="
+          
+          python -c "
+          import json
+          
+          with open('model/evidence.json') as f:
+              data = json.load(f)
+          
+          total = len(data['objects'])
+          test_fails = [o for o in data['objects'] if o['validation'].get('test_result') == 'FAIL']
+          lint_fails = [o for o in data['objects'] if o['validation'].get('lint_result') == 'FAIL']
+          
+          print(f'Total records: {total}')
+          print(f\"Test failures (MERGE-BLOCKING): {len(test_fails)}\")
+          print(f\"Lint failures (MERGE-BLOCKING): {len(lint_fails)}\")
+          print()
+          
+          if len(test_fails) > 0:
+              print('Test Failures:')
+              for record in test_fails[:5]:  # Show first 5
+                  print(f\"  - {record['id']}: {record.get('title', 'N/A')}\")
+              if len(test_fails) > 5:
+                  print(f\"  ... and {len(test_fails) - 5} more\")
+              print()
+          
+          if len(lint_fails) > 0:
+              print('Lint Failures:')
+              for record in lint_fails[:5]:  # Show first 5
+                  print(f\"  - {record['id']}: {record.get('title', 'N/A')}\")
+              if len(lint_fails) > 5:
+                  print(f\"  ... and {len(lint_fails) - 5} more\")
+              print()
+          
+          # Fail if merge gates are blocked
+          if len(test_fails) > 0 or len(lint_fails) > 0:
+              print('##vso[task.logissue type=warning]Merge-blocking failures detected')
+              # Note: Don't exit 1 here - we want to still commit the evidence
+              # but mark it with warnings for review
+          else:
+              print('✓ No merge-blocking failures')
+          "
+        workingDirectory: '$(WORK_DIR)'
+      displayName: 'Analyze Merge Gates'
+
+- stage: Commit
+  displayName: 'Commit Changes'
+  dependsOn: Validate
+  condition: succeeded()
+  jobs:
+  
+  - job: CommitChanges
+    displayName: 'Commit & Push to Repository'
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Checking for Changes ==="
+          
+          # Configure git
+          git config user.name "Azure Pipelines Bot"
+          git config user.email "pipelines@eva.local"
+          
+          # Check what changed
+          echo "Staged changes:"
+          git add model/evidence.json sync-evidence-report.json 2>/dev/null || true
+          
+          if git diff --cached --quiet; then
+            echo "✓ No changes to commit"
+            echo "##vso[task.setvariable variable=HAS_CHANGES]false"
+          else
+            echo "✓ Changes detected:"
+            git diff --cached --name-only
+            echo "##vso[task.setvariable variable=HAS_CHANGES]true"
+            
+            # Count records
+            RECORD_COUNT=$(python -c "
+            import json
+            with open('model/evidence.json') as f:
+              data = json.load(f)
+            print(len(data['objects']))
+            " 2>/dev/null || echo "unknown")
+            
+            echo "##vso[task.setvariable variable=RECORD_COUNT]$RECORD_COUNT"
+          fi
+        workingDirectory: '$(WORK_DIR)'
+      displayName: 'Stage Changes'
+    
+    - task: Bash@3
+      condition: eq(variables['HAS_CHANGES'], 'true')
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Committing Changes ==="
+          
+          cd $(WORK_DIR)
+          
+          # Create commit message
+          TIMESTAMP=$(date -u "+%Y-%m-%d %H:%M:%S UTC")
+          RECORD_COUNT=$(variables['RECORD_COUNT'])
+          
+          git commit -m "chore: sync evidence from 51-ACA [skip ci]
+          
+Automatic sync from 51-ACA/.eva/evidence/ to 37-data-model/model/evidence.json
+          
+Synced: $TIMESTAMP
+Records: $RECORD_COUNT (total)
+Pipeline: Azure Pipelines Build #$(Build.BuildId)
+Repository: $(Build.Repository.Name)
+Branch: $(Build.SourceBranchName)"
+          
+          echo "✓ Changes committed"
+      displayName: 'Commit to Git'
+    
+    - task: Bash@3
+      condition: eq(variables['HAS_CHANGES'], 'true')
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "=== Pushing to Repository ==="
+          
+          cd $(WORK_DIR)
+          
+          # Push to main branch
+          git push origin main && \
+            echo "✓ Changes pushed to main" || \
+            (echo "✗ Push failed" && exit 1)
+        workingDirectory: '$(WORK_DIR)'
+      displayName: 'Push to Main Branch'
+
+- stage: Report
+  displayName: 'Generate Report'
+  dependsOn: 
+    - Validate
+    - Commit
+  condition: succeeded()
+  jobs:
+  
+  - job: PublishArtifacts
+    displayName: 'Publish Artifacts'
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: CopyFiles@2
+      inputs:
+        sourceFolder: '$(WORK_DIR)'
+        contents: |
+          model/evidence.json
+          sync-evidence-report.json
+          schema/evidence.schema.json
+        targetFolder: '$(ARTIFACT_STAGING)'
+      displayName: 'Copy Artifacts'
+      continueOnError: true
+    
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(ARTIFACT_STAGING)'
+        artifactName: 'evidence-sync-$(Build.BuildId)'
+        publishLocation: 'Container'
+      displayName: 'Publish Artifacts to Pipeline'
+      continueOnError: true
+  
+  - job: GenerateSummary
+    displayName: 'Generate Pipeline Summary'
+    steps:
+    
+    - checkout: self
+      fetchDepth: 0
+      displayName: 'Checkout 37-data-model'
+    
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo "# Evidence Synchronization Report" > summary.md
+          echo "" >> summary.md
+          echo "**Build ID**: [$(Build.BuildId)]($(Build.BuildUri))" >> summary.md
+          echo "**Branch**: $(Build.SourceBranchName)" >> summary.md
+          echo "**Timestamp**: $(System.CollectionUri)" >> summary.md
+          echo "" >> summary.md
+          
+          if [ -f "$(WORK_DIR)/sync-evidence-report.json" ]; then
+            echo "## Status" >> summary.md
+            python -c "
+            import json
+            with open('model/evidence.json') as f:
+              data = json.load(f)
+            print(f\"✓ **Records**: {len(data['objects'])}\")
+            " >> summary.md
+          fi
+          
+          echo "" >> summary.md
+          echo "## Quality Gates" >> summary.md
+          echo "" >> summary.md
+          python -c "
+          import json
+          with open('model/evidence.json') as f:
+            data = json.load(f)
+          test_fails = len([o for o in data['objects'] if o['validation'].get('test_result') == 'FAIL'])
+          lint_fails = len([o for o in data['objects'] if o['validation'].get('lint_result') == 'FAIL'])
+          print(f\"- Test Failures: {test_fails}\")
+          print(f\"- Lint Failures: {lint_fails}\")
+          " >> summary.md
+          
+          cat summary.md
+        workingDirectory: '$(WORK_DIR)'
+      displayName: 'Create Summary'
