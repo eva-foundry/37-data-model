@@ -240,7 +240,7 @@ def create_app() -> FastAPI:
 
     app.add_middleware(CounterMiddleware)
 
-    # ── register routers ──────────────────────────────────────────────────
+    # register routers ──────────────────────────────────────────────────
     from api.routers.layers import (
         services_router, personas_router, feature_flags_router,
         containers_router, schemas_router, screens_router,
@@ -259,8 +259,9 @@ def create_app() -> FastAPI:
         traces_router,
         # observability plane (L11)
         evidence_router,
-        # governance plane (L33-L34)
+        # governance plane (L32-L35) — agent automation safety
         workspace_config_router, project_work_router,
+        agent_policies_router, quality_gates_router, github_rules_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -293,8 +294,9 @@ def create_app() -> FastAPI:
         traces_router,
         # observability plane (L11)
         evidence_router,
-        # governance plane (L33-L34)
+        # governance plane (L32-L35) — agent automation safety
         workspace_config_router, project_work_router,
+        agent_policies_router, quality_gates_router, github_rules_router,
         fp_router,
         # graph (E-11)
         graph_router,
@@ -701,6 +703,9 @@ def create_app() -> FastAPI:
                 "projects":      "all 48 eva-foundation numbered project folders",
                 "mcp_servers":   "registered MCP servers. used by agents to resolve skill endpoints",
                 "agents":        "registered agent definitions. .skills[] links to mcp_servers",
+                "agent_policies": "(L33) Agent capabilities, safety constraints, project access. evidence tech_stack='agent-policies'",
+                "quality_gates":  "(L34) MTI thresholds, test coverage gates, phase-specific blockers. evidence tech_stack='quality-gates'",
+                "github_rules":   "(L35) Branch protection, commit standards, naming conventions. evidence tech_stack='github-rules'",
             },
             "forbidden": [
                 "Reading model/*.json files directly",

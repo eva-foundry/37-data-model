@@ -44,6 +44,9 @@ decisions_router       = make_layer_router("decisions",        "/model/decisions
 traces_router          = make_layer_router("traces",           "/model/traces",           ["traces"])
 # ── Observability plane (L11) — captures proof-of-completion + call tracing ──────────
 evidence_router        = make_layer_router("evidence",         "/model/evidence",         ["evidence"])
-# ── Governance plane (L33-L34) — data-model-first architecture ───────────────────────
+# ── Governance plane (L32-L35) — data-model-first architecture + agent automation safety ────
 workspace_config_router = make_layer_router("workspace_config", "/model/workspace_config", ["workspace_config"])
 project_work_router     = make_layer_router("project_work",     "/model/project_work",     ["project_work"])
+agent_policies_router   = make_layer_router("agent_policies",   "/model/agent_policies",   ["agent_policies"])
+quality_gates_router    = make_layer_router("quality_gates",    "/model/quality_gates",    ["quality_gates"])
+github_rules_router     = make_layer_router("github_rules",     "/model/github_rules",     ["github_rules"])
