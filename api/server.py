@@ -267,8 +267,14 @@ def create_app() -> FastAPI:
     from api.routers.impact import router as impact_router
     from api.routers.graph import router as graph_router
     from api.routers.admin import router as admin_router
+    from api.routers.introspection import router as introspection_router  # Session 26: schema introspection
+    from api.routers.aggregation import router as aggregation_router  # Session 26: metrics & analytics
 
     for r in [
+        # introspection & aggregation (Session 26) — register FIRST for path precedence
+        introspection_router,
+        aggregation_router,
+        # layer routers (generic /{obj_id} path)
         services_router, personas_router, feature_flags_router,
         containers_router, endpoints_router, schemas_router,
         screens_router, literals_router, agents_router,
@@ -427,6 +433,9 @@ def create_app() -> FastAPI:
         The JSON model files (model/*.json) are an internal implementation
         detail. Agents MUST NOT read, parse, or reference them directly.
         This endpoint is the only bootstrap an agent needs.
+        
+        ENHANCED: Session 26 (2026-03-05) — Added discovery_journey, query_capabilities,
+        terminal_safety, common_mistakes, examples for agent experience excellence.
         """
         from api.routers.admin import _LAYER_FILES
         layers = list(_LAYER_FILES.keys())
@@ -448,6 +457,55 @@ def create_app() -> FastAPI:
                 "Agents must never read, parse, grep, or reference them. "
                 "One HTTP call beats ten file reads."
             ),
+            "discovery_journey": {
+                "description": "5-step progression for agents exploring the data model",
+                "steps": [
+                    {
+                        "step": 1,
+                        "title": "Health & Identity",
+                        "calls": ["GET /health", "GET /ready", "GET /model/agent-guide"],
+                        "what_you_learn": "Store type (cosmos/memory), uptime, API capabilities"
+                    },
+                    {
+                        "step": 2,
+                        "title": "Discover Available Layers",
+                        "calls": ["GET /model/layers", "GET /model/agent-summary"],
+                        "what_you_learn": "34 layers with counts, which have data vs schemas only"
+                    },
+                    {
+                        "step": 3,
+                        "title": "Inspect Schema Structure",
+                        "calls": [
+                            "GET /model/schemas/{layer}",
+                            "GET /model/{layer}/fields",
+                            "GET /model/{layer}/example"
+                        ],
+                        "what_you_learn": "Field names, types, required vs optional, real data examples"
+                    },
+                    {
+                        "step": 4,
+                        "title": "Query & Filter",
+                        "calls": [
+                            "GET /model/{layer}/?limit=10",
+                            "GET /model/endpoints/?status=active",
+                            "GET /model/evidence/?sprint_id=ACA-S11&phase=D3"
+                        ],
+                        "what_you_learn": "Which layers support query params, how pagination works"
+                    },
+                    {
+                        "step": 5,
+                        "title": "Navigate Relationships",
+                        "calls": [
+                            "GET /model/graph/?node_id=X&depth=2",
+                            "GET /model/impact/?container=X"
+                        ],
+                        "what_you_learn": "How objects reference each other, impact analysis"
+                    }
+                ],
+                "terminal_safe_first_query": (
+                    "Try: (Invoke-RestMethod -Uri http://localhost:8010/model/projects/?limit=5).data | Select-Object id,label,maturity | Format-Table"
+                )
+            },
             "bootstrap_sequence": [
                 "1. GET /health    — liveness (store type, uptime, request_count)",
                 "2. GET /ready     — readiness (confirms Cosmos is reachable; check store_reachable=true)",
@@ -455,6 +513,46 @@ def create_app() -> FastAPI:
                 "4. GET /model/{layer}/          — list objects in any layer",
                 "5. GET /model/{layer}/{id}      — fetch one object by exact id",
             ],
+            "query_capabilities": {
+                "description": "What query parameters work where (varies by layer)",
+                "universal_params": {
+                    "limit": "All layers support ?limit=N (default=100, max=1000)",
+                    "offset": "All layers support ?offset=N for pagination",
+                    "active_only": "All layers support ?active_only=true (excludes is_active=false)"
+                },
+                "layer_specific_filters": {
+                    "endpoints": ["?status=active|stub|impl|deprecated"],
+                    "evidence": ["?sprint_id=X", "?story_id=X", "?phase=D1|D2|P|D3|A"],
+                    "all_other_layers": "No query params yet (client-side filtering required)"
+                },
+                "coming_soon": "Universal query support for all layers (Session 26 Enhancement #3)",
+                "workaround_for_now": (
+                    "For layers without query params: GET the data, pipe to Where-Object. "
+                    "Example: (irm http://localhost:8010/model/projects/).data | Where-Object {$_.maturity -eq 'active'}"
+                )
+            },
+            "terminal_safety": {
+                "problem": "Large JSON responses (272 literals, 135 endpoints) scramble PowerShell terminal with Format-Table overflow",
+                "always_use_limit": (
+                    "Add ?limit=10 to your first query. Example: "
+                    "GET /model/endpoints/?limit=10  (not GET /model/endpoints/)"
+                ),
+                "always_use_select_object": (
+                    "Pick 3-5 key fields before Format-Table. Example: "
+                    "| Select-Object id,status,auth | Format-Table  (not | Format-Table)"
+                ),
+                "safe_exploration_pattern": (
+                    "1. GET /model/{layer}/count → check object count\n"
+                    "2. If count > 50: GET /model/{layer}/?limit=10\n"
+                    "3. Pipe to Select-Object id,{2-3 key fields} | Format-Table\n"
+                    "4. When ready for full scan: GET /model/{layer}/ → save to $data variable"
+                ),
+                "example_safe_query": (
+                    "$endpoints = (Invoke-RestMethod http://localhost:8010/model/endpoints/?limit=20).data; "
+                    "$endpoints | Select-Object id,status,auth | Format-Table"
+                ),
+                "fast_counts": "Use GET /model/{layer}/count for instant totals (no data transfer)"
+            },
             "query_patterns": {
                 "all_layer_counts":        "GET /model/agent-summary",
                 "object_by_id":            "GET /model/{layer}/{id}",
@@ -468,6 +566,10 @@ def create_app() -> FastAPI:
                 "impact_analysis":         "GET /model/impact/?container=X",
                 "relationship_graph":      "GET /model/graph/?node_id=X&depth=2",
                 "services_list":           "GET /model/services/  -> obj_id, status, is_active, notes",
+                "schema_introspection":    "GET /model/schemas/{layer} → full JSON schema",
+                "example_object":          "GET /model/{layer}/example → first real object",
+                "field_discovery":         "GET /model/{layer}/fields → array of field names",
+                "fast_count":              "GET /model/{layer}/count → instant count without data"
             },
             "write_cycle": {
                 "rule_1_capture_row_version": (
@@ -503,6 +605,78 @@ def create_app() -> FastAPI:
                 "write_operations": "Always include: -Headers @{'X-Actor'='agent:copilot'}",
                 "admin_operations": "Always include: -Headers @{'Authorization'='Bearer dev-admin'}",
             },
+            "common_mistakes": {
+                "mistake_1": {
+                    "error": "Terminal scrambled after GET /model/endpoints/",
+                    "cause": "135 endpoints × Format-Table auto-columns = overflow",
+                    "fix": "Always use ?limit=20 and Select-Object: (irm http://...?limit=20).data | Select-Object id,status | ft"
+                },
+                "mistake_2": {
+                    "error": "Query param ignored (e.g., GET /model/projects/?maturity=active returns all)",
+                    "cause": "Most layers don't support query params yet (only endpoints/evidence do)",
+                    "fix": "Client-side filter: (irm http://...).data | Where-Object {$_.maturity -eq 'active'}"
+                },
+                "mistake_3": {
+                    "error": "PUT returns 422 'PATCH not supported'",
+                    "cause": "Sent partial object or used -Method PATCH",
+                    "fix": "Always PUT full object with all fields (GET first, modify copy, PUT back)"
+                },
+                "mistake_4": {
+                    "error": "ConvertTo-Json truncates nested objects (request_schema becomes System.Collections.Hashtable)",
+                    "cause": "Default -Depth 2 is too shallow for complex objects",
+                    "fix": "Always use ConvertTo-Json -Depth 10"
+                },
+                "mistake_5": {
+                    "error": "Commit fails with 'unknown endpoint GET /search-cases'",
+                    "cause": "Constructed endpoint id instead of copying from /model/endpoints/",
+                    "fix": "GET /model/endpoints/ first, copy exact id (includes METHOD prefix)"
+                },
+                "mistake_6": {
+                    "error": "Row version mismatch after PUT",
+                    "cause": "Didn't capture prev row_version before PUT",
+                    "fix": "$prev = $obj.row_version; (PUT); $new = (GET).row_version; assert ($new -eq $prev + 1)"
+                },
+                "mistake_7": {
+                    "error": "Can't find schema for 'projects' layer",
+                    "cause": "Schema file is singular (project.schema.json) but layer is plural",
+                    "fix": "Use introspection: GET /model/schemas/projects (handles plural->singular conversion)"
+                }
+            },
+            "examples": {
+                "before_after_pagination": {
+                    "before": "irm http://localhost:8010/model/endpoints/  // scrambles terminal with 135 objects",
+                    "after": "(irm 'http://localhost:8010/model/endpoints/?limit=20').data | Select-Object id,status | ft"
+                },
+                "before_after_filtering": {
+                    "before": "irm http://localhost:8010/model/projects/?maturity=active  // returns all (query ignored)",
+                    "after": "(irm http://localhost:8010/model/projects/).data | Where-Object {$_.maturity -eq 'active'}"
+                },
+                "before_after_schema_discovery": {
+                    "before": "Read schema\\project.schema.json file // violates golden rule",
+                    "after": "irm http://localhost:8010/model/schemas/projects  // self-service schema access"
+                },
+                "before_after_field_discovery": {
+                    "before": "Get first object and inspect keys: (irm http://...).data[0].PSObject.Properties.Name",
+                    "after": "irm http://localhost:8010/model/projects/fields  // instant field list + required fields"
+                },
+                "before_after_example_object": {
+                    "before": "Fetch all and filter: (irm http://...).data | Where-Object {$_.id -notlike '*...'} | Select-Object -First 1",
+                    "after": "irm http://localhost:8010/model/projects/example  // first real object, placeholders skipped"
+                },
+                "safe_write_pattern": {
+                    "description": "How to safely update an object with audit trail verification",
+                    "code": [
+                        "$obj = (irm http://localhost:8010/model/projects/51-ACA).data",
+                        "$prev_rv = $obj.row_version",
+                        "$obj.maturity = 'production'",
+                        "$body = $obj | Select-Object id,label,maturity,phase,status,is_active | ConvertTo-Json -Depth 10",
+                        "irm -Method PUT -Uri http://localhost:8010/model/projects/51-ACA -Body $body -ContentType 'application/json' -Headers @{'X-Actor'='agent:copilot'}",
+                        "$updated = (irm http://localhost:8010/model/projects/51-ACA).data",
+                        "if ($updated.row_version -ne ($prev_rv + 1)) { Write-Error 'Row version mismatch' }",
+                        "irm -Method POST -Uri http://localhost:8010/model/admin/commit -Headers @{'Authorization'='Bearer dev-admin'}"
+                    ]
+                }
+            },
             "layers_available": layers,
             "layer_notes": {
                 "endpoints":     "id = 'METHOD /path' (exact). Filter by status with ?status=",
@@ -528,6 +702,11 @@ def create_app() -> FastAPI:
                 "health_check":    "GET /health  (liveness — uptime, store type, request_count)",
                 "readiness_check": "GET /ready   (readiness — Cosmos ping, store_reachable field)",
                 "layer_counts":    "GET /model/agent-summary",
+                "layer_list":      "GET /model/layers (all layers with schema + count metadata)",
+                "schema":          "GET /model/schemas/{layer} (full JSON Schema draft-07)",
+                "fields":          "GET /model/{layer}/fields (field names + required list)",
+                "example":         "GET /model/{layer}/example (first real object)",
+                "count":           "GET /model/{layer}/count (fast total without data)",
                 "commit":          "POST /model/admin/commit  (Bearer dev-admin)",
                 "validate":        "POST /model/admin/validate  (Bearer dev-admin)",
                 "export":          "POST /model/admin/export  (Bearer dev-admin)",
