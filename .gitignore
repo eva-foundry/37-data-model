@@ -34,3 +34,7 @@ acr-build*.log
 acr-build-*.log
 sync-output.txt
 tmp_len.txt
+
+# Cosmos DB exports (transient sync data - do not commit)
+model/*.json
+!model/.gitkeep
