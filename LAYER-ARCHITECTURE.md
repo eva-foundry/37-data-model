@@ -2,19 +2,20 @@
 
 ## How Many Layers?
 
-**Short Answer:** The data model currently has **33 semantic layers**, with **10 additional layers planned** for agent automation (target: 43+ layers by Session 30).
+**Short Answer:** The data model currently has **36 semantic layers**, with **7 additional layers planned** for agent automation (target: 43+ layers by Session 30).
 
-## Why "33 Layers"?
+## Why "36 Layers"?
 
-The number 33 reflects the current production state as of March 5, 2026 8:28 PM ET. This is an **observed count**, not a hardcoded limit:
+The number 36 reflects the current production state as of March 5, 2026 (post Session 28 Phase 1). This is an **observed count**, not a hardcoded limit:
 
 ```
-📊 Current Count (as of March 5, 2026 8:28 PM ET):
-├─ 33 layers operational in cloud (msub-eva-data-model endpoint)
-├─ 4,400+ objects distributed across layers
-├─ Largest: endpoints (186), services (34), projects (56)
-├─ Newest: workspace_config (L32), project_work (L33), wbs (L26)
-└─ Specialized: evidence (L31 - immutable DPDCA receipts)
+📊 Current Count (as of March 5, 2026 - Session 28 Phase 1):
+├─ 36 layers operational (33 baseline + L33-L35 new)
+├─ Cloud deployment: pending (PR #12 merged, awaiting ACR build + ACA update)
+├─ 4,400+ objects distributed across layers (66 evidence records with polymorphism)
+├─ Largest: endpoints (135), services (34), projects (56)
+├─ Newest: github_rules (L35), quality_gates (L34), agent_policies (L33)
+└─ Specialized: evidence (L11 - immutable DPDCA receipts with tech_stack discrimination)
 ```
 
 ## Layer Expansion Roadmap (Session 28+)
@@ -25,11 +26,11 @@ The number 33 reflects the current production state as of March 5, 2026 8:28 PM 
 
 | Layer | Purpose | Objects | Status |
 |-------|---------|---------|--------|
-| **L33: agent-policies** | Agent capabilities, safety constraints, project access | ~10 | Planned |
-| **L34: quality-gates** | MTI thresholds, test coverage, phase-specific gates | ~20 | Planned |
-| **L35: github-rules** | Branch protection, commit standards, naming conventions | ~15 | Planned |
+| **L33: agent-policies** | Agent capabilities, safety constraints, project access | 1 | ✅ Active |
+| **L34: quality-gates** | MTI thresholds, test coverage, phase-specific gates | 1 | ✅ Active |
+| **L35: github-rules** | Branch protection, commit standards, naming conventions | 1 | ✅ Active |
 
-*Rationale: Safety first. Before agents deploy, they need policies (L33), quality thresholds (L34), and Git rules (L35).*
+*Completed Session 28 Phase 1.* Evidence polymorphism: 3 test records seeded with tech_stack discrimination. Cloud deployment pending (PR #12 merged).
 
 ### Phase 2: Deployment & Testing (Session 29-30) - Priority ★★★★☆
 
@@ -69,9 +70,9 @@ $layers = $summary.layers | Select-Object -ExpandProperty name
 
 **Implication:** If a new layer is added to the cloud API tomorrow, the backup script will automatically include it on the next run.
 
-## The Current 33 Layers
+## The Current 36 Layers
 
-**Production Layers (as of Session 27):**
+**Production Layers (as of Session 28 Phase 1):**
 
 | Layer | Purpose | Typical Count | Status |
 |-------|---------|---------------|--------|
@@ -109,9 +110,12 @@ $layers = $summary.layers | Select-Object -ExpandProperty name
 | **traces** | Distributed tracing | 100+ | Active |
 | **evidence** | DPDCA receipts (L31) | 62 | Active |
 | **workspace_config** | Workspace governance (L32) | 1 | Active |
-| **project_work** | ADO work item mappings (L33) | 0 | Active |
+| **project_work** | ADO work item mappings (L32) | 0 | Active |
+| **agent_policies** | Agent capabilities & safety constraints (L33) | 1 | Active |
+| **quality_gates** | MTI thresholds & phase gates (L34) | 1 | Active |
+| **github_rules** | Branch protection & commit standards (L35) | 1 | Active |
 
-**Total: 33 layers, 4,400+ objects**
+**Total: 36 layers, 4,400+ objects**
 
 
 
@@ -134,6 +138,46 @@ When working with the data model:
 ❌ **DON'T:** Assume "30 layers" is permanent  
 ❌ **DON'T:** Skip layers because they weren't in an old script  
 
+## L33-L35 Agent Automation Integration (Session 28)
+
+### Polymorphic Evidence Pattern
+
+L33-L35 layers use **evidence tech_stack discrimination** to validate layer-specific context:
+
+```json
+{
+  "id": "ACA-S11-L34-quality-gates-P",
+  "tech_stack": "quality-gates",
+  "context": {
+    "mti_threshold": 75,
+    "test_coverage_percent": 80,
+    "gates_per_phase": { "D": {...}, "P": {...}, "Do": {...} }
+  }
+}
+```
+
+**Schema Validation:** If tech_stack="quality-gates", Evidence schema enforces context.mti_threshold and context.gates_per_phase fields.
+
+### 48-eva-veritas Integration
+
+The **quality-gates** layer (L34) provides MTI scoring thresholds:
+
+- **Current MTI Formula:** `Coverage*0.5 + Evidence*0.2 + Consistency*0.3`
+- **Enhanced by L34:** GET /model/quality-gates/{project_id} returns:
+  - `mti_threshold` (default: 75) — minimum acceptable MTI score
+  - `test_coverage_percent` (default: 80) — minimum test coverage required
+  - `gates_per_phase` — diffs per DPDCA phase that must pass before acceptance
+
+**Integration Point:** `compute-trust.js` (48-eva-veritas) should call:
+```
+GET /model/quality_gates/51-ACA
+→ Extract mti_threshold, apply as deployment gate
+```
+
+**Evidence Linking:** Evidence records with tech_stack="quality-gates" provide audit trail of which MTI gates were enforced per phase.
+
+---
+
 ## Historical Context
 
 **Session 20 (Mar 5, 2026):**
@@ -143,7 +187,7 @@ When working with the data model:
 
 ---
 
-**Updated:** March 5, 2026 8:28 PM ET  
-**Session:** 27 (USER-GUIDE simplification + layer expansion planning)  
+**Updated:** March 5, 2026 Session 28 Phase 1 (8:45 PM ET)  
+**Session:** 28 (L33-L35 agent automation layers with polymorphic Evidence)  
 **Automated by:** GitHub Copilot (Agent Framework mode)  
 **Related:** [STATUS.md](STATUS.md), [USER-GUIDE.md](USER-GUIDE.md), GET /model/agent-guide
