@@ -89,9 +89,12 @@ _LAYER_FILES: dict[str, str] = {
     "traces":          "traces.json",
     # observability plane (L11) — proof-of-completion + call tracing
     "evidence":        "evidence.json",
-    # governance plane (L33-L34) — data-model-first architecture
+    # governance plane (L32-L35) — data-model-first architecture + agent automation safety
     "workspace_config": "workspace_config.json",
     "project_work":     "project_work.json",
+    "agent_policies":   "agent_policies.json",
+    "quality_gates":    "quality_gates.json",
+    "github_rules":     "github_rules.json",
 }
 
 def _get_model_dir() -> Path:

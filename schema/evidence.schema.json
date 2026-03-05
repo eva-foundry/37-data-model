@@ -165,8 +165,8 @@
     },
     "tech_stack": {
       "type": "string",
-      "enum": ["python", "react", "terraform", "docker", "csharp", "generic"],
-      "description": "Technology stack discriminator for polymorphic context validation. Use 'generic' for stories without tech-specific artifacts.",
+      "enum": ["python", "react", "terraform", "docker", "csharp", "generic", "agent-policies", "quality-gates", "github-rules"],
+      "description": "Technology stack discriminator for polymorphic context validation. Use 'generic' for stories without tech-specific artifacts. L33-L35: agent-policies, quality-gates, github-rules for agent automation governance.",
       "default": "generic"
     },
     "context": {
@@ -357,10 +357,108 @@
           }
         },
         {
-          "if": { "properties": { "tech_stack": { "const": "generic" } } },
+          "if": { "properties": { "tech_stack": { "const": "agent-policies" } } },
           "then": {
             "type": "object",
-            "description": "Generic context for non-tech-specific stories (planning, documentation, etc.)",
+            "description": "L33: Agent capabilities, safety constraints, and project access policies",
+            "properties": {
+              "capabilities": {
+                "type": "array",
+                "description": "Agent capabilities enabled",
+                "items": { "type": "string" }
+              },
+              "safety_constraints": {
+                "type": "object",
+                "description": "Safety constraints and limits",
+                "properties": {
+                  "max_concurrent_tasks": { "type": "integer" },
+                  "allowed_actions": { "type": "array", "items": { "type": "string" } },
+                  "forbidden_actions": { "type": "array", "items": { "type": "string" } },
+                  "requires_human_approval": { "type": "boolean" }
+                }
+              },
+              "project_access": {
+                "type": "object",
+                "description": "Projects the agent can access",
+                "properties": {
+                  "allowed_projects": { "type": "array", "items": { "type": "string" } },
+                  "access_level": { "type": "string", "enum": ["read", "write", "admin"] },
+                  "expires_at": { "type": "string", "format": "date-time" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "quality-gates" } } },
+          "then": {
+            "type": "object",
+            "description": "L34: Quality gates with MTI thresholds, test coverage, and phase-specific gates",
+            "properties": {
+              "mti_threshold": {
+                "type": "number",
+                "description": "Minimum MTI score required (0-100)"
+              },
+              "test_coverage_percent": {
+                "type": "number",
+                "description": "Minimum test coverage percentage"
+              },
+              "gates_per_phase": {
+                "type": "object",
+                "description": "Gates for each DPDCA phase",
+                "properties": {
+                  "D": { "type": "object", "additionalProperties": true },
+                  "P": { "type": "object", "additionalProperties": true },
+                  "Do": { "type": "object", "additionalProperties": true },
+                  "C": { "type": "object", "additionalProperties": true },
+                  "A": { "type": "object", "additionalProperties": true }
+                }
+              },
+              "blockers": {
+                "type": "array",
+                "description": "Current blocking issues",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "github-rules" } } },
+          "then": {
+            "type": "object",
+            "description": "L35: GitHub branch protection, commit standards, and naming conventions",
+            "properties": {
+              "branch_protection": {
+                "type": "object",
+                "description": "Branch protection rules",
+                "properties": {
+                  "require_pull_request_reviews": { "type": "boolean" },
+                  "require_code_owner_reviews": { "type": "boolean" },
+                  "required_status_checks": { "type": "array", "items": { "type": "string" } },
+                  "enforced_for_admins": { "type": "boolean" }
+                }
+              },
+              "commit_standards": {
+                "type": "object",
+                "description": "Commit message and author standards",
+                "properties": {
+                  "require_signed_commits": { "type": "boolean" },
+                  "message_pattern": { "type": "string" },
+                  "require_issue_reference": { "type": "boolean" }
+                }
+              },
+              "naming_conventions": {
+                "type": "object",
+                "description": "Branch and tag naming conventions",
+                "properties": {
+                  "branch_pattern": { "type": "string" },
+                  "tag_pattern": { "type": "string" },
+                  "reserved_names": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
             "additionalProperties": true
           }
         },
