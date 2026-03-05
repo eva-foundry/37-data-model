@@ -448,6 +448,7 @@ def create_app() -> FastAPI:
                     "Store=Cosmos in production. Store=memory in local dev."
                 ),
                 "base_url":    "http://localhost:8010",
+                "cloud_url":   "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
                 "apim_base":   "https://marco-sandbox-apim.azure-api.net/data-model",
                 "apim_header": "Ocp-Apim-Subscription-Key: <EVA_APIM_KEY>",
             },
@@ -640,6 +641,18 @@ def create_app() -> FastAPI:
                     "error": "Can't find schema for 'projects' layer",
                     "cause": "Schema file is singular (project.schema.json) but layer is plural",
                     "fix": "Use introspection: GET /model/schemas/projects (handles plural->singular conversion)"
+                },
+                "mistake_8": {
+                    "error": "gh CLI fails with HTTP 401 despite gh auth login success",
+                    "cause": "GITHUB_TOKEN or GH_TOKEN environment variables override keyring credentials",
+                    "symptoms": "gh auth status shows both keyring auth (✓) and env token failure (✗), Active account: false",
+                    "fix": "Clear env vars: $env:GITHUB_TOKEN = $null; $env:GH_TOKEN = $null; then retry gh command"
+                },
+                "mistake_9": {
+                    "error": "git push origin main fails with 'protected branch hook declined'",
+                    "cause": "Main branch has protection rules requiring pull requests",
+                    "symptoms": "error: GH006: Protected branch update failed - Changes must be made through a pull request",
+                    "fix": "Create feature branch: git checkout -b feat/my-change; git push origin feat/my-change; gh pr create --base main"
                 }
             },
             "examples": {
