@@ -1,10 +1,10 @@
 ================================================================================
  EVA FOUNDATION -- MASTER OVERVIEW
  File: docs/library/00-EVA-OVERVIEW.md
- Updated: 2026-03-01 9:40 PM ET -- Evidence Layer LIVE; 32 layers; 4,152+ objects
- Source: 37-data-model (single source of truth, port 8010, store=cosmos)
+ Updated: 2026-03-05 7:30 PM ET -- Evidence Layer LIVE; Governance Plane LIVE; 33 layers; 4,339+ objects
+ Source: 37-data-model (single source of truth, cloud-only, store=cosmos)
 --------------------------------------------------------------------------------
- COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31) = BILLION-DOLLAR MOAT
+ COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31) + GOVERNANCE PLANE (L33-L34) = BILLION-DOLLAR MOAT
 --------------------------------------------------------------------------------
 
   EVA Foundation is the ONLY AI platform with immutable audit trails.
@@ -202,17 +202,18 @@ They fall into five bands:
     C:\AICOE\.venv\Scripts\python.exe -m uvicorn api.server:app --port 8010
 
 --------------------------------------------------------------------------------
- DATA MODEL STATE (2026-03-01)
+ DATA MODEL STATE (2026-03-05)
 --------------------------------------------------------------------------------
 
   Metric                 Count
   -----------------------------------------------
-  Total objects          4,152+    (across all entity types, PASS 0 violations)
+  Total objects          4,339+    (across all entity types, PASS 0 violations)
+  Layers                 33        (L0-L34: +2 governance plane Mar 5, 2026)
   Endpoints              184       (implemented + planned)
   Screens                46        (assistant-face:20, ops-face:26. WCAG 2.1 AA + i18n)
+  Projects               59        (enhanced with governance{} + acceptance_criteria[])
   Literals               375
-  Services               33
-  Projects               48
+  Services               36
   Feature flags          15
   Components             32
   Hooks                  18

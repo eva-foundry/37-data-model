@@ -1,0 +1,16 @@
+{
+  "dry_run": false,
+  "template_version": "v3.1.0",
+  "results": {
+    "steps": [
+      "copilot-instructions:PASS",
+      "PLAN.md:SKIP",
+      "STATUS.md:SKIP",
+      "ACCEPTANCE.md:SKIP",
+      "README.md:CHECKED"
+    ],
+    "folder": "37-data-model"
+  },
+  "primed_at": "2026-03-05T12:48:16-03:00",
+  "primed_by": "agent:copilot"
+}

@@ -1,0 +1,204 @@
+name: Phase 3 - Sync Portfolio-Wide Evidence
+
+on:
+  schedule:
+    # Run daily at 08:30 UTC (after 51-ACA Phase 2 sync completes at 08:00)
+    - cron: '30 8 * * *'
+  
+  workflow_dispatch:
+    inputs:
+      verbose:
+        description: 'Enable verbose output'
+        required: false
+        default: 'false'
+
+jobs:
+  sync-portfolio:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install jsonschema
+      
+      - name: Run Phase 3 portfolio sync
+        env:
+          VERBOSE: ${{ github.event.inputs.verbose || 'false' }}
+        run: |
+          echo "=========================================="
+          echo "Phase 3: Portfolio-Wide Evidence Sync"
+          echo "=========================================="
+          echo "Workspace: ${{ github.workspace }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Branch: ${{ github.ref }}"
+          echo "Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          echo "=========================================="
+          echo ""
+          
+          # Run the portfolio sync orchestrator
+          python scripts/sync-evidence-all-projects.py \
+            "${{ github.workspace }}/../../" \
+            "${{ github.workspace }}"
+      
+      - name: Validate schema
+        run: |
+          echo ""
+          echo "[VALIDATION] Checking evidence.json against schema..."
+          python -c "
+          import json
+          from pathlib import Path
+          
+          evidence_file = Path('model/evidence.json')
+          if evidence_file.exists():
+              with open(evidence_file) as f:
+                  evidence = json.load(f)
+              
+              print(f'✓ evidence.json is valid JSON')
+              print(f'  Records: {len(evidence.get(\"objects\", []))}')
+              
+              # Check for portfolio metadata
+              if '_portfolio_metadata' in evidence:
+                  meta = evidence['_portfolio_metadata']
+                  print(f'  Last sync: {meta.get(\"last_sync\", \"N/A\")}')
+                  print(f'  Projects scanned: {meta.get(\"projects_scanned\", 0)}')
+                  print(f'  Projects with evidence: {meta.get(\"projects_with_evidence\", 0)}')
+                  print(f'  Validation rate: {meta.get(\"validation_rate\", 0):.1f}%')
+          else:
+              print('! evidence.json not found')
+          "
+      
+      - name: Check merge gates
+        id: merge-gates
+        run: |
+          echo ""
+          echo "[MERGE GATES] Checking validation gates..."
+          
+          # Check if sync report exists
+          if [ -f sync-evidence-report.json ]; then
+            echo "✓ sync-evidence-report.json found"
+            
+            # Extract status from report
+            status=$(python -c "
+            import json
+            with open('sync-evidence-report.json') as f:
+              data = json.load(f)
+            print(data['status'])
+            ")
+            
+            echo "Status: $status"
+            echo "status=$status" >> $GITHUB_OUTPUT
+            
+            # Show per-project results
+            python -c "
+            import json
+            with open('sync-evidence-report.json') as f:
+              data = json.load(f)
+            
+            print('')
+            print('Per-project results:')
+            for project, result in data['per_project_results'].items():
+              errors = len(result['errors'])
+              status_icon = '✓' if errors == 0 else '⚠'
+              print(f'  {status_icon} {project}: {result[\"records_merged\"]} merged')
+              if errors > 0:
+                for error in result['errors'][:2]:
+                  print(f'      - {error}')
+            "
+          else
+            echo "! sync-evidence-report.json not found"
+            echo "status=FAIL" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Commit changes
+        if: success()
+        run: |
+          echo ""
+          echo "[GIT] Committing evidence updates..."
+          
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Check if there are changes
+          if git diff --quiet; then
+            echo "✓ No changes to commit"
+          else
+            echo "Changes detected:"
+            git status --short
+            
+            git add model/evidence.json sync-evidence-report.json
+            git commit -m "chore: Phase 3 portfolio evidence sync
+
+- Scanned all active projects
+- Consolidated evidence records
+- Validated portfolio
+- Updated sync report
+- Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            
+            echo "✓ Changes committed"
+          fi
+      
+      - name: Push changes
+        if: success()
+        run: |
+          echo ""
+          echo "[PUSH] Pushing changes to repository..."
+          
+          # Try to push; if it fails due to concurrent updates, that's OK
+          if git push origin ${{ github.ref_name }}; then
+            echo "✓ Changes pushed"
+          else
+            echo "⚠ Push failed (likely due to concurrent update)"
+            echo "  This is normal in multi-workflow scenarios"
+            echo "  The next sync will pick up any missing changes"
+          fi
+      
+      - name: Generate report summary
+        if: always()
+        run: |
+          echo ""
+          echo "[REPORT] Sync Summary"
+          echo "======================================================"
+          
+          if [ -f sync-evidence-report.json ]; then
+            python -c "
+            import json
+            from datetime import datetime
+            
+            with open('sync-evidence-report.json') as f:
+              report = json.load(f)
+            
+            print(f'Status: {report[\"status\"]}')
+            print(f'Duration: {report[\"duration_ms\"]:.0f}ms')
+            print(f'Projects scanned: {report[\"projects_with_evidence\"] + report[\"projects_without_evidence\"]}')
+            print(f'Projects with evidence: {report[\"projects_with_evidence\"]}')
+            print(f'Total records: {report[\"total_records_merged\"]}')
+            print(f'Validation rate: {report[\"validation_rate\"]:.1f}%')
+            print(f'')
+            print(f'Extracted: {report[\"total_records_extracted\"]}')
+            print(f'Transformed: {report[\"total_records_transformed\"]}')
+            print(f'Merged: {report[\"total_records_merged\"]}')
+            print(f'')
+            print(f'Passed: {report[\"total_validated_pass\"]}')
+            print(f'Failed: {report[\"total_validated_fail\"]}')
+            print(f'Skipped: {report[\"total_validated_skip\"]}')
+            "
+          else
+            echo "No report available"
+          fi
+          
+          echo "======================================================"

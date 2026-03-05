@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/project.schema.json",
+  "title": "Project",
+  "description": "Enhanced project metadata with governance fields. Layer 25 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["id", "label", "folder", "maturity", "phase", "goal", "status"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Project identifier matching folder name",
+      "pattern": "^[0-9]{2}-[a-z0-9-]+$"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable project name"
+    },
+    "label_fr": {
+      "type": "string",
+      "description": "French translation of project name"
+    },
+    "folder": {
+      "type": "string",
+      "description": "Folder name in workspace (matches id)"
+    },
+    "ado_epic_id": {
+      "type": "integer",
+      "description": "Azure DevOps epic ID"
+    },
+    "ado_project": {
+      "type": "string",
+      "description": "Azure DevOps project name"
+    },
+    "github_repo": {
+      "type": "string",
+      "description": "GitHub repository path (owner/repo)"
+    },
+    "category": {
+      "type": "string",
+      "description": "Project category",
+      "enum": ["Platform", "AI Intelligence", "User Products", "Developer", "Governance"]
+    },
+    "maturity": {
+      "type": "string",
+      "description": "Project maturity level",
+      "enum": ["empty", "poc", "active", "complete", "retired"]
+    },
+    "phase": {
+      "type": "string",
+      "description": "Current development phase"
+    },
+    "goal": {
+      "type": "string",
+      "description": "Project objective statement"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current project status",
+      "enum": ["planned", "active", "blocked", "complete", "retired"]
+    },
+    "depends_on": {
+      "type": "array",
+      "description": "Project dependencies (other project IDs)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blocked_by": {
+      "type": "array",
+      "description": "Blocking dependencies",
+      "items": {
+        "type": "string"
+      }
+    },
+    "pbi_total": {
+      "type": "integer",
+      "description": "Total product backlog items",
+      "minimum": 0
+    },
+    "pbi_done": {
+      "type": "integer",
+      "description": "Completed product backlog items",
+      "minimum": 0
+    },
+    "services": {
+      "type": "array",
+      "description": "Service IDs deployed by this project",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sprint_context": {
+      "type": ["string", "null"],
+      "description": "Current sprint context (e.g., 'Sprint-7')"
+    },
+    "wbs_id": {
+      "type": "string",
+      "description": "Work breakdown structure root ID"
+    },
+    "governance": {
+      "type": "object",
+      "description": "NEW: Governance metadata extracted from README/PLAN/STATUS",
+      "properties": {
+        "readme_summary": {
+          "type": "string",
+          "description": "Brief summary from README.md"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Project purpose and core responsibilities"
+        },
+        "key_artifacts": {
+          "type": "array",
+          "description": "Key deliverables and templates",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Artifact name"
+              },
+              "version": {
+                "type": "string",
+                "description": "Artifact version"
+              },
+              "lines": {
+                "type": "integer",
+                "description": "Lines of code/content"
+              },
+              "description": {
+                "type": "string",
+                "description": "Artifact description"
+              }
+            },
+            "required": ["name"]
+          }
+        },
+        "current_sprint": {
+          "type": "object",
+          "description": "Current sprint information",
+          "properties": {
+            "phase": {
+              "type": "string",
+              "description": "Current phase"
+            },
+            "focus": {
+              "type": "string",
+              "description": "Sprint focus area"
+            }
+          }
+        },
+        "latest_achievement": {
+          "type": "object",
+          "description": "Most recent major achievement",
+          "properties": {
+            "date": {
+              "type": "string",
+              "description": "Achievement date (YYYY-MM-DD)",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "title": {
+              "type": "string",
+              "description": "Achievement title"
+            },
+            "deliverables": {
+              "type": "array",
+              "description": "List of deliverables",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "description": "NEW: Acceptance criteria gates (from ACCEPTANCE.md)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gate": {
+            "type": "string",
+            "description": "Gate identifier (e.g., 'AC-1', 'G01')"
+          },
+          "criteria": {
+            "type": "string",
+            "description": "Acceptance criteria description"
+          },
+          "status": {
+            "type": "string",
+            "description": "Gate status",
+            "enum": ["PASS", "FAIL", "WARN", "CONDITIONAL", "NOT_STARTED"]
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes"
+          }
+        },
+        "required": ["gate", "criteria", "status"]
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional project notes"
+    }
+  }
+}

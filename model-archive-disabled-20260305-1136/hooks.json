@@ -1,0 +1,505 @@
+{
+  "hooks": [
+    {
+      "id": "useTranslations",
+      "label": "useTranslations",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useTranslations.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/translations",
+        "PUT /v1/translations/{key}",
+        "DELETE /v1/translations/{key}"
+      ],
+      "returns": [
+        "TranslationKey[]"
+      ],
+      "used_by_screens": [
+        "TranslationsPage"
+      ],
+      "data_type": "TranslationKey",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-22T23:48:33.514119-03:00",
+      "row_version": 2,
+      "repo_line": 14,
+      "layer": "hooks"
+    },
+    {
+      "id": "useRbacData",
+      "label": "useRbacData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useRbacData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/rbac/assignments",
+        "POST /v1/rbac/assignments",
+        "DELETE /v1/rbac/assignments/{id}"
+      ],
+      "returns": [
+        "RbacAssignment[]"
+      ],
+      "used_by_screens": [
+        "RbacPage"
+      ],
+      "data_type": "RbacAssignment",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useRbacRolesData",
+      "label": "useRbacRolesData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useRbacRolesData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/admin/rbac/roles",
+        "POST /v1/admin/rbac/roles",
+        "PATCH /v1/admin/rbac/roles/{roleId}",
+        "DELETE /v1/admin/rbac/roles/{roleId}"
+      ],
+      "returns": [
+        "Role[]"
+      ],
+      "used_by_screens": [
+        "RbacRolesPage"
+      ],
+      "data_type": "Role",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useFeatureFlagsData",
+      "label": "useFeatureFlagsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useFeatureFlagsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/admin/feature-flags",
+        "PATCH /v1/admin/feature-flags/{flagKey}",
+        "GET /v1/admin/feature-flags/{flagKey}/history"
+      ],
+      "returns": [
+        "FeatureFlag[]"
+      ],
+      "used_by_screens": [
+        "FeatureFlagsPage"
+      ],
+      "data_type": "FeatureFlag",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useIngestionRunsData",
+      "label": "useIngestionRunsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useIngestionRunsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/admin/ingestion/runs",
+        "POST /v1/admin/ingestion/runs",
+        "PATCH /v1/admin/ingestion/runs/{runId}"
+      ],
+      "returns": [
+        "IngestionRun[]"
+      ],
+      "used_by_screens": [
+        "IngestionRunsPage"
+      ],
+      "data_type": "IngestionRun",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useSearchHealthData",
+      "label": "useSearchHealthData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useSearchHealthData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/admin/search/health",
+        "POST /v1/admin/search/reindex"
+      ],
+      "returns": [
+        "SearchIndexHealth[]"
+      ],
+      "used_by_screens": [
+        "SearchHealthPage"
+      ],
+      "data_type": "SearchIndexHealth",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useSupportTicketsData",
+      "label": "useSupportTicketsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useSupportTicketsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/admin/support/tickets",
+        "PATCH /v1/admin/support/tickets/{ticketId}"
+      ],
+      "returns": [
+        "SupportTicket[]"
+      ],
+      "used_by_screens": [
+        "SupportTicketsPage"
+      ],
+      "data_type": "SupportTicket",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useAuditLogsData",
+      "label": "useAuditLogsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useAuditLogsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/logs/audit",
+        "GET /v1/logs/audit/export"
+      ],
+      "returns": [
+        "AuditLogEntry[]"
+      ],
+      "used_by_screens": [
+        "AuditLogsPage"
+      ],
+      "data_type": "AuditLogEntry",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useChatSession",
+      "label": "useChatSession",
+      "repo_path": "31-eva-faces/chat-face/src/hooks/useChatSession.ts",
+      "service": "chat-face",
+      "calls_endpoints": [
+        "POST /v1/chat"
+      ],
+      "returns": [
+        "ChatMessage[]"
+      ],
+      "used_by_screens": [
+        "ChatPane"
+      ],
+      "data_type": "ChatMessage",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useSettingsData",
+      "label": "useSettingsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useSettingsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/admin/settings",
+        "PUT /v1/admin/settings/{settingKey}"
+      ],
+      "returns": [
+        "Setting[]"
+      ],
+      "used_by_screens": [
+        "SettingsPage"
+      ],
+      "data_type": "Setting",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useAppsData",
+      "label": "useAppsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useAppsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/apps",
+        "POST /v1/apps",
+        "PATCH /v1/apps/{appId}",
+        "DELETE /v1/apps/{appId}"
+      ],
+      "returns": [
+        "App[]"
+      ],
+      "used_by_screens": [
+        "AppsPage"
+      ],
+      "data_type": "App",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useTranslationsData",
+      "label": "useTranslationsData",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useTranslationsData.ts",
+      "service": "admin-face",
+      "calls_endpoints": [
+        "GET /v1/translations",
+        "GET /v1/translations/export",
+        "POST /v1/translations/import"
+      ],
+      "returns": [
+        "TranslationKey[]"
+      ],
+      "used_by_screens": [
+        "TranslationsPage"
+      ],
+      "data_type": "TranslationKey",
+      "status": "implemented",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-22T23:48:35.62329-03:00",
+      "row_version": 2,
+      "repo_line": 18,
+      "layer": "hooks"
+    },
+    {
+      "id": "useFeatureFlags",
+      "label": "useFeatureFlags",
+      "app": "eva-jp-spark",
+      "repo_path": "44-eva-jp-spark/src/hooks/useFeatureFlags.ts",
+      "repo_line": 15,
+      "signature": "useFeatureFlags(): FeatureFlags",
+      "description": "Fetches GET /api/featureFlags on mount. Returns FeatureFlags object. Gates TDA and Tutor nav links.",
+      "used_by_screens": [
+        "JpSparkLayout"
+      ],
+      "status": "implemented",
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T09:54:27.027794-03:00",
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 7,
+      "source_file": "model/hooks.json",
+      "layer": "hooks"
+    },
+    {
+      "id": "useRBAC",
+      "label": "useRBAC",
+      "app": "eva-jp-spark",
+      "repo_path": "44-eva-jp-spark/src/hooks/useRBAC.ts",
+      "repo_line": 18,
+      "signature": "useRBAC(): { userInfo: UserGroupInfo | null; rbacLoading: boolean; isContributor: boolean; isAdmin: boolean; isOwner: boolean }",
+      "description": "Fetches GET /api/userGroupInfo on mount. Returns role-gating booleans. Drives nav link visibility.",
+      "used_by_screens": [
+        "JpSparkLayout"
+      ],
+      "status": "implemented",
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T09:54:27.030746-03:00",
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 7,
+      "source_file": "model/hooks.json",
+      "layer": "hooks"
+    },
+    {
+      "id": "useWorkPackages",
+      "label": "useWorkPackages",
+      "repo_path": "40-eva-devbench/src/hooks/useWorkPackages.ts",
+      "service": "eva-devbench",
+      "calls_endpoints": [
+        "GET /work-packages",
+        "POST /work-packages"
+      ],
+      "returns": [
+        "WorkPackage[]"
+      ],
+      "used_by_screens": [
+        "DevbenchReviewDemo",
+        "DevbenchProjectsPage"
+      ],
+      "data_type": "WorkPackage",
+      "status": "stub",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useContextBundles",
+      "label": "useContextBundles",
+      "repo_path": "40-eva-devbench/src/hooks/useContextBundles.ts",
+      "service": "eva-devbench",
+      "calls_endpoints": [
+        "GET /context-bundles",
+        "POST /context-bundles"
+      ],
+      "returns": [
+        "ContextBundle[]"
+      ],
+      "used_by_screens": [
+        "DevbenchContextBundlesPage"
+      ],
+      "data_type": "ContextBundle",
+      "status": "stub",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useRuns",
+      "label": "useRuns",
+      "repo_path": "40-eva-devbench/src/hooks/useRuns.ts",
+      "service": "eva-devbench",
+      "calls_endpoints": [
+        "GET /runs",
+        "POST /runs",
+        "GET /runs/{runId}/artifacts"
+      ],
+      "returns": [
+        "Run[]"
+      ],
+      "used_by_screens": [
+        "DevbenchReviewDemo",
+        "DevbenchRunsPage"
+      ],
+      "data_type": "Run",
+      "status": "stub",
+      "source_file": "model/hooks.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
+    },
+    {
+      "id": "useAnnouncer",
+      "label": "useAnnouncer",
+      "app": "eva-jp-spark",
+      "repo_path": "44-eva-jp-spark/src/hooks/useAnnouncer.ts",
+      "repo_line": 8,
+      "signature": "useAnnouncer(): (message: string) => void",
+      "description": "Returns a stable announce(msg) fn that writes to the hidden aria-live='polite' region in AnnouncerProvider. Must be called inside <AnnouncerProvider>.",
+      "used_by_screens": [
+        "JpSparkLayout",
+        "JpSparkChatPage",
+        "JpSparkContentPage",
+        "JpSparkTranslatorPage",
+        "JpSparkUrlScrapperPage",
+        "JpSparkTDAPage",
+        "JpSparkTutorPage"
+      ],
+      "depends_on_components": [
+        "AnnouncerProvider"
+      ],
+      "status": "implemented",
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T09:54:27.023272-03:00",
+      "created_by": "anonymous",
+      "created_at": "2026-02-23T09:35:10.720334-03:00",
+      "row_version": 5,
+      "source_file": "model/hooks.json",
+      "layer": "hooks"
+    },
+    {
+      "id": "useActingSession",
+      "label": "useActingSession",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useActingSession.ts",
+      "repo_line": 36,
+      "service": "admin-face",
+      "calls_endpoints": [
+        "POST /v1/roles/acting-as"
+      ],
+      "returns": [
+        "{ sessionReady: boolean; sessionId: string; personaId: string; features: string[] }"
+      ],
+      "used_by_screens": [
+        "AdminFaceApp"
+      ],
+      "data_type": "ActingSession",
+      "status": "implemented",
+      "is_active": true,
+      "description": "Bootstraps H1 handshake on mount: POST /v1/roles/acting-as with X-Actor-OID header. Falls back to DEV_BYPASS mode on error. Persists session to sessionStorage.",
+      "layer": "hooks",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-26T14:47:08.173917-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-26T13:52:19.431762-03:00",
+      "row_version": 3
+    }
+  ]
+}

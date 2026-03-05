@@ -1,7 +1,0 @@
-{
-  "$schema": "../schema/evidence.schema.json",
-  "layer": "evidence",
-  "version": "1.0.0",
-  "description": "DPDCA evidence receipts for all stories in all sprints across the EVA ecosystem. Canonical proof-of-completion for every phase of every story.",
-  "objects": []
-}

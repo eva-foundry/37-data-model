@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-03-01 7:39 PM ET -- 11: Evidence Layer LIVE; 32 layers; 4,152+ objects
+ Updated: 2026-03-05 7:30 PM ET -- 11: Evidence Layer LIVE; 33 layers; 4,339+ objects; Governance Plane LIVE
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -122,20 +122,24 @@ No Mermaid. No emoji. ASCII only. Printable.
   Berlin paper = vision. EVA = running implementation with governance.
 
 --------------------------------------------------------------------------------
- KEY NUMBERS (2026-03-01 Evidence Layer LIVE)
+ KEY NUMBERS (2026-03-05 Evidence Layer LIVE + Governance Plane LIVE)
 --------------------------------------------------------------------------------
 
   See: 03-DATA-MODEL-REFERENCE.md for complete entity catalog and layer details.
   
+  Layers: 33 (L0-L34 -- Governance Plane L33-L34 added Mar 5, 2026)
   Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
-  Entity types: endpoints, screens, services, containers, agents, evidence, traces
+  Entity types: endpoints, screens, services, containers, agents, evidence, traces,
+                workspace_config, project_work
   PASS 0 violations across all entities
-  458 literals   36 services   53 projects   10 personas
+  Projects: 59 (enhanced with governance{} + acceptance_criteria[])
+  458 literals   36 services   10 personas
   15 feature flags   12 governance domains   6 MTI subscores
   9-step decision engine   2 audit log lanes   7 authority planes
-  4,152+ total objects   27 edge types (20 existing + 7 new CI/CD)
+  4,339+ total objects   27 edge types (20 existing + 7 new CI/CD)
   FK Enhancement: Opus 4.6 CONDITIONAL GO, 403h/12 sprints, Phase 0 Mar 2026
   Evidence Layer: LIVE (L31 + L32 = Observability Plane)
+  Governance Plane: LIVE (L33 workspace_config + L34 project_work = Data-Model-First)
   doc-generator: planned -- auto-generate docs from entity catalog -> Azure Blob
 
 --------------------------------------------------------------------------------

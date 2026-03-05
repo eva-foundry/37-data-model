@@ -1,0 +1,134 @@
+{
+  "prompts": [
+    {
+      "id": "prompt-policy-analysis",
+      "label": "Policy Analysis Prompt",
+      "service": "eva-foundry-lib",
+      "format": "prompty",
+      "model": "gpt-5.1-chat",
+      "inputs": [
+        "policy_text",
+        "question",
+        "context_chunks"
+      ],
+      "repo_path": "29-foundry/prompts/policy-analysis.prompty",
+      "used_by": [
+        "skill-04-prompt-engineering"
+      ],
+      "status": "implemented",
+      "notes": "Analyses EI Act policy text. Produces structured JSON with findings, citations, and confidence score.",
+      "source_file": "model/prompts.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "prompts"
+    },
+    {
+      "id": "prompt-claim-evaluation",
+      "label": "Claim Evaluation Prompt",
+      "service": "eva-foundry-lib",
+      "format": "prompty",
+      "model": "gpt-5.1-chat",
+      "inputs": [
+        "claim_facts",
+        "applicable_sections",
+        "prior_decisions"
+      ],
+      "repo_path": "29-foundry/prompts/claim-evaluation.prompty",
+      "used_by": [
+        "skill-01-multi-agent-orchestrator"
+      ],
+      "status": "implemented",
+      "notes": "Evaluates EI claim eligibility against Act sections. Returns decision reasoning chain.",
+      "source_file": "model/prompts.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "prompts"
+    },
+    {
+      "id": "prompt-precedent-finder",
+      "label": "Precedent Finder Prompt",
+      "service": "eva-foundry-lib",
+      "format": "prompty",
+      "model": "gpt-5.1-chat",
+      "inputs": [
+        "case_summary",
+        "legal_issue",
+        "top_k"
+      ],
+      "repo_path": "29-foundry/prompts/precedent-finder.prompty",
+      "used_by": [
+        "skill-03-azure-search-integrator"
+      ],
+      "status": "implemented",
+      "notes": "Finds Federal Court and Board of Referees precedents matching a case summary.",
+      "source_file": "model/prompts.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "prompts"
+    },
+    {
+      "id": "prompt-citation-generator",
+      "label": "Citation Generator Prompt",
+      "service": "eva-foundry-lib",
+      "format": "prompty",
+      "model": "gpt-5.1-chat",
+      "inputs": [
+        "source_document",
+        "passage",
+        "citation_style"
+      ],
+      "repo_path": "29-foundry/prompts/citation-generator.prompty",
+      "used_by": [
+        "skill-04-prompt-engineering"
+      ],
+      "status": "implemented",
+      "notes": "Generates legal citations in McGill Guide or APA format from source passages.",
+      "source_file": "model/prompts.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "prompts"
+    },
+    {
+      "id": "prompt-eligibility-validator",
+      "label": "Eligibility Validator Prompt",
+      "service": "eva-foundry-lib",
+      "format": "prompty",
+      "model": "gpt-5.1-chat",
+      "inputs": [
+        "claimant_profile",
+        "insurable_hours",
+        "reason_for_separation"
+      ],
+      "repo_path": "29-foundry/prompts/eligibility-validator.prompty",
+      "used_by": [
+        "skill-05-evaluation-framework"
+      ],
+      "status": "implemented",
+      "notes": "Validates EI eligibility based on insurable hours, job separation reason, and waiting period rules.",
+      "source_file": "model/prompts.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "prompts"
+    }
+  ]
+}

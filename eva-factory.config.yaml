@@ -1,0 +1,162 @@
+# EVA Factory Configuration
+# ==================================================================
+# Single source of truth for all EVA Factory deployment parameters.
+# Enables portable deployment across different workspace structures.
+#
+# Usage: All scripts load this config on startup
+# Override: Environment variables (EVA_*)
+#
+# Example env overrides:
+#   EVA_STORAGE_PROJECTS_REGISTRY=/custom/path/projects.json
+#   EVA_SCHEMA_EVIDENCE_FILE=/custom/path/evidence.schema.json
+#   EVA_AUTOMATION_SCHEDULE_SYNC_51_ACA="0 7 * * *"
+
+factory:
+  name: "eva-factory"
+  version: "1.0.0"
+  description: "Evidence and Versioning Automation Framework"
+
+# =========== STORAGE CONFIGURATION ===========
+storage:
+  # Relative paths: resolved from target_repo root
+  projects_registry: "model/projects.json"
+  evidence_root: ".eva/evidence"
+  evidence_consolidated: "model/evidence.json"
+  reports_dir: "model/reports"
+
+# =========== SCHEMA CONFIGURATION ===========
+schema:
+  evidence_file: "schema/evidence.schema.json"
+  projects_file: "schema/projects.schema.json"
+  
+  # Evidence record field mappings
+  fields:
+    story_id: "story_id"
+    phase: "phase"
+    timestamp: "timestamp"
+    created_by: "created_by"
+    test_result: "test_result"
+    lint_result: "lint_result"
+    audit_result: "audit_result"
+    commit_sha: "commit_sha"
+    commit_message: "commit_message"
+    commit_author: "commit_author"
+    title: "title"
+    description: "description"
+    artifacts: "artifacts"
+
+  # Phase mapping: input → output
+  phase_map:
+    "D": "D3"
+    "P": "P"
+    "C": "C"
+    "A": "A"
+  
+  # Evidence ID format: {project}-{sprint}-{phase}-{story_id}
+  evidence_id_format: "{project}-{sprint}-{phase}-{story_id}"
+  
+  # Sprint ID inference: split story_id by "-", take first N parts
+  sprint_id_parts: 2
+
+# =========== VALIDATION CONFIGURATION ===========
+validation:
+  # Test result gates
+  gates:
+    status_values: ["PASS", "FAIL", "SKIP", "WARN"]
+    pass_threshold: 0.15  # 15% = PASS
+    fail_threshold: 0.50  # 50% = FAIL
+    warn_threshold: 0.30  # 30% = WARN
+  
+  # Deduplication: merge by evidence_id
+  deduplication:
+    key: "id"
+    strategy: "first-wins"  # first-wins | last-wins | merge-fields
+  
+  # Record completeness checks (optional fields allowed)
+  required_fields:
+    - "id"
+    - "project_id"
+    - "story_id"
+    - "created_at"
+  
+  optional_fields:
+    - "commits"
+    - "artifacts"
+    - "description"
+
+# =========== AUTOMATION CONFIGURATION ===========
+automation:
+  # Sync job schedules (cron format: "minute hour day month weekday")
+  schedules:
+    sync_51_aca: "0 8 * * *"       # Phase 2: 2026-03-04 08:00 UTC
+    sync_portfolio: "30 8 * * *"   # Phase 3: 2026-03-04 08:30 UTC
+  
+  # Batch processing
+  batch:
+    max_files_per_extract: 1000
+    max_records_per_merge: 10000
+    timeout_seconds: 300
+  
+  # Retry logic
+  retry:
+    max_attempts: 3
+    backoff_seconds: 5
+
+# =========== REPORTING CONFIGURATION ===========
+reporting:
+  report_file: "model/reports/sync-evidence-report.json"
+  
+  # Report metrics to include
+  metrics:
+    - "status"
+    - "duration_ms"
+    - "total_files_scanned"
+    - "projects_with_evidence"
+    - "total_records_merged"
+    - "validation_rate"
+    - "merge_gates_blocked"
+  
+  # Additional fields per project
+  per_project:
+    - "project_id"
+    - "folder_path"
+    - "evidence_files_found"
+    - "records_extracted"
+    - "validation_results"
+    - "errors"
+
+# =========== LOGGING CONFIGURATION ===========
+logging:
+  level: "INFO"  # DEBUG | INFO | WARNING | ERROR
+  format: "%(asctime)s [%(levelname)s] %(message)s"
+  file: "model/logs/sync-evidence.log"
+
+# =========== PROJECT DISCOVERY ===========
+project_discovery:
+  # Which projects to include
+  source: "projects.json"  # projects.json | filesystem | hybrid
+  
+  # Project selection criteria
+  filter:
+    requires_active: true
+    requires_folder: true
+    skip_ids: []  # Legacy projects to skip
+  
+  # Project structure expectations
+  structure:
+    evidence_dir: ".eva/evidence"
+    evidence_format: "json"
+
+# =========== DEPLOYMENT TARGETS ===========
+deployments:
+  # Production deployment (example)
+  production:
+    workspace_root: "/data/eva-factory"
+    data_model_root: "/data/eva-factory/37-data-model"
+    log_retention_days: 90
+  
+  # Development deployment (example)
+  development:
+    workspace_root: "${HOME}/workspace/eva-foundry"
+    data_model_root: "${HOME}/workspace/eva-foundry/37-data-model"
+    log_retention_days: 7

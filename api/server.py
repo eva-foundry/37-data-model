@@ -134,12 +134,16 @@ async def lifespan(app: FastAPI):
             if not path.exists():
                 continue
             raw = json.loads(path.read_text(encoding="utf-8-sig"))
-            objects = raw.get(layer, [])
-            if not objects:
-                for v in raw.values():
-                    if isinstance(v, list):
-                        objects = v
-                        break
+            # Handle both formats: direct array (from export) or dict with layer key (from disk)
+            if isinstance(raw, list):
+                objects = raw
+            else:
+                objects = raw.get(layer, [])
+                if not objects:
+                    for v in raw.values():
+                        if isinstance(v, list):
+                            objects = v
+                            break
             # normalise id + stamp source_file
             for obj in objects:
                 if "id" not in obj and "key" in obj:
@@ -255,6 +259,8 @@ def create_app() -> FastAPI:
         traces_router,
         # observability plane (L11)
         evidence_router,
+        # governance plane (L33-L34)
+        workspace_config_router, project_work_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -281,6 +287,8 @@ def create_app() -> FastAPI:
         traces_router,
         # observability plane (L11)
         evidence_router,
+        # governance plane (L33-L34)
+        workspace_config_router, project_work_router,
         fp_router,
         # graph (E-11)
         graph_router,
