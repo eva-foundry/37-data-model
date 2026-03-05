@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "wbs.schema.json",
+  "title": "Work Breakdown Structure",
+  "description": "Programme decomposition hierarchy: Program → Stream → Project → Epic → Feature → Story. Session 27: Layer 26 (L26) created.",
+  "type": "object",
+  "required": ["id", "label", "level"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "WBS identifier. Format: WBS-{PROJECT}-{TYPE}-{SEQ}",
+      "examples": [
+        "WBS-EVA-PROGRAM-001",
+        "WBS-51-ACA-EPIC-014",
+        "WBS-39-DASHBOARD-FEATURE-001"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable name for this WBS node",
+      "examples": ["EVA Platform", "Cost Analytics Engine", "Sprint Dashboard"]
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "Detailed description of scope and objectives"
+    },
+    "level": {
+      "type": "string",
+      "enum": ["program", "stream", "project", "epic", "feature", "story"],
+      "description": "Hierarchy level in the WBS tree"
+    },
+    "parent_id": {
+      "type": ["string", "null"],
+      "description": "Parent WBS node ID (null for top-level program)"
+    },
+    "children": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Child WBS node IDs for tree navigation"
+    },
+    "project_id": {
+      "type": ["string", "null"],
+      "description": "Reference to projects.id (Layer 25) if applicable"
+    },
+    "ado_epic_id": {
+      "type": ["integer", "null"],
+      "description": "Azure DevOps Epic ID (if level=epic)"
+    },
+    "ado_feature_id": {
+      "type": ["integer", "null"],
+      "description": "Azure DevOps Feature ID (if level=feature)"
+    },
+    "ado_story_id": {
+      "type": ["integer", "null"],
+      "description": "Azure DevOps Story/Task ID (if level=story)"
+    },
+    "estimated_effort": {
+      "type": ["integer", "null"],
+      "description": "Estimated effort in story points or hours"
+    },
+    "actual_effort": {
+      "type": ["integer", "null"],
+      "description": "Actual effort tracked"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "active", "complete", "cancelled", "blocked"],
+      "description": "Current status of this WBS node",
+      "default": "planned"
+    },
+    "start_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Planned or actual start date (YYYY-MM-DD)"
+    },
+    "end_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Planned or actual end date (YYYY-MM-DD)"
+    },
+    "owner": {
+      "type": ["string", "null"],
+      "description": "Person or team responsible for delivery"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tags for categorization and filtering"
+    },
+    "related_endpoints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Endpoint IDs (Layer 28) implemented by this WBS node"
+    },
+    "related_requirements": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Requirement IDs (Layer 29) fulfilled by this WBS node"
+    },
+    "related_evidence": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Evidence IDs (Layer 31) proving completion of this WBS node"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "additionalProperties": true
+    }
+  }
+}

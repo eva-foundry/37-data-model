@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "evidence.schema.json",
   "title": "EVA Evidence Receipt",
-  "description": "Proof-of-completion for a DPDCA phase of a story. Universal schema works for any story type (feature, bug, infrastructure, etc) and any project.",
+  "description": "Proof-of-completion for a DPDCA phase of a story. Universal schema works for any story type (feature, bug, infrastructure, etc) and any project. Session 27: Added tech_stack polymorphism for tech-specific context validation.",
   "type": "object",
   "required": ["id", "sprint_id", "story_id", "phase", "created_at"],
   "additionalProperties": false,
@@ -163,10 +163,213 @@
         }
       }
     },
+    "tech_stack": {
+      "type": "string",
+      "enum": ["python", "react", "terraform", "docker", "csharp", "generic"],
+      "description": "Technology stack discriminator for polymorphic context validation. Use 'generic' for stories without tech-specific artifacts.",
+      "default": "generic"
+    },
     "context": {
-      "type": "object",
-      "description": "Additional context or metadata specific to this story/phase",
-      "additionalProperties": true
+      "description": "Tech-stack-specific context. Schema validation depends on tech_stack field.",
+      "oneOf": [
+        {
+          "if": { "properties": { "tech_stack": { "const": "python" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "pytest": {
+                "type": "object",
+                "properties": {
+                  "total_tests": { "type": "integer" },
+                  "passed": { "type": "integer" },
+                  "failed": { "type": "integer" },
+                  "skipped": { "type": "integer" },
+                  "duration_sec": { "type": "number" },
+                  "junit_xml_path": { "type": "string" }
+                }
+              },
+              "coverage": {
+                "type": "object",
+                "properties": {
+                  "line_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "branch_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "html_report_path": { "type": "string" }
+                }
+              },
+              "ruff": {
+                "type": "object",
+                "properties": {
+                  "violations": { "type": "integer" },
+                  "auto_fixed": { "type": "integer" },
+                  "config_path": { "type": "string" }
+                }
+              },
+              "mypy": {
+                "type": "object",
+                "properties": {
+                  "errors": { "type": "integer" },
+                  "warnings": { "type": "integer" },
+                  "type_coverage_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "react" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "jest": {
+                "type": "object",
+                "properties": {
+                  "total_tests": { "type": "integer" },
+                  "passed": { "type": "integer" },
+                  "snapshots": { "type": "integer" },
+                  "duration_sec": { "type": "number" }
+                }
+              },
+              "bundle": {
+                "type": "object",
+                "properties": {
+                  "size_kb": { "type": "number" },
+                  "gzip_size_kb": { "type": "number" },
+                  "chunks": { "type": "integer" }
+                }
+              },
+              "lighthouse": {
+                "type": "object",
+                "properties": {
+                  "performance": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "accessibility": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "best_practices": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "seo": { "type": "integer", "minimum": 0, "maximum": 100 }
+                }
+              },
+              "eslint": {
+                "type": "object",
+                "properties": {
+                  "errors": { "type": "integer" },
+                  "warnings": { "type": "integer" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "terraform" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "plan": {
+                "type": "object",
+                "properties": {
+                  "resources_to_add": { "type": "integer" },
+                  "resources_to_change": { "type": "integer" },
+                  "resources_to_destroy": { "type": "integer" },
+                  "estimated_cost_delta_usd": { "type": "number" }
+                }
+              },
+              "apply": {
+                "type": "object",
+                "properties": {
+                  "resources_created": { "type": "integer" },
+                  "resources_updated": { "type": "integer" },
+                  "duration_sec": { "type": "number" },
+                  "state_lock_acquired": { "type": "boolean" }
+                }
+              },
+              "tfsec": {
+                "type": "object",
+                "properties": {
+                  "critical": { "type": "integer" },
+                  "high": { "type": "integer" },
+                  "medium": { "type": "integer" },
+                  "low": { "type": "integer" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "docker" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "image": {
+                "type": "object",
+                "properties": {
+                  "size_mb": { "type": "number" },
+                  "layers": { "type": "integer" },
+                  "tag": { "type": "string" },
+                  "digest": { "type": "string" }
+                }
+              },
+              "scan": {
+                "type": "object",
+                "properties": {
+                  "critical": { "type": "integer" },
+                  "high": { "type": "integer" },
+                  "medium": { "type": "integer" },
+                  "low": { "type": "integer" },
+                  "scanner": { "type": "string" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "csharp" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "nunit": {
+                "type": "object",
+                "properties": {
+                  "total_tests": { "type": "integer" },
+                  "passed": { "type": "integer" },
+                  "failed": { "type": "integer" },
+                  "duration_sec": { "type": "number" }
+                }
+              },
+              "dotcover": {
+                "type": "object",
+                "properties": {
+                  "line_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "branch_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+                }
+              },
+              "sonar": {
+                "type": "object",
+                "properties": {
+                  "bugs": { "type": "integer" },
+                  "vulnerabilities": { "type": "integer" },
+                  "code_smells": { "type": "integer" },
+                  "debt_minutes": { "type": "integer" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "generic" } } },
+          "then": {
+            "type": "object",
+            "description": "Generic context for non-tech-specific stories (planning, documentation, etc.)",
+            "additionalProperties": true
+          }
+        },
+        {
+          "type": "object",
+          "description": "Default: allow any context structure if tech_stack not specified",
+          "additionalProperties": true
+        }
+      ]
     }
   }
 }
