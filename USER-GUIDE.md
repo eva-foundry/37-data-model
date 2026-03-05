@@ -12,7 +12,7 @@
 
 ```powershell
 # Cloud (production)
-$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
 Invoke-RestMethod "$base/model/agent-guide" | ConvertTo-Json -Depth 10
 
 # Local (development)
@@ -57,7 +57,7 @@ The API returns a JSON object with these sections:
 | `query_patterns` | 20+ examples: filter, navigate, introspect, impact analysis |
 | `write_cycle` | 5 rules: capture row_version, strip audit, -Depth 10, no PATCH, copy endpoint id |
 | `actor_header` | X-Actor for writes, Authorization for admin |
-| `common_mistakes` | 8 lessons learned with error/cause/fix |
+| `common_mistakes` | 9 lessons learned with error/cause/fix |
 | `examples` | Before/after code showing safe patterns |
 | `layers_available` | All 34 layers (services → project_work) |
 | `layer_notes` | Special cases (endpoints id format, services obj_id, wbs ado_epic_id) |
