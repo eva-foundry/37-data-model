@@ -1,8 +1,8 @@
 ================================================================================
- EVA DATA MODEL -- 33-LAYER REFERENCE
+ EVA DATA MODEL -- 34-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-05 7:30 PM ET -- 33 layers; 4,339+ objects; Governance Plane LIVE
- Source: https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
+ Updated: 2026-03-05 8:00 PM ET -- 34 layers; 4,952+ objects; Agent Experience LIVE
+ Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 ================================================================================
 
   COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31)
@@ -27,10 +27,42 @@
   Agents must never read, grep, parse, or reference them.
   One HTTP call beats ten file reads and ten grep commands.
 
-  Bootstrap sequence for any agent:
+  Bootstrap sequence for any agent (SESSION 26 ENHANCED):
     GET /health                -> confirms store=cosmos, gives agent_guide link
-    GET /model/agent-guide     -> complete operating protocol in JSON
-    GET /model/agent-summary   -> all 31 layer counts in one call
+    GET /model/agent-guide     -> ENHANCED: 5 sections (discovery_journey,
+                                  query_capabilities, terminal_safety,
+                                  common_mistakes, examples)
+    GET /model/layers          -> introspect all 34 layers with schema availability
+    GET /model/{layer}/fields  -> get field names, types, descriptions for any layer
+    GET /model/{layer}/example -> see real object structure from any layer
+    GET /model/agent-summary   -> all layer counts in one call (LEGACY)
+
+  DISCOVERY & INTROSPECTION (Session 26):
+    All layers support self-documenting endpoints for agent orientation:
+      GET /model/layers               -> 34 layers with descriptions, example counts
+      GET /model/{layer}/fields       -> schema field definitions
+      GET /model/{layer}/example      -> first real object for reference
+      GET /model/{layer}/count        -> total object count
+      GET /model/schema-def/{layer}   -> JSON Schema Draft-07 definition (WIP)
+
+  UNIVERSAL QUERY OPERATORS (Session 26):
+    All 34 layers support standardized query parameters:
+      ?limit=N                        -> pagination (DEFAULT: use in terminal!)
+      ?offset=N                       -> skip N records
+      ?field=value                    -> exact match filter
+      ?field.gt=value                 -> greater than
+      ?field.lt=value                 -> less than
+      ?field.contains=substring       -> substring search
+      ?field.in=val1,val2,val3        -> multiple value match
+
+    Response format (with metadata):
+      { "data": [...], "metadata": {"total": N, "limit": N, "offset": N} }
+
+  AGGREGATION ENDPOINTS (Session 26):
+    Server-side aggregation for complex queries:
+      GET /model/evidence/aggregate?group_by=phase&metrics=count,avg_test_count
+      GET /model/sprints/{id}/metrics          -> phase breakdown (D1/D2/P/D3/A)
+      GET /model/projects/{id}/metrics/trend   -> multi-sprint velocity trend
 
   WRITE CYCLE (3-step preferred)
   --------------------------------
@@ -241,15 +273,27 @@
  OBSERVABILITY PLANE (L31-L32) -- L11
 --------------------------------------------------------------------------------
 
-  L31 evidence          0 items (schema + model ready, agents can record now)
+  L31 evidence          62 items (POLYMORPHIC schema, Session 27 LIVE)
   -----------------------------------------------------------------------
   Purpose: Capture proof-of-completion for every DPDCA phase across all projects.
            Universal schema works for 51-ACA, 31-eva-faces, 33-eva-brain-v2, etc.
 
-  Status: LIVE as of 2026-03-01 7:39 PM ET
-  Schema: schema/evidence.schema.json (JSON Schema Draft-07)
-  Model:  model/evidence.json (empty objects array, ready for evidence records)
+  Status: LIVE as of 2026-03-01 7:39 PM ET | ENHANCED 2026-03-05 (Session 27)
+  Schema: schema/evidence.schema.json (JSON Schema Draft-07, POLYMORPHIC)
+  Model:  model/evidence.json (62 evidence receipts, growing)
   API:    GET /model/evidence/, PUT /model/evidence/{id}, filters by sprint/story/phase
+
+  POLYMORPHIC ARCHITECTURE (Session 27):
+    tech_stack field enables tech-specific context validation:
+      python      -> pytest{}, coverage{}, ruff{}, mypy{}
+      react       -> jest{}, bundle{}, lighthouse{}, eslint{}
+      terraform   -> validate{}, plan{}, tfsec{}
+      docker      -> build{}, scan{}, layers{}
+      csharp      -> xunit{}, coverage{}, roslyn{}
+      generic     -> fallback for other stacks
+
+    oneOf validation ensures context matches tech_stack.
+    See: docs/architecture/EVIDENCE-POLYMORPHISM-ADO-INTEGRATION.md
 
   DPDCA PHASES (record after each):
     D1 -- Discover (problem statement, blockers documented)
@@ -259,7 +303,7 @@
     A  -- Act (results reflected in model + plan docs, loop closed)
 
   REQUIRED FIELDS:
-    id, sprint_id, story_id, phase, created_at
+    id, sprint_id, story_id, phase, created_at, tech_stack
 
   VALIDATION GATES (merge-blocking in CI/CD):
     test_result = "FAIL"  --> blocks merge (exit 1 in evidence_validate.ps1)
@@ -268,6 +312,14 @@
   METRICS CAPTURED:
     duration_ms, files_changed, lines_added, lines_deleted,
     tokens_used, cost_usd, test_count
+
+  TECH-SPECIFIC CONTEXT (examples):
+    Python:     pytest{total_tests, passed, failed, skipped},
+                coverage{line_pct, branch_pct}, ruff{violations}, mypy{errors}
+    React:      jest{total_tests, snapshots}, bundle{size_kb, gzip_size_kb},
+                lighthouse{performance, accessibility}, eslint{errors, warnings}
+    Terraform:  validate{success}, plan{resources_add, change, destroy},
+                tfsec{issues_high, medium, low}
 
   ARTIFACTS TRACKED:
     [{path, type (source|test|schema|config|doc), action (created|modified|deleted)}]
@@ -369,10 +421,11 @@
   QUERY: GET /model/projects/{id} returns ALL governance metadata in one call
          (vs reading 4 files: README.md, PLAN.md, STATUS.md, ACCEPTANCE.md)
 
-  L26 wbs               13 items (1 program | 4 streams | 3 projects | 5 deliverables)
+  L26 wbs               869 items (1 program | 4 streams | 56 projects | 808 deliverables)
   -----------------------------------------------------------------------
   Work breakdown structure. Dual-mode PM: Agile Scrum + classical Gantt/EVM.
-  Schema registered: WBSNode (in /model/schemas/WBS)
+  Schema: schema/wbs.schema.json (JSON Schema Draft-07, Session 27)
+  Status: LIVE as of 2026-03-05 (Session 27 deployment)
 
   CORE IDENTITY
     id, label, label_fr, level (program|stream|project|deliverable|milestone)

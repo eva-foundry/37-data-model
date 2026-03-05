@@ -1,0 +1,54 @@
+{
+  "id": "TEST-S27-POLY-001-D3",
+  "sprint_id": "37-data-model-sprint-7",
+  "story_id": "POLY-001",
+  "story_title": "Test evidence polymorphism with Python tech stack",
+  "phase": "D3",
+  "created_at": "2026-03-05T18:15:00-05:00",
+  "completed_at": "2026-03-05T18:15:00-05:00",
+  "tech_stack": "python",
+  "summary": "Session 27: Evidence polymorphism implementation test",
+  "artifacts": [
+    {
+      "path": "schema/evidence.schema.json",
+      "type": "schema",
+      "action": "modified"
+    }
+  ],
+  "validation": {
+    "test_result": "PASS",
+    "lint_result": "PASS",
+    "coverage_percent": 95
+  },
+  "metrics": {
+    "duration_ms": 5000,
+    "test_count": 42,
+    "files_changed": 1,
+    "lines_added": 180
+  },
+  "context": {
+    "pytest": {
+      "total_tests": 42,
+      "passed": 40,
+      "failed": 0,
+      "skipped": 2,
+      "duration_sec": 8.45,
+      "junit_xml_path": "test-results/junit.xml"
+    },
+    "coverage": {
+      "line_pct": 92.3,
+      "branch_pct": 87.1,
+      "html_report_path": "htmlcov/index.html"
+    },
+    "ruff": {
+      "violations": 3,
+      "auto_fixed": 12,
+      "config_path": "pyproject.toml"
+    },
+    "mypy": {
+      "errors": 0,
+      "warnings": 2,
+      "type_coverage_pct": 95.8
+    }
+  }
+}

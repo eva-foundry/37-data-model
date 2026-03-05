@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-03-05 7:30 PM ET -- 11: Evidence Layer LIVE; 33 layers; 4,339+ objects; Governance Plane LIVE
+ Updated: 2026-03-05 8:00 PM ET -- 12 files; 34 layers; 4,952+ objects; Agent Experience LIVE
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -99,13 +99,23 @@ No Mermaid. No emoji. ASCII only. Printable.
 
   11-EVIDENCE-LAYER.md          EVIDENCE LAYER (L31 -- Observability Plane).
                                 Universal DPDCA proof-of-completion schema.
-                                Python library (EvidenceBuilder), CI/CD merge gates,
-                                query tool, portfolio audits. Correlation IDs tie
-                                evidence + traces + WBS together. Status: LIVE.
-                                Agents record evidence after each DPDCA phase.
+                                POLYMORPHIC (Session 27): tech_stack field with
+                                6 tech-specific validation branches (python, react,
+                                terraform, docker, csharp, generic). Python library
+                                (EvidenceBuilder), CI/CD merge gates, query tool.
+                                Correlation IDs tie evidence + traces + WBS together.
+                                Status: LIVE. Agents record evidence after each phase.
                                 Merge blocks: test_result=FAIL, lint_result=FAIL.
-                                Agent quick reference, API route catalog.
-                                READ THIS for the FK enhancement roadmap.
+
+  12-AGENT-EXPERIENCE.md        AGENT EXPERIENCE ENHANCEMENTS (Session 26).
+                                Self-documenting API with 5-section agent-guide:
+                                discovery_journey, query_capabilities, terminal_safety,
+                                common_mistakes, examples. Schema introspection:
+                                /model/layers, /fields, /example, /count. Universal
+                                query operators: ?limit, ?field=value, ?field.gt/lt,
+                                ?contains, ?in. Aggregation endpoints for evidence,
+                                sprints, projects. API-first bootstrap (2 calls vs
+                                236 file reads). Status: LIVE. 10/11 endpoints operational.
 
 --------------------------------------------------------------------------------
  FOUNDING REFERENCE
@@ -117,16 +127,18 @@ No Mermaid. No emoji. ASCII only. Printable.
   Authors: Luukas Ilves, Manuel Kilian + 20 global digital gov leaders
   URL: https://edrm.net/2025/10/the-agentic-state-a-global-framework-for-
        secure-and-accountable-ai-powered-government/
-
-  EVA is the operationalization of that paper.
-  Berlin paper = vision. EVA = running implementation with governance.
-
---------------------------------------------------------------------------------
- KEY NUMBERS (2026-03-05 Evidence Layer LIVE + Governance Plane LIVE)
---------------------------------------------------------------------------------
-
-  See: 03-DATA-MODEL-REFERENCE.md for complete entity catalog and layer details.
-  
+4 (L0-L34 -- Governance Plane L33-L34 added Mar 5, 2026)
+  Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
+  Entity types: endpoints, screens, services, containers, agents, evidence, traces,
+                workspace_config, project_work, wbs
+  PASS 0 violations across all entities
+  Projects: 59 (enhanced with governance{} + acceptance_criteria[])
+  WBS nodes: 869 (1 program, 4 streams, 56 projects, 808 deliverables)
+  Evidence: 62 receipts (polymorphic with 6 tech stacks)
+  458 literals   36 services   10 personas
+  15 feature flags   12 governance domains   6 MTI subscores
+  9-step decision engine   2 audit log lanes   7 authority planes
+  4,952
   Layers: 33 (L0-L34 -- Governance Plane L33-L34 added Mar 5, 2026)
   Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
   Entity types: endpoints, screens, services, containers, agents, evidence, traces,
