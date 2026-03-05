@@ -1,0 +1,37 @@
+{
+  "status": "WARN",
+  "timestamp": "2026-03-04T00:37:44.920150+00:00",
+  "duration_ms": 463.99899999999997,
+  "total_files_scanned": 64,
+  "projects_with_evidence": 1,
+  "projects_without_evidence": 52,
+  "total_records_extracted": 64,
+  "total_records_transformed": 64,
+  "total_records_merged": 63,
+  "total_validated_pass": 11,
+  "total_validated_fail": 1,
+  "total_validated_skip": 51,
+  "validation_rate": 17.46031746031746,
+  "merge_gates_blocked": 1,
+  "per_project_results": {
+    "51-ACA": {
+      "folder": "51-ACA",
+      "label": "ACA (Azure Cost Advisor)",
+      "files_found": 64,
+      "records_extracted": 64,
+      "records_transformed": 64,
+      "records_merged": 63,
+      "validation": {
+        "PASS": 11,
+        "FAIL": 1,
+        "SKIP": 26,
+        "WARN": 25,
+        "success": 1
+      },
+      "errors": [],
+      "duration_ms": 25.999000000000002
+    }
+  },
+  "failure_count": 1,
+  "warning_count": 1
+}

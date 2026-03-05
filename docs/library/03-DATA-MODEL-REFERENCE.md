@@ -1,7 +1,7 @@
 ================================================================================
- EVA DATA MODEL -- 32-LAYER REFERENCE
+ EVA DATA MODEL -- 33-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-01 9:40 PM ET -- 32 layers; 4,152+ objects; Evidence Layer LIVE
+ Updated: 2026-03-05 7:30 PM ET -- 33 layers; 4,339+ objects; Governance Plane LIVE
  Source: https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
 ================================================================================
 
@@ -50,12 +50,15 @@
   L11      Observability Plane   (L31 EVIDENCE + L32 Traces -- PROOF & telemetry)
            *** L31 Evidence = COMPETITIVE MOAT = only AI with audit trails ***
   L12-L18  Control Plane         (automation operating model, Phase 4)
+  L13      Governance Plane      (L33-L34 -- workspace_config + project_work)
+           *** DATA-MODEL-FIRST: Bootstrap queries API, not files ***
   L19-L21  Frontend Structural   (components / hooks / ts_types, Phase 5)
   L22-L25  Catalog Additions     (MCP servers / prompts / security / runbooks)
-  L26-L27  Project Plane         (projects + WBS, E-07/E-08 sprint)
+  L26-L30  Project & DPDCA Plane (projects + WBS + sprints + milestones + risks + decisions)
 
   NOTE: Layer numbering shifted after L11 Observability insertion (Mar 1, 2026).
         Old L11-L26 layers remain in same logical order but renumbered L12-L27.
+        Governance Plane (L33-L34) added Mar 5, 2026 for data-model-first architecture.
 
 --------------------------------------------------------------------------------
  APPLICATION MODEL (L0-L10)
@@ -338,17 +341,35 @@
             evidence pack generation, red team run
 
 --------------------------------------------------------------------------------
- PROJECT PLANE (L26-L27)
+ PROJECT & DPDCA PLANE (L25-L30)
 --------------------------------------------------------------------------------
 
-  L26 projects          48 items
+  L25 projects          59 items (ENHANCED with governance{} + acceptance_criteria[])
   -----------------------------------------------------------------------
-  NOTE: All 27 numbered eva-foundation projects and their maturity.
-  Key fields: id, name, maturity, owner, description,
-              copilot_instructions, skills_count, wbs_count
+  NOTE: All EVA workspace projects with ADO epic IDs, maturity, and governance metadata.
+  Status: ENHANCED Mar 5, 2026 with governance{} and acceptance_criteria[] fields
+  
+  Key fields (original): id, name, maturity, owner, description,
+                        copilot_instructions, skills_count, wbs_count
+  
+  NEW FIELDS (data-model-first architecture):
+    governance:
+      readme_summary         -- Executive overview from README.md
+      purpose               -- Why this project exists
+      key_artifacts[]       -- Critical deliverables (path, description)
+      current_sprint{}      -- Active sprint metadata
+      latest_achievement{}  -- Most recent milestone (date, description)
+    acceptance_criteria[]:
+      gate                  -- Acceptance gate name
+      criteria              -- Success criteria
+      status                -- PASS | FAIL | WARN | CONDITIONAL
+  
   Maturity values: active, poc, idea, empty, retired
+  
+  QUERY: GET /model/projects/{id} returns ALL governance metadata in one call
+         (vs reading 4 files: README.md, PLAN.md, STATUS.md, ACCEPTANCE.md)
 
-  L27 wbs               13 items (1 program | 4 streams | 3 projects | 5 deliverables)
+  L26 wbs               13 items (1 program | 4 streams | 3 projects | 5 deliverables)
   -----------------------------------------------------------------------
   Work breakdown structure. Dual-mode PM: Agile Scrum + classical Gantt/EVM.
   Schema registered: WBSNode (in /model/schemas/WBS)
@@ -379,6 +400,110 @@
     velocity (rolling 3-sprint avg)
     cycle_time_days (avg days start->done per story)
     defect_rate (defects per sprint)
+
+  L27 sprints           (schema ready, data seeding in progress)
+  -----------------------------------------------------------------------
+  Sprint velocity records with planned/actual metrics, MTI at close
+  Key fields: sprint_id, velocity_planned, velocity_actual, mti_at_close,
+              ado_iteration_path, sprint_start, sprint_end
+
+  L28 milestones        (schema ready, data seeding in progress)
+  -----------------------------------------------------------------------
+  RUP phase gates with deliverables, sign-off, WBS linkage
+  Key fields: milestone_id, phase_gate, deliverables[], sign_off_by,
+              wbs_ids[], status
+
+  L29 risks             (schema ready, data seeding in progress)
+  -----------------------------------------------------------------------
+  3x3 risk matrix with probability × impact scoring
+  Key fields: risk_id, probability, impact, risk_score, mitigation_owner,
+              status, wbs_ids[]
+
+  L30 decisions         (schema ready, data seeding in progress)
+  -----------------------------------------------------------------------
+  Architecture Decision Records (ADRs)
+  Key fields: adr_id, context, decision, consequences, deciders[],
+              superseded_by, status
+
+--------------------------------------------------------------------------------
+ GOVERNANCE PLANE (L33-L34) -- DATA-MODEL-FIRST ARCHITECTURE
+--------------------------------------------------------------------------------
+
+  L33 workspace_config  1 item (schema ready, pilot in progress)
+  -----------------------------------------------------------------------
+  Purpose: Workspace-level best practices, bootstrap rules, data model config
+  Status: ADDED Mar 5, 2026 -- enables data-model-first bootstrap (query vs read files)
+  
+  Key fields:
+    id                     -- workspace root path (eva-foundry)
+    workspace_root        -- Absolute path
+    best_practices{}:
+      encoding_safety     -- Windows Enterprise encoding rules (ASCII only)
+      component_patterns  -- DebugArtifactCollector, SessionManager patterns
+      evidence_collection -- Capture state at every operation boundary
+      timestamped_naming  -- {component}_{context}_{YYYYMMDD_HHMMSS}.{ext}
+    bootstrap_rules{}:
+      mandatory_files     -- .github/copilot-instructions.md, README, PLAN, STATUS
+      governance_query    -- GET /model/projects/{id} for bootstrap context
+      fallback_strategy   -- Read local files if API timeout
+    data_model_config{}:
+      cloud_endpoint      -- Production API URL
+      layer_count         -- Current layer count (33)
+      backup_strategy     -- sync-cloud-to-local.ps1 frequency
+  
+  QUERY: GET /model/workspace_config/eva-foundry
+  BENEFIT: Single API call returns workspace-level best practices for all agents
+
+  L34 project_work      (schema ready, pilot in progress)
+  -----------------------------------------------------------------------
+  Purpose: Active work sessions -- REPLACES STATUS.md with queryable DPDCA records
+  Status: ADDED Mar 5, 2026 -- structured, versioned work tracking
+  
+  Key fields:
+    id                    -- {project_id}-{YYYY-MM-DD} (one record per session)
+    project_id            -- Foreign key to L25 projects
+    current_phase         -- D1 | D2 | P | D3 | A (DPDCA phase)
+    session_summary{}:
+      session_number      -- Incremental session counter
+      date                -- Session date
+      focus               -- What was worked on
+      outcome             -- Key result
+    tasks[]:
+      task_id
+      description
+      status              -- not-started | in-progress | completed | blocked
+      owner
+    blockers[]:
+      blocker_id
+      description
+      severity            -- critical | high | medium | low
+      resolution
+    metrics{}:
+      files_modified      -- Count of files changed
+      lines_added
+      lines_deleted
+      duration_minutes
+      mti_score           -- MTI at session close
+    next_steps[]          -- Prioritized actions for next session
+  
+  QUERY: GET /model/project_work/?project_id=07-foundation-layer
+  BENEFIT: Queryable work history, structured session data, API-driven status
+  
+  ARCHITECTURE SHIFT:
+    Before: Bootstrap reads README.md (purpose), PLAN.md (features), 
+            STATUS.md (sessions), ACCEPTANCE.md (gates) -- 4 file reads per project
+    After:  GET /model/projects/{id} returns governance{} + acceptance_criteria[]
+            GET /model/project_work/?project_id={id} returns active sessions
+    Result: 236 file reads (59 projects × 4 files) → 2 API calls
+
+  FILES AS EXPORTS:
+    README.md, STATUS.md, ACCEPTANCE.md become snapshots GENERATED from data model
+    Use export-governance-to-files.py to generate markdown from API data
+    Data model is single source of truth; files are presentation layer
+
+--------------------------------------------------------------------------------
+ DPDCA EVOLUTION PLANE (L27-L30) -- FORMERLY PART OF PROJECT PLANE
+--------------------------------------------------------------------------------
 
   EARNED VALUE MANAGEMENT (EVM)
     budget_at_completion (BAC -- authorised budget in story points)

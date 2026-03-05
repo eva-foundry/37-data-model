@@ -1,8 +1,8 @@
 ================================================================================
  EVA EVIDENCE LAYER -- THE BILLION-DOLLAR MOAT
  File: docs/library/11-EVIDENCE-LAYER.md
- Updated: 2026-03-01 9:40 PM ET
- Status: LIVE (GA) -- 32 layers total -- L31 Evidence (PATENT-WORTHY)
+ Updated: 2026-03-05 7:30 PM ET
+ Status: LIVE (GA) -- 33 layers total -- L31 Evidence (PATENT-WORTHY)
 ================================================================================
 
 This document is the authoritative guide for AI agents and developers working
@@ -575,7 +575,7 @@ Next steps:
 USER-GUIDE.md     -- Full Evidence Layer usage guide (API, library, queries)
 ARCHITECTURE.md   -- L11 Observability Plane design (Evidence + Traces)
 ANNOUNCEMENT.md   -- Quick-start for agents (concise, actionable)
-README.md         -- Data Model overview (32 layers, status)
+README.md         -- Data Model overview (33 layers, status, governance plane)
 STATUS.md         -- Session snapshot (implementation complete, MTI=100)
 
 ================================================================================

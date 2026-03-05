@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/workspace_config.schema.json",
+  "title": "Workspace Configuration",
+  "description": "Workspace-level configuration including best practices, bootstrap rules, and global settings. Layer 33 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["id", "workspace_root", "best_practices", "bootstrap_rules"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique workspace identifier (e.g., 'eva-foundry', 'eva-production')",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "label": {
+      "type": "string",
+      "description": "Human-readable workspace name"
+    },
+    "workspace_root": {
+      "type": "string",
+      "description": "Absolute path to workspace root directory (e.g., 'C:\\AICOE\\eva-foundry')"
+    },
+    "best_practices": {
+      "type": "object",
+      "description": "Consolidated best practices from workspace analysis",
+      "properties": {
+        "encoding_safety": {
+          "type": "string",
+          "description": "Encoding safety principle (ASCII-only, no Unicode)",
+          "default": "ASCII-only, no Unicode characters in production code"
+        },
+        "component_architecture": {
+          "type": "string",
+          "description": "Professional component architecture patterns",
+          "default": "DebugArtifactCollector, SessionManager, StructuredErrorHandler"
+        },
+        "evidence_collection": {
+          "type": "string",
+          "description": "Evidence collection principle",
+          "default": "Capture state at every operation boundary (pre/success/error)"
+        },
+        "timestamped_naming": {
+          "type": "string",
+          "description": "Timestamped naming convention",
+          "default": "{component}_{context}_{YYYYMMDD_HHMMSS}.{ext}"
+        },
+        "zero_setup_execution": {
+          "type": "string",
+          "description": "Zero-setup execution pattern",
+          "default": "Auto-detect structure, validate environment, normalize parameters"
+        }
+      }
+    },
+    "bootstrap_rules": {
+      "type": "object",
+      "description": "Bootstrap sequence rules for agents",
+      "properties": {
+        "step_1": {
+          "type": "string",
+          "description": "First bootstrap step",
+          "default": "Read workspace best practices"
+        },
+        "step_2": {
+          "type": "string",
+          "description": "Second bootstrap step",
+          "default": "Query data model for project context"
+        },
+        "step_3": {
+          "type": "string",
+          "description": "Third bootstrap step",
+          "default": "Read project-specific skills"
+        },
+        "fallback_strategy": {
+          "type": "string",
+          "description": "Fallback behavior if data model unavailable",
+          "default": "Read local governance files (README, PLAN, STATUS, ACCEPTANCE)"
+        }
+      }
+    },
+    "data_model_config": {
+      "type": "object",
+      "description": "Data model API configuration",
+      "properties": {
+        "cloud_endpoint": {
+          "type": "string",
+          "description": "Cloud API endpoint (primary)",
+          "format": "uri"
+        },
+        "local_endpoint": {
+          "type": "string",
+          "description": "Local API endpoint (fallback or disabled)",
+          "format": "uri"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "description": "API timeout in seconds",
+          "default": 30,
+          "minimum": 5,
+          "maximum": 120
+        }
+      }
+    },
+    "project_count": {
+      "type": "integer",
+      "description": "Total number of projects in workspace",
+      "minimum": 0
+    },
+    "active_project_count": {
+      "type": "integer",
+      "description": "Number of active projects",
+      "minimum": 0
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or configuration details"
+    }
+  }
+}

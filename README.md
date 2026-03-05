@@ -7,23 +7,27 @@
 
 | Tool | Purpose | How to Use |
 |------|---------|------------|
-| 37-data-model | Single source of truth for all project entities | GET http://localhost:8010/model/projects/37-data-model |
+| 37-data-model (CLOUD) | **SINGLE SOURCE OF TRUTH** — All project entities | `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/projects/37-data-model` |
 | 29-foundry | Agentic capabilities (search, RAG, eval, observability) | C:\AICOE\eva-foundation\29-foundry |
 | 48-eva-veritas | Trust score and coverage audit | MCP tool: audit_repo / get_trust_score |
 | 07-foundation-layer | Copilot instructions primer + governance templates | MCP tool: apply_primer / audit_project |
 
-**Agent rule**: Query the data model API before reading source files.
+**⚠️ IMPORTANT: LOCAL SERVICE DISABLED** — As of March 5, 2026, port 8010 (localhost) is **permanently disabled**.  
+All agents must query the **CLOUD API ONLY** to ensure single source of truth. Do NOT use localhost:8010.
+
+**Agent rule**: Query the cloud data model API before reading source files.
 ```powershell
-Invoke-RestMethod "http://localhost:8010/model/agent-guide"   # complete protocol
-Invoke-RestMethod "http://localhost:8010/model/agent-summary" # all layer counts
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+Invoke-RestMethod "$base/model/agent-guide"   # complete protocol
+Invoke-RestMethod "$base/model/agent-summary" # all layer counts (4,339 objects)
 ```
 
 ---
 
 
 **Component:** 37-data-model  
-**Status:** GA -- validate-model PASS 0 violations - as of 2026-03-01 9:40 PM ET: 32 layers - 187 endpoints - 46 screens - 375 literals - 53 projects - 4,152+ total objects - ACA deployed (Cosmos 24x7) - MTI=100 - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
-**Last Updated:** March 1, 2026 9:40 PM ET -- Evidence Layer documented as billion-dollar competitive moat
+**Status:** GA (Cloud Only) -- validate-model PASS 0 violations - **LOCAL SERVICE DISABLED (Mar 5)** - Cloud remains OPERATIONAL: **33 layers** (31→33 with Governance Plane L33-L34) - 4,339+ objects - ACA deployed (Cosmos 24x7, 100% uptime) - MTI=100 - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
+**Last Updated:** March 5, 2026 7:15 PM ET -- Data-model-first architecture COMPLETE: Layer 33 (workspace_config), Layer 34 (project_work), enhanced Layer 25 (projects with governance{}). Bootstrap now queries API for governance metadata vs reading 236 files. Pilot ready: 07-foundation-layer.
 
 ---
 
@@ -129,9 +133,19 @@ Layer 28 milestones      RUP phase gates -- deliverables, sign_off_by, wbs_ids
 Layer 29 risks           3x3 risk matrix -- probability, impact, risk_score, mitigation_owner
 Layer 30 decisions       ADRs (Architecture Decision Records) -- context/decision/consequences, superseded_by, deciders
 
-# Observability plane (L11 ? 2026-03-01) ? proof-of-completion + LM call tracing
-Layer 31 evidence        DPDCA phase completions -- sprint_id, story_id, phase (D1/D2/P/D3/A), validation gates, merge blockers, metrics (cost, duration, coverage)
-Layer 32 traces          Emerging: LM call telemetry -- model, tokens, cost_usd, latency_ms, correlation_id
+# Observability plane (L11 – 2026-03-01) – proof-of-completion + LM call tracing
+Layer 31 evidence        DPDCA phase completions – sprint_id, story_id, phase (D1/D2/P/D3/A), validation gates, merge blockers, metrics (cost, duration, coverage)
+Layer 32 traces          Emerging: LM call telemetry – model, tokens, cost_usd, latency_ms, correlation_id
+
+# Governance plane (L13 – 2026-03-05) – data-model-first architecture
+Layer 33 workspace_config Workspace-level best practices, bootstrap rules, data model config
+Layer 34 project_work    Active work sessions – replaces STATUS.md with queryable DPDCA sessions, tasks[], blockers[], metrics{}
+
+**Architecture Evolution (March 5, 2026):**
+- **File-First → Data-Model-First**: Bootstrap now queries `GET /model/projects/{id}` for governance metadata
+- **Enhanced Layer 25 (projects)**: Added `governance{}` (readme_summary, purpose, key_artifacts[], latest_achievement) and `acceptance_criteria[]` (gate/criteria/status)
+- **Portfolio Queries**: `GET /model/projects/` returns all 59 projects in one call vs 236 file reads (59 × 4 files)
+- **Files as Exports**: README/STATUS/ACCEPTANCE become snapshots generated from data model
 ```
 
 ---

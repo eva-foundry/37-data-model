@@ -2,21 +2,102 @@
 
 ## EVA Ecosystem Tools
 
-- Data model: GET http://localhost:8010/model/projects/37-data-model
+- Data model (CLOUD ONLY): GET https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/projects/37-data-model
+- Backup & Disaster Recovery: ./scripts/sync-cloud-to-local.ps1, validate-cloud-sync.ps1, restore-from-backup.ps1
 - 29-foundry agents: C:\AICOE\eva-foundation\29-foundry\agents\
 - 48-eva-veritas audit: run audit_repo MCP tool
+
+NOTE (March 5, 2026): Local port 8010 permanently disabled. Cloud API is sole authoritative source.
 
 ---
 
 # Project Plan
 
 <!-- veritas-normalized 2026-02-25 prefix=F37 source=PLAN.md -->
-<!-- Last updated: 2026-03-01 ET -- MTI=74, Cosmos 24x7, Evidence Layer LIVE -->
+<!-- Last updated: 2026-03-05 ET -- MTI=100, Cosmos 24x7, Data-Model-First Architecture COMPLETE -->
 
 ## Feature: Guiding Principle [ID=F37-01]
 The model is the single source of truth. One HTTP call beats 10 file reads.
-All entity layers live in Cosmos (ACA 24x7) and local MemoryStore (port 8010 dev).
+All entity layers live in Cosmos (ACA 24x7). Local backup maintained for disaster recovery only.
 For complete layer catalog, see docs/library/03-DATA-MODEL-REFERENCE.md.
+
+**ARCHITECTURE EVOLUTION (March 5, 2026):**
+- **File-First → Data-Model-First**: Bootstrap now queries data model API for governance metadata
+- **Governance Plane (L33-L34)**: workspace_config + project_work layers for queryable governance
+- **Enhanced Projects (L25)**: Added governance{} and acceptance_criteria[] fields
+- **Portfolio Queries**: GET /model/projects/ returns all 59 projects in one call (vs 236 file reads)
+- **Files as Exports**: README/STATUS become snapshots generated from data model
+
+## Feature: Data-Model-First Architecture [ID=F37-11] [NEW - 2026-03-05]
+
+### Story: Layer 33 - workspace_config Schema & API [ID=F37-11-001] [DONE]
+Completed 2026-03-05. schema/workspace_config.schema.json created (130 lines).
+Fields: id, workspace_root, best_practices{}, bootstrap_rules{}, data_model_config{}.
+Router registered in layers.py + server.py. _LAYER_FILES updated in admin.py.
+Model file: model/workspace_config.json (empty array, ready for seeding).
+[PASS] Schema valid JSON. [PASS] No Python syntax errors. [PASS] Router registered.
+
+### Story: Enhanced Layer 25 - projects Schema with Governance [ID=F37-11-002] [DONE]
+Completed 2026-03-05. schema/project.schema.json created (250 lines).
+NEW FIELDS: governance{}, acceptance_criteria[].
+governance: readme_summary, purpose, key_artifacts[], current_sprint{}, latest_achievement{}.
+acceptance_criteria: gate, criteria, status (PASS/FAIL/WARN/CONDITIONAL).
+[PASS] Schema valid JSON. Backward compatible with existing projects.json.
+
+### Story: Layer 34 - project_work Schema & API [ID=F37-11-003] [DONE]
+Completed 2026-03-05. schema/project_work.schema.json created (180 lines).
+Fields: id, project_id, current_phase, session_summary{}, tasks[], blockers[], metrics{}.
+Replaces STATUS.md with queryable, versioned work sessions.
+Router registered in layers.py + server.py. _LAYER_FILES updated in admin.py.
+Model file: model/project_work.json (empty array, ready for seeding).
+[PASS] Schema valid JSON. [PASS] No Python syntax errors. [PASS] Router registered.
+
+### Story: Migration Script - seed-governance-from-files.py [ID=F37-11-004] [DONE]
+Completed 2026-03-05. scripts/seed-governance-from-files.py (330 lines).
+Extracts governance from README.md, STATUS.md, ACCEPTANCE.md.
+Outputs governance-seed.json with workspace_config, projects_updates, project_work.
+Usage: python scripts/seed-governance-from-files.py --project 07-foundation-layer
+[PASS] Script created with full extraction logic.
+
+### Story: Migration Script - export-governance-to-files.py [ID=F37-11-005] [DONE]
+Completed 2026-03-05. scripts/export-governance-to-files.py (180 lines).
+Queries data model API, generates README-GOVERNANCE.md + STATUS-WORK.md.
+Files become exports/snapshots from data model (reverse direction).
+Usage: python scripts/export-governance-to-files.py --project 07-foundation-layer
+[PASS] Script created with full generation logic.
+
+### Story: Pilot Seed Data - 07-foundation-layer [ID=F37-11-006] [DONE]
+Completed 2026-03-05. docs/governance-seed-pilot.json (140 lines).
+workspace_config: eva-foundry workspace (56 projects, best practices, bootstrap rules).
+project_governance_update: 07-foundation-layer with 5 key artifacts, latest achievement (2026-03-03).
+project_work: Session 7 (Phase 4, Configuration-as-Product System, 4 deliverables).
+[PASS] Seed data ready for PUT. Usage instructions included.
+
+### Story: Update Bootstrap Flow Documentation [ID=F37-11-007] [NOT STARTED]
+Update workspace copilot-instructions.md to reflect data-model-first bootstrap.
+Step 2 changes from "Read project copilot-instructions" to "Query GET /model/projects/{id}".
+Add fallback strategy: If API timeout, read local governance files.
+Document new query patterns (governance, acceptance_criteria, project_work).
+
+### Story: Deploy Pilot - 07-foundation-layer [ID=F37-11-008] [NOT STARTED]
+Execute 3-step PUT sequence:
+1. PUT workspace_config: /model/workspace_config/eva-foundry
+2. Fetch + merge + PUT project: /model/projects/07-foundation-layer (add governance fields)
+3. PUT project_work: /model/project_work/07-foundation-layer-2026-03-03
+Verify queries: GET /model/projects/07-foundation-layer returns governance{}.
+Test bootstrap flow with new data-model-first copilot-instructions.
+
+### Story: Migrate Remaining Projects [ID=F37-11-009] [NOT STARTED]
+Run seed-governance-from-files.py --all-projects.
+Review generated governance-seed.json (59 projects).
+Execute bulk PUT for all projects_updates + project_work records.
+Verify: GET /model/projects/ returns all 59 projects with governance fields.
+
+### Story: Infrastructure Optimization [ID=F37-11-010] [NOT STARTED]
+1. Configure ACA minReplicas=1 (eliminate cold starts)
+2. Add Application Insights (P50/P95/P99 latency, dependency health, alerting)
+3. [Optional] Add Redis cache layer when Cosmos RU costs justify (80-95% RU reduction)
+4. Monitor Cosmos RU consumption, add alerts when approaching provisioned limit
 
 ## Feature: Layer Build Order [ID=F37-02]
 L0-L2 Foundation -> L3-L10 Data/API/UI/Agents/Requirements ->

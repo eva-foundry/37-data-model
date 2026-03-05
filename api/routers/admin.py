@@ -86,6 +86,12 @@ _LAYER_FILES: dict[str, str] = {
     "milestones":      "milestones.json",
     "risks":           "risks.json",
     "decisions":       "decisions.json",
+    "traces":          "traces.json",
+    # observability plane (L11) — proof-of-completion + call tracing
+    "evidence":        "evidence.json",
+    # governance plane (L33-L34) — data-model-first architecture
+    "workspace_config": "workspace_config.json",
+    "project_work":     "project_work.json",
 }
 
 def _get_model_dir() -> Path:

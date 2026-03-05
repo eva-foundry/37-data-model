@@ -1,0 +1,153 @@
+{
+  "workspace_config": [
+    {
+      "id": "eva-foundry",
+      "label": "EVA Foundry Workspace",
+      "workspace_root": "C:\\AICOE\\eva-foundry",
+      "best_practices": {
+        "encoding_safety": "ASCII-only, no Unicode characters in production code",
+        "component_architecture": "DebugArtifactCollector, SessionManager, StructuredErrorHandler",
+        "evidence_collection": "Capture state at every operation boundary (pre/success/error)",
+        "timestamped_naming": "{component}_{context}_{YYYYMMDD_HHMMSS}.{ext}",
+        "zero_setup_execution": "Auto-detect structure, validate environment, normalize parameters"
+      },
+      "bootstrap_rules": {
+        "step_1": "Read workspace best practices",
+        "step_2": "Query data model for project context",
+        "step_3": "Read project-specific skills",
+        "fallback_strategy": "Read local governance files (README, PLAN, STATUS, ACCEPTANCE)"
+      },
+      "data_model_config": {
+        "cloud_endpoint": "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io",
+        "local_endpoint": "http://localhost:8010",
+        "timeout_seconds": 30
+      },
+      "project_count": 56,
+      "active_project_count": 12,
+      "notes": "Configuration-as-data architecture implemented March 5, 2026. Data model is single source of truth for all project governance metadata."
+    }
+  ],
+  "project_governance_update": {
+    "id": "07-foundation-layer",
+    "governance": {
+      "readme_summary": "07-Foundation-Layer is the Workspace PM/Scrum Master -- the first touch on all new EVA projects.",
+      "purpose": "Core Responsibilities: 1) Project Scaffolding (README, PLAN, STATUS, ACCEPTANCE, skills, data model seeding), 2) Governance Toolchain Ownership (36, 37, 38, 39, 40-partial, 48), 3) Pattern Propagation (template v3.4.0, seeder scripts, workspace tools)",
+      "key_artifacts": [
+        {
+          "name": "copilot-instructions-template.md",
+          "version": "v3.2.0",
+          "lines": 588,
+          "description": "ACA-first, lean PART 1/2/3 template for all EVA projects"
+        },
+        {
+          "name": "Reseed-Projects.ps1",
+          "version": "v1.0.0",
+          "description": "Scoper (active) reseeds 12 projects"
+        },
+        {
+          "name": "Apply-Project07-Artifacts.ps1",
+          "version": "v1.4.0",
+          "description": "Smart primer with project-type detection, backup, DryRun"
+        },
+        {
+          "name": "eva-factory.config.yaml",
+          "version": "v1.0.0",
+          "description": "Configuration-as-Product system template"
+        },
+        {
+          "name": "config_loader.py",
+          "lines": 287,
+          "description": "Unified config management library"
+        }
+      ],
+      "current_sprint": {
+        "phase": "Phase 4",
+        "focus": "Configuration-as-Product System Complete"
+      },
+      "latest_achievement": {
+        "date": "2026-03-03",
+        "title": "EVA Factory Configuration-as-Product System",
+        "deliverables": [
+          "eva-factory.config.yaml",
+          "scripts/config_loader.py",
+          "scripts/sync-evidence-all-projects.py",
+          "DEPLOYMENT-GUIDE.md"
+        ]
+      }
+    },
+    "acceptance_criteria": [
+      {
+        "gate": "AC-1",
+        "criteria": "Data model record exists",
+        "status": "PASS"
+      },
+      {
+        "gate": "AC-2",
+        "criteria": "copilot-instructions compliant",
+        "status": "PASS"
+      },
+      {
+        "gate": "AC-3",
+        "criteria": "Veritas trust score >= 0.6",
+        "status": "CONDITIONAL"
+      }
+    ]
+  },
+  "project_work": [
+    {
+      "id": "07-foundation-layer-2026-03-03",
+      "project_id": "07-foundation-layer",
+      "current_phase": "Phase 4",
+      "session_summary": {
+        "session_number": 7,
+        "date": "2026-03-03",
+        "objective": "Transform EVA Factory into fully portable, configuration-driven product",
+        "deliverables": 4,
+        "status": "Complete",
+        "notes": "Configuration-as-Product System completed with YAML-based config, zero code changes for deployment"
+      },
+      "tasks": [
+        {
+          "id": "T1",
+          "title": "Evidence backfill (63 records from 51-ACA)",
+          "status": "complete"
+        },
+        {
+          "id": "T2",
+          "title": "Sync automation (GitHub Actions + Azure Pipelines)",
+          "status": "complete"
+        },
+        {
+          "id": "T3",
+          "title": "Portfolio-wide orchestrator (configuration-driven, all 54 projects)",
+          "status": "complete"
+        },
+        {
+          "id": "T4",
+          "title": "Projects registry sync (50 -> 56 projects, 51-ACA registered)",
+          "status": "complete"
+        }
+      ],
+      "blockers": [],
+      "metrics": {
+        "test_count": 60,
+        "open_issues": 0,
+        "open_prs": 0
+      },
+      "next_steps": [
+        "Deploy configuration-as-product to additional environments",
+        "Create documentation for workspace-level pattern elevation",
+        "Implement Redis cache layer for data model API"
+      ]
+    }
+  ],
+  "usage_instructions": {
+    "description": "Initial seed data for data-model-first architecture pilot (07-foundation-layer)",
+    "steps": [
+      "1. PUT workspace_config: Invoke-RestMethod $base/model/workspace_config/eva-foundry -Method PUT -Body (workspace_config JSON) -ContentType application/json -Headers @{'X-Actor'='agent:copilot'}",
+      "2. PATCH project with governance: Fetch existing 07-foundation-layer project, merge governance fields, PUT back",
+      "3. PUT project_work: Invoke-RestMethod $base/model/project_work/07-foundation-layer-2026-03-03 -Method PUT -Body (project_work JSON) -ContentType application/json -Headers @{'X-Actor'='agent:copilot'}",
+      "4. Query to verify: GET $base/model/projects/07-foundation-layer, GET $base/model/workspace_config/eva-foundry, GET $base/model/project_work/"
+    ]
+  }
+}

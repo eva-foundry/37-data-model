@@ -1,15 +1,15 @@
-# EVA Data Model — Agent User Guide
-
-**Version:** 2.6  
-**Last Updated:** March 1, 2026 9:40 PM ET · v2.6 — Evidence Layer immutable audit trail API  
+**Version:** 2.7  
+**Last Updated:** March 5, 2026 11:36 AM ET · v2.7 — LOCAL SERVICE DISABLED; Cloud (ACA) is sole source of truth  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills) executing work on the EVA project  
-**Model state:** query `/model/agent-summary` for live counts; see docs/library/03-DATA-MODEL-REFERENCE.md for complete layer catalog
+**Critical:** As of March 5, 2026, port 8010 (localhost) is **permanently disabled**. ALL agents must use the cloud ONLY.
+**Model state:** query `$base/model/agent-summary` where `$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"`
 
-> **You are the primary audience for this guide.**
+> **Single Source of Truth: Cloud API Only**
 >
-> Every task you execute on the EVA project must begin with a model query, not a source file read.
-> The model is the single source of truth. `grep` and `file_search` are the last resort —
-> they cost 10 turns; the model costs 1.
+> Every task you execute on the EVA project must query the CLOUD data model API.
+> Local fallback (localhost:8010) was disabled March 5, 2026.
+> The cloud endpoint (ACA + Cosmos DB) is now authoritative for all 4,339 objects.
+> Do NOT attempt to use localhost:8010 — it will not respond.
 
 ---
 
@@ -53,25 +53,20 @@ Invoke-RestMethod "$base/model/evidence/" | Select-Object -First 3
 # Returns: 31+ receipts with story_id, phase, test_result, correlation_id
 ```
 
-### Step 2 (optional) — Local dev fallback (localhost:8010)
+### Step 2 (DISABLED as of March 5, 2026) — Local dev fallback (localhost:8010)
 
-Use only when you need to test un-committed model changes against a local MemoryStore.
+**⚠️ The local development server on port 8010 is permanently disabled.**
 
-```powershell
-$base = "http://localhost:8010"
-Invoke-RestMethod "$base/health"   # if 200 -> proceed
+Previously, you could test un-committed model changes against a local MemoryStore at `https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io`.
+This has been removed to maintain a single source of truth across all agents.
 
-# Start local API if not running (~3 s)
-$env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
-C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
-# Interactive docs: http://localhost:8010/docs
-```
+**All agents must now use the cloud API endpoint above.** Development iterations should be tested 
+against the cloud endpoint (which has full 4,339 objects) rather than a potentially stale local copy.
 
 ### Step 3 — Azure Production (APIM) — for CI / GitHub Actions
 
-The model API is deployed to Azure as a sidecar inside `marco-eva-brain-api` and is accessible
-through APIM at the path `data-model`. Use this when running in CI, GitHub Actions, or any agent
-that cannot reach `localhost:8010`.
+The data model is accessible through APIM at the path `data-model`. Use this when running in CI, 
+GitHub Actions, or any agent that needs to access through Azure API Management gateway.
 
 ```powershell
 $apimBase = "https://marco-sandbox-apim.azure-api.net/data-model"
@@ -82,7 +77,7 @@ $h        = @{"Ocp-Apim-Subscription-Key" = $env:EVA_APIM_KEY}
 # Health
 Invoke-WebRequest "$apimBase/health" -Headers $h -UseBasicParsing
 
-# Agent summary (all 27 layer counts)
+# Agent summary (all 31 layer counts, 4,339 objects)
 Invoke-RestMethod "$apimBase/model/agent-summary" -Headers $h
 
 # Projects
@@ -105,30 +100,36 @@ When you receive a task, use the model to understand scope before touching any c
 ### "What services and apps exist?"
 
 ```powershell
-# NOTE: the services layer exposes obj_id (not id); type and port are not fields in this layer.
-Invoke-RestMethod "http://localhost:8010/model/services/" |
-  Select-Object obj_id, status, is_active, notes | Format-Table
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
 
-Invoke-RestMethod "http://localhost:8010/model/screens/" |
-  Select-Object obj_id, app, route, status | Sort-Object app | Format-Table
+# Services
+Invoke-RestMethod "$base/model/services/" |
+  Select-Object id, status, is_active, notes | Format-Table
+
+# Screens (all UIs across all apps)
+Invoke-RestMethod "$base/model/screens/" |
+  Select-Object id, app, route, status | Sort-Object app | Format-Table
 ```
 
 ### "Who can do what?"
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 # All personas and their feature flag grants
-Invoke-RestMethod "http://localhost:8010/model/personas/" |
+Invoke-RestMethod "$base/model/personas/" |
   Select-Object id, label, feature_flags | Format-List
 
 # What gates a specific endpoint?
-(Invoke-RestMethod "http://localhost:8010/model/endpoints/POST /v1/chat").feature_flag
-(Invoke-RestMethod "http://localhost:8010/model/endpoints/POST /v1/chat").auth
+(Invoke-RestMethod "$base/model/endpoints/POST /v1/chat").feature_flag
+(Invoke-RestMethod "$base/model/endpoints/POST /v1/chat").auth
 ```
 
 ### "What does screen X do?"
 
 ```powershell
-$s = Invoke-RestMethod "http://localhost:8010/model/screens/TranslationsPage"
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$s = Invoke-RestMethod "$base/model/screens/TranslationsPage"
 $s.api_calls     # endpoints it calls
 $s.components    # React components rendered
 $s.hooks         # custom hooks used
@@ -138,15 +139,17 @@ $s.min_role      # minimum persona required
 ### "What is the current implementation status?"
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 # Endpoint counts by status
 @('implemented','stub','planned') | ForEach-Object {
   $st = $_
-  $n  = (Invoke-RestMethod "http://localhost:8010/model/endpoints/filter?status=$st").Count
+  $n  = (Invoke-RestMethod "$base/model/endpoints/filter?status=$st").Count
   [PSCustomObject]@{ status = $st; count = $n }
 } | Format-Table
 
 # Screens by status
-Invoke-RestMethod "http://localhost:8010/model/screens/" |
+Invoke-RestMethod "$base/model/screens/" |
   Group-Object status | Select-Object Name, Count
 ```
 
@@ -166,7 +169,8 @@ Run these queries before writing a single line of code.
 >
 > Safe pattern — copy the id directly from the model:
 > ```powershell
-> Invoke-RestMethod "http://localhost:8010/model/endpoints/" |
+> $base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+> Invoke-RestMethod "$base/model/endpoints/" |
 >   Where-Object { $_.path -like '*translations*' } |
 >   Select-Object id, path
 > # Use the returned .id verbatim in api_calls — do not retype it
@@ -175,19 +179,22 @@ Run these queries before writing a single line of code.
 ### Does this object already exist?
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 # Endpoint
-Invoke-RestMethod "http://localhost:8010/model/endpoints/" |
+Invoke-RestMethod "$base/model/endpoints/" |
   Where-Object { $_.path -like '*translations*' } | Select-Object id, status
 
 # Screen
-Invoke-RestMethod "http://localhost:8010/model/screens/" |
+Invoke-RestMethod "$base/model/screens/" |
   Where-Object { $_.id -like '*Settings*' } | Select-Object id, app, status
 ```
 
 ### Cosmos container schema
 
 ```powershell
-$c = Invoke-RestMethod "http://localhost:8010/model/containers/translations"
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$c = Invoke-RestMethod "$base/model/containers/translations"
 $c.partition_key
 $c.fields | Format-Table
 ```
@@ -195,7 +202,8 @@ $c.fields | Format-Table
 ### Auth and feature flag requirements
 
 ```powershell
-Invoke-RestMethod "http://localhost:8010/model/feature_flags/" |
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+Invoke-RestMethod "$base/model/feature_flags/" |
   Where-Object { $_.id -like '*translation*' } |
   Select-Object id, status, personas, description
 ```
@@ -203,16 +211,19 @@ Invoke-RestMethod "http://localhost:8010/model/feature_flags/" |
 ### Jump directly to the source line — never grep (E-10)
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 # Backend endpoint → route decorator
-$ep = Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/health"
+$ep = Invoke-RestMethod "$base/model/endpoints/GET /v1/health"
 code --goto "C:\AICOE\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
 
 # React component
-$c = Invoke-RestMethod "http://localhost:8010/model/components/QuestionInput"
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$c = Invoke-RestMethod "$base/model/components/QuestionInput"
 code --goto "C:\AICOE\eva-foundation\$($c.repo_path):$($c.repo_line)"
 
 # Custom hook
-$h = Invoke-RestMethod "http://localhost:8010/model/hooks/useAnnouncer"
+$h = Invoke-RestMethod "$base/model/hooks/useAnnouncer"
 code --goto "C:\AICOE\eva-foundation\$($h.repo_path):$($h.repo_line)"
 ```
 
@@ -245,7 +256,7 @@ Follow this sequence every time. Skipping steps creates drift between model and 
 > Inline pipelines can silently truncate in some terminals. Always:
 > ```powershell
 > $body = Strip-Audit $ep | ConvertTo-Json -Depth 5
-> Invoke-RestMethod "http://localhost:8010/model/screens/X" `
+> Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/screens/X" `
 >   -Method PUT -ContentType "application/json" -Body $body
 > ```
 
@@ -262,6 +273,8 @@ Step 7  Close the write cycle: POST /model/admin/commit  (PASS = done)
 ### New backend endpoint
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 # After writing the route handler, register it:
 $body = @{
   id              = "GET /v1/tags"
@@ -277,7 +290,7 @@ $body = @{
   implemented_in  = "33-eva-brain-v2/app/routers/tags.py"
 } | ConvertTo-Json
 
-Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/tags" `
+Invoke-RestMethod "$base/model/endpoints/GET /v1/tags" `
   -Method PUT -ContentType "application/json" -Body $body `
   -Headers @{"X-Actor"="agent:copilot"}
 ```
@@ -285,6 +298,8 @@ Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/tags" `
 ### New React screen
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 $body = @{
   id         = "SettingsPage"
   app        = "admin-face"
@@ -296,7 +311,7 @@ $body = @{
   hooks      = @("useFeatureFlags","useRBAC")
 } | ConvertTo-Json
 
-Invoke-RestMethod "http://localhost:8010/model/screens/SettingsPage" `
+Invoke-RestMethod "$base/model/screens/SettingsPage" `
   -Method PUT -ContentType "application/json" -Body $body `
   -Headers @{"X-Actor"="agent:copilot"}
 ```
@@ -304,6 +319,8 @@ Invoke-RestMethod "http://localhost:8010/model/screens/SettingsPage" `
 ### New i18n literal
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 $body = @{
   id         = "settings.page.title"
   key        = "settings.page.title"
@@ -312,7 +329,7 @@ $body = @{
   screens    = @("SettingsPage")
 } | ConvertTo-Json
 
-Invoke-RestMethod "http://localhost:8010/model/literals/settings.page.title" `
+Invoke-RestMethod "$base/model/literals/settings.page.title" `
   -Method PUT -ContentType "application/json" -Body $body `
   -Headers @{"X-Actor"="agent:copilot"}
 ```
@@ -324,26 +341,28 @@ Invoke-RestMethod "http://localhost:8010/model/literals/settings.page.title" `
 Always start from the model. Source files are the last step, not the first.
 
 ```powershell
+$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+
 # Step 1: what does the broken screen call?
-$calls = (Invoke-RestMethod "http://localhost:8010/model/screens/TranslationsPage").api_calls
+$calls = (Invoke-RestMethod "$base/model/screens/TranslationsPage").api_calls
 
 # Step 2: are any of those endpoints not implemented?
-Invoke-RestMethod "http://localhost:8010/model/endpoints/" |
+Invoke-RestMethod "$base/model/endpoints/" |
   Where-Object { $_.id -in $calls -and $_.status -ne 'implemented' } |
   Select-Object id, status
 
 # Step 3: what auth and feature flag does each require?
-Invoke-RestMethod "http://localhost:8010/model/endpoints/" |
+Invoke-RestMethod "$base/model/endpoints/" |
   Where-Object { $_.id -in $calls } |
   Select-Object id, auth, feature_flag, status
 
 # Step 4: what Cosmos containers do they touch?
-Invoke-RestMethod "http://localhost:8010/model/endpoints/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/" |
   Where-Object { $_.id -in $calls } |
   Select-Object id, cosmos_reads, cosmos_writes | Format-List
 
 # Step 5: navigate to the implementation
-$ep = Invoke-RestMethod "http://localhost:8010/model/endpoints/$($calls[0])"
+$ep = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/$($calls[0])"
 code --goto "C:\AICOE\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
 ```
 
@@ -365,22 +384,22 @@ Never rename, move, or restructure code without mapping the blast radius first.
 
 ```powershell
 # Impact of changing a Cosmos container (or a specific field within it)
-Invoke-RestMethod "http://localhost:8010/model/impact/?container=translations"
-Invoke-RestMethod "http://localhost:8010/model/impact/?container=translations&field=key"
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/impact/?container=translations"
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/impact/?container=translations&field=key"
 
 # Graph traversal: all objects that depend on an endpoint (2 hops out)
-$g = Invoke-RestMethod "http://localhost:8010/model/graph/?node_id=GET /v1/config/translations/{language}&depth=2"
+$g = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/graph/?node_id=GET /v1/config/translations/{language}&depth=2"
 $g.edges | Select-Object from_id, from_layer, to_id, to_layer, edge_type | Format-Table
 
 # Which screens write to a container? (two-hop: writes → calls)
-$writes  = (Invoke-RestMethod "http://localhost:8010/model/graph/?edge_type=writes").edges |
+$writes  = (Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/graph/?edge_type=writes").edges |
     Where-Object { $_.to_id -eq "translations" }
-$callers = (Invoke-RestMethod "http://localhost:8010/model/graph/?edge_type=calls").edges |
+$callers = (Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/graph/?edge_type=calls").edges |
     Where-Object { $_.to_id -in $writes.from_id }
 $callers | Select-Object from_id, to_id
 
 # All services that depend on eva-roles-api
-(Invoke-RestMethod "http://localhost:8010/model/graph/?edge_type=depends_on").edges |
+(Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/graph/?edge_type=depends_on").edges |
     Where-Object { $_.to_id -eq "eva-roles-api" } | Select-Object from_id
 ```
 
@@ -393,27 +412,27 @@ $callers | Select-Object from_id, to_id
 
 ```powershell
 # Endpoints not yet implemented
-Invoke-RestMethod "http://localhost:8010/model/endpoints/filter?status=stub"    | Select-Object id | Sort-Object id
-Invoke-RestMethod "http://localhost:8010/model/endpoints/filter?status=planned" | Select-Object id
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/filter?status=stub"    | Select-Object id | Sort-Object id
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/filter?status=planned" | Select-Object id
 
 # Screens with empty components[] (structure not yet wired in model)
-Invoke-RestMethod "http://localhost:8010/model/screens/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/screens/" |
   Where-Object { $_.components.Count -eq 0 } | Select-Object id, app, status
 
 # Requirements with no test coverage
-Invoke-RestMethod "http://localhost:8010/model/requirements/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/requirements/" |
   Where-Object { $_.test_ids.Count -eq 0 } | Select-Object id, title, type, status
 
 # Azure resources not yet provisioned
-Invoke-RestMethod "http://localhost:8010/model/infrastructure/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/infrastructure/" |
   Where-Object { $_.status -eq 'planned' } | Select-Object id, type, azure_resource_name
 
 # i18n coverage — literals missing French
-Invoke-RestMethod "http://localhost:8010/model/literals/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/literals/" |
   Where-Object { -not $_.default_fr -or $_.default_fr -eq '' } | Select-Object key, default_en
 
 # Project plane: which projects are blocked?
-Invoke-RestMethod "http://localhost:8010/model/projects/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/projects/" |
   Where-Object { $_.blocked_by.Count -gt 0 } | Select-Object id, maturity, blocked_by
 ```
 
@@ -460,27 +479,27 @@ Invoke-RestMethod "http://localhost:8010/model/projects/" |
 
 ```powershell
 # Full example: promote an endpoint from stub to implemented
-$ep = Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/tags"
+$ep = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/GET /v1/tags"
 $ep.status         = "implemented"
 $ep.implemented_in = "33-eva-brain-v2/app/routers/tags.py"
 $ep.repo_line      = 14
 
 # Strip audit columns before PUT (see PUT rules above)
 $body = Strip-Audit $ep | ConvertTo-Json -Depth 5
-Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/tags" `
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/GET /v1/tags" `
   -Method PUT -ContentType "application/json" -Body $body `
   -Headers @{"X-Actor"="agent:copilot"}
 
 # --- Canonical write confirmation ---
 # row_version is the only reliable confirm when terminal output is truncated.
 # Always GET after PUT and assert these three:
-$written = Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/tags"
+$written = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/GET /v1/tags"
 $written.row_version   # must be previous + 1
 $written.modified_by   # must equal your X-Actor value
 $written.status        # must equal what you PUT
 
 # Close the cycle — commit shortcut (preferred)
-$c = Invoke-RestMethod "http://localhost:8010/model/admin/commit" `
+$c = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/admin/commit" `
   -Method POST -Headers @{"Authorization"="Bearer dev-admin"}
 $c.status           # "PASS" or "FAIL"
 $c.violation_count  # 0 = clean; >0 = fix before merging
@@ -493,7 +512,7 @@ $c.exported_total   # e.g. 866
 > These are pre-existing gaps; they are non-blocking. To distinguish your new violations from
 > pre-existing noise, use the API validator instead of the PowerShell script:
 > ```powershell
-> $v = Invoke-RestMethod "http://localhost:8010/model/admin/validate" `
+> $v = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/admin/validate" `
 >        -Headers @{"Authorization"="Bearer dev-admin"}
 > $v.count       # 0 = clean; >0 = new violations to fix right now
 > $v.violations  # the actual cross-reference FAILs — fix these
@@ -512,22 +531,22 @@ When `validate-model.ps1` (or `GET /model/admin/validate`) reports violations, t
 # Fix:
 
 # Step 1 — find the exact endpoint id from the model (never construct it yourself)
-Invoke-RestMethod "http://localhost:8010/model/endpoints/" |
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/endpoints/" |
   Where-Object { $_.path -like '*conversation*' } |
   Select-Object id, path
 
 # Step 2 — fetch the offending screen, correct the api_calls array
-$s = Invoke-RestMethod "http://localhost:8010/model/screens/JpSparkChatPage"
+$s = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/screens/JpSparkChatPage"
 # Replace the bad id with the exact id returned in step 1:
 $s.api_calls = @("POST /api/conversation", "GET /api/chathistory/sessions")  # etc.
 
 # Step 3 — PUT with Strip-Audit
 $body = Strip-Audit $s | ConvertTo-Json -Depth 5
-Invoke-RestMethod "http://localhost:8010/model/screens/JpSparkChatPage" `
+Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/screens/JpSparkChatPage" `
   -Method PUT -ContentType "application/json" -Body $body
 
 # Step 4 — re-validate: count must drop to 0
-$v = Invoke-RestMethod "http://localhost:8010/model/admin/validate" `
+$v = Invoke-RestMethod "https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/admin/validate" `
        -Headers @{"Authorization"="Bearer dev-admin"}
 $v.count   # 0 = done
 ```
@@ -1555,7 +1574,7 @@ Invoke-RestMethod "$base/model/agents/my-custom-agent" -Method PUT -Body $newAge
 
 *Model root:* `C:\AICOE\eva-foundation\37-data-model`  
 *ACA endpoint (primary):* `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io`  
-*Interactive API docs (local dev):* `http://localhost:8010/docs`  
+*Interactive API docs (local dev):* `https:\\/\\/marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/docs`  
 *Browser UI:* `portal-face /model` (layer browser) + `portal-face /model/report` (reports) -- requires `view:model` permission  
 *Last updated:* March 2, 2026 1:15 PM ET — v2.7 — Layer analysis, data quality patterns, Veritas integration  
 *Questions -> AI Centre of Excellence*

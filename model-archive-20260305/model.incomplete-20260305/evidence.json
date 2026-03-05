@@ -1806,5 +1806,12 @@
       ],
       "completed_at": "2026-03-02T21:50:00Z"
     }
-  ]
+  ],
+  "_portfolio_metadata": {
+    "last_sync": "2026-03-04T00:37:44.914151+00:00",
+    "projects_scanned": 54,
+    "projects_with_evidence": 1,
+    "total_records": 63,
+    "validation_rate": 17.46031746031746
+  }
 }

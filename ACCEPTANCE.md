@@ -1,8 +1,27 @@
 # ACCEPTANCE.md -- 37-data-model Done Criteria
-<!-- veritas-acceptance: project=37-data-model version=2.0 last-updated=2026-03-01 -->
+<!-- veritas-acceptance: project=37-data-model version=2.1 last-updated=2026-03-05 -->
 
 **Created:** February 19, 2026
-**Last Updated:** March 1, 2026 -- Evidence Layer LIVE, MTI=74, centralized layer catalog to docs/library/03-DATA-MODEL-REFERENCE.md
+**Last Updated:** March 5, 2026 -- Local service DISABLED, Cloud-only architecture, Backup strategy ACCEPTED
+
+---
+
+## Architecture Change (March 5, 2026)
+
+**ACCEPTANCE: Cloud-Only + Backup Strategy**
+
+| Criterion | Test | Result |
+|-----------|------|--------|
+| No local service | `Get-Process python -like '*8010*'` | No process (port 8010 not listening) |
+| Cloud authoritative | Health check returns 200 + cosmos store type | VALID |
+| Backup exists | `Test-Path C:\AICOE\eva-foundry\model\*.json` | 30 files, 4,279 objects, 7.2 MB |
+| Backup valid | `validate-cloud-sync.ps1` exit code | 0 (VALID) |
+| Restore ready | `restore-from-backup.ps1` successfully starts port 8010 | OPERABLE (emergency-only) |
+| Docs updated | README, PLAN, STATUS, USER-GUIDE, ACCEPTANCE reference new architecture | COMPLETE |
+
+**Decision:** Port 8010 (localhost) permanently disabled to enforce single source of truth.
+All agents use cloud API exclusively. Local backup for disaster recovery only (emergency 24h max).
+Backup scripts created: sync-cloud-to-local, validate-cloud-sync, health-check, restore-from-backup.
 
 ---
 
@@ -146,6 +165,42 @@ Schemas exist; data seeding is Sprint 8-9 work (F37-10).
 | L30 decisions | ADR records with context/decision/consequences, deciders, optional superseded_by | [ ] Seeded (schema only) |
 
 **L27 unlock condition:** seeding sprints.json unblocks 39-ado-dashboard F39-01-004 velocity calc in `/v1/scrum/dashboard`
+
+---
+
+## L33-L34 -- Governance Plane (Data-Model-First Architecture)
+
+Schemas created March 5, 2026. Pilot ready for 07-foundation-layer.
+
+| Layer | Acceptance condition | Status |
+|-------|---------------------|--------|
+| L33 workspace_config | `GET /model/workspace_config/eva-foundry` returns workspace-level best practices, bootstrap rules, data model config | [x] READY -- schema/model/API complete |
+| L34 project_work | `GET /model/project_work/?project_id=07-foundation-layer` returns active work sessions with tasks[], blockers[], metrics{} | [x] READY -- schema/model/API complete |
+| L25 projects (enhanced) | `GET /model/projects/07-foundation-layer` returns governance{readme_summary, purpose, key_artifacts[], latest_achievement} and acceptance_criteria[] | [x] READY -- schema complete |
+
+**Acceptance Tests:**
+
+| Criterion | Command | Expected |
+|-----------|---------|----------|
+| Schemas valid | `Get-Content schema/*.schema.json \| ConvertFrom-Json` | All 3 parse successfully |
+| Routers registered | `grep -r "workspace_config_router\|project_work_router" api/` | Found in layers.py + server.py |
+| Admin knows layers | `grep "workspace_config\|project_work" api/routers/admin.py` | Found in _LAYER_FILES dict |
+| Model files exist | `Test-Path model/workspace_config.json, model/project_work.json` | Both exist |
+| Migration tools ready | `Test-Path scripts/seed-governance-from-files.py, scripts/export-governance-to-files.py` | Both exist |
+| Pilot data ready | `Test-Path docs/governance-seed-pilot.json` | Exists with 07-foundation-layer data |
+
+**Pilot Deployment (F37-11-008):**
+1. PUT workspace_config: `/model/workspace_config/eva-foundry`
+2. Merge + PUT project: `/model/projects/07-foundation-layer` (add governance fields)
+3. PUT project_work: `/model/project_work/07-foundation-layer-2026-03-03`
+4. Test query: `GET /model/projects/07-foundation-layer` returns governance{} and acceptance_criteria[]
+
+**Production Migration (F37-11-009):**
+- Run `seed-governance-from-files.py --all-projects` to extract governance for all 59 projects
+- Execute bulk PUT for all projects_updates + project_work records
+- Verify: `GET /model/projects/` returns all 59 projects with governance fields
+
+**L33-L34 unlock condition:** Pilot deployment eliminates 236 file reads (59 projects × 4 files) for workspace governance queries. Bootstrap queries API instead of reading README/PLAN/STATUS/ACCEPTANCE.
 
 ---
 

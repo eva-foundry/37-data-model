@@ -1,0 +1,2027 @@
+{
+  "schemas": [
+    {
+      "id": "Citation",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "POST /v1/chat/read-retrieve-read"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "score",
+          "type": "float",
+          "required": false
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "excerpt",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "relevance_score",
+          "type": "float",
+          "required": false
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ChatRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "POST /v1/chat/ungrounded",
+        "POST /v1/chat/read-retrieve-read"
+      ],
+      "fields": [
+        {
+          "name": "query",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "top_k",
+          "type": "int",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "conversation_history",
+          "type": "list[dict]",
+          "required": false
+        },
+        {
+          "name": "indexes",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "cost_tags",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ChatResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "POST /v1/chat/ungrounded",
+        "POST /v1/chat/read-retrieve-read"
+      ],
+      "fields": [
+        {
+          "name": "answer",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "citations",
+          "type": "list",
+          "required": false
+        },
+        {
+          "name": "model",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "tokens_used",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "indexes_searched",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "approach",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "explain",
+          "type": "str",
+          "required": false
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ApproachInfo",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "GET /v1/chat/approaches"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "requires_retrieval",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ApproachesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "used_by": [
+        "GET /v1/chat/approaches"
+      ],
+      "fields": [
+        {
+          "name": "approaches",
+          "type": "list[ApproachInfo]",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "RetrieveRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "used_by": [
+        "POST /v1/retrieve"
+      ],
+      "fields": [
+        {
+          "name": "query",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "top_k",
+          "type": "int",
+          "required": false,
+          "default": 5
+        },
+        {
+          "name": "approach",
+          "type": "str",
+          "required": false,
+          "default": "hybrid"
+        },
+        {
+          "name": "indexes",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "include_answer",
+          "type": "bool",
+          "required": false,
+          "default": true
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "RetrieveResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/retrieve.py",
+      "used_by": [
+        "POST /v1/retrieve"
+      ],
+      "fields": [
+        {
+          "name": "query_hash",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "documents",
+          "type": "list[dict]",
+          "required": true
+        },
+        {
+          "name": "answer",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "approach",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "usage",
+          "type": "dict",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SessionCreate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "POST /v1/sessions"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SessionUpdate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "PATCH /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SessionResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "POST /v1/sessions",
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "PATCH /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "persona",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "created_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "updated_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "message_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "last_message_at",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SessionListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "GET /v1/sessions"
+      ],
+      "fields": [
+        {
+          "name": "sessions",
+          "type": "list[SessionResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SessionDeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "DELETE /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "BulkDeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "DELETE /v1/sessions"
+      ],
+      "fields": [
+        {
+          "name": "deleted_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "MessageResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "GET /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "role",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "content",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "timestamp",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "metadata",
+          "type": "dict",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SessionWithMessagesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "used_by": [
+        "GET /v1/sessions/{session_id}"
+      ],
+      "fields": [
+        {
+          "name": "session",
+          "type": "SessionResponse",
+          "required": true
+        },
+        {
+          "name": "messages",
+          "type": "list[MessageResponse]",
+          "required": true
+        },
+        {
+          "name": "total_messages",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "DocumentMetadataPatch",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "used_by": [
+        "PATCH /v1/documents/{doc_id}"
+      ],
+      "fields": [
+        {
+          "name": "title",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "tags",
+          "type": "list[str]",
+          "required": false
+        },
+        {
+          "name": "language",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "custom_fields",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "implemented",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "JobResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "GET /v1/ingest/jobs/{job_id}",
+        "GET /v1/ingest/jobs",
+        "POST /v1/ingest/reprocess/{job_id}"
+      ],
+      "fields": [
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filename",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "content_type",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "created_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "updated_at",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "error_message",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "progress",
+          "type": "dict",
+          "required": false
+        },
+        {
+          "name": "metrics",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "JobListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "GET /v1/ingest/jobs"
+      ],
+      "fields": [
+        {
+          "name": "jobs",
+          "type": "list[JobResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "continuation_token",
+          "type": "str",
+          "required": false
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "UploadResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "POST /v1/ingest/upload",
+        "POST /v1/ingest/reprocess/{job_id}"
+      ],
+      "fields": [
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filename",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "DeleteResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "DELETE /v1/ingest/jobs/{job_id}"
+      ],
+      "fields": [
+        {
+          "name": "job_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "chunks_deleted",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "StatsResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/ingest.py",
+      "used_by": [
+        "GET /v1/ingest/stats"
+      ],
+      "fields": [
+        {
+          "name": "total_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "completed_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "failed_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "in_progress_jobs",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "total_chunks",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "total_cost_usd",
+          "type": "float",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SavedSearchCreate",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "POST /v1/search/saved"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "dict",
+          "required": false
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SavedSearchResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "POST /v1/search/saved",
+        "GET /v1/search/saved"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "dict",
+          "required": true
+        },
+        {
+          "name": "created_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "updated_at",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "last_used_at",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "use_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SavedSearchesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/saved"
+      ],
+      "fields": [
+        {
+          "name": "searches",
+          "type": "list[SavedSearchResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SearchHistoryEntry",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/history"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "filters",
+          "type": "dict",
+          "required": true
+        },
+        {
+          "name": "result_count",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "execution_time_ms",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "timestamp",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SearchHistoryResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/history"
+      ],
+      "fields": [
+        {
+          "name": "history",
+          "type": "list[SearchHistoryEntry]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "TopQuery",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/analytics"
+      ],
+      "fields": [
+        {
+          "name": "query_text",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "SearchAnalyticsResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/search.py",
+      "used_by": [
+        "GET /v1/search/analytics"
+      ],
+      "fields": [
+        {
+          "name": "period_days",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "total_searches",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "top_queries",
+          "type": "list",
+          "required": true
+        },
+        {
+          "name": "average_results_per_search",
+          "type": "float",
+          "required": true
+        },
+        {
+          "name": "generated_at",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ServiceInfoResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "used_by": [
+        "GET /v1/config/info"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "version",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "environment",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "features_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "FeaturesResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/config.py",
+      "used_by": [
+        "GET /v1/config/features"
+      ],
+      "fields": [
+        {
+          "name": "action",
+          "type": "list",
+          "required": true
+        },
+        {
+          "name": "screen",
+          "type": "list",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "UserCreateRequest",
+      "kind": "request",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "POST /v1/admin/users"
+      ],
+      "fields": [
+        {
+          "name": "user_principal_name",
+          "type": "EmailStr",
+          "required": true
+        },
+        {
+          "name": "display_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "mail_nickname",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "password",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "UserResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "POST /v1/admin/users"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "user_principal_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "display_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "mail",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "account_enabled",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "GroupResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "GET /v1/admin/groups"
+      ],
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "display_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "description",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "mail",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "mail_enabled",
+          "type": "bool",
+          "required": true
+        },
+        {
+          "name": "security_enabled",
+          "type": "bool",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "GroupListResponse",
+      "kind": "response",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "used_by": [
+        "GET /v1/admin/groups"
+      ],
+      "fields": [
+        {
+          "name": "groups",
+          "type": "list[GroupResponse]",
+          "required": true
+        },
+        {
+          "name": "total_count",
+          "type": "int",
+          "required": true
+        }
+      ],
+      "status": "stub",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "CostTags",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/models/cost.py",
+      "used_by": [],
+      "fields": [
+        {
+          "name": "phase",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "task",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "project",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "costcenter",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "persona_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "notes": "Mandatory FinOps attribution. Passed to AuditLogger on every agent invocation.",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ToolInvocation",
+      "kind": "model",
+      "defined_in": "33-eva-brain-v2/services/eva-brain-api/app/models/agent.py",
+      "used_by": [],
+      "fields": [
+        {
+          "name": "tool_name",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "intent",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "invoked_at",
+          "type": "datetime",
+          "required": false
+        },
+        {
+          "name": "duration_ms",
+          "type": "int",
+          "required": true
+        },
+        {
+          "name": "result_summary",
+          "type": "dict",
+          "required": false
+        },
+        {
+          "name": "correlation_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "actor_oid",
+          "type": "str",
+          "required": true
+        }
+      ],
+      "status": "implemented",
+      "notes": "Lane A-compliant tool invocation record — no raw content/params stored.",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "WBS",
+      "kind": "entity",
+      "defined_in": "37-data-model",
+      "used_by": [
+        "wbs"
+      ],
+      "status": "active",
+      "source_file": "model/schemas.json",
+      "is_active": true,
+      "description": "Work Breakdown Structure node. Supports dual-mode: Agile Scrum delivery tracked via sprint metrics + classic PM/Gantt tracked via EVM (Earned Value Management). Every WBS node can be reported on independently or rolled up to programme level.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "description": "WBS-000 / WBS-S-{stream} / WBS-{NN}"
+        },
+        {
+          "name": "label",
+          "type": "str",
+          "required": true,
+          "description": "Short English title"
+        },
+        {
+          "name": "label_fr",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "French title (bilingual mandate)"
+        },
+        {
+          "name": "level",
+          "type": "str",
+          "required": true,
+          "description": "program | stream | project | deliverable | milestone"
+        },
+        {
+          "name": "parent_wbs_id",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "project_id",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "Linked eva-foundation project folder e.g. 33-eva-brain-v2"
+        },
+        {
+          "name": "stream",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "deliverable",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "Human-readable done statement"
+        },
+        {
+          "name": "methodology",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "agile | waterfall | hybrid"
+        },
+        {
+          "name": "owner",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "Person accountable for this WBS node"
+        },
+        {
+          "name": "team",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "Team responsible"
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": true,
+          "description": "planned | active | in_progress | done | on_hold | cancelled"
+        },
+        {
+          "name": "milestone",
+          "type": "bool",
+          "required": false,
+          "nullable": true,
+          "description": "True if this node is a phase gate or milestone"
+        },
+        {
+          "name": "phase_gate",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "WBS-id that must be done first"
+        },
+        {
+          "name": "depends_on_wbs",
+          "type": "list",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "depends_on_infra",
+          "type": "list",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "planned_start",
+          "type": "date",
+          "required": false,
+          "nullable": true,
+          "description": "Gantt: planned start date"
+        },
+        {
+          "name": "planned_end",
+          "type": "date",
+          "required": false,
+          "nullable": true,
+          "description": "Gantt: planned end date"
+        },
+        {
+          "name": "actual_start",
+          "type": "date",
+          "required": false,
+          "nullable": true,
+          "description": "Gantt: actual start (set when work begins)"
+        },
+        {
+          "name": "actual_end",
+          "type": "date",
+          "required": false,
+          "nullable": true,
+          "description": "Gantt: actual end (set when done)"
+        },
+        {
+          "name": "baseline_start",
+          "type": "date",
+          "required": false,
+          "nullable": true,
+          "description": "Locked at sprint-0 kickoff, never changes. Variance = planned_start - baseline_start"
+        },
+        {
+          "name": "baseline_end",
+          "type": "date",
+          "required": false,
+          "nullable": true,
+          "description": "Locked at sprint-0 kickoff, never changes"
+        },
+        {
+          "name": "sprint",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "Current sprint label e.g. Sprint-6"
+        },
+        {
+          "name": "sprint_start",
+          "type": "date",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "sprint_end",
+          "type": "date",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "sprints_planned",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Total sprints allocated to this WBS node"
+        },
+        {
+          "name": "sprints_done",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Sprints completed"
+        },
+        {
+          "name": "sprint_count",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Running count of sprints executed"
+        },
+        {
+          "name": "percent_complete",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "0-100. Rolled up from stories_done/stories_total for projects. Set manually for streams/program."
+        },
+        {
+          "name": "stories_total",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Total stories in scope for this WBS node"
+        },
+        {
+          "name": "stories_done",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Stories in Done state"
+        },
+        {
+          "name": "points_total",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Total story points scoped"
+        },
+        {
+          "name": "points_done",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "Story points completed"
+        },
+        {
+          "name": "velocity",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "Average story points per sprint (rolling 3-sprint average)"
+        },
+        {
+          "name": "cycle_time_days",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "Average calendar days from story In Progress to Done"
+        },
+        {
+          "name": "defect_rate",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "Defects raised per sprint (post-DoD)"
+        },
+        {
+          "name": "budget_at_completion",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: BAC -- total authorised budget in story points"
+        },
+        {
+          "name": "planned_value",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: PV -- budgeted cost of work scheduled to date"
+        },
+        {
+          "name": "earned_value",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: EV -- budgeted cost of work actually performed"
+        },
+        {
+          "name": "actual_cost",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: AC -- actual effort expended (story points or person-hours)"
+        },
+        {
+          "name": "spi",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: SPI = EV/PV. <1 = behind schedule. Computed, stored for reporting."
+        },
+        {
+          "name": "cpi",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: CPI = EV/AC. <1 = over budget. Computed, stored for reporting."
+        },
+        {
+          "name": "estimate_at_completion",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: EAC = BAC/CPI. Projected total cost."
+        },
+        {
+          "name": "variance_at_completion",
+          "type": "float",
+          "required": false,
+          "nullable": true,
+          "description": "EVM: VAC = BAC - EAC. Positive = under budget."
+        },
+        {
+          "name": "risk_level",
+          "type": "str",
+          "required": false,
+          "nullable": true,
+          "description": "low | medium | high | critical"
+        },
+        {
+          "name": "risk_notes",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "ado_epic_id",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "ADO Epic work item ID (readback from 38-ado-poc import)"
+        },
+        {
+          "name": "ado_feature_id",
+          "type": "int",
+          "required": false,
+          "nullable": true,
+          "description": "ADO Feature WI if WBS maps to a Feature"
+        },
+        {
+          "name": "work_items",
+          "type": "list",
+          "required": false,
+          "nullable": true,
+          "description": "ADO WI IDs for stories tracked under this node"
+        },
+        {
+          "name": "done_criteria",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "ci_runbook",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "evidence_id_pattern",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        },
+        {
+          "name": "notes",
+          "type": "str",
+          "required": false,
+          "nullable": true
+        }
+      ],
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-24T18:04:52.565233-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-24T18:04:52.565233-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ExecutionRecord",
+      "kind": "model",
+      "defined_in": "50-eva-ops/docs/20260226-design.md",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "agent_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "plane_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "service_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "trigger",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "start_time",
+          "type": "datetime",
+          "required": false
+        },
+        {
+          "name": "end_time",
+          "type": "datetime",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "exit_code",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "log_ref",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "run_action_ids",
+          "type": "list",
+          "required": false
+        },
+        {
+          "name": "evidence_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "environment",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "actor_id",
+          "type": "str",
+          "required": false
+        }
+      ],
+      "status": "planned",
+      "source_file": "50-eva-ops/docs/20260226-design.md",
+      "is_active": true,
+      "layer": "schemas",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-26T21:12:52.142291-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-26T21:12:52.142291-03:00",
+      "row_version": 1
+    },
+    {
+      "id": "RunActionRecord",
+      "kind": "model",
+      "defined_in": "50-eva-ops/docs/20260226-design.md",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "execution_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "action_verb",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "target_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "plane_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "actor_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "approved_by",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "policy_ids",
+          "type": "list",
+          "required": false
+        },
+        {
+          "name": "result",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "result_detail",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "timestamp",
+          "type": "datetime",
+          "required": false
+        }
+      ],
+      "status": "planned",
+      "source_file": "50-eva-ops/docs/20260226-design.md",
+      "is_active": true,
+      "layer": "schemas",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-26T21:12:52.239574-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-26T21:12:52.239574-03:00",
+      "row_version": 1
+    }
+  ]
+}
