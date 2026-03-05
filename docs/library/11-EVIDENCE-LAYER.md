@@ -1,8 +1,8 @@
 ================================================================================
  EVA EVIDENCE LAYER -- THE BILLION-DOLLAR MOAT
  File: docs/library/11-EVIDENCE-LAYER.md
- Updated: 2026-03-05 7:30 PM ET
- Status: LIVE (GA) -- 33 layers total -- L31 Evidence (PATENT-WORTHY)
+ Updated: 2026-03-05 8:00 PM ET
+ Status: LIVE (GA) -- 34 layers total -- L31 Evidence (PATENT-WORTHY, POLYMORPHIC)
 ================================================================================
 
 This document is the authoritative guide for AI agents and developers working
@@ -121,7 +121,45 @@ REQUIRED FIELDS (every evidence record must have these):
   sprint_id       string     Sprint identifier (e.g. "51-ACA-sprint-1")
   story_id        string     Story identifier (e.g. "51-ACA-001")
   phase           enum       One of: D1, D2, P, D3, A
+  tech_stack      enum       python | react | terraform | docker | csharp | generic
   created_at      string     ISO-8601 timestamp (auto-stamped by API if omitted)
+
+TECH STACK & POLYMORPHIC CONTEXT (Session 27):
+  The tech_stack field enables tech-specific validation and metrics:
+
+  python:
+    context.pytest       {total_tests, passed, failed, skipped}
+    context.coverage     {line_pct, branch_pct}
+    context.ruff         {violations}
+    context.mypy         {errors, warnings}
+
+  react:
+    context.jest         {total_tests, snapshots}
+    context.bundle       {size_kb, gzip_size_kb}
+    context.lighthouse   {performance, accessibility, best_practices, seo}
+    context.eslint       {errors, warnings}
+
+  terraform:
+    context.validate     {success (bool)}
+    context.plan         {resources_add, resources_change, resources_destroy}
+    context.tfsec        {issues_high, issues_medium, issues_low}
+
+  docker:
+    context.build        {success (bool), duration_sec}
+    context.scan         {vulnerabilities_critical, high, medium, low}
+    context.layers       {count, total_size_mb}
+
+  csharp:
+    context.xunit        {total_tests, passed, failed, skipped}
+    context.coverage     {line_pct, branch_pct}
+    context.roslyn       {errors, warnings}
+
+  generic:
+    context (any JSON)   -- No specific schema, use for unsupported tech stacks
+
+  VALIDATION: Schema uses oneOf to ensure context matches tech_stack.
+              See: docs/architecture/EVIDENCE-POLYMORPHISM-ADO-INTEGRATION.md
+              Test: python test-polymorphism.py (validates oneOf structure)
 
 VALIDATION OBJECT (required, but fields optional):
   test_result     enum       PASS | FAIL | WARN | SKIP
