@@ -93,11 +93,29 @@ Review generated governance-seed.json (59 projects).
 Execute bulk PUT for all projects_updates + project_work records.
 Verify: GET /model/projects/ returns all 59 projects with governance fields.
 
-### Story: Infrastructure Optimization [ID=F37-11-010] [NOT STARTED]
-1. Configure ACA minReplicas=1 (eliminate cold starts)
-2. Add Application Insights (P50/P95/P99 latency, dependency health, alerting)
-3. [Optional] Add Redis cache layer when Cosmos RU costs justify (80-95% RU reduction)
-4. Monitor Cosmos RU consumption, add alerts when approaching provisioned limit
+### Story: Infrastructure Optimization [ID=F37-11-010] [IN PROGRESS - Session 32]
+**Reason**: Bootstrap timeout issue (5-10s cold start) must be resolved before all bootstrap operations.  
+**Root Cause**: No minReplicas set on ACA container app → scales to zero → cold start on first request.  
+**Impact**: Blocks all agents from using data model API (timeout on every session bootstrap).
+
+**Tasks**:
+1. ✅ Configure ACA minReplicas=1 (eliminate cold starts)
+   - Scripts created: `scripts/deploy-containerapp-optimize.bicep` + `scripts/optimize-datamodel-infra.ps1`
+   - Quick fix script: `scripts/quick-fix-minreplicas.ps1` (use for immediate deployment)
+   - Expected result: P50 latency 500ms (vs 5-10s cold start)
+   - Verification: Test health endpoint after deployment
+   
+2. ⏳ Add Application Insights (P50/P95/P99 latency, dependency health, alerting)
+   - Integrated into optimize-datamodel-infra.ps1with -AddAppInsights flag
+   - Will track API performance & enable proactive alerts
+   
+3. ⏳ [Optional] Add Redis cache layer when Cosmos RU costs justify (80-95% RU reduction)
+   - Task guard: Only implement if Cosmos RU > 80% of provisioned limit
+   - Candidate for Q2 2026 cost optimization phase
+   
+4. ⏳ Monitor Cosmos RU consumption, add alerts when approaching provisioned limit
+   - Requires Application Insights setup (Task 2)
+   - Add alert rule for RU > 80% provisioned
 
 ---
 
