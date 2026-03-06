@@ -262,6 +262,8 @@ def create_app() -> FastAPI:
         # governance plane (L32-L35) — agent automation safety
         workspace_config_router, project_work_router,
         agent_policies_router, quality_gates_router, github_rules_router,
+        # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
+        deployment_policies_router, testing_policies_router, validation_rules_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -297,6 +299,8 @@ def create_app() -> FastAPI:
         # governance plane (L32-L35) — agent automation safety
         workspace_config_router, project_work_router,
         agent_policies_router, quality_gates_router, github_rules_router,
+        # deployment & testing (L36-L38)
+        deployment_policies_router, testing_policies_router, validation_rules_router,
         fp_router,
         # graph (E-11)
         graph_router,

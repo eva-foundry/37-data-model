@@ -4,7 +4,7 @@
   Assembles all layer JSON files into a single eva-model.json.
 
 .DESCRIPTION
-  Reads all 38 layer JSON files and merges them into model/eva-model.json:
+  Reads all 41 layer JSON files and merges them into model/eva-model.json:
     Application: services, personas, feature_flags, containers, schemas,
                  endpoints, screens, literals, agents, infrastructure, requirements
     Control-plane catalog: planes, connections, environments, cp_skills,
@@ -14,6 +14,7 @@
     Project plane (E-07/E-08): projects, wbs, sprints, milestones, risks, decisions
     Governance plane (Session 27+): workspace_config, project_work, traces, evidence
     Agent automation (Session 28+): agent_policies, quality_gates, github_rules
+    Deployment & Testing (Session 30+): deployment_policies, testing_policies, validation_rules
 
   Run this after editing any layer file.
 
@@ -76,6 +77,10 @@ $layers = @{
   agent_policies   = (Get-Content "$modelDir/agent_policies.json"    | ConvertFrom-Json).agent_policies
   quality_gates    = (Get-Content "$modelDir/quality_gates.json"     | ConvertFrom-Json).quality_gates
   github_rules     = (Get-Content "$modelDir/github_rules.json"      | ConvertFrom-Json).github_rules
+  # Deployment & Testing (Session 30+) -- deployment policies + testing policies + validation rules
+  deployment_policies = (Get-Content "$modelDir/deployment_policies.json" | ConvertFrom-Json).deployment_policies
+  testing_policies    = (Get-Content "$modelDir/testing_policies.json"    | ConvertFrom-Json).testing_policies
+  validation_rules    = (Get-Content "$modelDir/validation_rules.json"    | ConvertFrom-Json).validation_rules
 }
 
 # Count populated layers
@@ -86,7 +91,7 @@ $assembled = [ordered]@{
     schema_version  = "1.0.0"
     last_updated    = (Get-Date -Format "yyyy-MM-dd")
     layers_complete = $layersComplete
-    total_layers    = 38
+    total_layers    = 41
     generated_by    = "scripts/assemble-model.ps1"
     note            = "DO NOT hand-edit this file. Edit layer files then run assemble-model.ps1."
   }

@@ -165,8 +165,8 @@
     },
     "tech_stack": {
       "type": "string",
-      "enum": ["python", "react", "terraform", "docker", "csharp", "generic", "agent-policies", "quality-gates", "github-rules"],
-      "description": "Technology stack discriminator for polymorphic context validation. Use 'generic' for stories without tech-specific artifacts. L33-L35: agent-policies, quality-gates, github-rules for agent automation governance.",
+      "enum": ["python", "react", "terraform", "docker", "csharp", "generic", "agent-policies", "quality-gates", "github-rules", "deployment-policies", "testing-policies", "validation-rules"],
+      "description": "Technology stack discriminator for polymorphic context validation. Use 'generic' for stories without tech-specific artifacts. L33-L35: agent-policies, quality-gates, github-rules for agent automation governance. L36-L38: deployment-policies, testing-policies, validation-rules for deployment/testing automation.",
       "default": "generic"
     },
     "context": {
@@ -456,6 +456,105 @@
                   "branch_pattern": { "type": "string" },
                   "tag_pattern": { "type": "string" },
                   "reserved_names": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "deployment-policies" } } },
+          "then": {
+            "type": "object",
+            "description": "L36: Container app deployment policies, resource limits, scaling, health probes",
+            "properties": {
+              "container_app": {
+                "type": "object",
+                "description": "Azure Container App configuration",
+                "properties": {
+                  "name": { "type": "string" },
+                  "cpu": { "type": "string" },
+                  "memory": { "type": "string" },
+                  "min_replicas": { "type": "integer" },
+                  "max_replicas": { "type": "integer" }
+                }
+              },
+              "health_probes": {
+                "type": "object",
+                "description": "Health probe endpoints and timeouts",
+                "properties": {
+                  "liveness_path": { "type": "string" },
+                  "readiness_path": { "type": "string" },
+                  "startup_timeout_seconds": { "type": "integer" }
+                }
+              },
+              "deployment_gates": {
+                "type": "array",
+                "description": "Required gates before deployment",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "testing-policies" } } },
+          "then": {
+            "type": "object",
+            "description": "L37: Testing automation policies, coverage thresholds, CI configuration",
+            "properties": {
+              "coverage": {
+                "type": "object",
+                "description": "Code coverage requirements",
+                "properties": {
+                  "unit_threshold": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "integration_threshold": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "e2e_required": { "type": "boolean" }
+                }
+              },
+              "ci_workflow": {
+                "type": "object",
+                "description": "CI/CD pipeline configuration",
+                "properties": {
+                  "workflow_file": { "type": "string" },
+                  "runner": { "type": "string" },
+                  "python_version": { "type": "string" },
+                  "test_command": { "type": "string" }
+                }
+              },
+              "test_data_strategy": {
+                "type": "string",
+                "description": "How test data is managed"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "validation-rules" } } },
+          "then": {
+            "type": "object",
+            "description": "L38: Schema validation, data integrity, compliance gates",
+            "properties": {
+              "schema_enforcement": {
+                "type": "object",
+                "description": "Schema validation policies",
+                "properties": {
+                  "mode": { "type": "string", "enum": ["strict", "permissive"] },
+                  "allow_additional_properties": { "type": "boolean" }
+                }
+              },
+              "cross_reference_checks": {
+                "type": "array",
+                "description": "Required cross-reference validations",
+                "items": { "type": "string" }
+              },
+              "compliance_gates": {
+                "type": "object",
+                "description": "Compliance requirements",
+                "properties": {
+                  "dpdca_phase_required": { "type": "boolean" },
+                  "mti_threshold": { "type": "integer", "minimum": 0, "maximum": 100 }
                 }
               }
             },

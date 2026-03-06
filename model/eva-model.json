@@ -2,8 +2,8 @@
   "meta": {
     "schema_version": "1.0.0",
     "last_updated": "2026-03-06",
-    "layers_complete": 35,
-    "total_layers": 38,
+    "layers_complete": 38,
+    "total_layers": 41,
     "generated_by": "scripts/assemble-model.ps1",
     "note": "DO NOT hand-edit this file. Edit layer files then run assemble-model.ps1."
   },
@@ -27348,6 +27348,201 @@
         }
       },
       "completed_at": "2026-03-05T20:32:00Z"
+    },
+    {
+      "id": "ACA-S11-L36-deployment-policies-D",
+      "sprint_id": "51-ACA-S11",
+      "story_id": "L36-001",
+      "phase": "D",
+      "created_at": "2026-03-06T14:00:00Z",
+      "modified_at": "2026-03-06T14:00:00Z",
+      "created_by": "agent:copilot",
+      "modified_by": "agent:copilot",
+      "tech_stack": "deployment-policies",
+      "validation": {
+        "test_result": "PASS",
+        "lint_result": "PASS",
+        "audit_result": "PASS"
+      },
+      "metrics": {
+        "policies_defined": 4,
+        "container_apps_configured": 3,
+        "deployment_gates_enforced": true
+      },
+      "artifacts": [
+        {
+          "path": "model/deployment_policies.json",
+          "type": "configuration",
+          "action": "created"
+        }
+      ],
+      "commits": [
+        {
+          "sha": "session30abc",
+          "message": "Session 30: Add L36 deployment-policies layer",
+          "timestamp": "2026-03-06T14:00:00Z"
+        }
+      ],
+      "context": {
+        "container_apps": [
+          {
+            "project": "51-ACA",
+            "name": "aca-evidence-api",
+            "cpu": "0.25",
+            "memory": "0.5Gi",
+            "min_replicas": 0,
+            "max_replicas": 2
+          },
+          {
+            "project": "37-data-model",
+            "name": "msub-eva-data-model",
+            "cpu": "0.5",
+            "memory": "1Gi",
+            "min_replicas": 1,
+            "max_replicas": 3
+          },
+          {
+            "project": "48-eva-veritas",
+            "name": "eva-veritas-api",
+            "cpu": "0.5",
+            "memory": "1Gi",
+            "min_replicas": 1,
+            "max_replicas": 5
+          }
+        ],
+        "deployment_gates": [
+          "pytest_pass",
+          "validate_model_pass",
+          "assemble_successful"
+        ],
+        "revision_strategy": "single_with_rollback"
+      },
+      "completed_at": "2026-03-06T14:00:00Z"
+    },
+    {
+      "id": "ACA-S11-L37-testing-policies-P",
+      "sprint_id": "51-ACA-S11",
+      "story_id": "L37-001",
+      "phase": "P",
+      "created_at": "2026-03-06T14:15:00Z",
+      "modified_at": "2026-03-06T14:15:00Z",
+      "created_by": "agent:copilot",
+      "modified_by": "agent:copilot",
+      "tech_stack": "testing-policies",
+      "validation": {
+        "test_result": "PASS",
+        "lint_result": "PASS",
+        "audit_result": "PASS"
+      },
+      "metrics": {
+        "policies_defined": 4,
+        "coverage_thresholds_set": true,
+        "ci_workflows_configured": 2
+      },
+      "artifacts": [
+        {
+          "path": "model/testing_policies.json",
+          "type": "configuration",
+          "action": "created"
+        }
+      ],
+      "commits": [
+        {
+          "sha": "session30def",
+          "message": "Session 30: Add L37 testing-policies layer",
+          "timestamp": "2026-03-06T14:15:00Z"
+        }
+      ],
+      "context": {
+        "coverage_thresholds": {
+          "51-ACA": {
+            "unit": 80,
+            "integration": 70
+          },
+          "37-data-model": {
+            "unit": 85,
+            "integration": 75
+          },
+          "07-foundation": {
+            "unit": 75,
+            "integration": 60
+          },
+          "48-eva-veritas": {
+            "unit": 95,
+            "integration": 90
+          }
+        },
+        "ci_workflows": {
+          "pytest": ".github/workflows/pytest.yml",
+          "validate_model": ".github/workflows/validate-model.yml"
+        },
+        "test_data_strategy": "seed_from_json"
+      },
+      "completed_at": "2026-03-06T14:15:00Z"
+    },
+    {
+      "id": "ACA-S11-L38-validation-rules-Do",
+      "sprint_id": "51-ACA-S11",
+      "story_id": "L38-001",
+      "phase": "D3",
+      "created_at": "2026-03-06T14:30:00Z",
+      "modified_at": "2026-03-06T14:30:00Z",
+      "created_by": "agent:copilot",
+      "modified_by": "agent:copilot",
+      "tech_stack": "validation-rules",
+      "validation": {
+        "test_result": "PASS",
+        "lint_result": "PASS",
+        "audit_result": "PASS"
+      },
+      "metrics": {
+        "rules_defined": 4,
+        "cross_reference_checks_configured": 9,
+        "compliance_gates_enforced": true
+      },
+      "artifacts": [
+        {
+          "path": "model/validation_rules.json",
+          "type": "configuration",
+          "action": "created"
+        }
+      ],
+      "commits": [
+        {
+          "sha": "session30ghi",
+          "message": "Session 30: Add L38 validation-rules layer",
+          "timestamp": "2026-03-06T14:30:00Z"
+        }
+      ],
+      "context": {
+        "schema_enforcement": {
+          "51-ACA": "strict",
+          "37-data-model": "strict",
+          "07-foundation": "permissive",
+          "48-eva-veritas": "strict"
+        },
+        "cross_reference_checks": [
+          "evidence.sprint_id -> sprints.id",
+          "evidence.story_id -> project_work.id",
+          "endpoints.service_id -> services.id",
+          "schemas.service_id -> services.id"
+        ],
+        "compliance_gates": {
+          "dpdca_required": true,
+          "mti_thresholds": {
+            "51-ACA": 70,
+            "37-data-model": 0,
+            "07-foundation": 70,
+            "48-eva-veritas": 85
+          }
+        },
+        "validation_scripts": {
+          "assemble": "scripts/assemble-model.ps1",
+          "validate": "scripts/validate-model.ps1",
+          "expected_layers": 41
+        }
+      },
+      "completed_at": "2026-03-06T14:30:00Z"
     }
   ],
   "agent_policies": [
