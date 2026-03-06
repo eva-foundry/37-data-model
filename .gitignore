@@ -1,5 +1,7 @@
 # Secrets -- never commit
 .env
+.env.*
+!.env.example
 
 # Python
 __pycache__/
@@ -13,10 +15,11 @@ build/
 .venv/
 venv/
 
-# pytest / coverage
+# pytest / coverage / test data
 .pytest_cache/
 .coverage
 htmlcov/
+.hypothesis/
 
 # OS
 desktop.ini
@@ -28,13 +31,42 @@ Thumbs.db
 *.swp
 *.swo
 
-# Temp / debug logs
+# Temp / debug / backup files
 *.log
+*.backup*
 acr-build*.log
 acr-build-*.log
 sync-output.txt
 tmp_len.txt
+tmp-*.json
+*-tmp.json
+fix_*.py
+add_*.py
+update_*.py
+debug-*.py
 
-# Cosmos DB exports (transient sync data - do not commit)
+# Reports and temporary documentation
+*-REPORT.md
+*-SUMMARY.md
+!RCA-*.md
+!CONSISTENCY-*.md
+
+# Archives and exports
+model-archive*/
+model-archive-*/
+*-export-*/
+eva-data-model-export-*/
+
+# Temporary scripts (one-off debugging/testing)
+scripts/audit-*.ps1
+scripts/debug-*.ps1
+scripts/fix-*.ps1
+scripts/test-*.ps1
+scripts/tmp-*.ps1
+
+# Cosmos DB exports (transient sync data)
+# Note: Base model/*.json files ARE tracked for CI/CD seed data (force-added)
+# This pattern only prevents NEW files from being accidentally committed
+# Tracked files: services.json, evidence.json, etc. (38 layers + eva-model.json)
 model/*.json
 !model/.gitkeep

@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema/milestone.schema.json",
+  "milestones": [
+    {
+      "id": "37-data-model-M0-inception",
+      "label": "Inception -- Model Design Approved",
+      "project_id": "37-data-model",
+      "target_date": "2026-02-17",
+      "actual_date": "2026-02-17",
+      "status": "completed",
+      "phase": "inception",
+      "deliverables": [
+        "Layer registry (31 layers planned)",
+        "ADR-001: Cosmos DB as persistence layer",
+        "ADR-002: HTTP API as sole agent interface",
+        "Sprint plan F37-03 through F37-10"
+      ],
+      "sign_off_by": "marco.presta",
+      "evidence_path": "docs/inception-sign-off.md",
+      "wbs_ids": ["F37-01", "F37-02", "F37-09"],
+      "notes": "Scope locked: 31 layers, Cosmos 24x7, HTTP-only agent protocol."
+    },
+    {
+      "id": "37-data-model-M1-elaboration",
+      "label": "Elaboration -- Core API Operational",
+      "project_id": "37-data-model",
+      "target_date": "2026-02-22",
+      "actual_date": "2026-02-22",
+      "status": "completed",
+      "phase": "elaboration",
+      "deliverables": [
+        "L0-L9 all shipped (services through requirements)",
+        "FastAPI server with all CRUD routes",
+        "validate-model.ps1 PASS 0 violations",
+        "pytest 40/41 PASS",
+        "Local MemoryStore + Cosmos fallback wired"
+      ],
+      "sign_off_by": "marco.presta",
+      "evidence_path": "evidence/F37-08-005.py",
+      "wbs_ids": ["F37-03", "F37-04", "F37-05", "F37-06", "F37-07"],
+      "notes": "Risk R001 mitigated: single-worker constraint documented in Dockerfile."
+    },
+    {
+      "id": "37-data-model-M2-construction",
+      "label": "Construction -- 31 Layers + ACA 24x7",
+      "project_id": "37-data-model",
+      "target_date": "2026-02-25",
+      "actual_date": "2026-02-25",
+      "status": "completed",
+      "phase": "construction",
+      "deliverables": [
+        "All 31 layers registered and queryable",
+        "4006 objects in Cosmos",
+        "ACA deployment live (Cosmos-backed)",
+        "DPDCA layers L27-L30 shipped",
+        "FP calculator /model/fp/estimate",
+        "Veritas 4th MTI component wired",
+        "TFT stamped 76/76, DFT stamped 13/13"
+      ],
+      "sign_off_by": "marco.presta",
+      "evidence_path": "acr-build-cosmos.log",
+      "wbs_ids": ["F37-08", "F37-10"],
+      "notes": "MTI=100 at Sprint 7 close. ACA redeploy pending for DPDCA layers."
+    },
+    {
+      "id": "37-data-model-M3-transition",
+      "label": "Transition -- Production Hardened",
+      "project_id": "37-data-model",
+      "target_date": "2026-03-15",
+      "actual_date": null,
+      "status": "in_progress",
+      "phase": "transition",
+      "deliverables": [
+        "ACA redeployed with DPDCA layers",
+        "fp/estimate returning live UFP",
+        "Same-PR enforcement GitHub Action (F37-10-004)",
+        "Scheduled drift detection cron (F37-10-005)",
+        "Mermaid graph output (F37-10-006)",
+        "Sprint velocity chart in 39-ado-dashboard"
+      ],
+      "sign_off_by": "marco.presta",
+      "evidence_path": null,
+      "wbs_ids": ["F37-10-003", "F37-10-004", "F37-10-005", "F37-10-006"],
+      "notes": "Blocked on ACA redeploy (G03/G07/G08). Target: Sprint 8 close."
+    }
+  ]
+}

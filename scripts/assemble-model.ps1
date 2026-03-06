@@ -4,14 +4,16 @@
   Assembles all layer JSON files into a single eva-model.json.
 
 .DESCRIPTION
-  Reads all 27 layer JSON files and merges them into model/eva-model.json:
+  Reads all 38 layer JSON files and merges them into model/eva-model.json:
     Application: services, personas, feature_flags, containers, schemas,
                  endpoints, screens, literals, agents, infrastructure, requirements
     Control-plane catalog: planes, connections, environments, cp_skills,
                            cp_agents, runbooks, cp_workflows, cp_policies
     Catalog extensions: mcp_servers, prompts, security_controls
     Frontend object layers (E-01/E-02/E-03): components, hooks, ts_types
-    Project plane (E-07/E-08): projects, wbs
+    Project plane (E-07/E-08): projects, wbs, sprints, milestones, risks, decisions
+    Governance plane (Session 27+): workspace_config, project_work, traces, evidence
+    Agent automation (Session 28+): agent_policies, quality_gates, github_rules
 
   Run this after editing any layer file.
 
@@ -65,6 +67,15 @@ $layers = @{
   milestones       = (Get-Content "$modelDir/milestones.json"        | ConvertFrom-Json).milestones
   risks            = (Get-Content "$modelDir/risks.json"             | ConvertFrom-Json).risks
   decisions        = (Get-Content "$modelDir/decisions.json"         | ConvertFrom-Json).decisions
+  # Governance plane (Session 27+) -- workspace-level config + project governance
+  workspace_config = (Get-Content "$modelDir/workspace_config.json"  | ConvertFrom-Json).workspace_config
+  project_work     = (Get-Content "$modelDir/project_work.json"      | ConvertFrom-Json).project_work
+  traces           = (Get-Content "$modelDir/traces.json"            | ConvertFrom-Json).traces
+  evidence         = (Get-Content "$modelDir/evidence.json"          | ConvertFrom-Json).objects
+  # Agent automation (Session 28+) -- agent policies + quality gates + github rules
+  agent_policies   = (Get-Content "$modelDir/agent_policies.json"    | ConvertFrom-Json).agent_policies
+  quality_gates    = (Get-Content "$modelDir/quality_gates.json"     | ConvertFrom-Json).quality_gates
+  github_rules     = (Get-Content "$modelDir/github_rules.json"      | ConvertFrom-Json).github_rules
 }
 
 # Count populated layers
@@ -75,7 +86,7 @@ $assembled = [ordered]@{
     schema_version  = "1.0.0"
     last_updated    = (Get-Date -Format "yyyy-MM-dd")
     layers_complete = $layersComplete
-    total_layers    = 27
+    total_layers    = 38
     generated_by    = "scripts/assemble-model.ps1"
     note            = "DO NOT hand-edit this file. Edit layer files then run assemble-model.ps1."
   }
@@ -110,6 +121,19 @@ $assembled = [ordered]@{
   # Project plane (E-07/E-08)
   projects          = $layers.projects
   wbs               = $layers.wbs
+  sprints           = $layers.sprints
+  milestones        = $layers.milestones
+  risks             = $layers.risks
+  decisions         = $layers.decisions
+  # Governance plane (Session 27+)
+  workspace_config  = $layers.workspace_config
+  project_work      = $layers.project_work
+  traces            = $layers.traces
+  evidence          = $layers.evidence
+  # Agent automation (Session 28+)
+  agent_policies    = $layers.agent_policies
+  quality_gates     = $layers.quality_gates
+  github_rules      = $layers.github_rules
 }
 
 $outputPath = "$modelDir/eva-model.json"
@@ -117,7 +141,7 @@ $assembled | ConvertTo-Json -Depth 20 | Set-Content $outputPath -Encoding UTF8
 
 Write-Host ""
 Write-Host "Assembled: $outputPath" -ForegroundColor Green
-Write-Host "Layers populated: $layersComplete / 27"
+Write-Host "Layers populated: $layersComplete / 38"
 foreach ($layer in $layers.GetEnumerator() | Sort-Object Name) {
   $icon = if ($layer.Value.Count -gt 0) { "[OK]" } else { "[  ]" }
   Write-Host "  $icon $($layer.Name.PadRight(16)) $($layer.Value.Count) items"

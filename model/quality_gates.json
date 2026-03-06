@@ -1,0 +1,240 @@
+{
+  "quality_gates": [
+    {
+      "id": "51-ACA-gates",
+      "created_at": "2026-03-05T20:30:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:30:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "51-ACA-gates",
+      "layer": "quality_gates",
+      "label": "51-ACA Quality Gates",
+      "project_id": "51-ACA",
+      "mti_threshold": 75,
+      "test_coverage_percent": 80,
+      "gates_per_phase": {
+        "D": {
+          "gate_name": "Discovery Complete",
+          "required_artifacts": [
+            "requirements:epic",
+            "requirements:feature",
+            "risks:identified"
+          ],
+          "approval_required": true
+        },
+        "P": {
+          "gate_name": "Planning Approved",
+          "required_artifacts": [
+            "requirements:story",
+            "wbs:decomposed",
+            "decisions:recorded"
+          ],
+          "approval_required": true
+        },
+        "Do": {
+          "gate_name": "Implementation Verified",
+          "required_artifacts": [
+            "evidence:tests_passing",
+            "evidence:code_reviewed",
+            "evidence:coverage_met"
+          ],
+          "approval_required": false
+        },
+        "C": {
+          "gate_name": "Quality Checked",
+          "required_artifacts": [
+            "evidence:mti_verified",
+            "evidence:security_passed",
+            "evidence:performance_ok"
+          ],
+          "approval_required": true
+        },
+        "A": {
+          "gate_name": "Deployment Ready",
+          "required_artifacts": [
+            "evidence:documentation_complete",
+            "evidence:rollback_tested",
+            "evidence:monitoring_configured"
+          ],
+          "approval_required": true
+        }
+      },
+      "blockers": []
+    },
+    {
+      "id": "37-data-model-gates",
+      "created_at": "2026-03-05T20:35:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:35:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "37-data-model-gates",
+      "layer": "quality_gates",
+      "label": "37-data-model Quality Gates",
+      "project_id": "37-data-model",
+      "mti_threshold": 80,
+      "test_coverage_percent": 85,
+      "gates_per_phase": {
+        "D": {
+          "gate_name": "Schema Design Approved",
+          "required_artifacts": [
+            "schema:draft",
+            "decisions:data-model"
+          ],
+          "approval_required": true
+        },
+        "P": {
+          "gate_name": "Migration Plan Verified",
+          "required_artifacts": [
+            "model:migration-script",
+            "risks:incompatibility"
+          ],
+          "approval_required": true
+        },
+        "Do": {
+          "gate_name": "Data Seeded & Validated",
+          "required_artifacts": [
+            "evidence:schema-validation",
+            "evidence:seed-success"
+          ],
+          "approval_required": false
+        },
+        "C": {
+          "gate_name": "Cloud API Tested",
+          "required_artifacts": [
+            "evidence:api-endpoints",
+            "evidence:performance-baseline"
+          ],
+          "approval_required": true
+        },
+        "A": {
+          "gate_name": "Layer Available in Production",
+          "required_artifacts": [
+            "evidence:cloud-deployed",
+            "evidence:agent-tested"
+          ],
+          "approval_required": true
+        }
+      },
+      "blockers": []
+    },
+    {
+      "id": "07-foundation-gates",
+      "created_at": "2026-03-05T20:36:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:36:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "07-foundation-gates",
+      "layer": "quality_gates",
+      "label": "07-foundation-layer Quality Gates",
+      "project_id": "07-foundation-layer",
+      "mti_threshold": 70,
+      "test_coverage_percent": 75,
+      "gates_per_phase": {
+        "D": {
+          "gate_name": "Governance Design",
+          "required_artifacts": [
+            "requirements:charter",
+            "decisions:framework"
+          ],
+          "approval_required": true
+        },
+        "P": {
+          "gate_name": "Process Documented",
+          "required_artifacts": [
+            "docs:procedures",
+            "docs:templates"
+          ],
+          "approval_required": true
+        },
+        "Do": {
+          "gate_name": "Primer Deployed",
+          "required_artifacts": [
+            "evidence:copilot-instructions",
+            "evidence:template-deployed"
+          ],
+          "approval_required": false
+        },
+        "C": {
+          "gate_name": "Compliance Reviewed",
+          "required_artifacts": [
+            "evidence:audit-passed",
+            "evidence:feedback-incorporated"
+          ],
+          "approval_required": true
+        },
+        "A": {
+          "gate_name": "Governance at Scale",
+          "required_artifacts": [
+            "evidence:multi-project-adoption"
+          ],
+          "approval_required": true
+        }
+      },
+      "blockers": []
+    },
+    {
+      "id": "48-eva-veritas-gates",
+      "created_at": "2026-03-05T20:37:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:37:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "48-eva-veritas-gates",
+      "layer": "quality_gates",
+      "label": "48-eva-veritas Quality Gates",
+      "project_id": "48-eva-veritas",
+      "mti_threshold": 88,
+      "test_coverage_percent": 95,
+      "gates_per_phase": {
+        "D": {
+          "gate_name": "Requirements Locked",
+          "required_artifacts": [
+            "requirements:complete",
+            "evidence:peer-reviewed"
+          ],
+          "approval_required": true
+        },
+        "P": {
+          "gate_name": "Test Strategy Ready",
+          "required_artifacts": [
+            "tests:unit-suite",
+            "tests:integration-suite"
+          ],
+          "approval_required": true
+        },
+        "Do": {
+          "gate_name": "All Tests Passing",
+          "required_artifacts": [
+            "evidence:npm-test-success",
+            "evidence:coverage-target-met"
+          ],
+          "approval_required": false
+        },
+        "C": {
+          "gate_name": "Quality Metrics Met",
+          "required_artifacts": [
+            "evidence:mti-verified",
+            "evidence:no-regressions"
+          ],
+          "approval_required": true
+        },
+        "A": {
+          "gate_name": "Deployed to Production",
+          "required_artifacts": [
+            "evidence:npm-publish-success",
+            "evidence:agents-active"
+          ],
+          "approval_required": true
+        }
+      },
+      "blockers": []
+    }
+  ]
+}

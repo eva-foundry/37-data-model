@@ -25,7 +25,9 @@ from fastapi.testclient import TestClient
 def test_T01_list_services(client: TestClient):
     r = client.get("/model/services")
     assert r.status_code == 200
-    data = r.json()
+    response = r.json()
+    assert "data" in response, f"Expected {{data: [...]}} format, got {list(response.keys())}"
+    data = response["data"]
     assert isinstance(data, list)
     assert len(data) >= 9, f"Expected ≥9 services from disk seed, got {len(data)}"
     ids = [d.get("id") or d.get("obj_id") for d in data]
@@ -120,7 +122,9 @@ def test_T07_list_includes_inactive(client: TestClient):
 
     r = client.get("/model/services?active_only=false")
     assert r.status_code == 200
-    ids = [d.get("id") or d.get("obj_id") for d in r.json()]
+    response = r.json()
+    assert "data" in response
+    ids = [d.get("id") or d.get("obj_id") for d in response["data"]]
     assert "hidden" in ids
 
 
@@ -139,7 +143,8 @@ def test_T08_get_soft_deleted_is_404(client: TestClient):
 def test_T09_filter_endpoints_by_status(client: TestClient):
     r = client.get("/model/endpoints/filter?status=implemented")
     assert r.status_code == 200
-    items = r.json()
+    response = r.json()
+    items = response.get("data", response) if isinstance(response, dict) and "data" in response else response
     assert len(items) >= 1
     for ep in items:
         assert ep.get("status") == "implemented"
@@ -150,7 +155,8 @@ def test_T09_filter_endpoints_by_status(client: TestClient):
 def test_T10_filter_endpoints_by_cosmos_writes(client: TestClient):
     r = client.get("/model/endpoints/filter?cosmos_writes=jobs")
     assert r.status_code == 200
-    items = r.json()
+    response = r.json()
+    items = response.get("data", response) if isinstance(response, dict) and "data" in response else response
     assert len(items) >= 1
     for ep in items:
         assert "jobs" in (ep.get("cosmos_writes") or [])
@@ -161,7 +167,8 @@ def test_T10_filter_endpoints_by_cosmos_writes(client: TestClient):
 def test_T11_filter_endpoints_by_auth(client: TestClient):
     r = client.get("/model/endpoints/filter?auth=admin")
     assert r.status_code == 200
-    items = r.json()
+    response = r.json()
+    items = response.get("data", response) if isinstance(response, dict) and "data" in response else response
     assert len(items) >= 1
     for ep in items:
         assert "admin" in (ep.get("auth") or [])

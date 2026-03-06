@@ -95,7 +95,9 @@ def test_T60_export_response_format(isolated_client: TestClient, admin_headers: 
     # Spot-check: export count for services matches GET list count
     r_list = isolated_client.get("/model/services?active_only=false")
     assert r_list.status_code == 200
-    get_count = len(r_list.json())
+    response = r_list.json()
+    assert "data" in response
+    get_count = len(response["data"])
     assert exported["services"] == get_count, (
         f"export.services={exported['services']} but GET /model/services returned {get_count}"
     )

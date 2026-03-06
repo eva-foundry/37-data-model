@@ -2,21 +2,29 @@
 
 ## How Many Layers?
 
-**Short Answer:** The data model currently has **36 semantic layers**, with **7 additional layers planned** for agent automation (target: 43+ layers by Session 30).
+**Short Answer:** The data model currently has **38 semantic layers**, with **5 additional layers planned** for agent automation (target: 43+ layers by Session 30).
 
-## Why "36 Layers"?
+## Why "38 Layers"?
 
-The number 36 reflects the current production state as of March 5, 2026 (post Session 28 Phase 1). This is an **observed count**, not a hardcoded limit:
+The number 38 reflects the current production state as of March 6, 2026 (post Session 28+29 deployment & validation fixes). This is an **observed count**, not a hardcoded limit:
 
 ```
-📊 Current Count (as of March 5, 2026 - Session 28 Phase 1):
-├─ 36 layers operational (33 baseline + L33-L35 new)
-├─ Cloud deployment: pending (PR #12 merged, awaiting ACR build + ACA update)
+📊 Current Count (as of March 6, 2026 - Session 28+29):
+├─ 38 layers operational (27 baseline + 11 new: 3 governance + 5 empty + 3 agent automation)
+├─ Cloud deployment: live (L33-L35 endpoints operational, awaiting production data)
 ├─ 4,400+ objects distributed across layers (66 evidence records with polymorphism)
 ├─ Largest: endpoints (135), services (34), projects (56)
 ├─ Newest: github_rules (L35), quality_gates (L34), agent_policies (L33)
-└─ Specialized: evidence (L11 - immutable DPDCA receipts with tech_stack discrimination)
+├─ Governance: workspace_config, project_work, traces (Session 27 enhancements)
+└─ Specialized: evidence (L11 - immutable DPDCA receipts with 9 tech_stack values)
 ```
+
+**Recent Validation Fixes (Session 29):**
+- ✅ assemble-model.ps1 updated from 27→38 layers
+- ✅ JSON structure standardized (wrapped in `{ layer_name: [...] }` format)
+- ✅ evidence.json property corrected (`.objects` not `.evidence`)
+- ✅ All 42 tests passing, 0 validation violations
+- ⏳ PR #14 awaiting checks, production data deployment pending
 
 ## Layer Expansion Roadmap (Session 28+)
 

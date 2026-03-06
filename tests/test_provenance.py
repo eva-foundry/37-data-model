@@ -24,7 +24,9 @@ def test_T50_repo_line_on_implemented_endpoints(
     """
     r = client.get("/model/endpoints", headers=admin_headers)
     assert r.status_code == 200
-    endpoints = r.json()
+    response = r.json()
+    assert "data" in response
+    endpoints = response["data"]
     assert isinstance(endpoints, list)
 
     eligible = [
@@ -70,7 +72,9 @@ def test_T51_repo_line_on_implemented_hooks(
     """
     r = client.get("/model/hooks", headers=admin_headers)
     assert r.status_code == 200
-    hooks = r.json()
+    response = r.json()
+    assert "data" in response
+    hooks = response["data"]
     assert isinstance(hooks, list)
 
     eligible = [
@@ -111,7 +115,9 @@ def test_T52_repo_line_on_implemented_screens(
     """
     r = client.get("/model/screens", headers=admin_headers)
     assert r.status_code == 200
-    screens = r.json()
+    response = r.json()
+    assert "data" in response
+    screens = response["data"]
     assert isinstance(screens, list)
 
     eligible = [

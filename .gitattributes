@@ -1,0 +1,42 @@
+# EVA Data Model - Git Attributes
+# Ensures consistent line endings and file handling across Windows/Linux/Mac
+
+# Auto-detect text files and normalize line endings to LF
+* text=auto eol=lf
+
+# Source code - always LF
+*.py text eol=lf
+*.ps1 text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# Data files - always LF, mark as linguist-generated (no diffs in GitHub)
+*.json text eol=lf
+model/*.json linguist-generated=true
+schema/*.json linguist-documentation=true
+
+# Config files
+.env* text eol=lf
+.gitignore text eol=lf
+Dockerfile text eol=lf
+
+# Images (binary)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+
+# Docker images (binary)
+*.tar binary
+*.gz binary
+*.zip binary
+
+# Exclude test/temporary files from GitHub export
+.hypothesis/** export-ignore
+__pycache__/** export-ignore
+*.log export-ignore
+tmp-* export-ignore
