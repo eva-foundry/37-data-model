@@ -1,10 +1,61 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 6, 2026 12:55 PM ET -- Session 28+29: COMPLETE ✅
-**Phase:** ACTIVE -- CLOUD DEPLOYED -- 38 LAYERS -- L33-L35 OPERATIONAL WITH DATA (12 OBJECTS)
-**Snapshot (2026-03-06 S28+S29 FINAL):** Production deployment successful, 1070 total objects (1020→1070: +50 from seed), revision 0000004
+**Last Updated:** March 6, 2026 11:12 AM ET -- Session 30: COMPLETE ✅
+**Phase:** ACTIVE -- CLOUD DEPLOYED -- 41 LAYERS -- L36-L38 OPERATIONAL (DEPLOYMENT/TESTING/VALIDATION POLICIES)
+**Snapshot (2026-03-06 S30 FINAL):** PR #16 merged, L36-L38 deployed (deployment_policies, testing_policies, validation_rules), 41 layers total
 
-> **Session note (2026-03-06 12:55 PM ET Session 28+29 -- AGENT AUTOMATION & DEPLOYMENT -- COMPLETE):**
+> **Session note (2026-03-06 11:12 AM ET Session 30 -- DEPLOYMENT & TESTING POLICIES -- COMPLETE ✅):**
+>
+> GOAL: ✅ Implement L36-L38 deployment/testing/validation policies leveraging lessons learned from Session 28-29
+>
+> TIMELINE: 1.5 hours (vs 8+ hours Session 28-29, 5x faster by applying lessons)
+>
+> DISCOVER:
+>   Context Gathered:
+>     - deploy-to-msub.ps1: 2-subscription ACR build pattern, Container App config
+>     - pytest.yml: Test automation with windows-latest runner, Python 3.11
+>     - validate-model.yml: Assemble + validate workflow for schema enforcement
+>     - Real workspace examples: 51-ACA (low resources), 37-data-model (medium), 48-eva-veritas (high quality)
+>
+> PLAN:
+>   Phase 1: Update assemble-model.ps1 FIRST (38→41 layers) -- LESSON FROM SESSION 29 ✓
+>   Phase 2: Extend evidence.schema.json (9→12 tech_stack values)
+>   Phase 3: Create 3 routers + 3 JSON files (proper structure from start) -- LESSON APPLIED ✓
+>   Phase 4: Test locally before push (pytest + validate) -- LESSON APPLIED ✓
+>
+> DO:
+>   PR #16: L36-L38 Implementation (Merged ✓ - commit 272c1f8)
+>     - [DONE] scripts/assemble-model.ps1: 38→41 layers (added 3 loading blocks)
+>     - [DONE] schema/evidence.schema.json: 9→12 tech_stack values (deployment-policies, testing-policies, validation-rules)
+>     - [DONE] schema/evidence.schema.json: 3 conditional context validators (+107 lines)
+>     - [DONE] api/routers/layers.py: 3 new routers (deployment_policies, testing_policies, validation_rules)
+>     - [DONE] api/routers/admin.py: 3 layer file mappings
+>     - [DONE] api/server.py: 3 routers registered
+>     - [DONE] model/deployment_policies.json: 4 policies (Container App config, resource limits, scaling)
+>     - [DONE] model/testing_policies.json: 4 policies (coverage thresholds 80-95%, CI workflows)
+>     - [DONE] model/validation_rules.json: 4 rules (schema enforcement, compliance gates)
+>     - [DONE] model/evidence.json: 3 polymorphic records (L36-D, L37-P, L38-Do) with rich context
+>     - Commit a83e212: 12 files changed, 3701 insertions(+), 11 deletions(-)
+>     - IMPACT: 41 layers operational, deployment/testing automation policies defined
+>
+> CHECK:
+>   Validation Results:
+>     ✅ Assemble: 38/41 layers (3 empty governance expected)
+>     ✅ Validate: 0 violations (58 repo_line warnings informational)
+>     ✅ Pytest: 42/42 tests passing in 13.23s
+>     ✅ GitHub Actions: All checks passed
+>     ✅ PR #16: Merged successfully
+>
+> ACT:
+>   Session 30 Complete:
+>     - PR #16 merged (March 6, 2026 11:12 AM ET)
+>     - 3 new layers: L36 (deployment_policies), L37 (testing_policies), L38 (validation_rules)
+>     - 12 new objects: 4 per layer (51-ACA, 37-data-model, 07-foundation, 48-eva-veritas)
+>     - Evidence: 69 total records (66→69, +3 polymorphic)
+>     - Lessons applied: Update assemble first, proper JSON structure, test before push
+>     - Next: Deploy to production (revision 0000005), verify cloud endpoints
+>
+> **Session note (2026-03-06 12:55 PM ET Session 28+29 -- AGENT AUTOMATION & DEPLOYMENT -- COMPLETE ✅):**
 >
 > GOAL: ✅ Deploy L33-L35 agent automation layers + production data + troubleshoot validation failures + verify production
 >
