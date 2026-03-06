@@ -1,0 +1,2249 @@
+{
+  "workspace_config": [
+    {
+      "id": "eva-foundry",
+      "label": "EVA Foundry Workspace",
+      "workspace_root": "C:\\AICOE\\eva-foundry",
+      "best_practices": {
+        "encoding_safety": "ASCII-only, no Unicode characters in production code",
+        "component_architecture": "DebugArtifactCollector, SessionManager, StructuredErrorHandler",
+        "evidence_collection": "Capture state at every operation boundary (pre/success/error)",
+        "timestamped_naming": "{component}_{context}_{YYYYMMDD_HHMMSS}.{ext}",
+        "zero_setup_execution": "Auto-detect structure, validate environment, normalize parameters"
+      },
+      "bootstrap_rules": {
+        "step_1": "Read workspace best practices",
+        "step_2": "Query data model for project context",
+        "step_3": "Read project-specific skills",
+        "fallback_strategy": "Read local governance files (README, PLAN, STATUS, ACCEPTANCE)"
+      },
+      "data_model_config": {
+        "cloud_endpoint": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
+        "local_endpoint": "http://localhost:8010",
+        "timeout_seconds": 30
+      },
+      "notes": "Configuration-as-data architecture implemented March 5, 2026"
+    }
+  ],
+  "projects_updates": [
+    {
+      "id": "01-documentation-generator",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "02-poc-agent-skills",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "03-poc-enhanced-docs",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "04-os-vnext",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "05-extract-cases",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "Project 05 implements a **Phase-1, no-agent, no-PDF-scraping pipeline** that:\n\n- Takes existing Jurisprudence data already extracted into SQLite.\n- Aggregates records at the **case-level** (one record per `case_id + language`).\n- Exports a **Plan-2 enriched XML dataset**.\n- Conforms to the **official EVA DA XML schema** (`eva-da-export-v1.xsd`).\n- Is ingested via the **EVA DA Content Management UI**.\n- Requires **zero changes to EVA DA code**.\n\nThis project is intentionally designed to improve retrieval quality with minimal operational risk: it changes the ingest artifact (XML), not the EVA DA application.",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "06-jp-auto-extraction",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "Automate the extraction of jurisprudence answers and citations from the [JP UI](https://ei-jp-ui.purplesky-a9615d9b.canadacentral.azurecontainerapps.io/) using a predefined set of legal questions.\n\nThis project enables:\n- **Deterministic regression testing** of JP answers\n- **Bulk evidence extraction** for downstream XML/RAG ingestion\n- **Traceable, auditable outputs** aligned with EVA governance principles",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "07-foundation-layer",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "**07-Foundation-Layer is the Workspace PM/Scrum Master** -- the first touch on all new EVA projects.",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {
+          "date": "2026-03-03",
+          "title": "Transformed EVA Factory into a **fully portable, configuration-driven product**.",
+          "deliverables": []
+        }
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PASS"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PASS"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "CONDITIONAL"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file (root level)",
+          "status": "PASS"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PASS"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PASS"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "Data model cloud endpoint documented (localhost:8010 disabled)",
+          "status": "PASS"
+        },
+        {
+          "gate": "AC-9",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "08-cds-rag",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "09-eva-repo-documentation",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "This project evaluates the EVA Domain Assistant JP 1.2 repository as a reference implementation for Retrieval Augmented Generation (RAG) systems. Through code-based inspection and analysis, we document the architectural patterns, implementation strategies, and technical capabilities that can inform future RAG system development and deployment within government contexts.",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "10-mkdocs-poc",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "11-ms-infojp",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "12-work-spc-reorg",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "13-vscode-tools",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "14-az-finops",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "14-az-finops.bak.20260226165411",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "15-cdc",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "**Problem**: RAG systems experience \"knowledge decay\" when indexes aren't kept current with new legal precedents, leading to incorrect legal guidance and compliance risk.\n\n**Solution**: CDC maintains freshness in the MS-InfoJP jurisprudence RAG corpus by:\n- **Detecting changes** in CanLII case metadata and artifacts (scheduled + event-driven)\n- **Tracking versions** with full provenance (audit trail for every change)\n- **Minimizing recompute** (only changed artifacts/chunks/vectors are reprocessed)\n- **Providing freshness guarantees** via SLO tiers (1hr/24hr/weekly)\n- **Enabling audit compliance** (ATO-friendly evidence logging)\n\n---",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "16-engineered-case-law",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "17-apim",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "This feature is the **first step** toward putting **APIM in front of InfoJP** and enabling **end-to-end cost attribution** (queries + ingestion runs) via standard headers.\n\nBefore changing infrastructure or code, we will **scan the repo** to produce an evidence-based inventory of:\n\n* all **frontend ? backend** API calls (including streaming)\n* all **backend ? downstream** HTTP calls (OpenAI, Search, Storage, external endpoints, etc.)\n* all existing auth/session patterns\n* the best insertion points for **APIM gateway base URL** and **header propagation**\n\nThis scan produces a **ground-truth map** that later becomes:\n\n* the APIM API surface (OpenAPI)\n* the header contract & enforcement plan (APIM policies)\n* the costing plan (Run IDs + Variant tracking)\n\n---",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "18-azure-best",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "19-ai-gov",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "20-assistme",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "21-habit-tracker",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "22-rg-sandbox",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "Deploy a cost-optimized RAG system PoC into the existing **EsDAICoE-Sandbox** resource group, cloning the EVA Dev2 (infoasst-dev2) architecture. This sandbox enables PoC development and testing with official ESDC tenant services (Azure OpenAI, APIM) without impacting production environments.\n\n**Key Benefits**:\n- ? **Immediate Access**: Owner role already active (no infrastructure team wait)\n- ? **Full Control**: Owner permissions until April 17, 2026\n- ? **Existing Infrastructure**: RG already provisioned in Canada Central\n- ? **Cost-Optimized**: $100-150/month target maintained\n\n---",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "23-ei-dsst-rewrite",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "24-eva-brain",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "EVA Brain is the **architectural decomposition** of Microsoft's PubSec-Info-Assistant monolith into 3 independently deployable microservices:\n\n1. **EVA Brain Backend** (Intelligence Layer) - GPT-4o RAG engine, maintained by AICOE\n2. **EVA Face** (Universal Facade) - API gateway deployable anywhere (browser, legacy, modern apps)\n3. **EVA Pipeline** (Enrichment Service) - Document processing (OCR, embeddings, indexing)\n\n**Timeline**: Phase 0 validation -- 24-week phased rollout  \n**Target**: Organization-wide AI democratization (1000+ users, 20+ applications)  \n**Status**: PROJECT CLOSED - Feb 25, 2026 12:42 PM ET -- Successor: 33-eva-brain-v2 (active)",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "25-eva-suite",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "26-eva-gh",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "27-devbench",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "28-rbac",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "29-foundry",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "The **EVA Foundry Library** is a comprehensive toolkit for building AI agents with Microsoft Agent Framework, Azure AI Foundry, and Model Context Protocol (MCP). It provides reusable skills, tools, and patterns extracted from Microsoft's proven implementations.\n\nThis foundry library enables:\n\n1. **GitHub Copilot Skills** -- 6 reusable technical skills for agent development (multi-agent orchestration, RAG, Azure Search, prompts, evaluation, observability)\n2. **Python Tools Library** -- 5 utility modules for search, RAG, evaluation, observability, and authentication\n3. **MCP Servers** -- 3 production-ready servers exposing Azure AI Search, Cosmos DB, and Blob Storage to agents\n4. **Prompty Templates** -- Prompt management using Microsoft's Prompty format\n5. **Documentation Suite** -- Comprehensive guides for architecture, skills, MCP, Agent Framework, and migration\n\n**Target Integration:** eva-brain-v2 (jurisprudence AI) and eva-faces (UI components)  \n**Domain Focus:** Employment Insura",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "30-ui-bench",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "31-eva-faces",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "32-logging",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "33-eva-brain-v2",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "34-AIRA",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "34-eva-agents",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "35-agentic-code-fixing",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "36-red-teaming",
+      "governance": {},
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "37-data-model",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "The EVA Data Model is the **single source of truth for the entire EVA ecosystem** ? a\nmachine-queryable repository of every significant object in the application and how objects\nrelate to each other across service, UI, and infrastructure boundaries.\n\nThe principle: every significant object in the system is a typed node with explicit\ncross-references. Renaming a field, changing an endpoint, or adding a screen is a\nmodel operation first ? not a grep operation.\n\nEVA Data Model applies that principle to the modern cloud stack:\n\n> **If it is not in the model, agents will rediscover it by reading source files every session.**\n> That is a 10-turn grep spiral. The model makes it a 3-line PowerShell query.\n\n> **Agents: start with [USER-GUIDE.md](USER-GUIDE.md)** ? a task-by-task guide covering\n> bootstrap, context gathering, implementation, debugging, refactoring, and the model write cycle.\n> Every EVA task should open with a model query, not a file read.\n\n---",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "38-ado-poc",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "39-ado-dashboard",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "40-eva-control-plane",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "41-eva-cli",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "42-learn-foundry",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "43-spark",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "44-eva-jp-spark",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "45-aicoe-page",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "46-accelerator",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "47-eva-mti",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "48-eva-veritas",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "49-eva-dtl",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "50-eva-ops",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "51-ACA",
+      "governance": {
+        "readme_summary": "",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "52-DA-space-cleanup",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "Investigate and map how the EVA Domain Assistant (InfoAssistant, instance hccld2) stores and\nmanages user groups, roles, and project space data, then deliver two interoperable tools:",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "53-refactor",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": []
+    },
+    {
+      "id": "54-ai-engineering-hub",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "97-workspace-notes",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "**97-Workspace-Notes is the Workspace Home Root** -- the single source of truth for workspace-level documentation, scripts, and configuration that applies across ALL eva-foundry projects.\n\nWhen numbered projects (01-54) are pushed to https://github.com/eva-foundry as independent repos, this project preserves:\n- Workspace-level GitHub Copilot instructions\n- Workspace-level skills (cross-project capabilities)\n- Utility scripts (commit-and-push, audit-ado-readiness, etc.)\n- Architecture documentation (WORKFLOW-ARCHITECTURE-REVIEW, GITHUB-CODESPACES-SETUP, etc.)\n- Operational guides and troubleshooting docs\n\n---",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "98-system-analysis",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    },
+    {
+      "id": "99-test-project",
+      "governance": {
+        "readme_summary": "<!-- eva-primed -->",
+        "purpose": "",
+        "key_artifacts": [],
+        "current_sprint": {},
+        "latest_achievement": {}
+      },
+      "acceptance_criteria": [
+        {
+          "gate": "AC-1",
+          "criteria": "Data model record exists and is current",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-2",
+          "criteria": "copilot-instructions.md is v3.1.0 compliant (PART 1/2/3 present, ASCII-clean)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-3",
+          "criteria": "Veritas trust score >= 0.6 (MTI baseline)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-4",
+          "criteria": "All tests pass (exit 0)",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-5",
+          "criteria": "No non-ASCII characters in any .md or .ps1 or .py file",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-6",
+          "criteria": "PLAN.md has active sprint stories with IDs",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-7",
+          "criteria": "README.md references data-model API and veritas",
+          "status": "PENDING"
+        },
+        {
+          "gate": "AC-8",
+          "criteria": "(project-specific criteria -- fill in)",
+          "status": "PENDING"
+        }
+      ]
+    }
+  ],
+  "project_work": [
+    {
+      "id": "07-foundation-layer-2026-03-05",
+      "project_id": "07-foundation-layer",
+      "current_phase": "Evidence Layer Consolidation Complete + Configuration-as-Product System (Phase 4)",
+      "session_summary": {
+        "session_number": 1,
+        "date": "2026-03-05",
+        "objective": "Transform EVA Factory from workspace-specific implementation to truly **portable, configuration-driven product** deployable across any workspace structure without code changes.",
+        "status": "Complete"
+      },
+      "tasks": [],
+      "blockers": [],
+      "metrics": {}
+    }
+  ]
+}

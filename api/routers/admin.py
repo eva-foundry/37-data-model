@@ -95,6 +95,10 @@ _LAYER_FILES: dict[str, str] = {
     "agent_policies":   "agent_policies.json",
     "quality_gates":    "quality_gates.json",
     "github_rules":     "github_rules.json",
+    # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
+    "deployment_policies": "deployment_policies.json",
+    "testing_policies":    "testing_policies.json",
+    "validation_rules":    "validation_rules.json",
 }
 
 def _get_model_dir() -> Path:
