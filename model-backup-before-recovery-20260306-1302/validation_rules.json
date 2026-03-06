@@ -1,0 +1,261 @@
+{
+  "validation_rules": [
+    {
+      "id": "51-ACA-validation",
+      "project_id": "51-ACA",
+      "project_name": "Academic Case Analysis",
+      "description": "Validation rules for 51-ACA Evidence API with standard compliance gates",
+      "schema_validation": {
+        "enforcement_mode": "strict",
+        "allow_additional_properties": false,
+        "validate_on_write": true,
+        "validate_on_read": false
+      },
+      "data_integrity": {
+        "cross_reference_checks": [
+          "evidence.sprint_id -> sprints.id",
+          "evidence.story_id -> project_work.id"
+        ],
+        "orphan_detection": true,
+        "duplicate_detection": true,
+        "referential_integrity_enforced": true
+      },
+      "compliance_gates": {
+        "dpdca_phase_required": true,
+        "allowed_phases": ["D1", "D2", "P", "D3", "A"],
+        "mti_threshold": 70,
+        "evidence_required_for_done": true,
+        "require_test_coverage": true,
+        "min_test_coverage_percent": 75
+      },
+      "validation_workflow": {
+        "pre_commit": [],
+        "pre_merge": [
+          "pytest",
+          "schema_validation"
+        ],
+        "post_merge": [
+          "integration_tests"
+        ]
+      },
+      "error_handling": {
+        "on_schema_violation": "reject",
+        "on_cross_reference_failure": "warn",
+        "on_orphan_detected": "warn",
+        "on_mti_below_threshold": "warn"
+      },
+      "is_active": true
+    },
+    {
+      "id": "37-data-model-validation",
+      "project_id": "37-data-model",
+      "project_name": "EVA Data Model API",
+      "description": "Validation rules for 37-data-model with strict schema enforcement",
+      "schema_validation": {
+        "enforcement_mode": "strict",
+        "allow_additional_properties": false,
+        "validate_on_write": true,
+        "validate_on_read": false,
+        "json_schema_draft": "draft-07"
+      },
+      "data_integrity": {
+        "cross_reference_checks": [
+          "evidence.sprint_id -> sprints.id",
+          "evidence.story_id -> project_work.id",
+          "endpoints.service_id -> services.id",
+          "schemas.service_id -> services.id",
+          "components.container_id -> containers.id",
+          "hooks.component_id -> components.id",
+          "wbs.project_id -> projects.id",
+          "sprints.project_id -> projects.id",
+          "traces.agent_id -> agents.id"
+        ],
+        "orphan_detection": true,
+        "duplicate_detection": true,
+        "referential_integrity_enforced": true,
+        "bidirectional_validation": true
+      },
+      "compliance_gates": {
+        "dpdca_phase_required": false,
+        "allowed_phases": [],
+        "mti_threshold": 0,
+        "evidence_required_for_done": false,
+        "require_test_coverage": true,
+        "min_test_coverage_percent": 80,
+        "require_assemble_validation": true,
+        "layer_count_validation": 41
+      },
+      "validation_workflow": {
+        "pre_commit": [],
+        "pre_merge": [
+          "pytest",
+          "validate-model",
+          "assemble-model"
+        ],
+        "post_merge": [
+          "deploy_to_staging",
+          "smoke_tests"
+        ]
+      },
+      "validation_scripts": {
+        "assemble": "scripts/assemble-model.ps1",
+        "validate": "scripts/validate-model.ps1",
+        "expected_layers": 41,
+        "exit_code_success": 0,
+        "allow_informational_warnings": true
+      },
+      "error_handling": {
+        "on_schema_violation": "reject",
+        "on_cross_reference_failure": "reject",
+        "on_orphan_detected": "warn",
+        "on_mti_below_threshold": "ignore",
+        "on_assemble_failure": "reject",
+        "on_validation_failure": "reject"
+      },
+      "custom_validators": {
+        "repo_line_format": "warn_only",
+        "id_uniqueness": "enforce",
+        "layer_file_structure": "enforce"
+      },
+      "is_active": true
+    },
+    {
+      "id": "07-foundation-validation",
+      "project_id": "07-foundation-layer",
+      "project_name": "Foundation Layer (Workspace PM)",
+      "description": "Validation rules for 07-foundation-layer with governance focus",
+      "schema_validation": {
+        "enforcement_mode": "permissive",
+        "allow_additional_properties": true,
+        "validate_on_write": false,
+        "validate_on_read": false
+      },
+      "data_integrity": {
+        "cross_reference_checks": [],
+        "orphan_detection": false,
+        "duplicate_detection": false,
+        "referential_integrity_enforced": false
+      },
+      "compliance_gates": {
+        "dpdca_phase_required": true,
+        "allowed_phases": ["D", "P", "Do", "C", "A"],
+        "mti_threshold": 70,
+        "evidence_required_for_done": true,
+        "require_test_coverage": false,
+        "min_test_coverage_percent": 0,
+        "require_governance_docs": true,
+        "required_docs": [
+          "PLAN.md",
+          "STATUS.md",
+          "ACCEPTANCE.md"
+        ]
+      },
+      "validation_workflow": {
+        "pre_commit": [
+          "markdown_lint"
+        ],
+        "pre_merge": [
+          "check_governance_docs",
+          "powershell_syntax_check"
+        ],
+        "post_merge": []
+      },
+      "error_handling": {
+        "on_schema_violation": "warn",
+        "on_cross_reference_failure": "warn",
+        "on_orphan_detected": "ignore",
+        "on_mti_below_threshold": "warn",
+        "on_missing_governance_doc": "reject"
+      },
+      "is_active": true
+    },
+    {
+      "id": "48-eva-veritas-validation",
+      "project_id": "48-eva-veritas",
+      "project_name": "EVA Veritas (Requirements Traceability)",
+      "description": "Validation rules for 48-eva-veritas with highest quality enforcement",
+      "schema_validation": {
+        "enforcement_mode": "strict",
+        "allow_additional_properties": false,
+        "validate_on_write": true,
+        "validate_on_read": true,
+        "json_schema_draft": "draft-07",
+        "custom_validators_enabled": true
+      },
+      "data_integrity": {
+        "cross_reference_checks": [
+          "evidence.sprint_id -> sprints.id",
+          "evidence.story_id -> project_work.id",
+          "evidence.project_id -> projects.id",
+          "traceability_matrix.requirement_id -> requirements.id",
+          "traceability_matrix.test_id -> tests.id",
+          "traceability_matrix.evidence_id -> evidence.id",
+          "mti_scores.sprint_id -> sprints.id"
+        ],
+        "orphan_detection": true,
+        "duplicate_detection": true,
+        "referential_integrity_enforced": true,
+        "bidirectional_validation": true,
+        "temporal_consistency_check": true
+      },
+      "compliance_gates": {
+        "dpdca_phase_required": true,
+        "allowed_phases": ["D1", "D2", "P", "D3", "A"],
+        "mti_threshold": 85,
+        "evidence_required_for_done": true,
+        "require_test_coverage": true,
+        "min_test_coverage_percent": 95,
+        "require_traceability_matrix": true,
+        "require_mti_calculation": true,
+        "require_security_scan": true
+      },
+      "validation_workflow": {
+        "pre_commit": [
+          "format_check",
+          "lint_check"
+        ],
+        "pre_merge": [
+          "pytest",
+          "mutation_tests",
+          "schema_validation",
+          "mti_calculation",
+          "traceability_check",
+          "security_scan"
+        ],
+        "post_merge": [
+          "integration_tests",
+          "load_tests",
+          "deploy_to_staging",
+          "smoke_tests",
+          "canary_deployment"
+        ]
+      },
+      "validation_scripts": {
+        "mti_calculator": "scripts/calculate-mti.ps1",
+        "traceability_validator": "scripts/validate-traceability.ps1",
+        "evidence_verifier": "scripts/verify-evidence.ps1"
+      },
+      "error_handling": {
+        "on_schema_violation": "reject",
+        "on_cross_reference_failure": "reject",
+        "on_orphan_detected": "reject",
+        "on_mti_below_threshold": "reject",
+        "on_missing_traceability": "reject",
+        "on_security_scan_failure": "reject",
+        "on_mutation_score_low": "reject"
+      },
+      "custom_validators": {
+        "mti_score_validator": "enforce",
+        "traceability_completeness": "enforce",
+        "evidence_quality_score": "enforce",
+        "temporal_consistency": "enforce"
+      },
+      "audit_trail": {
+        "enabled": true,
+        "log_all_validations": true,
+        "retention_days": 90
+      },
+      "is_active": true
+    }
+  ]
+}

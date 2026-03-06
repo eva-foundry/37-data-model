@@ -1,0 +1,362 @@
+{
+  "$schema": "../schema/feature_flag.schema.json",
+  "feature_flags": [
+    {
+      "id": "action.chat",
+      "priority": 10,
+      "label": "Chat — invoke conversation agent",
+      "personas": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/chat.py",
+      "endpoints": [
+        "POST /v1/chat",
+        "POST /v1/chat/rrr",
+        "POST /v1/chat/rtr",
+        "POST /v1/chat/work",
+        "POST /v1/chat/hybrid",
+        "GET /v1/chat/approaches"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_CHAT = 'action.chat'. Source: features.py.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-23T02:17:49.060387+00:00",
+      "row_version": 1
+    },
+    {
+      "id": "action.retrieve",
+      "priority": 20,
+      "label": "Retrieve — read sessions and session history",
+      "personas": [
+        "admin",
+        "legal-researcher",
+        "auditor",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/sessions.py",
+      "endpoints": [
+        "GET /v1/sessions",
+        "GET /v1/sessions/{session_id}",
+        "GET /v1/sessions/{session_id}/messages"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_RETRIEVE = 'action.retrieve'. Source: features.py.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-23T02:17:49.060387+00:00",
+      "row_version": 1
+    },
+    {
+      "id": "action.ingest",
+      "priority": 40,
+      "label": "Ingest — upload and process documents",
+      "personas": [
+        "admin",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "endpoints": [
+        "PATCH /v1/documents/{doc_id}",
+        "DELETE /v1/documents/{doc_id}",
+        "DELETE /v1/documents/{doc_id}/chunks",
+        "POST /v1/documents/{doc_id}/reindex"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_INGEST = 'action.ingest'. Write operations on documents. Source: features.py.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-23T02:17:49.060387+00:00",
+      "row_version": 1
+    },
+    {
+      "id": "action.search",
+      "priority": 30,
+      "label": "Search — search documents and tags",
+      "personas": [
+        "admin",
+        "legal-researcher",
+        "legal-clerk",
+        "machine-agent"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/documents.py",
+      "endpoints": [
+        "GET /v1/documents",
+        "GET /v1/documents/{doc_id}",
+        "GET /v1/documents/{doc_id}/content",
+        "GET /v1/documents/{doc_id}/chunks",
+        "GET /v1/tags",
+        "GET /v1/search"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_SEARCH = 'action.search'. Read operations on documents. Source: features.py.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "system:autoload",
+      "modified_at": "2026-02-23T02:17:49.060387+00:00",
+      "row_version": 1
+    },
+    {
+      "id": "action.admin.translations",
+      "priority": 50,
+      "label": "Admin — manage UI translation strings",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/translations.py",
+      "endpoints": [
+        "GET /v1/translations",
+        "GET /v1/translations/{key}",
+        "PUT /v1/translations/{key}",
+        "DELETE /v1/translations/{key}",
+        "POST /v1/translations/bulk"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_ADMIN_TRANSLATIONS = 'action.admin.translations'. Sprint 5. Route file not yet implemented.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-23T13:35:00.232520+00:00",
+      "row_version": 2
+    },
+    {
+      "id": "action.admin.settings",
+      "priority": 60,
+      "label": "Admin — manage application settings",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/settings.py",
+      "endpoints": [
+        "GET /v1/settings",
+        "GET /v1/settings/{key}",
+        "PUT /v1/settings/{key}"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_ADMIN_SETTINGS = 'action.admin.settings'. Sprint 5. Route file not yet implemented.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-23T13:35:04.295235+00:00",
+      "row_version": 2
+    },
+    {
+      "id": "action.admin.apps",
+      "priority": 70,
+      "label": "Admin — manage app registry",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/apps.py",
+      "endpoints": [
+        "GET /v1/apps",
+        "GET /v1/apps/{app_id}",
+        "POST /v1/apps",
+        "PATCH /v1/apps/{app_id}",
+        "DELETE /v1/apps/{app_id}"
+      ],
+      "status": "active",
+      "notes": "FeatureID.ACTION_ADMIN_APPS = 'action.admin.apps'. Sprint 6. Route file not yet implemented.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-23T13:35:08.358395+00:00",
+      "row_version": 2
+    },
+    {
+      "id": "action.admin.manage_users",
+      "priority": 80,
+      "label": "Admin — create and manage Entra ID users",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "endpoints": [
+        "POST /v1/users"
+      ],
+      "status": "active",
+      "notes": "Decorator: @require_feature('action.admin.manage_users'). Not in FeatureID enum (features.py); admin.py is an optional/pre-existing router. Prefix /v1/admin TBD.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-23T13:35:12.450804+00:00",
+      "row_version": 2
+    },
+    {
+      "id": "action.admin.view_groups",
+      "priority": 90,
+      "label": "Admin — list Entra ID groups",
+      "personas": [
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/admin.py",
+      "endpoints": [
+        "GET /v1/groups"
+      ],
+      "status": "active",
+      "notes": "Decorator: @require_feature('action.admin.view_groups'). Not in FeatureID enum (features.py); admin.py is an optional/pre-existing router. Prefix /v1/admin TBD.",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-23T13:35:16.533206+00:00",
+      "row_version": 2
+    },
+    {
+      "id": "action.assistant",
+      "priority": 45,
+      "label": "AI Assistant (Math + Tabular)",
+      "personas": [
+        "user",
+        "admin"
+      ],
+      "implemented_in": "33-eva-brain-v2/services/eva-brain-api/app/routes/assistants.py",
+      "endpoints": [
+        "POST /v1/assistant/math/solve",
+        "POST /v1/assistant/math/explain",
+        "POST /v1/assistant/math/convert",
+        "POST /v1/assistant/tabular/analyze",
+        "POST /v1/assistant/tabular/summarize",
+        "POST /v1/assistant/tabular/compare",
+        "POST /v1/assistant/tabular/extract"
+      ],
+      "status": "active",
+      "notes": "Brain-v2 Sprint 6+. Math reasoning and tabular data analysis. Feature-gated on assistants router (optional, try/except import in main.py).",
+      "source_file": "model/feature_flags.json",
+      "is_active": true,
+      "created_by": "system:autoload",
+      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-23T13:35:20.628013+00:00",
+      "row_version": 2
+    },
+    {
+      "id": "action.programme",
+      "label": "Programme Management",
+      "status": "planned",
+      "personas": [
+        "admin",
+        "auditor",
+        "pm_viewer"
+      ],
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T02:32:35.328385+00:00",
+      "created_by": "anonymous",
+      "created_at": "2026-02-23T02:32:29.014234+00:00",
+      "row_version": 2,
+      "source_file": "model/feature_flags.json"
+    },
+    {
+      "label": "ADO Sync (read)",
+      "personas": [
+        "admin",
+        "machine-agent"
+      ],
+      "status": "planned",
+      "id": "action.ado_sync",
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T02:32:31.072627+00:00",
+      "created_by": "anonymous",
+      "created_at": "2026-02-23T02:32:31.072627+00:00",
+      "row_version": 1,
+      "source_file": "model/feature_flags.json"
+    },
+    {
+      "id": "action.ado_write",
+      "label": "ADO Write",
+      "status": "planned",
+      "personas": [
+        "admin",
+        "machine-agent"
+      ],
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T02:32:39.353629+00:00",
+      "created_by": "anonymous",
+      "created_at": "2026-02-23T02:32:33.119687+00:00",
+      "row_version": 2,
+      "source_file": "model/feature_flags.json"
+    },
+    {
+      "id": "ENABLE_TABULAR_DATA_ASSISTANT",
+      "label": "Tabular Data Assistant visibility gate",
+      "personas": [
+        "reader",
+        "contributor",
+        "admin",
+        "owner"
+      ],
+      "implemented_in": "44-eva-jp-spark/src/hooks/useFeatureFlags.ts",
+      "repo_path": "44-eva-jp-spark/src/hooks/useFeatureFlags.ts",
+      "endpoints": [
+        "GET /api/featureFlags"
+      ],
+      "gates_screens": [
+        "JpSparkTDAPage"
+      ],
+      "status": "active",
+      "app": "eva-jp-spark",
+      "notes": "Returned by GET /api/featureFlags. When false, /tda nav link is hidden and route redirects.",
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T12:54:26.951883+00:00",
+      "created_by": "anonymous",
+      "created_at": "2026-02-23T12:34:25.828567+00:00",
+      "row_version": 5,
+      "source_file": "model/feature_flags.json"
+    },
+    {
+      "id": "ENABLE_MATH_ASSISTANT",
+      "label": "Math Tutor visibility gate",
+      "personas": [
+        "reader",
+        "contributor",
+        "admin",
+        "owner"
+      ],
+      "implemented_in": "44-eva-jp-spark/src/hooks/useFeatureFlags.ts",
+      "repo_path": "44-eva-jp-spark/src/hooks/useFeatureFlags.ts",
+      "endpoints": [
+        "GET /api/featureFlags"
+      ],
+      "gates_screens": [
+        "JpSparkTutorPage"
+      ],
+      "status": "active",
+      "app": "eva-jp-spark",
+      "notes": "Returned by GET /api/featureFlags. When false, /tutor nav link is hidden and route redirects.",
+      "is_active": true,
+      "modified_by": "anonymous",
+      "modified_at": "2026-02-23T12:54:26.951883+00:00",
+      "created_by": "anonymous",
+      "created_at": "2026-02-23T12:34:27.878415+00:00",
+      "row_version": 5,
+      "source_file": "model/feature_flags.json"
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "testing_policies": [
+    {
+      "id": "51-ACA-testing",
+      "project_id": "51-ACA",
+      "project_name": "Academic Case Analysis",
+      "description": "Testing policy for 51-ACA Evidence API with 80% coverage threshold",
+      "test_requirements": {
+        "unit_coverage_threshold": 80,
+        "integration_coverage_threshold": 70,
+        "e2e_required": false,
+        "mutation_testing_required": false
+      },
+      "test_types": {
+        "unit_tests": true,
+        "integration_tests": true,
+        "e2e_tests": false,
+        "load_tests": false,
+        "security_tests": false
+      },
+      "test_environments": {
+        "local": {
+          "mocking_strategy": "full_mocks",
+          "test_data_approach": "in_memory_fixtures",
+          "isolation_level": "test_function"
+        },
+        "ci": {
+          "mocking_strategy": "external_services_mocked",
+          "test_data_approach": "seed_from_json",
+          "isolation_level": "test_class"
+        }
+      },
+      "ci_workflow": {
+        "workflow_file": ".github/workflows/pytest.yml",
+        "runner": "ubuntu-latest",
+        "python_version": "3.11",
+        "test_command": "pytest tests/ -v --tb=short --cov=api --cov-report=html",
+        "trigger": ["push", "pull_request"],
+        "branches": ["main", "develop"]
+      },
+      "test_data_strategy": {
+        "approach": "seed_from_json",
+        "fixtures_location": "tests/fixtures/",
+        "snapshot_testing": false
+      },
+      "quality_gates": {
+        "min_coverage_to_merge": 75,
+        "max_test_duration_seconds": 300,
+        "fail_on_warnings": false
+      },
+      "is_active": true
+    },
+    {
+      "id": "37-data-model-testing",
+      "project_id": "37-data-model",
+      "project_name": "EVA Data Model API",
+      "description": "Testing policy for 37-data-model with 85% coverage threshold",
+      "test_requirements": {
+        "unit_coverage_threshold": 85,
+        "integration_coverage_threshold": 75,
+        "e2e_required": true,
+        "mutation_testing_required": false
+      },
+      "test_types": {
+        "unit_tests": true,
+        "integration_tests": true,
+        "e2e_tests": true,
+        "load_tests": false,
+        "security_tests": false
+      },
+      "test_environments": {
+        "local": {
+          "mocking_strategy": "memory_cache_only",
+          "test_data_approach": "seed_from_json",
+          "isolation_level": "test_function"
+        },
+        "ci": {
+          "mocking_strategy": "memory_store_and_cache",
+          "test_data_approach": "seed_from_json",
+          "isolation_level": "test_module"
+        },
+        "staging": {
+          "mocking_strategy": "none",
+          "test_data_approach": "cosmos_test_db",
+          "isolation_level": "test_suite"
+        }
+      },
+      "ci_workflow": {
+        "workflow_file": ".github/workflows/pytest.yml",
+        "runner": "windows-latest",
+        "python_version": "3.11",
+        "test_command": "pytest tests/ -v --tb=short",
+        "trigger": ["push", "pull_request"],
+        "branches": ["main"],
+        "additional_workflows": [
+          ".github/workflows/validate-model.yml"
+        ]
+      },
+      "test_data_strategy": {
+        "approach": "seed_from_json",
+        "fixtures_location": "model/",
+        "snapshot_testing": false,
+        "real_cosmos_testing": true
+      },
+      "quality_gates": {
+        "min_coverage_to_merge": 80,
+        "max_test_duration_seconds": 600,
+        "fail_on_warnings": false,
+        "require_assemble_validation": true,
+        "require_cross_reference_validation": true
+      },
+      "test_modules": {
+        "test_admin": "Admin endpoints (seed, export, health)",
+        "test_cosmos": "Cosmos DB roundtrip tests",
+        "test_crud": "CRUD operations on all layers",
+        "test_graph": "Graph analysis and impact",
+        "test_impact": "Impact analysis queries",
+        "test_provenance": "Provenance tracking"
+      },
+      "is_active": true
+    },
+    {
+      "id": "07-foundation-testing",
+      "project_id": "07-foundation-layer",
+      "project_name": "Foundation Layer (Workspace PM)",
+      "description": "Testing policy for 07-foundation-layer governance utilities (PowerShell scripts)",
+      "test_requirements": {
+        "unit_coverage_threshold": 75,
+        "integration_coverage_threshold": 60,
+        "e2e_required": false,
+        "mutation_testing_required": false
+      },
+      "test_types": {
+        "unit_tests": true,
+        "integration_tests": true,
+        "e2e_tests": false,
+        "load_tests": false,
+        "security_tests": false
+      },
+      "test_environments": {
+        "local": {
+          "mocking_strategy": "file_system_mocked",
+          "test_data_approach": "temp_directories",
+          "isolation_level": "test_function"
+        },
+        "ci": {
+          "mocking_strategy": "file_system_mocked",
+          "test_data_approach": "temp_directories",
+          "isolation_level": "test_script"
+        }
+      },
+      "ci_workflow": {
+        "workflow_file": "N/A - No CI workflow yet",
+        "runner": "windows-latest",
+        "python_version": "N/A - PowerShell",
+        "test_command": "Invoke-Pester tests/ -Output Detailed",
+        "trigger": ["manual"],
+        "branches": ["main"]
+      },
+      "test_data_strategy": {
+        "approach": "temp_files_and_directories",
+        "fixtures_location": "tests/fixtures/",
+        "snapshot_testing": false
+      },
+      "quality_gates": {
+        "min_coverage_to_merge": 0,
+        "max_test_duration_seconds": 300,
+        "fail_on_warnings": false,
+        "manual_testing_accepted": true
+      },
+      "is_active": true
+    },
+    {
+      "id": "48-eva-veritas-testing",
+      "project_id": "48-eva-veritas",
+      "project_name": "EVA Veritas (Requirements Traceability)",
+      "description": "Testing policy for 48-eva-veritas with 95% coverage (highest quality)",
+      "test_requirements": {
+        "unit_coverage_threshold": 95,
+        "integration_coverage_threshold": 90,
+        "e2e_required": true,
+        "mutation_testing_required": true
+      },
+      "test_types": {
+        "unit_tests": true,
+        "integration_tests": true,
+        "e2e_tests": true,
+        "load_tests": true,
+        "security_tests": true
+      },
+      "test_environments": {
+        "local": {
+          "mocking_strategy": "minimal_mocks",
+          "test_data_approach": "realistic_fixtures",
+          "isolation_level": "test_function"
+        },
+        "ci": {
+          "mocking_strategy": "external_only",
+          "test_data_approach": "seed_from_json",
+          "isolation_level": "test_class"
+        },
+        "staging": {
+          "mocking_strategy": "none",
+          "test_data_approach": "real_cosmos_db",
+          "isolation_level": "test_suite"
+        },
+        "production": {
+          "mocking_strategy": "none",
+          "test_data_approach": "synthetic_monitoring",
+          "isolation_level": "end_to_end"
+        }
+      },
+      "ci_workflow": {
+        "workflow_file": ".github/workflows/pytest.yml",
+        "runner": "ubuntu-latest",
+        "python_version": "3.11",
+        "test_command": "pytest tests/ -v --tb=short --cov=api --cov-report=html --cov-report=xml --cov-fail-under=95",
+        "trigger": ["push", "pull_request"],
+        "branches": ["main", "develop", "release/*"],
+        "additional_workflows": [
+          ".github/workflows/mutation-tests.yml",
+          ".github/workflows/load-tests.yml",
+          ".github/workflows/security-scan.yml"
+        ]
+      },
+      "test_data_strategy": {
+        "approach": "seed_from_json_with_snapshots",
+        "fixtures_location": "tests/fixtures/",
+        "snapshot_testing": true,
+        "real_cosmos_testing": true,
+        "synthetic_monitoring": true
+      },
+      "quality_gates": {
+        "min_coverage_to_merge": 95,
+        "max_test_duration_seconds": 900,
+        "fail_on_warnings": true,
+        "require_mti_score_above": 85,
+        "require_mutation_score_above": 80,
+        "require_security_scan_pass": true
+      },
+      "test_modules": {
+        "test_mti": "MTI calculation and scoring",
+        "test_traceability": "Requirements traceability matrix",
+        "test_evidence": "Evidence validation and verification",
+        "test_quality_gates": "Quality gate enforcement",
+        "test_integration": "ADO integration and sync",
+        "test_api": "REST API endpoints"
+      },
+      "is_active": true
+    }
+  ]
+}

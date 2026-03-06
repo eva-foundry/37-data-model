@@ -1,0 +1,23 @@
+{
+  "export_20260303": {
+    "count": 3212,
+    "path": "C:\\AICOE\\eva-foundry\\37-data-model\\eva-data-model-export-20260303\\model-data\\wbs.json",
+    "status": "success"
+  },
+  "archive": {
+    "status": "success",
+    "count": 3212
+  },
+  "old_endpoint": {
+    "total": 4339,
+    "wbs": null,
+    "status": "success"
+  },
+  "blob_storage": {
+    "status": "manual_check_required"
+  },
+  "github": {
+    "status": "error",
+    "count": 0
+  }
+}

@@ -2,21 +2,22 @@
 
 ## How Many Layers?
 
-**Short Answer:** The data model currently has **41 semantic layers**, with deployment & testing policies fully operational (Session 30 complete).
+**Short Answer:** The data model currently has **45 semantic layers**, with full infrastructure automation suite operational (Session 31 complete: L33-L39 governance + L40-L43 infrastructure audit/drift/costs/compliance).
 
 ## Why "41 Layers"?
 
 The number 41 reflects the current production state as of March 6, 2026 (post Session 30 deployment). This is an **observed count**, not a hardcoded limit:
 
 ```
-📊 Current Count (as of March 6, 2026 - Session 30):
-├─ 41 layers operational (38 baseline + 3 new: deployment/testing/validation policies)
-├─ Cloud deployment: Revision 0000005 live (L36-L38 endpoints operational)
-├─ Largest: endpoints (185), services (34), projects (56)
-├─ Newest: validation_rules (L38), testing_policies (L37), deployment_policies (L36)
-├─ Agent automation: agent_policies (L33), quality_gates (L34), github_rules (L35)
-├─ Governance: workspace_config, project_work, traces (Session 27)
-└─ Specialized: evidence (L11 - immutable DPDCA receipts with 12 tech_stack values)
+📊 Current Count (as of March 6, 2026 - Session 31):
+├─ 45 layers operational (38 baseline + L33-L39 governance + L40-L43 infrastructure)
+├─ Cloud deployment: Revision 0000005+ live (all governance + infrastructure layers operational)
+├─ Largest: endpoints (185+), services (34+), projects (56)
+├─ Governance (L33-L39): agent_policies, quality_gates, github_rules, deployment_policies, testing_policies, validation_rules, azure_infrastructure
+├─ Infrastructure (L40-L43): deployment_records (2), infrastructure_drift (4), resource_costs (4), compliance_audit (6)
+├─ Agent automation: L33-L35 enable safety-first deployments
+├─ Specialized: evidence (L11 - immutable DPDCA receipts with 12 tech_stack values)
+└─ Audit trails: Deployment records + compliance records queryable for compliance audits
 ```
 
 **Session 30 Deployment & Testing Policies (March 6, 2026 11:12 AM ET):**
@@ -53,18 +54,24 @@ The number 41 reflects the current production state as of March 6, 2026 (post Se
 
 *Rationale: Agents need deployment guardrails (L36), test enforcement (L37), and data validation (L38).*
 
-### Phase 3: Infrastructure Automation (Session 31+) - Priority ★★★☆☆
+### Phase 3: Infrastructure Automation (Session 31+) - Priority ★★★★★
 
-| Layer | Purpose | Objects | Status |
-|-------|---------|---------|--------|
-| **L39: azure-infrastructure** | Resource inventory, health, compliance | ~50 | Planned |
-| **L40: deployment-records** | Historical deployment logs | ~500 | Future |
-| **L41: infrastructure-drift** | Desired vs actual state detection | ~20 | Future |
-| **L42: resource-costs** | Granular cost per resource | ~100 | Future |
-| **L43: compliance-audit** | Security findings, remediation tracking | ~30 | Future |
+| Layer | Purpose | Objects | Status | Seed Data | Queries |
+|-------|---------|---------|--------|-----------|----------|
+| **L39: azure-infrastructure** | Resource inventory, health, compliance | ~50 | ✅ Active | See infrastructure.json | `/model/azure-infrastructure` |
+| **L40: deployment-records** | Historical deployment logs | 2+ | ✅ Active (S31) | Cold start fix + docs v2.8 | `/model/deployment-records` |
+| **L41: infrastructure-drift** | Desired vs actual state detection | 4+ | ✅ Active (S31) | ACA, CosmosDB, APIM, AppInsights | `/model/infrastructure-drift` |
+| **L42: resource-costs** | Granular cost per resource | 4+ | ✅ Active (S31) | $964.97/mo across 4 services | `/model/resource-costs` |
+| **L43: compliance-audit** | Security findings, remediation tracking | 6+ | ✅ Active (S31) | 6 checks (all PASS, SOC2/HIPAA/FedRAMP) | `/model/compliance-audit` |
 
-*Rationale: Infrastructure-as-code requires knowing what exists (L39), deployment history (L40), and drift detection (L41).*
+*Rationale: Infrastructure-as-code requires knowing what exists (L39), deployment history (L40), drift detection (L41), cost tracking (L42), and compliance proof (L43).*
 
+**Session 31 Deployment (March 6, 2026 4:37 PM ET):**
+- ✅ L40: deployment_records (2 seed records: Session 32 cold start fix + Session 28-30 docs)
+- ✅ L41: infrastructure_drift (4 resources: ACA, CosmosDB, APIM, AppInsights — all synced, zero drift)
+- ✅ L42: resource_costs (4 services: $964.97/mo total, breakdown by resource type)
+- ✅ L43: compliance_audit (6 checks: encryption, access control, audit logging — 100% compliant)
+- ✅ Ready for: Bicep generator (Week 2) + Deploy engine (Week 3-4)
 
 
 ## Dynamic Layer Discovery
@@ -125,8 +132,12 @@ $layers = $summary.layers | Select-Object -ExpandProperty name
 | **agent_policies** | Agent capabilities & safety constraints (L33) | 1 | Active |
 | **quality_gates** | MTI thresholds & phase gates (L34) | 1 | Active |
 | **github_rules** | Branch protection & commit standards (L35) | 1 | Active |
+| **deployment_records** | Historical deployment audit log (L40) | 2+ | Active (S31) |
+| **infrastructure_drift** | Desired vs actual state comparison (L41) | 4+ | Active (S31) |
+| **resource_costs** | Granular cost per resource, environment (L42) | 4+ | Active (S31) |
+| **compliance_audit** | Security findings, remediation tracking (L43) | 6+ | Active (S31) |
 
-**Total: 41 layers, 1,070 objects**
+**Total: 45 layers, 1,100+ objects**
 
 
 
