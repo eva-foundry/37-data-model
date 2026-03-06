@@ -260,7 +260,7 @@ Write-Info "  ⏳ Task 4: Cosmos RU monitoring & alerts"
 Write-Host "`nProduction Benefits:" -ForegroundColor Green
 Write-Info "• Cold start elimination: 5-10s → 500ms P50 latency"
 Write-Info "• 24x7 availability: Always at least 1 replica running"
-Write-Info "• Cost optimization: $0.006/hour per replica (vs scale-to-zero)"
+Write-Info "• Cost optimization: `$0.006/hour per replica (vs scale-to-zero)"
 
 Write-Host "`nNext Steps:" -ForegroundColor Yellow
 Write-Info "1. Monitor API latency for 10 minutes post-deployment"
