@@ -1,12 +1,12 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 6, 2026 9:08 AM ET -- Session 28+29: L33-L35 AGENT AUTOMATION + DEPLOYMENT RCA
-**Phase:** ACTIVE -- CLOUD DEPLOYED -- 38 LAYERS (27→38: +11 NEW LAYERS) -- L33-L35 ENDPOINTS LIVE
-**Snapshot (2026-03-06 S28+S29):** L33-L35 agent automation layers + deploy-to-msub.ps1 + RCA validation fixes + 42/42 tests passing
+**Last Updated:** March 6, 2026 12:55 PM ET -- Session 28+29: COMPLETE ✅
+**Phase:** ACTIVE -- CLOUD DEPLOYED -- 38 LAYERS -- L33-L35 OPERATIONAL WITH DATA (12 OBJECTS)
+**Snapshot (2026-03-06 S28+S29 FINAL):** Production deployment successful, 1070 total objects (1020→1070: +50 from seed), revision 0000004
 
-> **Session note (2026-03-06 9:08 AM ET Session 28+29 -- AGENT AUTOMATION & DEPLOYMENT):**
+> **Session note (2026-03-06 12:55 PM ET Session 28+29 -- AGENT AUTOMATION & DEPLOYMENT -- COMPLETE):**
 >
-> GOAL: Deploy L33-L35 agent automation layers + production data + troubleshoot validation failures
+> GOAL: ✅ Deploy L33-L35 agent automation layers + production data + troubleshoot validation failures + verify production
 >
 > DISCOVER (Session 28 - March 5, 2026):
 >   Context Gathered:
@@ -93,22 +93,38 @@
 >     - [DOCUMENTED] Lessons learned: Insufficient test coverage, missing integration test, need pre-commit validation
 >     - IMPACT: Knowledge captured for future sessions, preventive measures identified
 >
-> **Session 28+29 STATUS: 95% COMPLETE** ✅
->   - ✅ L33-L35 code deployed to cloud (PR #12)
->   - ✅ L33-L35 endpoints operational (200 OK, 0 objects)
->   - ✅ Governance documentation updated (PR #13)
->   - ✅ Production data prepared (12 objects: 4 per layer)
->   - ✅ Deployment automation created (deploy-to-msub.ps1)
->   - ✅ Validation issues resolved (42/42 tests passing locally)
->   - ⏳ PR #14 awaiting GitHub Actions check rerun
->   - ⏳ Final deployment with production data (after PR #14 merge)
+> ACT (Session 29 Final - March 6, 2026 12:47-12:55 PM):
+>   PR #14 Final Deployment (Merged ✓)
+>     - [DONE] PR #14 merged: Commit 0d98bd6 (6 commits squashed into main)
+>     - [DONE] Local sync: git reset --hard origin/main
+>     - [DONE] Deployment: .\deploy-to-msub.ps1 -Tag "session-28-data-final"
+>     - [DONE] ACR build cx7: 54 seconds, image session-28-data-final pushed
+>     - [DONE] Container App updated: Revision 0000004 (from 0000003)
+>     - [DONE] Data seeding: POST /model/admin/seed (idempotent, loads model/*.json → Cosmos)
+>     - [VERIFIED] L33 agent_policies: 4 objects ✓
+>     - [VERIFIED] L34 quality_gates: 4 objects ✓
+>     - [VERIFIED] L35 github_rules: 4 objects ✓
+>     - [VERIFIED] Total objects: 1070 (1020→1070: +50 from seed)
+>     - [VERIFIED] Evidence: 65 records with polymorphic tech_stack (agent-policies, quality-gates, github-rules)
+>     - [NOTE] tech_stack query parameter filtering needs implementation (returns all records, not filtered)
+>     - IMPACT: Full production deployment complete, L33-L35 operational with data
 >
-> **NEXT STEPS:**
->   1. Monitor PR #14 GitHub Actions checks (pytest + validate-model)
->   2. Merge PR #14 once checks pass
->   3. Redeploy with data: `.\deploy-to-msub.ps1 -Tag "session-28-data-final"`
->   4. Verify: 12 objects in L33-L35, 66 evidence records in cloud
->   5. Session 30: Implement L36-L38 (deployment-policies, testing-policies, validation-rules)
+> **Session 28+29 STATUS: 100% COMPLETE** ✅
+>   - ✅ L33-L35 code deployed to cloud (PR #12, revision 0000003)
+>   - ✅ L33-L35 endpoints operational with production data (PR #14, revision 0000004)
+>   - ✅ Governance documentation updated (PR #13)
+>   - ✅ Production data deployed (12 objects: 4 per layer)
+>   - ✅ Deployment automation created (deploy-to-msub.ps1, 364 lines)
+>   - ✅ Multi-stage validation fixes (tests, assemble, gitignore, CI/CD)
+>   - ✅ Proactive improvements (.gitignore enhancement, .gitattributes creation)
+>   - ✅ ITIL pattern documented (workspace copilot-instructions.md)
+>   - ✅ Final deployment verified (revision 0000004, 1070 objects, 38 layers)
+>
+> **FUTURE ENHANCEMENTS:**
+>   - [ ] Implement tech_stack query parameter filtering for /model/evidence/
+>   - [ ] Session 30: Implement L36-L38 (deployment-policies, testing-policies, validation-rules)
+>   - [ ] Add pre-commit hooks for model assembly + validation
+>   - [ ] Add CI/CD layer count check workflow
 
 ---
 
