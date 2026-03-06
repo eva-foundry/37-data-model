@@ -96,10 +96,8 @@ KEY ENDPOINTS:
   GET /model/{layer}/example (RECOMMENDED for schema discovery)
     Returns: First real object from layer (NOT synthetic example)
     Use case: "Show me a real evidence record structure"
-    Response: {
-      "data": {...actual evidence object from production...}
-    }
-    Note: Access .data property to get the object
+    Response: {...actual evidence object...}  (direct object, NO wrapper)
+    Note: Unlike list endpoints, /example returns object directly (no .data)
 
   GET /model/{layer}/count
     Returns: Total object count for layer
@@ -114,12 +112,13 @@ KEY ENDPOINTS:
 AGENT DISCOVERY FLOW (RECOMMENDED):
   1. GET /model/layers                    -> "What's available?"
   2. GET /model/evidence/example          -> "Show me real data + discover schema"
-     Access: (Invoke-RestMethod "$base/model/evidence/example").data
+     Access: Invoke-RestMethod "$base/model/evidence/example"  (NO .data wrapper)
   3. Inspect $example.PSObject.Properties -> "List all fields"
   4. GET /model/evidence/?limit=5         -> "Give me 5 records"
      Access: (Invoke-RestMethod "$base/model/evidence/?limit=5").data
 
   NOTE: /fields endpoint currently returns 404, use /example for schema discovery
+  NOTE: /example returns direct object (no wrapper), but list endpoints use .data wrapper
 
 --------------------------------------------------------------------------------
  UNIVERSAL QUERY OPERATORS (SESSION 26)

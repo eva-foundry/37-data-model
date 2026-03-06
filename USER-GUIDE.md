@@ -115,11 +115,11 @@ $projects | Group-Object maturity | Select-Object Name, Count | Format-Table
 ### Example 3: Discover Layer Schema
 ```powershell
 $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
-# Get an example object to see all available fields
-$example = (Invoke-RestMethod "$base/model/projects/example").data
+# Get an example object to see all available fields (NO .data wrapper for /example)
+$example = Invoke-RestMethod "$base/model/projects/example"
 $example | Format-List
 
-# Count total objects in this layer
+# Count total objects in this layer (HAS .data wrapper)
 $all = (Invoke-RestMethod "$base/model/projects/").data
 Write-Host "Total projects: $($all.Count)"
 ```
