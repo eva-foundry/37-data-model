@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/requirement.schema.json",
   "requirements": [
     {
       "id": "EPIC-001",
@@ -24,10 +23,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "EPIC-002",
@@ -45,10 +45,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "EPIC-003",
@@ -72,10 +73,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "EPIC-004",
@@ -100,10 +102,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "EPIC-005",
@@ -118,10 +121,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-001",
@@ -136,10 +140,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-002",
@@ -154,10 +159,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-003",
@@ -172,10 +178,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-004",
@@ -190,10 +197,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-005",
@@ -215,10 +223,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-006",
@@ -240,10 +249,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-007",
@@ -258,10 +268,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-008",
@@ -276,10 +287,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-009",
@@ -298,10 +310,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-010",
@@ -317,10 +330,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "STORY-001",
@@ -340,10 +354,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "STORY-002",
@@ -363,10 +378,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "STORY-003",
@@ -391,10 +407,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "STORY-004",
@@ -414,10 +431,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "AC-001",
@@ -433,10 +451,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "AC-002",
@@ -452,10 +471,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "AC-003",
@@ -471,10 +491,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-019-D15",
@@ -489,10 +510,11 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T14:43:59.270382+00:00",
+      "modified_at": "2026-02-24T11:43:59.270382-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T14:43:59.270382+00:00",
-      "row_version": 1
+      "created_at": "2026-02-24T11:43:59.270382-03:00",
+      "row_version": 1,
+      "layer": "requirements"
     },
     {
       "id": "REQ-037-E09",
@@ -507,10 +529,96 @@
       "source_file": "model/requirements.json",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T14:54:18.049915+00:00",
+      "modified_at": "2026-02-24T11:54:18.049915-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T14:54:18.049915+00:00",
-      "row_version": 1
+      "created_at": "2026-02-24T11:54:18.049915-03:00",
+      "row_version": 1,
+      "layer": "requirements"
+    },
+    {
+      "priority": "high",
+      "type": "feature",
+      "id": "F31-SHELL1",
+      "label": "WI-SHELL-1 PortalShell.tsx (GCHeader + SideNavPanel + ContextBar)",
+      "project": "31-eva-faces",
+      "status": "not-started",
+      "notes": "MISSING per ARCHITECTURE.md Feb 20. Must be created in portal-face/src/shell/. See PLAN.md F31-SHELL1.",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:24:17.62735-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:23:29.340119-03:00",
+      "row_version": 4,
+      "source_file": "model/requirements.json",
+      "layer": "requirements"
+    },
+    {
+      "priority": "high",
+      "type": "feature",
+      "id": "F31-DATA2",
+      "label": "37-DM cleanup - hollow records, literals, route mismatches, eva-roles-api endpoints",
+      "project": "31-eva-faces",
+      "status": "not-started",
+      "notes": "Source: docs/ADO/20260226-to-be-cataloged.md. 5 hollow screen records, ~96 literals, 2 route mismatches, 6 missing endpoints. See PLAN.md F31-DATA2.",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:24:17.733896-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:23:29.460474-03:00",
+      "row_version": 3,
+      "source_file": "model/requirements.json",
+      "layer": "requirements"
+    },
+    {
+      "priority": "medium",
+      "type": "feature",
+      "id": "F31-PM1",
+      "label": "PM Plane UI - Project Portfolio (ProjectPortfolioPage + DependencyGraphPanel)",
+      "project": "31-eva-faces",
+      "status": "not-started",
+      "notes": "13 points. Routes /portal/projects. Deps: brain-v2 GET /v1/projects. WI-F1 thru WI-F9. Source: docs/ADO/20260222-pm-plane-on-faces.md Epic 1.",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:24:17.819114-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:23:29.577273-03:00",
+      "row_version": 3,
+      "source_file": "model/requirements.json",
+      "layer": "requirements"
+    },
+    {
+      "priority": "medium",
+      "type": "feature",
+      "id": "F31-PM2",
+      "label": "PM Plane UI - WBS Tree Viewer (WBSTreePage + CriticalPathPanel)",
+      "project": "31-eva-faces",
+      "status": "not-started",
+      "notes": "16 points. Route /portal/wbs. Deps: brain-v2 GET /v1/wbs + GET /v1/wbs/critical-path. WI-F10 thru WI-F18. Source: docs/ADO/20260222-pm-plane-on-faces.md Epic 2.",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:24:17.896236-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:23:29.703888-03:00",
+      "row_version": 3,
+      "source_file": "model/requirements.json",
+      "layer": "requirements"
+    },
+    {
+      "priority": "medium",
+      "type": "feature",
+      "id": "F31-PM3",
+      "label": "PM Plane UI - Sprint Board Enhancements (WorkItemCard + SprintKanban + SprintSummaryStrip)",
+      "project": "31-eva-faces",
+      "status": "not-started",
+      "notes": "14 points. Route /portal/sprint. Deps: brain-v2 GET /v1/scrum/dashboard + summary. WI-F19 thru WI-F24. Source: docs/ADO/20260222-pm-plane-on-faces.md Epic 3.",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:24:17.965134-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:23:29.825351-03:00",
+      "row_version": 3,
+      "source_file": "model/requirements.json",
+      "layer": "requirements"
     }
   ]
 }

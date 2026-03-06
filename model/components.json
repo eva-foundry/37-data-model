@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/component.schema.json",
   "components": [
     {
       "id": "AdminListPage",
@@ -35,10 +34,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "EvaBadge",
@@ -64,10 +64,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "EvaButton",
@@ -94,10 +95,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "EvaDialog",
@@ -123,10 +125,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "EvaThemeProvider",
@@ -143,10 +146,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "NavHeader",
@@ -168,10 +172,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "ProductTileGrid",
@@ -191,10 +196,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "SprintBadge",
@@ -215,10 +221,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "WIDetailDrawer",
@@ -239,10 +246,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "DiffViewer",
@@ -264,10 +272,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "AgentRationalePanel",
@@ -288,10 +297,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "ArtifactViewer",
@@ -313,10 +323,11 @@
       "source_file": "model/components.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "components"
     },
     {
       "id": "AnnouncerProvider",
@@ -336,11 +347,12 @@
       "notes": "SC-01. Required by every screen via Layout. Wraps entire app tree.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.961689+00:00",
+      "modified_at": "2026-02-23T09:54:26.961689-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:29.914508+00:00",
+      "created_at": "2026-02-23T09:34:29.914508-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "WarningBanner",
@@ -360,11 +372,12 @@
       "notes": "SC-02. Positioned at top of Layout main content area.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.964689+00:00",
+      "modified_at": "2026-02-23T09:54:26.964689-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:31.957753+00:00",
+      "created_at": "2026-02-23T09:34:31.957753-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "QuestionInput",
@@ -390,11 +403,12 @@
       "notes": "SC-03. Textarea + Send button. Disabled state during streaming.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.967977+00:00",
+      "modified_at": "2026-02-23T09:54:26.967977-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:33.984717+00:00",
+      "created_at": "2026-02-23T09:34:33.984717-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "UserChatMessage",
@@ -415,11 +429,12 @@
       "notes": "SC-04. Right-aligned chat bubble for user turns.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.970996+00:00",
+      "modified_at": "2026-02-23T09:54:26.970996-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:36.021681+00:00",
+      "created_at": "2026-02-23T09:34:36.021681-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "Answer",
@@ -445,11 +460,12 @@
       "notes": "SC-05. Renders streamed answer via CharacterStreamer + ReactMarkdown. Citations + feedback dialog.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.972997+00:00",
+      "modified_at": "2026-02-23T09:54:26.972997-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:38.080650+00:00",
+      "created_at": "2026-02-23T09:34:38.08065-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "CharacterStreamer",
@@ -472,11 +488,12 @@
       "notes": "SC-06. Token-by-token text reveal with configurable speed.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.975996+00:00",
+      "modified_at": "2026-02-23T09:54:26.975996-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:40.113568+00:00",
+      "created_at": "2026-02-23T09:34:40.113568-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "AnalysisPanel",
@@ -501,11 +518,12 @@
       "notes": "SC-07. Right-side Drawer with 3-tab TabList: Thought Process, Supporting Content, Data Points.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.978995+00:00",
+      "modified_at": "2026-02-23T09:54:26.978995-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:42.162739+00:00",
+      "created_at": "2026-02-23T09:34:42.162739-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "ChatHistory",
@@ -530,11 +548,12 @@
       "notes": "SC-08. Left Drawer showing paginated session list (10/page) with delete confirm Dialog.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.982513+00:00",
+      "modified_at": "2026-02-23T09:54:26.982513-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:44.195083+00:00",
+      "created_at": "2026-02-23T09:34:44.195083-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "ExampleList",
@@ -556,11 +575,12 @@
       "notes": "SC-09. Suggestion chip Buttons shown when chat area is empty.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.985536+00:00",
+      "modified_at": "2026-02-23T09:54:26.985536-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:46.252206+00:00",
+      "created_at": "2026-02-23T09:34:46.252206-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "FolderPicker",
@@ -585,11 +605,12 @@
       "notes": "SC-10. Fluent UI Dropdown + inline Dialog to create new folder.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.987538+00:00",
+      "modified_at": "2026-02-23T09:54:26.987538-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:48.304323+00:00",
+      "created_at": "2026-02-23T09:34:48.304323-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "TagPicker",
@@ -612,11 +633,12 @@
       "notes": "SC-11. Combobox freeform + dismissible Tag chips for metadata tagging.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.990533+00:00",
+      "modified_at": "2026-02-23T09:54:26.990533-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:50.344275+00:00",
+      "created_at": "2026-02-23T09:34:50.344275-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "FilePicker",
@@ -642,11 +664,12 @@
       "notes": "SC-12. Drag-drop zone + hidden file input. Multi-file support. ProgressBar.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.993537+00:00",
+      "modified_at": "2026-02-23T09:54:26.993537-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:52.408120+00:00",
+      "created_at": "2026-02-23T09:34:52.40812-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "FileStatus",
@@ -667,11 +690,12 @@
       "notes": "SC-13. Sortable/filterable DataGrid showing file upload status records.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:26.995370+00:00",
+      "modified_at": "2026-02-23T09:54:26.99537-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:54.454791+00:00",
+      "created_at": "2026-02-23T09:34:54.454791-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "RagApproachPicker",
@@ -692,11 +716,12 @@
       "notes": "SC-14. Native <select> with 7 RAG approaches + live description (aria-live='polite').",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.001551+00:00",
+      "modified_at": "2026-02-23T09:54:27.001551-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:56.491326+00:00",
+      "created_at": "2026-02-23T09:34:56.491326-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "ResponseLengthButtonGroup",
@@ -717,11 +742,12 @@
       "notes": "SC-15. Concise / Balanced / Detailed toggle group following radiogroup pattern.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.004551+00:00",
+      "modified_at": "2026-02-23T09:54:27.004551-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:34:58.533644+00:00",
+      "created_at": "2026-02-23T09:34:58.533644-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "ChatModeButtonGroup",
@@ -742,11 +768,12 @@
       "notes": "SC-16. Work / Web / Hybrid radiogroup. Same pattern as ResponseLengthButtonGroup.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.008554+00:00",
+      "modified_at": "2026-02-23T09:54:27.008554-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:00.564389+00:00",
+      "created_at": "2026-02-23T09:35:00.564389-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "RAIPanel",
@@ -768,11 +795,12 @@
       "notes": "SC-17. Responsible AI disclaimer shown in Settings drawer Info tab.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.010548+00:00",
+      "modified_at": "2026-02-23T09:54:27.010548-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:02.613204+00:00",
+      "created_at": "2026-02-23T09:35:02.613204-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "SupportingContent",
@@ -793,11 +821,12 @@
       "notes": "SC-18. Per-chunk source citation buttons shown in AnalysisPanel.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.014264+00:00",
+      "modified_at": "2026-02-23T09:54:27.014264-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:04.631786+00:00",
+      "created_at": "2026-02-23T09:35:04.631786-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "SettingsIconButton",
@@ -818,11 +847,12 @@
       "notes": "SC-19. Gear icon → right Drawer with Info/Adjust/Examples TabList.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.017269+00:00",
+      "modified_at": "2026-02-23T09:54:27.017269-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:06.657603+00:00",
+      "created_at": "2026-02-23T09:35:06.657603-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     },
     {
       "id": "Title",
@@ -840,11 +870,12 @@
       "notes": "SC-20. Fetches /api/applicationtitle; shows Spinner fallback. LoadTitle is alias.",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.020278+00:00",
+      "modified_at": "2026-02-23T09:54:27.020278-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:08.690545+00:00",
+      "created_at": "2026-02-23T09:35:08.690545-03:00",
       "row_version": 5,
-      "source_file": "model/components.json"
+      "source_file": "model/components.json",
+      "layer": "components"
     }
   ]
 }

@@ -43,10 +43,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "ChatRequest",
@@ -93,10 +94,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "ChatResponse",
@@ -152,10 +154,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "ApproachInfo",
@@ -185,10 +188,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "ApproachesResponse",
@@ -208,10 +212,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "RetrieveRequest",
@@ -254,10 +259,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "RetrieveResponse",
@@ -297,10 +303,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SessionCreate",
@@ -325,10 +332,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SessionUpdate",
@@ -353,10 +361,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SessionResponse",
@@ -419,10 +428,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SessionListResponse",
@@ -447,10 +457,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SessionDeleteResponse",
@@ -480,10 +491,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "BulkDeleteResponse",
@@ -508,10 +520,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "MessageResponse",
@@ -556,10 +569,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SessionWithMessagesResponse",
@@ -589,10 +603,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "DocumentMetadataPatch",
@@ -627,10 +642,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "JobResponse",
@@ -692,10 +708,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "JobListResponse",
@@ -725,10 +742,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "UploadResponse",
@@ -764,10 +782,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "DeleteResponse",
@@ -797,10 +816,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "StatsResponse",
@@ -845,10 +865,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SavedSearchCreate",
@@ -883,10 +904,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SavedSearchResponse",
@@ -952,10 +974,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SavedSearchesResponse",
@@ -980,10 +1003,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SearchHistoryEntry",
@@ -1028,10 +1052,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SearchHistoryResponse",
@@ -1056,10 +1081,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "TopQuery",
@@ -1084,10 +1110,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "SearchAnalyticsResponse",
@@ -1127,10 +1154,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "ServiceInfoResponse",
@@ -1165,10 +1193,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "FeaturesResponse",
@@ -1193,10 +1222,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "UserCreateRequest",
@@ -1231,10 +1261,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "UserResponse",
@@ -1274,10 +1305,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "GroupResponse",
@@ -1322,10 +1354,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "GroupListResponse",
@@ -1350,10 +1383,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "CostTags",
@@ -1397,10 +1431,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "ToolInvocation",
@@ -1449,10 +1484,11 @@
       "source_file": "model/schemas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "schemas"
     },
     {
       "id": "WBS",
@@ -1824,9 +1860,167 @@
         }
       ],
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T21:04:52.565233+00:00",
+      "modified_at": "2026-02-24T18:04:52.565233-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T21:04:52.565233+00:00",
+      "created_at": "2026-02-24T18:04:52.565233-03:00",
+      "row_version": 1,
+      "layer": "schemas"
+    },
+    {
+      "id": "ExecutionRecord",
+      "kind": "model",
+      "defined_in": "50-eva-ops/docs/20260226-design.md",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "agent_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "plane_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "service_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "trigger",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "start_time",
+          "type": "datetime",
+          "required": false
+        },
+        {
+          "name": "end_time",
+          "type": "datetime",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "exit_code",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "log_ref",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "run_action_ids",
+          "type": "list",
+          "required": false
+        },
+        {
+          "name": "evidence_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "environment",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "actor_id",
+          "type": "str",
+          "required": false
+        }
+      ],
+      "status": "planned",
+      "source_file": "50-eva-ops/docs/20260226-design.md",
+      "is_active": true,
+      "layer": "schemas",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-26T21:12:52.142291-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-26T21:12:52.142291-03:00",
+      "row_version": 1
+    },
+    {
+      "id": "RunActionRecord",
+      "kind": "model",
+      "defined_in": "50-eva-ops/docs/20260226-design.md",
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "execution_id",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "action_verb",
+          "type": "str",
+          "required": true
+        },
+        {
+          "name": "target_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "plane_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "actor_id",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "approved_by",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "policy_ids",
+          "type": "list",
+          "required": false
+        },
+        {
+          "name": "result",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "result_detail",
+          "type": "str",
+          "required": false
+        },
+        {
+          "name": "timestamp",
+          "type": "datetime",
+          "required": false
+        }
+      ],
+      "status": "planned",
+      "source_file": "50-eva-ops/docs/20260226-design.md",
+      "is_active": true,
+      "layer": "schemas",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-26T21:12:52.239574-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-26T21:12:52.239574-03:00",
       "row_version": 1
     }
   ]

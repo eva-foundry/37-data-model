@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/screen.schema.json",
   "screens": [
     {
       "id": "TranslationsPage",
@@ -31,11 +30,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:11.383657+00:00",
+      "modified_at": "2026-02-24T17:22:11.383657-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 6,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "SettingsPage",
@@ -64,11 +64,12 @@
       "repo_line": 19,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:13.486264+00:00",
+      "modified_at": "2026-02-24T17:22:13.486264-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "AppsPage",
@@ -102,11 +103,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:15.568680+00:00",
+      "modified_at": "2026-02-24T17:22:15.56868-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 5,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "AuditLogsPage",
@@ -135,11 +137,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:17.673590+00:00",
+      "modified_at": "2026-02-24T17:22:17.67359-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 5,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "RbacPage",
@@ -168,11 +171,12 @@
       "repo_line": 20,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:19.760932+00:00",
+      "modified_at": "2026-02-24T17:22:19.760932-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "ChatPane",
@@ -202,11 +206,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:21.848879+00:00",
+      "modified_at": "2026-02-24T17:22:21.848879-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "EVAHomePage",
@@ -234,11 +239,12 @@
       "repo_line": 22,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:23.928558+00:00",
+      "modified_at": "2026-02-24T17:22:23.928558-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "SprintBoardPage",
@@ -269,11 +275,12 @@
       "repo_line": 47,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:25.990017+00:00",
+      "modified_at": "2026-02-24T17:22:25.990017-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "IngestionRunsPage",
@@ -305,11 +312,12 @@
       "_cached": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:28.059602+00:00",
+      "modified_at": "2026-02-24T17:22:28.059602-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "SearchHealthPage",
@@ -339,11 +347,12 @@
       "repo_line": 37,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:30.135788+00:00",
+      "modified_at": "2026-02-24T17:22:30.135788-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "SupportTicketsPage",
@@ -372,11 +381,12 @@
       "repo_line": 49,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:32.219621+00:00",
+      "modified_at": "2026-02-24T17:22:32.219621-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "FeatureFlagsPage",
@@ -406,11 +416,12 @@
       "repo_line": 27,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:34.292838+00:00",
+      "modified_at": "2026-02-24T17:22:34.292838-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "RbacRolesPage",
@@ -442,11 +453,12 @@
       "repo_line": 30,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:36.377043+00:00",
+      "modified_at": "2026-02-24T17:22:36.377043-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "FinOpsDashboardPage",
@@ -473,11 +485,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:38.468993+00:00",
+      "modified_at": "2026-02-24T17:22:38.468993-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "DevopsHealthDashboardPage",
@@ -504,11 +517,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:40.555067+00:00",
+      "modified_at": "2026-02-24T17:22:40.555067-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "DevbenchReviewDemo",
@@ -537,11 +551,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:42.628333+00:00",
+      "modified_at": "2026-02-24T17:22:42.628333-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "DevbenchProjectsPage",
@@ -569,11 +584,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:44.697910+00:00",
+      "modified_at": "2026-02-24T17:22:44.69791-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "DevbenchContextBundlesPage",
@@ -601,11 +617,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:46.770612+00:00",
+      "modified_at": "2026-02-24T17:22:46.770612-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "DevbenchRunsPage",
@@ -633,11 +650,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:48.866678+00:00",
+      "modified_at": "2026-02-24T17:22:48.866678-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "DevbenchSettingsPage",
@@ -657,11 +675,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:50.973737+00:00",
+      "modified_at": "2026-02-24T17:22:50.973737-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkLayout",
@@ -689,11 +708,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:53.049787+00:00",
+      "modified_at": "2026-02-24T17:22:53.049787-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkChatPage",
@@ -736,11 +756,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:55.120194+00:00",
+      "modified_at": "2026-02-24T17:22:55.120194-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkContentPage",
@@ -770,11 +791,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:57.210759+00:00",
+      "modified_at": "2026-02-24T17:22:57.210759-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkTranslatorPage",
@@ -798,11 +820,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:22:59.288588+00:00",
+      "modified_at": "2026-02-24T17:22:59.288588-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkUrlScrapperPage",
@@ -825,11 +848,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:01.374982+00:00",
+      "modified_at": "2026-02-24T17:23:01.374982-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkTDAPage",
@@ -859,11 +883,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:03.442865+00:00",
+      "modified_at": "2026-02-24T17:23:03.442865-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkTutorPage",
@@ -888,11 +913,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:05.507371+00:00",
+      "modified_at": "2026-02-24T17:23:05.507371-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "row_version": 7,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "id": "JpSparkNoPage",
@@ -907,11 +933,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:07.596335+00:00",
+      "modified_at": "2026-02-24T17:23:07.596335-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:55:53.727791+00:00",
+      "created_at": "2026-02-23T09:55:53.727791-03:00",
       "row_version": 4,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -945,11 +972,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:09.661247+00:00",
+      "modified_at": "2026-02-24T17:23:09.661247-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:35.794288+00:00",
+      "created_at": "2026-02-24T10:12:35.794288-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -982,11 +1010,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:11.753225+00:00",
+      "modified_at": "2026-02-24T17:23:11.753225-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:37.883183+00:00",
+      "created_at": "2026-02-24T10:12:37.883183-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1041,11 +1070,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:13.834193+00:00",
+      "modified_at": "2026-02-24T17:23:13.834193-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:39.993295+00:00",
+      "created_at": "2026-02-24T10:12:39.993295-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1091,11 +1121,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:15.913347+00:00",
+      "modified_at": "2026-02-24T17:23:15.913347-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:42.085830+00:00",
+      "created_at": "2026-02-24T10:12:42.08583-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1132,11 +1163,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:18.004006+00:00",
+      "modified_at": "2026-02-24T17:23:18.004006-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:44.178685+00:00",
+      "created_at": "2026-02-24T10:12:44.178685-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1175,11 +1207,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:20.101044+00:00",
+      "modified_at": "2026-02-24T17:23:20.101044-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:46.257872+00:00",
+      "created_at": "2026-02-24T10:12:46.257872-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1215,11 +1248,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:22.176078+00:00",
+      "modified_at": "2026-02-24T17:23:22.176078-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:48.319017+00:00",
+      "created_at": "2026-02-24T10:12:48.319017-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1254,11 +1288,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:24.255851+00:00",
+      "modified_at": "2026-02-24T17:23:24.255851-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:50.402920+00:00",
+      "created_at": "2026-02-24T10:12:50.40292-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1293,11 +1328,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:26.326294+00:00",
+      "modified_at": "2026-02-24T17:23:26.326294-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:52.498535+00:00",
+      "created_at": "2026-02-24T10:12:52.498535-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1334,11 +1370,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:28.427229+00:00",
+      "modified_at": "2026-02-24T17:23:28.427229-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:54.581223+00:00",
+      "created_at": "2026-02-24T10:12:54.581223-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1373,11 +1410,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:35.325360+00:00",
+      "modified_at": "2026-02-24T17:23:35.32536-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:56.774438+00:00",
+      "created_at": "2026-02-24T10:12:56.774438-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1412,11 +1450,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:37.390823+00:00",
+      "modified_at": "2026-02-24T17:23:37.390823-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:12:58.852747+00:00",
+      "created_at": "2026-02-24T10:12:58.852747-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1451,11 +1490,12 @@
       "is_active": true,
       "face": "assistant-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:39.465668+00:00",
+      "modified_at": "2026-02-24T17:23:39.465668-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:13:00.949683+00:00",
+      "created_at": "2026-02-24T10:13:00.949683-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1491,11 +1531,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:23:41.552039+00:00",
+      "modified_at": "2026-02-24T17:23:41.552039-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:13:03.025796+00:00",
+      "created_at": "2026-02-24T10:13:03.025796-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1532,11 +1573,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:24:05.148249+00:00",
+      "modified_at": "2026-02-24T17:24:05.148249-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:13:05.101801+00:00",
+      "created_at": "2026-02-24T10:13:05.101801-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1569,11 +1611,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:24:09.289245+00:00",
+      "modified_at": "2026-02-24T17:24:09.289245-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:13:07.198538+00:00",
+      "created_at": "2026-02-24T10:13:07.198538-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1604,11 +1647,12 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:24:13.400823+00:00",
+      "modified_at": "2026-02-24T17:24:13.400823-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:13:09.267215+00:00",
+      "created_at": "2026-02-24T10:13:09.267215-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
     },
     {
       "api_calls": [
@@ -1644,11 +1688,110 @@
       "is_active": true,
       "face": "ops-face",
       "modified_by": "user:marco.presta",
-      "modified_at": "2026-02-24T20:24:17.551598+00:00",
+      "modified_at": "2026-02-24T17:24:17.551598-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:13:11.370408+00:00",
+      "created_at": "2026-02-24T10:13:11.370408-03:00",
       "row_version": 2,
-      "source_file": "model/screens.json"
+      "source_file": "model/screens.json",
+      "layer": "screens"
+    },
+    {
+      "notes": "Feb 25 -- no WI -- no tests -- WI-MODEL-1 pending",
+      "app": "portal-face",
+      "description": "EVA Data Model browser -- 27 layers -- EvaDataGrid + drawer + EvaJsonViewer -- view:model gated",
+      "id": "ModelBrowserPage",
+      "has_tests": false,
+      "repo_path": "31-eva-faces/portal-face/src/pages/ModelBrowserPage.tsx",
+      "route": "/model",
+      "status": "implemented",
+      "project_id": "31-eva-faces",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:08:18.505085-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:05:14.317353-03:00",
+      "row_version": 4,
+      "source_file": "model/screens.json",
+      "layer": "screens"
+    },
+    {
+      "notes": "Feb 25 -- no WI -- no tests -- WI-MODEL-2 pending",
+      "app": "portal-face",
+      "description": "EVA Data Model report -- layer counts + endpoint matrix by service + graph stats -- view:model gated",
+      "id": "ModelReportPage",
+      "has_tests": false,
+      "repo_path": "31-eva-faces/portal-face/src/pages/ModelReportPage.tsx",
+      "route": "/model/report",
+      "status": "implemented",
+      "project_id": "31-eva-faces",
+      "is_active": true,
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:08:18.622103-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:05:14.676263-03:00",
+      "row_version": 3,
+      "source_file": "model/screens.json",
+      "layer": "screens"
+    },
+    {
+      "id": "ProjectPortfolioPage",
+      "label": "Project Portfolio",
+      "app": "portal-face",
+      "route": "/portal/projects",
+      "component_path": "31-eva-faces/portal-face/src/pages/ProjectPortfolioPage.tsx",
+      "status": "implemented",
+      "api_calls": [],
+      "components": [
+        "ProjectCard",
+        "MaturityBadge",
+        "NavHeader"
+      ],
+      "hooks": [],
+      "rbac": [
+        "view:portal"
+      ],
+      "notes": "WI-PM-PLANE-1 DONE Session 15. 10 tests. WCAG 2.1 AA axe-verified. Mock-first.",
+      "is_active": true,
+      "repo_line": 60,
+      "face": "portal-face",
+      "wbs_id": "F31-PM-001",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T18:00:27.429354-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T17:58:55.21173-03:00",
+      "row_version": 5,
+      "source_file": "model/screens.json",
+      "layer": "screens"
+    },
+    {
+      "id": "WBSTreePage",
+      "label": "WBS Tree",
+      "app": "portal-face",
+      "route": "/portal/wbs",
+      "component_path": "31-eva-faces/portal-face/src/pages/WBSTreePage.tsx",
+      "status": "implemented",
+      "api_calls": [],
+      "components": [
+        "WBSNodeRow",
+        "CriticalPathPanel",
+        "NavHeader"
+      ],
+      "hooks": [],
+      "rbac": [
+        "view:portal"
+      ],
+      "notes": "WI-PM-PLANE-2 DONE Session 15. 10 tests. WBS treegrid expand/collapse, phase gate locks, critical path panel. WCAG 2.1 AA axe-verified. Mock-first.",
+      "is_active": true,
+      "repo_line": 59,
+      "face": "portal-face",
+      "wbs_id": "F31-PM-002",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T18:00:33.53349-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T17:59:35.977197-03:00",
+      "row_version": 2,
+      "source_file": "model/screens.json",
+      "layer": "screens"
     }
   ]
 }

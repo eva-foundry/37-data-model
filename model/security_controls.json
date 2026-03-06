@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/security_control.schema.json",
   "security_controls": [
     {
       "id": "OWASP-LLM-01",
@@ -22,10 +21,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "OWASP-LLM-02",
@@ -43,10 +43,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "OWASP-LLM-06",
@@ -67,10 +68,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "ITSG-33-AC-2",
@@ -91,10 +93,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "ITSG-33-AU-2",
@@ -116,10 +119,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "ITSG-33-IA-2",
@@ -145,10 +149,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "ATLAS-AML.T0051",
@@ -167,10 +172,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "ATLAS-AML.T0054",
@@ -188,10 +194,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "NIST-AI-RMF-GV-1.1",
@@ -212,10 +219,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     },
     {
       "id": "ITSG-33-SC-28",
@@ -233,10 +241,11 @@
       "source_file": "model/security_controls.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "security_controls"
     }
   ]
 }

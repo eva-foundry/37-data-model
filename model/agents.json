@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/agent.schema.json",
   "agents": [
     {
       "status": "implemented",
@@ -12,10 +11,11 @@
       "repo_path": "29-foundry/agents/azure_plane/app/conversation/conversation_agent.py",
       "notes": "Multi-turn EVA-JP conversation orchestrator. Imported from 33-eva-brain-v2.",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:43.888770+00:00",
+      "modified_at": "2026-02-24T21:53:43.88877-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 3
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 3,
+      "layer": "agents"
     },
     {
       "id": "screen-generator",
@@ -34,10 +34,11 @@
       "source_file": "model/agents.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "agents"
     },
     {
       "id": "test-generator",
@@ -56,10 +57,11 @@
       "source_file": "model/agents.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "agents"
     },
     {
       "id": "validator",
@@ -78,42 +80,11 @@
       "source_file": "model/agents.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
-    },
-    {
-      "status": "implemented",
-      "plane": "github",
-      "source_file": "29-foundry/server/main.py",
-      "id": "session-workflow-agent",
-      "is_active": true,
-      "repo_line": 68,
-      "skills": [],
-      "repo_path": "29-foundry/server/main.py",
-      "notes": "DPDCA phase dispatcher: Define|Plan|Do|Act. Called by sprint-execute.yml. Endpoint: POST /agents/session-workflow-agent/invoke.",
-      "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:41.855138+00:00",
-      "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:25.456397+00:00",
-      "row_version": 2
-    },
-    {
-      "status": "implemented",
-      "plane": "azure",
-      "source_file": "29-foundry/agents/azure_plane/internal/validator/validator_agent.py",
-      "id": "validator-agent",
-      "is_active": true,
-      "repo_line": 1,
-      "skills": [],
-      "repo_path": "29-foundry/agents/azure_plane/internal/validator/validator_agent.py",
-      "notes": "Artifact cross-reference and schema validator. Internal sub-plane.",
-      "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:45.936443+00:00",
-      "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:29.500586+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "agents"
     },
     {
       "status": "implemented",
@@ -126,10 +97,45 @@
       "repo_path": "29-foundry/agents/azure_plane/app/screen_generator/screen_agent.py",
       "notes": "Fluent UI v9 TSX screen code generator. Imported from 31-eva-faces.",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:47.982065+00:00",
+      "modified_at": "2026-02-24T21:53:47.982065-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:31.531428+00:00",
-      "row_version": 2
+      "created_at": "2026-02-24T21:53:31.531428-03:00",
+      "row_version": 2,
+      "layer": "agents"
+    },
+    {
+      "status": "implemented",
+      "plane": "github",
+      "source_file": "29-foundry/server/main.py",
+      "id": "session-workflow-agent",
+      "is_active": true,
+      "repo_line": 68,
+      "skills": [],
+      "repo_path": "29-foundry/server/main.py",
+      "notes": "DPDCA phase dispatcher: Define|Plan|Do|Act. Called by sprint-execute.yml. Endpoint: POST /agents/session-workflow-agent/invoke.",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-24T21:53:41.855138-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-24T21:53:25.456397-03:00",
+      "row_version": 2,
+      "layer": "agents"
+    },
+    {
+      "status": "implemented",
+      "plane": "azure",
+      "source_file": "29-foundry/agents/azure_plane/internal/validator/validator_agent.py",
+      "id": "validator-agent",
+      "is_active": true,
+      "repo_line": 1,
+      "skills": [],
+      "repo_path": "29-foundry/agents/azure_plane/internal/validator/validator_agent.py",
+      "notes": "Artifact cross-reference and schema validator. Internal sub-plane.",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-24T21:53:45.936443-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-24T21:53:29.500586-03:00",
+      "row_version": 2,
+      "layer": "agents"
     },
     {
       "status": "stub",
@@ -142,55 +148,11 @@
       "repo_path": "29-foundry/agents/azure_plane/internal/test_generator/test_agent.py",
       "notes": "Phase 2 stub: vitest + jest-axe scaffold generator. Phase 3 full impl planned.",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:50.013135+00:00",
+      "modified_at": "2026-02-24T21:53:50.013135-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:33.582341+00:00",
-      "row_version": 2
-    },
-    {
-      "plane": "ado",
-      "skills": [],
-      "is_active": false,
-      "source_file": "",
-      "id": "sprint-scope-agent",
-      "repo_path": "",
-      "notes": "Validates sprint WI set before Define phase. Tracked in ADO Epic 177.",
-      "status": "planned",
-      "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:52.063040+00:00",
-      "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:35.607146+00:00",
-      "row_version": 2
-    },
-    {
-      "plane": "ado",
-      "skills": [],
-      "is_active": false,
-      "source_file": "",
-      "id": "release-note-agent",
-      "repo_path": "",
-      "notes": "Generates release notes from closed PBIs. Tracked in ADO Epic 177.",
-      "status": "planned",
-      "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:54.096196+00:00",
-      "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:37.624309+00:00",
-      "row_version": 2
-    },
-    {
-      "plane": "ado",
-      "skills": [],
-      "is_active": false,
-      "source_file": "",
-      "id": "blocker-triage-agent",
-      "repo_path": "",
-      "notes": "Flags blocked WIs and drafts unblock proposals. Tracked in ADO Epic 177.",
-      "status": "planned",
-      "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:53:56.123997+00:00",
-      "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:53:39.657628+00:00",
-      "row_version": 2
+      "created_at": "2026-02-24T21:53:33.582341-03:00",
+      "row_version": 2,
+      "layer": "agents"
     },
     {
       "status": "implemented",
@@ -201,11 +163,34 @@
       "skill_file": "copilot-skills/azure-plane/app/eva-brain-v2/01-conversation-agent.skill.md",
       "source_project": "33-eva-brain-v2",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T03:04:17.072823+00:00",
+      "modified_at": "2026-02-25T00:04:17.072823-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-25T03:04:10.929276+00:00",
+      "created_at": "2026-02-25T00:04:10.929276-03:00",
       "row_version": 2,
-      "id": "ConversationAgent"
+      "id": "ConversationAgent",
+      "source_file": "model/agents.json",
+      "layer": "agents"
+    },
+    {
+      "status": "active",
+      "capabilities": [
+        "code-generation",
+        "rca",
+        "incident-response",
+        "data-model-sync"
+      ],
+      "last_session": "2026-03-02T13:15:00Z",
+      "label": "GitHub Copilot",
+      "id": "github-copilot",
+      "version": "Claude Sonnet 4.5",
+      "type": "coding-assistant",
+      "layer": "agents",
+      "is_active": true,
+      "modified_by": "agent:github-copilot",
+      "modified_at": "2026-03-02T15:17:34.161133-03:00",
+      "created_by": "agent:github-copilot",
+      "created_at": "2026-03-02T15:17:25.468052-03:00",
+      "row_version": 2
     }
   ]
 }

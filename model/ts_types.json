@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/ts_type.schema.json",
   "ts_types": [
     {
       "id": "UserRole",
@@ -25,11 +24,12 @@
       "endpoint_response": "GET /api/userGroupInfo",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.056320+00:00",
+      "modified_at": "2026-02-23T09:54:27.05632-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "row_version": 6,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "Role",
@@ -57,10 +57,11 @@
       "source_file": "model/ts_types.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "ts_types"
     },
     {
       "id": "CreateRoleRequest",
@@ -87,10 +88,11 @@
       "source_file": "model/ts_types.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "ts_types"
     },
     {
       "id": "WorkPackage",
@@ -120,10 +122,11 @@
       "source_file": "model/ts_types.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "ts_types"
     },
     {
       "id": "Run",
@@ -153,10 +156,11 @@
       "source_file": "model/ts_types.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "ts_types"
     },
     {
       "id": "ContextBundle",
@@ -184,10 +188,11 @@
       "source_file": "model/ts_types.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "ts_types"
     },
     {
       "id": "UserGroupInfo",
@@ -212,11 +217,12 @@
       "endpoint_response": "GET /api/userGroupInfo",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.060312+00:00",
+      "modified_at": "2026-02-23T09:54:27.060312-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "row_version": 6,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "FeatureFlagMap",
@@ -244,10 +250,11 @@
       "source_file": "model/ts_types.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "ts_types"
     },
     {
       "id": "FeatureFlags",
@@ -273,11 +280,12 @@
       "endpoint_response": "GET /api/featureFlags",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.062172+00:00",
+      "modified_at": "2026-02-23T09:54:27.062172-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:35.163380+00:00",
+      "created_at": "2026-02-23T09:35:35.16338-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ChatMode",
@@ -301,11 +309,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.067838+00:00",
+      "modified_at": "2026-02-23T09:54:27.067838-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:37.178256+00:00",
+      "created_at": "2026-02-23T09:35:37.178256-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "RagApproach",
@@ -334,11 +343,12 @@
       "endpoint_response": "POST /api/conversation",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.070887+00:00",
+      "modified_at": "2026-02-23T09:54:27.070887-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:39.225253+00:00",
+      "created_at": "2026-02-23T09:35:39.225253-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ResponseLength",
@@ -362,11 +372,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.075409+00:00",
+      "modified_at": "2026-02-23T09:54:27.075409-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:41.271988+00:00",
+      "created_at": "2026-02-23T09:35:41.271988-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ResponseTemp",
@@ -388,11 +399,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.078609+00:00",
+      "modified_at": "2026-02-23T09:54:27.078609-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:43.311873+00:00",
+      "created_at": "2026-02-23T09:35:43.311873-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ChatSettings",
@@ -419,11 +431,12 @@
       "endpoint_response": "POST /api/conversation",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.081609+00:00",
+      "modified_at": "2026-02-23T09:54:27.081609-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:45.349813+00:00",
+      "created_at": "2026-02-23T09:35:45.349813-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ChatMessage",
@@ -446,11 +459,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.084615+00:00",
+      "modified_at": "2026-02-23T09:54:27.084615-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:47.395756+00:00",
+      "created_at": "2026-02-23T09:35:47.395756-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ChatSession",
@@ -474,11 +488,12 @@
       "endpoint_response": "GET /api/chathistory/sessions",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.086607+00:00",
+      "modified_at": "2026-02-23T09:54:27.086607-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:49.408937+00:00",
+      "created_at": "2026-02-23T09:35:49.408937-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "Citation",
@@ -504,11 +519,12 @@
       "endpoint_response": "POST /api/conversation",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.089610+00:00",
+      "modified_at": "2026-02-23T09:54:27.08961-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:51.442287+00:00",
+      "created_at": "2026-02-23T09:35:51.442287-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "AnswerResponse",
@@ -533,11 +549,12 @@
       "endpoint_response": "POST /api/conversation",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.092626+00:00",
+      "modified_at": "2026-02-23T09:54:27.092626-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:53.489684+00:00",
+      "created_at": "2026-02-23T09:35:53.489684-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "FileUploadStatus",
@@ -562,11 +579,12 @@
       "endpoint_response": "GET /api/uploadstatus",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.095619+00:00",
+      "modified_at": "2026-02-23T09:54:27.095619-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:55.519955+00:00",
+      "created_at": "2026-02-23T09:35:55.519955-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "FileUploadRecord",
@@ -593,11 +611,12 @@
       "endpoint_response": "GET /api/uploadstatus",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.098627+00:00",
+      "modified_at": "2026-02-23T09:54:27.098627-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:57.550962+00:00",
+      "created_at": "2026-02-23T09:35:57.550962-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "TranslationLanguage",
@@ -619,11 +638,12 @@
       "endpoint_response": "POST /api/translatefile",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.101624+00:00",
+      "modified_at": "2026-02-23T09:54:27.101624-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:59.610700+00:00",
+      "created_at": "2026-02-23T09:35:59.6107-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "TranslationResult",
@@ -645,11 +665,12 @@
       "endpoint_response": "POST /api/translatefile",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.103624+00:00",
+      "modified_at": "2026-02-23T09:54:27.103624-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:36:01.655713+00:00",
+      "created_at": "2026-02-23T09:36:01.655713-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ScrapedLink",
@@ -671,11 +692,12 @@
       "endpoint_response": "POST /api/urlscrape/preview",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.106700+00:00",
+      "modified_at": "2026-02-23T09:54:27.1067-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:36:03.704143+00:00",
+      "created_at": "2026-02-23T09:36:03.704143-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ScrapePreviewResult",
@@ -697,11 +719,12 @@
       "endpoint_response": "POST /api/urlscrape/preview",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.108403+00:00",
+      "modified_at": "2026-02-23T09:54:27.108403-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:36:05.736647+00:00",
+      "created_at": "2026-02-23T09:36:05.736647-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ExampleItem",
@@ -723,11 +746,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.111399+00:00",
+      "modified_at": "2026-02-23T09:54:27.111399-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:36:07.782976+00:00",
+      "created_at": "2026-02-23T09:36:07.782976-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     },
     {
       "id": "ApiError",
@@ -753,11 +777,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.114399+00:00",
+      "modified_at": "2026-02-23T09:54:27.114399-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:36:09.813300+00:00",
+      "created_at": "2026-02-23T09:36:09.8133-03:00",
       "row_version": 5,
-      "source_file": "model/ts_types.json"
+      "source_file": "model/ts_types.json",
+      "layer": "ts_types"
     }
   ]
 }
