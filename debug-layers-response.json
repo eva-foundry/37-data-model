@@ -1,0 +1,330 @@
+{
+  "layers": [
+    {
+      "name": "services",
+      "has_schema": false,
+      "total_count": 34,
+      "real_objects": 34,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "personas",
+      "has_schema": false,
+      "total_count": 10,
+      "real_objects": 10,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "feature_flags",
+      "has_schema": false,
+      "total_count": 15,
+      "real_objects": 15,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "containers",
+      "has_schema": false,
+      "total_count": 13,
+      "real_objects": 13,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "endpoints",
+      "has_schema": false,
+      "total_count": 185,
+      "real_objects": 185,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "screens",
+      "has_schema": false,
+      "total_count": 46,
+      "real_objects": 46,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "literals",
+      "has_schema": false,
+      "total_count": 375,
+      "real_objects": 375,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "agents",
+      "has_schema": false,
+      "total_count": 9,
+      "real_objects": 9,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "infrastructure",
+      "has_schema": false,
+      "total_count": 23,
+      "real_objects": 23,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "requirements",
+      "has_schema": false,
+      "total_count": 24,
+      "real_objects": 24,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "planes",
+      "has_schema": false,
+      "total_count": 3,
+      "real_objects": 3,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "connections",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "environments",
+      "has_schema": false,
+      "total_count": 3,
+      "real_objects": 3,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "cp_skills",
+      "has_schema": false,
+      "total_count": 7,
+      "real_objects": 7,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "cp_agents",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "runbooks",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "cp_workflows",
+      "has_schema": false,
+      "total_count": 2,
+      "real_objects": 2,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "cp_policies",
+      "has_schema": false,
+      "total_count": 3,
+      "real_objects": 3,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "components",
+      "has_schema": false,
+      "total_count": 32,
+      "real_objects": 32,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "hooks",
+      "has_schema": false,
+      "total_count": 18,
+      "real_objects": 18,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "ts_types",
+      "has_schema": false,
+      "total_count": 26,
+      "real_objects": 26,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "mcp_servers",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "prompts",
+      "has_schema": false,
+      "total_count": 5,
+      "real_objects": 5,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "security_controls",
+      "has_schema": false,
+      "total_count": 10,
+      "real_objects": 10,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "projects",
+      "has_schema": false,
+      "total_count": 56,
+      "real_objects": 56,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "wbs",
+      "has_schema": false,
+      "total_count": 13,
+      "real_objects": 13,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "sprints",
+      "has_schema": false,
+      "total_count": 9,
+      "real_objects": 9,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "milestones",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "risks",
+      "has_schema": false,
+      "total_count": 5,
+      "real_objects": 5,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "decisions",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "evidence",
+      "has_schema": false,
+      "total_count": 65,
+      "real_objects": 65,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "traces",
+      "has_schema": false,
+      "total_count": 0,
+      "real_objects": 0,
+      "is_active": false,
+      "schema_file": null
+    },
+    {
+      "name": "workspace_config",
+      "has_schema": false,
+      "total_count": 1,
+      "real_objects": 1,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "project_work",
+      "has_schema": false,
+      "total_count": 2,
+      "real_objects": 2,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "agent_policies",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "quality_gates",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "github_rules",
+      "has_schema": false,
+      "total_count": 4,
+      "real_objects": 4,
+      "is_active": true,
+      "schema_file": null
+    },
+    {
+      "name": "deployment_policies",
+      "has_schema": false,
+      "total_count": 0,
+      "real_objects": 0,
+      "is_active": false,
+      "schema_file": null
+    },
+    {
+      "name": "testing_policies",
+      "has_schema": false,
+      "total_count": 0,
+      "real_objects": 0,
+      "is_active": false,
+      "schema_file": null
+    },
+    {
+      "name": "validation_rules",
+      "has_schema": false,
+      "total_count": 0,
+      "real_objects": 0,
+      "is_active": false,
+      "schema_file": null
+    }
+  ],
+  "summary": {
+    "total_layers": 40,
+    "active_layers": 36,
+    "total_objects": 1030,
+    "layers_with_schemas": 0
+  }
+}

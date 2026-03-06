@@ -1,0 +1,155 @@
+{
+  "github_rules": [
+    {
+      "id": "37-data-model-main",
+      "created_at": "2026-03-05T20:30:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:30:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "37-data-model-main",
+      "layer": "github_rules",
+      "label": "37-data-model Main Branch Rules",
+      "repository": "eva-foundry",
+      "branch": "main",
+      "branch_protection": {
+        "require_pull_request_reviews": true,
+        "require_code_owner_reviews": true,
+        "required_status_checks": [
+          "validate-model",
+          "semantic-check",
+          "schema-validation"
+        ],
+        "enforced_for_admins": true
+      },
+      "commit_standards": {
+        "require_signed_commits": true,
+        "message_pattern": "^(feat|fix|docs|refactor|test|chore|Session \\d+):",
+        "require_issue_reference": true
+      },
+      "naming_conventions": {
+        "branch_pattern": "^(main|develop|feature/|hotfix/|release/).*",
+        "tag_pattern": "^(v|release-)\\d+\\.\\d+\\.\\d+.*",
+        "reserved_names": [
+          "main",
+          "develop",
+          "stage",
+          "prod"
+        ]
+      }
+    },
+    {
+      "id": "51-ACA-main",
+      "created_at": "2026-03-05T20:31:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:31:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "51-ACA-main",
+      "layer": "github_rules",
+      "label": "51-ACA Main Branch Rules",
+      "repository": "eva-foundry",
+      "branch": "main",
+      "branch_protection": {
+        "require_pull_request_reviews": true,
+        "require_code_owner_reviews": false,
+        "required_status_checks": [
+          "pytest-unit",
+          "pytest-integration",
+          "coverage-80pct"
+        ],
+        "enforced_for_admins": true
+      },
+      "commit_standards": {
+        "require_signed_commits": false,
+        "message_pattern": "^(feat|fix|test|docs|Session \\d+):",
+        "require_issue_reference": true
+      },
+      "naming_conventions": {
+        "branch_pattern": "^(main|develop|feature/|bugfix/|release/).*-ACA",
+        "tag_pattern": "^ACA-release-\\d+\\.\\d+\\.\\d+",
+        "reserved_names": [
+          "main",
+          "develop"
+        ]
+      }
+    },
+    {
+      "id": "07-foundation-main",
+      "created_at": "2026-03-05T20:32:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:32:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "07-foundation-main",
+      "layer": "github_rules",
+      "label": "07-foundation-layer Main Branch Rules",
+      "repository": "eva-foundry",
+      "branch": "main",
+      "branch_protection": {
+        "require_pull_request_reviews": true,
+        "require_code_owner_reviews": true,
+        "required_status_checks": [
+          "governance-audit",
+          "template-validation"
+        ],
+        "enforced_for_admins": true
+      },
+      "commit_standards": {
+        "require_signed_commits": true,
+        "message_pattern": "^(governance|chore|docs|Session \\d+):",
+        "require_issue_reference": false
+      },
+      "naming_conventions": {
+        "branch_pattern": "^(main|governance/|policy/).*",
+        "tag_pattern": "^governance-\\d{4}-\\d{2}-\\d{2}",
+        "reserved_names": [
+          "main",
+          "governance"
+        ]
+      }
+    },
+    {
+      "id": "48-eva-veritas-main",
+      "created_at": "2026-03-05T20:33:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:33:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "48-eva-veritas-main",
+      "layer": "github_rules",
+      "label": "48-eva-veritas Main Branch Rules",
+      "repository": "eva-foundry",
+      "branch": "main",
+      "branch_protection": {
+        "require_pull_request_reviews": true,
+        "require_code_owner_reviews": true,
+        "required_status_checks": [
+          "npm-test",
+          "npm-lint",
+          "coverage-95pct",
+          "security-audit"
+        ],
+        "enforced_for_admins": true
+      },
+      "commit_standards": {
+        "require_signed_commits": true,
+        "message_pattern": "^(feat|fix|test|docs|mti|evidence|Session \\d+):",
+        "require_issue_reference": true
+      },
+      "naming_conventions": {
+        "branch_pattern": "^(main|feature/|fix/|docs/|release/).*",
+        "tag_pattern": "^veritas-\\d+\\.\\d+\\.\\d+",
+        "reserved_names": [
+          "main",
+          "develop",
+          "staging"
+        ]
+      }
+    }
+  ]
+}
