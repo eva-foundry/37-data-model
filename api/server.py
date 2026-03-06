@@ -146,10 +146,11 @@ async def lifespan(app: FastAPI):
                             break
             # normalise id + stamp source_file
             for obj in objects:
-                if "id" not in obj and "key" in obj:
-                    obj["id"] = obj["key"]
-                obj.setdefault("source_file", f"model/{filename}")
-            objects = [o for o in objects if o.get("id")]
+                if isinstance(obj, dict):
+                    if "id" not in obj and "key" in obj:
+                        obj["id"] = obj["key"]
+                    obj.setdefault("source_file", f"model/{filename}")
+            objects = [o for o in objects if isinstance(o, dict) and o.get("id")]
             loaded = await store.bulk_load(layer, objects, "system:autoload")
             total += loaded
         log.info("Auto-seeded %d objects from disk JSON files", total)

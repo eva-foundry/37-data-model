@@ -148,10 +148,11 @@ async def seed(
 
         # Normalise: ensure every object has an 'id' field
         for obj in objects:
-            if "id" not in obj and "key" in obj:
-                obj["id"] = obj["key"]
+            if isinstance(obj, dict):
+                if "id" not in obj and "key" in obj:
+                    obj["id"] = obj["key"]
 
-        objects = [o for o in objects if o.get("id")]
+        objects = [o for o in objects if isinstance(o, dict) and o.get("id")]
         # Stamp source_file on every object so the field is persisted on export
         # and carried forward into every subsequent cold-deploy seed cycle.
         for obj in objects:
