@@ -1,0 +1,324 @@
+{
+  "$schema": "../schema/azure_infrastructure.schema.json",
+  "$metadata": {
+    "layer": "L39",
+    "layer_name": "azure-infrastructure",
+    "description": "Desired infrastructure state - source of truth for IaC deployments",
+    "purpose": "Enable agents to deploy Azure infrastructure with single source of truth",
+    "regions": ["canadacentral", "eastus"],
+    "environments": ["dev", "staging", "prod"],
+    "created_at": "2026-03-06T16:48:00-05:00",
+    "session": "Session 31 - Priority #2 (IaC Integration)"
+  },
+  "environments": {
+    "dev": {
+      "id": "eva-foundry-dev",
+      "subscription_id": "MarcoSub-dev",
+      "region": "canadacentral",
+      "resource_group": "EVA-Sandbox-dev",
+      "tags": {
+        "environment": "development",
+        "cost-center": "R&D",
+        "maintainer": "dev-team"
+      },
+      "description": "Development environment - rapid iteration, lower cost"
+    },
+    "staging": {
+      "id": "eva-foundry-staging",
+      "subscription_id": "MarcoSub-staging",
+      "region": "canadacentral",
+      "resource_group": "EVA-Sandbox-staging",
+      "tags": {
+        "environment": "staging",
+        "cost-center": "QA",
+        "maintainer": "qa-team"
+      },
+      "description": "Staging environment - pre-production validation"
+    },
+    "prod": {
+      "id": "eva-foundry-prod",
+      "subscription_id": "MarcoSub",
+      "region": "canadacentral",
+      "resource_group": "EVA-Sandbox-prod",
+      "tags": {
+        "environment": "production",
+        "cost-center": "Operations",
+        "maintainer": "platform-team"
+      },
+      "description": "Production environment - high availability, monitoring"
+    }
+  },
+  "resources": {
+    "data-model-aca": {
+      "type": "Microsoft.App/containerApps",
+      "name_pattern": "msub-eva-data-model-{env}",
+      "description": "EVA Data Model API - Container App",
+      "resource_config": {
+        "image": "ghcr.io/eva-foundry/37-data-model:latest",
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "dev": {
+          "minReplicas": 1,
+          "maxReplicas": 2,
+          "cpu": "0.25",
+          "memory": "0.5Gi"
+        },
+        "staging": {
+          "minReplicas": 2,
+          "maxReplicas": 3,
+          "cpu": "0.5",
+          "memory": "1Gi"
+        },
+        "prod": {
+          "minReplicas": 3,
+          "maxReplicas": 10,
+          "cpu": "1.0",
+          "memory": "2Gi"
+        }
+      },
+      "ingress": {
+        "enabled": true,
+        "targetPort": 8000,
+        "transport": "tcp",
+        "external": true
+      },
+      "environment_variables": [
+        {
+          "name": "DOTNET_ENVIRONMENT",
+          "value_by_env": {
+            "dev": "Development",
+            "staging": "Staging",
+            "prod": "Production"
+          }
+        },
+        {
+          "name": "LOG_LEVEL",
+          "value_by_env": {
+            "dev": "Debug",
+            "staging": "Information",
+            "prod": "Warning"
+          }
+        }
+      ],
+      "secrets_from_keyvault": [
+        "COSMOS_CONNECTION_STRING",
+        "OPENAI_API_KEY",
+        "AZURE_SEARCH_KEY"
+      ],
+      "health_probe": {
+        "path": "/health",
+        "protocol": "http",
+        "initialDelaySeconds": 10,
+        "periodSeconds": 30,
+        "timeoutSeconds": 5
+      }
+    },
+    "cosmos-db": {
+      "type": "Microsoft.DocumentDB/databaseAccounts",
+      "name_pattern": "eva-cosmos-{env}",
+      "description": "Cosmos DB NoSQL - Data storage",
+      "resource_config": {
+        "kind": "GlobalDocumentDB",
+        "dev": {
+          "throughput": 400,
+          "autoscale_max": 1000,
+          "backup_type": "periodic",
+          "retention_hours": 24
+        },
+        "staging": {
+          "throughput": 1000,
+          "autoscale_max": 5000,
+          "backup_type": "continuous",
+          "retention_hours": 72
+        },
+        "prod": {
+          "throughput": 40000,
+          "autoscale_max": 100000,
+          "backup_type": "continuous",
+          "retention_hours": 2160,
+          "multi_region_enabled": true
+        }
+      },
+      "containers": [
+        {
+          "name": "evidence",
+          "partition_key": "/correlation_id",
+          "ttl": -1
+        },
+        {
+          "name": "projects",
+          "partition_key": "/project_id",
+          "ttl": -1
+        }
+      ]
+    },
+    "keyvault": {
+      "type": "Microsoft.KeyVault/vaults",
+      "name_pattern": "eva-kv-{env}",
+      "description": "Key Vault - Secrets and certificates",
+      "resource_config": {
+        "sku": "standard",
+        "enabled_for_deployment": true,
+        "enabled_for_disk_encryption": false,
+        "enabled_for_template_deployment": true,
+        "purge_protection_enabled": true,
+        "dev": {
+          "purge_protection_enabled": false
+        },
+        "prod": {
+          "purge_protection_enabled": true
+        }
+      },
+      "access_policies": [
+        {
+          "principal_type": "ServicePrincipal",
+          "permissions": ["Get", "List"]
+        }
+      ]
+    },
+    "app-insights": {
+      "type": "Microsoft.Insights/components",
+      "name_pattern": "eva-insights-{env}",
+      "description": "Application Insights - Monitoring and observability",
+      "resource_config": {
+        "application_type": "web",
+        "retention_in_days": 90,
+        "dev": {
+          "retention_in_days": 30,
+          "sampling_enabled": true,
+          "sampling_rate": 100
+        },
+        "staging": {
+          "retention_in_days": 60,
+          "sampling_enabled": true,
+          "sampling_rate": 50
+        },
+        "prod": {
+          "retention_in_days": 90,
+          "sampling_enabled": true,
+          "sampling_rate": 10
+        }
+      }
+    }
+  },
+  "quotas": {
+    "dev": {
+      "max_container_app_replicas": 5,
+      "max_cosmos_throughput": 5000,
+      "max_storage_gb": 100,
+      "max_monthly_cost_usd": 500
+    },
+    "staging": {
+      "max_container_app_replicas": 10,
+      "max_cosmos_throughput": 50000,
+      "max_storage_gb": 500,
+      "max_monthly_cost_usd": 3000
+    },
+    "prod": {
+      "max_container_app_replicas": 100,
+      "max_cosmos_throughput": 500000,
+      "max_storage_gb": 5000,
+      "max_monthly_cost_usd": 50000
+    }
+  },
+  "deployment_gates": {
+    "pre_flight_checks": [
+      {
+        "check": "azure_cli_installed",
+        "command": "az --version",
+        "required": true
+      },
+      {
+        "check": "authenticated_subscription",
+        "command": "az account show",
+        "required": true
+      },
+      {
+        "check": "resource_group_exists",
+        "command": "az group exists -n {resource_group}",
+        "required": true
+      },
+      {
+        "check": "no_secrets_in_config",
+        "pattern": "(password|secret|key|token)",
+        "required": true
+      }
+    ],
+    "post_deployment_checks": [
+      {
+        "check": "health_endpoint",
+        "url": "https://{app_name}.canadacentral.azurecontainerapps.io/health",
+        "expected_status": 200
+      },
+      {
+        "check": "application_insights_data",
+        "timeout_seconds": 60,
+        "metric": "requests_per_minute"
+      },
+      {
+        "check": "error_rate",
+        "threshold_percent": 5,
+        "window_minutes": 5
+      }
+    ]
+  },
+  "rollback_policies": {
+    "auto_rollback_conditions": [
+      "health_check_fail_5min",
+      "error_rate_exceeds_5percent",
+      "response_time_exceeds_2000ms",
+      "crashes_detected"
+    ],
+    "rollback_procedure": "Restore previous container image, verify health, promote traffic back"
+  },
+  "deployment_sequence": [
+    {
+      "step": 1,
+      "name": "Pre-flight validation",
+      "duration_minutes": 2,
+      "required": true
+    },
+    {
+      "step": 2,
+      "name": "Generate Bicep IaC",
+      "duration_minutes": 1,
+      "required": true
+    },
+    {
+      "step": 3,
+      "name": "Show deployment diff",
+      "duration_minutes": 2,
+      "required": true
+    },
+    {
+      "step": 4,
+      "name": "Request approval (if prod)",
+      "duration_minutes": 5,
+      "required_for_env": ["prod"]
+    },
+    {
+      "step": 5,
+      "name": "Execute Bicep deployment",
+      "duration_minutes": 10,
+      "required": true
+    },
+    {
+      "step": 6,
+      "name": "Post-deployment validation",
+      "duration_minutes": 5,
+      "required": true
+    },
+    {
+      "step": 7,
+      "name": "Record in L40 (deployment-records)",
+      "duration_minutes": 1,
+      "required": true
+    },
+    {
+      "step": 8,
+      "name": "Update L41 (infrastructure-drift)",
+      "duration_minutes": 1,
+      "required": true
+    }
+  ]
+}

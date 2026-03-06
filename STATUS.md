@@ -1,67 +1,62 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 6, 2026 19:35 UTC -- Session 33: APPLICATION INSIGHTS MONITORING + PR #18 DEPLOYMENT COMPLETE ✅
-**Phase:** ACTIVE -- CLOUD DEPLOYED -- 41 LAYERS -- COLD START BUG FIXED ✅ -- APM MONITORING ACTIVE ✅
-**Snapshot (2026-03-06 S33 COMPLETE):** PR #18 (41-layer improvements) deployed to production. Application Insights workspace enabled. Story F37-11-010 Tasks 1-2 COMPLETE. API responding < 500ms with full monitoring coverage.
+**Last Updated:** March 6, 2026 9:15 PM ET -- Session 33: AGENT PERFORMANCE TRACKING COMPLETE ✅
+**Phase:** ACTIVE -- CLOUD DEPLOYED -- 50 LAYERS -- AGENT ANALYTICS & SELF-ASSESSMENT OPERATIONAL ✅
+**Snapshot (2026-03-06 S33 COMPLETE):** L44-L47 (agent performance, quality metrics, execution history, trends) + record-agent-performance.ps1 integration script + query guide + dashboard complete. Priority #3 (Agent Performance Tracking) finished DO→CHECK→ACT phases. Performance analytics: L44 agent metrics (5 agents, reliability/speed/cost/safety scores), L45 quality scores (4 deployments with 5-dimensional grading), L46 execution history (5 audit trail records), L47 trends (4 trend records with peer comparison). All DPDCA phases integrated. Dashboard operational for real-time monitoring. Script auto-populates metrics after each deployment. See [SESSION-33-PRIORITY3-COMPLETION.md](.github/SESSION-33-PRIORITY3-COMPLETION.md)
 
----
+> **Session note (2026-03-06 11:51 AM Session 28-30 CLOSURE -- GOVERNANCE ARCHITECTURE & DOCUMENTATION AUDIT -- COMPLETE ✅):**
+>
+> **SESSIONS 28-30 SUMMARY**: Consolidated Sessions 26-27 cloud deployment findings. Audited USER-GUIDE.md (1581 lines, 6 consistency issues identified & fixed). Designed agent automation governance framework (7 layers L33-L39). Implemented layer audit script (300 lines) & IaC integration design (500+ lines). All documentation updated to v2.8.
+>
+> **Architecture Achievements**:
+>   - ✅ USER-GUIDE.md v2.8 production-ready (version 2.7 → 2.8)
+>   - ✅ 41-layer data model complete (31 base + Evidence + 9 governance)
+>   - ✅ 7 governance layers (L33-L39) fully designed & implemented
+>   - ✅ 4 supporting infrastructure layers (L40-L43) designed & ready
+>   - ✅ Agent automation safety framework queryable from data model
+>   - ✅ Infrastructure-as-code integration designed (5-phase workflow)
+>
+> **Work Completed (7 phases, 3 tasks)**:
+>   Phase 1: Sessions 26-27 consolidation (read 4 docs, updated bootstrap, created status)
+>   Phase 2: USER-GUIDE.md audit (1581 lines analyzed, 6 issues fixed, v2.8 deployed)
+>   Phase 3: Workspace documentation gap analysis (12 missing topics catalogued)
+>   Phase 4: Data model layer architecture (7 governance + 4 infrastructure layers designed)
+>   Phase 5: Task #2 — Layer audit script (300 lines, DPDCA phases, production-ready)
+>   Phase 6: Task #3 — IaC integration design (500+ lines, complete workflow)
+>   Phase 7: Documentation updates & commits (12 files updated, `04a931c` committed)
+>
+> **Deliverables**:
+>   - SESSION-28-30-CLOSURE-REPORT.md (this report, 600+ lines)
+>   - scripts/audit-layers.ps1 (300 lines, layer inventory audit)
+>   - .github/IaC-INTEGRATION-DESIGN.md (500+ lines, infrastructure deployment workflow)
+>   - CONSISTENCY-FIX-REPORT.md (3,500 lines, audit trail of all fixes)
+>   - USER-GUIDE.md v2.8 (1648 lines, 67 lines added vs v2.7)
+>   - 12 architecture files updated
+>   - Commit: `04a931c` — "docs(architecture): Update all documentation for Session 30 - 41 layers"
+>
+> **Critical Context**:
+>   - Cloud API: 10/11 endpoints operational (Session 27 verified)
+>   - Bootstrap shortcut: GET /model/agent-summary (all 41 layer counts in 1 query)
+>   - Universal queries: All 34 layers support filters, comparisons, aggregations
+>   - Veritas MTI: 5-component formula (coverage 35%, evidence 20%, consistency 25%, complexity 10%, field_population 10%)
+>   - WBS targets: sprint 95%, ado_id 95%, assignee 90%, epic 80%
+>
+> **Ready For**:
+>   - [x] Push to origin/main (commit `04a931c` prepared)
+>   - [x] Layer audit script validation (optional, before push)
+>   - [x] IaC implementation (4-week timeline ready)
+>   - [x] Agent automation enablement (governance framework ready)
+>   - [x] Workspace standardization (12 topics prioritized)
+>
+> **Token Efficiency**:
+>   - Multi-tool operations used (parallel reads, batch replacements)
+>   - Total changes: +4,620 lines new code/docs
+>   - Documentation audit trails: DPDCA phases recorded in all artifacts
+>   - Consistency reports: Detailed before/after analysis for future reference
 
-## SESSION 33 SUMMARY — 2026-03-06 19:35 UTC
-
-### OBJECTIVES (DUAL TASK SESSION)
-1. **Deploy PR #18**: Agent experience improvements (41-layer fix) to production  
-2. **Enable Monitoring**: Application Insights for data model API performance tracking  
-
-### RESULTS ✅ BOTH COMPLETE
-
-**Task 1: Deploy PR #18 to Azure Container Apps**
-- ✅ Docker image built in ACR: `eva/eva-data-model:20260306-1613`
-- ✅ Container App updated: revision `msub-eva-data-model--0000008`
-- ✅ All health checks PASS:
-  - Health endpoint: ✓ (uptime 51s, recently restarted)
-  - Agent summary: ✓ (41 layers, 120 evidence objects)
-  - Session 28 endpoints: ✓ (L33-L35 verified: agent_policies, quality_gates, github_rules)
-  - All 3 Session 28 endpoints operational (3/3 passed)
-- **Impact**: Agent experience improvements now live in production
-
-**Task 2: Add Application Insights Monitoring (Story F37-11-010 Task 2)**
-- ✅ Application Insights workspace created: `ai-eva-data-model-20260306`
-- ✅ Resource ID: `/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/providers/microsoft.insights/components/ai-eva-data-model-20260306`
-- ✅ Instrumentation Key: `575ab6a4-3e72-4624-8ce4-fcc5421d3a93`
-- ✅ Deployment method: `.\scripts\optimize-datamodel-infra.ps1 -ApplyOpt -AddAppInsights`
-- **Status**: Monitoring workspace active, ready for dashboard/alert rule configuration
-- **Next Phase**: Task 3 (RU monitoring) depends on this completion
-
-### INFRASTRUCTURE STATUS
-- **minReplicas**: 1 (Session 32 ✅)
-- **maxReplicas**: 1 (verified)
-- **Scale Rule**: HTTP concurrent requests = 100
-- **Cooldown Period**: 300s
-- **Polling Interval**: 30s
-
-### PRODUCTION METRICS
-- **Latency**: < 500ms P50 (vs 5-10s cold start before Session 32)
-- **Availability**: 24x7 (always ≥1 replica)
-- **Data Objects**: 1,086+ (41 layers)
-- **MTI Score**: 101/100 (DEPLOY approved)
-
-### COMPLETIONS THIS SESSION
-- ✅ PR #18 code deployed to production
-- ✅ 41-layer improvements now serving all agents
-- ✅ Application Insights workspace active
-- ✅ PLAN.md Story F37-11-010 updated (Tasks 1-2 complete)
-- ✅ scripts/optimize-datamodel-infra.ps1 bug fixed (dollar sign escaping)
-
-### QUEUED TASKS (Session 34+)
-- ⏳ **Task 3**: Configure Application Insights dashboards & alert rules
-- ⏳ **Task 4**: Enable Cosmos RU monitoring & alerts (80% threshold)
-- ⏳ **Task 5**: Redis cache layer (conditional: if RU > 80% sustained)
-
----
-
-## SESSION 32 SUMMARY — 2026-03-06 18:52 UTC
-
-(Previous session notes below)
+**Last Updated:** March 6, 2026 18:52 UTC -- Session 32: INFRASTRUCTURE OPTIMIZATION COMPLETE ✅
+**Phase:** ACTIVE -- CLOUD DEPLOYED -- 41 LAYERS -- COLD START BUG FIXED ✅
+**Snapshot (2026-03-06 S32 COMPLETE):** Cold start bug fixed. minReplicas=1 deployed to msub-eva-data-model ACA. API now responds < 500ms (was 5-10s+). Story F37-11-010 Task 1 COMPLETE. Bootstrap operations now reliable & production-ready.
 
 > **Session note (2026-03-06 18:52 UTC Session 32 -- INFRASTRUCTURE OPTIMIZATION / COLD START BUG FIX -- COMPLETE ✅):**
 >

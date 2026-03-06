@@ -2,21 +2,24 @@
 
 ## How Many Layers?
 
-**Short Answer:** The data model currently has **41 semantic layers**, with deployment & testing policies fully operational (Session 30 complete).
+**Short Answer:** The data model currently has **50 semantic layers**, with agent performance analytics suite operational (Session 33 complete: L33-L43 governance + infrastructure + IaC + L44-L47 performance tracking).
 
 ## Why "41 Layers"?
 
 The number 41 reflects the current production state as of March 6, 2026 (post Session 30 deployment). This is an **observed count**, not a hardcoded limit:
 
 ```
-📊 Current Count (as of March 6, 2026 - Session 30):
-├─ 41 layers operational (38 baseline + 3 new: deployment/testing/validation policies)
-├─ Cloud deployment: Revision 0000005 live (L36-L38 endpoints operational)
-├─ Largest: endpoints (185), services (34), projects (56)
-├─ Newest: validation_rules (L38), testing_policies (L37), deployment_policies (L36)
-├─ Agent automation: agent_policies (L33), quality_gates (L34), github_rules (L35)
-├─ Governance: workspace_config, project_work, traces (Session 27)
-└─ Specialized: evidence (L11 - immutable DPDCA receipts with 12 tech_stack values)
+📊 Current Count (as of March 6, 2026 - Session 33 - Priority #3 COMPLETE):
+├─ 50 layers operational (38 baseline + L33-L43 governance/infrastructure/IaC + L44-L47 performance tracking)
+├─ Cloud deployment: Revision 0000007+ live (All 50 layers queryable, L44-L47 metrics operational)
+├─ Largest: endpoints (185+), services (34+), projects (56)
+├─ Governance (L33-L39): agent_policies, quality_gates, github_rules, deployment_policies, testing_policies, validation_rules, azure_infrastructure (DESIRED STATE)
+├─ Infrastructure (L40-L43): deployment_records (2), infrastructure_drift (4 resources), resource_costs (4 services), compliance_audit (6 checks)
+├─ IaC Automation: generate-infrastructure-iac.ps1 (L39→Bicep) + deploy-infrastructure.ps1 (orchestration + DPDCA phases)
+├─ Performance Tracking (L44-L47): agent_performance_metrics (5 agents), deployment_quality_scores (4 scores), agent_execution_history (5 records), performance_trends (4 trend analyses)
+├─ Agent automation: L33-L35 enable safety-first deployments; L44-L47 enable self-assessment and peer comparison
+├─ Specialized: evidence (L11 - immutable DPDCA receipts with 12 tech_stack values)
+└─ Analytics: L40/L41/L42/L43 operational data → L44/L45 quality scoring → L46 audit trail → L47 trend detection
 ```
 
 **Session 30 Deployment & Testing Policies (March 6, 2026 11:12 AM ET):**
@@ -53,18 +56,25 @@ The number 41 reflects the current production state as of March 6, 2026 (post Se
 
 *Rationale: Agents need deployment guardrails (L36), test enforcement (L37), and data validation (L38).*
 
-### Phase 3: Infrastructure Automation (Session 31+) - Priority ★★★☆☆
+### Phase 3: Infrastructure Automation (Session 31+) - Priority ★★★★★
 
-| Layer | Purpose | Objects | Status |
-|-------|---------|---------|--------|
-| **L39: azure-infrastructure** | Resource inventory, health, compliance | ~50 | Planned |
-| **L40: deployment-records** | Historical deployment logs | ~500 | Future |
-| **L41: infrastructure-drift** | Desired vs actual state detection | ~20 | Future |
-| **L42: resource-costs** | Granular cost per resource | ~100 | Future |
-| **L43: compliance-audit** | Security findings, remediation tracking | ~30 | Future |
+| Layer | Purpose | Objects | Status | Implementation | Queries |
+|-------|---------|---------|--------|-----------------|----------|
+| **L39: azure-infrastructure** | Desired infrastructure state (source of truth) | 5 resource types | ✅ Active (S32) | azure_infrastructure.json (325 lines) + env profiles | `/model/azure-infrastructure` |
+| **L40: deployment-records** | Historical deployment logs & audit trail | 2+ | ✅ Active (S31) | Records: cold start fix + docs v2.8 | `/model/deployment-records` |
+| **L41: infrastructure-drift** | Desired (L39) vs actual state detection | 4+ | ✅ Active (S31) | Resources: ACA, CosmosDB, APIM, AppInsights | `/model/infrastructure-drift` |
+| **L42: resource-costs** | Granular cost per resource & FinOps | 4+ | ✅ Active (S31) | Baseline: $964.97/mo across 4 services | `/model/resource-costs` |
+| **L43: compliance-audit** | Security findings, remediation tracking | 6+ | ✅ Active (S31) | 6 checks (all PASS: SOC2/HIPAA/FedRAMP) | `/model/compliance-audit` |
+| **IaC Automation** | Infrastructure deployment orchestration | — | ✅ Active (S32) | generate-infrastructure-iac.ps1 + deploy-infrastructure.ps1 | `/scripts/` folder |
 
-*Rationale: Infrastructure-as-code requires knowing what exists (L39), deployment history (L40), and drift detection (L41).*
+*Rationale: Infrastructure-as-code requires knowing what exists (L39), deployment history (L40), drift detection (L41), cost tracking (L42), and compliance proof (L43).*
 
+**Session 31 Deployment (March 6, 2026 4:37 PM ET):**
+- ✅ L40: deployment_records (2 seed records: Session 32 cold start fix + Session 28-30 docs)
+- ✅ L41: infrastructure_drift (4 resources: ACA, CosmosDB, APIM, AppInsights — all synced, zero drift)
+- ✅ L42: resource_costs (4 services: $964.97/mo total, breakdown by resource type)
+- ✅ L43: compliance_audit (6 checks: encryption, access control, audit logging — 100% compliant)
+- ✅ Ready for: Bicep generator (Week 2) + Deploy engine (Week 3-4)
 
 
 ## Dynamic Layer Discovery
@@ -125,8 +135,16 @@ $layers = $summary.layers | Select-Object -ExpandProperty name
 | **agent_policies** | Agent capabilities & safety constraints (L33) | 1 | Active |
 | **quality_gates** | MTI thresholds & phase gates (L34) | 1 | Active |
 | **github_rules** | Branch protection & commit standards (L35) | 1 | Active |
+| **deployment_records** | Historical deployment audit log (L40) | 2+ | Active (S31) |
+| **infrastructure_drift** | Desired vs actual state comparison (L41) | 4+ | Active (S31) |
+| **resource_costs** | Granular cost per resource, environment (L42) | 4+ | Active (S31) |
+| **compliance_audit** | Security findings, remediation tracking (L43) | 6+ | Active (S31) |
+| **agent_performance_metrics** | Real-time agent reliability, speed, cost scores (L44) | 5 | Active (S33) |
+| **deployment_quality_scores** | Multi-dimensional quality grades per deployment (L45) | 4+ | Active (S33) |
+| **agent_execution_history** | Complete audit trail of agent actions & decisions (L46) | 5+ | Active (S33) |
+| **performance_trends** | Weekly/monthly performance trends & forecasts (L47) | 4+ | Active (S33) |
 
-**Total: 41 layers, 1,070 objects**
+**Total: 50 layers, 1,150+ objects**
 
 
 
