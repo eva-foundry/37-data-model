@@ -75,7 +75,7 @@ Agents can now discover schema structure WITHOUT reading .schema.json files.
 KEY ENDPOINTS:
 
   GET /model/layers
-    Returns: List all 34 layers with descriptions, example counts
+    Returns: List all 41 layers with descriptions, example counts
     Use case: "What data is available in this data model?"
     Response: [
       {
@@ -90,17 +90,16 @@ KEY ENDPOINTS:
   GET /model/{layer}/fields
     Returns: Field names, types, descriptions, required status
     Use case: "What fields can I query on evidence layer?"
-    Response: {
-      "id": {"type": "string", "required": true},
-      "tech_stack": {"type": "enum", "values": ["python", "react", ...]},
-      "phase": {"type": "enum", "values": ["D1", "D2", "P", "D3", "A"]},
-      ...
-    }
+    Status: KNOWN ISSUE - Returns 404 "Schema not found" for most layers
+    Workaround: Use /example endpoint instead (see below)
 
-  GET /model/{layer}/example
+  GET /model/{layer}/example (RECOMMENDED for schema discovery)
     Returns: First real object from layer (NOT synthetic example)
     Use case: "Show me a real evidence record structure"
-    Response: {...actual evidence object from production...}
+    Response: {
+      "data": {...actual evidence object from production...}
+    }
+    Note: Access .data property to get the object
 
   GET /model/{layer}/count
     Returns: Total object count for layer
@@ -112,17 +111,21 @@ KEY ENDPOINTS:
     Use case: "Validate my data against official schema"
     Status: WIP (known 404 issue, non-blocking)
 
-AGENT DISCOVERY FLOW:
+AGENT DISCOVERY FLOW (RECOMMENDED):
   1. GET /model/layers                    -> "What's available?"
-  2. GET /model/evidence/fields           -> "What fields exist?"
-  3. GET /model/evidence/example          -> "Show me real data"
+  2. GET /model/evidence/example          -> "Show me real data + discover schema"
+     Access: (Invoke-RestMethod "$base/model/evidence/example").data
+  3. Inspect $example.PSObject.Properties -> "List all fields"
   4. GET /model/evidence/?limit=5         -> "Give me 5 records"
+     Access: (Invoke-RestMethod "$base/model/evidence/?limit=5").data
+
+  NOTE: /fields endpoint currently returns 404, use /example for schema discovery
 
 --------------------------------------------------------------------------------
  UNIVERSAL QUERY OPERATORS (SESSION 26)
 --------------------------------------------------------------------------------
 
-All 34 layers support standardized query parameters. No per-layer API learning.
+All 41 layers support standardized query parameters. No per-layer API learning.
 
 PAGINATION (terminal-safe):
   ?limit=N                              Return max N records (DEFAULT: use in terminal!)
