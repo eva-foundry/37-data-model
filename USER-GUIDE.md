@@ -70,27 +70,58 @@ The API returns a JSON object with these sections:
 
 **3 working examples to get productive in 60 seconds:**
 
+### Response Structure (IMPORTANT!)
+
+All layer endpoints return data wrapped in a standard structure:
+
+```json
+{
+  "data": [...],        // Your actual data array
+  "metadata": {         // Query information
+    "total": 56,
+    "limit": null,
+    "offset": 0,
+    "_query_warnings": []
+  }
+}
+```
+
+**Always access the `.data` property:**
+
+```powershell
+# ✅ Correct - access .data property
+$projects = (Invoke-RestMethod "$base/model/projects/").data
+
+# ❌ Wrong - missing .data (shows empty table)
+$projects = Invoke-RestMethod "$base/model/projects/"
+```
+
+---
+
 ### Example 1: Get Endpoints for a Service
 ```powershell
 $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
-$endpoints = Invoke-RestMethod "$base/model/endpoints/?service=eva-brain-api&limit=10"
+$endpoints = (Invoke-RestMethod "$base/model/endpoints/?service=eva-brain-api&limit=10").data
 $endpoints | Select-Object id, method, path, status | Format-Table
 ```
 
 ### Example 2: Count Projects by Maturity
 ```powershell
 $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
-$projects = Invoke-RestMethod "$base/model/projects/"
+$projects = (Invoke-RestMethod "$base/model/projects/").data
 $projects | Group-Object maturity | Select-Object Name, Count | Format-Table
 ```
 
 ### Example 3: Discover Layer Schema
 ```powershell
 $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
-$fields = Invoke-RestMethod "$base/model/projects/fields"
-Write-Host "Available fields: $($fields -join ', ')"
-$example = Invoke-RestMethod "$base/model/projects/example"
+# Get an example object to see all available fields
+$example = (Invoke-RestMethod "$base/model/projects/example").data
 $example | Format-List
+
+# Count total objects in this layer
+$all = (Invoke-RestMethod "$base/model/projects/").data
+Write-Host "Total projects: $($all.Count)"
 ```
 
 ---
