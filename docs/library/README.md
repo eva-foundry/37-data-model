@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-03-05 8:00 PM ET -- 12 files; 34 layers; 4,952+ objects; Agent Experience LIVE
+ Updated: 2026-03-06 11:12 AM ET -- 12 files; 41 layers; Session 30 COMPLETE
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -127,31 +127,19 @@ No Mermaid. No emoji. ASCII only. Printable.
   Authors: Luukas Ilves, Manuel Kilian + 20 global digital gov leaders
   URL: https://edrm.net/2025/10/the-agentic-state-a-global-framework-for-
        secure-and-accountable-ai-powered-government/
-4 (L0-L34 -- Governance Plane L33-L34 added Mar 5, 2026)
-  Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
-  Entity types: endpoints, screens, services, containers, agents, evidence, traces,
-                workspace_config, project_work, wbs
-  PASS 0 violations across all entities
-  Projects: 59 (enhanced with governance{} + acceptance_criteria[])
-  WBS nodes: 869 (1 program, 4 streams, 56 projects, 808 deliverables)
-  Evidence: 62 receipts (polymorphic with 6 tech stacks)
-  458 literals   36 services   10 personas
-  15 feature flags   12 governance domains   6 MTI subscores
-  9-step decision engine   2 audit log lanes   7 authority planes
-  4,952
-  Layers: 33 (L0-L34 -- Governance Plane L33-L34 added Mar 5, 2026)
+  Layers: 41 (L0-L38 -- Agent Automation L33-L38 added Mar 5-6, 2026)
   Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
   Entity types: endpoints, screens, services, containers, agents, evidence, traces,
                 workspace_config, project_work
   PASS 0 violations across all entities
-  Projects: 59 (enhanced with governance{} + acceptance_criteria[])
+  Projects: 56 (enhanced with governance{} + acceptance_criteria[])
   458 literals   36 services   10 personas
   15 feature flags   12 governance domains   6 MTI subscores
   9-step decision engine   2 audit log lanes   7 authority planes
-  4,339+ total objects   27 edge types (20 existing + 7 new CI/CD)
   FK Enhancement: Opus 4.6 CONDITIONAL GO, 403h/12 sprints, Phase 0 Mar 2026
   Evidence Layer: LIVE (L31 + L32 = Observability Plane)
   Governance Plane: LIVE (L33 workspace_config + L34 project_work = Data-Model-First)
+  Agent Automation: LIVE (L36-L38 = Deployment, Testing, Validation Policies)
   doc-generator: planned -- auto-generate docs from entity catalog -> Azure Blob
 
 --------------------------------------------------------------------------------

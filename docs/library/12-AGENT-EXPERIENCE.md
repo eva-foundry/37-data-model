@@ -1,8 +1,8 @@
 ================================================================================
  EVA DATA MODEL -- AGENT EXPERIENCE ENHANCEMENTS
  File: docs/library/12-AGENT-EXPERIENCE.md
- Updated: 2026-03-05 8:00 PM ET
- Status: LIVE -- Session 26 deployed to production
+ Updated: 2026-03-06 11:12 AM ET
+ Status: LIVE -- Session 26+30 deployed to production (41 layers)
 ================================================================================
 
 This document explains the self-documenting, self-discovery capabilities added
@@ -40,7 +40,7 @@ SECTION 1: discovery_journey
 
 SECTION 2: query_capabilities
   Purpose: Universal query operator documentation
-  Content: Filter, pagination, aggregation patterns for all 34 layers
+  Content: Filter, pagination, aggregation patterns for all 41 layers
   Value: Agents learn advanced queries without trial-and-error
 
 SECTION 3: terminal_safety
@@ -75,7 +75,7 @@ Agents can now discover schema structure WITHOUT reading .schema.json files.
 KEY ENDPOINTS:
 
   GET /model/layers
-    Returns: List all 34 layers with descriptions, example counts
+    Returns: List all 41 layers with descriptions, example counts
     Use case: "What data is available in this data model?"
     Response: [
       {
@@ -90,17 +90,14 @@ KEY ENDPOINTS:
   GET /model/{layer}/fields
     Returns: Field names, types, descriptions, required status
     Use case: "What fields can I query on evidence layer?"
-    Response: {
-      "id": {"type": "string", "required": true},
-      "tech_stack": {"type": "enum", "values": ["python", "react", ...]},
-      "phase": {"type": "enum", "values": ["D1", "D2", "P", "D3", "A"]},
-      ...
-    }
+    Status: KNOWN ISSUE - Returns 404 "Schema not found" for most layers
+    Workaround: Use /example endpoint instead (see below)
 
-  GET /model/{layer}/example
+  GET /model/{layer}/example (RECOMMENDED for schema discovery)
     Returns: First real object from layer (NOT synthetic example)
     Use case: "Show me a real evidence record structure"
-    Response: {...actual evidence object from production...}
+    Response: {...actual evidence object...}  (direct object, NO wrapper)
+    Note: Unlike list endpoints, /example returns object directly (no .data)
 
   GET /model/{layer}/count
     Returns: Total object count for layer
@@ -112,17 +109,22 @@ KEY ENDPOINTS:
     Use case: "Validate my data against official schema"
     Status: WIP (known 404 issue, non-blocking)
 
-AGENT DISCOVERY FLOW:
+AGENT DISCOVERY FLOW (RECOMMENDED):
   1. GET /model/layers                    -> "What's available?"
-  2. GET /model/evidence/fields           -> "What fields exist?"
-  3. GET /model/evidence/example          -> "Show me real data"
+  2. GET /model/evidence/example          -> "Show me real data + discover schema"
+     Access: Invoke-RestMethod "$base/model/evidence/example"  (NO .data wrapper)
+  3. Inspect $example.PSObject.Properties -> "List all fields"
   4. GET /model/evidence/?limit=5         -> "Give me 5 records"
+     Access: (Invoke-RestMethod "$base/model/evidence/?limit=5").data
+
+  NOTE: /fields endpoint currently returns 404, use /example for schema discovery
+  NOTE: /example returns direct object (no wrapper), but list endpoints use .data wrapper
 
 --------------------------------------------------------------------------------
  UNIVERSAL QUERY OPERATORS (SESSION 26)
 --------------------------------------------------------------------------------
 
-All 34 layers support standardized query parameters. No per-layer API learning.
+All 41 layers support standardized query parameters. No per-layer API learning.
 
 PAGINATION (terminal-safe):
   ?limit=N                              Return max N records (DEFAULT: use in terminal!)

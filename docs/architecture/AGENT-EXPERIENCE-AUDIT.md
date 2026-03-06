@@ -53,7 +53,7 @@ GET /model/agent-summary
 # Returns: {total: 895, by_layer: {...}, layers: [...]}
 ```
 
-**Agent feedback:** "One call shows me all 34 layers. Efficient."
+**Agent feedback:** "One call shows me all 41 layers. Efficient."
 
 ### 4. Endpoints Support Filtering
 ```powershell

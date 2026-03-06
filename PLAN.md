@@ -28,7 +28,7 @@ For complete layer catalog, see docs/library/03-DATA-MODEL-REFERENCE.md.
 - **Portfolio Queries**: GET /model/projects/ returns all 59 projects in one call (vs 236 file reads)
 - **Files as Exports**: README/STATUS become snapshots generated from data model
 
-## Feature: Data-Model-First Architecture [ID=F37-11] [NEW - 2026-03-05]
+## Feature: Data-Model-First Architecture [ID=F37-11] [DONE - 2026-03-05]
 
 ### Story: Layer 33 - workspace_config Schema & API [ID=F37-11-001] [DONE]
 Completed 2026-03-05. schema/workspace_config.schema.json created (130 lines).
@@ -98,6 +98,77 @@ Verify: GET /model/projects/ returns all 59 projects with governance fields.
 2. Add Application Insights (P50/P95/P99 latency, dependency health, alerting)
 3. [Optional] Add Redis cache layer when Cosmos RU costs justify (80-95% RU reduction)
 4. Monitor Cosmos RU consumption, add alerts when approaching provisioned limit
+
+---
+
+## Feature: Agent Automation Policies (L36-L38) [ID=F37-12] [DONE - 2026-03-06]
+
+Implement deployment, testing, and validation policy layers to support rule-based CI/CD automation and quality gates.
+
+### Story: Layer 36 - deployment_policies Schema & API [ID=F37-12-001] [DONE]
+Completed 2026-03-06. schema/deployment_policies.schema.json created.
+Fields: id, project_id, container_app_config{}, resource_limits{}, health_probes{}, scaling_policies{}.
+Router registered in layers.py + server.py. _LAYER_FILES updated in admin.py.
+Model file: model/deployment_policies.json (4 objects: 51-ACA, 37-data-model, 07-foundation, 48-eva-veritas).
+[PASS] Schema valid JSON. [PASS] Router registered. [PASS] 4 policies created.
+
+### Story: Layer 37 - testing_policies Schema & API [ID=F37-12-002] [DONE]
+Completed 2026-03-06. schema/testing_policies.schema.json created.
+Fields: id, project_id, coverage_thresholds{}, ci_workflows{}, test_strategies{}.
+Router registered in layers.py + server.py. _LAYER_FILES updated in admin.py.
+Model file: model/testing_policies.json (4 objects with varying coverage thresholds 80-95%).
+[PASS] Schema valid JSON. [PASS] Router registered. [PASS] 4 policies created.
+
+### Story: Layer 38 - validation_rules Schema & API [ID=F37-12-003] [DONE]
+Completed 2026-03-06. schema/validation_rules.schema.json created.
+Fields: id, project_id, schema_enforcement{}, compliance_gates{}, data_integrity{}.
+Router registered in layers.py + server.py. _LAYER_FILES updated in admin.py.
+Model file: model/validation_rules.json (4 objects with project-specific validation rules).
+[PASS] Schema valid JSON. [PASS] Router registered. [PASS] 4 rules created.
+
+### Story: Evidence Schema Extension [ID=F37-12-004] [DONE]
+Completed 2026-03-06. evidence.schema.json extended.
+Tech_stack enum: 9→12 values (added deployment-policies, testing-policies, validation-rules).
+Conditional validators: 3 new context validators (+107 lines).
+Evidence records: 3 polymorphic records created (L36-D, L37-P, L38-Do).
+[PASS] Schema extension valid. [PASS] 69 total evidence records.
+
+### Story: Assemble Script Update [ID=F37-12-005] [DONE]
+Completed 2026-03-06. scripts/assemble-model.ps1 updated.
+Layer count: 38→41 layers. Added 3 loading blocks for L36-L38.
+[PASS] Assemble successful (38/41 layers, 3 empty governance layers expected).
+[PASS] Validation clean (0 violations).
+
+### Story: Local Testing & Deployment [ID=F37-12-006] [DONE]
+Completed 2026-03-06. PR #16 merged (commit 272c1f8).
+Local tests: 42/42 tests passing in 13.23s.
+Validation: 0 violations (58 repo_line warnings informational).
+GitHub Actions: All checks passed.
+Cloud deployment: Revision 0000005 deployed and operational.
+[PASS] All quality gates passed. [PASS] Production verified.
+
+### Story: Documentation Updates [ID=F37-12-007] [DONE]
+Completed 2026-03-06. PR #17 merged (commit 424f6f3).
+STATUS.md: Session 30 completion entry added.
+LAYER-ARCHITECTURE.md: 38→41 layers, L36-L38 documented.
+docs/library/*: Updated to reflect 41 layers.
+[PASS] Documentation synchronized with implementation.
+
+### Acceptance Criteria [ID=F37-12-008]
+- ✅ 3 new layers operational (L36-L38)
+- ✅ 12 new objects (4 per layer)
+- ✅ Evidence schema supports 12 tech_stack values
+- ✅ All tests passing (42/42)
+- ✅ Zero validation violations
+- ✅ Cloud deployed (revision 0000005)
+- ✅ Documentation updated
+- ✅ Timeline: 1.5 hours (5× faster than Session 28-29)
+
+**Lessons Applied from Session 29:**
+- Update assemble-model.ps1 FIRST (prevented validation failures)
+- Proper JSON structure from start (no rework needed)
+- Force-add model files immediately (no CI/CD issues)
+- Test locally before push (all green first try)
 
 ## Feature: Layer Build Order [ID=F37-02]
 L0-L2 Foundation -> L3-L10 Data/API/UI/Agents/Requirements ->

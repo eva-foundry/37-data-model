@@ -1,7 +1,7 @@
 ================================================================================
  EVA FOUNDATION -- MASTER OVERVIEW
  File: docs/library/00-EVA-OVERVIEW.md
- Updated: 2026-03-05 7:30 PM ET -- Evidence Layer LIVE; Governance Plane LIVE; 33 layers; 4,339+ objects
+ Updated: 2026-03-06 11:12 AM ET -- Evidence Layer LIVE; Agent Automation LIVE; 41 layers
  Source: 37-data-model (single source of truth, cloud-only, store=cosmos)
 --------------------------------------------------------------------------------
  COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31) + GOVERNANCE PLANE (L33-L34) = BILLION-DOLLAR MOAT

@@ -1,7 +1,7 @@
 # EVA Data Model - Agent User Guide
 
-**Version:** 3.0  
-**Last Updated:** March 5, 2026 8:30 PM ET  
+**Version:** 3.1  
+**Last Updated:** March 6, 2026 11:12 AM ET  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills)
 
 ---
@@ -59,10 +59,88 @@ The API returns a JSON object with these sections:
 | `actor_header` | X-Actor for writes, Authorization for admin |
 | `common_mistakes` | 9 lessons learned with error/cause/fix |
 | `examples` | Before/after code showing safe patterns |
-| `layers_available` | All 34 layers (services → project_work) |
+| `layers_available` | All 41 layers (services → validation_rules) |
 | `layer_notes` | Special cases (endpoints id format, services obj_id, wbs ado_epic_id) |
 | `forbidden` | 7 rules: no model/*.json reads, no grep, no PATCH, etc. |
 | `quick_reference` | All endpoints with one-line descriptions |
+
+---
+
+## Copy-Paste Quick Start
+
+**3 working examples to get productive in 60 seconds:**
+
+### Response Structure (IMPORTANT!)
+
+All layer endpoints return data wrapped in a standard structure:
+
+```json
+{
+  "data": [...],        // Your actual data array
+  "metadata": {         // Query information
+    "total": 56,
+    "limit": null,
+    "offset": 0,
+    "_query_warnings": []
+  }
+}
+```
+
+**Always access the `.data` property:**
+
+```powershell
+# ✅ Correct - access .data property
+$projects = (Invoke-RestMethod "$base/model/projects/").data
+
+# ❌ Wrong - missing .data (shows empty table)
+$projects = Invoke-RestMethod "$base/model/projects/"
+```
+
+---
+
+### Example 1: Get Endpoints for a Service
+```powershell
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+$endpoints = (Invoke-RestMethod "$base/model/endpoints/?service=eva-brain-api&limit=10").data
+$endpoints | Select-Object id, method, path, status | Format-Table
+```
+
+### Example 2: Count Projects by Maturity
+```powershell
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+$projects = (Invoke-RestMethod "$base/model/projects/").data
+$projects | Group-Object maturity | Select-Object Name, Count | Format-Table
+```
+
+### Example 3: Discover Layer Schema
+```powershell
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+# Get an example object to see all available fields (NO .data wrapper for /example)
+$example = Invoke-RestMethod "$base/model/projects/example"
+$example | Format-List
+
+# Count total objects in this layer (HAS .data wrapper)
+$all = (Invoke-RestMethod "$base/model/projects/").data
+Write-Host "Total projects: $($all.Count)"
+```
+
+---
+
+## PowerShell Tip: Counting Nested Objects
+
+When counting properties in nested objects from the API:
+
+**❌ Don't use:**
+```powershell
+$guide.common_mistakes.PSObject.Properties.Count  # Prints "1 1 1 1 1 1 1 1 1"
+```
+
+**✅ Use instead:**
+```powershell
+($guide.common_mistakes.PSObject.Properties | Measure-Object).Count  # Prints "9"
+```
+
+This is a PowerShell display quirk, not an API issue.
 
 ---
 

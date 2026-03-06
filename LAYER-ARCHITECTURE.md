@@ -2,29 +2,32 @@
 
 ## How Many Layers?
 
-**Short Answer:** The data model currently has **38 semantic layers**, with **5 additional layers planned** for agent automation (target: 43+ layers by Session 30).
+**Short Answer:** The data model currently has **41 semantic layers**, with deployment & testing policies fully operational (Session 30 complete).
 
-## Why "38 Layers"?
+## Why "41 Layers"?
 
-The number 38 reflects the current production state as of March 6, 2026 (post Session 28+29 deployment & validation fixes). This is an **observed count**, not a hardcoded limit:
+The number 41 reflects the current production state as of March 6, 2026 (post Session 30 deployment). This is an **observed count**, not a hardcoded limit:
 
 ```
-📊 Current Count (as of March 6, 2026 - Session 28+29):
-├─ 38 layers operational (27 baseline + 11 new: 3 governance + 5 empty + 3 agent automation)
-├─ Cloud deployment: live (L33-L35 endpoints operational, awaiting production data)
-├─ 4,400+ objects distributed across layers (66 evidence records with polymorphism)
-├─ Largest: endpoints (135), services (34), projects (56)
-├─ Newest: github_rules (L35), quality_gates (L34), agent_policies (L33)
-├─ Governance: workspace_config, project_work, traces (Session 27 enhancements)
-└─ Specialized: evidence (L11 - immutable DPDCA receipts with 9 tech_stack values)
+📊 Current Count (as of March 6, 2026 - Session 30):
+├─ 41 layers operational (38 baseline + 3 new: deployment/testing/validation policies)
+├─ Cloud deployment: Revision 0000005 live (L36-L38 endpoints operational)
+├─ Largest: endpoints (185), services (34), projects (56)
+├─ Newest: validation_rules (L38), testing_policies (L37), deployment_policies (L36)
+├─ Agent automation: agent_policies (L33), quality_gates (L34), github_rules (L35)
+├─ Governance: workspace_config, project_work, traces (Session 27)
+└─ Specialized: evidence (L11 - immutable DPDCA receipts with 12 tech_stack values)
 ```
 
-**Recent Validation Fixes (Session 29):**
-- ✅ assemble-model.ps1 updated from 27→38 layers
-- ✅ JSON structure standardized (wrapped in `{ layer_name: [...] }` format)
-- ✅ evidence.json property corrected (`.objects` not `.evidence`)
+**Session 30 Deployment & Testing Policies (March 6, 2026 11:12 AM ET):**
+- ✅ assemble-model.ps1 updated from 38→41 layers
+- ✅ L36: deployment_policies (Container App config, resource limits, health probes)
+- ✅ L37: testing_policies (Coverage thresholds, CI workflows, test strategies)
+- ✅ L38: validation_rules (Schema enforcement, compliance gates, data integrity)
+- ✅ evidence.schema.json extended: 9→12 tech_stack values (polymorphic contexts)
 - ✅ All 42 tests passing, 0 validation violations
-- ⏳ PR #14 awaiting checks, production data deployment pending
+- ✅ Timeline: 1.5 hours (5x faster than Session 28-29, lessons applied)
+- ✅ PR #16 & #17 merged, Revision 0000005 deployed and operational
 
 ## Layer Expansion Roadmap (Session 28+)
 
@@ -78,7 +81,7 @@ $layers = $summary.layers | Select-Object -ExpandProperty name
 
 **Implication:** If a new layer is added to the cloud API tomorrow, the backup script will automatically include it on the next run.
 
-## The Current 36 Layers
+## The Current 41 Layers
 
 **Production Layers (as of Session 28 Phase 1):**
 
@@ -123,7 +126,7 @@ $layers = $summary.layers | Select-Object -ExpandProperty name
 | **quality_gates** | MTI thresholds & phase gates (L34) | 1 | Active |
 | **github_rules** | Branch protection & commit standards (L35) | 1 | Active |
 
-**Total: 36 layers, 4,400+ objects**
+**Total: 41 layers, 1,070 objects**
 
 
 

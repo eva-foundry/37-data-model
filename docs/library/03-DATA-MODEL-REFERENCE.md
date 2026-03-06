@@ -1,7 +1,7 @@
 ================================================================================
- EVA DATA MODEL -- 34-LAYER REFERENCE
+ EVA DATA MODEL -- 41-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-05 8:00 PM ET -- 34 layers; 4,952+ objects; Agent Experience LIVE
+ Updated: 2026-03-06 11:12 AM ET -- 41 layers; Session 30 COMPLETE
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 ================================================================================
 
@@ -32,21 +32,21 @@
     GET /model/agent-guide     -> ENHANCED: 5 sections (discovery_journey,
                                   query_capabilities, terminal_safety,
                                   common_mistakes, examples)
-    GET /model/layers          -> introspect all 34 layers with schema availability
+    GET /model/layers          -> introspect all 41 layers with schema availability
     GET /model/{layer}/fields  -> get field names, types, descriptions for any layer
     GET /model/{layer}/example -> see real object structure from any layer
     GET /model/agent-summary   -> all layer counts in one call (LEGACY)
 
   DISCOVERY & INTROSPECTION (Session 26):
     All layers support self-documenting endpoints for agent orientation:
-      GET /model/layers               -> 34 layers with descriptions, example counts
+      GET /model/layers               -> 41 layers with descriptions, example counts
       GET /model/{layer}/fields       -> schema field definitions
       GET /model/{layer}/example      -> first real object for reference
       GET /model/{layer}/count        -> total object count
       GET /model/schema-def/{layer}   -> JSON Schema Draft-07 definition (WIP)
 
   UNIVERSAL QUERY OPERATORS (Session 26):
-    All 34 layers support standardized query parameters:
+    All 41 layers support standardized query parameters:
       ?limit=N                        -> pagination (DEFAULT: use in terminal!)
       ?offset=N                       -> skip N records
       ?field=value                    -> exact match filter
@@ -501,7 +501,7 @@
       fallback_strategy   -- Read local files if API timeout
     data_model_config{}:
       cloud_endpoint      -- Production API URL
-      layer_count         -- Current layer count (33)
+      layer_count         -- Current layer count (41)
       backup_strategy     -- sync-cloud-to-local.ps1 frequency
   
   QUERY: GET /model/workspace_config/eva-foundry

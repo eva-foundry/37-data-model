@@ -90,7 +90,7 @@
   | Blob Storage   |    THREE PLANES OF TRUTH
   | Uploaded docs  |    ==============================
   | Analysis output|    DATA PLANE       37-data-model (L0-L34)
-  +----------------+    (what SHOULD be)  entity catalog: 33 layers
+  +----------------+    (what SHOULD be)  entity catalog: 41 layers
                                          endpoints/screens/services/containers
                                          governance plane (L33-L34) LIVE
                                          4,339+ objects, Cosmos-backed (24x7)
