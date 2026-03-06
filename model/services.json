@@ -1,17 +1,17 @@
 {
-  "$schema": "../schema/service.schema.json",
   "services": [
     {
       "status": "deployed",
       "notes": "marco-eva-brain-api Container App revision --0000005. Exposes /v1/* (own routes) + /model/* proxy to data-model sidecar. 2026-02-23.",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T21:58:13.311310+00:00",
+      "modified_at": "2026-02-23T18:58:13.31131-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "row_version": 3,
       "id": "eva-brain-api",
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "id": "eva-roles-api",
@@ -35,10 +35,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "admin-face",
@@ -68,10 +69,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "chat-face",
@@ -100,10 +102,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "agent-fleet",
@@ -129,22 +132,24 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "status": "deployed",
       "notes": "marco-sandbox-apim Developer tier. EVA Data Model API at /data-model/model/*. 2026-02-23.",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T21:58:05.558126+00:00",
+      "modified_at": "2026-02-23T18:58:05.558126-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "row_version": 2,
       "id": "azure-apim",
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "id": "azure-foundry",
@@ -168,10 +173,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-jurisprudence",
@@ -197,10 +203,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "assist-me",
@@ -223,22 +230,24 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "status": "deployed",
       "notes": "model-api exposed via brain-api /model/ proxy at revision --0000005. APIM: marco-sandbox-apim /data-model/model/*. 866 objects, 27 layers. 2026-02-23.",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T21:57:58.517675+00:00",
+      "modified_at": "2026-02-23T18:57:58.517675-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "row_version": 2,
       "id": "model-api",
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "id": "eva-foundry-lib",
@@ -266,10 +275,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-red-teaming",
@@ -298,10 +308,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-ui-bench",
@@ -325,10 +336,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-ado-command-center",
@@ -353,10 +365,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-ado-dashboard",
@@ -383,10 +396,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-control-plane",
@@ -413,10 +427,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-devbench",
@@ -440,10 +455,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-cli",
@@ -471,10 +487,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-spark",
@@ -497,10 +514,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-jp-spark",
@@ -529,10 +547,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-cdc",
@@ -558,10 +577,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "id": "eva-system-analysis",
@@ -585,10 +605,11 @@
       "source_file": "model/services.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "services"
     },
     {
       "type": "react_spa",
@@ -603,11 +624,12 @@
       "project": "31-eva-faces",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:01.940685+00:00",
+      "modified_at": "2026-02-24T10:01:01.940685-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:00:20.457275+00:00",
+      "created_at": "2026-02-24T10:00:20.457275-03:00",
       "row_version": 2,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "react_spa",
@@ -622,11 +644,12 @@
       "project": "31-eva-faces",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:04.031637+00:00",
+      "modified_at": "2026-02-24T10:01:04.031637-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:04.031637+00:00",
+      "created_at": "2026-02-24T10:01:04.031637-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "react_spa",
@@ -641,11 +664,12 @@
       "project": "31-eva-faces",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:06.095990+00:00",
+      "modified_at": "2026-02-24T10:01:06.09599-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:06.095990+00:00",
+      "created_at": "2026-02-24T10:01:06.09599-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "react_spa",
@@ -661,11 +685,12 @@
       "project": "31-eva-faces",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:08.199224+00:00",
+      "modified_at": "2026-02-24T10:01:08.199224-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:08.199224+00:00",
+      "created_at": "2026-02-24T10:01:08.199224-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "react_spa",
@@ -680,11 +705,12 @@
       "project": "31-eva-faces",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:10.287023+00:00",
+      "modified_at": "2026-02-24T10:01:10.287023-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:10.287023+00:00",
+      "created_at": "2026-02-24T10:01:10.287023-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "fastapi_agent",
@@ -700,11 +726,12 @@
       "project": "48-eva-orchestrator",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:12.387365+00:00",
+      "modified_at": "2026-02-24T10:01:12.387365-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:12.387365+00:00",
+      "created_at": "2026-02-24T10:01:12.387365-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "fastapi_agent",
@@ -720,11 +747,12 @@
       "project": "48-eva-orchestrator",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:14.468560+00:00",
+      "modified_at": "2026-02-24T10:01:14.46856-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:14.468560+00:00",
+      "created_at": "2026-02-24T10:01:14.46856-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "fastapi_agent",
@@ -740,11 +768,12 @@
       "is_active": true,
       "_cached": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T20:35:36.327111+00:00",
+      "modified_at": "2026-02-24T17:35:36.327111-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:16.552555+00:00",
+      "created_at": "2026-02-24T10:01:16.552555-03:00",
       "row_version": 2,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "fastapi_agent",
@@ -759,11 +788,12 @@
       "project": "01-documentation-generator",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:18.637528+00:00",
+      "modified_at": "2026-02-24T10:01:18.637528-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:18.637528+00:00",
+      "created_at": "2026-02-24T10:01:18.637528-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "fastapi_agent",
@@ -780,11 +810,12 @@
       "project": "48-eva-orchestrator",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:20.718274+00:00",
+      "modified_at": "2026-02-24T10:01:20.718274-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:20.718274+00:00",
+      "created_at": "2026-02-24T10:01:20.718274-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "type": "fastapi_agent",
@@ -800,11 +831,12 @@
       "project": "47-eva-mti",
       "is_active": true,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T13:01:22.804393+00:00",
+      "modified_at": "2026-02-24T10:01:22.804393-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T13:01:22.804393+00:00",
+      "created_at": "2026-02-24T10:01:22.804393-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
     },
     {
       "id": "maf-orchestration",
@@ -824,11 +856,38 @@
       "feature_flag": null,
       "auth": [],
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T20:54:04.929512+00:00",
+      "modified_at": "2026-02-24T17:54:04.929512-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T20:54:04.929512+00:00",
+      "created_at": "2026-02-24T17:54:04.929512-03:00",
       "row_version": 1,
-      "source_file": "model/services.json"
+      "source_file": "model/services.json",
+      "layer": "services"
+    },
+    {
+      "is_active": true,
+      "notes": "Azure API Management: marco-sandbox-apim in EsDAICoE-Sandbox. URL: https://marco-sandbox-apim.azure-api.net. Products: eva-core, eva-admin, eva-management, eva-jp-internal, public. Scrum routes registered 2026-02-25. Brain-api backend: marco-eva-brain-api.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io",
+      "id": "apim-gateway",
+      "status": "active",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T14:41:36.332474-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T14:41:36.332474-03:00",
+      "row_version": 1,
+      "source_file": "model/services.json",
+      "layer": "services"
+    },
+    {
+      "is_active": true,
+      "notes": "31-eva-faces/portal-face -- React/TypeScript SPA. Vite build. Routes: / (EVAHomePage), /devops/sprint (SprintBoardPage), /model (ModelBrowserPage). Consumes eva-brain-api via APIM (marco-sandbox-apim). WI-3 live: VITE_APIM_BASE_URL + VITE_APIM_SUBSCRIPTION_KEY set in .env.local. 43/43 vitest passing 2026-02-25.",
+      "id": "portal-face",
+      "status": "running",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T15:13:10.623806-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T15:13:10.623806-03:00",
+      "row_version": 1,
+      "source_file": "model/services.json",
+      "layer": "services"
     }
   ]
 }

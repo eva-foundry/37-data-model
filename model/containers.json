@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/container.schema.json",
   "containers": [
     {
       "id": "jobs",
@@ -126,10 +125,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "extracted_content",
@@ -165,10 +165,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "chunks",
@@ -218,10 +219,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "audit_logs",
@@ -285,10 +287,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "content_access_logs",
@@ -345,10 +348,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "sessions",
@@ -426,10 +430,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "messages",
@@ -486,10 +491,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "scrum-cache",
@@ -532,10 +538,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "config",
@@ -571,10 +578,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "apps",
@@ -624,10 +632,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "model_objects",
@@ -705,10 +714,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "translations",
@@ -765,10 +775,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     },
     {
       "id": "content_logs",
@@ -818,10 +829,11 @@
       "source_file": "model/containers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "containers"
     }
   ]
 }

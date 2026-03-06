@@ -22,10 +22,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     },
     {
       "id": "skill-run-tests",
@@ -51,10 +52,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     },
     {
       "id": "skill-pack-evidence",
@@ -78,10 +80,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     },
     {
       "id": "skill-deploy-resource",
@@ -107,10 +110,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     },
     {
       "id": "skill-query-telemetry",
@@ -137,10 +141,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     },
     {
       "id": "skill-create-ado-wi",
@@ -166,10 +171,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     },
     {
       "id": "skill-scrum-draft",
@@ -193,10 +199,11 @@
       "source_file": "model/cp_skills.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "cp_skills"
     }
   ]
 }

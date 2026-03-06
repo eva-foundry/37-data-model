@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/hook.schema.json",
   "hooks": [
     {
       "id": "useTranslations",
@@ -22,11 +21,12 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:33.514119+00:00",
+      "modified_at": "2026-02-22T23:48:33.514119-03:00",
       "row_version": 2,
-      "repo_line": 14
+      "repo_line": 14,
+      "layer": "hooks"
     },
     {
       "id": "useRbacData",
@@ -49,10 +49,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useRbacRolesData",
@@ -76,10 +77,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useFeatureFlagsData",
@@ -102,10 +104,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useIngestionRunsData",
@@ -128,10 +131,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useSearchHealthData",
@@ -153,10 +157,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useSupportTicketsData",
@@ -178,10 +183,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useAuditLogsData",
@@ -203,10 +209,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useChatSession",
@@ -227,10 +234,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useSettingsData",
@@ -252,10 +260,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useAppsData",
@@ -279,10 +288,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useTranslationsData",
@@ -305,11 +315,12 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:35.623290+00:00",
+      "modified_at": "2026-02-22T23:48:35.62329-03:00",
       "row_version": 2,
-      "repo_line": 18
+      "repo_line": 18,
+      "layer": "hooks"
     },
     {
       "id": "useFeatureFlags",
@@ -325,11 +336,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.027794+00:00",
+      "modified_at": "2026-02-23T09:54:27.027794-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "row_version": 7,
-      "source_file": "model/hooks.json"
+      "source_file": "model/hooks.json",
+      "layer": "hooks"
     },
     {
       "id": "useRBAC",
@@ -345,11 +357,12 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.030746+00:00",
+      "modified_at": "2026-02-23T09:54:27.030746-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "row_version": 7,
-      "source_file": "model/hooks.json"
+      "source_file": "model/hooks.json",
+      "layer": "hooks"
     },
     {
       "id": "useWorkPackages",
@@ -372,10 +385,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useContextBundles",
@@ -397,10 +411,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useRuns",
@@ -424,10 +439,11 @@
       "source_file": "model/hooks.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "hooks"
     },
     {
       "id": "useAnnouncer",
@@ -452,11 +468,38 @@
       "status": "implemented",
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:54:27.023272+00:00",
+      "modified_at": "2026-02-23T09:54:27.023272-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:35:10.720334+00:00",
+      "created_at": "2026-02-23T09:35:10.720334-03:00",
       "row_version": 5,
-      "source_file": "model/hooks.json"
+      "source_file": "model/hooks.json",
+      "layer": "hooks"
+    },
+    {
+      "id": "useActingSession",
+      "label": "useActingSession",
+      "repo_path": "31-eva-faces/admin-face/src/hooks/useActingSession.ts",
+      "repo_line": 36,
+      "service": "admin-face",
+      "calls_endpoints": [
+        "POST /v1/roles/acting-as"
+      ],
+      "returns": [
+        "{ sessionReady: boolean; sessionId: string; personaId: string; features: string[] }"
+      ],
+      "used_by_screens": [
+        "AdminFaceApp"
+      ],
+      "data_type": "ActingSession",
+      "status": "implemented",
+      "is_active": true,
+      "description": "Bootstraps H1 handshake on mount: POST /v1/roles/acting-as with X-Actor-OID header. Falls back to DEV_BYPASS mode on error. Persists session to sessionStorage.",
+      "layer": "hooks",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-26T14:47:08.173917-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-26T13:52:19.431762-03:00",
+      "row_version": 3
     }
   ]
 }

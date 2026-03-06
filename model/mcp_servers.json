@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/mcp_server.schema.json",
   "mcp_servers": [
     {
       "id": "mcp-azure-search",
@@ -21,10 +20,11 @@
       "source_file": "model/mcp_servers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "mcp_servers"
     },
     {
       "id": "mcp-cosmos",
@@ -46,10 +46,11 @@
       "source_file": "model/mcp_servers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "mcp_servers"
     },
     {
       "id": "mcp-blob",
@@ -71,10 +72,11 @@
       "source_file": "model/mcp_servers.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.091561+00:00",
+      "created_at": "2026-02-22T23:17:49.091561-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.091561+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.091561-03:00",
+      "row_version": 1,
+      "layer": "mcp_servers"
     },
     {
       "azure_resource": "",
@@ -93,10 +95,12 @@
       "id": "mcp-eva-dtl",
       "status": "implemented",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T02:20:09.700742+00:00",
+      "modified_at": "2026-02-24T23:20:09.700742-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-25T02:20:09.700742+00:00",
-      "row_version": 1
+      "created_at": "2026-02-24T23:20:09.700742-03:00",
+      "row_version": 1,
+      "source_file": "model/mcp_servers.json",
+      "layer": "mcp_servers"
     }
   ]
 }

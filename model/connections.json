@@ -19,34 +19,11 @@
       "source_file": "model/connections.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
-    },
-    {
-      "id": "connection-ado-51aca",
-      "label": "Azure DevOps — 51-aca project",
-      "plane": "plane-ado",
-      "type": "ado",
-      "auth_mode": "oidc",
-      "endpoint": "https://dev.azure.com/marcopresta",
-      "scopes": [
-        "work_items:read",
-        "work_items:write",
-        "build:read",
-        "build:execute"
-      ],
-      "workspace_id": "51-aca",
-      "status": "active",
-      "notes": "Dedicated ADO project for Azure Cost Advisor commercial SaaS.",
-      "source_file": "model/connections.json",
-      "is_active": true,
-      "created_by": "agent:copilot",
-      "created_at": "2026-02-28T18:20:00.000000+00:00",
-      "modified_by": "agent:copilot",
-      "modified_at": "2026-02-28T18:20:00.000000+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "connections"
     },
     {
       "id": "connection-github",
@@ -69,10 +46,11 @@
       "source_file": "model/connections.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "connections"
     },
     {
       "id": "connection-azure",
@@ -94,10 +72,36 @@
       "source_file": "model/connections.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.075906+00:00",
+      "created_at": "2026-02-22T23:17:49.075906-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.075906+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.075906-03:00",
+      "row_version": 1,
+      "layer": "connections"
+    },
+    {
+      "id": "connection-ado-51aca",
+      "label": "Azure DevOps — 51-aca project",
+      "plane": "plane-ado",
+      "type": "ado",
+      "auth_mode": "oidc",
+      "endpoint": "https://dev.azure.com/marcopresta",
+      "scopes": [
+        "work_items:read",
+        "work_items:write",
+        "build:read",
+        "build:execute"
+      ],
+      "workspace_id": "51-aca",
+      "status": "active",
+      "notes": "Dedicated ADO project for Azure Cost Advisor commercial SaaS.",
+      "source_file": "model/connections.json",
+      "is_active": true,
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-28T15:20:00-03:00",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-28T15:20:00-03:00",
+      "row_version": 1,
+      "layer": "connections"
     }
   ]
 }

@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/persona.schema.json",
   "personas": [
     {
       "id": "admin",
@@ -27,10 +26,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "legal-researcher",
@@ -53,10 +53,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "legal-clerk",
@@ -78,10 +79,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "auditor",
@@ -102,10 +104,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "support",
@@ -127,10 +130,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "machine-agent",
@@ -155,10 +159,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "viewer",
@@ -179,10 +184,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "developer",
@@ -201,10 +207,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "jr_user",
@@ -222,10 +229,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     },
     {
       "id": "jr_admin",
@@ -245,10 +253,11 @@
       "source_file": "model/personas.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "personas"
     }
   ]
 }

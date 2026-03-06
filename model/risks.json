@@ -1,23 +1,5 @@
 {
-  "$schema": "../schema/risk.schema.json",
   "risks": [
-    {
-      "id": "37-data-model-R001",
-      "project_id": "37-data-model",
-      "title": "ACA image drift -- deployed image lags main branch",
-      "description": "ACA runs stale image if rebuild/redeploy is not triggered after schema changes. DPDCA sprint shipped L27-L30 and fp.py; ACA still on pre-DPDCA image.",
-      "category": "schedule",
-      "probability": "High",
-      "impact": "High",
-      "risk_score": 9,
-      "status": "open",
-      "mitigation": "Automate ACR build + ACA update on every merge to main (GitHub Action). Manual trigger: stamp-tft.ps1 + stamp-dft.ps1 + az acr build + az containerapp update.",
-      "mitigation_owner": "marco.presta",
-      "due_date": "2026-03-07",
-      "sprint_id": "37-data-model-sprint-8",
-      "wbs_ids": ["F37-10-003"],
-      "notes": "G03/G07/G08 all FAIL due to this risk. Sprint 8 remediation in progress."
-    },
     {
       "id": "37-data-model-R002",
       "project_id": "37-data-model",
@@ -32,8 +14,18 @@
       "mitigation_owner": "marco.presta",
       "due_date": null,
       "sprint_id": "37-data-model-sprint-8",
-      "wbs_ids": ["F37-10-001"],
-      "notes": "Accepted: close enough for estimation. Reclassify specific endpoints if FP calc diverges."
+      "wbs_ids": [
+        "F37-10-001"
+      ],
+      "notes": "Accepted: close enough for estimation. Reclassify specific endpoints if FP calc diverges.",
+      "source_file": "model/risks.json",
+      "layer": "risks",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.039852-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.039852-03:00",
+      "row_version": 1
     },
     {
       "id": "37-data-model-R003",
@@ -50,7 +42,15 @@
       "due_date": "2026-06-01",
       "sprint_id": null,
       "wbs_ids": [],
-      "notes": "Current sandbox Cosmos tier sufficient through 2026 at current growth rate."
+      "notes": "Current sandbox Cosmos tier sufficient through 2026 at current growth rate.",
+      "source_file": "model/risks.json",
+      "layer": "risks",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.039852-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.039852-03:00",
+      "row_version": 1
     },
     {
       "id": "37-data-model-R004",
@@ -66,8 +66,46 @@
       "mitigation_owner": "marco.presta",
       "due_date": "2026-03-15",
       "sprint_id": "37-data-model-sprint-8",
-      "wbs_ids": ["F37-10-004", "F37-10-005"],
-      "notes": "Currently relying on developer discipline + veritas session-start audit. Will be automated in Sprint 8."
+      "wbs_ids": [
+        "F37-10-004",
+        "F37-10-005"
+      ],
+      "notes": "Currently relying on developer discipline + veritas session-start audit. Will be automated in Sprint 8.",
+      "source_file": "model/risks.json",
+      "layer": "risks",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.039852-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.039852-03:00",
+      "row_version": 1
+    },
+    {
+      "id": "37-data-model-R001",
+      "project_id": "37-data-model",
+      "title": "ACA image drift -- deployed image lags main branch",
+      "description": "ACA runs stale image if rebuild/redeploy is not triggered after schema changes. DPDCA sprint shipped L27-L30 and fp.py; ACA still on pre-DPDCA image.",
+      "category": "schedule",
+      "probability": "High",
+      "impact": "High",
+      "risk_score": 9,
+      "status": "open",
+      "mitigation": "Automate ACR build + ACA update on every merge to main (GitHub Action). Manual trigger: stamp-tft.ps1 + stamp-dft.ps1 + az acr build + az containerapp update.",
+      "mitigation_owner": "marco.presta",
+      "due_date": "2026-03-07",
+      "sprint_id": "37-data-model-sprint-8",
+      "wbs_ids": [
+        "F37-10-003"
+      ],
+      "notes": "G03/G07/G08 all FAIL due to this risk. Sprint 8 remediation in progress.",
+      "source_file": "model/risks.json",
+      "layer": "risks",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.039852-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.039852-03:00",
+      "row_version": 1
     },
     {
       "id": "37-data-model-R005",
@@ -84,7 +122,15 @@
       "due_date": null,
       "sprint_id": null,
       "wbs_ids": [],
-      "notes": "No key in any committed file as of 2026-02-25 audit."
+      "notes": "No key in any committed file as of 2026-02-25 audit.",
+      "source_file": "model/risks.json",
+      "layer": "risks",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.039852-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.039852-03:00",
+      "row_version": 1
     }
   ]
 }

@@ -1,26 +1,40 @@
 {
-  "$schema": "../schema/decision.schema.json",
   "decisions": [
     {
-      "id": "37-data-model-ADR-001",
+      "id": "37-data-model-ADR-004",
       "project_id": "37-data-model",
-      "title": "Use Cosmos DB NoSQL as the primary persistence layer",
-      "date": "2026-02-15",
+      "title": "Add complexity_coverage as 4th MTI component (weight 0.15)",
+      "date": "2026-02-25",
       "status": "accepted",
-      "context": "The data model needs a persistence layer that is 24x7 available, schemaless to accommodate evolving layers, and accessible from ACA without VNet dependencies. Options considered: PostgreSQL Flexible Server, Azure Table Storage, Cosmos DB NoSQL.",
-      "decision": "Use Azure Cosmos DB NoSQL API (single container model_objects, partition key /layer) hosted on marco-sandbox-cosmos. ACA Container App reads COSMOS_URL + COSMOS_KEY from environment secrets.",
-      "consequences": "All 31 layers stored in one Cosmos container. Partition key /layer enables efficient per-layer queries. RU cost scales with object count. Single-worker constraint on ACA avoids split-brain with MemoryStore.",
+      "context": "Three-component MTI (coverage=0.40, evidence=0.20, consistency=0.25) did not reward stories that touched complex endpoints or containers. High-complexity work was underweighted relative to trivial stories.",
+      "decision": "Add complexity_coverage (weight 0.15) sourced from veritas enrich.js enrichment step. Rebalance weights: coverage=0.40, evidence=0.20, consistency=0.25, complexity=0.15. Falls back to 3-component formula when enrichment data is absent (backwards compat).",
+      "consequences": "Stories lacking story_ids on endpoints will score 0 for complexity_coverage. This creates an incentive to stamp story_ids (F37-10-001). veritas audit pipeline now runs enrich() between reconcile() and computeTrust().",
       "alternatives_considered": [
-        "PostgreSQL Flexible Server: rejected -- requires VNet peering or public endpoint, higher operational overhead",
-        "Azure Table Storage: rejected -- no JSON-native query, poor cross-layer graph traversal",
-        "In-memory only: rejected -- data lost on ACA restart"
+        "Keep 3-component formula: rejected -- does not differentiate complex vs trivial work",
+        "Replace consistency with complexity: rejected -- consistency catches naming drift which is valuable"
       ],
       "superseded_by": null,
-      "deciders": ["marco.presta"],
-      "tags": ["cosmos", "persistence", "deployment"],
-      "related_wbs_ids": ["F37-09"],
-      "evidence_path": "acr-build-cosmos.log",
-      "notes": "Cosmos container: evamodel/model_objects. Partition: /layer."
+      "deciders": [
+        "marco.presta"
+      ],
+      "tags": [
+        "veritas",
+        "mti",
+        "quality"
+      ],
+      "related_wbs_ids": [
+        "F37-10-001"
+      ],
+      "evidence_path": "C:/AICOE/eva-foundation/48-eva-veritas/src/lib/trust.js",
+      "notes": "Activated when story_ids stamped on endpoints. Currently falls back to 3-component (MTI=86 local).",
+      "source_file": "model/decisions.json",
+      "layer": "decisions",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.075467-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.075467-03:00",
+      "row_version": 1
     },
     {
       "id": "37-data-model-ADR-002",
@@ -36,11 +50,27 @@
         "SDK/library: rejected -- overhead for PowerShell and CLI agents"
       ],
       "superseded_by": null,
-      "deciders": ["marco.presta"],
-      "tags": ["api", "agents", "governance"],
-      "related_wbs_ids": ["F37-01"],
+      "deciders": [
+        "marco.presta"
+      ],
+      "tags": [
+        "api",
+        "agents",
+        "governance"
+      ],
+      "related_wbs_ids": [
+        "F37-01"
+      ],
       "evidence_path": "USER-GUIDE.md",
-      "notes": "Documented in copilot-instructions.md GOLDEN RULE section and USER-GUIDE.md."
+      "notes": "Documented in copilot-instructions.md GOLDEN RULE section and USER-GUIDE.md.",
+      "source_file": "model/decisions.json",
+      "layer": "decisions",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.075467-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.075467-03:00",
+      "row_version": 1
     },
     {
       "id": "37-data-model-ADR-003",
@@ -57,31 +87,65 @@
         "Use Case Points: rejected -- no use case catalog in model"
       ],
       "superseded_by": null,
-      "deciders": ["marco.presta"],
-      "tags": ["fp", "estimation", "ifpug"],
-      "related_wbs_ids": ["F37-10-001", "F37-10-002"],
+      "deciders": [
+        "marco.presta"
+      ],
+      "tags": [
+        "fp",
+        "estimation",
+        "ifpug"
+      ],
+      "related_wbs_ids": [
+        "F37-10-001",
+        "F37-10-002"
+      ],
       "evidence_path": "api/routers/fp.py",
-      "notes": "fp/estimate requires ACA redeploy to activate (DPDCA sprint image). TFT: EI=23 EO=25 EQ=28. DFT: ILF=12 EIF=1."
+      "notes": "fp/estimate requires ACA redeploy to activate (DPDCA sprint image). TFT: EI=23 EO=25 EQ=28. DFT: ILF=12 EIF=1.",
+      "source_file": "model/decisions.json",
+      "layer": "decisions",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.075467-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.075467-03:00",
+      "row_version": 1
     },
     {
-      "id": "37-data-model-ADR-004",
+      "id": "37-data-model-ADR-001",
       "project_id": "37-data-model",
-      "title": "Add complexity_coverage as 4th MTI component (weight 0.15)",
-      "date": "2026-02-25",
+      "title": "Use Cosmos DB NoSQL as the primary persistence layer",
+      "date": "2026-02-15",
       "status": "accepted",
-      "context": "Three-component MTI (coverage=0.40, evidence=0.20, consistency=0.25) did not reward stories that touched complex endpoints or containers. High-complexity work was underweighted relative to trivial stories.",
-      "decision": "Add complexity_coverage (weight 0.15) sourced from veritas enrich.js enrichment step. Rebalance weights: coverage=0.40, evidence=0.20, consistency=0.25, complexity=0.15. Falls back to 3-component formula when enrichment data is absent (backwards compat).",
-      "consequences": "Stories lacking story_ids on endpoints will score 0 for complexity_coverage. This creates an incentive to stamp story_ids (F37-10-001). veritas audit pipeline now runs enrich() between reconcile() and computeTrust().",
+      "context": "The data model needs a persistence layer that is 24x7 available, schemaless to accommodate evolving layers, and accessible from ACA without VNet dependencies. Options considered: PostgreSQL Flexible Server, Azure Table Storage, Cosmos DB NoSQL.",
+      "decision": "Use Azure Cosmos DB NoSQL API (single container model_objects, partition key /layer) hosted on marco-sandbox-cosmos. ACA Container App reads COSMOS_URL + COSMOS_KEY from environment secrets.",
+      "consequences": "All 31 layers stored in one Cosmos container. Partition key /layer enables efficient per-layer queries. RU cost scales with object count. Single-worker constraint on ACA avoids split-brain with MemoryStore.",
       "alternatives_considered": [
-        "Keep 3-component formula: rejected -- does not differentiate complex vs trivial work",
-        "Replace consistency with complexity: rejected -- consistency catches naming drift which is valuable"
+        "PostgreSQL Flexible Server: rejected -- requires VNet peering or public endpoint, higher operational overhead",
+        "Azure Table Storage: rejected -- no JSON-native query, poor cross-layer graph traversal",
+        "In-memory only: rejected -- data lost on ACA restart"
       ],
       "superseded_by": null,
-      "deciders": ["marco.presta"],
-      "tags": ["veritas", "mti", "quality"],
-      "related_wbs_ids": ["F37-10-001"],
-      "evidence_path": "C:/AICOE/eva-foundation/48-eva-veritas/src/lib/trust.js",
-      "notes": "Activated when story_ids stamped on endpoints. Currently falls back to 3-component (MTI=86 local)."
+      "deciders": [
+        "marco.presta"
+      ],
+      "tags": [
+        "cosmos",
+        "persistence",
+        "deployment"
+      ],
+      "related_wbs_ids": [
+        "F37-09"
+      ],
+      "evidence_path": "acr-build-cosmos.log",
+      "notes": "Cosmos container: evamodel/model_objects. Partition: /layer.",
+      "source_file": "model/decisions.json",
+      "layer": "decisions",
+      "is_active": true,
+      "created_by": "admin:dev-admi",
+      "created_at": "2026-02-25T18:24:55.075467-03:00",
+      "modified_by": "admin:dev-admi",
+      "modified_at": "2026-02-25T18:24:55.075467-03:00",
+      "row_version": 1
     }
   ]
 }

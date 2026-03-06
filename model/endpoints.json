@@ -1,5 +1,4 @@
 {
-  "$schema": "../schema/endpoint.schema.json",
   "endpoints": [
     {
       "id": "GET /v1/health",
@@ -18,12 +17,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:30.127134+00:00",
+      "modified_at": "2026-02-22T23:47:30.127134-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 21
+      "repo_line": 21,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/background",
@@ -42,12 +42,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:32.246191+00:00",
+      "modified_at": "2026-02-22T23:47:32.246191-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 36
+      "repo_line": 36,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/config/info",
@@ -67,10 +68,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:15.313983+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:15.313983-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/config/features",
@@ -90,10 +92,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:19.393704+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:19.393704-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "method": "GET",
@@ -108,10 +111,12 @@
       "path": "/v1/config/translations/{language}",
       "status": "planned",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T02:26:56.933590+00:00",
+      "modified_at": "2026-02-24T23:26:56.93359-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 4
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 4,
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "PUT /v1/config/translations/{language}",
@@ -135,10 +140,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "method": "PATCH",
@@ -152,10 +158,11 @@
       "path": "/v1/config/translations/{language}",
       "status": "planned",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T14:46:47.469967+00:00",
+      "modified_at": "2026-02-24T11:46:47.469967-03:00",
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 2
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/config/translations/{language}",
@@ -179,10 +186,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/chat/approaches",
@@ -207,12 +215,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:34.358183+00:00",
+      "modified_at": "2026-02-22T23:47:34.358183-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 109
+      "repo_line": 109,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat",
@@ -239,12 +248,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:36.499201+00:00",
+      "modified_at": "2026-02-22T23:47:36.499201-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 109
+      "repo_line": 109,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat/rrr",
@@ -271,12 +281,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:38.642827+00:00",
+      "modified_at": "2026-02-22T23:47:38.642827-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 182
+      "repo_line": 182,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat/rtr",
@@ -303,12 +314,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:40.790372+00:00",
+      "modified_at": "2026-02-22T23:47:40.790372-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 188
+      "repo_line": 188,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat/work",
@@ -335,12 +347,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:42.895669+00:00",
+      "modified_at": "2026-02-22T23:47:42.895669-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 194
+      "repo_line": 194,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat/hybrid",
@@ -367,12 +380,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:45.027018+00:00",
+      "modified_at": "2026-02-22T23:47:45.027018-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 200
+      "repo_line": 200,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat/ungrounded",
@@ -399,12 +413,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:47.134500+00:00",
+      "modified_at": "2026-02-22T23:47:47.1345-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 206
+      "repo_line": 206,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/chat/read-retrieve-read",
@@ -431,12 +446,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:49.225889+00:00",
+      "modified_at": "2026-02-22T23:47:49.225889-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 212
+      "repo_line": 212,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/retrieve",
@@ -463,12 +479,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:51.344903+00:00",
+      "modified_at": "2026-02-22T23:47:51.344903-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 43
+      "repo_line": 43,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/documents",
@@ -492,12 +509,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:53.465234+00:00",
+      "modified_at": "2026-02-22T23:47:53.465234-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/documents/{doc_id}",
@@ -523,12 +541,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:55.589232+00:00",
+      "modified_at": "2026-02-22T23:47:55.589232-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/documents/{doc_id}/content",
@@ -554,12 +573,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:57.701901+00:00",
+      "modified_at": "2026-02-22T23:47:57.701901-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/documents/{doc_id}/chunks",
@@ -585,12 +605,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:47:59.794914+00:00",
+      "modified_at": "2026-02-22T23:47:59.794914-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/documents/{doc_id}",
@@ -614,12 +635,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:01.878078+00:00",
+      "modified_at": "2026-02-22T23:48:01.878078-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/documents/{doc_id}",
@@ -643,12 +665,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:03.981202+00:00",
+      "modified_at": "2026-02-22T23:48:03.981202-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/documents/{doc_id}/chunks",
@@ -672,12 +695,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:06.095856+00:00",
+      "modified_at": "2026-02-22T23:48:06.095856-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/documents/{doc_id}/reindex",
@@ -701,12 +725,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:08.203491+00:00",
+      "modified_at": "2026-02-22T23:48:08.203491-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 51
+      "repo_line": 51,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/sessions",
@@ -734,10 +759,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:50.819032+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:50.819032-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/sessions",
@@ -765,10 +791,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:54.906011+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:54.906011-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/sessions/{session_id}",
@@ -797,10 +824,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:59.000512+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:59.000512-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/sessions/{session_id}",
@@ -830,10 +858,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:03.094406+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:03.094406-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/sessions/{session_id}",
@@ -864,10 +893,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:07.172362+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:07.172362-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/sessions",
@@ -898,10 +928,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:11.267568+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:11.267568-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/tags",
@@ -926,10 +957,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:52.029845+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:52.029845-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/tags/{tag_name}/documents",
@@ -954,10 +986,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:56.131316+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:56.131316-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/tags/suggestions",
@@ -982,10 +1015,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/search/saved",
@@ -1010,10 +1044,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:39.782354+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:39.782354-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/search/saved",
@@ -1038,10 +1073,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:35.706392+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:35.706392-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/search/saved/{search_id}",
@@ -1066,10 +1102,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:47.950457+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:47.950457-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/search/history",
@@ -1094,10 +1131,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:43.871879+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:43.871879-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/search/analytics",
@@ -1119,10 +1157,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/ingest/upload",
@@ -1149,11 +1188,12 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:30.432957+00:00",
+      "modified_at": "2026-02-23T10:33:30.432957-03:00",
       "row_version": 2,
-      "_cached": true
+      "_cached": true,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/ingest/jobs/{job_id}",
@@ -1180,10 +1220,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:38.588251+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:38.588251-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/ingest/jobs",
@@ -1210,10 +1251,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:34.494062+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:34.494062-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/ingest/jobs/{job_id}",
@@ -1242,10 +1284,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:42.662487+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:42.662487-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/ingest/reprocess/{job_id}",
@@ -1274,10 +1317,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:33:46.744459+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:33:46.744459-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/ingest/stats",
@@ -1301,10 +1345,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/admin/users",
@@ -1326,10 +1371,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:27.533652+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:27.533652-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/groups",
@@ -1351,10 +1397,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-23T13:34:31.625084+00:00",
-      "row_version": 2
+      "modified_at": "2026-02-23T10:34:31.625084-03:00",
+      "row_version": 2,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/settings",
@@ -1378,12 +1425,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:10.352946+00:00",
+      "modified_at": "2026-02-22T23:48:10.352946-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 27
+      "repo_line": 27,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/settings/{key}",
@@ -1407,12 +1455,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:12.499303+00:00",
+      "modified_at": "2026-02-22T23:48:12.499303-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 27
+      "repo_line": 27,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/apps",
@@ -1436,12 +1485,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:14.634724+00:00",
+      "modified_at": "2026-02-22T23:48:14.634724-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/apps/{appId}/disable",
@@ -1465,12 +1515,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:16.751495+00:00",
+      "modified_at": "2026-02-22T23:48:16.751495-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/apps",
@@ -1494,12 +1545,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:18.875476+00:00",
+      "modified_at": "2026-02-22T23:48:18.875476-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/apps/{appId}",
@@ -1523,12 +1575,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:20.985161+00:00",
+      "modified_at": "2026-02-22T23:48:20.985161-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/apps/{appId}",
@@ -1554,12 +1607,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:23.109017+00:00",
+      "modified_at": "2026-02-22T23:48:23.109017-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/apps/{appId}",
@@ -1583,12 +1637,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:25.201616+00:00",
+      "modified_at": "2026-02-22T23:48:25.201616-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/apps/{appId}/export",
@@ -1612,12 +1667,13 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T02:48:27.292133+00:00",
+      "modified_at": "2026-02-22T23:48:27.292133-03:00",
       "row_version": 2,
       "_cached": true,
-      "repo_line": 28
+      "repo_line": 28,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/audit",
@@ -1641,10 +1697,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/audit/{log_id}",
@@ -1668,10 +1725,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/audit/export",
@@ -1695,10 +1753,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/audit/stats",
@@ -1722,10 +1781,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/content",
@@ -1749,10 +1809,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/content/{log_id}",
@@ -1776,10 +1837,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/content/export",
@@ -1803,10 +1865,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/logs/content/stats",
@@ -1830,10 +1893,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/math/solve",
@@ -1859,10 +1923,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/math/explain",
@@ -1888,10 +1953,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/math/convert",
@@ -1917,10 +1983,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/tabular/analyze",
@@ -1946,10 +2013,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/tabular/summarize",
@@ -1975,10 +2043,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/tabular/compare",
@@ -2004,10 +2073,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/assistant/tabular/extract",
@@ -2033,10 +2103,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/scrum/summary",
@@ -2060,10 +2131,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/scrum/dashboard",
@@ -2089,10 +2161,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/ingestion/runs",
@@ -2113,10 +2186,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/admin/ingestion/runs",
@@ -2137,10 +2211,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/admin/ingestion/runs/{runId}",
@@ -2161,10 +2236,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/search/health",
@@ -2185,10 +2261,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/admin/search/reindex",
@@ -2209,10 +2286,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/support/tickets",
@@ -2234,10 +2312,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/admin/support/tickets/{ticketId}",
@@ -2259,10 +2338,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/feature-flags",
@@ -2283,10 +2363,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/admin/feature-flags/{flagKey}",
@@ -2307,10 +2388,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/feature-flags/{flagKey}/history",
@@ -2331,10 +2413,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/admin/rbac/roles",
@@ -2355,10 +2438,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/admin/rbac/roles",
@@ -2379,10 +2463,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "PATCH /v1/admin/rbac/roles/{roleId}",
@@ -2403,10 +2488,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/admin/rbac/roles/{roleId}",
@@ -2427,10 +2513,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/finops/summary",
@@ -2452,10 +2539,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/finops/breakdown/services",
@@ -2477,10 +2565,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/finops/breakdown/personas",
@@ -2502,10 +2591,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/finops/breakdown/tenants",
@@ -2527,10 +2617,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/finops/alerts",
@@ -2552,10 +2643,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/finops/export",
@@ -2577,10 +2669,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/summary",
@@ -2602,10 +2695,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/services",
@@ -2627,10 +2721,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/pipelines",
@@ -2652,10 +2747,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/endpoints",
@@ -2677,10 +2773,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/sla",
@@ -2702,10 +2799,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/health/incidents",
@@ -2727,10 +2825,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/roles/acting-as",
@@ -2750,10 +2849,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/roles/acting-as",
@@ -2773,10 +2873,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/roles/context",
@@ -2796,10 +2897,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/roles/features",
@@ -2819,10 +2921,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/roles/check-feature",
@@ -2842,10 +2945,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/roles/personas",
@@ -2865,10 +2969,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /work-packages",
@@ -2888,10 +2993,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /work-packages",
@@ -2911,10 +3017,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /context-bundles",
@@ -2934,10 +3041,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /context-bundles",
@@ -2957,10 +3065,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /runs",
@@ -2980,10 +3089,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /runs",
@@ -3003,10 +3113,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /runs/{runId}/artifacts",
@@ -3026,10 +3137,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/userGroupInfo",
@@ -3047,10 +3159,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/featureFlags",
@@ -3068,10 +3181,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/conversation",
@@ -3092,10 +3206,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/chathistory/sessions",
@@ -3115,10 +3230,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/chathistory/session",
@@ -3138,10 +3254,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /api/chathistory/session",
@@ -3161,10 +3278,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/upload",
@@ -3184,10 +3302,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/uploadstatus",
@@ -3207,10 +3326,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /v1/rbac/assignments",
@@ -3231,10 +3351,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /v1/rbac/assignments",
@@ -3255,10 +3376,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "DELETE /v1/rbac/assignments/{id}",
@@ -3279,10 +3401,11 @@
       "source_file": "model/endpoints.json",
       "is_active": true,
       "created_by": "system:autoload",
-      "created_at": "2026-02-23T02:17:49.060387+00:00",
+      "created_at": "2026-02-22T23:17:49.060387-03:00",
       "modified_by": "system:autoload",
-      "modified_at": "2026-02-23T02:17:49.060387+00:00",
-      "row_version": 1
+      "modified_at": "2026-02-22T23:17:49.060387-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/applicationtitle",
@@ -3301,11 +3424,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.843573+00:00",
+      "modified_at": "2026-02-23T09:57:35.843573-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:55:50.391421+00:00",
+      "created_at": "2026-02-23T09:55:50.391421-03:00",
       "row_version": 2,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/feedback",
@@ -3324,11 +3448,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.845576+00:00",
+      "modified_at": "2026-02-23T09:57:35.845576-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:56:11.360452+00:00",
+      "created_at": "2026-02-23T09:56:11.360452-03:00",
       "row_version": 3,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/getfolders",
@@ -3347,11 +3472,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.847581+00:00",
+      "modified_at": "2026-02-23T09:57:35.847581-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.847581+00:00",
+      "created_at": "2026-02-23T09:57:35.847581-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/createfolder",
@@ -3370,11 +3496,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.850579+00:00",
+      "modified_at": "2026-02-23T09:57:35.850579-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.850579+00:00",
+      "created_at": "2026-02-23T09:57:35.850579-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/gettags",
@@ -3393,11 +3520,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.852585+00:00",
+      "modified_at": "2026-02-23T09:57:35.852585-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.852585+00:00",
+      "created_at": "2026-02-23T09:57:35.852585-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/translatefile",
@@ -3416,11 +3544,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.854582+00:00",
+      "modified_at": "2026-02-23T09:57:35.854582-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.854582+00:00",
+      "created_at": "2026-02-23T09:57:35.854582-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/urlscrape/preview",
@@ -3439,11 +3568,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.858036+00:00",
+      "modified_at": "2026-02-23T09:57:35.858036-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.858036+00:00",
+      "created_at": "2026-02-23T09:57:35.858036-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/urlscrape/submit",
@@ -3462,11 +3592,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.861301+00:00",
+      "modified_at": "2026-02-23T09:57:35.861301-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.861301+00:00",
+      "created_at": "2026-02-23T09:57:35.861301-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/tda/analyse",
@@ -3485,11 +3616,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.864295+00:00",
+      "modified_at": "2026-02-23T09:57:35.864295-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.864295+00:00",
+      "created_at": "2026-02-23T09:57:35.864295-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/tda/maxcsvfilesize",
@@ -3508,11 +3640,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.866291+00:00",
+      "modified_at": "2026-02-23T09:57:35.866291-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.866291+00:00",
+      "created_at": "2026-02-23T09:57:35.866291-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/tda/images",
@@ -3531,11 +3664,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.868297+00:00",
+      "modified_at": "2026-02-23T09:57:35.868297-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.868297+00:00",
+      "created_at": "2026-02-23T09:57:35.868297-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "GET /api/tda/output",
@@ -3554,11 +3688,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.871291+00:00",
+      "modified_at": "2026-02-23T09:57:35.871291-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.871291+00:00",
+      "created_at": "2026-02-23T09:57:35.871291-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "id": "POST /api/tutor/query",
@@ -3577,11 +3712,12 @@
       "cosmos_writes": [],
       "is_active": true,
       "modified_by": "anonymous",
-      "modified_at": "2026-02-23T12:57:35.874312+00:00",
+      "modified_at": "2026-02-23T09:57:35.874312-03:00",
       "created_by": "anonymous",
-      "created_at": "2026-02-23T12:57:35.874312+00:00",
+      "created_at": "2026-02-23T09:57:35.874312-03:00",
       "row_version": 1,
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3589,9 +3725,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/auth/me",
-      "modified_at": "2026-02-24T13:25:22.288926+00:00",
+      "modified_at": "2026-02-24T10:25:22.288926-03:00",
       "description": "Return current authenticated user identity, active persona, assigned roles, and feature flags.",
-      "created_at": "2026-02-24T13:13:13.463546+00:00",
+      "created_at": "2026-02-24T10:13:13.463546-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3600,7 +3736,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3608,9 +3745,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/auth/personas",
-      "modified_at": "2026-02-24T13:25:26.455601+00:00",
+      "modified_at": "2026-02-24T10:25:26.455601-03:00",
       "description": "List all available personas the current user may select from at login. Filtered by role membership.",
-      "created_at": "2026-02-24T13:13:15.555482+00:00",
+      "created_at": "2026-02-24T10:13:15.555482-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3619,7 +3756,8 @@
       "auth_required": false,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3628,9 +3766,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/auth/login",
-      "modified_at": "2026-02-24T13:25:30.603401+00:00",
+      "modified_at": "2026-02-24T10:25:30.603401-03:00",
       "description": "Initiate EVA login. Returns MSAL redirect URL or token if already authenticated via Entra ID.",
-      "created_at": "2026-02-24T13:13:17.630774+00:00",
+      "created_at": "2026-02-24T10:13:17.630774-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3639,7 +3777,8 @@
       "auth_required": false,
       "status": "planned",
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3647,9 +3786,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/auth/logout",
-      "modified_at": "2026-02-24T13:25:34.754268+00:00",
+      "modified_at": "2026-02-24T10:25:34.754268-03:00",
       "description": "Terminate the current EVA session and clear persona selection.",
-      "created_at": "2026-02-24T13:13:19.722341+00:00",
+      "created_at": "2026-02-24T10:13:19.722341-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3657,7 +3796,8 @@
       "method": "POST",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3666,9 +3806,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/auth/persona/select",
-      "modified_at": "2026-02-24T13:25:38.994627+00:00",
+      "modified_at": "2026-02-24T10:25:38.994627-03:00",
       "description": "Set or update the active persona for the current session. Persists preference. Affects navigation layout, feature flags, and default route returned to the portal.",
-      "created_at": "2026-02-24T13:13:21.789859+00:00",
+      "created_at": "2026-02-24T10:13:21.789859-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3676,7 +3816,8 @@
       "method": "POST",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3685,9 +3826,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/eva-da/chat",
-      "modified_at": "2026-02-24T13:25:43.159834+00:00",
+      "modified_at": "2026-02-24T10:25:43.159834-03:00",
       "description": "Main EVA DA chat endpoint. Accepts message + session_id + rag_mode (semantic|keyword|hybrid|reranked|multihop). Streams response via SSE. Replaces /api/conversation in jp-spark.",
-      "created_at": "2026-02-24T13:13:23.871630+00:00",
+      "created_at": "2026-02-24T10:13:23.87163-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3696,7 +3837,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3704,9 +3846,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/rag-modes",
-      "modified_at": "2026-02-24T13:25:47.312351+00:00",
+      "modified_at": "2026-02-24T10:25:47.312351-03:00",
       "description": "List available RAG modes for the current user/tenant: semantic, keyword, hybrid, re-ranked, multi-hop. Mode availability gated by feature flags.",
-      "created_at": "2026-02-24T13:13:25.949134+00:00",
+      "created_at": "2026-02-24T10:13:25.949134-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3715,7 +3857,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3724,9 +3867,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/eva-da/data/upload",
-      "modified_at": "2026-02-24T13:25:51.476142+00:00",
+      "modified_at": "2026-02-24T10:25:51.476142-03:00",
       "description": "Upload one or more files into the EVA DA knowledge base. Accepts multipart/form-data. Triggers async ingestion pipeline. Returns ingestion job_id.",
-      "created_at": "2026-02-24T13:13:28.040292+00:00",
+      "created_at": "2026-02-24T10:13:28.040292-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3735,7 +3878,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3743,9 +3887,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/data/folders",
-      "modified_at": "2026-02-24T13:25:55.634320+00:00",
+      "modified_at": "2026-02-24T10:25:55.63432-03:00",
       "description": "List all knowledge base folders available to the current user (mirrors /api/getfolders).",
-      "created_at": "2026-02-24T13:13:30.109972+00:00",
+      "created_at": "2026-02-24T10:13:30.109972-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3754,7 +3898,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3763,9 +3908,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/eva-da/data/folders",
-      "modified_at": "2026-02-24T13:25:59.787366+00:00",
+      "modified_at": "2026-02-24T10:25:59.787366-03:00",
       "description": "Create a new knowledge base folder. Folder names are unique per tenant.",
-      "created_at": "2026-02-24T13:13:32.196133+00:00",
+      "created_at": "2026-02-24T10:13:32.196133-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3773,7 +3918,8 @@
       "method": "POST",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3781,9 +3927,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/data/tags",
-      "modified_at": "2026-02-24T13:26:03.908045+00:00",
+      "modified_at": "2026-02-24T10:26:03.908045-03:00",
       "description": "List all tags in the knowledge base for the current tenant (mirrors /api/gettags).",
-      "created_at": "2026-02-24T13:13:34.246383+00:00",
+      "created_at": "2026-02-24T10:13:34.246383-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3792,7 +3938,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3800,9 +3947,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/data/status",
-      "modified_at": "2026-02-24T13:26:08.043364+00:00",
+      "modified_at": "2026-02-24T10:26:08.043364-03:00",
       "description": "Get ingestion status for recent uploads (mirrors /api/uploadstatus as a paginated list with job_id, filename, state, progress %).",
-      "created_at": "2026-02-24T13:13:36.326408+00:00",
+      "created_at": "2026-02-24T10:13:36.326408-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3811,7 +3958,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3820,9 +3968,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/eva-da/data/url-scrape",
-      "modified_at": "2026-02-24T13:26:12.208204+00:00",
+      "modified_at": "2026-02-24T10:26:12.208204-03:00",
       "description": "Scrape a public URL and ingest into knowledge base. Supports preview mode (returns extracted text + metadata without indexing) and submit mode.",
-      "created_at": "2026-02-24T13:13:38.417951+00:00",
+      "created_at": "2026-02-24T10:13:38.417951-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3831,7 +3979,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3839,9 +3988,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/knowledge",
-      "modified_at": "2026-02-24T13:26:16.402618+00:00",
+      "modified_at": "2026-02-24T10:26:16.402618-03:00",
       "description": "Browse the ingested knowledge base: paginated list of documents with folder, tags, ingestion_date, chunk_count. Filter by folder/tag. Supports keyword-in-metadata search.",
-      "created_at": "2026-02-24T13:13:40.533344+00:00",
+      "created_at": "2026-02-24T10:13:40.533344-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3850,7 +3999,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3859,9 +4009,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/eva-da/analysis",
-      "modified_at": "2026-02-24T13:26:20.580469+00:00",
+      "modified_at": "2026-02-24T10:26:20.580469-03:00",
       "description": "Tabular data analysis: upload CSV/Excel + natural-language question, returns streamed narrative + base64 chart images (mirrors /api/tda/analyse).",
-      "created_at": "2026-02-24T13:13:42.611013+00:00",
+      "created_at": "2026-02-24T10:13:42.611013-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3870,7 +4020,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3878,9 +4029,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/analysis/images",
-      "modified_at": "2026-02-24T13:26:24.756209+00:00",
+      "modified_at": "2026-02-24T10:26:24.756209-03:00",
       "description": "Retrieve generated chart images for a prior analysis run (mirrors /api/tda/images).",
-      "created_at": "2026-02-24T13:13:44.683455+00:00",
+      "created_at": "2026-02-24T10:13:44.683455-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3888,7 +4039,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3896,9 +4048,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/analysis/output",
-      "modified_at": "2026-02-24T13:26:28.889308+00:00",
+      "modified_at": "2026-02-24T10:26:28.889308-03:00",
       "description": "Retrieve the full analysis output (narrative + charts) for a completed run (mirrors /api/tda/output).",
-      "created_at": "2026-02-24T13:13:46.745684+00:00",
+      "created_at": "2026-02-24T10:13:46.745684-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3906,7 +4058,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3914,9 +4067,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/analysis/maxfilesize",
-      "modified_at": "2026-02-24T13:26:33.064374+00:00",
+      "modified_at": "2026-02-24T10:26:33.064374-03:00",
       "description": "Return max allowed CSV file size for analysis upload (mirrors /api/tda/maxcsvfilesize).",
-      "created_at": "2026-02-24T13:13:48.808544+00:00",
+      "created_at": "2026-02-24T10:13:48.808544-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3924,7 +4077,8 @@
       "method": "GET",
       "auth_required": false,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3933,9 +4087,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/eva-da/translate",
-      "modified_at": "2026-02-24T13:26:37.238092+00:00",
+      "modified_at": "2026-02-24T10:26:37.238092-03:00",
       "description": "Translate a document file into a target language and write result back to designated folder (mirrors /api/translatefile). Async; returns job_id.",
-      "created_at": "2026-02-24T13:13:50.900957+00:00",
+      "created_at": "2026-02-24T10:13:50.900957-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3943,7 +4097,8 @@
       "method": "POST",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3951,9 +4106,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/feedback",
-      "modified_at": "2026-02-24T13:26:41.400148+00:00",
+      "modified_at": "2026-02-24T10:26:41.400148-03:00",
       "description": "Admin endpoint: list all collected chat feedback (rating, comment, session_id, user_hash, timestamp). Paginated. Filter by date/rating. Admin + auditor roles.",
-      "created_at": "2026-02-24T13:13:52.965309+00:00",
+      "created_at": "2026-02-24T10:13:52.965309-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3962,7 +4117,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3970,9 +4126,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/eva-da/feedback/export",
-      "modified_at": "2026-02-24T13:26:45.569494+00:00",
+      "modified_at": "2026-02-24T10:26:45.569494-03:00",
       "description": "Export feedback as CSV for AI governance review cycle (19-ai-gov). Admin + auditor roles.",
-      "created_at": "2026-02-24T13:13:55.043365+00:00",
+      "created_at": "2026-02-24T10:13:55.043365-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3980,7 +4136,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -3988,9 +4145,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/admin/a11y/themes",
-      "modified_at": "2026-02-24T13:26:49.731842+00:00",
+      "modified_at": "2026-02-24T10:26:49.731842-03:00",
       "description": "List all registered accessibility themes (high-contrast, large-text, reduced-motion, etc.).",
-      "created_at": "2026-02-24T13:13:57.109496+00:00",
+      "created_at": "2026-02-24T10:13:57.109496-03:00",
       "row_version": 5,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -3998,7 +4155,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4007,9 +4165,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/admin/a11y/themes",
-      "modified_at": "2026-02-24T13:26:53.909478+00:00",
+      "modified_at": "2026-02-24T10:26:53.909478-03:00",
       "description": "Create a new accessibility theme with Fluent UI token overrides.",
-      "created_at": "2026-02-24T13:13:59.185234+00:00",
+      "created_at": "2026-02-24T10:13:59.185234-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4017,7 +4175,8 @@
       "method": "POST",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4026,9 +4185,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "PATCH /v1/admin/a11y/themes/{id}",
-      "modified_at": "2026-02-24T13:26:58.106268+00:00",
+      "modified_at": "2026-02-24T10:26:58.106268-03:00",
       "description": "Update an existing accessibility theme. Partial update (merge-patch semantics).",
-      "created_at": "2026-02-24T13:14:01.276079+00:00",
+      "created_at": "2026-02-24T10:14:01.276079-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4036,7 +4195,8 @@
       "method": "PATCH",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4044,9 +4204,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "DELETE /v1/admin/a11y/themes/{id}",
-      "modified_at": "2026-02-24T13:27:02.276718+00:00",
+      "modified_at": "2026-02-24T10:27:02.276718-03:00",
       "description": "Delete a custom accessibility theme. Blocked if the theme is currently active.",
-      "created_at": "2026-02-24T13:14:03.341069+00:00",
+      "created_at": "2026-02-24T10:14:03.341069-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4054,7 +4214,8 @@
       "method": "DELETE",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4062,9 +4223,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/admin/a11y/themes/active",
-      "modified_at": "2026-02-24T13:27:06.429236+00:00",
+      "modified_at": "2026-02-24T10:27:06.429236-03:00",
       "description": "Return the currently active system-wide accessibility theme token set.",
-      "created_at": "2026-02-24T13:14:05.432069+00:00",
+      "created_at": "2026-02-24T10:14:05.432069-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4072,7 +4233,8 @@
       "method": "GET",
       "auth_required": false,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-roles-api",
@@ -4080,9 +4242,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/rbac/responsibilities",
-      "modified_at": "2026-02-24T13:27:10.595634+00:00",
+      "modified_at": "2026-02-24T10:27:10.595634-03:00",
       "description": "Return the full RACI responsibility matrix: all roles x all actions with R/A/C/I designations. Powers RbacResponsibilitiesPage.",
-      "created_at": "2026-02-24T13:14:07.496452+00:00",
+      "created_at": "2026-02-24T10:14:07.496452-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4091,7 +4253,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-roles-api",
@@ -4100,9 +4263,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/rbac/act-as",
-      "modified_at": "2026-02-24T13:27:14.749426+00:00",
+      "modified_at": "2026-02-24T10:27:14.749426-03:00",
       "description": "Begin an Act-As session. Admin/support role assumes the identity of target_user_id for duration_minutes (default 30). Returns act_as_token. All subsequent API calls made with this token are audit-logged with both real + assumed identity.",
-      "created_at": "2026-02-24T13:14:09.572750+00:00",
+      "created_at": "2026-02-24T10:14:09.57275-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4111,7 +4274,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-roles-api",
@@ -4119,9 +4283,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "DELETE /v1/rbac/act-as",
-      "modified_at": "2026-02-24T13:27:18.918346+00:00",
+      "modified_at": "2026-02-24T10:27:18.918346-03:00",
       "description": "End the active Act-As session immediately. Clears the act_as_token and restores the caller's own identity.",
-      "created_at": "2026-02-24T13:14:11.636608+00:00",
+      "created_at": "2026-02-24T10:14:11.636608-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4129,7 +4293,8 @@
       "method": "DELETE",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4137,9 +4302,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/logs/system",
-      "modified_at": "2026-02-24T13:27:23.094427+00:00",
+      "modified_at": "2026-02-24T10:27:23.094427-03:00",
       "description": "Application/structural system logs (INFO/WARN/ERROR/FATAL). Filter by service, log level, time range. Paginated. Second logging lane vs audit logs (user-action / PIPEDA scope).",
-      "created_at": "2026-02-24T13:14:13.729242+00:00",
+      "created_at": "2026-02-24T10:14:13.729242-03:00",
       "row_version": 4,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4148,7 +4313,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4156,9 +4322,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/logs/system/export",
-      "modified_at": "2026-02-24T13:27:27.245886+00:00",
+      "modified_at": "2026-02-24T10:27:27.245886-03:00",
       "description": "Export system logs as JSONL or CSV with the same filters as GET /v1/logs/system.",
-      "created_at": "2026-02-24T13:14:15.821579+00:00",
+      "created_at": "2026-02-24T10:14:15.821579-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4166,7 +4332,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4174,9 +4341,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/config/translations/by-screen/{screenId}",
-      "modified_at": "2026-02-24T13:27:31.416749+00:00",
+      "modified_at": "2026-02-24T10:27:31.416749-03:00",
       "description": "Return all literals belonging to the specified screen ID, in all registered languages. Powers AdminI18nByScreenPage screen-scoped editor.",
-      "created_at": "2026-02-24T13:14:17.900794+00:00",
+      "created_at": "2026-02-24T10:14:17.900794-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4185,7 +4352,8 @@
       "auth_required": true,
       "status": "planned",
       "method": "GET",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4193,9 +4361,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/config/translations/import",
-      "modified_at": "2026-02-24T13:27:35.577201+00:00",
+      "modified_at": "2026-02-24T10:27:35.577201-03:00",
       "description": "Bulk import translations from a CSV upload. CSV format: key,language,value. Validates all keys exist in the literals model before applying. Returns validation_errors + applied_count.",
-      "created_at": "2026-02-24T13:14:19.996326+00:00",
+      "created_at": "2026-02-24T10:14:19.996326-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "request_schema": "TranslationImportRequest",
@@ -4204,7 +4372,8 @@
       "auth_required": true,
       "status": "planned",
       "cosmos_reads": [],
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4212,9 +4381,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/redteam/results",
-      "modified_at": "2026-02-24T13:27:39.763368+00:00",
+      "modified_at": "2026-02-24T10:27:39.763368-03:00",
       "description": "List red teaming test results across all runs: per-prompt pass/fail, vulnerability category (OWASP LLM Top 10), severity, timestamp. Used by RedTeamingPage.",
-      "created_at": "2026-02-24T13:14:22.073439+00:00",
+      "created_at": "2026-02-24T10:14:22.073439-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4222,7 +4391,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4230,9 +4400,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/redteam/runs",
-      "modified_at": "2026-02-24T13:27:43.937146+00:00",
+      "modified_at": "2026-02-24T10:27:43.937146-03:00",
       "description": "List all red-team test run records with summary stats (pass%, fail_count, critical_count).",
-      "created_at": "2026-02-24T13:14:24.135652+00:00",
+      "created_at": "2026-02-24T10:14:24.135652-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4240,7 +4410,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4248,9 +4419,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/redteam/run",
-      "modified_at": "2026-02-24T13:27:48.121744+00:00",
+      "modified_at": "2026-02-24T10:27:48.121744-03:00",
       "description": "Trigger a new Promptfoo red-team run against the current EVA DA chat endpoint. Returns run_id. Async; poll GET /v1/redteam/runs/{run_id} for status.",
-      "created_at": "2026-02-24T13:14:26.211221+00:00",
+      "created_at": "2026-02-24T10:14:26.211221-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "request_schema": "RedTeamRunRequest",
@@ -4259,7 +4430,8 @@
       "auth_required": true,
       "status": "planned",
       "cosmos_reads": [],
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4267,9 +4439,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/redteam/config",
-      "modified_at": "2026-02-24T13:27:52.293332+00:00",
+      "modified_at": "2026-02-24T10:27:52.293332-03:00",
       "description": "Return current Promptfoo test suite configuration (plugins enabled, target model, threshold settings).",
-      "created_at": "2026-02-24T13:14:28.288139+00:00",
+      "created_at": "2026-02-24T10:14:28.288139-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4277,7 +4449,8 @@
       "method": "GET",
       "auth_required": true,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4285,10 +4458,10 @@
       "path": "/v1/assistme/chat",
       "cosmos_writes": [],
       "id": "POST /v1/assistme/chat",
-      "modified_at": "2026-02-24T13:27:56.455196+00:00",
+      "modified_at": "2026-02-24T10:27:56.455196-03:00",
       "is_active": true,
       "description": "Citizen-facing AssistMe chat: no authentication required for citizen persona. Returns streamed bilingual (EN/FR) response. Limited to curated knowledge base (citizen topics).",
-      "created_at": "2026-02-24T13:14:30.365538+00:00",
+      "created_at": "2026-02-24T10:14:30.365538-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "request_schema": "AssistMeChatRequest",
@@ -4297,7 +4470,8 @@
       "status": "planned",
       "cosmos_reads": [],
       "method": "POST",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4305,9 +4479,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/assistme/topics",
-      "modified_at": "2026-02-24T13:28:00.637617+00:00",
+      "modified_at": "2026-02-24T10:28:00.637617-03:00",
       "description": "List curated topic cards for the AssistMe citizen portal. Returns topic_id, title_en, title_fr, icon, description.",
-      "created_at": "2026-02-24T13:14:32.430216+00:00",
+      "created_at": "2026-02-24T10:14:32.430216-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
@@ -4315,7 +4489,8 @@
       "method": "GET",
       "auth_required": false,
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "eva-brain-api",
@@ -4323,9 +4498,9 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "POST /v1/assistme/feedback",
-      "modified_at": "2026-02-24T13:28:04.800027+00:00",
+      "modified_at": "2026-02-24T10:28:04.800027-03:00",
       "description": "Submit citizen feedback on an AssistMe response. Appends to the same feedback store as EVA DA feedback.",
-      "created_at": "2026-02-24T13:14:34.524668+00:00",
+      "created_at": "2026-02-24T10:14:34.524668-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "request_schema": "FeedbackRequest",
@@ -4334,7 +4509,8 @@
       "auth_required": false,
       "status": "planned",
       "cosmos_reads": [],
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4342,15 +4518,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/rbac/roles",
-      "modified_at": "2026-02-24T13:28:08.959059+00:00",
+      "modified_at": "2026-02-24T10:28:08.959059-03:00",
       "path": "/v1/rbac/roles",
-      "created_at": "2026-02-24T13:20:20.325076+00:00",
+      "created_at": "2026-02-24T10:20:20.325076-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4358,15 +4535,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/scrum/sprints",
-      "modified_at": "2026-02-24T13:28:13.132353+00:00",
+      "modified_at": "2026-02-24T10:28:13.132353-03:00",
       "path": "/v1/scrum/sprints",
-      "created_at": "2026-02-24T13:20:22.403488+00:00",
+      "created_at": "2026-02-24T10:20:22.403488-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4374,15 +4552,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /v1/scrum/pbis",
-      "modified_at": "2026-02-24T13:28:17.299807+00:00",
+      "modified_at": "2026-02-24T10:28:17.299807-03:00",
       "path": "/v1/scrum/pbis",
-      "created_at": "2026-02-24T13:20:24.492297+00:00",
+      "created_at": "2026-02-24T10:20:24.492297-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4390,15 +4569,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /model/services/",
-      "modified_at": "2026-02-24T13:28:21.474999+00:00",
+      "modified_at": "2026-02-24T10:28:21.474999-03:00",
       "path": "/model/services/",
-      "created_at": "2026-02-24T13:20:27.022596+00:00",
+      "created_at": "2026-02-24T10:20:27.022596-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4406,15 +4586,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /model/graph/",
-      "modified_at": "2026-02-24T13:28:25.652247+00:00",
+      "modified_at": "2026-02-24T10:28:25.652247-03:00",
       "path": "/model/graph/",
-      "created_at": "2026-02-24T13:20:29.087019+00:00",
+      "created_at": "2026-02-24T10:20:29.087019-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4422,15 +4603,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /model/services/{id}",
-      "modified_at": "2026-02-24T13:28:29.831904+00:00",
+      "modified_at": "2026-02-24T10:28:29.831904-03:00",
       "path": "/model/services/{id}",
-      "created_at": "2026-02-24T13:20:31.175569+00:00",
+      "created_at": "2026-02-24T10:20:31.175569-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "service": "model-api",
@@ -4438,15 +4620,16 @@
       "is_active": true,
       "cosmos_writes": [],
       "id": "GET /model/impact/",
-      "modified_at": "2026-02-24T13:28:34.009411+00:00",
+      "modified_at": "2026-02-24T10:28:34.009411-03:00",
       "path": "/model/impact/",
-      "created_at": "2026-02-24T13:20:33.278780+00:00",
+      "created_at": "2026-02-24T10:20:33.27878-03:00",
       "row_version": 3,
       "created_by": "agent:copilot",
       "cosmos_reads": [],
       "method": "GET",
       "status": "planned",
-      "source_file": "model/endpoints.json"
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     },
     {
       "method": "GET",
@@ -4460,10 +4643,11 @@
       "path": "/v1/config/translations/export",
       "status": "planned",
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-24T14:48:09.271811+00:00",
+      "modified_at": "2026-02-24T11:48:09.271811-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-24T14:48:09.271811+00:00",
-      "row_version": 1
+      "created_at": "2026-02-24T11:48:09.271811-03:00",
+      "row_version": 1,
+      "layer": "endpoints"
     },
     {
       "id": "POST /model/admin/audit-repo",
@@ -4479,10 +4663,11 @@
       "source_file": "api/routers/admin.py",
       "is_active": true,
       "modified_by": "agent:veritas",
-      "modified_at": "2026-02-24T21:51:26.721407+00:00",
+      "modified_at": "2026-02-24T18:51:26.721407-03:00",
       "created_by": "agent:veritas",
-      "created_at": "2026-02-24T21:50:37.634514+00:00",
-      "row_version": 5
+      "created_at": "2026-02-24T18:50:37.634514-03:00",
+      "row_version": 5,
+      "layer": "endpoints"
     },
     {
       "id": "POST /agents/session-workflow-agent/invoke",
@@ -4499,10 +4684,42 @@
       "repo_path": "29-foundry/server/main.py",
       "repo_line": 68,
       "modified_by": "agent:copilot",
-      "modified_at": "2026-02-25T00:38:14.625370+00:00",
+      "modified_at": "2026-02-24T21:38:14.62537-03:00",
       "created_by": "agent:copilot",
-      "created_at": "2026-02-25T00:33:57.768801+00:00",
-      "row_version": 6
+      "created_at": "2026-02-24T21:33:57.768801-03:00",
+      "row_version": 6,
+      "layer": "endpoints"
+    },
+    {
+      "id": "POST /model/wbs/sync-from-ado",
+      "method": "POST",
+      "path": "/model/wbs/sync-from-ado",
+      "service": "model-api",
+      "tag": "wbs",
+      "summary": "Trigger ADO->WBS field sync: pulls State, IterationPath, StoryPoints, AssignedTo and writes sprint_id, story_points, owner, status to WBS layer",
+      "auth": [
+        "admin"
+      ],
+      "auth_mode": "any",
+      "feature_flag": null,
+      "cosmos_reads": [
+        "model_objects"
+      ],
+      "cosmos_writes": [
+        "model_objects"
+      ],
+      "implemented_in": "48-eva-veritas/.evidence/20260225-dpdca/wbs-ado-sync.ps1",
+      "repo_line": 1,
+      "status": "stub",
+      "is_active": true,
+      "wbs_id": "F37-SYNC-001",
+      "modified_by": "agent:copilot",
+      "modified_at": "2026-02-25T13:02:44.496746-03:00",
+      "created_by": "agent:copilot",
+      "created_at": "2026-02-25T13:00:32.222594-03:00",
+      "row_version": 6,
+      "source_file": "model/endpoints.json",
+      "layer": "endpoints"
     }
   ]
 }
