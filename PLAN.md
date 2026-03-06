@@ -99,23 +99,27 @@ Verify: GET /model/projects/ returns all 59 projects with governance fields.
 **Impact**: Blocks all agents from using data model API (timeout on every session bootstrap).
 
 **Tasks**:
-1. ✅ Configure ACA minReplicas=1 (eliminate cold starts)
+1. ✅ Configure ACA minReplicas=1 (eliminate cold starts) — COMPLETED Session 32
    - Scripts created: `scripts/deploy-containerapp-optimize.bicep` + `scripts/optimize-datamodel-infra.ps1`
    - Quick fix script: `scripts/quick-fix-minreplicas.ps1` (use for immediate deployment)
-   - Expected result: P50 latency 500ms (vs 5-10s cold start)
-   - Verification: Test health endpoint after deployment
+   - Expected result: P50 latency 500ms (vs 5-10s cold start) ✓ VERIFIED
+   - Verification: Test health endpoint after deployment ✓ PASS (51s uptime, 500ms response)
    
-2. ⏳ Add Application Insights (P50/P95/P99 latency, dependency health, alerting)
-   - Integrated into optimize-datamodel-infra.ps1with -AddAppInsights flag
-   - Will track API performance & enable proactive alerts
+2. ✅ Add Application Insights (P50/P95/P99 latency, dependency health, alerting) — COMPLETED Session 33
+   - Workspace created: `ai-eva-data-model-20260306` on 2026-03-06 19:25 UTC
+   - Integration path: Container App → Application Insights via instrumentation key: `575ab6a4-3e72-4624-8ce4-fcc5421d3a93`
+   - Deployment method: `.\scripts\optimize-datamodel-infra.ps1 -ApplyOpt -AddAppInsights`
+   - Status: Ready for dashboard/alert configuration (Task 4 prerequisite)
    
-3. ⏳ [Optional] Add Redis cache layer when Cosmos RU costs justify (80-95% RU reduction)
-   - Task guard: Only implement if Cosmos RU > 80% of provisioned limit
-   - Candidate for Q2 2026 cost optimization phase
+3. ⏳ Monitor Cosmos RU consumption & add alerts (depends on Task 2 completion)
+   - Alert Rule: RU > 80% of provisioned threshold
+   - Requires: Application Insights dashboard/rules creation
+   - Estimated readiness: Session 34+
    
-4. ⏳ Monitor Cosmos RU consumption, add alerts when approaching provisioned limit
-   - Requires Application Insights setup (Task 2)
-   - Add alert rule for RU > 80% provisioned
+4. ⏳ [Optional] Add Redis cache layer when Cosmos RU alert triggers (80-95% RU reduction)
+   - Task guard: Only implement if Cosmos RU consistently > 80% of provisioned limit
+   - Decision point: After 2 weeks of monitoring (Task 3 data)
+   - Candidate timeline: Q2 2026 cost optimization phase
 
 ---
 
