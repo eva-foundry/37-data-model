@@ -1,0 +1,64 @@
+{
+  "audit_report": {
+    "timestamp": "2026-03-06T17:57:52.601335Z",
+    "project_id": "37-data-model",
+    "phases": {
+      "bootstrap": {
+        "status": "complete",
+        "docs": [
+          "README.md",
+          "PLAN.md",
+          "STATUS.md",
+          "ACCEPTANCE.md"
+        ]
+      },
+      "decompose": {
+        "status": "in_progress",
+        "target": "epics/features/stories"
+      },
+      "register": {
+        "status": "complete",
+        "location": "data model cloud"
+      },
+      "execute": {
+        "status": "in_progress",
+        "target": "DPDCA evidence"
+      },
+      "verify": {
+        "status": "pending",
+        "target": "eva-veritas audit"
+      }
+    },
+    "findings": {
+      "current_state": {
+        "documentation": "COMPLETE",
+        "wbs_current": "1 deliverable (WBS-037)",
+        "epics": 0,
+        "features": 0,
+        "stories": 0,
+        "evidence_records": 0,
+        "pbis_completed": "6/7"
+      },
+      "gaps": [],
+      "recommendations": [],
+      "mti": {
+        "score": 100.6,
+        "coverage": 100.0,
+        "evidence": 104.0,
+        "consistency": 95,
+        "gate": "\u2705 DEPLOY approved",
+        "gaps": []
+      }
+    }
+  },
+  "wbs_records_count": 81,
+  "evidence_records_count": 52,
+  "execution_timestamp": "2026-03-06T17:57:52.601335Z",
+  "generated_records_summary": {
+    "deliverables": 1,
+    "epics": 5,
+    "features": 25,
+    "stories": 50,
+    "evidence": 52
+  }
+}
