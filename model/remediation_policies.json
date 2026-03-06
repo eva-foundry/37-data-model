@@ -1,0 +1,309 @@
+{
+  "$metadata": {
+    "layer_id": "L48",
+    "layer_name": "remediation_policies",
+    "version": "1.0.0",
+    "created": "2026-03-06T21:49:00Z",
+    "source": "EVA Automated Remediation Framework",
+    "queryable_as": "/model/remediation_policies",
+    "description": "Unified decision framework for auto-remediation across agents, infrastructure, and policies"
+  },
+  "remediation_policies": [
+    {
+      "policy_id": "policy:agent-performance-recovery",
+      "policy_name": "Agent Performance Recovery",
+      "scope": "agent_self_healing",
+      "description": "Automatically remediate agent performance degradation",
+      "triggers": [
+        {
+          "trigger_id": "trigger:low-reliability",
+          "metric": "reliability_percent",
+          "threshold": 75,
+          "comparison": "less_than",
+          "duration_minutes": 30,
+          "condition": "reliability < 75% for 30+ minutes"
+        },
+        {
+          "trigger_id": "trigger:high-error-rate",
+          "metric": "error_rate_percent",
+          "threshold": 5,
+          "comparison": "greater_than",
+          "duration_minutes": 10,
+          "condition": "error rate > 5% for 10+ minutes"
+        },
+        {
+          "trigger_id": "trigger:slow-response",
+          "metric": "response_time_ms",
+          "threshold": 2000,
+          "comparison": "greater_than",
+          "duration_minutes": 5,
+          "condition": "response time > 2000ms for 5+ minutes"
+        }
+      ],
+      "remediation_actions": [
+        {
+          "action_id": "action:restart-agent",
+          "action_name": "Restart Agent Container",
+          "order": 1,
+          "command": "restart_container(agent_id)",
+          "expected_impact": "Clear transient state, recover from deadlock",
+          "estimated_duration_seconds": 30,
+          "rollback_strategy": "restore_from_snapshot",
+          "success_metric": "reliability > 85% within 60s post-restart",
+          "enabled": true
+        },
+        {
+          "action_id": "action:reload-model",
+          "action_name": "Reload LLM Model Weights",
+          "order": 2,
+          "command": "reload_llm_model(agent_id)",
+          "expected_impact": "Recover from corrupted model state or memory leak",
+          "estimated_duration_seconds": 60,
+          "rollback_strategy": "restore_from_backup",
+          "success_metric": "error_rate < 2% within 120s post-reload",
+          "enabled": true
+        },
+        {
+          "action_id": "action:reduce-concurrency",
+          "action_name": "Reduce Concurrent Request Limit",
+          "order": 3,
+          "command": "set_concurrency_limit(agent_id, 2)",
+          "expected_impact": "Reduce load while investigating root cause",
+          "estimated_duration_seconds": 5,
+          "rollback_strategy": "restore_original_limit(agent_id)",
+          "success_metric": "response_time < 1000ms within 30s",
+          "enabled": true
+        }
+      ],
+      "approval_required": false,
+      "auto_execute": true,
+      "enabled": true,
+      "priority": "high",
+      "linked_policies": ["L33:agent-restart-policy", "L36:escalation-policy"],
+      "affected_agents": ["system:validator", "system:iac-deployer", "system:cost-optimizer"],
+      "created": "2026-03-06T21:49:00Z",
+      "last_updated": "2026-03-06T21:49:00Z"
+    },
+    {
+      "policy_id": "policy:infrastructure-autoscale",
+      "policy_name": "Infrastructure Auto-Scale",
+      "scope": "infrastructure_remediation",
+      "description": "Automatically scale infrastructure when performance thresholds exceeded",
+      "triggers": [
+        {
+          "trigger_id": "trigger:high-latency",
+          "metric": "latency_p95_ms",
+          "threshold": 1000,
+          "comparison": "greater_than",
+          "duration_minutes": 5,
+          "condition": "P95 latency > 1000ms for 5+ minutes"
+        },
+        {
+          "trigger_id": "trigger:high-cpu",
+          "metric": "container_cpu_percent",
+          "threshold": 80,
+          "comparison": "greater_than",
+          "duration_minutes": 3,
+          "condition": "CPU utilization > 80% for 3+ minutes"
+        },
+        {
+          "trigger_id": "trigger:memory-pressure",
+          "metric": "container_memory_percent",
+          "threshold": 85,
+          "comparison": "greater_than",
+          "duration_minutes": 2,
+          "condition": "Memory utilization > 85% for 2+ minutes"
+        }
+      ],
+      "remediation_actions": [
+        {
+          "action_id": "action:increase-replicas",
+          "action_name": "Add Container Replicas",
+          "order": 1,
+          "command": "scale_containerapp(app_id, +1)",
+          "expected_impact": "Distribute load across more instances, reduce per-instance latency",
+          "estimated_duration_seconds": 120,
+          "rollback_strategy": "scale_back_down(app_id)",
+          "success_metric": "latency_p95 < 500ms within 180s",
+          "enabled": true,
+          "max_replicas": 5
+        },
+        {
+          "action_id": "action:upgrade-sku",
+          "action_name": "Upgrade Container SKU",
+          "order": 2,
+          "command": "upgrade_containerapp_sku(app_id, 'Premium')",
+          "expected_impact": "Increase CPU/RAM for single container, improve throughput",
+          "estimated_duration_seconds": 300,
+          "rollback_strategy": "downgrade_sku(app_id, 'Standard')",
+          "success_metric": "cpu_percent < 60% within 300s",
+          "enabled": true
+        }
+      ],
+      "approval_required": true,
+      "auto_execute": false,
+      "enabled": true,
+      "priority": "medium",
+      "linked_policies": ["L36:autoscale-policy", "L37:cost-control"],
+      "cost_limits_usd_per_month": 500,
+      "notification_channels": ["team-slack", "on-call-pagerduty"],
+      "created": "2026-03-06T21:49:00Z",
+      "last_updated": "2026-03-06T21:49:00Z"
+    },
+    {
+      "policy_id": "policy:deployment-quality-gate",
+      "policy_name": "Deployment Quality Auto-Gate",
+      "scope": "policy_enforcement",
+      "description": "Automatically block low-quality deployments at policy enforcement layer",
+      "triggers": [
+        {
+          "trigger_id": "trigger:low-quality",
+          "metric": "deployment_quality_score",
+          "threshold": 85,
+          "comparison": "less_than",
+          "condition": "quality grade < B (85/100)"
+        },
+        {
+          "trigger_id": "trigger:low-compliance",
+          "metric": "compliance_score_percent",
+          "threshold": 80,
+          "comparison": "less_than",
+          "condition": "compliance < 80%"
+        },
+        {
+          "trigger_id": "trigger:safety-violations",
+          "metric": "safety_violations_count",
+          "threshold": 1,
+          "comparison": "greater_than_or_equal",
+          "condition": "detected any safety violations"
+        }
+      ],
+      "remediation_actions": [
+        {
+          "action_id": "action:auto-deny-deployment",
+          "action_name": "Auto-Deny Low-Quality Deployment",
+          "order": 1,
+          "command": "deny_deployment(deployment_id, 'quality_gate_failed')",
+          "expected_impact": "Prevent low-quality code from reaching production",
+          "estimated_duration_seconds": 1,
+          "rollback_strategy": "none",
+          "success_metric": "deployment blocked, not executed",
+          "enabled": true
+        },
+        {
+          "action_id": "action:notify-team",
+          "action_name": "Notify Engineering Team",
+          "order": 2,
+          "command": "send_notification(team_id, deployment_id, 'Deployment blocked - quality gate')",
+          "expected_impact": "Prompt investigation and fix by engineering team",
+          "estimated_duration_seconds": 5,
+          "rollback_strategy": "none",
+          "success_metric": "notification delivered successfully",
+          "enabled": true
+        },
+        {
+          "action_id": "action:log-evidence",
+          "action_name": "Log Evidence for Audit Trail",
+          "order": 3,
+          "command": "append_to_evidence_log(deployment_id, 'auto_gate_denial')",
+          "expected_impact": "Create SOC2/HIPAA-compliant audit record",
+          "estimated_duration_seconds": 2,
+          "rollback_strategy": "none",
+          "success_metric": "evidence recorded in L31",
+          "enabled": true
+        }
+      ],
+      "approval_required": false,
+      "auto_execute": true,
+      "enabled": true,
+      "priority": "critical",
+      "linked_policies": ["L35:quality-gates", "L33:deployment-policy", "L37:compliance-controls"],
+      "audit_required": true,
+      "created": "2026-03-06T21:49:00Z",
+      "last_updated": "2026-03-06T21:49:00Z"
+    },
+    {
+      "policy_id": "policy:cost-anomaly-detection",
+      "policy_name": "Cost Anomaly Auto-Recovery",
+      "scope": "agent_self_healing",
+      "description": "Automatically throttle high-cost agents when spending exceeds threshold",
+      "triggers": [
+        {
+          "trigger_id": "trigger:cost-spike",
+          "metric": "hourly_cost_usd",
+          "threshold": 50,
+          "comparison": "greater_than",
+          "condition": "hourly cost > $50"
+        },
+        {
+          "trigger_id": "trigger:budget-exceeded",
+          "metric": "monthly_cost_percent_of_budget",
+          "threshold": 90,
+          "comparison": "greater_than",
+          "condition": "spent 90%+ of monthly budget"
+        }
+      ],
+      "remediation_actions": [
+        {
+          "action_id": "action:throttle-llm-calls",
+          "action_name": "Throttle LLM API Calls",
+          "order": 1,
+          "command": "set_throttle_rate(agent_id, 0.5)",
+          "expected_impact": "Reduce cost by 50% (process fewer requests)",
+          "estimated_duration_seconds": 5,
+          "rollback_strategy": "restore_normal_rate(agent_id)",
+          "success_metric": "hourly_cost < $25 within 600s",
+          "enabled": true
+        },
+        {
+          "action_id": "action:alert-team",
+          "action_name": "Alert Finance Team",
+          "order": 2,
+          "command": "send_cost_alert(finance_team, agent_id, reason)",
+          "expected_impact": "Enable manual budget review and approval",
+          "estimated_duration_seconds": 10,
+          "rollback_strategy": "none",
+          "success_metric": "alert sent successfully",
+          "enabled": true
+        }
+      ],
+      "approval_required": false,
+      "auto_execute": true,
+      "enabled": true,
+      "priority": "medium",
+      "linked_policies": ["L37:cost-control", "L36:budget-policy"],
+      "cost_threshold_monthly_usd": 1000,
+      "created": "2026-03-06T21:49:00Z",
+      "last_updated": "2026-03-06T21:49:00Z"
+    }
+  ],
+  "policy_summary": {
+    "total_policies": 4,
+    "scope_breakdown": {
+      "agent_self_healing": 2,
+      "infrastructure_remediation": 1,
+      "policy_enforcement": 1
+    },
+    "approval_required_count": 1,
+    "auto_execute_count": 3,
+    "enabled_count": 4,
+    "critical_priority": 1,
+    "high_priority": 1,
+    "medium_priority": 2
+  },
+  "integration_summary": {
+    "data_sources": [
+      "L44 - agent_performance_metrics",
+      "L45 - deployment_quality_scores",
+      "L46 - agent_execution_history",
+      "L47 - performance_trends"
+    ],
+    "linked_policies": [
+      "L33 - agent_policies",
+      "L35 - quality_gates",
+      "L36 - deployment_policies",
+      "L37 - risk_controls"
+    ],
+    "decision_flow": "L48 (policy) → L44/L45/L47 (metrics) → trigger match? → L49 (execute) → L50 (outcome) → L51 (effectiveness)"
+  }
+}
