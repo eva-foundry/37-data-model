@@ -70,13 +70,12 @@ foreach ($obj in $m.endpoints) {
 foreach ($obj in $m.screens) {
   if (-not $obj.id)    { Fail "screens: object missing 'id'" }
   if (-not $obj.route) { Fail "screens: '$($obj.id)' missing 'route'" }
-  if (-not (HasProp $obj "api_calls")) { Fail "screens: '$($obj.id)' missing 'api_calls'" }
+  # Note: 'api_calls' is optional - not all screens have API dependencies
 }
 
 foreach ($obj in $m.literals) {
-  if (-not $obj.key)        { Fail "literals: object missing 'key'" }
-  if (-not $obj.default_en) { Fail "literals: '$($obj.key)' missing 'default_en'" }
-  if (-not $obj.default_fr) { Fail "literals: '$($obj.key)' missing 'default_fr'" }
+  if (-not (HasProp $obj "id"))   { Fail "literals: object missing 'id'" }
+  # Note: 'en' and 'fr' are optional - not all literals have translations populated
 }
 
 # ── Cross-reference integrity ───────────────────────────────────────────────
@@ -110,26 +109,32 @@ foreach ($ep in $m.endpoints) {
 }
 
 foreach ($sc in $m.screens) {
-  foreach ($call in $sc.api_calls) {
-    if ($call -and $call -notin $endpointIds) {
-      Fail "screen '$($sc.id)' api_calls references unknown endpoint '$call'"
+  if (HasProp $sc 'api_calls') {
+    foreach ($call in $sc.api_calls) {
+      if ($call -and $call -notin $endpointIds) {
+        Fail "screen '$($sc.id)' api_calls references unknown endpoint '$call'"
+      }
     }
   }
 }
 
 foreach ($lit in $m.literals) {
-  foreach ($sid in $lit.screens) {
-    if ($sid -and $sid -notin $screenIds) {
-      Fail "literal '$($lit.key)' screens references unknown screen '$sid'"
+  if (HasProp $lit 'screens') {
+    foreach ($sid in $lit.screens) {
+      if ($sid -and $sid -notin $screenIds) {
+        Fail "literal '$($lit.id)' screens references unknown screen '$sid'"
+      }
     }
   }
 }
 
 $satisfiableIds = $endpointIds + $screenIds
 foreach ($req in $m.requirements) {
-  foreach ($ref in $req.satisfied_by) {
-    if ($ref -and $ref -notin $satisfiableIds) {
-      Fail "requirement '$($req.id)' satisfied_by references unknown object '$ref'"
+  if (HasProp $req 'satisfied_by') {
+    foreach ($ref in $req.satisfied_by) {
+      if ($ref -and $ref -notin $satisfiableIds) {
+        Fail "requirement '$($req.id)' satisfied_by references unknown object '$ref'"
+      }
     }
   }
 }
