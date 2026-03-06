@@ -259,15 +259,17 @@ async def list_layers(request: Request):
     """
     store = request.app.state.store
     
-    # List of all known layers (from layers.py)
+    # List of all known layers (from layers.py + Session 28-30 additions)
     known_layers = [
-        "services", "personas", "feature_flags", "containers", "schemas", 
+        "services", "personas", "feature_flags", "containers", "endpoints",
         "screens", "literals", "agents", "infrastructure", "requirements",
         "planes", "connections", "environments", "cp_skills", "cp_agents",
-        "runbooks", "cp_workflows", "cp_policies", "mcp_servers", "prompts",
-        "security_controls", "components", "hooks", "ts_types", "projects",
-        "wbs", "sprints", "milestones", "risks", "decisions", "traces",
-        "evidence", "workspace_config", "project_work"
+        "runbooks", "cp_workflows", "cp_policies", "components", "hooks",
+        "ts_types", "mcp_servers", "prompts", "security_controls", "projects",
+        "wbs", "sprints", "milestones", "risks", "decisions", "evidence",
+        "traces", "workspace_config", "project_work", "agent_policies",
+        "quality_gates", "github_rules", "deployment_policies", "testing_policies",
+        "validation_rules"
     ]
     
     layers_info = []

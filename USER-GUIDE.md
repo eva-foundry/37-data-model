@@ -66,6 +66,53 @@ The API returns a JSON object with these sections:
 
 ---
 
+## Copy-Paste Quick Start
+
+**3 working examples to get productive in 60 seconds:**
+
+### Example 1: Get Endpoints for a Service
+```powershell
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+$endpoints = Invoke-RestMethod "$base/model/endpoints/?service=eva-brain-api&limit=10"
+$endpoints | Select-Object id, method, path, status | Format-Table
+```
+
+### Example 2: Count Projects by Maturity
+```powershell
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+$projects = Invoke-RestMethod "$base/model/projects/"
+$projects | Group-Object maturity | Select-Object Name, Count | Format-Table
+```
+
+### Example 3: Discover Layer Schema
+```powershell
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+$fields = Invoke-RestMethod "$base/model/projects/fields"
+Write-Host "Available fields: $($fields -join ', ')"
+$example = Invoke-RestMethod "$base/model/projects/example"
+$example | Format-List
+```
+
+---
+
+## PowerShell Tip: Counting Nested Objects
+
+When counting properties in nested objects from the API:
+
+**❌ Don't use:**
+```powershell
+$guide.common_mistakes.PSObject.Properties.Count  # Prints "1 1 1 1 1 1 1 1 1"
+```
+
+**✅ Use instead:**
+```powershell
+($guide.common_mistakes.PSObject.Properties | Measure-Object).Count  # Prints "9"
+```
+
+This is a PowerShell display quirk, not an API issue.
+
+---
+
 ## Emergency: If API Is Down
 
 If the API is unreachable, the backup guide is in your conversation history. But **ALWAYS try the API first** - it has the latest guidance including lessons learned from recent sessions.
