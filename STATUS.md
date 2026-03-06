@@ -1,8 +1,8 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 6, 2026 4:37 PM ET -- Session 31: INFRASTRUCTURE AUTOMATION LAYERS (L40-L43) ACTIVATED ✅
-**Phase:** ACTIVE -- CLOUD DEPLOYED -- 45 LAYERS -- INFRASTRUCTURE AUTOMATION COMPLETE ✅
-**Snapshot (2026-03-06 S31 COMPLETE):** L40-L43 infrastructure layers created & populated. Deployment records (L40: 2 records), infrastructure drift detection (L41: 4 resources), cost tracking (L42: 4 services), compliance audits (L43: 6 checks, all PASS). Priority #1 (L40-L43 deployment) complete. Ready for Priority #2 (IaC integration + Bicep generator). See [SESSION-31-INFRASTRUCTURE-LAYERS.md](SESSION-31-INFRASTRUCTURE-LAYERS.md)
+**Last Updated:** March 6, 2026 5:20 PM ET -- Session 32: INFRASTRUCTURE-as-CODE INTEGRATION COMPLETE ✅
+**Phase:** ACTIVE -- CLOUD DEPLOYED -- 46 LAYERS -- FULL IaC AUTOMATION OPERATIONAL ✅
+**Snapshot (2026-03-06 S32 COMPLETE):** L39 (desired infrastructure state) + Bicep generator + Deploy orchestrator complete. Priority #2 (IaC Integration) finished within same session as Priority #1. IaC workflow: L39 → Bicep Generator → Deploy Engine → Validation → L40/L41 recording. All DPDCA phases integrated. Safety gates operational (L33 policies, L35 rules, health checks, auto-rollback). Agents can now deploy infrastructure with full governance audit trail. See [SESSION-32-PRIORITY2-COMPLETION.md](.github/SESSION-32-PRIORITY2-COMPLETION.md) and [IaC-INTEGRATION-DESIGN.md](.github/IaC-INTEGRATION-DESIGN.md)
 
 > **Session note (2026-03-06 11:51 AM Session 28-30 CLOSURE -- GOVERNANCE ARCHITECTURE & DOCUMENTATION AUDIT -- COMPLETE ✅):**
 >

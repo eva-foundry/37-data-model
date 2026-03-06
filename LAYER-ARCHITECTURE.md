@@ -2,22 +2,23 @@
 
 ## How Many Layers?
 
-**Short Answer:** The data model currently has **45 semantic layers**, with full infrastructure automation suite operational (Session 31 complete: L33-L39 governance + L40-L43 infrastructure audit/drift/costs/compliance).
+**Short Answer:** The data model currently has **46 semantic layers**, with full infrastructure-as-code automation suite operational (Session 32 complete: L33-L43 governance + infrastructure + IaC).
 
 ## Why "41 Layers"?
 
 The number 41 reflects the current production state as of March 6, 2026 (post Session 30 deployment). This is an **observed count**, not a hardcoded limit:
 
 ```
-📊 Current Count (as of March 6, 2026 - Session 31):
-├─ 45 layers operational (38 baseline + L33-L39 governance + L40-L43 infrastructure)
-├─ Cloud deployment: Revision 0000005+ live (all governance + infrastructure layers operational)
+📊 Current Count (as of March 6, 2026 - Session 32 - Priority #2 COMPLETE):
+├─ 46 layers operational (38 baseline + L33-L43 governance + infrastructure + IaC)
+├─ Cloud deployment: Revision 0000006+ live (L39 + Bicep generator + deploy orchestrator operational)
 ├─ Largest: endpoints (185+), services (34+), projects (56)
-├─ Governance (L33-L39): agent_policies, quality_gates, github_rules, deployment_policies, testing_policies, validation_rules, azure_infrastructure
-├─ Infrastructure (L40-L43): deployment_records (2), infrastructure_drift (4), resource_costs (4), compliance_audit (6)
-├─ Agent automation: L33-L35 enable safety-first deployments
+├─ Governance (L33-L39): agent_policies, quality_gates, github_rules, deployment_policies, testing_policies, validation_rules, azure_infrastructure (DESIRED STATE)
+├─ Infrastructure (L40-L43): deployment_records (2), infrastructure_drift (4 resources), resource_costs (4 services), compliance_audit (6 checks)
+├─ IaC Automation: generate-infrastructure-iac.ps1 (L39→Bicep) + deploy-infrastructure.ps1 (orchestration + DPDCA phases)
+├─ Agent automation: L33-L35 enable safety-first deployments with policy checks
 ├─ Specialized: evidence (L11 - immutable DPDCA receipts with 12 tech_stack values)
-└─ Audit trails: Deployment records + compliance records queryable for compliance audits
+└─ Audit trails: L40 deployment records + L41 drift detection + L43 compliance queryable
 ```
 
 **Session 30 Deployment & Testing Policies (March 6, 2026 11:12 AM ET):**
@@ -56,13 +57,14 @@ The number 41 reflects the current production state as of March 6, 2026 (post Se
 
 ### Phase 3: Infrastructure Automation (Session 31+) - Priority ★★★★★
 
-| Layer | Purpose | Objects | Status | Seed Data | Queries |
-|-------|---------|---------|--------|-----------|----------|
-| **L39: azure-infrastructure** | Resource inventory, health, compliance | ~50 | ✅ Active | See infrastructure.json | `/model/azure-infrastructure` |
-| **L40: deployment-records** | Historical deployment logs | 2+ | ✅ Active (S31) | Cold start fix + docs v2.8 | `/model/deployment-records` |
-| **L41: infrastructure-drift** | Desired vs actual state detection | 4+ | ✅ Active (S31) | ACA, CosmosDB, APIM, AppInsights | `/model/infrastructure-drift` |
-| **L42: resource-costs** | Granular cost per resource | 4+ | ✅ Active (S31) | $964.97/mo across 4 services | `/model/resource-costs` |
-| **L43: compliance-audit** | Security findings, remediation tracking | 6+ | ✅ Active (S31) | 6 checks (all PASS, SOC2/HIPAA/FedRAMP) | `/model/compliance-audit` |
+| Layer | Purpose | Objects | Status | Implementation | Queries |
+|-------|---------|---------|--------|-----------------|----------|
+| **L39: azure-infrastructure** | Desired infrastructure state (source of truth) | 5 resource types | ✅ Active (S32) | azure_infrastructure.json (325 lines) + env profiles | `/model/azure-infrastructure` |
+| **L40: deployment-records** | Historical deployment logs & audit trail | 2+ | ✅ Active (S31) | Records: cold start fix + docs v2.8 | `/model/deployment-records` |
+| **L41: infrastructure-drift** | Desired (L39) vs actual state detection | 4+ | ✅ Active (S31) | Resources: ACA, CosmosDB, APIM, AppInsights | `/model/infrastructure-drift` |
+| **L42: resource-costs** | Granular cost per resource & FinOps | 4+ | ✅ Active (S31) | Baseline: $964.97/mo across 4 services | `/model/resource-costs` |
+| **L43: compliance-audit** | Security findings, remediation tracking | 6+ | ✅ Active (S31) | 6 checks (all PASS: SOC2/HIPAA/FedRAMP) | `/model/compliance-audit` |
+| **IaC Automation** | Infrastructure deployment orchestration | — | ✅ Active (S32) | generate-infrastructure-iac.ps1 + deploy-infrastructure.ps1 | `/scripts/` folder |
 
 *Rationale: Infrastructure-as-code requires knowing what exists (L39), deployment history (L40), drift detection (L41), cost tracking (L42), and compliance proof (L43).*
 
