@@ -1,179 +1,181 @@
-[
-  {
-    "id": "github-copilot-policies",
-    "created_at": "2026-03-05T20:30:00Z",
-    "created_by": "agent:bootstrap",
-    "modified_at": "2026-03-05T20:30:00Z",
-    "modified_by": "agent:bootstrap",
-    "row_version": 1,
-    "is_active": true,
-    "obj_id": "github-copilot-policies",
-    "layer": "agent_policies",
-    "label": "GitHub Copilot Agent Policies",
-    "agent_type": "copilot",
-    "capabilities": [
-      "read-models",
-      "read-repos",
-      "query-search",
-      "analyze-code",
-      "suggest-improvements"
-    ],
-    "safety_constraints": {
-      "max_concurrent_tasks": 5,
-      "allowed_actions": [
-        "GET /model/*",
-        "search:files",
-        "analyze:syntax",
-        "suggest:refactor"
+{
+  "agent_policies": [
+    {
+      "id": "github-copilot-policies",
+      "created_at": "2026-03-05T20:30:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:30:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "github-copilot-policies",
+      "layer": "agent_policies",
+      "label": "GitHub Copilot Agent Policies",
+      "agent_type": "copilot",
+      "capabilities": [
+        "read-models",
+        "read-repos",
+        "query-search",
+        "analyze-code",
+        "suggest-improvements"
       ],
-      "forbidden_actions": [
-        "DELETE",
-        "PUT /model/*",
-        "exec:shell",
-        "write:files"
-      ],
-      "requires_human_approval": true
+      "safety_constraints": {
+        "max_concurrent_tasks": 5,
+        "allowed_actions": [
+          "GET /model/*",
+          "search:files",
+          "analyze:syntax",
+          "suggest:refactor"
+        ],
+        "forbidden_actions": [
+          "DELETE",
+          "PUT /model/*",
+          "exec:shell",
+          "write:files"
+        ],
+        "requires_human_approval": true
+      },
+      "project_access": {
+        "allowed_projects": [
+          "51-ACA",
+          "37-data-model",
+          "48-eva-veritas"
+        ],
+        "access_level": "read",
+        "expires_at": "2026-12-31T23:59:59Z"
+      }
     },
-    "project_access": {
-      "allowed_projects": [
-        "51-ACA",
-        "37-data-model",
-        "48-eva-veritas"
+    {
+      "id": "sprint-agent-policies",
+      "created_at": "2026-03-05T20:31:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:31:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "sprint-agent-policies",
+      "layer": "agent_policies",
+      "label": "Sprint Planning Agent Policies",
+      "agent_type": "workflow",
+      "capabilities": [
+        "read-sprints",
+        "read-evidence",
+        "read-projects",
+        "write-sprints",
+        "generate-reports",
+        "send-notifications"
       ],
-      "access_level": "read",
-      "expires_at": "2026-12-31T23:59:59Z"
-    }
-  },
-  {
-    "id": "sprint-agent-policies",
-    "created_at": "2026-03-05T20:31:00Z",
-    "created_by": "agent:bootstrap",
-    "modified_at": "2026-03-05T20:31:00Z",
-    "modified_by": "agent:bootstrap",
-    "row_version": 1,
-    "is_active": true,
-    "obj_id": "sprint-agent-policies",
-    "layer": "agent_policies",
-    "label": "Sprint Planning Agent Policies",
-    "agent_type": "workflow",
-    "capabilities": [
-      "read-sprints",
-      "read-evidence",
-      "read-projects",
-      "write-sprints",
-      "generate-reports",
-      "send-notifications"
-    ],
-    "safety_constraints": {
-      "max_concurrent_tasks": 2,
-      "allowed_actions": [
-        "GET /model/sprints/*",
-        "GET /model/evidence/*",
-        "PUT /model/sprints/*",
-        "POST /model/evidence/*"
-      ],
-      "forbidden_actions": [
-        "DELETE /model/*",
-        "exec:shell",
-        "access:secrets"
-      ],
-      "requires_human_approval": false
+      "safety_constraints": {
+        "max_concurrent_tasks": 2,
+        "allowed_actions": [
+          "GET /model/sprints/*",
+          "GET /model/evidence/*",
+          "PUT /model/sprints/*",
+          "POST /model/evidence/*"
+        ],
+        "forbidden_actions": [
+          "DELETE /model/*",
+          "exec:shell",
+          "access:secrets"
+        ],
+        "requires_human_approval": false
+      },
+      "project_access": {
+        "allowed_projects": [
+          "51-ACA",
+          "07-foundation-layer"
+        ],
+        "access_level": "write",
+        "expires_at": "2026-12-31T23:59:59Z"
+      }
     },
-    "project_access": {
-      "allowed_projects": [
-        "51-ACA",
-        "07-foundation-layer"
+    {
+      "id": "veritas-audit-agent",
+      "created_at": "2026-03-05T20:32:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:32:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "veritas-audit-agent",
+      "layer": "agent_policies",
+      "label": "Veritas Audit Agent Policies",
+      "agent_type": "automation",
+      "capabilities": [
+        "read-all-layers",
+        "compute-mti",
+        "validate-evidence",
+        "audit-consistency",
+        "generate-trust-scores"
       ],
-      "access_level": "write",
-      "expires_at": "2026-12-31T23:59:59Z"
-    }
-  },
-  {
-    "id": "veritas-audit-agent",
-    "created_at": "2026-03-05T20:32:00Z",
-    "created_by": "agent:bootstrap",
-    "modified_at": "2026-03-05T20:32:00Z",
-    "modified_by": "agent:bootstrap",
-    "row_version": 1,
-    "is_active": true,
-    "obj_id": "veritas-audit-agent",
-    "layer": "agent_policies",
-    "label": "Veritas Audit Agent Policies",
-    "agent_type": "automation",
-    "capabilities": [
-      "read-all-layers",
-      "compute-mti",
-      "validate-evidence",
-      "audit-consistency",
-      "generate-trust-scores"
-    ],
-    "safety_constraints": {
-      "max_concurrent_tasks": 1,
-      "allowed_actions": [
-        "GET /model/*",
-        "GET /model/admin/validate"
-      ],
-      "forbidden_actions": [
-        "DELETE",
-        "PUT",
-        "POST",
-        "exec:shell"
-      ],
-      "requires_human_approval": false
+      "safety_constraints": {
+        "max_concurrent_tasks": 1,
+        "allowed_actions": [
+          "GET /model/*",
+          "GET /model/admin/validate"
+        ],
+        "forbidden_actions": [
+          "DELETE",
+          "PUT",
+          "POST",
+          "exec:shell"
+        ],
+        "requires_human_approval": false
+      },
+      "project_access": {
+        "allowed_projects": [
+          "51-ACA",
+          "37-data-model",
+          "48-eva-veritas",
+          "07-foundation-layer"
+        ],
+        "access_level": "read",
+        "expires_at": "2026-12-31T23:59:59Z"
+      }
     },
-    "project_access": {
-      "allowed_projects": [
-        "51-ACA",
-        "37-data-model",
-        "48-eva-veritas",
-        "07-foundation-layer"
+    {
+      "id": "control-plane-deployer",
+      "created_at": "2026-03-05T20:33:00Z",
+      "created_by": "agent:bootstrap",
+      "modified_at": "2026-03-05T20:33:00Z",
+      "modified_by": "agent:bootstrap",
+      "row_version": 1,
+      "is_active": true,
+      "obj_id": "control-plane-deployer",
+      "layer": "agent_policies",
+      "label": "Control Plane Deployment Agent Policies",
+      "agent_type": "automation",
+      "capabilities": [
+        "deploy-infrastructure",
+        "update-configurations",
+        "manage-secrets",
+        "trigger-pipelines",
+        "monitor-deployments",
+        "execute-rollbacks"
       ],
-      "access_level": "read",
-      "expires_at": "2026-12-31T23:59:59Z"
+      "safety_constraints": {
+        "max_concurrent_tasks": 1,
+        "allowed_actions": [
+          "POST /model/admin/deploy",
+          "GET /model/quality_gates/*",
+          "GET /model/github_rules/*",
+          "POST /deployment/execute"
+        ],
+        "forbidden_actions": [
+          "DELETE",
+          "exec:unrestricted_shell"
+        ],
+        "requires_human_approval": true
+      },
+      "project_access": {
+        "allowed_projects": [
+          "40-eva-control-plane",
+          "51-ACA",
+          "37-data-model"
+        ],
+        "access_level": "admin",
+        "expires_at": "2026-12-31T23:59:59Z"
+      }
     }
-  },
-  {
-    "id": "control-plane-deployer",
-    "created_at": "2026-03-05T20:33:00Z",
-    "created_by": "agent:bootstrap",
-    "modified_at": "2026-03-05T20:33:00Z",
-    "modified_by": "agent:bootstrap",
-    "row_version": 1,
-    "is_active": true,
-    "obj_id": "control-plane-deployer",
-    "layer": "agent_policies",
-    "label": "Control Plane Deployment Agent Policies",
-    "agent_type": "automation",
-    "capabilities": [
-      "deploy-infrastructure",
-      "update-configurations",
-      "manage-secrets",
-      "trigger-pipelines",
-      "monitor-deployments",
-      "execute-rollbacks"
-    ],
-    "safety_constraints": {
-      "max_concurrent_tasks": 1,
-      "allowed_actions": [
-        "POST /model/admin/deploy",
-        "GET /model/quality_gates/*",
-        "GET /model/github_rules/*",
-        "POST /deployment/execute"
-      ],
-      "forbidden_actions": [
-        "DELETE",
-        "exec:unrestricted_shell"
-      ],
-      "requires_human_approval": true
-    },
-    "project_access": {
-      "allowed_projects": [
-        "40-eva-control-plane",
-        "51-ACA",
-        "37-data-model"
-      ],
-      "access_level": "admin",
-      "expires_at": "2026-12-31T23:59:59Z"
-    }
-  }
-]
+  ]
+}
