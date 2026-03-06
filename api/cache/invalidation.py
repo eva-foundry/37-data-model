@@ -118,7 +118,12 @@ class CacheInvalidationManager:
         Args:
             event: InvalidationEvent instance
         """
-        await self.event_queue.put(event)
+        # For test environments or direct processing, execute immediately
+        if not self._running:
+            await self.process_event(event)
+        else:
+            # For production with background loop, queue the event
+            await self.event_queue.put(event)
     
     async def invalidate_on_create(self, entity_type: str, entity_id: str) -> None:
         """Handle entity creation"""

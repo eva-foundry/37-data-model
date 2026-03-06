@@ -266,19 +266,28 @@ class CacheLayer:
         self.total_misses += 1
         return None
     
-    async def set(self, key: str, value: Any) -> bool:
-        """Set value in cache (L1 + L2)"""
+    async def set(self, key: str, value: Any, ttl_seconds: Optional[int] = None) -> bool:
+        """Set value in cache (L1 + L2)
+        
+        Args:
+            key: Cache key
+            value: Value to cache
+            ttl_seconds: Optional TTL override (uses defaults if not provided)
+        """
+        
+        ttl_l1 = ttl_seconds or self.ttl_l1
+        ttl_l2 = ttl_seconds or self.ttl_l2
         
         # Write to L1
         try:
-            await self.l1.set(key, value, self.ttl_l1)
+            await self.l1.set(key, value, ttl_l1)
         except Exception as e:
             logger.warning(f"L1 set error: {e}")
         
         # Write to L2 (if enabled)
         if self.l2:
             try:
-                await self.l2.set(key, value, self.ttl_l2)
+                await self.l2.set(key, value, ttl_l2)
             except Exception as e:
                 logger.warning(f"L2 set error: {e}")
         
