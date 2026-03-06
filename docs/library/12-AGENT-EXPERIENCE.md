@@ -1,8 +1,8 @@
 ================================================================================
  EVA DATA MODEL -- AGENT EXPERIENCE ENHANCEMENTS
  File: docs/library/12-AGENT-EXPERIENCE.md
- Updated: 2026-03-05 8:00 PM ET
- Status: LIVE -- Session 26 deployed to production
+ Updated: 2026-03-06 11:12 AM ET
+ Status: LIVE -- Session 26+30 deployed to production (41 layers)
 ================================================================================
 
 This document explains the self-documenting, self-discovery capabilities added
@@ -40,7 +40,7 @@ SECTION 1: discovery_journey
 
 SECTION 2: query_capabilities
   Purpose: Universal query operator documentation
-  Content: Filter, pagination, aggregation patterns for all 34 layers
+  Content: Filter, pagination, aggregation patterns for all 41 layers
   Value: Agents learn advanced queries without trial-and-error
 
 SECTION 3: terminal_safety

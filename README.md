@@ -19,15 +19,15 @@ All agents must query the **CLOUD API ONLY** to ensure single source of truth. D
 ```powershell
 $base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
 Invoke-RestMethod "$base/model/agent-guide"   # complete protocol
-Invoke-RestMethod "$base/model/agent-summary" # all layer counts (4,339 objects)
+Invoke-RestMethod "$base/model/agent-summary" # all layer counts
 ```
 
 ---
 
 
 **Component:** 37-data-model  
-**Status:** GA (Cloud Only) -- validate-model PASS 0 violations - **LOCAL SERVICE DISABLED (Mar 5)** - Cloud remains OPERATIONAL: **33 layers** (31→33 with Governance Plane L33-L34) - 4,339+ objects - ACA deployed (Cosmos 24x7, 100% uptime) - MTI=100 - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
-**Last Updated:** March 5, 2026 7:15 PM ET -- Data-model-first architecture COMPLETE: Layer 33 (workspace_config), Layer 34 (project_work), enhanced Layer 25 (projects with governance{}). Bootstrap now queries API for governance metadata vs reading 236 files. Pilot ready: 07-foundation-layer.
+**Status:** GA (Cloud Only) -- validate-model PASS 0 violations - **LOCAL SERVICE DISABLED (Mar 5)** - Cloud remains OPERATIONAL: **41 layers** (33→41 with Agent Automation L33-L38) - ACA deployed (Cosmos 24x7, 100% uptime) - MTI=100 - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
+**Last Updated:** March 6, 2026 11:12 AM ET -- Session 30 COMPLETE: Layer 36 (deployment_policies), Layer 37 (testing_policies), Layer 38 (validation_rules). Agent automation layers operational. Documentation updated.
 
 ---
 
@@ -137,14 +137,23 @@ Layer 30 decisions       ADRs (Architecture Decision Records) -- context/decisio
 Layer 31 evidence        DPDCA phase completions – sprint_id, story_id, phase (D1/D2/P/D3/A), validation gates, merge blockers, metrics (cost, duration, coverage)
 Layer 32 traces          Emerging: LM call telemetry – model, tokens, cost_usd, latency_ms, correlation_id
 
-# Governance plane (L13 – 2026-03-05) – data-model-first architecture
+# Governance plane (L33-L34 – 2026-03-05) – data-model-first architecture
 Layer 33 workspace_config Workspace-level best practices, bootstrap rules, data model config
 Layer 34 project_work    Active work sessions – replaces STATUS.md with queryable DPDCA sessions, tasks[], blockers[], metrics{}
 
-**Architecture Evolution (March 5, 2026):**
+# Agent automation plane (L35-L38 – 2026-03-05/06) – rules-as-code for CI/CD and quality gates
+Layer 35 github_rules    GitHub branch protection, PR checks, CI/CD policies per project
+Layer 36 deployment_policies Container App config, resource limits, health probes, scaling policies
+Layer 37 testing_policies Coverage thresholds (80-95%), CI workflows, test strategies
+Layer 38 validation_rules Schema enforcement, compliance gates, data integrity checks
+
+**Architecture Evolution (March 5-6-6, 2026):**
 - **File-First → Data-Model-First**: Bootstrap now queries `GET /model/projects/{id}` for governance metadata
-- **Enhanced Layer 25 (projects)**: Added `governance{}` (readme_summary, purpose, key_artifacts[], latest_achievement) and `acceptance_criteria[]` (gate/criteria/status)
-- **Portfolio Queries**: `GET /model/projects/` returns all 59 projects in one call vs 236 file reads (59 × 4 files)
+- **Session 27**: Enhanced Layer 25 (projects) with `governance{}` and `acceptance_criteria[]` fields
+- **Session 27**: Added Layer 33 (workspace_config) and Layer 34 (project_work)
+- **Session 28-29**: Added Layer 33 (agent_policies), Layer 34 (quality_gates), Layer 35 (github_rules)
+- **Session 30**: Added Layer 36 (deployment_policies), Layer 37 (testing_policies), Layer 38 (validation_rules)
+- **Portfolio Queries**: `GET /model/projects/` returns all 56 projects in one call vs 224 file reads (56 × 4 files)
 - **Files as Exports**: README/STATUS/ACCEPTANCE become snapshots generated from data model
 ```
 

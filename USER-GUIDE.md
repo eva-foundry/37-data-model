@@ -1,7 +1,7 @@
 # EVA Data Model - Agent User Guide
 
-**Version:** 3.0  
-**Last Updated:** March 5, 2026 8:30 PM ET  
+**Version:** 3.1  
+**Last Updated:** March 6, 2026 11:12 AM ET  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills)
 
 ---
@@ -59,7 +59,7 @@ The API returns a JSON object with these sections:
 | `actor_header` | X-Actor for writes, Authorization for admin |
 | `common_mistakes` | 9 lessons learned with error/cause/fix |
 | `examples` | Before/after code showing safe patterns |
-| `layers_available` | All 34 layers (services → project_work) |
+| `layers_available` | All 41 layers (services → validation_rules) |
 | `layer_notes` | Special cases (endpoints id format, services obj_id, wbs ado_epic_id) |
 | `forbidden` | 7 rules: no model/*.json reads, no grep, no PATCH, etc. |
 | `quick_reference` | All endpoints with one-line descriptions |
