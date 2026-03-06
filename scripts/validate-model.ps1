@@ -70,7 +70,7 @@ foreach ($obj in $m.endpoints) {
 foreach ($obj in $m.screens) {
   if (-not $obj.id)    { Fail "screens: object missing 'id'" }
   if (-not $obj.route) { Fail "screens: '$($obj.id)' missing 'route'" }
-  if ($null -eq $obj.api_calls) { Fail "screens: '$($obj.id)' missing 'api_calls' (use [] not null)" }
+  if (-not (HasProp $obj "api_calls")) { Fail "screens: '$($obj.id)' missing 'api_calls'" }
 }
 
 foreach ($obj in $m.literals) {
