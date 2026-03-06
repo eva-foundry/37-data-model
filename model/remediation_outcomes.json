@@ -1,0 +1,254 @@
+{
+  "$metadata": {
+    "layer_id": "L50",
+    "layer_name": "remediation_outcomes",
+    "version": "1.0.0",
+    "created": "2026-03-06T21:49:00Z",
+    "source": "EVA Automated Remediation Framework",
+    "queryable_as": "/model/remediation_outcomes",
+    "description": "Impact analysis of each remediation - did it fix the issue?"
+  },
+  "outcome_records": [
+    {
+      "outcome_id": "outcome:exec-20260306-154530-001",
+      "execution_id": "exec:20260306-154530-001",
+      "remediation_id": "policy:agent-performance-recovery:action:restart-agent",
+      "issue_id": "issue:pilot-agent-reliability-decline",
+      "timestamp": "2026-03-06T15:46:00Z",
+      "resolution_status": "resolved",
+      "issue_type": "agent_reliability_degradation",
+      "issue_severity": "high",
+      "issue_description": "pilot-agent-1 reliability dropped to 72% over 30-minute window",
+      "root_cause_identified": true,
+      "root_cause_description": "Memory leak in request handling loop causing gradual state corruption",
+      "permanent_fix_applied": true,
+      "fix_description": "Restart cleared corrupted memory state. Root cause tracked for permanent code fix.",
+      "mttr_minutes": 0.5,
+      "mttr_classification": "very_fast",
+      "issue_fixed": true,
+      "symptom_addressed": true,
+      "side_effects": [],
+      "safety_violations": [],
+      "customer_impact_prevented": true,
+      "customers_affected": 0,
+      "downtime_prevented_minutes": 15,
+      "revenue_protected_usd": 2500,
+      "cost_benefit_ratio": 5000,
+      "follow_up_actions": [
+        {
+          "action": "code_review",
+          "assigned_to": "team:backend-ai",
+          "priority": "high",
+          "description": "Fix memory leak in request loop"
+        }
+      ],
+      "effectiveness_score": 95,
+      "notes": "Excellent remediation. Issue fully resolved with no side effects. Root cause identified for permanent prevention."
+    },
+    {
+      "outcome_id": "outcome:exec-20260306-162000-003",
+      "execution_id": "exec:20260306-162000-003",
+      "remediation_id": "policy:deployment-quality-gate:action:auto-deny-deployment",
+      "issue_id": "issue:low-quality-pilot-deployment",
+      "timestamp": "2026-03-06T16:20:00Z",
+      "resolution_status": "prevented",
+      "issue_type": "policy_compliance_violation",
+      "issue_severity": "critical",
+      "issue_description": "Deployment with quality score 62/100 attempted to prod without approval",
+      "root_cause_identified": true,
+      "root_cause_description": "Insufficient test coverage (45% compliance) and safety violations in code",
+      "permanent_fix_applied": false,
+      "fix_description": "Blocked deployment. Engineering team must fix code and resubmit.",
+      "mttr_minutes": 0,
+      "mttr_classification": "instant_prevention",
+      "issue_fixed": false,
+      "issue_prevented": true,
+      "symptom_addressed": false,
+      "side_effects": [],
+      "safety_violations": [],
+      "incident_prevented": true,
+      "incident_severity_if_allowed": "critical_prod_outage",
+      "customer_impact_prevented": true,
+      "customers_protected": 500,
+      "revenue_protected_usd": 50000,
+      "cost_benefit_ratio": 50000,
+      "follow_up_actions": [
+        {
+          "action": "engineering_review",
+          "assigned_to": "team:backend-engineering",
+          "priority": "critical",
+          "description": "Fix code quality issues before resubmission"
+        },
+        {
+          "action": "training",
+          "assigned_to": "agent:user-pilot-agent-1",
+          "priority": "high",
+          "description": "Provide feedback on test coverage and safety requirements"
+        }
+      ],
+      "effectiveness_score": 100,
+      "notes": "Perfect outcome. Prevented critical incident. Deployment blocked before damage possible."
+    },
+    {
+      "outcome_id": "outcome:exec-20260306-143000-004",
+      "execution_id": "exec:20260306-143000-004",
+      "remediation_id": "policy:agent-performance-recovery:action:reload-model",
+      "issue_id": "issue:iac-deployer-error-spike",
+      "timestamp": "2026-03-06T14:31:30Z",
+      "resolution_status": "partial",
+      "issue_type": "error_rate_performance_degradation",
+      "issue_severity": "medium",
+      "issue_description": "iac-deployer error rate increased to 6.2%, exceeding 5% threshold",
+      "root_cause_identified": false,
+      "root_cause_description": "Model reload improved error rate but did not resolve root cause. Appears to be data quality issue, not model corruption.",
+      "permanent_fix_applied": false,
+      "fix_description": "Symptom addressed (error rate reduced). Root cause requires further investigation.",
+      "mttr_minutes": 1.5,
+      "mttr_classification": "fast",
+      "issue_fixed": false,
+      "symptom_addressed": true,
+      "side_effects": [
+        {
+          "effect": "increased_latency",
+          "magnitude": "200ms additional P95 latency",
+          "severity": "low",
+          "acceptable": true
+        }
+      ],
+      "safety_violations": [],
+      "temporary_improvement": true,
+      "escalated_for_investigation": true,
+      "investigation_priority": "high",
+      "follow_up_actions": [
+        {
+          "action": "root_cause_analysis",
+          "assigned_to": "team:data-engineering",
+          "priority": "high",
+          "description": "Investigate data quality issue causing errors"
+        },
+        {
+          "action": "data_validation",
+          "assigned_to": "team:qa",
+          "priority": "high",
+          "description": "Add validation checks for data quality"
+        }
+      ],
+      "effectiveness_score": 60,
+      "notes": "Partial success. Error rate improved but root cause not fixed. Symptom relief only. Escalated for investigation."
+    },
+    {
+      "outcome_id": "outcome:exec-20260306-151530-005",
+      "execution_id": "exec:20260306-151530-005",
+      "remediation_id": "policy:cost-anomaly-detection:action:throttle-llm-calls",
+      "issue_id": "issue:cost-optimizer-spending-spike",
+      "timestamp": "2026-03-06T15:16:00Z",
+      "resolution_status": "resolved",
+      "issue_type": "cost_spike_detection",
+      "issue_severity": "medium",
+      "issue_description": "Cost-optimizer agent hourly cost exceeded $50 threshold",
+      "root_cause_identified": true,
+      "root_cause_description": "Aggressive optimization strategy led to increased LLM API calls for cost analysis",
+      "permanent_fix_applied": false,
+      "fix_description": "Throttled to 50% request rate, reducing cost by 51%. Requires manual review for permanent budget adjustment.",
+      "mttr_minutes": 0.5,
+      "mttr_classification": "very_fast",
+      "issue_fixed": true,
+      "symptom_addressed": true,
+      "side_effects": [
+        {
+          "effect": "reduced_optimization_throughput",
+          "magnitude": "50% fewer optimizations per hour",
+          "severity": "low",
+          "acceptable": true
+        }
+      ],
+      "safety_violations": [],
+      "cost_saved_this_hour_usd": 30,
+      "cost_saved_projected_monthly_usd": 450,
+      "roi_percent": 1500,
+      "follow_up_actions": [
+        {
+          "action": "budget_review",
+          "assigned_to": "team:finance",
+          "priority": "medium",
+          "description": "Review cost-optimizer budget allocation"
+        },
+        {
+          "action": "optimization_tuning",
+          "assigned_to": "team:ai-engineering",
+          "priority": "medium",
+          "description": "Tune cost-optimizer strategy for efficiency"
+        }
+      ],
+      "effectiveness_score": 85,
+      "notes": "Successfully resolved cost spike. Temporary throttle effective. Requires budget review for permanent solution."
+    },
+    {
+      "outcome_id": "outcome:exec-20260306-172345-006",
+      "execution_id": "exec:20260306-172345-006",
+      "remediation_id": "policy:agent-performance-recovery:action:reduce-concurrency",
+      "issue_id": "issue:validator-response-time-spike",
+      "timestamp": "2026-03-06T17:23:45Z",
+      "resolution_status": "resolved",
+      "issue_type": "latency_performance_degradation",
+      "issue_severity": "high",
+      "issue_description": "Validator P95 response time exceeded 2000ms threshold",
+      "root_cause_identified": false,
+      "root_cause_description": "Load balancer sending traffic to already-saturated instance. Root cause to be investigated.",
+      "permanent_fix_applied": false,
+      "fix_description": "Reduced concurrency limit from 10 to 2, improving response time. Temporary measure pending investigation.",
+      "mttr_minutes": 0.08,
+      "mttr_classification": "instant",
+      "issue_fixed": true,
+      "symptom_addressed": true,
+      "side_effects": [
+        {
+          "effect": "reduced_throughput",
+          "magnitude": "55 RPS reduction (150→95)",
+          "severity": "medium",
+          "acceptable": false,
+          "reason": "Acceptable temporarily but requires scaling solution"
+        }
+      ],
+      "safety_violations": [],
+      "request_queue_reduction_percent": 82,
+      "follow_up_actions": [
+        {
+          "action": "load_balancer_investigation",
+          "assigned_to": "team:infrastructure",
+          "priority": "critical",
+          "description": "Investigate load balancer health checks and routing"
+        },
+        {
+          "action": "scale_up",
+          "assigned_to": "on-call-infrastructure",
+          "priority": "high",
+          "description": "Scale validator replicas to handle load"
+        }
+      ],
+      "effectiveness_score": 70,
+      "notes": "Effective short-term fix but not sustainable. Requires scaling solution. Root cause appears to be infrastructure issue, not agent issue."
+    }
+  ],
+  "outcome_summary": {
+    "total_remediations": 5,
+    "resolved": 4,
+    "prevented": 1,
+    "partial_remediation": 1,
+    "average_effectiveness_score": 82,
+    "critical_issues_prevented": 1,
+    "temporary_solutions": 2,
+    "root_cause_fixed": 2,
+    "escalations_required": 2,
+    "total_revenue_protected_usd": 52500,
+    "total_cost_savings_usd": 30,
+    "total_cost_of_remediation_usd": 1.7,
+    "roi_percent": 3088234
+  },
+  "trend_analysis": {
+    "effectiveness_trend": "improving",
+    "success_rate_trend": "stable",
+    "average_mttr_minutes": 0.6,
+    "false_positive_rate_percent": 0
+  }
+}
