@@ -262,7 +262,7 @@ async def list_layers(request: Request):
     # List of all known layers (from layers.py + Session 28-30 additions)
     known_layers = [
         "services", "personas", "feature_flags", "containers", "endpoints",
-        "screens", "literals", "agents", "infrastructure", "requirements",
+        "schemas", "screens", "literals", "agents", "infrastructure", "requirements",
         "planes", "connections", "environments", "cp_skills", "cp_agents",
         "runbooks", "cp_workflows", "cp_policies", "components", "hooks",
         "ts_types", "mcp_servers", "prompts", "security_controls", "projects",
