@@ -169,8 +169,8 @@ class TestCachedRouterIntegration:
         invalidation = create_invalidation_manager(cache_layer)
         router = CachedProjectRouter(cosmos, cache_layer, invalidation)
         
-        # Pre-warm cache with list
-        cache_key = "project:list"
+        # Pre-warm cache with list (use "projects:" prefix to match router entity_type)
+        cache_key = "projects:list"
         await cache_layer.set(cache_key, {"items": []}, 300)
         
         # Create new project
@@ -197,8 +197,8 @@ class TestCachedRouterIntegration:
         original_data = {"id": project_id, "name": "Original Name"}
         cosmos.data[project_id] = original_data
         
-        # Cache the original
-        cache_key = f"project:{project_id}"
+        # Cache the original (use "projects:" prefix to match router entity_type)
+        cache_key = f"projects:{project_id}"
         await cache_layer.set(cache_key, original_data, 300)
         
         # Verify cached
