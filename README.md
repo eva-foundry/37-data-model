@@ -26,8 +26,8 @@ Invoke-RestMethod "$base/model/agent-summary" # all layer counts
 
 
 **Component:** 37-data-model  
-**Status:** GA (Cloud Only) -- validate-model PASS 0 violations - **LOCAL SERVICE DISABLED (Mar 5)** - Cloud remains OPERATIONAL: **41 layers** (33→41 with Agent Automation L33-L38) - ACA deployed (Cosmos 24x7, 100% uptime) - MTI=100 - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
-**Last Updated:** March 6, 2026 11:12 AM ET -- Session 30 COMPLETE: Layer 36 (deployment_policies), Layer 37 (testing_policies), Layer 38 (validation_rules). Agent automation layers operational. Documentation updated.
+**Status:** GA (Cloud Only) -- validate-model PASS 0 violations - **LOCAL SERVICE DISABLED (Mar 5)** - Cloud remains OPERATIONAL: **41 layers** (31 base + Evidence + 9 governance) - ACA deployed (Cosmos 24x7, 100% uptime) - MTI=100 - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
+**Last Updated:** March 6, 2026 11:51 AM ET -- **Sessions 28-30 COMPLETE**: USER-GUIDE.md v2.8 deployed. All 7 governance layers (L33-L39) designed & implemented. Layer audit script (300 lines) & IaC integration design (500+ lines) delivered. See [SESSION-28-30-CLOSURE-REPORT.md](SESSION-28-30-CLOSURE-REPORT.md) for details. Ready for production deployment.
 
 ---
 
