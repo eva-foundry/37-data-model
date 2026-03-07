@@ -144,7 +144,11 @@ async def lifespan(app: FastAPI):
                         if isinstance(v, list):
                             objects = v
                             break
+            # Ensure objects is a list and filter to dicts only
+            if not isinstance(objects, list):
+                objects = []
             # normalise id + stamp source_file
+            objects = [o for o in objects if isinstance(o, dict)]
             for obj in objects:
                 if "id" not in obj and "key" in obj:
                     obj["id"] = obj["key"]

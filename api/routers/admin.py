@@ -157,7 +157,11 @@ async def seed(
                     objects = v
                     break
 
+        # Ensure objects is a list and filter to dicts only
+        if not isinstance(objects, list):
+            objects = []
         # Normalise: ensure every object has an 'id' field
+        objects = [o for o in objects if isinstance(o, dict)]
         for obj in objects:
             if "id" not in obj and "key" in obj:
                 obj["id"] = obj["key"]
