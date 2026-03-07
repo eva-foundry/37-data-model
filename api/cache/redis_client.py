@@ -4,6 +4,7 @@ Redis Client Wrapper for EVA Data Model API
 Async Redis operations with connection pooling and error handling.
 Supports both standalone and managed identity authentication.
 """
+from __future__ import annotations
 
 import asyncio
 import logging

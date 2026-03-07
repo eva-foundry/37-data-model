@@ -1,33 +1,44 @@
-# EVA Data Model
+procee# EVA Data Model
 
 <!-- eva-primed -->
 <!-- foundation-primer: 2026-03-03 by agent:copilot -->
+<!-- paperless-governance: 2026-03-07 18:03 ET by agent:copilot -->
 
 ## EVA Ecosystem Integration
 
 | Tool | Purpose | How to Use |
 |------|---------|------------|
-| 37-data-model (CLOUD) | **SINGLE SOURCE OF TRUTH** — All project entities | `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/projects/37-data-model` |
+| 37-data-model (CLOUD) | **SINGLE SOURCE OF TRUTH** — All project entities | `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/projects/37-data-model` |
 | 29-foundry | Agentic capabilities (search, RAG, eval, observability) | C:\AICOE\eva-foundation\29-foundry |
 | 48-eva-veritas | Trust score and coverage audit | MCP tool: audit_repo / get_trust_score |
 | 07-foundation-layer | Copilot instructions primer + governance templates | MCP tool: apply_primer / audit_project |
 
-**⚠️ IMPORTANT: LOCAL SERVICE DISABLED** — As of March 5, 2026, port 8010 (localhost) is **permanently disabled**.  
-All agents must query the **CLOUD API ONLY** to ensure single source of truth. Do NOT use localhost:8010.
+**⚠️ CRITICAL: PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)**
+
+**Mandatory files on disk:**
+- ✅ `README.md` - Project overview, architecture, integration points
+- ✅ `ACCEPTANCE.md` - Quality gates, exit criteria, evidence requirements
+
+**All other governance flows through data model:**
+- ❌ ~~STATUS.md~~ → Query `GET /model/project_work/{project_id}` (Layer 34)
+- ❌ ~~PLAN.md~~ → Query `GET /model/wbs/?project_id={id}` (Layer 26)
+- ❌ ~~Sprint tracking~~ → Query `GET /model/sprints/?project_id={id}` (Layer 27)
+- ❌ ~~Risk register~~ → Query `GET /model/risks/?project_id={id}` (Layer 29)
+- ❌ ~~ADRs~~ → Query `GET /model/decisions/?project_id={id}` (Layer 30)
+- ❌ ~~Evidence~~ → Query `GET /model/evidence/?project_id={id}` (Layer 31)
 
 **Agent rule**: Query the cloud data model API before reading source files.
 ```powershell
-$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
 Invoke-RestMethod "$base/model/agent-guide"   # complete protocol
-Invoke-RestMethod "$base/model/agent-summary" # all layer counts
+Invoke-RestMethod "$base/model/agent-summary" # all layer counts (51 layers)
 ```
 
 ---
 
-
 **Component:** 37-data-model  
-**Status:** GA (Cloud Only) -- validate-model PASS 0 violations - **LOCAL SERVICE DISABLED (Mar 5)** - Cloud remains OPERATIONAL: **41 layers** (31 base + Evidence + 9 governance) - ACA deployed (Cosmos 24x7, 100% uptime) - MTI=100 - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
-**Last Updated:** March 6, 2026 11:51 AM ET -- **Sessions 28-30 COMPLETE**: USER-GUIDE.md v2.8 deployed. All 7 governance layers (L33-L39) designed & implemented. Layer audit script (300 lines) & IaC integration design (500+ lines) delivered. See [SESSION-28-30-CLOSURE-REPORT.md](SESSION-28-30-CLOSURE-REPORT.md) for details. Ready for production deployment.
+**Status:** GA (Cloud Only) - **51 LAYERS OPERATIONAL** (Session 38, Mar 7 6:03 PM ET) - Priority #4 infrastructure monitoring deployed - validate-model PASS - Cloud: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io - ACA deployed (Cosmos 24x7 backing store) - MTI=100 - **PAPERLESS GOVERNANCE** (README + ACCEPTANCE mandatory, all else via API) - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
+**Last Updated:** March 7, 2026 6:03 PM ET -- **Session 38 COMPLETE**: All 51 layers deployed to cloud. Paperless governance model activated - STATUS.md, PLAN.md, sprint tracking, risks, ADRs, evidence all flow through data model API. Only README.md and ACCEPTANCE.md remain mandatory on disk. API serves complete governance metadata via 51 operational layers.
 
 ---
 
