@@ -99,6 +99,17 @@ _LAYER_FILES: dict[str, str] = {
     "deployment_policies": "deployment_policies.json",
     "testing_policies":    "testing_policies.json",
     "validation_rules":    "validation_rules.json",
+    # infrastructure monitoring (L48-L51) — Priority #4 observability layers
+    "agent_execution_history":       "agent_execution_history.json",
+    "agent_performance_metrics":     "agent_performance_metrics.json",
+    "azure_infrastructure":          "azure_infrastructure.json",
+    "compliance_audit":              "compliance_audit.json",
+    "deployment_quality_scores":     "deployment_quality_scores.json",
+    "deployment_records":            "deployment_records.json",
+    "eva_model":                     "eva-model.json",
+    "infrastructure_drift":          "infrastructure_drift.json",
+    "performance_trends":            "performance_trends.json",
+    "resource_costs":                "resource_costs.json",
 }
 
 def _get_model_dir() -> Path:

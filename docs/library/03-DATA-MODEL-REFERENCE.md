@@ -1,9 +1,24 @@
 ================================================================================
- EVA DATA MODEL -- 41-LAYER REFERENCE
+ EVA DATA MODEL -- 51-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-06 11:12 AM ET -- 41 layers; Session 30 COMPLETE
+ Updated: 2026-03-07 6:03 PM ET -- 51 layers; Session 38 COMPLETE (Paperless Governance)
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 ================================================================================
+
+  PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
+  -----------------------------------------------------------
+  **Mandatory files on disk:** README.md + ACCEPTANCE.md ONLY
+  **Everything else via API:** project_work, wbs, sprints, risks, decisions, evidence
+  
+  Query governance without markdown files:
+    GET /model/project_work/{project_id}  -> replaces STATUS.md
+    GET /model/wbs/?project_id={id}       -> replaces PLAN.md  
+    GET /model/sprints/?project_id={id}   -> replaces sprint tracking
+    GET /model/risks/?project_id={id}     -> replaces risk register
+    GET /model/decisions/?project_id={id} -> replaces ADR files
+    GET /model/evidence/?project_id={id}  -> replaces evidence/*.md
+  
+  Single source of truth. Always current. Queryable by any agent.
 
   COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31)
   -------------------------------------------
@@ -27,26 +42,26 @@
   Agents must never read, grep, parse, or reference them.
   One HTTP call beats ten file reads and ten grep commands.
 
-  Bootstrap sequence for any agent (SESSION 26 ENHANCED):
+  Bootstrap sequence for any agent (SESSION 38 ENHANCED):
     GET /health                -> confirms store=cosmos, gives agent_guide link
-    GET /model/agent-guide     -> ENHANCED: 5 sections (discovery_journey,
-                                  query_capabilities, terminal_safety,
-                                  common_mistakes, examples)
-    GET /model/layers          -> introspect all 41 layers with schema availability
+    GET /model/agent-guide     -> COMPLETE: 6 sections (discovery_journey,
+                                  query_capabilities, write_cycle, common_mistakes,
+                                  forbidden_actions, quick_reference)
+    GET /model/agent-summary   -> all 51 layer counts in one call
+    GET /model/layers          -> introspect all 51 layers with schema availability
     GET /model/{layer}/fields  -> get field names, types, descriptions for any layer
     GET /model/{layer}/example -> see real object structure from any layer
-    GET /model/agent-summary   -> all layer counts in one call (LEGACY)
 
   DISCOVERY & INTROSPECTION (Session 26):
     All layers support self-documenting endpoints for agent orientation:
-      GET /model/layers               -> 41 layers with descriptions, example counts
+      GET /model/layers               -> 51 layers with descriptions, example counts
       GET /model/{layer}/fields       -> schema field definitions
       GET /model/{layer}/example      -> first real object for reference
       GET /model/{layer}/count        -> total object count
       GET /model/schema-def/{layer}   -> JSON Schema Draft-07 definition (WIP)
 
   UNIVERSAL QUERY OPERATORS (Session 26):
-    All 41 layers support standardized query parameters:
+    All 51 layers support standardized query parameters:
       ?limit=N                        -> pagination (DEFAULT: use in terminal!)
       ?offset=N                       -> skip N records
       ?field=value                    -> exact match filter
@@ -64,8 +79,11 @@
       GET /model/sprints/{id}/metrics          -> phase breakdown (D1/D2/P/D3/A)
       GET /model/projects/{id}/metrics/trend   -> multi-sprint velocity trend
 
-  WRITE CYCLE (3-step preferred)
+  WRITE CYCLE (3-step preferred) - Session 38 CORRECTED  
   --------------------------------
+  Authentication: X-Actor header (NO FOUNDRY_TOKEN needed)
+  Write method: PUT with ID in URL (NO POST support)
+  
   1. PUT /model/{layer}/{id}      -Headers @{'X-Actor'='agent:copilot'}
   2. GET /model/{layer}/{id}      assert row_version == prev + 1
   3. POST /model/admin/commit     -Headers @{'Authorization'='Bearer dev-admin'}
@@ -84,9 +102,12 @@
   L12-L18  Control Plane         (automation operating model, Phase 4)
   L13      Governance Plane      (L33-L34 -- workspace_config + project_work)
            *** DATA-MODEL-FIRST: Bootstrap queries API, not files ***
+           *** PAPERLESS: Only README + ACCEPTANCE on disk ***
   L19-L21  Frontend Structural   (components / hooks / ts_types, Phase 5)
   L22-L25  Catalog Additions     (MCP servers / prompts / security / runbooks)
   L26-L30  Project & DPDCA Plane (projects + WBS + sprints + milestones + risks + decisions)
+  L31-L38  CI/CD & Testing       (deployment/testing/validation policies, Priority #3)
+  L42-L51  Infrastructure Monitoring  (agent perf, azure infra, compliance, drift, costs -- Priority #4 Session 38)
 
   NOTE: Layer numbering shifted after L11 Observability insertion (Mar 1, 2026).
         Old L11-L26 layers remain in same logical order but renumbered L12-L27.

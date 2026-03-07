@@ -1,8 +1,38 @@
 # EVA Data Model - Agent User Guide
 
-**Version:** 3.1  
-**Last Updated:** March 6, 2026 11:12 AM ET  
+**Version:** 3.3  
+**Last Updated:** March 7, 2026 6:03 PM ET (Session 38 - Paperless Governance)  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills)
+
+---
+
+## 🎯 **PAPERLESS GOVERNANCE** (Session 38, March 7, 2026 6:03 PM ET)
+
+**Mandatory files on disk:**
+- ✅ `README.md` - Project overview, architecture, integration points
+- ✅ `ACCEPTANCE.md` - Quality gates, exit criteria, evidence requirements
+
+**Everything else flows through data model API:**
+- ❌ ~~STATUS.md~~ → `GET /model/project_work/{project_id}` (Layer 34)
+- ❌ ~~PLAN.md~~ → `GET /model/wbs/?project_id={id}` (Layer 26)
+- ❌ ~~Sprint tracking~~ → `GET /model/sprints/?project_id={id}` (Layer 27)
+- ❌ ~~Risk register~~ → `GET /model/risks/?project_id={id}` (Layer 29)
+- ❌ ~~ADRs~~ → `GET /model/decisions/?project_id={id}` (Layer 30)
+- ❌ ~~Evidence~~ → `GET /model/evidence/?project_id={id}` (Layer 31)
+
+**Agent workflow (paper-free):**
+1. Bootstrap → `GET /model/agent-guide` (get complete protocol)
+2. Project context → `GET /model/projects/{id}` (governance metadata)
+3. Current work → `GET /model/project_work/{id}-{date}` (active session)
+4. Sprint progress → `GET /model/sprints/?project_id={id}` (velocity, burndown)
+5. Evidence → `GET /model/evidence/?sprint_id={current}` (DPDCA phases)
+
+**When work is done:**
+- Update work log: `PUT /model/project_work/{id}` with deliverables, metrics
+- Add evidence: `PUT /model/evidence/{sprint}-{story}-{phase}` with artifacts
+- Update WBS: `PUT /model/wbs/{story_id}` with status=complete
+
+**No markdown files to maintain** → Single source of truth, always current, queryable by any agent.
 
 ---
 
@@ -23,10 +53,12 @@ Invoke-RestMethod "$base/model/agent-guide" | ConvertTo-Json -Depth 10
 **The API response contains everything you need:**
 - Bootstrap sequence (5-step discovery journey)
 - Query capabilities (universal params, filters, pagination)
-- Write cycle (PUT rules, commit workflow, actor headers)
-- Common mistakes (8 lessons learned with fixes)
+- Write cycle (PUT with ID in URL, X-Actor header, commit workflow)
+- Authentication (X-Actor for writes, NO tokens required)
+- Common mistakes (13+ lessons learned with fixes)
 - Forbidden actions (what NOT to do)
 - Quick reference (all endpoints)
+- **Layer introspection** (query live counts, don't hardcode)
 
 ---
 
@@ -94,7 +126,120 @@ The `GET /model/agent-guide` endpoint is the **single source of truth** for agen
 - ✅ No sync drift between docs and implementation
 - ✅ Self-documenting (modify api/server.py to update guidance)
 - ✅ Includes live examples with current data counts
-- ✅ 41 operational layers queried live (not hardcoded)
+- ✅ Live layer discovery via introspection (no hardcoded counts)
+
+---
+
+## 🚨 CRITICAL: Authentication & Write Patterns (Session 38 Lessons)
+
+### Authentication: X-Actor Header (NOT Tokens)
+
+**❌ Wrong Assumption**: "I need FOUNDRY_TOKEN or credentials to write"  
+**✅ Reality**: Write operations only need simple X-Actor header
+
+```powershell
+# Write operations - what you ACTUALLY need
+$Headers = @{
+  "X-Actor" = "agent:copilot"
+  "Content-Type" = "application/json"
+}
+
+# NO FOUNDRY_TOKEN, NO GH_TOKEN, NO CREDENTIALS NEEDED
+Invoke-RestMethod -Uri "$base/model/project_work/my-id" -Method PUT -Headers $Headers -Body $json
+```
+
+**Key Rule**: Check `$session.guide.actor_header` before assuming authentication requirements.
+
+---
+
+### Write Pattern: PUT with ID in URL (NOT POST)
+
+**❌ Wrong Assumption**: "I'll POST to /model/project_work/ to create an object"  
+**✅ Reality**: This API uses PUT with explicit ID in URL path
+
+```powershell
+# ❌ This returns 405 Method Not Allowed
+POST /model/project_work/ -Body $json
+
+# ✅ Correct: PUT with ID in URL
+PUT /model/project_work/07-foundation-layer-2026-03-07 -Body $json -Headers @{'X-Actor'='agent:copilot'}
+```
+
+**Key Rules** (from `$session.guide.write_cycle`):
+1. **No POST support**: All writes use PUT
+2. **ID in URL path**: `/model/{layer}/{id}`
+3. **Creates or updates**: If ID doesn't exist → creates (row_version=1); if exists → updates (row_version++)
+4. **Full object required**: No PATCH support, always PUT complete object
+
+---
+
+### Layer Discovery: Use Introspection (NOT Hardcoded Assumptions)
+
+**❌ Wrong Assumption**: "Features are stored in /features/ endpoint"  
+**✅ Reality**: Use introspection to discover available layers
+
+```powershell
+# Discover all available layers (live count)
+$layers = Invoke-RestMethod "$base/model/agent-summary"
+$layers.PSObject.Properties | ForEach-Object { Write-Host "$($_.Name): $($_.Value) objects" }
+
+# Check if a specific layer exists
+$guide = Invoke-RestMethod "$base/model/agent-guide"
+if ($guide.layers_available -contains "project_work") {
+  Write-Host "✅ project_work layer exists"
+}
+
+# See example object schema
+$example = Invoke-RestMethod "$base/model/project_work/example"
+$example | Format-List  # Shows actual fields available
+```
+
+**Key Rules**:
+1. **Never hardcode layer names** without checking `$session.guide.layers_available`
+2. **Never hardcode field names** without querying `/model/{layer}/example`
+3. **Never hardcode layer counts** (evolves frequently - use live introspection)
+4. Work tracking uses `project_work` layer (not `/features/` or `/stories/`)
+
+---
+
+### Putting It All Together: Complete Write Pattern
+
+```powershell
+# 1. Bootstrap session (once at start)
+$session = @{
+    base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+    guide = (Invoke-RestMethod "$base/model/agent-guide" -TimeoutSec 10)
+}
+
+# 2. Discover available layers
+if ($session.guide.layers_available -contains "project_work") {
+    
+    # 3. Inspect schema
+    $example = Invoke-RestMethod "$($session.base)/model/project_work/example"
+    Write-Host "Available fields: $($example.PSObject.Properties.Name -join ', ')"
+    
+    # 4. Build payload (match schema structure)
+    $Body = @{
+        id = "my-project-2026-03-07"
+        project_id = "my-project"
+        session_summary = @{ session_number = 1; date = "2026-03-07"; status = "Complete" }
+        tasks = @()
+        is_active = $true
+    } | ConvertTo-Json -Depth 10
+    
+    # 5. Write with X-Actor header (NO TOKENS)
+    $Headers = @{ "X-Actor" = "agent:copilot"; "Content-Type" = "application/json" }
+    $Response = Invoke-RestMethod `
+        -Uri "$($session.base)/model/project_work/my-project-2026-03-07" `
+        -Method PUT `
+        -Headers $Headers `
+        -Body $Body
+    
+    Write-Host "✅ Created: row_version=$($Response.row_version), created_by=$($Response.created_by)"
+}
+```
+
+**This Pattern Saves Hours**: Session 38 wasted time assuming FOUNDRY_TOKEN + POST patterns. Check the guide first!
 
 ---
 
@@ -157,13 +302,13 @@ The API returns a JSON object with these sections:
 | `query_capabilities` | Universal params (limit, offset, active_only), layer-specific filters |
 | `terminal_safety` | How to avoid scrambled PowerShell output (limit=20, Select-Object) |
 | `query_patterns` | 20+ examples: filter, navigate, introspect, impact analysis |
-| `write_cycle` | 5 rules: capture row_version, strip audit, -Depth 10, no PATCH, copy endpoint id |
-| `actor_header` | X-Actor for writes, Authorization for admin |
-| `common_mistakes` | 9 lessons learned (includes git CLI quirks, branch protection) |
+| `write_cycle` | PUT with ID in URL (not POST), X-Actor header, 5 rules, commit workflow |
+| `actor_header` | X-Actor for writes (no tokens needed), Authorization for admin |
+| `common_mistakes` | 13+ lessons learned (auth, POST vs PUT, introspection, git quirks) |
 | `examples` | Before/after code showing safe patterns |
-| `layers_available` | All 41 operational layers (services → validation_rules) |
-| `layer_notes` | Special cases (endpoints id format, services obj_id, wbs ado_epic_id, etc.) |
-| `forbidden` | 7 rules: no model/*.json reads, no grep, no PATCH, etc. |
+| `layers_available` | All operational layers (query live - count evolves, don't hardcode) |
+| `layer_notes` | Special cases (endpoints id format, project_work tracking, etc.) |
+| `forbidden` | 7 rules: no model/*.json reads, no grep, no PATCH, no POST, etc. |
 | `quick_reference` | All endpoints with one-line descriptions |
 
 ---
@@ -234,15 +379,15 @@ When counting properties in nested objects from the API:
 
 **❌ Don't use:**
 ```powershell
-$guide.common_mistakes.PSObject.Properties.Count  # Prints "1 1 1 1 1 1 1 1 1"
+$guide.common_mistakes.PSObject.Properties.Count  # Prints "1 1 1 1..." (wrong)
 ```
 
 **✅ Use instead:**
 ```powershell
-($guide.common_mistakes.PSObject.Properties | Measure-Object).Count  # Prints "9"
+($guide.common_mistakes.PSObject.Properties | Measure-Object).Count  # Prints actual count (13+ as of Session 38)
 ```
 
-This is a PowerShell display quirk, not an API issue.
+This is a PowerShell display quirk, not an API issue. Count evolves as lessons are learned.
 
 ---
 
