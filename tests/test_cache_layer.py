@@ -314,6 +314,8 @@ class TestCacheInvalidationManager:
     async def test_emit_event(self):
         """Test event emission"""
         manager = CacheInvalidationManager()
+        # Enable background loop so events get queued (not processed immediately)
+        manager._running = True
         
         event = InvalidationEvent(
             change_type='update',
