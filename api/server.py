@@ -823,10 +823,10 @@ def create_app() -> FastAPI:
                     "fk_resolution_pattern": {
                         "description": "Follow FK from execution to policy to agent metrics (4 API calls)",
                         "pattern": [
-                            "1. GET /model/auto_fix_execution_history/exec:20260308-142035-abc → extract policy_id, executor_agent_id",
-                            "2. GET /model/remediation_policies/{policy_id} → get triggers[], actions[], linked_policies[]",
-                            "3. GET /model/agent_performance_metrics/{executor_agent_id} → verify agent reliability",
-                            "4. GET /model/decision_provenance/{decision_id} → trace reasoning (if decision_ids[] populated)"
+                            "1. GET /model/auto_fix_execution_history/exec:20260308-142035-abc -> extract policy_id, executor_agent_id",
+                            "2. GET /model/remediation_policies/{policy_id} -> get triggers[], actions[], linked_policies[]",
+                            "3. GET /model/agent_performance_metrics/{executor_agent_id} -> verify agent reliability",
+                            "4. GET /model/decision_provenance/{decision_id} -> trace reasoning (if decision_ids[] populated)"
                         ],
                         "code_example": [
                             "$exec = (irm http://localhost:8010/model/auto_fix_execution_history/exec:xyz).data",
@@ -880,7 +880,7 @@ def create_app() -> FastAPI:
                     "analyze_outcome": "L50 links execution_id to resolution_status (resolved, failed, partial)",
                     "measure_effectiveness": "L51 aggregates by policy/agent/severity for trend analysis and false positive detection",
                     "cross_layer_workflow": [
-                        "Metrics drop (L40-L47) → Trigger policy (L48) → Execute remediation (L49) → Record outcome (L50) → Update effectiveness (L51)"
+                        "Metrics drop (L40-L47) -> Trigger policy (L48) -> Execute remediation (L49) -> Record outcome (L50) -> Update effectiveness (L51)"
                     ]
                 },
                 "fk_navigation": {
@@ -916,10 +916,10 @@ def create_app() -> FastAPI:
                 },
                 "ready_for_production": {
                     "status": "All 4 layers operational (Session 40)",
-                    "data_available": true,
+                    "data_available": True,
                     "sample_policies": "agent-performance-recovery, infrastructure-scale-up, deployment-rollback",
                     "sample_executions": "8+ historical executions across all policies",
-                    "next_session": "Phase 4 — populate remaining 32 stub layers with realistic data"
+                    "next_session": "Phase 4 - populate remaining 32 stub layers with realistic data"
                 }
             },
             "layers_available": layers,
