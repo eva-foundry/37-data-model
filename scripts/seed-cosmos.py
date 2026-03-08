@@ -8,7 +8,7 @@ Usage:
 Options:
   --dry-run        Validate layer files and count objects without writing to Cosmos.
   --layer <name>   Seed only the specified layer (e.g. --layer endpoints).
-                   Can be repeated. Defaults to all 27 layers.
+                   Can be repeated. Defaults to all 51 layers.
 
 Requirements:
   COSMOS_URL and COSMOS_KEY must be set in .env (or environment).
@@ -16,7 +16,7 @@ Requirements:
 
 Why this exists (COS-4):
   When pointing at a fresh Cosmos container (first deploy or disaster recovery),
-  there is no automated way to seed all 27 layers from disk JSON without this script.
+  there is no automated way to seed all 51 layers from disk JSON without this script.
   The API's POST /model/admin/seed endpoint does the same thing but requires the
   API to already be running and authenticated — this script is the bootstrap path.
 
@@ -67,8 +67,37 @@ _LAYER_FILES: dict[str, str] = {
     "components":         "components.json",
     "hooks":              "hooks.json",
     "ts_types":           "ts_types.json",
+    # project plane (E-07/E-08) — waterfall WBS + agile scrum + CI/CD linkage
     "projects":           "projects.json",
     "wbs":                "wbs.json",
+    "sprints":            "sprints.json",
+    "milestones":         "milestones.json",
+    "risks":              "risks.json",
+    "decisions":          "decisions.json",
+    "traces":             "traces.json",
+    # observability plane (L11) — proof-of-completion + call tracing
+    "evidence":           "evidence.json",
+    # governance plane (L32-L35) — data-model-first architecture + agent automation safety
+    "workspace_config":   "workspace_config.json",
+    "project_work":       "project_work.json",
+    "agent_policies":     "agent_policies.json",
+    "quality_gates":      "quality_gates.json",
+    "github_rules":       "github_rules.json",
+    # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
+    "deployment_policies": "deployment_policies.json",
+    "testing_policies":   "testing_policies.json",
+    "validation_rules":   "validation_rules.json",
+    # infrastructure monitoring (L48-L51) — Priority #4 observability layers
+    "agent_execution_history":       "agent_execution_history.json",
+    "agent_performance_metrics":     "agent_performance_metrics.json",
+    "azure_infrastructure":          "azure_infrastructure.json",
+    "compliance_audit":              "compliance_audit.json",
+    "deployment_quality_scores":     "deployment_quality_scores.json",
+    "deployment_records":            "deployment_records.json",
+    "eva_model":                     "eva-model.json",
+    "infrastructure_drift":          "infrastructure_drift.json",
+    "performance_trends":            "performance_trends.json",
+    "resource_costs":                "resource_costs.json",
 }
 
 _MODEL_DIR = _ROOT / "model"

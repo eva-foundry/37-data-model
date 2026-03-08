@@ -53,3 +53,15 @@ github_rules_router     = make_layer_router("github_rules",     "/model/github_r
 deployment_policies_router = make_layer_router("deployment_policies", "/model/deployment_policies", ["deployment_policies"])
 testing_policies_router    = make_layer_router("testing_policies",    "/model/testing_policies",    ["testing_policies"])
 validation_rules_router    = make_layer_router("validation_rules",    "/model/validation_rules",    ["validation_rules"])
+
+# ── Infrastructure Monitoring Plane (L40-L49, Priority #4) ─────────────────────────
+agent_execution_history_router     = make_layer_router("agent_execution_history",     "/model/agent_execution_history",     ["agent_execution_history"])
+agent_performance_metrics_router   = make_layer_router("agent_performance_metrics",   "/model/agent_performance_metrics",   ["agent_performance_metrics"])
+azure_infrastructure_router        = make_layer_router("azure_infrastructure",        "/model/azure_infrastructure",        ["azure_infrastructure"])
+compliance_audit_router            = make_layer_router("compliance_audit",            "/model/compliance_audit",            ["compliance_audit"])
+deployment_quality_scores_router   = make_layer_router("deployment_quality_scores",   "/model/deployment_quality_scores",   ["deployment_quality_scores"])
+deployment_records_router          = make_layer_router("deployment_records",          "/model/deployment_records",          ["deployment_records"])
+eva_model_router                   = make_layer_router("eva_model",                   "/model/eva_model",                   ["eva_model"])
+infrastructure_drift_router        = make_layer_router("infrastructure_drift",        "/model/infrastructure_drift",        ["infrastructure_drift"])
+performance_trends_router          = make_layer_router("performance_trends",          "/model/performance_trends",          ["performance_trends"])
+resource_costs_router              = make_layer_router("resource_costs",              "/model/resource_costs",              ["resource_costs"])

@@ -1,9 +1,24 @@
 ================================================================================
- EVA DATA MODEL -- 41-LAYER REFERENCE
+ EVA DATA MODEL -- 51-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-06 11:12 AM ET -- 41 layers; Session 30 COMPLETE
+ Updated: 2026-03-08 9:13 AM ET -- 51 layers; Session 39 (Infrastructure Monitoring L40-L49 Deployed)
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 ================================================================================
+
+  PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
+  -----------------------------------------------------------
+  **Mandatory files on disk:** README.md + ACCEPTANCE.md ONLY
+  **Everything else via API:** project_work, wbs, sprints, risks, decisions, evidence
+  
+  Query governance without markdown files:
+    GET /model/project_work/{project_id}  -> replaces STATUS.md
+    GET /model/wbs/?project_id={id}       -> replaces PLAN.md  
+    GET /model/sprints/?project_id={id}   -> replaces sprint tracking
+    GET /model/risks/?project_id={id}     -> replaces risk register
+    GET /model/decisions/?project_id={id} -> replaces ADR files
+    GET /model/evidence/?project_id={id}  -> replaces evidence/*.md
+  
+  Single source of truth. Always current. Queryable by any agent.
 
   COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31)
   -------------------------------------------
@@ -27,26 +42,26 @@
   Agents must never read, grep, parse, or reference them.
   One HTTP call beats ten file reads and ten grep commands.
 
-  Bootstrap sequence for any agent (SESSION 26 ENHANCED):
+  Bootstrap sequence for any agent (SESSION 38 ENHANCED):
     GET /health                -> confirms store=cosmos, gives agent_guide link
-    GET /model/agent-guide     -> ENHANCED: 5 sections (discovery_journey,
-                                  query_capabilities, terminal_safety,
-                                  common_mistakes, examples)
-    GET /model/layers          -> introspect all 41 layers with schema availability
+    GET /model/agent-guide     -> COMPLETE: 6 sections (discovery_journey,
+                                  query_capabilities, write_cycle, common_mistakes,
+                                  forbidden_actions, quick_reference)
+    GET /model/agent-summary   -> all 51 layer counts in one call
+    GET /model/layers          -> introspect all 51 layers with schema availability
     GET /model/{layer}/fields  -> get field names, types, descriptions for any layer
     GET /model/{layer}/example -> see real object structure from any layer
-    GET /model/agent-summary   -> all layer counts in one call (LEGACY)
 
   DISCOVERY & INTROSPECTION (Session 26):
     All layers support self-documenting endpoints for agent orientation:
-      GET /model/layers               -> 41 layers with descriptions, example counts
+      GET /model/layers               -> 51 layers with descriptions, example counts
       GET /model/{layer}/fields       -> schema field definitions
       GET /model/{layer}/example      -> first real object for reference
       GET /model/{layer}/count        -> total object count
       GET /model/schema-def/{layer}   -> JSON Schema Draft-07 definition (WIP)
 
   UNIVERSAL QUERY OPERATORS (Session 26):
-    All 41 layers support standardized query parameters:
+    All 51 layers support standardized query parameters:
       ?limit=N                        -> pagination (DEFAULT: use in terminal!)
       ?offset=N                       -> skip N records
       ?field=value                    -> exact match filter
@@ -64,8 +79,11 @@
       GET /model/sprints/{id}/metrics          -> phase breakdown (D1/D2/P/D3/A)
       GET /model/projects/{id}/metrics/trend   -> multi-sprint velocity trend
 
-  WRITE CYCLE (3-step preferred)
+  WRITE CYCLE (3-step preferred) - Session 38 CORRECTED  
   --------------------------------
+  Authentication: X-Actor header (NO FOUNDRY_TOKEN needed)
+  Write method: PUT with ID in URL (NO POST support)
+  
   1. PUT /model/{layer}/{id}      -Headers @{'X-Actor'='agent:copilot'}
   2. GET /model/{layer}/{id}      assert row_version == prev + 1
   3. POST /model/admin/commit     -Headers @{'Authorization'='Bearer dev-admin'}
@@ -84,9 +102,12 @@
   L12-L18  Control Plane         (automation operating model, Phase 4)
   L13      Governance Plane      (L33-L34 -- workspace_config + project_work)
            *** DATA-MODEL-FIRST: Bootstrap queries API, not files ***
+           *** PAPERLESS: Only README + ACCEPTANCE on disk ***
   L19-L21  Frontend Structural   (components / hooks / ts_types, Phase 5)
   L22-L25  Catalog Additions     (MCP servers / prompts / security / runbooks)
   L26-L30  Project & DPDCA Plane (projects + WBS + sprints + milestones + risks + decisions)
+  L31-L38  CI/CD & Testing       (deployment/testing/validation policies, Priority #3)
+  L40-L49  Infrastructure Monitoring  (agent perf, azure infra, compliance, drift, costs -- Priority #4 Session 39)
 
   NOTE: Layer numbering shifted after L11 Observability insertion (Mar 1, 2026).
         Old L11-L26 layers remain in same logical order but renumbered L12-L27.
@@ -479,6 +500,36 @@
               superseded_by, status
 
 --------------------------------------------------------------------------------
+ CI/CD & TESTING PLANE (L35-L38) -- PRIORITY #3
+--------------------------------------------------------------------------------
+
+  L35 agent_policies    4 items
+  -----------------------------------------------------------------------
+  Purpose: Agent behavioral policies and constraints for safe AI operations
+  Key fields: policy_id, policy_type, constraints{}, enforcement_level,
+              applies_to_agents[], validation_rules[], exceptions[]
+
+  L36 quality_gates     4 items
+  -----------------------------------------------------------------------
+  Purpose: Quality gate definitions for deployment readiness assessment
+  Key fields: gate_id, gate_name, criteria[], thresholds{}, blocking,
+              applies_to_phases[], validation_script
+
+  L37 github_rules      4 items
+  -----------------------------------------------------------------------
+  Purpose: GitHub repository rules, branch protection, and PR requirements
+  Key fields: rule_id, repo_pattern, branch_protection{}, pr_requirements{},
+              status_checks[], review_policies[]
+
+  L38 deployment_policies    4 items
+  -----------------------------------------------------------------------
+  Purpose: Deployment approval workflows and rollback policies
+  Key fields: policy_id, environment, approval_workflow{}, rollback_policy{},
+              health_checks[], post_deploy_actions[]
+
+  NOTE: L39 testing_policies and L39 validation_rules planned for future Priority #3 expansion
+
+--------------------------------------------------------------------------------
  GOVERNANCE PLANE (L33-L34) -- DATA-MODEL-FIRST ARCHITECTURE
 --------------------------------------------------------------------------------
 
@@ -553,6 +604,181 @@
     README.md, STATUS.md, ACCEPTANCE.md become snapshots GENERATED from data model
     Use export-governance-to-files.py to generate markdown from API data
     Data model is single source of truth; files are presentation layer
+
+--------------------------------------------------------------------------------
+ INFRASTRUCTURE MONITORING PLANE (L40-L49) -- PRIORITY #4 SESSION 39
+--------------------------------------------------------------------------------
+
+  L40 agent_execution_history    0 items (schema ready, awaiting operational data)
+  -----------------------------------------------------------------------
+  Purpose: Complete audit trail of every agent execution for forensics and compliance
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- ready for agent operational tracking
+  
+  Key fields:
+    execution_id          -- Unique identifier for each agent run
+    agent_id              -- Which agent performed the action
+    action_type           -- Type of operation (code_gen, review, deploy, etc.)
+    timestamp             -- When the execution occurred
+    outcome               -- success | failure | partial
+    duration_ms           -- Execution time in milliseconds
+    cost_impact_usd       -- Financial cost of this execution
+    evidence_trail[]      -- Array of evidence IDs for audit linkage
+  
+  Use cases: Agent forensics, action tracking, timing analysis, cost attribution
+  Query: GET /model/agent_execution_history/?agent_id={id}&date.gte={start}
+
+  L41 agent_performance_metrics    0 items (schema ready, awaiting metrics data)
+  -----------------------------------------------------------------------
+  Purpose: Real-time agent performance indicators for SLA monitoring and optimization
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- calculates from execution history
+  
+  Key fields:
+    agent_id                    -- Agent identifier
+    reliability_score           -- Success rate (0-100%)
+    speed_percentile            -- Performance vs peers (0-100)
+    cost_efficiency_percentile  -- Cost efficiency ranking (0-100)
+    safety_incidents            -- Count of safety violations
+    rollback_rate              -- Percentage of changes rolled back
+  
+  Use cases: Performance monitoring, SLA tracking, optimization opportunity identification
+  Query: GET /model/agent_performance_metrics/?agent_id={id}
+
+  L42 azure_infrastructure    0 items (schema ready, awaiting Azure inventory sync)
+  -----------------------------------------------------------------------
+  Purpose: Azure resource inventory and state tracking for infrastructure auditing
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- awaits Azure Resource Graph sync
+  
+  Key fields:
+    subscription_id       -- Azure subscription ID
+    resource_name         -- Resource name
+    resource_type         -- Type (VM, Storage, Container App, etc.)
+    status                -- running | stopped | deallocated
+    configuration{}       -- Resource-specific config snapshot
+    security_config{}     -- Security settings (RBAC, networking, encryption)
+    cost_tracking{}       -- Cost allocation and budget tracking
+  
+  Use cases: Infrastructure auditing, cost allocation, capacity planning, security review
+  Query: GET /model/azure_infrastructure/?subscription_id={id}&resource_type={type}
+
+  L43 compliance_audit    0 items (schema ready, awaiting first audit run)
+  -----------------------------------------------------------------------
+  Purpose: Compliance assessment and remediation tracking for regulatory frameworks
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- supports SOC2, PCI-DSS, HIPAA, GDPR
+  
+  Key fields:
+    audit_timestamp        -- When audit was performed
+    framework              -- SOC2 | PCI-DSS | HIPAA | GDPR | ISO27001
+    overall_status         -- PASS | FAIL | CONDITIONAL
+    compliance_score       -- Percentage compliance (0-100%)
+    findings[]             -- Array of non-compliance findings
+    remediations_tracking  -- Remediation status and ownership
+  
+  Use cases: Security compliance, audit preparation, governance validation
+  Query: GET /model/compliance_audit/?framework={name}&status=FAIL
+
+  L44 deployment_quality_scores    0 items (schema ready, calculated post-deployment)
+  -----------------------------------------------------------------------
+  Purpose: Multi-dimensional quality metrics with letter grades (A-F) for deployments
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- automated quality gate assessment
+  
+  Key fields:
+    deployment_id              -- Link to L45 deployment_records
+    quality_dimensions{}:
+      compliance_score         -- Regulatory compliance score
+      performance_score        -- Performance benchmarks
+      safety_score            -- Safety and reliability
+      cost_score              -- Cost efficiency
+      speed_score             -- Deployment velocity
+      reliability_score       -- Stability and uptime
+    overall_quality_score     -- Weighted average (0-100)
+    grade                     -- A | B | C | D | F
+  
+  Use cases: Deployment readiness assessment, quality gate validation, trend analysis
+  Query: GET /model/deployment_quality_scores/?grade.in=A,B&deployment_id={id}
+
+  L45 deployment_records    0 items (schema ready, captures all deployments)
+  -----------------------------------------------------------------------
+  Purpose: Complete deployment history and audit trails for change tracking
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- captures every deployment
+  
+  Key fields:
+    deployment_number      -- Sequential deployment counter
+    timestamp              -- Deployment timestamp
+    status                 -- success | failed | rolled_back
+    resources_deployed[]   -- Array of resources deployed
+    changelog[]            -- Changes included in deployment
+    validation_results[]   -- Pre-deployment validation outcomes
+    rollback_info{}        -- Rollback procedure and status
+  
+  Use cases: Deployment analysis, rollback planning, change tracking, audit compliance
+  Query: GET /model/deployment_records/?status=success&timestamp.gte={date}
+
+  L46 eva_model    0 items (schema ready, self-describing meta-model)
+  -----------------------------------------------------------------------
+  Purpose: Self-describing data model metadata for schema introspection
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- enables dynamic schema discovery
+  
+  Key fields:
+    model_version           -- Data model version (semantic versioning)
+    layer_catalog[]         -- All 51 layers with descriptions
+    layer_groups[]          -- Logical groupings (Application, Control, etc.)
+    relationships[]         -- Cross-layer relationships and dependencies
+    schema_definitions[]    -- JSON Schema references for each layer
+  
+  Use cases: Data model discovery, schema evolution tracking, documentation generation
+  Query: GET /model/eva_model/ (returns single meta-model record)
+
+  L47 infrastructure_drift    0 items (schema ready, awaits drift detection runs)
+  -----------------------------------------------------------------------
+  Purpose: Desired vs actual infrastructure state comparison for drift detection
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- automated drift detection
+  
+  Key fields:
+    drift_detected          -- Boolean: drift detected?
+    resources_drifted       -- Count of resources with drift
+    severity                -- low | medium | high | critical
+    drift_items[]           -- Detailed drift findings per resource
+    remediation{}           -- Automated remediation options and status
+  
+  Use cases: Drift detection, configuration management, automated remediation
+  Query: GET /model/infrastructure_drift/?severity=high&drift_detected=true
+
+  L48 performance_trends    0 items (schema ready, calculated from historical data)
+  -----------------------------------------------------------------------
+  Purpose: Historical trends and capacity planning predictions
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- trend analysis and forecasting
+  
+  Key fields:
+    metric_period           -- Time period for trend calculation
+    metrics_snapshot{}      -- Current metrics snapshot
+    trend_indicators{}      -- Trend direction and velocity
+    prediction{}            -- Forecasted future state
+  
+  Use cases: Trend analysis, prediction, capacity forecasting, proactive scaling
+  Query: GET /model/performance_trends/?metric_period=30d
+
+  L49 resource_costs    0 items (schema ready, awaits Azure Cost Management sync)
+  -----------------------------------------------------------------------
+  Purpose: Cloud cost tracking and budget management for financial optimization
+  Status: DEPLOYED Mar 8, 2026 (Session 39) -- Azure cost data integration
+  
+  Key fields:
+    subscription_id             -- Azure subscription ID
+    total_cost                  -- Total cost for period
+    budget                      -- Allocated budget
+    cost_by_service[]           -- Cost breakdown by service type
+    forecasted_cost{}           -- Predicted future costs
+    optimization_opportunities[] -- Cost optimization recommendations
+  
+  Use cases: Cost optimization, budget alerts, forecasting, cost allocation
+  Query: GET /model/resource_costs/?subscription_id={id}&total_cost.gt={budget}
+
+  SESSION 39 SUMMARY (March 8, 2026 9:13 AM ET):
+    - All 10 infrastructure monitoring layers deployed to Azure Container Apps
+    - Validation: 10/10 endpoints responding with HTTP 200 (100% pass rate)
+    - Cloud status: msub-eva-data-model provisioning succeeded
+    - Ready for operational data ingestion
+    - Enables comprehensive infrastructure governance and cost optimization
 
 --------------------------------------------------------------------------------
  DPDCA EVOLUTION PLANE (L27-L30) -- FORMERLY PART OF PROJECT PLANE

@@ -144,7 +144,11 @@ async def lifespan(app: FastAPI):
                         if isinstance(v, list):
                             objects = v
                             break
+            # Ensure objects is a list and filter to dicts only
+            if not isinstance(objects, list):
+                objects = []
             # normalise id + stamp source_file
+            objects = [o for o in objects if isinstance(o, dict)]
             for obj in objects:
                 if "id" not in obj and "key" in obj:
                     obj["id"] = obj["key"]
@@ -264,6 +268,12 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
         deployment_policies_router, testing_policies_router, validation_rules_router,
+        # infrastructure monitoring (L40-L49) — agent execution, performance, deployment quality
+        agent_execution_history_router, agent_performance_metrics_router,
+        azure_infrastructure_router, compliance_audit_router,
+        deployment_quality_scores_router, deployment_records_router,
+        eva_model_router, infrastructure_drift_router,
+        performance_trends_router, resource_costs_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -301,6 +311,12 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38)
         deployment_policies_router, testing_policies_router, validation_rules_router,
+        # infrastructure monitoring (L40-L49) — Priority #4 layers
+        agent_execution_history_router, agent_performance_metrics_router,
+        azure_infrastructure_router, compliance_audit_router,
+        deployment_quality_scores_router, deployment_records_router,
+        eva_model_router, infrastructure_drift_router,
+        performance_trends_router, resource_costs_router,
         fp_router,
         # graph (E-11)
         graph_router,
@@ -579,6 +595,10 @@ def create_app() -> FastAPI:
                 "fast_count":              "GET /model/{layer}/count → instant count without data"
             },
             "write_cycle": {
+                "critical_rule": (
+                    "This API does NOT support POST for creating objects. "
+                    "ALL writes use PUT with the object ID in the URL path: PUT /model/{layer}/{id}"
+                ),
                 "rule_1_capture_row_version": (
                     "Before any PUT: capture $prev_rv = obj.row_version. "
                     "After PUT: assert new row_version == prev_rv + 1."
@@ -607,6 +627,11 @@ def create_app() -> FastAPI:
                     "POST /model/admin/validate to check cross-references without committing. "
                     "38+ repo_line WARNs are pre-existing noise, not caused by your work."
                 ),
+                "creating_new_objects": (
+                    "To create a new object: PUT /model/{layer}/{new-id} with is_active=true. "
+                    "The object will be created if it doesn't exist (row_version=1), "
+                    "or updated if it does (row_version increments). No separate POST endpoint."
+                )
             },
             "actor_header": {
                 "write_operations": "Always include: -Headers @{'X-Actor'='agent:copilot'}",
@@ -659,6 +684,30 @@ def create_app() -> FastAPI:
                     "cause": "Main branch has protection rules requiring pull requests",
                     "symptoms": "error: GH006: Protected branch update failed - Changes must be made through a pull request",
                     "fix": "Create feature branch: git checkout -b feat/my-change; git push origin feat/my-change; gh pr create --base main"
+                },
+                "mistake_10": {
+                    "error": "Assumed FOUNDRY_TOKEN environment variable required for authentication",
+                    "cause": "External systems use tokens, but this API uses simple X-Actor header for writes",
+                    "symptoms": "Blocked waiting for token or credentials that don't exist",
+                    "fix": "Write operations only need: -Headers @{'X-Actor'='agent:copilot'}. Read agent_guide.actor_header first."
+                },
+                "mistake_11": {
+                    "error": "POST /model/project_work/ returns 405 Method Not Allowed",
+                    "cause": "This API does not support POST - all writes use PUT with ID in URL path",
+                    "symptoms": "Tried POST to layer endpoint; received 405 error",
+                    "fix": "Always use PUT with explicit ID: PUT /model/{layer}/{id} -Body $json -Headers @{'X-Actor'='agent:copilot'}"
+                },
+                "mistake_12": {
+                    "error": "Searched for non-existent /features/ or /stories/ endpoints",
+                    "cause": "Assumed layer structure without checking introspection endpoints",
+                    "symptoms": "404 Not Found on assumed endpoint paths",
+                    "fix": "Use GET /model/layers or GET /model/agent-summary to discover available layers. Work tracking uses 'project_work' layer."
+                },
+                "mistake_13": {
+                    "error": "Hardcoded layer count or capabilities in documentation",
+                    "cause": "Layers evolve - hardcoded counts become stale immediately",
+                    "symptoms": "Documentation says '41 layers' but API has 51; examples reference removed fields",
+                    "fix": "Always tell agents to introspect: GET /model/agent-summary for live counts, GET /model/{layer}/example for current schema"
                 }
             },
             "examples": {
@@ -707,6 +756,7 @@ def create_app() -> FastAPI:
                 "projects":      "all 48 eva-foundation numbered project folders",
                 "mcp_servers":   "registered MCP servers. used by agents to resolve skill endpoints",
                 "agents":        "registered agent definitions. .skills[] links to mcp_servers",
+                "project_work":  "session-based work tracking. id format: '{project_id}-{YYYY-MM-DD}'. Contains session_summary (number, date, objective, status), tasks[], metrics{}, next_steps[]",
                 "agent_policies": "(L33) Agent capabilities, safety constraints, project access. evidence tech_stack='agent-policies'",
                 "quality_gates":  "(L34) MTI thresholds, test coverage gates, phase-specific blockers. evidence tech_stack='quality-gates'",
                 "github_rules":   "(L35) Branch protection, commit standards, naming conventions. evidence tech_stack='github-rules'",
