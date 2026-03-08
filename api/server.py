@@ -501,8 +501,8 @@ def create_app() -> FastAPI:
                     {
                         "step": 2,
                         "title": "Discover Available Layers",
-                        "calls": ["GET /model/layers", "GET /model/agent-summary"],
-                        "what_you_learn": "34 layers with counts, which have data vs schemas only"
+                        "calls": ["GET /model/layers", "GET /model/agent-summary", "GET /model/layer-metadata/?operational=true"],
+                        "what_you_learn": "51 layers with counts, FK relationships, priorities, categories, operational status flags"
                     },
                     {
                         "step": 3,
@@ -587,6 +587,13 @@ def create_app() -> FastAPI:
             },
             "query_patterns": {
                 "all_layer_counts":        "GET /model/agent-summary",
+                "discover_layers":         "GET /model/layer-metadata/ (all 51 layers with FK relationships)",
+                "discover_operational":    "GET /model/layer-metadata/?operational=true (only 19 operational layers)",
+                "discover_by_priority":    "GET /model/layer-metadata/?priority=P0,P1 (foundation layers)",
+                "discover_by_category":    "GET /model/layer-metadata/?category=Remediation (L48-L51)",
+                "discover_with_fks":       "GET /model/layer-metadata/?with_fk=true (layers with FK relationships)",
+                "layer_fk_details":        "GET /model/layer-metadata/{layer} (single layer with fk_references and referenced_by)",
+                "fk_relationship_matrix":  "GET /model/fk-matrix (complete FK map for all layers)",
                 "object_by_id":            "GET /model/{layer}/{id}",
                 "all_objects_in_layer":    "GET /model/{layer}/",
                 "filter_endpoints_status": "GET /model/endpoints/filter?status=stub",
@@ -717,6 +724,29 @@ def create_app() -> FastAPI:
                     "cause": "Layers evolve - hardcoded counts become stale immediately",
                     "symptoms": "Documentation says '41 layers' but API has 51; examples reference removed fields",
                     "fix": "Always tell agents to introspect: GET /model/agent-summary for live counts, GET /model/{layer}/example for current schema"
+                },
+                "mistake_14": {
+                    "error": "Not discovering FK relationships before querying linked layers",
+                    "cause": "Assumed FK structure instead of using layer-metadata endpoint",
+                    "symptoms": "Manual FK resolution attempts; hardcoded layer names; missed referenced_by relationships",
+                    "fix": "Use GET /model/layer-metadata/{layer} to see fk_references[] and referenced_by[] arrays. Example: GET /model/layer-metadata/remediation_policies shows links to agent_policies and deployment_policies"
+                },
+                "mistake_15": {
+                    "error": "Not following FK resolution pattern for L48-L51 remediation framework",
+                    "cause": "Fetched execution history but didn't resolve policy_id to full policy object",
+                    "symptoms": "Incomplete data; missing policy details like triggers, actions, thresholds",
+                    "fix": [
+                        "1. GET /model/auto_fix_execution_history/{exec_id} → extract policy_id",
+                        "2. GET /model/remediation_policies/{policy_id} → get full policy with triggers/actions",
+                        "3. For agent context: extract executor_agent_id → GET /model/agent_performance_metrics/{agent_id}",
+                        "4. For provenance: extract decision_ids[] → GET /model/decision_provenance/{decision_id}"
+                    ]
+                },
+                "mistake_16": {
+                    "error": "Querying all layers without knowing which have data vs stubs",
+                    "cause": "No pre-query check of operational status",
+                    "symptoms": "Empty responses; wasted queries; unclear which layers are production-ready",
+                    "fix": "Use GET /model/layer-metadata/?operational=true to get only the 19 operational layers. Stub layers (32) are designed but not populated yet"
                 }
             },
             "examples": {
@@ -754,6 +784,137 @@ def create_app() -> FastAPI:
                     ]
                 }
             },
+            "remediation_framework": {
+                "overview": "L48-L51 automated remediation with policy-driven self-healing (Session 40)",
+                "description": (
+                    "4-layer framework for automated incident response: "
+                    "L48 (policies) defines WHEN/HOW/WHO to remediate. "
+                    "L49 (execution_history) records every auto-fix attempt. "
+                    "L50 (outcomes) tracks resolution success/failure. "
+                    "L51 (effectiveness) aggregates system-wide KPIs."
+                ),
+                "examples": {
+                    "list_policies": {
+                        "method": "GET",
+                        "url": "/model/remediation_policies/",
+                        "description": "Get all remediation policies with triggers and actions",
+                        "response_fields": ["policy_id", "policy_name", "triggers", "actions", "linked_policies"]
+                    },
+                    "get_policy": {
+                        "method": "GET",
+                        "url": "/model/remediation_policies/policy:agent-performance-recovery",
+                        "description": "Fetch specific policy by ID",
+                        "use_case": "Understand what triggers a specific remediation action"
+                    },
+                    "execution_history": {
+                        "method": "GET",
+                        "url": "/model/auto_fix_execution_history/",
+                        "description": "View audit trail of all remediation actions",
+                        "query_params": ["?limit=20", "?executor_agent_id=X"],
+                        "response_fields": ["execution_id", "policy_id", "timestamp", "outcome", "duration_seconds"]
+                    },
+                    "fk_resolution_pattern": {
+                        "description": "Follow FK from execution to policy to agent metrics (4 API calls)",
+                        "pattern": [
+                            "1. GET /model/auto_fix_execution_history/exec:20260308-142035-abc → extract policy_id, executor_agent_id",
+                            "2. GET /model/remediation_policies/{policy_id} → get triggers[], actions[], linked_policies[]",
+                            "3. GET /model/agent_performance_metrics/{executor_agent_id} → verify agent reliability",
+                            "4. GET /model/decision_provenance/{decision_id} → trace reasoning (if decision_ids[] populated)"
+                        ],
+                        "code_example": [
+                            "$exec = (irm http://localhost:8010/model/auto_fix_execution_history/exec:xyz).data",
+                            "$policy = (irm http://localhost:8010/model/remediation_policies/$($exec.policy_id)).data",
+                            "$agent = (irm http://localhost:8010/model/agent_performance_metrics/$($exec.executor_agent_id)).data",
+                            "Write-Host \"Policy: $($policy.policy_name), Agent: $($agent.agent_id), Reliability: $($agent.reliability_percent)%\""
+                        ]
+                    },
+                    "effectiveness_metrics": {
+                        "method": "GET",
+                        "url": "/model/remediation_effectiveness/2026-03",
+                        "description": "System-wide success rates and trends for March 2026",
+                        "aggregations": {
+                            "by_policy": "Success rate per policy type (agent restart, scale-up, rollback)",
+                            "by_agent": "Which agents have highest auto-fix success rates",
+                            "by_severity": "How quickly critical vs warning issues are resolved"
+                        }
+                    },
+                    "outcomes_analysis": {
+                        "method": "GET",
+                        "url": "/model/remediation_outcomes/?resolution_status=resolved",
+                        "description": "Analyze successful vs failed remediation attempts",
+                        "use_case": "Identify which policies need tuning (high false positive rate)"
+                    },
+                    "layer_metadata_integration": {
+                        "method": "GET",
+                        "url": "/model/layer-metadata/?category=Remediation",
+                        "description": "Get metadata for all 4 remediation layers (L48-L51)",
+                        "returns": "Layer definitions with FK relationships, priorities, operational status",
+                        "next_step": "Use fk_references[] to discover linked layers without hardcoding"
+                    },
+                    "discover_fk_relationships": {
+                        "method": "GET",
+                        "url": "/model/layer-metadata/auto_fix_execution_history",
+                        "description": "See all FK relationships for execution history layer",
+                        "returns": {
+                            "fk_references": ["remediation_policies", "agent_performance_metrics", "agent_execution_history", "decision_provenance"],
+                            "referenced_by": ["remediation_outcomes"]
+                        }
+                    },
+                    "query_by_priority": {
+                        "method": "GET",
+                        "url": "/model/layer-metadata/?priority=P4",
+                        "description": "Get all Priority #4 layers (automated remediation framework)",
+                        "use_case": "Discover complete remediation layer set without hardcoding layer names"
+                    }
+                },
+                "common_patterns": {
+                    "trigger_policy": "Check L48 for policy_id, verify triggers match current metrics (latency_threshold, error_rate, etc.)",
+                    "track_execution": "L49 records all execution attempts with timestamps, outcomes, and duration",
+                    "analyze_outcome": "L50 links execution_id to resolution_status (resolved, failed, partial)",
+                    "measure_effectiveness": "L51 aggregates by policy/agent/severity for trend analysis and false positive detection",
+                    "cross_layer_workflow": [
+                        "Metrics drop (L40-L47) → Trigger policy (L48) → Execute remediation (L49) → Record outcome (L50) → Update effectiveness (L51)"
+                    ]
+                },
+                "fk_navigation": {
+                    "description": "How to navigate FK relationships across remediation layers",
+                    "outbound_fks": {
+                        "L48_remediation_policies": {
+                            "fk_to": ["L33:agent_policies", "L36:deployment_policies"],
+                            "use_case": "Fetch governance constraints before executing policy"
+                        },
+                        "L49_auto_fix_execution_history": {
+                            "fk_to": ["L48:remediation_policies", "L40:agent_performance_metrics", "L46:agent_execution_history", "L31:decision_provenance"],
+                            "use_case": "Full context for execution: policy definition + agent state + reasoning"
+                        },
+                        "L50_remediation_outcomes": {
+                            "fk_to": ["L49:auto_fix_execution_history"],
+                            "use_case": "Link outcome metrics back to execution details"
+                        },
+                        "L51_remediation_effectiveness": {
+                            "fk_to": ["L48:remediation_policies", "L40:agent_performance_metrics"],
+                            "use_case": "Aggregate effectiveness by policy type and agent"
+                        }
+                    },
+                    "inbound_fks": {
+                        "L48_remediation_policies": {
+                            "referenced_by": ["L49:auto_fix_execution_history", "L51:remediation_effectiveness"],
+                            "use_case": "Find all executions and effectiveness records for a policy"
+                        },
+                        "L49_auto_fix_execution_history": {
+                            "referenced_by": ["L50:remediation_outcomes"],
+                            "use_case": "Get outcome analysis for a specific execution"
+                        }
+                    }
+                },
+                "ready_for_production": {
+                    "status": "All 4 layers operational (Session 40)",
+                    "data_available": true,
+                    "sample_policies": "agent-performance-recovery, infrastructure-scale-up, deployment-rollback",
+                    "sample_executions": "8+ historical executions across all policies",
+                    "next_session": "Phase 4 — populate remaining 32 stub layers with realistic data"
+                }
+            },
             "layers_available": layers,
             "layer_notes": {
                 "endpoints":     "id = 'METHOD /path' (exact). Filter by status with ?status=",
@@ -769,6 +930,11 @@ def create_app() -> FastAPI:
                 "agent_policies": "(L33) Agent capabilities, safety constraints, project access. evidence tech_stack='agent-policies'",
                 "quality_gates":  "(L34) MTI thresholds, test coverage gates, phase-specific blockers. evidence tech_stack='quality-gates'",
                 "github_rules":   "(L35) Branch protection, commit standards, naming conventions. evidence tech_stack='github-rules'",
+                "remediation_policies": "(L48) Decision framework for when/how/who to remediate. Triggers, actions, linked_policies. FK to agent_policies, deployment_policies",
+                "auto_fix_execution_history": "(L49) Audit trail of automated remediation attempts. FK to remediation_policies, agent_performance_metrics, agent_execution_history, decision_provenance",
+                "remediation_outcomes": "(L50) Resolution status and impact analytics. FK to auto_fix_execution_history",
+                "remediation_effectiveness": "(L51) System-wide KPIs aggregated by policy/agent/severity. FK to remediation_policies, agent_performance_metrics",
+                "layer_metadata": "Use GET /model/layer-metadata/ to discover all 51 layers with FK relationships, priorities, categories, operational status. Query params: operational, priority, category, sort, with_fk"
             },
             "forbidden": [
                 "Reading model/*.json files directly",
@@ -784,6 +950,9 @@ def create_app() -> FastAPI:
                 "readiness_check": "GET /ready   (readiness — Cosmos ping, store_reachable field)",
                 "layer_counts":    "GET /model/agent-summary",
                 "layer_list":      "GET /model/layers (all layers with schema + count metadata)",
+                "layer_metadata":  "GET /model/layer-metadata/ (51 layer definitions with FK relationships, priorities, categories)",
+                "layer_metadata_single": "GET /model/layer-metadata/{layer} (single layer with fk_references and referenced_by)",
+                "fk_matrix":       "GET /model/fk-matrix (complete FK relationship matrix for all layers)",
                 "schema":          "GET /model/schemas/{layer} (full JSON Schema draft-07)",
                 "fields":          "GET /model/{layer}/fields (field names + required list)",
                 "example":         "GET /model/{layer}/example (first real object)",
