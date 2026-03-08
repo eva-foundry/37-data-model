@@ -1,29 +1,100 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 8, 2026 18:58 PM ET -- Session 41: Phase 1 Audit Script Fixes COMPLETE ✅
+**Last Updated:** March 8, 2026 18:58 PM ET -- Session 41: Phase 2 Layer-Metadata Endpoint COMPLETE ✅
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- 51 LAYERS OPERATIONAL -- CLOUD-ONLY ARCHITECTURE ✅
-**Snapshot (2026-03-08 S41 Phase 1 COMPLETE):** Comprehensive layer audit script normalized and production-ready. All 51 layer definitions now have consistent schema (Operational + FK properties). FK testing integrated. Script tested successfully: 19/51 operational layers, 17/19 with data, L48-L51 validation complete. PropertyNotFoundException bug resolved. Container App revision 0000012 healthy. Total Cosmos DB objects: 1,262. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+**Snapshot (2026-03-08 S41 Phase 2 COMPLETE):** Layer-metadata query endpoint fully implemented with comprehensive filtering and FK matrix support. All 51 layers now discoverable via REST API. Metadata index includes category/priority counts, FK relationships (L48-L51), and operational status flags. Router registered. Ready for cloud deployment testing. Container App revision 0000012 healthy. Total Cosmos DB objects: 1,262. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 
 ---
 
-## Session 41: Comprehensive Audit Script Enhancement (6:58 PM ET) ✅
+## Session 41: Comprehensive Audit Script + Layer-Metadata Endpoint (6:58 PM ET) ✅
 
-**MISSION**: Fix audit script bugs and enhance FK testing capabilities
+**MISSION**: Fix audit script bugs, implement layer-metadata query endpoint
 
 **PHASE 1 COMPLETE (6:58 PM ET)**:
 - ✅ Normalized all 51 layer definitions (added Operational + FK properties)
 - ✅ Integrated FK testing into main audit flow (Test 4 section)
 - ✅ Script tested successfully - no PropertyNotFoundException errors
 - ✅ FK validation working (L49→L48, L49→L41, L50→L49 resolution tested)
-- ✅ Changes committed with comprehensive documentation
+
+**PHASE 2 COMPLETE (6:58 PM ET)**:
+- ✅ Created api/routers/metadata.py (250+ lines)
+  - GET /model/layer-metadata/ (main query with 5 filters)
+  - GET /model/layer-metadata/{layer} (single layer lookup)
+  - GET /model/fk-matrix (FK relationship matrix)
+  - Query params: operational, priority, category, sort, with_fk
+- ✅ Created model/layer-metadata-index.json (51 complete layer definitions)
+  - Categories: Foundation(32), Governance(8), Infrastructure(8), Remediation(4)
+  - FK matrix: L48-L51 relationships + all other layer dependencies
+  - Operational status: 19 operational, 32 stub layers
+- ✅ Registered router in api/server.py (metadata_router added before layer routers)
+- ✅ Added L48-L51 to admin.py _LAYER_FILES and layers.py routers
+- ✅ Committed with comprehensive documentation
 
 **FILES MODIFIED**:
 - scripts/comprehensive-layer-audit.ps1 (450 lines)
-  - Lines 48-108: Normalized $allLayers array (all 51 definitions)
-  - Lines 316-341: FK testing section with Test-ForeignKeyRelationship calls
-  - Resolves: PropertyNotFoundException on lines 149-150, 164-165
+- api/routers/metadata.py (NEW - 250+ lines)
+- model/layer-metadata-index.json (NEW - 51 layer definitions)
+- api/server.py (metadata router registration)
+- api/routers/admin.py (L48-L51 layer files)
+- api/routers/layers.py (L48-L51 routers)
 
-**TEST RESULTS**:
+**METADATA ENDPOINT FEATURES**:
+```powershell
+# Query all layers
+GET /model/layer-metadata/
+
+# Filter by operational status
+GET /model/layer-metadata/?operational=true
+
+# Filter by priority (comma-separated)
+GET /model/layer-metadata/?priority=P0,P1
+
+# Filter by category
+GET /model/layer-metadata/?category=Remediation
+
+# Filter by FK presence
+GET /model/layer-metadata/?with_fk=true
+
+# Sort results
+GET /model/layer-metadata/?sort=layer_name
+
+# Single layer lookup
+GET /model/layer-metadata/remediation_policies
+GET /model/layer-metadata/48
+
+# FK matrix
+GET /model/fk-matrix
+```
+
+**RESPONSE STRUCTURE**:
+```json
+{
+  "data": [
+    {
+      "layer_number": 48,
+      "layer_name": "remediation_policies",
+      "description": "Decision framework (WHEN/HOW/WHO to remediate)",
+      "priority": "P4",
+      "category": "Remediation",
+      "operational": true,
+      "schema_file": "remediation_policy.schema.json",
+      "fk_references": ["agent_policies", "deployment_policies"],
+      "referenced_by": ["auto_fix_execution_history", "remediation_effectiveness"],
+      "automation": "manual"
+    }
+  ],
+  "metadata": {
+    "total_layers": 51,
+    "filtered_count": 4,
+    "operational_count": 19,
+    "stub_count": 32,
+    "last_updated": "2026-03-08T18:58:00Z",
+    "fk_matrix_available": true
+  }
+}
+```
+
+**TEST RESULTS** (Phase 1 Audit Script):
 - Total Layers: 51
 - Available (HTTP 200): 19/51 (37%)
 - Operational: 24 layers
@@ -31,8 +102,7 @@
 - L48-L51 Verification: 4/4 available, 4/4 with data ✅
 
 **NEXT PHASES** (Planned):
-- Phase 2: layer-metadata endpoint (query builder with filtering/sorting)
-- Phase 3: agent-guide examples (L48-L51 FK resolution patterns)
+- Phase 3: agent-guide examples (L48-L51 FK resolution patterns + remediation_framework section)
 - Phase 4: stub layer population (all 32 stub layers with realistic data)
 - Phase 5: enhanced seed endpoint (--layers parameter for selective seeding)
 
