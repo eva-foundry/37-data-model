@@ -286,6 +286,7 @@ def create_app() -> FastAPI:
     from api.routers.introspection import router as introspection_router  # Session 26: schema introspection
     from api.routers.aggregation import router as aggregation_router  # Session 26: metrics & analytics
     from api.routers.metadata import router as metadata_router  # Session 41: layer metadata query
+    from api.routers.debug import router as debug_router  # Session 41: debug agent-guide 500 error
 
     for r in [
         # introspection & aggregation (Session 26) — register FIRST for path precedence
@@ -293,6 +294,8 @@ def create_app() -> FastAPI:
         aggregation_router,
         # metadata (Session 41) — register SECOND for layer discovery endpoint
         metadata_router,
+        # debug (Session 41) — debug agent-guide 500 error investigation
+        debug_router,
         # layer routers (generic /{obj_id} path)
         services_router, personas_router, feature_flags_router,
         containers_router, endpoints_router, schemas_router,
