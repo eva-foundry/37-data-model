@@ -437,6 +437,9 @@ try {
     }
     Write-Host ("=" * 80) + "`n"
     
+    # Explicit exit for workflow status check
+    exit 0
+    
 } catch {
     Write-Log "✗ Sync failed: $_" -Level ERROR
     Write-Host $_.ScriptStackTrace -ForegroundColor Red
