@@ -268,6 +268,12 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
         deployment_policies_router, testing_policies_router, validation_rules_router,
+        # infrastructure monitoring (L40-L49) — agent execution, performance, deployment quality
+        agent_execution_history_router, agent_performance_metrics_router,
+        azure_infrastructure_router, compliance_audit_router,
+        deployment_quality_scores_router, deployment_records_router,
+        eva_model_router, infrastructure_drift_router,
+        performance_trends_router, resource_costs_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -305,6 +311,12 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38)
         deployment_policies_router, testing_policies_router, validation_rules_router,
+        # infrastructure monitoring (L40-L49) — Priority #4 layers
+        agent_execution_history_router, agent_performance_metrics_router,
+        azure_infrastructure_router, compliance_audit_router,
+        deployment_quality_scores_router, deployment_records_router,
+        eva_model_router, infrastructure_drift_router,
+        performance_trends_router, resource_costs_router,
         fp_router,
         # graph (E-11)
         graph_router,

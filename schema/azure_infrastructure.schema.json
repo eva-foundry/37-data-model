@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Azure Infrastructure",
+  "description": "Azure resource inventory, configuration, and state tracking",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Unique resource identifier"},
+    "subscription_id": {"type": "string", "format": "uuid", "description": "Azure subscription UUID"},
+    "resource_group": {"type": "string", "description": "Resource group name"},
+    "resource_name": {"type": "string", "description": "Azure resource name"},
+    "resource_type": {
+      "type": "string",
+      "enum": ["container_app", "cosmos_db", "blob_storage", "key_vault", "apim", "app_insights", "app_service", "sql_database", "virtual_machine", "network_security_group"],
+      "description": "Type of Azure resource"
+    },
+    "arn": {"type": "string", "description": "Azure Resource Name"},
+    "region": {"type": "string", "description": "Azure region"},
+    "environment": {"type": "string", "enum": ["dev", "staging", "prod"], "description": "Environment"},
+    "status": {"type": "string", "description": "Current provisioning status"},
+    "created_date": {"type": "string", "format": "date-time", "description": "Creation timestamp"},
+    "resource_configuration": {"type": "object", "description": "Tier, capacity, version, and other config"},
+    "security_config": {"type": "object", "description": "Authentication, encryption, firewall settings"},
+    "cost_tracking": {"type": "object", "description": "Estimated and actual costs"}
+  },
+  "required": ["id", "subscription_id", "resource_name", "resource_type", "region", "environment"]
+}

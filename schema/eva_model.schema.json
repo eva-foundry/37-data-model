@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#", 
+  "title": "EVA Model Meta-Schema",
+  "description": "EVA data model meta-information describing all 51 layers and their relationships",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Model identifier"},
+    "model_version": {"type": "string", "description": "Semantic version of data model"},
+    "last_updated": {"type": "string", "format": "date-time", "description": "Last update timestamp"},
+    "layer_catalog": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "layer_number": {"type": "integer", "minimum": 0, "maximum": 51},
+          "layer_name": {"type": "string"},
+          "description": {"type": "string"},
+          "entity_count": {"type": "integer", "minimum": 0},
+          "status": {"type": "string", "enum": ["operational", "beta", "deprecated", "archived"]},
+          "owner": {"type": "string"}
+        }
+      },
+      "description": "Catalog of all layers"
+    },
+    "layer_groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "group_name": {"type": "string"},
+          "purpose": {"type": "string"},
+          "layer_numbers": {"type": "array", "items": {"type": "integer"}}
+        }
+      },
+      "description": "Semantic grouping of layers"
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_layer": {"type": "integer"},
+          "to_layer": {"type": "integer"},
+          "relationship_type": {"type": "string"},
+          "cardinality": {"type": "string"}
+        }
+      },
+      "description": "Layer-to-layer relationships"
+    },
+    "schema_definitions": {"type": "array", "items": {"type": "object"}, "description": "All layer schemas"},
+    "query_patterns": {"type": "array", "items": {"type": "object"}, "description": "Standard query patterns"},
+    "write_cycle_details": {"type": "object", "description": "PUT, GET, POST/admin/commit cycle"},
+    "data_quality_rules": {"type": "array", "items": {"type": "string"}, "description": "Quality validation rules"},
+    "evolution_history": {"type": "array", "items": {"type": "object"}, "description": "Model version history"}
+  },
+  "required": ["id", "model_version", "layer_catalog"]
+}

@@ -1,8 +1,8 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 7, 2026 6:03 PM ET -- Session 38: PAPERLESS GOVERNANCE + 51 LAYERS DEPLOYED ✅
+**Last Updated:** March 8, 2026 12:07 PM UTC -- Session 39: INFRASTRUCTURE LAYERS L40-L49 DEPLOYED & VALIDATED ✅
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- 51 LAYERS OPERATIONAL -- CLOUD-ONLY ARCHITECTURE ✅
-**Snapshot (2026-03-07 S38 COMPLETE):** All 51 layers deployed to cloud API. **Paperless governance activated**: Only README.md + ACCEPTANCE.md required on disk. STATUS.md, PLAN.md, sprints, risks, ADRs, evidence → all queryable via data model API (Layers 26-31, 34). Priority #4 infrastructure monitoring (L42-L51) deployed. Agent guide updated with Session 38 lessons (13+ common mistakes). USER-GUIDE.md v3.2 published with authentication patterns & paper-free workflow. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+**Snapshot (2026-03-08 S39 COMPLETE):** All 51 layers deployed to cloud API. **Session 39 validation complete**: All 10 infrastructure monitoring layers (L40-L49) confirmed operational with successful endpoint testing (10/10 pass rate). Cloud Container App deployment provisioning state: Succeeded. All layers accessible via HTTPS with trailing slash requirement. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 
 > **Session note (2026-03-07 18:03 ET Session 38 -- PAPERLESS GOVERNANCE + LAYER COUNT CORRECTION -- COMPLETE ✅):**
 >
@@ -58,6 +58,54 @@
 >   - Mistake 11: Used POST for creates → API only supports PUT with ID in URL
 >   - Mistake 12: Assumed layer structure without checking → Use /model/agent-summary
 >   - Mistake 13: Hardcoded layer counts in docs → Always query live, don't hardcode
+>
+> **Session note (2026-03-08 12:07 UTC Session 39 -- INFRASTRUCTURE LAYERS DEPLOYMENT & CLOUD VALIDATION -- COMPLETE ✅):**
+>
+> **DEPLOYMENT SUCCESS**: All 10 infrastructure monitoring layers (L40-L49) deployed to Azure Container Apps
+>   - **Build**: Docker image session-39-layers-40-49 successfully built in ACR
+>   - **Deployment**: Container App revision 0000011 provisioned (state: Succeeded)
+>   - **Validation**: All 10 endpoints tested and responding with HTTP 200
+>   - **Discovery**: API requires trailing slashes (`/model/layer_name/` not `/model/layer_name`)
+>
+> **10 INFRASTRUCTURE MONITORING LAYERS NOW LIVE** (L40-L49):
+>   - ✅ agent_execution_history — Audit trail of every agent execution
+>   - ✅ agent_performance_metrics — Real-time agent performance indicators
+>   - ✅ azure_infrastructure — Azure resource inventory and state tracking
+>   - ✅ compliance_audit — Compliance assessment and remediation tracking
+>   - ✅ deployment_quality_scores — Multi-dimensional quality metrics (A-F grades)
+>   - ✅ deployment_records — Complete deployment history and audit trails
+>   - ✅ eva_model — Self-describing meta-model and layer relationships
+>   - ✅ infrastructure_drift — Desired vs actual state comparison
+>   - ✅ performance_trends — Historical trends and capacity planning
+>   - ✅ resource_costs — Cloud cost tracking and budget management
+>
+> **VALIDATION RESULTS**:
+>   - Test Status: 10/10 endpoints passing (100% success rate)
+>   - Each layer returning 1+ items (initialized with schema metadata)
+>   - HTTP Status: All 200 OK with JSON responses
+>   - Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+>   - Region: canadacentral | Subscription: MarcoSub | Resource Group: EVA-Sandbox-dev
+>
+> **SECURITY & COMPLIANCE**:
+>   - ✅ All credentials removed from GitHub (used Azure Key Vault references instead)
+>   - ✅ Clean git commits (2 commits, no security violations)
+>   - ✅ Credentials stored in Azure Key Vault (marcosub subscription)
+>   - ✅ Docker image immutable and tracked (session-39-layers-40-49)
+>
+> **SESSION 39 DELIVERABLES**:
+>   - 10 JSON Schema Draft-07 files (all validated)
+>   - 10 Python router factory definitions (registered in api/routers/layers.py)
+>   - Updated api/server.py with 10 new router registrations
+>   - SESSION-39-INFRASTRUCTURE-LAYERS-DEPLOYMENT.md (deployment guide)
+>   - SESSION-39-COMPLETION-REPORT.md (final status report)
+>   - Git commits: ed20dd6 (implementation), 90949b2 (documentation)
+>   - Cloud deployment: session-39-layers-40-49 image tag
+>
+> **LESSONS LEARNED**:
+>   - ✅ Trailing slash requirement: FastAPI redirect pattern (307 HTTP redirects)
+>   - ✅ Factory pattern consistency: Same make_layer_router() pattern across all 10 layers
+>   - ✅ Credential management: Always use Key Vault, never commit secrets
+>   - ✅ Cloud environment: Verify correct Azure cloud (AzureCloud vs AzureUSGovernment)
 >
 > **SESSION 38 METRICS**:
 >   - Duration: ~2.5 hours (4:20 PM - 6:03 PM ET)

@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Resource Costs",
+  "description": "Cloud cost tracking, budget alerts, and cost optimization",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Cost report identifier"},
+    "subscription_id": {"type": "string", "format": "uuid", "description": "Azure subscription"},
+    "billing_period": {
+      "type": "object",
+      "properties": {
+        "start_date": {"type": "string", "format": "date"},
+        "end_date": {"type": "string", "format": "date"},
+        "period_type": {"type": "string", "enum": ["daily", "weekly", "monthly"]}
+      }
+    },
+    "total_cost": {"type": "number", "minimum": 0, "description": "Total spending in USD"},
+    "budget": {"type": "number", "minimum": 0, "description": "Budgeted amount in USD"},
+    "budget_variance": {"type": "number", "description": "Over/under budget in USD"},
+    "budget_utilization_percent": {"type": "number", "minimum": 0, "maximum": 100, "description": "Percentage of budget used"},
+    "cost_by_service": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service_name": {"type": "string"},
+          "cost": {"type": "number", "minimum": 0},
+          "percentage": {"type": "number", "minimum": 0, "maximum": 100},
+          "usage_quantity": {"type": "number", "minimum": 0}
+        }
+      }
+    },
+    "cost_by_environment": {
+      "type": "object",
+      "properties": {
+        "dev": {"type": "number", "minimum": 0},
+        "staging": {"type": "number", "minimum": 0},
+        "prod": {"type": "number", "minimum": 0}
+      }
+    },
+    "cost_by_resource": {"type": "array", "items": {"type": "object"}, "description": "Top cost drivers"},
+    "forecasted_cost": {
+      "type": "object",
+      "properties": {
+        "forecast_30_days": {"type": "number", "minimum": 0},
+        "forecast_90_days": {"type": "number", "minimum": 0},
+        "forecast_yearly": {"type": "number", "minimum": 0}
+      }
+    },
+    "anomalies": {"type": "array", "items": {"type": "string"}, "description": "Detected cost anomalies"},
+    "optimization_opportunities": {"type": "array", "items": {"type": "string"}, "description": "Potential savings"},
+    "reserved_instances": {"type": "object", "description": "RI utilization and savings"}
+  },
+  "required": ["id", "subscription_id", "billing_period", "total_cost", "budget"]
+}

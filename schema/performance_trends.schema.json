@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Performance Trends",
+  "description": "Historical performance analysis and trend detection",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Trend report identifier"},
+    "agent_id": {"type": "string", "description": "Agent being assessed"},
+    "metric_period": {"type": "string", "enum": ["daily", "weekly", "monthly", "quarterly"], "description": "Aggregation period"},
+    "period_start": {"type": "string", "format": "date-time", "description": "Period start date"},
+    "period_end": {"type": "string", "format": "date-time", "description": "Period end date"},
+    "metrics_snapshot": {
+      "type": "object",
+      "properties": {
+        "deployments_count": {"type": "integer", "minimum": 0},
+        "success_rate": {"type": "number", "minimum": 0, "maximum": 100},
+        "avg_quality_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "avg_deployment_time": {"type": "number", "minimum": 0},
+        "total_cost": {"type": "number", "minimum": 0},
+        "incidents_count": {"type": "integer", "minimum": 0}
+      },
+      "description": "Aggregated metrics for period"
+    },
+    "trend_indicators": {
+      "type": "object",
+      "properties": {
+        "reliability_trend": {"type": "string", "enum": ["improving", "declining", "stable"]},
+        "speed_trend": {"type": "string", "enum": ["improving", "declining", "stable"]},
+        "cost_trend": {"type": "string", "enum": ["improving", "declining", "stable"]},
+        "quality_trend": {"type": "string", "enum": ["improving", "declining", "stable"]}
+      },
+      "description": "Trend directions"
+    },
+    "prediction": {
+      "type": "object",
+      "properties": {
+        "predicted_success_rate": {"type": "number", "minimum": 0, "maximum": 100},
+        "predicted_avg_cost": {"type": "number", "minimum": 0},
+        "confidence_level": {"type": "number", "minimum": 0, "maximum": 100}
+      },
+      "description": "Forward-looking predictions"
+    }
+  },
+  "required": ["id", "agent_id", "metric_period", "period_start", "period_end", "metrics_snapshot"]
+}

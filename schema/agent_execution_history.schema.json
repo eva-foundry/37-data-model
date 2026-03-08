@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Execution History",
+  "description": "Complete audit trail of every agent action, decision, and outcome",
+  "type": "object",
+  "properties": {
+    "execution_id": {"type": "string", "description": "Unique execution identifier (UUID)"},
+    "agent_id": {"type": "string", "description": "Agent identifier"},
+    "agent_name": {"type": "string", "description": "Human-readable agent name"},
+    "action_type": {
+      "type": "string",
+      "enum": ["deploy", "validate", "rollback", "query_policy", "evidence_emit", "state_check", "remediation", "other"],
+      "description": "Type of action performed"
+    },
+    "timestamp": {"type": "string", "format": "date-time", "description": "When action occurred"},
+    "outcome": {
+      "type": "string",
+      "enum": ["success", "failure", "partial", "blocked"],
+      "description": "Result of the action"
+    },
+    "duration_ms": {"type": "integer", "minimum": 0, "description": "Execution time in milliseconds"},
+    "cost_impact_usd": {"type": "number", "minimum": 0, "description": "Cost impact in USD"},
+    "evidence_trail": {"type": "array", "items": {"type": "string"}, "description": "References to evidence layer records"},
+    "error_details": {"type": "string", "description": "Error message if outcome is failure"},
+    "metadata": {"type": "object", "description": "Additional contextual data"}
+  },
+  "required": ["execution_id", "agent_id", "action_type", "timestamp", "outcome", "duration_ms"]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deployment Quality Scores",
+  "description": "Multi-dimensional quality assessment for deployments",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Unique score identifier"},
+    "deployment_id": {"type": "string", "description": "Foreign key to deployment_records"},
+    "deployment_timestamp": {"type": "string", "format": "date-time", "description": "When deployment occurred"},
+    "quality_dimensions": {
+      "type": "object",
+      "properties": {
+        "compliance_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "performance_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "safety_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "cost_efficiency_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "speed_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "reliability_score": {"type": "number", "minimum": 0, "maximum": 100}
+      }
+    },
+    "overall_quality_score": {"type": "number", "minimum": 0, "maximum": 100, "description": "Average of all dimensions"},
+    "quality_grade": {"type": "string", "enum": ["A", "B", "C", "D", "F"], "description": "Letter grade based on overall score"},
+    "validation_results": {"type": "array", "items": {"type": "object"}, "description": "Validation checks and results"},
+    "anomalies_detected": {"type": "array", "items": {"type": "string"}, "description": "List of detected anomalies"},
+    "recommendations": {"type": "array", "items": {"type": "string"}, "description": "Recommendations for improvement"}
+  },
+  "required": ["id", "deployment_id", "quality_dimensions", "overall_quality_score", "quality_grade"]
+}
