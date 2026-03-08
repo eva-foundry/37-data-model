@@ -1,8 +1,8 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 8, 2026 18:58 PM ET -- Session 41: Phase 3 Agent-Guide L48-L51 Examples COMPLETE ✅
+**Last Updated:** March 8, 2026 20:35 PM ET -- Session 41: Phase 4 Bug Fix + Data Seeding COMPLETE ✅
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- 51 LAYERS OPERATIONAL -- CLOUD-ONLY ARCHITECTURE ✅
-**Snapshot (2026-03-08 S41 Phase 3 COMPLETE):** Agent-guide endpoint enhanced with comprehensive L48-L51 remediation framework documentation. Added 10 examples, FK navigation patterns, 3 new common mistakes for FK resolution. Query patterns updated with layer-metadata discovery. Agents can now discover FK relationships dynamically without hardcoding. Ready for cloud deployment. Container App revision 0000012 healthy. Total Cosmos DB objects: 1,262. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+**Snapshot (2026-03-08 S41 Phase 4 COMPLETE):** Fixed agent-guide 500 error (lowercase boolean bug), seeded 10 agent_performance_metrics records. Applied DPDCA debugging methodology with debug endpoint and professional evidence trail. Local endpoint fully operational. Azure deployment pending manual ACR rebuild. Commits: 6 total (c0fd544 through 2c75810). Bug detection gap: Violated CHECK phase by not running pylint/flake8/manual test before commits. Total Cosmos DB objects: 1,272 (10 new agents). Branch: docs/session-39-completion-and-51-layer-catalog ready for merge.
 
 ---
 
@@ -148,6 +148,42 @@ GET /model/remediation_effectiveness/2026-03
 # Discover FK relationships
 GET /model/layer-metadata/auto_fix_execution_history
 # Returns: fk_references: [remediation_policies, agent_performance_metrics, agent_execution_history, decision_provenance]
+```
+
+**PHASE 4 COMPLETE (8:30 PM ET) - Bug Fix + Data Seeding**:
+- ✅ Seeded 10 agent_performance_metrics records via API
+  - Distribution: 7 high performers (≥90%), 2 average (75-89%), 1 low (<75%)
+  - IDs: github-copilot, validator, conversation-agent, eva-factory-guide, etc.
+- ✅ Discovered and fixed agent-guide 500 error (lowercase `true` → `True`)
+  - Root cause: `data_available: true` (JavaScript) instead of `True` (Python)
+  - Error: NameError: name 'true' is not defined (line 907 in remediation_framework)
+  - Applied DPDCA methodology: Created debug endpoint, isolated issue, professional commit
+- ✅ Verified fix locally: GET /model/agent-guide returns 200 with 51 layers ✅
+- ⏸ Azure deployment pending: ACR build encountered terminal issues, manual redeploy needed
+
+**BUG FIX EVIDENCE** (Session 41 DPDCA Complete):
+- Created api/routers/debug.py with step-by-step testing
+- Proved layer loading logic was correct (all 3 steps passed)
+- Identified real issue in response dict (boolean case error)
+- Detection methods that SHOULD have caught it:
+  - pylint: E0602 undefined variable 'true'
+  - flake8: F821 undefined name 'true'
+  - Manual endpoint test before commit
+  - pytest (if test_agent_guide.py existed)
+- Violated CHECK phase: Did not run pytest or manual test before initial commits
+- Evidence document: docs/20260308-agent-guide-debug-plan.md
+
+**COMMITS** (Phase 4):
+- c0fd544: feat(P4): Add L48-L51 schemas + agent_performance_metrics seed data
+- a65bfbe: fix(P2): Load layers from layer-metadata-index.json in agent-guide (attempt 1 - failed)
+- fc9c05a: fix(P2): Use metadata helper function for layer loading (attempt 2 - failed)
+- 229b21d: feat(debug): Add debug endpoint for agent-guide 500 error investigation
+- 2c75810: fix(agent-guide): Fix lowercase boolean true to Python True ✅
+
+**DEPLOYMENT STATUS**:
+- Local (port 8010): ✅ OPERATIONAL (Phase 2 + Phase 3 both working)
+- Azure (revision 0000014): ⚠️ Phase 2 works, Phase 3 broken (still has `true` bug)
+- Next: Manual ACR build + Container App update to revision 0000015
 
 # Query by category
 GET /model/layer-metadata/?category=Remediation
