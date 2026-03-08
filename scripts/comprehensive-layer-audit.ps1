@@ -46,71 +46,71 @@ $ErrorActionPreference = "Continue"
 
 $allLayers = @(
   # L01-L11: Project & Evidence Plane
-  [PSCustomObject]@{Number=1; Name="projects"; Priority="P0"; Description="Project catalog"}
-  [PSCustomObject]@{Number=2; Name="sprints"; Priority="P0"; Description="Sprint tracking"}
-  [PSCustomObject]@{Number=3; Name="stories"; Priority="P1"; Description="User stories (stub)"}
-  [PSCustomObject]@{Number=4; Name="tasks"; Priority="P1"; Description="Task breakdown (stub)"}
-  [PSCustomObject]@{Number=5; Name="evidence"; Priority="P0"; Description="Proof artifacts"}
-  [PSCustomObject]@{Number=6; Name="coverage_summary"; Priority="P1"; Description="Test coverage (stub)"}
+  [PSCustomObject]@{Number=1; Name="projects"; Priority="P0"; Description="Project catalog"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=2; Name="sprints"; Priority="P0"; Description="Sprint tracking"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=3; Name="stories"; Priority="P1"; Description="User stories (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=4; Name="tasks"; Priority="P1"; Description="Task breakdown (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=5; Name="evidence"; Priority="P0"; Description="Proof artifacts"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=6; Name="coverage_summary"; Priority="P1"; Description="Test coverage (stub)"; Operational=$false; FK=$null}
   
   # L07-L11: Architecture & Tech Stack
-  [PSCustomObject]@{Number=7; Name="services"; Priority="P0"; Description="Service catalog"}
-  [PSCustomObject]@{Number=8; Name="repos"; Priority="P1"; Description="Repository registry (stub)"}
-  [PSCustomObject]@{Number=9; Name="tech_stack"; Priority="P1"; Description="Technology inventory (stub)"}
-  [PSCustomObject]@{Number=10; Name="architecture_decisions"; Priority="P1"; Description="ADRs (stub)"}
-  [PSCustomObject]@{Number=11; Name="endpoints"; Priority="P0"; Description="API endpoints"}
+  [PSCustomObject]@{Number=7; Name="services"; Priority="P0"; Description="Service catalog"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=8; Name="repos"; Priority="P1"; Description="Repository registry (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=9; Name="tech_stack"; Priority="P1"; Description="Technology inventory (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=10; Name="architecture_decisions"; Priority="P1"; Description="ADRs (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=11; Name="endpoints"; Priority="P0"; Description="API endpoints"; Operational=$true; FK=$null}
   
   # L12-L16: API & Deployment
-  [PSCustomObject]@{Number=12; Name="api_contracts"; Priority="P1"; Description="API contracts (stub)"}
-  [PSCustomObject]@{Number=13; Name="request_response_samples"; Priority="P1"; Description="API samples (stub)"}
-  [PSCustomObject]@{Number=14; Name="deployment_targets"; Priority="P1"; Description="Deploy targets (stub)"}
-  [PSCustomObject]@{Number=15; Name="ci_cd_pipelines"; Priority="P1"; Description="CI/CD config (stub)"}
-  [PSCustomObject]@{Number=16; Name="deployment_history"; Priority="P1"; Description="Deploy history (stub)"}
+  [PSCustomObject]@{Number=12; Name="api_contracts"; Priority="P1"; Description="API contracts (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=13; Name="request_response_samples"; Priority="P1"; Description="API samples (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=14; Name="deployment_targets"; Priority="P1"; Description="Deploy targets (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=15; Name="ci_cd_pipelines"; Priority="P1"; Description="CI/CD config (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=16; Name="deployment_history"; Priority="P1"; Description="Deploy history (stub)"; Operational=$false; FK=$null}
   
   # L17-L20: Configuration Management
-  [PSCustomObject]@{Number=17; Name="config_defs"; Priority="P1"; Description="Config definitions (stub)"}
-  [PSCustomObject]@{Number=18; Name="runtime_config"; Priority="P1"; Description="Runtime config (stub)"}
-  [PSCustomObject]@{Number=19; Name="secrets_catalog"; Priority="P1"; Description="Secrets catalog (stub)"}
-  [PSCustomObject]@{Number=20; Name="env_vars"; Priority="P1"; Description="Env variables (stub)"}
+  [PSCustomObject]@{Number=17; Name="config_defs"; Priority="P1"; Description="Config definitions (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=18; Name="runtime_config"; Priority="P1"; Description="Runtime config (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=19; Name="secrets_catalog"; Priority="P1"; Description="Secrets catalog (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=20; Name="env_vars"; Priority="P1"; Description="Env variables (stub)"; Operational=$false; FK=$null}
   
   # L21-L26: Agentic Workflows
-  [PSCustomObject]@{Number=21; Name="prompts"; Priority="P0"; Description="Prompt catalog"}
-  [PSCustomObject]@{Number=22; Name="personas"; Priority="P0"; Description="Agent personas"}
-  [PSCustomObject]@{Number=23; Name="instructions"; Priority="P1"; Description="Agent instructions (stub)"}
-  [PSCustomObject]@{Number=24; Name="agentic_workflows"; Priority="P1"; Description="Workflow definitions (stub)"}
-  [PSCustomObject]@{Number=25; Name="session_transcripts"; Priority="P1"; Description="Session logs (stub)"}
-  [PSCustomObject]@{Number=26; Name="workflow_metrics"; Priority="P1"; Description="Workflow metrics (stub)"}
+  [PSCustomObject]@{Number=21; Name="prompts"; Priority="P0"; Description="Prompt catalog"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=22; Name="personas"; Priority="P0"; Description="Agent personas"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=23; Name="instructions"; Priority="P1"; Description="Agent instructions (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=24; Name="agentic_workflows"; Priority="P1"; Description="Workflow definitions (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=25; Name="session_transcripts"; Priority="P1"; Description="Session logs (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=26; Name="workflow_metrics"; Priority="P1"; Description="Workflow metrics (stub)"; Operational=$false; FK=$null}
   
   # L27-L29: Observability
-  [PSCustomObject]@{Number=27; Name="error_catalog"; Priority="P1"; Description="Error taxonomy (stub)"}
-  [PSCustomObject]@{Number=28; Name="model_telemetry"; Priority="P1"; Description="Model telemetry (stub)"}
-  [PSCustomObject]@{Number=29; Name="cost_tracking"; Priority="P1"; Description="Cost tracking (stub)"}
+  [PSCustomObject]@{Number=27; Name="error_catalog"; Priority="P1"; Description="Error taxonomy (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=28; Name="model_telemetry"; Priority="P1"; Description="Model telemetry (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=29; Name="cost_tracking"; Priority="P1"; Description="Cost tracking (stub)"; Operational=$false; FK=$null}
   
   # L30-L31: Evidence Correlation
-  [PSCustomObject]@{Number=30; Name="evidence_correlation"; Priority="P1"; Description="Evidence links (stub)"}
-  [PSCustomObject]@{Number=31; Name="decision_provenance"; Priority="P1"; Description="Decision provenance (stub)"}
+  [PSCustomObject]@{Number=30; Name="evidence_correlation"; Priority="P1"; Description="Evidence links (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=31; Name="decision_provenance"; Priority="P1"; Description="Decision provenance (stub)"; Operational=$false; FK=$null}
   
   # L32-L35: Governance (Session 28)
-  [PSCustomObject]@{Number=32; Name="agent_policies"; Priority="P2"; Description="Agent policies (Session 28)"; Operational=$true}
-  [PSCustomObject]@{Number=33; Name="quality_gates"; Priority="P2"; Description="Quality gates (Session 28)"; Operational=$true}
-  [PSCustomObject]@{Number=34; Name="github_rules"; Priority="P2"; Description="GitHub rules (Session 28)"; Operational=$true}
-  [PSCustomObject]@{Number=35; Name="verification_records"; Priority="P2"; Description="Verification records (stub)"}
+  [PSCustomObject]@{Number=32; Name="agent_policies"; Priority="P2"; Description="Agent policies (Session 28)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=33; Name="quality_gates"; Priority="P2"; Description="Quality gates (Session 28)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=34; Name="github_rules"; Priority="P2"; Description="GitHub rules (Session 28)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=35; Name="verification_records"; Priority="P2"; Description="Verification records (stub)"; Operational=$false; FK=$null}
   
   # L36-L39: Deployment & Testing
-  [PSCustomObject]@{Number=36; Name="deployment_policies"; Priority="P2"; Description="Deployment policies"}
-  [PSCustomObject]@{Number=37; Name="runbooks"; Priority="P2"; Description="Runbook catalog"}
-  [PSCustomObject]@{Number=38; Name="test_cases"; Priority="P2"; Description="Test case registry (stub)"}
-  [PSCustomObject]@{Number=39; Name="synthetic_tests"; Priority="P2"; Description="Synthetic tests (stub)"}
+  [PSCustomObject]@{Number=36; Name="deployment_policies"; Priority="P2"; Description="Deployment policies"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=37; Name="runbooks"; Priority="P2"; Description="Runbook catalog"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=38; Name="test_cases"; Priority="P2"; Description="Test case registry (stub)"; Operational=$false; FK=$null}
+  [PSCustomObject]@{Number=39; Name="synthetic_tests"; Priority="P2"; Description="Synthetic tests (stub)"; Operational=$false; FK=$null}
   
   # L40-L47: Infrastructure Monitoring (Priority #3)
-  [PSCustomObject]@{Number=40; Name="agent_performance_metrics"; Priority="P3"; Description="Agent metrics (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=41; Name="service_health_metrics"; Priority="P3"; Description="Service health (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=42; Name="resource_inventory"; Priority="P3"; Description="Resource inventory (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=43; Name="usage_metrics"; Priority="P3"; Description="Usage metrics (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=44; Name="cost_allocation"; Priority="P3"; Description="Cost allocation (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=45; Name="infrastructure_events"; Priority="P3"; Description="Infra events (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=46; Name="agent_execution_history"; Priority="P3"; Description="Agent execution (Priority #3)"; Operational=$true}
-  [PSCustomObject]@{Number=47; Name="resource_costs"; Priority="P3"; Description="Resource costs (Priority #3)"; Operational=$true}
+  [PSCustomObject]@{Number=40; Name="agent_performance_metrics"; Priority="P3"; Description="Agent metrics (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=41; Name="service_health_metrics"; Priority="P3"; Description="Service health (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=42; Name="resource_inventory"; Priority="P3"; Description="Resource inventory (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=43; Name="usage_metrics"; Priority="P3"; Description="Usage metrics (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=44; Name="cost_allocation"; Priority="P3"; Description="Cost allocation (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=45; Name="infrastructure_events"; Priority="P3"; Description="Infra events (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=46; Name="agent_execution_history"; Priority="P3"; Description="Agent execution (Priority #3)"; Operational=$true; FK=$null}
+  [PSCustomObject]@{Number=47; Name="resource_costs"; Priority="P3"; Description="Resource costs (Priority #3)"; Operational=$true; FK=$null}
   
   # L48-L51: Automated Remediation (Priority #4 - Session 40)
   [PSCustomObject]@{Number=48; Name="remediation_policies"; Priority="P4"; Description="Remediation policies (Session 40)"; Operational=$true; FK=@("agent_policies", "deployment_policies")}
