@@ -1,0 +1,77 @@
+﻿2026-03-08T13:48:05.1345139Z ##[group]Run actions/checkout@v4
+2026-03-08T13:48:05.1346052Z with:
+2026-03-08T13:48:05.1346643Z   repository: eva-foundry/37-data-model
+2026-03-08T13:48:05.1347476Z   token: ***
+2026-03-08T13:48:05.1347940Z   ssh-strict: true
+2026-03-08T13:48:05.1348484Z   ssh-user: git
+2026-03-08T13:48:05.1348983Z   persist-credentials: true
+2026-03-08T13:48:05.1349607Z   clean: true
+2026-03-08T13:48:05.1350255Z   sparse-checkout-cone-mode: true
+2026-03-08T13:48:05.1350824Z   fetch-depth: 1
+2026-03-08T13:48:05.1351331Z   fetch-tags: false
+2026-03-08T13:48:05.1351885Z   show-progress: true
+2026-03-08T13:48:05.1352402Z   lfs: false
+2026-03-08T13:48:05.1352872Z   submodules: false
+2026-03-08T13:48:05.1353348Z   set-safe-directory: true
+2026-03-08T13:48:05.1354212Z env:
+2026-03-08T13:48:05.1354839Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:48:05.1355982Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:48:05.1356985Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:48:05.1357712Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:48:05.1358368Z ##[endgroup]
+2026-03-08T13:48:05.2424693Z Syncing repository: eva-foundry/37-data-model
+2026-03-08T13:48:05.2427926Z ##[group]Getting Git version info
+2026-03-08T13:48:05.2429267Z Working directory is '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:48:05.2431259Z [command]/usr/bin/git version
+2026-03-08T13:48:05.2489623Z git version 2.53.0
+2026-03-08T13:48:05.2514000Z ##[endgroup]
+2026-03-08T13:48:05.2530203Z Temporarily overriding HOME='/home/runner/work/_temp/9db81f0b-be42-40f2-9769-c33bc23eec5b' before making global git config changes
+2026-03-08T13:48:05.2532609Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:48:05.2546393Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:48:05.2583724Z Deleting the contents of '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:48:05.2587361Z ##[group]Initializing the repository
+2026-03-08T13:48:05.2592201Z [command]/usr/bin/git init /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:48:05.2675921Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-08T13:48:05.2679316Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-08T13:48:05.2681452Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-08T13:48:05.2682711Z hint: call:
+2026-03-08T13:48:05.2683364Z hint:
+2026-03-08T13:48:05.2684649Z hint: 	git config --global init.defaultBranch <name>
+2026-03-08T13:48:05.2685691Z hint:
+2026-03-08T13:48:05.2686621Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-08T13:48:05.2688119Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-08T13:48:05.2689284Z hint:
+2026-03-08T13:48:05.2690115Z hint: 	git branch -m <name>
+2026-03-08T13:48:05.2690863Z hint:
+2026-03-08T13:48:05.2691463Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-08T13:48:05.2692416Z Initialized empty Git repository in /home/runner/work/37-data-model/37-data-model/.git/
+2026-03-08T13:48:05.2694093Z [command]/usr/bin/git remote add origin https://github.com/eva-foundry/37-data-model
+2026-03-08T13:48:05.2720061Z ##[endgroup]
+2026-03-08T13:48:05.2720820Z ##[group]Disabling automatic garbage collection
+2026-03-08T13:48:05.2724361Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-08T13:48:05.2748996Z ##[endgroup]
+2026-03-08T13:48:05.2749709Z ##[group]Setting up auth
+2026-03-08T13:48:05.2755416Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:48:05.2780523Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:48:05.3057579Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:48:05.3086868Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:48:05.3272416Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:48:05.3301830Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:48:05.3498945Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-08T13:48:05.3528288Z ##[endgroup]
+2026-03-08T13:48:05.3529584Z ##[group]Fetching the repository
+2026-03-08T13:48:05.3537826Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +93c5b54ba8fc62062f04d3642335fb64a4a15778:refs/remotes/origin/main
+2026-03-08T13:48:05.9686994Z From https://github.com/eva-foundry/37-data-model
+2026-03-08T13:48:05.9688824Z  * [new ref]         93c5b54ba8fc62062f04d3642335fb64a4a15778 -> origin/main
+2026-03-08T13:48:05.9718244Z ##[endgroup]
+2026-03-08T13:48:05.9719535Z ##[group]Determining the checkout info
+2026-03-08T13:48:05.9721384Z ##[endgroup]
+2026-03-08T13:48:05.9726057Z [command]/usr/bin/git sparse-checkout disable
+2026-03-08T13:48:05.9764058Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-08T13:48:05.9788586Z ##[group]Checking out the ref
+2026-03-08T13:48:05.9794064Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-08T13:48:06.0424523Z Switched to a new branch 'main'
+2026-03-08T13:48:06.0428207Z branch 'main' set up to track 'origin/main'.
+2026-03-08T13:48:06.0436111Z ##[endgroup]
+2026-03-08T13:48:06.0471474Z [command]/usr/bin/git log -1 --format=%H
+2026-03-08T13:48:06.0490721Z 93c5b54ba8fc62062f04d3642335fb64a4a15778

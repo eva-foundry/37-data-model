@@ -1,0 +1,73 @@
+﻿2026-03-08T13:48:43.2701637Z Current runner version: '2.332.0'
+2026-03-08T13:48:43.2735785Z ##[group]Runner Image Provisioner
+2026-03-08T13:48:43.2737047Z Hosted Compute Agent
+2026-03-08T13:48:43.2738062Z Version: 20260213.493
+2026-03-08T13:48:43.2739218Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-08T13:48:43.2740483Z Build Date: 2026-02-13T00:28:41Z
+2026-03-08T13:48:43.2741971Z Worker ID: {6c5d82ac-3363-4560-802c-dc306216f51d}
+2026-03-08T13:48:43.2743271Z Azure Region: eastus
+2026-03-08T13:48:43.2744242Z ##[endgroup]
+2026-03-08T13:48:43.2746908Z ##[group]Operating System
+2026-03-08T13:48:43.2747941Z Ubuntu
+2026-03-08T13:48:43.2748795Z 24.04.3
+2026-03-08T13:48:43.2749545Z LTS
+2026-03-08T13:48:43.2750497Z ##[endgroup]
+2026-03-08T13:48:43.2751329Z ##[group]Runner Image
+2026-03-08T13:48:43.2752549Z Image: ubuntu-24.04
+2026-03-08T13:48:43.2753717Z Version: 20260302.42.1
+2026-03-08T13:48:43.2755721Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-08T13:48:43.2758346Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-08T13:48:43.2759981Z ##[endgroup]
+2026-03-08T13:48:43.2764975Z ##[group]GITHUB_TOKEN Permissions
+2026-03-08T13:48:43.2768004Z Actions: write
+2026-03-08T13:48:43.2769036Z ArtifactMetadata: write
+2026-03-08T13:48:43.2770050Z Attestations: write
+2026-03-08T13:48:43.2771104Z Checks: write
+2026-03-08T13:48:43.2772127Z Contents: write
+2026-03-08T13:48:43.2773250Z Deployments: write
+2026-03-08T13:48:43.2774083Z Discussions: write
+2026-03-08T13:48:43.2774929Z Issues: write
+2026-03-08T13:48:43.2775909Z Metadata: read
+2026-03-08T13:48:43.2776837Z Models: read
+2026-03-08T13:48:43.2777735Z Packages: write
+2026-03-08T13:48:43.2778857Z Pages: write
+2026-03-08T13:48:43.2779910Z PullRequests: write
+2026-03-08T13:48:43.2780843Z RepositoryProjects: write
+2026-03-08T13:48:43.2782304Z SecurityEvents: write
+2026-03-08T13:48:43.2783284Z Statuses: write
+2026-03-08T13:48:43.2784136Z ##[endgroup]
+2026-03-08T13:48:43.2787116Z Secret source: Actions
+2026-03-08T13:48:43.2788631Z Prepare workflow directory
+2026-03-08T13:48:43.3360917Z Prepare all required actions
+2026-03-08T13:48:43.3436672Z Complete job name: Generate Sync Summary
+2026-03-08T13:48:43.4256737Z ##[group]Run echo "# EVA Infrastructure Monitoring - Sync Summary" >> $GITHUB_STEP_SUMMARY
+2026-03-08T13:48:43.4258162Z [36;1mecho "# EVA Infrastructure Monitoring - Sync Summary" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4259065Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4259843Z [36;1mecho "**Triggered by:** workflow_dispatch" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4260763Z [36;1mecho "**Run ID:** 22822375439" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4262017Z [36;1mecho "**Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4262835Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4263650Z [36;1mecho "## Job Status" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4264353Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4265005Z [36;1mecho "| Layer | Job | Status |" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4265986Z [36;1mecho "|-------|-----|--------|" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4266935Z [36;1mecho "| L42 (azure_infrastructure) | sync-infrastructure | success |" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4268167Z [36;1mecho "| L49 (resource_costs) | sync-costs | failure |" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4269285Z [36;1mecho "| L41 (agent_performance_metrics) | sync-agent-metrics | failure |" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4270227Z [36;1mecho "" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4270900Z [36;1m[0m
+2026-03-08T13:48:43.4271618Z [36;1mif [ "success" == "success" ] && \[0m
+2026-03-08T13:48:43.4272315Z [36;1m   [ "failure" == "success" ] && \[0m
+2026-03-08T13:48:43.4273143Z [36;1m   [ "failure" == "success" ]; then[0m
+2026-03-08T13:48:43.4273991Z [36;1m  echo "✓ **All syncs completed successfully**" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4275079Z [36;1melse[0m
+2026-03-08T13:48:43.4275755Z [36;1m  echo "⚠ **Some syncs failed - check job logs**" >> $GITHUB_STEP_SUMMARY[0m
+2026-03-08T13:48:43.4276533Z [36;1mfi[0m
+2026-03-08T13:48:43.5339995Z shell: /usr/bin/bash -e {0}
+2026-03-08T13:48:43.5341093Z env:
+2026-03-08T13:48:43.5342213Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:48:43.5343756Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:48:43.5345187Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:48:43.5345985Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:48:43.5346802Z ##[endgroup]
+2026-03-08T13:48:43.5678703Z Cleaning up orphan processes

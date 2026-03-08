@@ -1,0 +1,42 @@
+﻿2026-03-08T13:48:22.3042368Z ##[group]Run if ("true" -eq "true") ***
+2026-03-08T13:48:22.3042950Z [36;1mif ("true" -eq "true") ***[0m
+2026-03-08T13:48:22.3043392Z [36;1m  .\sync-azure-costs.ps1 -DryRun[0m
+2026-03-08T13:48:22.3043797Z [36;1m*** else ***[0m
+2026-03-08T13:48:22.3044099Z [36;1m  .\sync-azure-costs.ps1[0m
+2026-03-08T13:48:22.3044425Z [36;1m***[0m
+2026-03-08T13:48:22.3078347Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T13:48:22.3078769Z env:
+2026-03-08T13:48:22.3079106Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:48:22.3079835Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:48:22.3080450Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:48:22.3080793Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:48:22.3081155Z   X_ACTOR: github-actions:cost-sync
+2026-03-08T13:48:22.3081467Z ##[endgroup]
+2026-03-08T13:48:25.9977767Z 
+2026-03-08T13:48:25.9982149Z  + ================================================================================
+2026-03-08T13:48:25.9983019Z   EVA COST SYNC - Azure Cost Management to L49
+2026-03-08T13:48:25.9983608Z ================================================================================ + 
+2026-03-08T13:48:25.9983987Z 
+2026-03-08T13:48:26.0250309Z [2026-03-08 13:48:26] [INFO] Configuration:
+2026-03-08T13:48:26.0259564Z [2026-03-08 13:48:26] [INFO]   Subscription: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:48:26.0264320Z [2026-03-08 13:48:26] [INFO]   Data Model: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:48:26.0269093Z [2026-03-08 13:48:26] [INFO]   Actor: github-actions:cost-sync
+2026-03-08T13:48:26.0285946Z [2026-03-08 13:48:26] [INFO]   Month: Current
+2026-03-08T13:48:26.0309771Z [2026-03-08 13:48:26] [INFO]   Dry Run: True
+2026-03-08T13:48:26.0311067Z 
+2026-03-08T13:48:26.0412151Z [2026-03-08 13:48:26] [INFO] Querying Azure Cost Management for subscription c59ee575-eb2a-4b51-a865-4b618f9add0a...
+2026-03-08T13:48:26.0793336Z [2026-03-08 13:48:26] [INFO]   Time period: 2026-03-01 to 2026-03-31
+2026-03-08T13:48:26.5133645Z [2026-03-08 13:48:26] [INFO] Querying Cost Management REST API...
+2026-03-08T13:48:28.5816154Z [2026-03-08 13:48:28] [SUCCESS] ✓ Retrieved cost data for 56 rows
+2026-03-08T13:48:28.5897695Z [2026-03-08 13:48:28] [INFO] Checking budgets via REST API...
+2026-03-08T13:48:30.3050065Z [2026-03-08 13:48:30] [WARNING] ⚠ No budgets configured for subscription
+2026-03-08T13:48:30.3140278Z [2026-03-08 13:48:30] [INFO] Transforming to L49 schema format...
+2026-03-08T13:48:30.3586314Z [2026-03-08 13:48:30] [SUCCESS] ✓ Transformed to L49 format (12 services, System.Collections.Hashtable System.Collections.Hashtable System.Collections.Hashtable.Count opportunities)
+2026-03-08T13:48:30.3630672Z [2026-03-08 13:48:30] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/resource_costs/c59ee575-eb2a-4b51-a865-4b618f9add0a-2026-03
+2026-03-08T13:48:30.3632340Z [2026-03-08 13:48:30] [INFO] [DRY-RUN] Payload preview:
+2026-03-08T13:48:30.4799346Z [2026-03-08 13:48:30] [ERROR] ✗ Sync failed: The type 'System.Collections.Hashtable' is not supported for serialization or deserialization of a dictionary. Keys must be strings.
+2026-03-08T13:48:30.4808137Z at Send-ToDataModel, /home/runner/work/37-data-model/37-data-model/scripts/sync-azure-costs.ps1: line 345
+2026-03-08T13:48:30.4809343Z at <ScriptBlock>, /home/runner/work/37-data-model/37-data-model/scripts/sync-azure-costs.ps1: line 404
+2026-03-08T13:48:30.4810468Z at <ScriptBlock>, /home/runner/work/_temp/7e5f09e0-d64b-4444-8fa6-a3bb8e87c998.ps1: line 3
+2026-03-08T13:48:30.4811274Z at <ScriptBlock>, <No file>: line 1
+2026-03-08T13:48:30.5920670Z ##[error]Process completed with exit code 1.
