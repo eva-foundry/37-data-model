@@ -470,11 +470,9 @@ def create_app() -> FastAPI:
         Session 41: Phase 2 - Load layers from layer-metadata-index.json for FK support.
         """
         # Load layers from layer-metadata-index.json (Phase 2)
-        import json
-        from pathlib import Path
-        layer_metadata_path = Path(__file__).parent.parent / "model" / "layer-metadata-index.json"
-        with open(layer_metadata_path, "r", encoding="utf-8") as f:
-            layer_metadata_index = json.load(f)
+        # Use metadata router's helper function
+        from api.routers.metadata import _load_metadata_index
+        layer_metadata_index = _load_metadata_index()
         layers = [entry["layer_name"] for entry in layer_metadata_index["layers"]]
         return {
             "identity": {
