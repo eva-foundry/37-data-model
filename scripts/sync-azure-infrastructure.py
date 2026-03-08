@@ -130,9 +130,10 @@ def transform_to_l42_schema(resource: Dict[str, Any]) -> Dict[str, Any]:
     resource_type = resource.get("type", "unknown")
     
     # Parse properties for security and cost tracking
-    properties = resource.get("properties", {})
-    tags = resource.get("tags", {})
-    sku = resource.get("sku", {})
+    # Ensure properties is always a dict (some resources return None)
+    properties = resource.get("properties") or {}
+    tags = resource.get("tags") or {}
+    sku = resource.get("sku") or {}
     
     # Build security configuration
     security_config = {
