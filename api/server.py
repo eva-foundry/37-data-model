@@ -268,12 +268,15 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
         deployment_policies_router, testing_policies_router, validation_rules_router,
-        # infrastructure monitoring (L40-L49) — agent execution, performance, deployment quality
+        # infrastructure monitoring (L40-L47) — agent execution, performance, deployment quality
         agent_execution_history_router, agent_performance_metrics_router,
         azure_infrastructure_router, compliance_audit_router,
         deployment_quality_scores_router, deployment_records_router,
         eva_model_router, infrastructure_drift_router,
         performance_trends_router, resource_costs_router,
+        # automated remediation (L48-L51) — Priority #4 self-healing framework
+        remediation_policies_router, auto_fix_execution_history_router,
+        remediation_outcomes_router, remediation_effectiveness_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -282,11 +285,14 @@ def create_app() -> FastAPI:
     from api.routers.admin import router as admin_router
     from api.routers.introspection import router as introspection_router  # Session 26: schema introspection
     from api.routers.aggregation import router as aggregation_router  # Session 26: metrics & analytics
+    from api.routers.metadata import router as metadata_router  # Session 41: layer metadata query
 
     for r in [
         # introspection & aggregation (Session 26) — register FIRST for path precedence
         introspection_router,
         aggregation_router,
+        # metadata (Session 41) — register SECOND for layer discovery endpoint
+        metadata_router,
         # layer routers (generic /{obj_id} path)
         services_router, personas_router, feature_flags_router,
         containers_router, endpoints_router, schemas_router,
@@ -311,12 +317,15 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38)
         deployment_policies_router, testing_policies_router, validation_rules_router,
-        # infrastructure monitoring (L40-L49) — Priority #4 layers
+        # infrastructure monitoring (L40-L47) — Priority #3 layers
         agent_execution_history_router, agent_performance_metrics_router,
         azure_infrastructure_router, compliance_audit_router,
         deployment_quality_scores_router, deployment_records_router,
         eva_model_router, infrastructure_drift_router,
         performance_trends_router, resource_costs_router,
+        # automated remediation (L48-L51) — Priority #4 self-healing framework
+        remediation_policies_router, auto_fix_execution_history_router,
+        remediation_outcomes_router, remediation_effectiveness_router,
         fp_router,
         # graph (E-11)
         graph_router,

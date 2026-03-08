@@ -65,3 +65,9 @@ eva_model_router                   = make_layer_router("eva_model",             
 infrastructure_drift_router        = make_layer_router("infrastructure_drift",        "/model/infrastructure_drift",        ["infrastructure_drift"])
 performance_trends_router          = make_layer_router("performance_trends",          "/model/performance_trends",          ["performance_trends"])
 resource_costs_router              = make_layer_router("resource_costs",              "/model/resource_costs",              ["resource_costs"])
+
+# Priority #4 automated remediation layers (L48-L51)
+remediation_policies_router        = make_layer_router("remediation_policies",        "/model/remediation_policies",        ["remediation_policies"])
+auto_fix_execution_history_router  = make_layer_router("auto_fix_execution_history",  "/model/auto_fix_execution_history",  ["auto_fix_execution_history"])
+remediation_outcomes_router        = make_layer_router("remediation_outcomes",        "/model/remediation_outcomes",        ["remediation_outcomes"])
+remediation_effectiveness_router   = make_layer_router("remediation_effectiveness",   "/model/remediation_effectiveness",   ["remediation_effectiveness"])

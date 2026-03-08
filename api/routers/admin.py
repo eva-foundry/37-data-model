@@ -99,7 +99,7 @@ _LAYER_FILES: dict[str, str] = {
     "deployment_policies": "deployment_policies.json",
     "testing_policies":    "testing_policies.json",
     "validation_rules":    "validation_rules.json",
-    # infrastructure monitoring (L48-L51) — Priority #4 observability layers
+    # infrastructure monitoring (L40-L47) — Priority #3 observability layers
     "agent_execution_history":       "agent_execution_history.json",
     "agent_performance_metrics":     "agent_performance_metrics.json",
     "azure_infrastructure":          "azure_infrastructure.json",
@@ -110,6 +110,11 @@ _LAYER_FILES: dict[str, str] = {
     "infrastructure_drift":          "infrastructure_drift.json",
     "performance_trends":            "performance_trends.json",
     "resource_costs":                "resource_costs.json",
+    # automated remediation (L48-L51) — Priority #4 self-healing framework
+    "remediation_policies":          "remediation_policies.json",
+    "auto_fix_execution_history":    "auto_fix_execution_history.json",
+    "remediation_outcomes":          "remediation_outcomes.json",
+    "remediation_effectiveness":     "remediation_effectiveness.json",
 }
 
 def _get_model_dir() -> Path:
