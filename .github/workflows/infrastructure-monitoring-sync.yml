@@ -1,0 +1,229 @@
+name: EVA Infrastructure Monitoring - Scheduled Data Sync
+
+# This workflow populates infrastructure monitoring layers (L40-L49) with operational data
+# from Azure Resource Graph, Cost Management, and Application Insights.
+#
+# Schedule:
+# - L42 (azure_infrastructure): Every 4 hours
+# - L49 (resource_costs): Daily at 6 AM ET (11:00 UTC)
+# - L41 (agent_performance_metrics): Hourly
+#
+# Manual trigger: workflow_dispatch for ad-hoc syncs
+
+on:
+  # Scheduled runs
+  schedule:
+    # L41: Agent metrics from App Insights - Hourly at :00
+    - cron: '0 * * * *'
+    
+    # L42: Infrastructure inventory - Every 4 hours at :15
+    - cron: '15 */4 * * *'
+    
+    # L49: Cost data - Daily at 6 AM ET (11:00 UTC)
+    - cron: '0 11 * * *'
+  
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      sync_target:
+        description: 'Which sync to run'
+        required: true
+        type: choice
+        options:
+          - all
+          - infrastructure
+          - costs
+          - metrics
+      dry_run:
+        description: 'Dry run (preview without uploading)'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+  DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+  RESOURCE_GROUP: EVA-Sandbox-dev
+  APP_INSIGHTS_NAME: msub-sandbox-appinsights
+
+jobs:
+  # ─────────────────────────────────────────────────────────────────────────
+  # Job 1: Sync Azure Infrastructure to L42 (Every 4 hours)
+  # ─────────────────────────────────────────────────────────────────────────
+  sync-infrastructure:
+    name: Sync Azure Infrastructure (L42)
+    runs-on: ubuntu-latest
+    
+    # Run if:
+    # - Scheduled on :15 of every 4th hour
+    # - Manual trigger with target=all or target=infrastructure
+    if: |
+      github.event_name == 'schedule' && github.event.schedule == '15 */4 * * *' ||
+      github.event_name == 'workflow_dispatch' && (github.event.inputs.sync_target == 'all' || github.event.inputs.sync_target == 'infrastructure')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests
+      
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Run infrastructure sync
+        working-directory: scripts
+        env:
+          X_ACTOR: 'github-actions:infrastructure-sync'
+        run: |
+          if [ "${{ github.event.inputs.dry_run }}" == "true" ]; then
+            python sync-azure-infrastructure.py --dry-run
+          else
+            python sync-azure-infrastructure.py
+          fi
+      
+      - name: Report sync status
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "✓ Infrastructure sync completed successfully"
+          else
+            echo "✗ Infrastructure sync failed"
+            exit 1
+          fi
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Job 2: Sync Azure Costs to L49 (Daily at 6 AM ET)
+  # ─────────────────────────────────────────────────────────────────────────
+  sync-costs:
+    name: Sync Azure Costs (L49)
+    runs-on: ubuntu-latest
+    
+    # Run if:
+    # - Scheduled daily at 11:00 UTC (6 AM ET)
+    # - Manual trigger with target=all or target=costs
+    if: |
+      github.event_name == 'schedule' && github.event.schedule == '0 11 * * *' ||
+      github.event_name == 'workflow_dispatch' && (github.event.inputs.sync_target == 'all' || github.event.inputs.sync_target == 'costs')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Run cost sync
+        working-directory: scripts
+        shell: pwsh
+        env:
+          X_ACTOR: 'github-actions:cost-sync'
+        run: |
+          if ("${{ github.event.inputs.dry_run }}" -eq "true") {
+            .\sync-azure-costs.ps1 -DryRun
+          } else {
+            .\sync-azure-costs.ps1
+          }
+      
+      - name: Report sync status
+        if: always()
+        shell: pwsh
+        run: |
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "✓ Cost sync completed successfully" -ForegroundColor Green
+          } else {
+            Write-Host "✗ Cost sync failed" -ForegroundColor Red
+            exit 1
+          }
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Job 3: Sync Agent Metrics to L41 (Hourly)
+  # ─────────────────────────────────────────────────────────────────────────
+  sync-agent-metrics:
+    name: Sync Agent Metrics (L41)
+    runs-on: ubuntu-latest
+    
+    # Run if:
+    # - Scheduled hourly at :00
+    # - Manual trigger with target=all or target=metrics
+    if: |
+      github.event_name == 'schedule' && github.event.schedule == '0 * * * *' ||
+      github.event_name == 'workflow_dispatch' && (github.event.inputs.sync_target == 'all' || github.event.inputs.sync_target == 'metrics')
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Run agent metrics sync
+        working-directory: scripts
+        shell: pwsh
+        env:
+          X_ACTOR: 'github-actions:metrics-sync'
+        run: |
+          if ("${{ github.event.inputs.dry_run }}" -eq "true") {
+            .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1 -DryRun
+          } else {
+            .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1
+          }
+      
+      - name: Report sync status
+        if: always()
+        shell: pwsh
+        run: |
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "✓ Agent metrics sync completed successfully" -ForegroundColor Green
+          } else {
+            Write-Host "✗ Agent metrics sync failed" -ForegroundColor Red
+            exit 1
+          }
+
+  # ─────────────────────────────────────────────────────────────────────────
+  # Job 4: Summary Report (runs after all syncs complete)
+  # ─────────────────────────────────────────────────────────────────────────
+  summary:
+    name: Generate Sync Summary
+    runs-on: ubuntu-latest
+    needs: [sync-infrastructure, sync-costs, sync-agent-metrics]
+    if: always()
+    
+    steps:
+      - name: Generate summary
+        run: |
+          echo "# EVA Infrastructure Monitoring - Sync Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered by:** ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Run ID:** ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Job Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Layer | Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| L42 (azure_infrastructure) | sync-infrastructure | ${{ needs.sync-infrastructure.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| L49 (resource_costs) | sync-costs | ${{ needs.sync-costs.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| L41 (agent_performance_metrics) | sync-agent-metrics | ${{ needs.sync-agent-metrics.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ needs.sync-infrastructure.result }}" == "success" ] && \
+             [ "${{ needs.sync-costs.result }}" == "success" ] && \
+             [ "${{ needs.sync-agent-metrics.result }}" == "success" ]; then
+            echo "✓ **All syncs completed successfully**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠ **Some syncs failed - check job logs**" >> $GITHUB_STEP_SUMMARY
+          fi
