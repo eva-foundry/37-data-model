@@ -166,19 +166,6 @@ function Invoke-AppInsightsQuery {
         Write-Log "✗ Query failed: $_" -Level ERROR
         return @()
     }
-        
-        if ($LASTEXITCODE -ne 0) {
-            throw "Query execution failed"
-        }
-        
-        $rowCount = $result.tables[0].rows.Count
-        Write-Log "✓ Query returned $rowCount rows" -Level SUCCESS
-        return $result.tables[0].rows
-        
-    } catch {
-        Write-Log "✗ Query failed: $_" -Level ERROR
-        return @()
-    }
 }
 
 function Get-AgentReliabilityMetrics {
