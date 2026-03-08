@@ -361,7 +361,8 @@ function Send-ToDataModel {
             "X-Actor" = $XActor
         }
         
-        $body = $Record | ConvertTo-Json -Depth 10
+        # Use -AsArray to handle complex nested structures properly
+        $body = $Record | ConvertTo-Json -Depth 10 -AsArray
         
         $response = Invoke-RestMethod -Uri $url -Method Put -Body $body -Headers $headers -TimeoutSec 10
         

@@ -1,0 +1,45 @@
+﻿2026-03-08T13:48:04.2073908Z Current runner version: '2.332.0'
+2026-03-08T13:48:04.2099406Z ##[group]Runner Image Provisioner
+2026-03-08T13:48:04.2100568Z Hosted Compute Agent
+2026-03-08T13:48:04.2101208Z Version: 20260213.493
+2026-03-08T13:48:04.2101805Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-08T13:48:04.2102479Z Build Date: 2026-02-13T00:28:41Z
+2026-03-08T13:48:04.2103250Z Worker ID: ***ffdf725c-f992-4469-a907-300f2eb399b5***
+2026-03-08T13:48:04.2104015Z Azure Region: northcentralus
+2026-03-08T13:48:04.2104601Z ##[endgroup]
+2026-03-08T13:48:04.2106096Z ##[group]Operating System
+2026-03-08T13:48:04.2106706Z Ubuntu
+2026-03-08T13:48:04.2107268Z 24.04.3
+2026-03-08T13:48:04.2107780Z LTS
+2026-03-08T13:48:04.2108266Z ##[endgroup]
+2026-03-08T13:48:04.2108796Z ##[group]Runner Image
+2026-03-08T13:48:04.2109381Z Image: ubuntu-24.04
+2026-03-08T13:48:04.2110204Z Version: 20260302.42.1
+2026-03-08T13:48:04.2111201Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-08T13:48:04.2112800Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-08T13:48:04.2113663Z ##[endgroup]
+2026-03-08T13:48:04.2116449Z ##[group]GITHUB_TOKEN Permissions
+2026-03-08T13:48:04.2119134Z Actions: write
+2026-03-08T13:48:04.2119766Z ArtifactMetadata: write
+2026-03-08T13:48:04.2120504Z Attestations: write
+2026-03-08T13:48:04.2121072Z Checks: write
+2026-03-08T13:48:04.2121573Z Contents: write
+2026-03-08T13:48:04.2122101Z Deployments: write
+2026-03-08T13:48:04.2122660Z Discussions: write
+2026-03-08T13:48:04.2123180Z Issues: write
+2026-03-08T13:48:04.2123701Z Metadata: read
+2026-03-08T13:48:04.2124220Z Models: read
+2026-03-08T13:48:04.2124794Z Packages: write
+2026-03-08T13:48:04.2125312Z Pages: write
+2026-03-08T13:48:04.2125920Z PullRequests: write
+2026-03-08T13:48:04.2126504Z RepositoryProjects: write
+2026-03-08T13:48:04.2127101Z SecurityEvents: write
+2026-03-08T13:48:04.2127659Z Statuses: write
+2026-03-08T13:48:04.2128160Z ##[endgroup]
+2026-03-08T13:48:04.2130555Z Secret source: Actions
+2026-03-08T13:48:04.2131651Z Prepare workflow directory
+2026-03-08T13:48:04.2510630Z Prepare all required actions
+2026-03-08T13:48:04.2548985Z Getting action download info
+2026-03-08T13:48:04.5739225Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-08T13:48:04.6950929Z Download action repository 'azure/login@v2' (SHA:a457da9ea143d694b1b9c7c869ebb04ebe844ef5)
+2026-03-08T13:48:05.0720483Z Complete job name: Sync Agent Metrics (L41)

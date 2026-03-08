@@ -299,7 +299,27 @@ function Transform-ToL49Schema {
         }
     }
     
-    # Build L49 record
+    # Build L49 record with proper serialization
+    # Convert daily_breakdown hashtable to array of objects for JSON serialization
+    $costByServiceFormatted = @()
+    foreach ($service in $costByServiceArray) {
+        $dailyBreakdownArray = @()
+        if ($service.daily_breakdown) {
+            foreach ($date in $service.daily_breakdown.Keys | Sort-Object) {
+                $dailyBreakdownArray += @{
+                    date = $date
+                    cost = $service.daily_breakdown[$date]
+                }
+            }
+        }
+        
+        $costByServiceFormatted += @{
+            service_name = $service.service_name
+            total_cost = $service.total_cost
+            daily_breakdown = $dailyBreakdownArray
+        }
+    }
+    
     $l49Record = @{
         id = "$Subscription-$Month"
         subscription_id = $Subscription
@@ -314,7 +334,7 @@ function Transform-ToL49Schema {
                 [math]::Round(($totalCost / $Budget.budget_amount) * 100, 2) 
             } else { 0 }
         }
-        cost_by_service = $costByServiceArray
+        cost_by_service = $costByServiceFormatted
         forecasted_cost = @{
             month_end_forecast = [math]::Round($forecastedCost, 2)
             forecast_confidence = "medium"
@@ -329,7 +349,7 @@ function Transform-ToL49Schema {
         }
     }
     
-    Write-Log "✓ Transformed to L49 format ($($costByServiceArray.Count) services, $optimizationOpportunities.Count opportunities)" -Level SUCCESS
+    Write-Log "✓ Transformed to L49 format ($($costByServiceArray.Count) services, $($optimizationOpportunities.Count) opportunities)" -Level SUCCESS
     return $l49Record
 }
 
@@ -352,7 +372,8 @@ function Send-ToDataModel {
             "X-Actor" = $XActor
         }
         
-        $body = $Record | ConvertTo-Json -Depth 10
+        # Use -AsArray to handle complex nested structures properly
+        $body = $Record | ConvertTo-Json -Depth 10 -AsArray
         
         $response = Invoke-RestMethod -Uri $url -Method Put -Body $body -Headers $headers -TimeoutSec 10
         
