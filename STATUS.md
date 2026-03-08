@@ -1,8 +1,44 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 8, 2026 14:35 PM ET -- Session 40: L48-L51 AUTOMATED REMEDIATION DEPLOYED & SEEDED ✅
+**Last Updated:** March 8, 2026 18:58 PM ET -- Session 41: Phase 1 Audit Script Fixes COMPLETE ✅
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- 51 LAYERS OPERATIONAL -- CLOUD-ONLY ARCHITECTURE ✅
-**Snapshot (2026-03-08 S40 COMPLETE):** All 51 layers deployed to cloud API. **Session 40 validation complete**: L48-L51 automated remediation framework (4 layers: policies, execution history, outcomes, effectiveness) deployed, seeded with 10 items, and FK relationships validated. Total Cosmos DB objects: 1,262. Container App revision 0000012 healthy. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+**Snapshot (2026-03-08 S41 Phase 1 COMPLETE):** Comprehensive layer audit script normalized and production-ready. All 51 layer definitions now have consistent schema (Operational + FK properties). FK testing integrated. Script tested successfully: 19/51 operational layers, 17/19 with data, L48-L51 validation complete. PropertyNotFoundException bug resolved. Container App revision 0000012 healthy. Total Cosmos DB objects: 1,262. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+
+---
+
+## Session 41: Comprehensive Audit Script Enhancement (6:58 PM ET) ✅
+
+**MISSION**: Fix audit script bugs and enhance FK testing capabilities
+
+**PHASE 1 COMPLETE (6:58 PM ET)**:
+- ✅ Normalized all 51 layer definitions (added Operational + FK properties)
+- ✅ Integrated FK testing into main audit flow (Test 4 section)
+- ✅ Script tested successfully - no PropertyNotFoundException errors
+- ✅ FK validation working (L49→L48, L49→L41, L50→L49 resolution tested)
+- ✅ Changes committed with comprehensive documentation
+
+**FILES MODIFIED**:
+- scripts/comprehensive-layer-audit.ps1 (450 lines)
+  - Lines 48-108: Normalized $allLayers array (all 51 definitions)
+  - Lines 316-341: FK testing section with Test-ForeignKeyRelationship calls
+  - Resolves: PropertyNotFoundException on lines 149-150, 164-165
+
+**TEST RESULTS**:
+- Total Layers: 51
+- Available (HTTP 200): 19/51 (37%)
+- Operational: 24 layers
+- With Data: 17/19 (89%)
+- L48-L51 Verification: 4/4 available, 4/4 with data ✅
+
+**NEXT PHASES** (Planned):
+- Phase 2: layer-metadata endpoint (query builder with filtering/sorting)
+- Phase 3: agent-guide examples (L48-L51 FK resolution patterns)
+- Phase 4: stub layer population (all 32 stub layers with realistic data)
+- Phase 5: enhanced seed endpoint (--layers parameter for selective seeding)
+
+---
+
+## Session 40: L48-L51 Automated Remediation Framework (14:35 PM ET) ✅
 
 > **Session note (2026-03-07 18:03 ET Session 38 -- PAPERLESS GOVERNANCE + LAYER COUNT CORRECTION -- COMPLETE ✅):**
 >
