@@ -118,23 +118,68 @@ function Get-AzureCostData {
     } | ConvertTo-Json -Depth 10
     
     try {
-        # Execute query via Azure CLI
-        $result = az costmanagement query `
-            --type Usage `
-            --dataset-aggregation totalCost="name=Cost,function=Sum" `
-            --dataset-grouping name=ServiceName type=Dimension `
-            --timeframe Custom `
-            --time-period from=$startDate to=$endDate `
-            --scope "/subscriptions/$Subscription" `
-            --query "rows" `
-            -o json | ConvertFrom-Json
-        
+        # Get access token for REST API
+        $token = az account get-access-token --query accessToken -o tsv
         if ($LASTEXITCODE -ne 0) {
-            throw "Azure Cost Management query failed"
+            throw "Failed to get access token"
         }
         
-        Write-Log "✓ Retrieved cost data for $($result.Count) service groups" -Level SUCCESS
-        return $result
+        # Format dates for ARM API
+        $startDateISO = "$startDate`T00:00:00Z"
+        $endDateISO = "$endDate`T23:59:59Z"
+        
+        # Build Cost Management REST API query
+        $costQueryBody = @{
+            type = "Usage"
+            timeframe = "Custom"
+            timePeriod = @{
+                from = $startDateISO
+                to = $endDateISO
+            }
+            dataset = @{
+                granularity = "Daily"
+                aggregation = @{
+                    totalCost = @{
+                        name = "Cost"
+                        function = "Sum"
+                    }
+                }
+                grouping = @(
+                    @{
+                        type = "Dimension"
+                        name = "ServiceName"
+                    }
+                )
+            }
+        } | ConvertTo-Json -Depth 10
+        
+        # Call Cost Management Operations API
+        $scope = "/subscriptions/$Subscription"
+        $apiVersion = "2021-10-01"
+        $url = "https://management.azure.com$scope/providers/Microsoft.CostManagement/query?api-version=$apiVersion"
+        
+        Write-Log "Querying Cost Management REST API..."
+        
+        $headers = @{
+            "Authorization" = "Bearer $token"
+            "Content-Type"  = "application/json"
+        }
+        
+        $response = Invoke-WebRequest -Uri $url `
+            -Method POST `
+            -Headers $headers `
+            -Body $costQueryBody `
+            -UseBasicParsing
+        
+        if ($response.StatusCode -ne 200) {
+            throw "Cost Management API returned status: $($response.StatusCode)"
+        }
+        
+        $result = $response.Content | ConvertFrom-Json
+        $rowCount = if ($result.properties.rows) { $result.properties.rows.Count } else { 0 }
+        
+        Write-Log "✓ Retrieved cost data for $rowCount rows" -Level SUCCESS
+        return $result.properties.rows
         
     } catch {
         Write-Log "✗ Failed to query Cost Management: $_" -Level ERROR
@@ -145,22 +190,38 @@ function Get-AzureCostData {
 function Get-BudgetInfo {
     param([string]$Subscription)
     
-    Write-Log "Checking budgets for subscription..."
+    Write-Log "Checking budgets via REST API..."
     
     try {
-        $budgets = az consumption budget list `
-            --scope "/subscriptions/$Subscription" `
-            -o json 2>$null | ConvertFrom-Json
+        # Get access token
+        $token = az account get-access-token --query accessToken -o tsv
         
-        if ($budgets -and $budgets.Count -gt 0) {
-            $budget = $budgets[0]
-            Write-Log "✓ Found budget: $($budget.name) - $($budget.amount) $($budget.category)" -Level SUCCESS
+        $headers = @{
+            "Authorization" = "Bearer $token"
+            "Content-Type"  = "application/json"
+        }
+        
+        # Budgets REST API
+        $scope = "/subscriptions/$Subscription"
+        $apiVersion = "2021-10-01"
+        $url = "https://management.azure.com$scope/providers/Microsoft.Consumption/budgets?api-version=$apiVersion"
+        
+        $response = Invoke-WebRequest -Uri $url `
+            -Method GET `
+            -Headers $headers `
+            -UseBasicParsing
+        
+        $result = $response.Content | ConvertFrom-Json
+        
+        if ($result.value -and $result.value.Count -gt 0) {
+            $budget = $result.value[0]
+            Write-Log "✓ Found budget: $($budget.name)" -Level SUCCESS
             
             return @{
                 budget_name = $budget.name
-                budget_amount = [decimal]$budget.amount
-                currency = $budget.category
-                time_grain = $budget.timeGrain
+                budget_amount = [decimal]$budget.properties.amount
+                currency = $budget.properties.timeGrain
+                time_grain = $budget.properties.timeGrain
             }
         } else {
             Write-Log "⚠ No budgets configured for subscription" -Level WARNING
@@ -173,7 +234,7 @@ function Get-BudgetInfo {
         }
         
     } catch {
-        Write-Log "⚠ Could not retrieve budget info: $_" -Level WARNING
+        Write-Log "⚠ Could not retrieve budget info (non-blocking): $_" -Level WARNING
         return @{
             budget_name = "unknown"
             budget_amount = 0

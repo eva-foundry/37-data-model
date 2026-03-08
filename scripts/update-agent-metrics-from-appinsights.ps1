@@ -82,20 +82,39 @@ function Write-Log {
 function Get-AppInsightsId {
     param([string]$Name, [string]$RG)
     
-    Write-Log "Resolving Application Insights resource ID..."
+    Write-Log "Resolving Application Insights resource..."
     
     try {
-        $appInsights = az monitor app-insights component show `
-            --app $Name `
-            --resource-group $RG `
-            -o json | ConvertFrom-Json
-        
+        # Get token
+        $token = az account get-access-token --query accessToken -o tsv
         if ($LASTEXITCODE -ne 0) {
-            throw "Failed to get App Insights resource"
+            throw "Failed to get access token"
         }
         
-        Write-Log "✓ Found: $($appInsights.name) (ID: $($appInsights.appId))" -Level SUCCESS
-        return $appInsights.appId
+        # Get current subscription
+        $subscription = az account show --query id -o tsv
+        if ($LASTEXITCODE -ne 0) {
+            throw "Failed to get subscription ID"
+        }
+        
+        $headers = @{
+            "Authorization" = "Bearer $token"
+            "Content-Type"  = "application/json"
+        }
+        
+        # Get App Insights resource
+        $url = "https://management.azure.com/subscriptions/$subscription/resourceGroups/$RG/providers/Microsoft.Insights/components/$Name?api-version=2020-02-02"
+        
+        $response = Invoke-WebRequest -Uri $url -Method GET -Headers $headers -UseBasicParsing
+        $appInsights = $response.Content | ConvertFrom-Json
+        
+        Write-Log "✓ Found: $($appInsights.name)" -Level SUCCESS
+        
+        return @{
+            id = $appInsights.id
+            appId = $appInsights.properties.AppId
+            instrumentationKey = $appInsights.properties.InstrumentationKey
+        }
         
     } catch {
         Write-Log "✗ Failed to resolve App Insights: $_" -Level ERROR
@@ -107,17 +126,46 @@ function Invoke-AppInsightsQuery {
     param([string]$AppId, [string]$Query, [int]$Timespan)
     
     try {
-        # Format timespan for KQL
-        $timespanISO = "PT$($Timespan)H"
+        # Get token
+        $token = az account get-access-token --query accessToken -o tsv
         
-        Write-Log "Executing query (timespan: $timespanISO)..."
-        Write-Log "  Query: $($Query.Substring(0, [Math]::Min(100, $Query.Length)))..." -Level INFO
+        Write-Log "Executing KQL query (timespan: $($Timespan)h)..." -Level INFO
         
-        $result = az monitor app-insights query `
-            --app $AppId `
-            --analytics-query $Query `
-            --timespan $timespanISO `
-            -o json | ConvertFrom-Json
+        $headers = @{
+            "Authorization" = "Bearer $token"
+            "Content-Type"  = "application/json"
+            "x-ms-app"      = "pwsh"
+        }
+        
+        # App Insights Analytics API
+        $url = "https://api.applicationinsights.io/v1/apps/$AppId/query"
+        
+        $body = @{
+            query = $Query
+            timespan = "PT{0}H" -f $Timespan
+        } | ConvertTo-Json
+        
+        $response = Invoke-WebRequest -Uri $url `
+            -Method POST `
+            -Headers $headers `
+            -Body $body `
+            -UseBasicParsing
+        
+        $result = $response.Content | ConvertFrom-Json
+        
+        if ($result.tables -and $result.tables[0].rows) {
+            $rowCount = $result.tables[0].rows.Count
+            Write-Log "✓ Query returned $rowCount rows" -Level SUCCESS
+            return $result.tables[0].rows
+        } else {
+            Write-Log "⚠ Query returned no data" -Level WARNING
+            return @()
+        }
+        
+    } catch {
+        Write-Log "✗ Query failed: $_" -Level ERROR
+        return @()
+    }
         
         if ($LASTEXITCODE -ne 0) {
             throw "Query execution failed"
@@ -345,7 +393,8 @@ Write-Host ""
 
 try {
     # Step 1: Get App Insights resource ID
-    $appId = Get-AppInsightsId -Name $AppInsightsName -RG $ResourceGroup
+    $appInsightsResource = Get-AppInsightsId -Name $AppInsightsName -RG $ResourceGroup
+    $appId = $appInsightsResource.appId
     
     # Step 2: Query metrics
     Write-Host ""
