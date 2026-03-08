@@ -90,16 +90,6 @@ jobs:
           else
             python sync-azure-infrastructure.py
           fi
-      
-      - name: Report sync status
-        if: always()
-        run: |
-          if [ $? -eq 0 ]; then
-            echo "✓ Infrastructure sync completed successfully"
-          else
-            echo "✗ Infrastructure sync failed"
-            exit 1
-          fi
 
   # ─────────────────────────────────────────────────────────────────────────
   # Job 2: Sync Azure Costs to L49 (Daily at 6 AM ET)
@@ -135,17 +125,6 @@ jobs:
           } else {
             .\sync-azure-costs.ps1
           }
-      
-      - name: Report sync status
-        if: always()
-        shell: pwsh
-        run: |
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "✓ Cost sync completed successfully" -ForegroundColor Green
-          } else {
-            Write-Host "✗ Cost sync failed" -ForegroundColor Red
-            exit 1
-          }
 
   # ─────────────────────────────────────────────────────────────────────────
   # Job 3: Sync Agent Metrics to L41 (Hourly)
@@ -180,17 +159,6 @@ jobs:
             .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1 -DryRun
           } else {
             .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1
-          }
-      
-      - name: Report sync status
-        if: always()
-        shell: pwsh
-        run: |
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "✓ Agent metrics sync completed successfully" -ForegroundColor Green
-          } else {
-            Write-Host "✗ Agent metrics sync failed" -ForegroundColor Red
-            exit 1
           }
 
   # ─────────────────────────────────────────────────────────────────────────
