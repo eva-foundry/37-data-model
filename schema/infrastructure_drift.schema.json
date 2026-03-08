@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Infrastructure Drift",
+  "description": "Infrastructure drift detection showing desired vs actual state",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Drift report identifier"},
+    "timestamp": {"type": "string", "format": "date-time", "description": "When drift check occurred"},
+    "environment": {"type": "string", "enum": ["dev", "staging", "prod"], "description": "Target environment"},
+    "drift_detected": {"type": "boolean", "description": "Whether drift was detected"},
+    "total_resources_checked": {"type": "integer", "minimum": 0, "description": "Total resources scanned"},
+    "resources_in_sync": {"type": "integer", "minimum": 0, "description": "Resources matching desired state"},
+    "resources_drifted": {"type": "integer", "minimum": 0, "description": "Resources with deviations"},
+    "drift_percentage": {"type": "number", "minimum": 0, "maximum": 100, "description": "Percentage of drifted resources"},
+    "severity": {"type": "string", "enum": ["critical", "high", "medium", "low", "none"], "description": "Overall drift severity"},
+    "drift_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "resource_id": {"type": "string"},
+          "drift_type": {"type": "string"},
+          "expected_value": {"type": ["string", "object", "number", "boolean"]},
+          "actual_value": {"type": ["string", "object", "number", "boolean"]}
+        }
+      },
+      "description": "Individual drift details"
+    },
+    "root_cause_analysis": {"type": "array", "items": {"type": "string"}, "description": "Potential causes"},
+    "remediation": {"type": "object", "description": "Remediation approach and status"},
+    "compliance_impact": {"type": "string", "description": "Impact on compliance posture"}
+  },
+  "required": ["id", "timestamp", "environment", "drift_detected", "resources_checked"]
+}

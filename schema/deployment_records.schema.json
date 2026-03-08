@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deployment Records",
+  "description": "Complete deployment history, changelogs, and rollback tracking",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Unique deployment identifier"},
+    "deployment_number": {"type": "integer", "minimum": 1, "description": "Sequential deployment number"},
+    "timestamp": {"type": "string", "format": "date-time", "description": "When deployment started"},
+    "completion_timestamp": {"type": "string", "format": "date-time", "description": "When deployment completed"},
+    "agent_id": {"type": "string", "description": "Agent that performed deployment"},
+    "environment": {"type": "string", "enum": ["dev", "staging", "prod"], "description": "Target environment"},
+    "deployment_method": {"type": "string", "enum": ["bicep", "terraform", "arm", "manual"], "description": "Deployment method used"},
+    "status": {"type": "string", "enum": ["in_progress", "success", "failed", "partial", "rolled_back"], "description": "Deployment status"},
+    "duration_seconds": {"type": "number", "minimum": 0, "description": "Total deployment duration"},
+    "resources_deployed": {"type": "array", "items": {"type": "string"}, "description": "List of deployed resource IDs"},
+    "files_changed": {"type": "array", "items": {"type": "string"}, "description": "Files modified in this deployment"},
+    "before_state": {"type": "object", "description": "Infrastructure state before deployment"},
+    "after_state": {"type": "object", "description": "Infrastructure state after deployment"},
+    "validation_results": {"type": "array", "items": {"type": "object"}, "description": "Pre and post-deployment validation"},
+    "changelog": {"type": "array", "items": {"type": "object"}, "description": "Detailed resource-level change log"},
+    "cost_impact": {"type": "number", "description": "Cost impact in USD"},
+    "rollback_info": {"type": "object", "description": "Rollback details if rolled back"}
+  },
+  "required": ["id", "deployment_number", "timestamp", "status", "environment"]
+}
