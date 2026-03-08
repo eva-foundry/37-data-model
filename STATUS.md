@@ -1,14 +1,14 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 8, 2026 18:58 PM ET -- Session 41: Phase 2 Layer-Metadata Endpoint COMPLETE ✅
+**Last Updated:** March 8, 2026 18:58 PM ET -- Session 41: Phase 3 Agent-Guide L48-L51 Examples COMPLETE ✅
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- 51 LAYERS OPERATIONAL -- CLOUD-ONLY ARCHITECTURE ✅
-**Snapshot (2026-03-08 S41 Phase 2 COMPLETE):** Layer-metadata query endpoint fully implemented with comprehensive filtering and FK matrix support. All 51 layers now discoverable via REST API. Metadata index includes category/priority counts, FK relationships (L48-L51), and operational status flags. Router registered. Ready for cloud deployment testing. Container App revision 0000012 healthy. Total Cosmos DB objects: 1,262. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+**Snapshot (2026-03-08 S41 Phase 3 COMPLETE):** Agent-guide endpoint enhanced with comprehensive L48-L51 remediation framework documentation. Added 10 examples, FK navigation patterns, 3 new common mistakes for FK resolution. Query patterns updated with layer-metadata discovery. Agents can now discover FK relationships dynamically without hardcoding. Ready for cloud deployment. Container App revision 0000012 healthy. Total Cosmos DB objects: 1,262. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 
 ---
 
-## Session 41: Comprehensive Audit Script + Layer-Metadata Endpoint (6:58 PM ET) ✅
+## Session 41: Comprehensive Audit Script + Layer-Metadata Endpoint + Agent-Guide Enhancement (6:58 PM ET) ✅
 
-**MISSION**: Fix audit script bugs, implement layer-metadata query endpoint
+**MISSION**: Fix audit script bugs, implement layer-metadata query endpoint, document L48-L51 remediation patterns
 
 **PHASE 1 COMPLETE (6:58 PM ET)**:
 - ✅ Normalized all 51 layer definitions (added Operational + FK properties)
@@ -101,8 +101,66 @@ GET /model/fk-matrix
 - With Data: 17/19 (89%)
 - L48-L51 Verification: 4/4 available, 4/4 with data ✅
 
+**PHASE 3 COMPLETE (6:58 PM ET)**:
+- ✅ Added 'remediation_framework' section to agent-guide
+  - Overview of L48-L51 automated remediation layers
+  - 10 comprehensive examples (list policies, execution history, FK resolution, effectiveness metrics)
+  - FK navigation patterns (outbound/inbound relationships for L48-L51)
+  - Code examples for FK resolution workflow (4-step pattern)
+  - Ready for production flag
+- ✅ Enhanced 'common_mistakes' with FK patterns
+  - mistake_14: Using layer-metadata to discover FK relationships
+  - mistake_15: Following FK resolution pattern for L48-L51 (4-step workflow)
+  - mistake_16: Checking operational status before querying
+- ✅ Updated discovery_journey Step 2
+  - Added GET /model/layer-metadata/?operational=true to layer discovery
+- ✅ Enhanced query_patterns section
+  - Added 7 new layer-metadata query patterns
+  - FK discovery patterns (discover_layers, discover_operational, discover_by_priority, discover_by_category, discover_with_fks)
+  - Category/priority filtering
+- ✅ Updated quick_reference section
+  - layer_metadata, layer_metadata_single, fk_matrix endpoints
+- ✅ Enhanced layer_notes section
+  - Added L48-L51 layer descriptions with FK references
+  - Added layer_metadata usage note
+- ✅ Committed with comprehensive documentation
+
+**AGENT-GUIDE REMEDIATION EXAMPLES**:
+```powershell
+# List all remediation policies
+GET /model/remediation_policies/
+
+# Get specific policy
+GET /model/remediation_policies/policy:agent-performance-recovery
+
+# View execution history
+GET /model/auto_fix_execution_history/?limit=20
+
+# FK Resolution Pattern (4 steps)
+$exec = (irm http://localhost:8010/model/auto_fix_execution_history/exec:xyz).data
+$policy = (irm http://localhost:8010/model/remediation_policies/$($exec.policy_id)).data
+$agent = (irm http://localhost:8010/model/agent_performance_metrics/$($exec.executor_agent_id)).data
+Write-Host "Policy: $($policy.policy_name), Reliability: $($agent.reliability_percent)%"
+
+# Effectiveness metrics
+GET /model/remediation_effectiveness/2026-03
+
+# Discover FK relationships
+GET /model/layer-metadata/auto_fix_execution_history
+# Returns: fk_references: [remediation_policies, agent_performance_metrics, agent_execution_history, decision_provenance]
+
+# Query by category
+GET /model/layer-metadata/?category=Remediation
+# Returns: All 4 remediation layers (L48-L51)
+```
+
+**IMPACT**:
+- Agents can now discover FK relationships dynamically (no hardcoded assumptions)
+- Complete L48-L51 remediation framework documentation in agent-guide
+- FK resolution patterns prevent trial-and-error queries
+- Operational layer filtering avoids stub layer queries (saves 32 unnecessary API calls)
+
 **NEXT PHASES** (Planned):
-- Phase 3: agent-guide examples (L48-L51 FK resolution patterns + remediation_framework section)
 - Phase 4: stub layer population (all 32 stub layers with realistic data)
 - Phase 5: enhanced seed endpoint (--layers parameter for selective seeding)
 
