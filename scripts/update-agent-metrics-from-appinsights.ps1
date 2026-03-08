@@ -426,6 +426,9 @@ try {
     
     if ($failedCount -gt 0) { exit 1 }
     
+    # Explicit exit for workflow status check
+    exit 0
+    
 } catch {
     Write-Log "✗ Sync failed: $_" -Level ERROR
     Write-Host $_.ScriptStackTrace -ForegroundColor Red
