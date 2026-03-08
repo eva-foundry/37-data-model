@@ -467,9 +467,15 @@ def create_app() -> FastAPI:
         
         ENHANCED: Session 26 (2026-03-05) — Added discovery_journey, query_capabilities,
         terminal_safety, common_mistakes, examples for agent experience excellence.
+        Session 41: Phase 2 - Load layers from layer-metadata-index.json for FK support.
         """
-        from api.routers.admin import _LAYER_FILES
-        layers = list(_LAYER_FILES.keys())
+        # Load layers from layer-metadata-index.json (Phase 2)
+        import json
+        from pathlib import Path
+        layer_metadata_path = Path(__file__).parent.parent / "model" / "layer-metadata-index.json"
+        with open(layer_metadata_path, "r", encoding="utf-8") as f:
+            layer_metadata_index = json.load(f)
+        layers = [entry["layer_name"] for entry in layer_metadata_index["layers"]]
         return {
             "identity": {
                 "service":     "EVA Data Model API",
