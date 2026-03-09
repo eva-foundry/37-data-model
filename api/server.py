@@ -477,7 +477,11 @@ def create_app() -> FastAPI:
         from api.routers.metadata import _load_metadata_index
         layer_metadata_index = _load_metadata_index()
         layers = [entry["layer_name"] for entry in layer_metadata_index["layers"]]
+        operational_count = sum(1 for entry in layer_metadata_index["layers"] if entry.get("operational", False))
+        # Session 41 marker - verifying code reload
+        debug_timestamp = "2026-03-08T21:15:00Z"
         return {
+            "session_41_reload_marker": debug_timestamp,
             "identity": {
                 "service":     "EVA Data Model API",
                 "description": (
@@ -923,6 +927,9 @@ def create_app() -> FastAPI:
                 }
             },
             "layers_available": layers,
+            "layers_total": len(layers),
+            "layers_operational": operational_count,
+            "layers_complete_percent": round((operational_count / len(layers) * 100) if layers else 0, 1),
             "layer_notes": {
                 "endpoints":     "id = 'METHOD /path' (exact). Filter by status with ?status=",
                 "screens":       ".api_calls[] lists every endpoint id the screen calls",
