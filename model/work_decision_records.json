@@ -1,0 +1,31 @@
+{
+  "work_decision_records": [
+    {
+      "decision_id": "37-data-model-wu-20260309-001-dec-001",
+      "work_unit_id": "37-data-model-wu-20260309-001",
+      "decision_question": "Should we implement all 24 execution layers at once or phase them?",
+      "options_considered": [
+        "All 24 layers immediately (L52-L75)",
+        "Phase 1 (4 core layers: L52, L53, L54, L56) then iterate",
+        "Minimal 2 layers only (L52, L53)"
+      ],
+      "selected_option_id": "Phase 1 (4 core layers: L52, L53, L54, L56) then iterate",
+      "decision_scope": "execution",
+      "basis": "evidence",
+      "decided_by_type": "agent",
+      "decided_by_id": "copilot-sonnet-4.5",
+      "decided_at": "2026-03-09T11:48:00-05:00",
+      "rationale": "Assessment document (docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md from Session 40) explicitly recommends phased approach. Aligns with fractal DPDCA principle: validate smallest viable unit first, then proceed. Reduces risk of schema complexity overwhelming adoption. User confirmed: 'you have the helm' - empowered to make engineering decisions within documented strategy.",
+      "policy_refs": null,
+      "evidence_refs": [
+        "docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md",
+        "docs/library/99-layers-design-20260309-0935.md",
+        "user confirmation: 'you have the helm'"
+      ],
+      "obligation_ids": null,
+      "reversible": true,
+      "risk_level": "low",
+      "notes": "Phase 1 provides complete execution loop (work → events → decisions → outcomes) sufficient for 51-ACA ground-up development to start. Phase 2-6 can be added incrementally as operational patterns emerge."
+    }
+  ]
+}

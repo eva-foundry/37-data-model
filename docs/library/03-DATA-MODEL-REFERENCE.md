@@ -1,8 +1,10 @@
 ================================================================================
- EVA DATA MODEL -- 51-LAYER REFERENCE
+ EVA DATA MODEL -- 87-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-08 9:13 AM ET -- 51 layers; Session 39 (Infrastructure Monitoring L40-L49 Deployed)
+ Updated: 2026-03-09 -- 87 operational layers; 12 ontology domains; Session 41
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+ Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
+         docs/COMPLETE-LAYER-CATALOG.md (definitive catalog with all 87+24 layers)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -47,21 +49,21 @@
     GET /model/agent-guide     -> COMPLETE: 6 sections (discovery_journey,
                                   query_capabilities, write_cycle, common_mistakes,
                                   forbidden_actions, quick_reference)
-    GET /model/agent-summary   -> all 51 layer counts in one call
-    GET /model/layers          -> introspect all 51 layers with schema availability
+    GET /model/agent-summary   -> all 87 layer counts in one call
+    GET /model/layers          -> introspect all 87 layers with schema availability
     GET /model/{layer}/fields  -> get field names, types, descriptions for any layer
     GET /model/{layer}/example -> see real object structure from any layer
 
   DISCOVERY & INTROSPECTION (Session 26):
     All layers support self-documenting endpoints for agent orientation:
-      GET /model/layers               -> 51 layers with descriptions, example counts
+      GET /model/layers               -> 87 layers with descriptions, example counts
       GET /model/{layer}/fields       -> schema field definitions
       GET /model/{layer}/example      -> first real object for reference
       GET /model/{layer}/count        -> total object count
       GET /model/schema-def/{layer}   -> JSON Schema Draft-07 definition (WIP)
 
   UNIVERSAL QUERY OPERATORS (Session 26):
-    All 51 layers support standardized query parameters:
+    All 87 layers support standardized query parameters:
       ?limit=N                        -> pagination (DEFAULT: use in terminal!)
       ?offset=N                       -> skip N records
       ?field=value                    -> exact match filter
@@ -96,28 +98,40 @@
  LAYER GROUPS
 --------------------------------------------------------------------------------
 
-  L0-L10   Application Model     (original 11 layers, Sprint 1-5)
-  L11      Observability Plane   (L31 EVIDENCE + L32 Traces -- PROOF & telemetry)
-           *** L31 Evidence = COMPETITIVE MOAT = only AI with audit trails ***
-  L12-L18  Control Plane         (automation operating model, Phase 4)
-  L13      Governance Plane      (L33-L34 -- workspace_config + project_work)
-           *** DATA-MODEL-FIRST: Bootstrap queries API, not files ***
-           *** PAPERLESS: Only README + ACCEPTANCE on disk ***
-  L19-L21  Frontend Structural   (components / hooks / ts_types, Phase 5)
-  L22-L25  Catalog Additions     (MCP servers / prompts / security / runbooks)
-  L26-L30  Project & DPDCA Plane (projects + WBS + sprints + milestones + risks + decisions)
-  L31-L38  CI/CD & Testing       (deployment/testing/validation policies, Priority #3)
-  L40-L49  Infrastructure Monitoring  (agent perf, azure infra, compliance, drift, costs -- Priority #4 Session 39)
+  THE 12 ONTOLOGY DOMAINS (see docs/library/98-model-ontology-for-agents.md)
+  -----------------------------------------------------------------------
+  Agents reason over 12 conceptual domains, not 91 individual layers.
+  91 operational layers + 20 planned (L55, L57-L75) = 111 total.
+  36 organic layers (no L-number) added by sessions beyond original L1-L51.
+  4 Phase 1 execution layers (L52-L56) deployed Session 41 Part 10.
+  Agents query by layer NAME. L-numbers are historical identifiers only.
 
-  NOTE: Layer numbering shifted after L11 Observability insertion (Mar 1, 2026).
-        Old L11-L26 layers remain in same logical order but renumbered L12-L27.
-        Governance Plane (L33-L34) added Mar 5, 2026 for data-model-first architecture.
+   Domain                       Layers  Key Layers
+   --------------------------   ------  -----------------------------------------
+   1. System Architecture       10      services, endpoints, schemas, infrastructure
+   2. Identity & Access          3      personas, security_controls, secrets_catalog
+   3. AI Runtime                 6      agents, prompts, mcp_servers, agent_policies
+   4. User Interface             5      screens, literals, components, hooks, ts_types
+   5. Control Plane             12      planes, connections, environments, cp_*, feature_flags
+   6. Governance & Policy       10      quality_gates, github_rules, validation_rules, risks
+   7. Project & PM              9      projects, wbs, sprints, stories, tasks, milestones
+   8. DevOps & Delivery         10      deployment_policies, repos, ci_cd_pipelines, test_cases
+   9. Observability & Evidence  13      evidence, agent_execution_history, verification_records
+  10. Infrastructure & FinOps    9      azure_infrastructure, resource_costs, cost_tracking
+  11. Execution Engine          4 (+15) work_execution_units, work_step_events (L52-L56 operational)
+  12. Strategy & Portfolio (planned) 5  work_factory_portfolio, roadmaps (L71-L75)
+
+  See docs/COMPLETE-LAYER-CATALOG.md for the definitive per-layer catalog.
+
+  LEGACY NOTE: Layer numbering shifted multiple times historically.
+  The canonical 75-layer design is in docs/library/99-layers-design-20260309-0935.md.
+  Organic layers beyond L51 get names only (no L-number).
 
 --------------------------------------------------------------------------------
  APPLICATION MODEL (L0-L10)
 --------------------------------------------------------------------------------
 
-  L0  services          33 items
+  L0  services          36 items
   -----------------------------------------------------------------------
   Purpose: catalog every deployed or planned service in EVA.
   Notable additions (Feb 24):
@@ -156,7 +170,7 @@
   Key fields: id, cosmos_db, container_name, partition_key, status,
               retention_days, classification
 
-  L4  endpoints         184 items
+  L4  endpoints         187 items
   -----------------------------------------------------------------------
   Purpose: canonical backend API catalog. Every frontend API call must
            reference an endpoint registered here.
@@ -180,34 +194,34 @@
     cosmos_reads: []   cosmos_writes: []
     feature_flag: null  auth: []
 
-  L5  schemas           36 items
+  L5  schemas           39 items
   -----------------------------------------------------------------------
   Purpose: request/response/domain object type definitions.
   breakdown: request:12, response:19, model:5
   Examples: ChatRequest, ChatResponse, RAGModeEnum, ActorEnvelope,
             MTIScore, DecisionResult, EvidenceArtifact, PersonaProfile
 
-  L6  screens           46 items
+  L6  screens           50 items
   -----------------------------------------------------------------------
   See 04-PORTAL-SCREENS.md for full catalog.
   Key fields: id, route, face, title_en, title_fr, component,
               api_calls[], a11y, i18n_system, status, persona_access[]
 
-  L7  literals          375 items
+  L7  literals          458 items
   -----------------------------------------------------------------------
   Purpose: i18n string catalog by namespace + screen.
   Namespaces: common.*, nav.*, portal.*, admin.*, chat.*, da.*, auth.*
   All new screens registered Feb 24 need literals added.
   Key fields: id, namespace, key, value_en, value_fr, screen_id
 
-  L8  agents            4 items
+  L8  agents            13 items
   -----------------------------------------------------------------------
   Purpose: catalog AI agents built on the platform.
-  Items: screen-generator (eva-faces), test-generator (eva-faces),
-         validator (eva-faces), control-plane-agent
+  Items include: screen-generator, test-generator, validator,
+         control-plane-agent, + 9 additional operational agents
   Key fields: id, type, skills[], model, host_project, status
 
-  L9  infrastructure    23 items
+  L9  infrastructure    46 items
   -----------------------------------------------------------------------
   Purpose: Azure resource catalog (IaC reference).
   Statuses: provisioned:12, planned:11
@@ -217,7 +231,7 @@
                  Container Registry, Log Analytics Workspace
   Corrections applied 2026-02-22: cosmos DB name, 2 SWA types
 
-  L10 requirements      22 items
+  L10 requirements      29 items
   -----------------------------------------------------------------------
   Purpose: traceability from business requirement to implementation.
   breakdown: epics:5, requirements:10, stories:4, acceptance:3
@@ -417,7 +431,7 @@
  PROJECT & DPDCA PLANE (L25-L30)
 --------------------------------------------------------------------------------
 
-  L25 projects          59 items (ENHANCED with governance{} + acceptance_criteria[])
+  L25 projects          56 items (ENHANCED with governance{} + acceptance_criteria[])
   -----------------------------------------------------------------------
   NOTE: All EVA workspace projects with ADO epic IDs, maturity, and governance metadata.
   Status: ENHANCED Mar 5, 2026 with governance{} and acceptance_criteria[] fields
@@ -720,7 +734,7 @@
   
   Key fields:
     model_version           -- Data model version (semantic versioning)
-    layer_catalog[]         -- All 51 layers with descriptions
+    layer_catalog[]         -- All 87 layers with descriptions
     layer_groups[]          -- Logical groupings (Application, Control, etc.)
     relationships[]         -- Cross-layer relationships and dependencies
     schema_definitions[]    -- JSON Schema references for each layer
@@ -828,7 +842,7 @@
     containers    -> container-schema.md   (Cosmos containers, fields, partition)
     agents        -> agent-registry.md     (registered agents, skills, trust)
     requirements  -> requirements-trace.md (req -> endpoint -> screen trace)
-    projects      -> project-manifest.md   (all 48 projects, maturity, skills)
+    projects      -> project-manifest.md   (all 57 projects, maturity, skills)
     infrastructure-> infra-inventory.md    (Azure resources, ACA, Blob, APIM)
     personas      -> persona-matrix.md     (persona -> portal -> screen access)
 
@@ -844,6 +858,132 @@
   Implementation location: to be built in 37-data-model api/docs_generator.py
   API endpoint (planned): POST /model/docs/generate
   Async trigger (planned): background task in POST /model/admin/commit
+
+--------------------------------------------------------------------------------
+ EXECUTION ENGINE PLANE (L52-L56) -- PHASE 1 SESSION 41 PART 10
+--------------------------------------------------------------------------------
+
+  L52 work_execution_units    0 items (schema deployed, parent layer for cascade)
+  -----------------------------------------------------------------------
+  Purpose: Operational work ledger tracking each governed unit of work
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- parent layer with CASCADE children
+  Schema: schema/work_execution_units.schema.json
+  
+  Key fields:
+    work_unit_id           -- Primary key: {project-id}-wu-{YYYYMMDD}-{seq}
+    project_id             -- FK to L25 projects
+    wbs_id                 -- FK to L26 wbs
+    sprint_id              -- FK to L27 sprints
+    title                  -- Brief description of work
+    status                 -- queued | in-progress | paused | succeeded | failed | cancelled
+    assigned_to_type       -- agent | cp_agent | human
+    assigned_to_id         -- Polymorphic FK (agent_id, cp_agent_id, or persona_id)
+    milestone_id           -- FK to L28 milestones
+    workflow_id            -- FK to L18 cp_workflows (governing workflow)
+    project_work_id        -- FK to L34 project_work (session container)
+    parent_work_unit_id    -- Self-referencing FK for sub-tasks
+    depends_on[]           -- Array of work_unit_ids (dependencies)
+    policy_refs[]          -- FK array to L16 cp_policies
+    evidence_ids[]         -- FK array to L31 evidence
+  
+  Parent-child cascade: L53, L54, L56 CASCADE on delete
+  Use cases: Govern agent work, DPDCA tracking, audit trail
+  Query: GET /model/work_execution_units/?project_id={id}&status=in-progress
+
+  L53 work_step_events    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Execution event stream capturing step-by-step timeline of work units
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- event log with CASCADE delete
+  Schema: schema/work_step_events.schema.json
+  
+  Key fields:
+    event_id               -- Primary key: {work_unit_id}-evt-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE)
+    sequence_no            -- Event order within work unit
+    event_type             -- state_change | gate_check | action_execution | error_occurred | retry_attempt
+    timestamp              -- ISO8601 timestamp
+    actor_type             -- agent | cp_agent | human | system
+    actor_id               -- Identifier of actor
+    state_before           -- Status before event (for state_change)
+    state_after            -- Status after event (for state_change)
+    action_taken           -- Description of action performed
+    gate_name              -- Quality gate identifier (for gate_check)
+    gate_result            -- PASS | FAIL | WARN | SKIP
+    evidence_ids[]         -- FK array to L31 evidence
+    trace_ids[]            -- FK array to L32 traces (LLM traces)
+    decision_ids[]         -- FK array to L54 work_decision_records
+    error_details          -- Error details (for error_occurred)
+  
+  Parent: L52 work_execution_units (CASCADE on parent delete)
+  Use cases: Event timeline, audit trail, retry analysis, gate verification
+  Query: GET /model/work_step_events/?work_unit_id={id}&event_type=gate_check
+
+  L54 work_decision_records    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Runtime decision ledger capturing decisions made during execution
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- distinct from L30 decisions (architectural ADRs)
+  Schema: schema/work_decision_records.schema.json
+  
+  Key fields:
+    decision_id            -- Primary key: {work_unit_id}-dec-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE)
+    decision_question      -- What decision was being made
+    options_considered[]   -- Alternative options evaluated
+    selected_option_id     -- The option that was chosen
+    decision_scope         -- execution | governance | quality | deployment | exception
+    basis                  -- policy | evidence | heuristic | human_judgment
+    decided_by_type        -- agent | human
+    decided_by_id          -- Identifier of decision maker
+    decided_at             -- ISO8601 timestamp
+    rationale              -- Explanation of choice
+    policy_refs[]          -- FK array to L16 cp_policies
+    evidence_refs[]        -- Supporting evidence IDs or documents
+    obligation_ids[]       -- FK array to L55 work_obligations (Phase 2)
+    reversible             -- Boolean: can decision be undone?
+    risk_level             -- low | medium | high
+  
+  Parent: L52 work_execution_units (CASCADE on parent delete)
+  Contrast with L30 decisions: L30 = architectural ADRs, L54 = runtime execution decisions
+  Use cases: Decision audit, basis documentation, reversibility tracking
+  Query: GET /model/work_decision_records/?work_unit_id={id}&basis=policy
+
+  L56 work_outcomes    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Result ledger recording what was delivered vs what was expected
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- realized outcomes vs expectations
+  Schema: schema/work_outcomes.schema.json
+  
+  Key fields:
+    outcome_id             -- Primary key: {work_unit_id}-out-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE)
+    result                 -- delivered | not_delivered | partially_delivered
+    outcome_type           -- technical | governance | quality | operational | business
+    recorded_at            -- ISO8601 timestamp
+    expected_vs_actual     -- Narrative comparison
+    delivered_changes{}    -- Structured summary (files, commits, deployments, metrics)
+      - files_created[]    -- Array of created file paths
+      - files_modified[]   -- Array of modified file paths
+      - files_deleted[]    -- Array of deleted file paths
+      - commits[]          -- Array of commit SHAs
+      - deployments[]      -- Array of deployment IDs
+      - metrics{}          -- Quantitative measures
+    evidence_ids[]         -- FK array to L31 evidence
+    decision_ids[]         -- FK array to L54 (decisions that influenced outcome)
+    learning_ids[]         -- FK array to L57 work_learning_feedback (Phase 2)
+    metrics{}              -- Time, cost, quality scores
+  
+  Parent: L52 work_execution_units (CASCADE on parent delete)
+  Use cases: Delivery verification, lesson learned capture, variance analysis
+  Query: GET /model/work_outcomes/?work_unit_id={id}&result=delivered
+
+  SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
+    - 4 execution layers deployed (L52, L53, L54, L56)
+    - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
+    - 11 new FK edge types added (27 → 38 total)
+    - Layer count: 87 → 91 operational
+    - Planned layers: 24 → 20 (still L55, L57-L75 to deploy)
+    - Phase 1 complete, Phase 2-6 ready for deployment
+    - See docs/library/13-EXECUTION-LAYERS.md for complete specification
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)

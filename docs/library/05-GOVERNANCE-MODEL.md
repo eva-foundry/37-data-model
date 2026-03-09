@@ -25,7 +25,7 @@ Core thesis (from 19-ai-gov/EVA-AIatGov.md):
   EVA Domain Assistant    RAG reasoning, 4 modes (hybrid, semantic, BM25, none)
   EVA Chat                General assistance
   EVA Brain               Skills + orchestration (24 skills in 33-eva-brain-v2)
-  EVA Faces               UX delivery (46 screens, 4 faces)
+  EVA Faces               UX delivery (50 screens, 4 faces)
   EVA DevBench            Code / COBOL / refactoring assistance
   EVA Red Teaming         Continuous adversarial testing (Promptfoo + ATLAS)
   EVA Evidence Pack       Runtime evidence generation (40-control-plane)

@@ -2,7 +2,7 @@
  EVA DATA MODEL -- AGENT EXPERIENCE ENHANCEMENTS
  File: docs/library/12-AGENT-EXPERIENCE.md
  Updated: 2026-03-08 9:13 AM ET
- Status: LIVE -- Session 26+30+39 deployed to production (51 layers)
+ Status: LIVE -- Session 26+30+39+41 deployed to production (87 layers)
 ================================================================================
 
 This document explains the self-documenting, self-discovery capabilities added
@@ -21,7 +21,7 @@ ASCII only. No emoji. No Mermaid. Printable.
                      GET /model/workspace_config/eva-foundry  (workspace best practices)
                      GET /model/projects/?workspace=eva-foundry  (all 56 projects with governance)
   
-  Session 39 Update: All 51 layers now operational (added L40-L49 infrastructure monitoring)
+  Session 41 Update: All 87 layers now operational (51 canonical + 36 organic)
   
   Result: 10x faster bootstrap, real-time data, no file sync delay.
 
@@ -42,7 +42,7 @@ SECTION 1: discovery_journey
 
 SECTION 2: query_capabilities
   Purpose: Universal query operator documentation
-  Content: Filter, pagination, aggregation patterns for all 41 layers
+  Content: Filter, pagination, aggregation patterns for all 87 layers
   Value: Agents learn advanced queries without trial-and-error
 
 SECTION 3: terminal_safety
@@ -75,7 +75,7 @@ USAGE:
 Agents can now discover schema structure WITHOUT reading .schema.json files.
 
 SESSION 39 UPDATE (March 8, 2026 9:13 AM ET):
-  All 51 layers operational. Priority #4 infrastructure monitoring (L40-L49) deployed:
+  All 87 layers operational. Priority #4 infrastructure monitoring (L40-L49) deployed:
     - agent_execution_history, agent_performance_metrics, azure_infrastructure
     - compliance_audit, deployment_quality_scores, deployment_records
     - eva_model, infrastructure_drift, performance_trends, resource_costs
@@ -86,7 +86,7 @@ SESSION 39 UPDATE (March 8, 2026 9:13 AM ET):
 KEY ENDPOINTS:
 
   GET /model/layers
-    Returns: List all 51 layers with descriptions, example counts
+    Returns: List all 87 layers with descriptions, example counts
     Use case: "What data is available in this data model?"
     Response: [
       {
@@ -135,7 +135,7 @@ AGENT DISCOVERY FLOW (RECOMMENDED):
  UNIVERSAL QUERY OPERATORS (SESSION 26)
 --------------------------------------------------------------------------------
 
-All 41 layers support standardized query parameters. No per-layer API learning.
+All 87 layers support standardized query parameters. No per-layer API learning.
 
 PAGINATION (terminal-safe):
   ?limit=N                              Return max N records (DEFAULT: use in terminal!)

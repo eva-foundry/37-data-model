@@ -35,7 +35,7 @@
 - **`seed-cosmos.py`** - Bulk load all 51 layer files into Cosmos DB
   - Requires: COSMOS_URL, COSMOS_KEY in .env
   - Usage: `python scripts/seed-cosmos.py`
-  - ⚠️ Critical: `_LAYER_FILES` must include all 51 layers
+  - ⚠️ Critical: `_LAYER_FILES` must include all 87 layers
 
 - **`POST /model/admin/seed`** - HTTP endpoint to seed from model/*.json
   - Reads all files in `_LAYER_FILES` registry
@@ -55,7 +55,7 @@
 
 ### Comprehensive Audits
 - **`comprehensive-layer-audit.ps1`** - **MAIN AUDIT TOOL**
-  - Tests all 51 layers: availability, performance, FK relationships, consistency
+  - Tests all 87 layers: availability, performance, FK relationships, consistency
   - Generates detailed report with pass/fail status
   - Usage: `./scripts/comprehensive-layer-audit.ps1`
   
@@ -289,7 +289,7 @@ These tools have been created multiple times in past sessions. **Always check th
 - Validate after restore
 
 ### Consistency Testing Framework
-**Purpose**: Automated FK integrity testing across all 51 layers  
+**Purpose**: Automated FK integrity testing across all 87 layers  
 **Required**:
 - Verify all FK references resolve
 - Check for orphaned records

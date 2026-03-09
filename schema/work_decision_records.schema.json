@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/work_decision_records.schema.json",
+  "title": "Work Decision Record",
+  "description": "Runtime decision ledger. Captures decisions made during work execution (not architectural ADRs which are in L30 decisions layer). Layer 54 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["decision_id", "work_unit_id", "decision_question", "options_considered", "selected_option_id", "decision_scope", "basis", "decided_by_type", "decided_by_id", "decided_at"],
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": {
+      "type": "string",
+      "description": "Primary key. Format: {work_unit_id}-dec-{sequence}",
+      "pattern": "^.+-wu-.+-dec-[0-9]{3,}$",
+      "examples": ["51-ACA-wu-20260309-001-dec-001"]
+    },
+    "work_unit_id": {
+      "type": "string",
+      "description": "Foreign key to L52 work_execution_units (CASCADE on delete)"
+    },
+    "decision_question": {
+      "type": "string",
+      "description": "What decision was being made",
+      "minLength": 5
+    },
+    "options_considered": {
+      "type": "array",
+      "description": "Alternative options that were evaluated",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "selected_option_id": {
+      "type": "string",
+      "description": "The option that was chosen (should match one of options_considered)"
+    },
+    "decision_scope": {
+      "type": "string",
+      "enum": ["execution", "governance", "quality", "deployment", "exception"],
+      "description": "Category of decision"
+    },
+    "basis": {
+      "type": "string",
+      "enum": ["policy", "evidence", "heuristic", "human_judgment"],
+      "description": "What the decision was based on"
+    },
+    "decided_by_type": {
+      "type": "string",
+      "enum": ["agent", "human"],
+      "description": "Who made the decision"
+    },
+    "decided_by_id": {
+      "type": "string",
+      "description": "Identifier of decision maker (agent_id or persona_id)"
+    },
+    "decided_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp when decision was made"
+    },
+    "rationale": {
+      "type": ["string", "null"],
+      "description": "Explanation of why this option was chosen"
+    },
+    "policy_refs": {
+      "type": ["array", "null"],
+      "description": "Array of policy_ids from L16 cp_policies layer that influenced this decision",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_refs": {
+      "type": ["array", "null"],
+      "description": "Array of evidence_ids or document references that supported this decision",
+      "items": {
+        "type": "string"
+      }
+    },
+    "obligation_ids": {
+      "type": ["array", "null"],
+      "description": "Array of obligation_ids from L55 work_obligations (Phase 2 FK)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reversible": {
+      "type": ["boolean", "null"],
+      "description": "Can this decision be undone without significant cost",
+      "default": true
+    },
+    "risk_level": {
+      "type": ["string", "null"],
+      "enum": ["low", "medium", "high", null],
+      "description": "Risk assessment of this decision"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Additional context or observations"
+    }
+  }
+}

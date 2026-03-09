@@ -1,0 +1,38 @@
+{
+  "work_execution_units": [
+    {
+      "work_unit_id": "37-data-model-wu-20260309-001",
+      "project_id": "37-data-model",
+      "wbs_id": null,
+      "sprint_id": null,
+      "title": "Implement Phase 1 Execution Layers (L52-L56)",
+      "description": "Add work_execution_units, work_step_events, work_decision_records, work_outcomes to EVA Data Model. Foundation for governed software production runtime.",
+      "status": "in-progress",
+      "assigned_to_type": "agent",
+      "assigned_to_id": "copilot-sonnet-4.5",
+      "milestone_id": null,
+      "workflow_id": null,
+      "project_work_id": "37-data-model-2026-03-09",
+      "parent_work_unit_id": null,
+      "depends_on": null,
+      "instruction_type": "agent_workflow",
+      "instruction_payload": {
+        "phase": "Phase 1",
+        "layers": ["L52", "L53", "L54", "L56"],
+        "goal": "Core execution engine",
+        "strategy": "Fractal DPDCA - smallest viable unit first",
+        "validation": "Local:8010 testing before production merge"
+      },
+      "policy_refs": null,
+      "evidence_ids": null,
+      "created_at": "2026-03-09T12:00:00-05:00",
+      "updated_at": "2026-03-09T12:15:00-05:00",
+      "started_at": "2026-03-09T11:45:00-05:00",
+      "completed_at": null,
+      "duration_seconds": null,
+      "retry_count": 0,
+      "error_message": null,
+      "notes": "Meta: This work unit tracks its own implementation. Demonstrates self-referential capability of execution engine."
+    }
+  ]
+}

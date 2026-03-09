@@ -30,7 +30,7 @@
                                     |
   ============================================================
    FRONTEND LAYER (31-eva-faces -- React 19, Fluent UI v9)
-   TWO PORTALS -- face field set on all 46 screens 2026-02-24
+   TWO PORTALS -- face field set on all 50 screens 2026-02-24
   ============================================================
   |                                                          |
   |  PORTAL 1: assistant-face      PORTAL 2: ops-face        |
@@ -67,8 +67,8 @@
   |  FastAPI (ACA) |    |  FastAPI port 8010|   |  FastAPI       |
   |  24 skills     |    |  (ACA + Cosmos)   |   |  Sprint/ADO    |
   |  Chat, RAG     |    |  Entity catalog   |   |  board         |
-  |  Analysis      |    |  184 endpoints    |   |                |
-  |  Translate     |    |  46 screens       |   +----------------+
+  |  Analysis      |    |  187 endpoints    |   |                |
+  |  Translate     |    |  50 screens       |   +----------------+
   |  Feedback      |    |                   |
   +-------+--------+    +-------------------+
           |                    |
@@ -90,7 +90,7 @@
   | Blob Storage   |    THREE PLANES OF TRUTH
   | Uploaded docs  |    ==============================
   | Analysis output|    DATA PLANE       37-data-model (L0-L34)
-  +----------------+    (what SHOULD be)  entity catalog: 41 layers
+  +----------------+    (what SHOULD be)  entity catalog: 87 layers
                                          endpoints/screens/services/containers
                                          governance plane (L33-L34) LIVE
                                          4,339+ objects, Cosmos-backed (24x7)

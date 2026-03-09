@@ -133,14 +133,14 @@ All three implemented.
  -----------------------------------------------------
 
 The model grew from a backend spec into a full-platform catalog.
-46 screens across two portals registered. Architectural decision ratified:
+50 screens across two portals registered. Architectural decision ratified:
 
   assistant-face (20 screens): citizens + RAG -- auth, EVA DA chat,
     JP Spark, AssistMe, A11y themes, i18n
   ops-face (26 screens): admin + operations -- RBAC, ADO, DataModel,
     RedTeam, DevBench
 
-184 endpoints registered. Control plane catalog (Layers 11-17): planes,
+187 endpoints registered. Control plane catalog (Layers 11-17): planes,
 connections, environments, CP skills, CP agents, runbooks, compiled
 workflow definitions. Frontend structural layers (L18-L20): React
 components, custom hooks, TypeScript type definitions. Catalog and ops
@@ -371,7 +371,7 @@ Full bootstrap sequence:
   sweep-all.ps1        49 projects audited; 6 pure-docs -> manifest.yml;
                        7 empty -> minimal PLAN.md
   wbs-import.ps1       3234 WBS records PUT to data model
-  endpoint-link.ps1    186 endpoints + 46 screens linked to WBS story IDs
+  endpoint-link.ps1    187 endpoints + 50 screens linked to WBS story IDs
   wbs-to-ado.ps1       42 ADO artifact files -> 1920 PBIs, 42/42 imported
 
 full-bootstrap.ps1 captures the entire 8-phase sequence as a repeatable

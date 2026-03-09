@@ -260,49 +260,9 @@ async def list_layers(request: Request):
     """
     store = request.app.state.store
 
-    # List of all known layers (from layers.py + Session 28-30 additions)
-    known_layers = [
-        "services",
-        "personas",
-        "feature_flags",
-        "containers",
-        "endpoints",
-        "schemas",
-        "screens",
-        "literals",
-        "agents",
-        "infrastructure",
-        "requirements",
-        "planes",
-        "connections",
-        "environments",
-        "cp_skills",
-        "cp_agents",
-        "runbooks",
-        "cp_workflows",
-        "cp_policies",
-        "components",
-        "hooks",
-        "ts_types",
-        "mcp_servers",
-        "prompts",
-        "security_controls",
-        "projects",
-        "wbs",
-        "sprints",
-        "milestones",
-        "risks",
-        "decisions",
-        "evidence",
-        "traces",
-        "workspace_config",
-        "project_work",
-        "agent_policies",
-        "quality_gates",
-        "github_rules",
-        "deployment_policies",
-        "testing_policies",
-        "validation_rules"]
+    # Dynamically read from _LAYER_FILES (single source of truth)
+    from api.routers.admin import _LAYER_FILES
+    known_layers = list(_LAYER_FILES.keys())
 
     layers_info = []
 
