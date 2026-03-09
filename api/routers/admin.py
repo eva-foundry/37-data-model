@@ -189,47 +189,73 @@ async def seed(
     counts: dict[str, int] = {}
     errors: list[str] = []
 
-    for layer, filename in _LAYER_FILES.items():
-        path = _get_model_dir() / filename
-        if not path.exists():
-            log.warning("Seed: %s not found, skipping", path)
-            continue
+    try:
+        for layer, filename in _LAYER_FILES.items():
+            path = _get_model_dir() / filename
+            if not path.exists():
+                log.warning("Seed: %s not found, skipping", path)
+                continue
 
-        raw = json.loads(path.read_text(encoding="utf-8"))
-        # Layer files have structure: {"$schema": ..., "layer_key": [...]}
-        objects: list[dict] = raw.get(layer, [])
-        if not objects:
-            # Some files use alternate plural keys
-            for v in raw.values():
-                if isinstance(v, list):
-                    objects = v
-                    break
+            try:
+                raw = json.loads(path.read_text(encoding="utf-8"))
+            except Exception as exc:
+                errors.append(f"{layer}: Failed to read/parse {filename} — {exc}")
+                log.error("Seed: %s read failed — %s", filename, exc)
+                continue
 
-        # Ensure objects is a list and filter to dicts only
-        if not isinstance(objects, list):
-            objects = []
-        # Normalise: ensure every object has an 'id' field
-        objects = [o for o in objects if isinstance(o, dict)]
-        for obj in objects:
-            if "id" not in obj and "key" in obj:
-                obj["id"] = obj["key"]
+            # Layer files have structure: {"$schema": ..., "layer_key": [...]}
+            # Some files may be raw arrays: [...]
+            objects: list[dict] = []
+            if isinstance(raw, list):
+                # File is a raw array
+                objects = raw
+            elif isinstance(raw, dict):
+                # File is a dict, try to extract layer array
+                objects = raw.get(layer, [])
+                if not objects:
+                    # Some files use alternate plural keys
+                    for v in raw.values():
+                        if isinstance(v, list):
+                            objects = v
+                            break
+            else:
+                errors.append(f"{layer}: Unexpected JSON type {type(raw).__name__} in {filename}")
+                log.error("Seed: %s unexpected type — %s", filename, type(raw))
+                continue
 
-        objects = [o for o in objects if o.get("id")]
-        # Stamp source_file on every object so the field is persisted on export
-        # and carried forward into every subsequent cold-deploy seed cycle.
-        for obj in objects:
-            obj.setdefault("source_file", f"model/{filename}")
-        try:
-            # bulk_load preserves audit fields from JSON; only fills defaults
-            # for gaps
-            loaded = await store.bulk_load(layer, objects, actor)
-        except Exception as exc:
-            errors.append(f"{layer}: bulk_load failed — {exc}")
-            loaded = 0
+            # Ensure objects is a list and filter to dicts only
+            if not isinstance(objects, list):
+                objects = []
+            # Normalise: ensure every object has an 'id' field
+            objects = [o for o in objects if isinstance(o, dict)]
+            for obj in objects:
+                if "id" not in obj and "key" in obj:
+                    obj["id"] = obj["key"]
 
-        await cache.invalidate_layer(layer)
-        counts[layer] = loaded
-        log.info("Seed: %s — %d objects", layer, loaded)
+            objects = [o for o in objects if o.get("id")]
+            # Stamp source_file on every object so the field is persisted on export
+            # and carried forward into every subsequent cold-deploy seed cycle.
+            for obj in objects:
+                obj.setdefault("source_file", f"model/{filename}")
+            try:
+                # bulk_load preserves audit fields from JSON; only fills defaults
+                # for gaps
+                log.info("Seed: Starting %s with %d objects", layer, len(objects))
+                loaded = await store.bulk_load(layer, objects, actor)
+                log.info("Seed: Completed %s — %d objects loaded", layer, loaded)
+            except Exception as exc:
+                error_msg = f"{layer}: bulk_load failed — {type(exc).__name__}: {exc}"
+                errors.append(error_msg)
+                log.error("Seed: %s", error_msg, exc_info=True)
+                loaded = 0
+
+            await cache.invalidate_layer(layer)
+            counts[layer] = loaded
+
+    except Exception as exc:
+        error_msg = f"Seed operation failed — {type(exc).__name__}: {exc}"
+        errors.append(error_msg)
+        log.error("Seed: Fatal error — %s", exc, exc_info=True)
 
     return {
         "seeded": counts,
