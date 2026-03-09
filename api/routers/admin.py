@@ -171,6 +171,171 @@ def _get_model_dir() -> Path:
     return Path(__file__).parents[2] / "model"
 
 
+# ── DATA EXTRACTION MAPPINGS ────────────────────────────────────────────
+
+# Known exceptions: layers where data key differs from layer name
+_LAYER_DATA_KEYS: dict[str, str] = {
+    "agent_execution_history": "execution_records",
+    "agent_performance_metrics": "agent_metrics",
+    "deployment_quality_scores": "quality_scores",
+    "performance_trends": "trend_records",
+}
+
+# Layers where the entire file is a single object (wrap in array)
+_SINGLE_OBJECT_LAYERS: set[str] = {
+    "remediation_effectiveness",
+}
+
+# Layers where data is in a dict that needs values extracted
+_DICT_VALUE_LAYERS: set[str] = {
+    "azure_infrastructure",  # resources: {key: obj, key: obj} -> [obj, obj]
+}
+
+# Layers with no arrays (metadata/placeholder files - skip without error)
+_SKIP_LAYERS: set[str] = {
+    "evidence",      # Has "objects" key but it's a dict, not array
+    "traces",        # Has "traces" key but it's a dict, not array
+    "eva_model",     # Placeholder file (4 bytes empty)
+}
+
+# Common ID field patterns: map alternate ID fields to 'id'
+_COMMON_ID_FIELDS: list[str] = [
+    "execution_id",
+    "metric_id",
+    "effectiveness_id",
+    "score_id",
+    "trend_id",
+    "record_id",
+    "event_id",
+    "policy_id",
+    "resource_id",
+]
+
+
+def _normalize_object_ids(objects: list[dict], layer: str) -> list[dict]:
+    """
+    Ensure all objects have an 'id' field by checking common patterns.
+    
+    Args:
+        objects: List of dict objects extracted from JSON
+        layer: Layer name for logging
+        
+    Returns:
+        List of objects with 'id' field set
+    """
+    for obj in objects:
+        if "id" in obj:
+            continue  # Already has id
+        
+        # Check for 'key' field (legacy pattern)
+        if "key" in obj:
+            obj["id"] = obj["key"]
+            continue
+        
+        # Check common ID field patterns
+        for id_field in _COMMON_ID_FIELDS:
+            if id_field in obj:
+                obj["id"] = obj[id_field]
+                break
+        
+        # Last resort: for single-object layers, try layer_id pattern
+        layer_id_field = f"{layer}_id"
+        if layer_id_field in obj:
+            obj["id"] = obj[layer_id_field]
+    
+    return objects
+
+
+def _extract_objects_from_json(raw: dict | list, layer: str, filename: str) -> list[dict]:
+    """
+    Smart extraction of object arrays from various JSON structures.
+    
+    Handles:
+    - Raw arrays: [obj1, obj2, ...]
+    - Standard dict: {"layer_name": [obj1, obj2, ...]}
+    - Alternate keys: {"execution_records": [...]} for agent_execution_history
+    - Single objects: Entire file is one object (wrap in array)
+    - Dict values: {"resources": {key1: obj1, key2: obj2}} -> [obj1, obj2]
+    - Skip layers: Known metadata files with no data
+    
+    Returns:
+        List of dict objects ready for bulk_load
+    """
+    
+    # Check skip list first
+    if layer in _SKIP_LAYERS:
+        log.info("Extract: %s is a metadata layer, skipping", layer)
+        return []
+    
+    # Case 1: Raw array
+    if isinstance(raw, list):
+        return raw
+    
+    # Case 2: Single object layer (wrap entire file)
+    if layer in _SINGLE_OBJECT_LAYERS:
+        if isinstance(raw, dict):
+            # Use layer name + "_id" field as 'id' if present
+            id_field = f"{layer}_id"
+            if id_field in raw:
+                raw.setdefault("id", raw[id_field])
+            return [raw]
+        else:
+            log.warning("Extract: %s marked as single object but not a dict", layer)
+            return []
+    
+    # Case 3: Dict value extraction (resources dict -> array of resources)
+    if layer in _DICT_VALUE_LAYERS:
+        if isinstance(raw, dict) and "resources" in raw:
+            resources = raw["resources"]
+            if isinstance(resources, dict):
+                # Extract values from dict, add resource key as 'id' if missing
+                objects = []
+                for key, obj in resources.items():
+                    if isinstance(obj, dict):
+                        obj.setdefault("id", key)
+                        obj.setdefault("resource_id", key)
+                        objects.append(obj)
+                return objects
+        log.warning("Extract: %s marked for dict extraction but no resources dict found", layer)
+    
+    # Case 4: Dict with layer data
+    if isinstance(raw, dict):
+        # Try exact layer name match
+        if layer in raw and isinstance(raw[layer], list):
+            return raw[layer]
+        
+        # Check known alternate keys
+        if layer in _LAYER_DATA_KEYS:
+            alt_key = _LAYER_DATA_KEYS[layer]
+            if alt_key in raw and isinstance(raw[alt_key], list):
+                return raw[alt_key]
+        
+        # Try common variations (plural forms)
+        for candidate in [layer + 's', layer + 'es']:
+            if candidate in raw and isinstance(raw[candidate], list):
+                log.info("Extract: %s using plural key '%s'", layer, candidate)
+                return raw[candidate]
+        
+        # Last resort: find first array that looks like data (has 'id' fields)
+        for key, value in raw.items():
+            # Skip schema/metadata keys
+            if key.startswith('$') or key in ['metadata', 'summary', 'statistics']:
+                continue
+            
+            if isinstance(value, list) and len(value) > 0:
+                # Check if array contains objects with 'id' fields
+                sample = value[:3] if len(value) >= 3 else value
+                if all(isinstance(obj, dict) and 'id' in obj for obj in sample):
+                    log.warning(
+                        "Extract: %s using fallback array from key '%s' (add to _LAYER_DATA_KEYS)",
+                        layer, key
+                    )
+                    return value
+    
+    # No data found
+    return []
+
+
 # ── SEED ────────────────────────────────────────────────────────────────
 
 @router.post("/seed",
@@ -223,38 +388,25 @@ async def seed(
                 log.error("Seed: %s read failed — %s", filename, exc)
                 continue
 
-            # Layer files have structure: {"$schema": ..., "layer_key": [...]}
-            # Some files may be raw arrays: [...]
-            objects: list[dict] = []
-            if isinstance(raw, list):
-                # File is a raw array
-                objects = raw
-            elif isinstance(raw, dict):
-                # File is a dict, try to extract layer array
-                objects = raw.get(layer, [])
-                if not objects:
-                    # Some files use alternate plural keys
-                    for v in raw.values():
-                        if isinstance(v, list):
-                            objects = v
-                            break
-            else:
-                error_msg = f"{layer}: Unexpected JSON type {type(raw).__name__} in {filename}"
+            # Extract objects using smart extractor
+            try:
+                objects = _extract_objects_from_json(raw, layer, filename)
+            except Exception as exc:
+                error_msg = f"{layer}: Failed to extract objects from {filename} — {exc}"
                 errors.append(error_msg)
-                progress.append(
-                    f"  [ERROR] Unexpected JSON type: {type(raw).__name__}")
-                log.error("Seed: %s unexpected type — %s", filename, type(raw))
+                progress.append(f"  [ERROR] Extract failed: {exc}")
+                log.error("Seed: %s extract failed — %s", filename, exc)
                 continue
 
             # Ensure objects is a list and filter to dicts only
             if not isinstance(objects, list):
                 objects = []
-            # Normalise: ensure every object has an 'id' field
             objects = [o for o in objects if isinstance(o, dict)]
-            for obj in objects:
-                if "id" not in obj and "key" in obj:
-                    obj["id"] = obj["key"]
-
+            
+            # Normalize IDs: map common ID field patterns to 'id'
+            objects = _normalize_object_ids(objects, layer)
+            
+            # Filter out objects without 'id'
             objects = [o for o in objects if o.get("id")]
             # Stamp source_file on every object so the field is persisted on export
             # and carried forward into every subsequent cold-deploy seed cycle.
@@ -294,10 +446,15 @@ async def seed(
 
     total_time = time.time() - start_time
     total_records = sum(counts.values())
+    layers_with_data = sum(1 for c in counts.values() if c > 0)
+    layers_skipped = len(_LAYER_FILES) - len(counts)
     
     progress.append("=== SEED OPERATION COMPLETED ===")
     progress.append(f"Total records loaded: {total_records:,}")
-    progress.append(f"Total layers processed: {len(counts)}/{len(_LAYER_FILES)}")
+    progress.append(f"Layers in _LAYER_FILES: {len(_LAYER_FILES)}")
+    progress.append(f"Layers processed: {len(counts)} (files found)")
+    progress.append(f"Layers with data: {layers_with_data}")
+    progress.append(f"Layers skipped: {layers_skipped} (file not found)")
     progress.append(f"Total errors: {len(errors)}")
     progress.append(f"Total time: {total_time:.2f}s")
     if total_records > 0:
@@ -310,6 +467,10 @@ async def seed(
         "actor": actor,
         "progress": progress,  # ← Verbose log of all operations
         "duration_seconds": round(total_time, 2),
+        "layers_in_definition": len(_LAYER_FILES),
+        "layers_processed": len(counts),
+        "layers_with_data": layers_with_data,
+        "layers_skipped": layers_skipped,
     }
 
 
