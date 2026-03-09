@@ -201,7 +201,7 @@ jobs:
           if [ "${{ needs.sync-infrastructure.result }}" == "success" ] && \
              [ "${{ needs.sync-costs.result }}" == "success" ] && \
              [ "${{ needs.sync-agent-metrics.result }}" == "success" ]; then
-            echo "✓ **All syncs completed successfully**" >> $GITHUB_STEP_SUMMARY
+            echo "[OK] **All syncs completed successfully**" >> $GITHUB_STEP_SUMMARY
           else
-            echo "⚠ **Some syncs failed - check job logs**" >> $GITHUB_STEP_SUMMARY
+            echo "[WARN] **Some syncs failed - check job logs**" >> $GITHUB_STEP_SUMMARY
           fi

@@ -167,7 +167,7 @@ jobs:
         run: |
           echo "## Evidence Sync Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Status**: $([[ ${{ steps.sync.outputs.exit_code }} == '0' ]] && echo '✅ PASS' || echo '❌ FAIL')" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: $([[ ${{ steps.sync.outputs.exit_code }} == '0' ]] && echo '[SUCCESS] PASS' || echo '[FAIL] FAIL')" >> $GITHUB_STEP_SUMMARY
           echo "**Records**: ${{ steps.sync.outputs.record_count }}" >> $GITHUB_STEP_SUMMARY
           echo "**Changes**: ${{ steps.sync.outputs.has_changes }}" >> $GITHUB_STEP_SUMMARY
           echo "**Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY

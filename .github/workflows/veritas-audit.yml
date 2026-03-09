@@ -47,8 +47,8 @@ jobs:
         Write-Host "MTI Score: $mti (threshold: $threshold)"
         
         if ($mti -lt $threshold) {
-          Write-Error "❌ MTI=$mti below threshold $threshold - merge BLOCKED"
+          Write-Error "[FAIL] MTI=$mti below threshold $threshold - merge BLOCKED"
           exit 1
         }
         
-        Write-Host "✅ MTI=$mti meets threshold $threshold - merge ALLOWED"
+        Write-Host "[SUCCESS] MTI=$mti meets threshold $threshold - merge ALLOWED"

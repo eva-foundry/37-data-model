@@ -52,7 +52,7 @@ jobs:
             TAG=$(date -u +"%Y%m%d-%H%M")
           fi
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
-          echo "📦 Image tag: ${TAG}"
+          echo "[BUILD] Image tag: ${TAG}"
 
       - name: Azure Login (OIDC)
         uses: azure/login@v2
@@ -65,12 +65,12 @@ jobs:
         run: |
           az account set --subscription ${{ env.TARGET_SUBSCRIPTION }}
           CURRENT_SUB=$(az account show --query name -o tsv)
-          echo "✓ Current subscription: ${CURRENT_SUB}"
+          echo "[OK] Current subscription: ${CURRENT_SUB}"
 
       - name: Build Docker image in ACR
         id: build
         run: |
-          echo "🔨 Building image in ACR..."
+          echo "[BUILD] Building image in ACR..."
           FULL_IMAGE="${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}"
           echo "full_image=${FULL_IMAGE}" >> $GITHUB_OUTPUT
           
@@ -83,28 +83,28 @@ jobs:
           BUILD_END=$(date +%s)
           BUILD_DURATION=$((BUILD_END - BUILD_START))
           
-          echo "✓ Image built successfully in ${BUILD_DURATION}s"
+          echo "[OK] Image built successfully in ${BUILD_DURATION}s"
           echo "  Image: ${{ env.TARGET_ACR }}.azurecr.io/${FULL_IMAGE}"
 
       - name: Verify image in ACR
         run: |
-          echo "🔍 Verifying image in ACR..."
+          echo "[CHECK] Verifying image in ACR..."
           TAGS=$(az acr repository show-tags \
             --name ${{ env.TARGET_ACR }} \
             --repository ${{ env.IMAGE_NAME }} \
             --output json)
           
           if echo "$TAGS" | grep -q "${{ steps.tag.outputs.tag }}"; then
-            echo "✓ Image verified in ACR: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+            echo "[OK] Image verified in ACR: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
           else
-            echo "✗ Image not found in ACR after build"
+            echo "[FAIL] Image not found in ACR after build"
             exit 1
           fi
 
       - name: Update Container App
         id: update
         run: |
-          echo "🚀 Updating Container App..."
+          echo "[DEPLOY] Updating Container App..."
           az containerapp update \
             --name ${{ env.CONTAINER_APP }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
@@ -117,33 +117,33 @@ jobs:
             --output tsv)
           
           echo "revision=${REVISION}" >> $GITHUB_OUTPUT
-          echo "✓ Container App updated successfully"
+          echo "[OK] Container App updated successfully"
           echo "  New revision: ${REVISION}"
 
       - name: Wait for deployment
         run: |
-          echo "⏳ Waiting 90 seconds for Container App to restart..."
+          echo "[WAIT] Waiting 90 seconds for Container App to restart..."
           sleep 90
 
       - name: Verify deployment
         if: ${{ !github.event.inputs.skip_verify }}
         run: |
-          echo "🔍 Verifying deployment..."
+          echo "[CHECK] Verifying deployment..."
           
           # Health check
           echo "Testing health endpoint..."
           HEALTH=$(curl -f -s "${{ env.CLOUD_URL }}/health" || echo "FAILED")
           
           if [ "$HEALTH" = "FAILED" ]; then
-            echo "✗ Health check FAILED"
+            echo "[FAIL] Health check FAILED"
             exit 1
           fi
           
           UPTIME=$(echo "$HEALTH" | jq -r '.uptime_seconds')
           if [ "$UPTIME" -lt 120 ]; then
-            echo "✓ Health check PASS (uptime: ${UPTIME}s - recently restarted)"
+            echo "[OK] Health check PASS (uptime: ${UPTIME}s - recently restarted)"
           else
-            echo "⚠ Health check PASS but uptime unexpected (${UPTIME}s - may not have restarted)"
+            echo "[WARN] Health check PASS but uptime unexpected (${UPTIME}s - may not have restarted)"
           fi
           
           # Agent summary check
@@ -151,14 +151,14 @@ jobs:
           SUMMARY=$(curl -f -s "${{ env.CLOUD_URL }}/model/agent-summary" || echo "FAILED")
           
           if [ "$SUMMARY" = "FAILED" ]; then
-            echo "✗ Agent summary check FAILED"
+            echo "[FAIL] Agent summary check FAILED"
             exit 1
           fi
           
           LAYER_COUNT=$(echo "$SUMMARY" | jq '.layers | length')
           EVIDENCE_COUNT=$(echo "$SUMMARY" | jq -r '.layers.evidence // 0')
           
-          echo "✓ Agent summary PASS"
+          echo "[OK] Agent summary PASS"
           echo "  Layers: ${LAYER_COUNT}"
           echo "  Evidence: ${EVIDENCE_COUNT}"
           
@@ -169,24 +169,24 @@ jobs:
           HAS_L56=$(echo "$SUMMARY" | jq -r '.layers.work_outcomes // "null"')
           
           if [ "$HAS_L52" != "null" ] && [ "$HAS_L53" != "null" ] && [ "$HAS_L54" != "null" ] && [ "$HAS_L56" != "null" ]; then
-            echo "✓ Phase 1 Execution layers detected (L52-L56)"
+            echo "[OK] Phase 1 Execution layers detected (L52-L56)"
             echo "  L52 work_execution_units: ${HAS_L52} objects"
             echo "  L53 work_step_events: ${HAS_L53} objects"
             echo "  L54 work_decision_records: ${HAS_L54} objects"
             echo "  L56 work_outcomes: ${HAS_L56} objects"
           else
-            echo "⚠ Phase 1 Execution layers NOT fully detected"
-            echo "  L52 work_execution_units: $([ "$HAS_L52" != "null" ] && echo '✓' || echo '✗')"
-            echo "  L53 work_step_events: $([ "$HAS_L53" != "null" ] && echo '✓' || echo '✗')"
-            echo "  L54 work_decision_records: $([ "$HAS_L54" != "null" ] && echo '✓' || echo '✗')"
-            echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '✓' || echo '✗')"
+            echo "[WARN] Phase 1 Execution layers NOT fully detected"
+            echo "  L52 work_execution_units: $([ "$HAS_L52" != "null" ] && echo '[OK]' || echo '[FAIL]')"
+            echo "  L53 work_step_events: $([ "$HAS_L53" != "null" ] && echo '[OK]' || echo '[FAIL]')"
+            echo "  L54 work_decision_records: $([ "$HAS_L54" != "null" ] && echo '[OK]' || echo '[FAIL]')"
+            echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '[OK]' || echo '[FAIL]')"
           fi
 
       - name: Deployment summary
         if: always()
         run: |
-          echo "━━━ Deployment Complete ━━━"
-          echo "✓ Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
-          echo "✓ Container App: ${{ env.CONTAINER_APP }}"
-          echo "✓ Revision: ${{ steps.update.outputs.revision }}"
-          echo "✓ Cloud URL: ${{ env.CLOUD_URL }}"
+          echo "=== Deployment Complete ==="
+          echo "[OK] Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          echo "[OK] Container App: ${{ env.CONTAINER_APP }}"
+          echo "[OK] Revision: ${{ steps.update.outputs.revision }}"
+          echo "[OK] Cloud URL: ${{ env.CLOUD_URL }}"

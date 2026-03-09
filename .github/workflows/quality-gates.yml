@@ -91,6 +91,24 @@ jobs:
             exit 1
           fi
       
+      - name: Check emoji policy
+        id: emoji
+        continue-on-error: true
+        run: |
+          echo "::group::Emoji Policy Check"
+          pytest tests/test_no_emojis.py -v
+          EMOJI_EXIT=$?
+          echo "::endgroup::"
+          
+          if [ $EMOJI_EXIT -eq 0 ]; then
+            echo "status=passed" >> $GITHUB_OUTPUT
+            echo "::notice::Emoji policy check passed - no decorative characters found"
+          else
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "::error::Emoji policy violation - remove decorative characters from code"
+            exit 1
+          fi
+      
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -108,18 +126,19 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Pylint (E errors) | ${{ steps.pylint.outputs.status == 'passed' && '✅ PASS' || '❌ FAIL' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Flake8 (F/E errors) | ${{ steps.flake8.outputs.status == 'passed' && '✅ PASS' || '❌ FAIL' }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Pytest | ${{ steps.pytest.outputs.status == 'passed' && '✅ PASS' || '❌ FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Pylint (E errors) | ${{ steps.pylint.outputs.status == 'passed' && '[OK] PASS' || '[FAIL] FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Flake8 (F/E errors) | ${{ steps.flake8.outputs.status == 'passed' && '[OK] PASS' || '[FAIL] FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Pytest | ${{ steps.pytest.outputs.status == 'passed' && '[OK] PASS' || '[FAIL] FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Emoji Policy | ${{ steps.emoji.outputs.status == 'passed' && '[OK] PASS' || '[FAIL] FAIL' }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
-          if [ "${{ steps.pylint.outputs.status }}" = "failed" ] || [ "${{ steps.flake8.outputs.status }}" = "failed" ] || [ "${{ steps.pytest.outputs.status }}" = "failed" ]; then
+          if [ "${{ steps.pylint.outputs.status }}" = "failed" ] || [ "${{ steps.flake8.outputs.status }}" = "failed" ] || [ "${{ steps.pytest.outputs.status }}" = "failed" ] || [ "${{ steps.emoji.outputs.status }}" = "failed" ]; then
             echo "::error::Quality gate FAILED. Fix errors before merging."
-            echo "**Result**: ❌ FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**Result**: [FAIL] FAILED" >> $GITHUB_STEP_SUMMARY
             exit 1
           else
             echo "::notice::Quality gate PASSED. All checks successful."
-            echo "**Result**: ✅ PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**Result**: [SUCCESS] PASSED" >> $GITHUB_STEP_SUMMARY
           fi
       
       - name: Comment PR (on failure)
@@ -130,7 +149,7 @@ jobs:
           script: |
             const fs = require('fs');
             
-            let comment = '## ❌ Quality Gate Failed\\n\\n';
+            let comment = '## [FAIL] Quality Gate Failed\\n\\n';
             comment += 'The following checks failed:\\n\\n';
             
             if ('${{ steps.pylint.outputs.status }}' === 'failed') {

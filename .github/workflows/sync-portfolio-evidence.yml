@@ -68,7 +68,7 @@ jobs:
               with open(evidence_file) as f:
                   evidence = json.load(f)
               
-              print(f'✓ evidence.json is valid JSON')
+              print(f'[OK] evidence.json is valid JSON')
               print(f'  Records: {len(evidence.get(\"objects\", []))}')
               
               # Check for portfolio metadata
@@ -90,7 +90,7 @@ jobs:
           
           # Check if sync report exists
           if [ -f sync-evidence-report.json ]; then
-            echo "✓ sync-evidence-report.json found"
+            echo "[OK] sync-evidence-report.json found"
             
             # Extract status from report
             status=$(python -c "
@@ -113,7 +113,7 @@ jobs:
             print('Per-project results:')
             for project, result in data['per_project_results'].items():
               errors = len(result['errors'])
-              status_icon = '✓' if errors == 0 else '⚠'
+              status_icon = '[OK]' if errors == 0 else '[WARN]'
               print(f'  {status_icon} {project}: {result[\"records_merged\"]} merged')
               if errors > 0:
                 for error in result['errors'][:2]:
@@ -135,7 +135,7 @@ jobs:
           
           # Check if there are changes
           if git diff --quiet; then
-            echo "✓ No changes to commit"
+            echo "[OK] No changes to commit"
           else
             echo "Changes detected:"
             git status --short
@@ -149,7 +149,7 @@ jobs:
 - Updated sync report
 - Timestamp: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             
-            echo "✓ Changes committed"
+            echo "[OK] Changes committed"
           fi
       
       - name: Push changes
@@ -160,9 +160,9 @@ jobs:
           
           # Try to push; if it fails due to concurrent updates, that's OK
           if git push origin ${{ github.ref_name }}; then
-            echo "✓ Changes pushed"
+            echo "[OK] Changes pushed"
           else
-            echo "⚠ Push failed (likely due to concurrent update)"
+            echo "[WARN] Push failed (likely due to concurrent update)"
             echo "  This is normal in multi-workflow scenarios"
             echo "  The next sync will pick up any missing changes"
           fi

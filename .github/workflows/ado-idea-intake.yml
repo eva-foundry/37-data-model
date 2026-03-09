@@ -5,7 +5,7 @@ name: ADO Idea Intake
 #           post a PR comment with summary, then on main merge optionally
 #           import to ADO if ADO_PAT secret is present.
 #
-# Three-system wiring: GitHub → ADO (idea promotion)
+# Three-system wiring: GitHub -> ADO (idea promotion)
 
 on:
   push:
@@ -93,7 +93,7 @@ jobs:
             const prNumber = parseInt('${{ steps.find-pr.outputs.result }}');
             const summary  = `${{ steps.summary.outputs.SUMMARY }}`;
             const body = [
-              '### 📋 ADO Artifact Generated',
+              '### ADO Artifact Generated',
               '',
               summary,
               '',
@@ -121,7 +121,7 @@ jobs:
         shell: pwsh
         run: |
           if ([string]::IsNullOrEmpty("$env:ADO_PAT")) {
-            Write-Host "ADO_PAT not set — skipping live import. Set the secret to enable."
+            Write-Host "ADO_PAT not set -- skipping live import. Set the secret to enable."
             echo "HAS_PAT=false" >> $env:GITHUB_OUTPUT
           } else {
             echo "HAS_PAT=true" >> $env:GITHUB_OUTPUT

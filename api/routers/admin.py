@@ -376,7 +376,7 @@ async def seed(
             progress.append(f"[{idx}/{len(_LAYER_FILES)}] Processing {layer}...")
             
             if not path.exists():
-                msg = f"  ⚠ File not found: {filename}, skipping"
+                msg = f"  [WARN] File not found: {filename}, skipping"
                 progress.append(msg)
                 log.warning("Seed: %s not found, skipping", path)
                 continue

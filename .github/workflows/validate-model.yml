@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Assemble eva-model.json (27 layers → single file)
+      - name: Assemble eva-model.json (27 layers -> single file)
         shell: pwsh
         run: pwsh scripts/assemble-model.ps1
 
