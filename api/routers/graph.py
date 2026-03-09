@@ -303,6 +303,35 @@ EDGE_TYPES: list[EdgeTypeMeta] = [
         via_field="example_work_units",
         cardinality="many-to-many",
         description="Pattern demonstrated by work unit examples"),
+    # ── Execution Engine Edges Phase 3 (L59, L60) Session 41 Part 11 ──
+    EdgeTypeMeta(
+        edge_type="applies_pattern",
+        from_layer="work_pattern_applications",
+        to_layer="work_reusable_patterns",
+        via_field="pattern_id",
+        cardinality="many-to-one",
+        description="Pattern application references reusable pattern"),
+    EdgeTypeMeta(
+        edge_type="pattern_applied_to",
+        from_layer="work_pattern_applications",
+        to_layer="work_execution_units",
+        via_field="work_unit_id",
+        cardinality="many-to-one",
+        description="Pattern applied to work unit (CASCADE on work unit delete)"),
+    EdgeTypeMeta(
+        edge_type="profiles_pattern",
+        from_layer="work_pattern_performance_profiles",
+        to_layer="work_reusable_patterns",
+        via_field="pattern_id",
+        cardinality="many-to-one",
+        description="Performance profile tracks pattern effectiveness"),
+    EdgeTypeMeta(
+        edge_type="profile_sourced_from",
+        from_layer="work_pattern_performance_profiles",
+        to_layer="work_pattern_applications",
+        via_field="source_application_ids",
+        cardinality="many-to-many",
+        description="Profile computed from pattern application records"),
 ]
 
 # Fast lookup by edge_type string

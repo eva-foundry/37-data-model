@@ -1,9 +1,9 @@
 ================================================================================
- EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1 & 2: L52-L58)
+ EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1, 2, 3: L52-L60)
  File: docs/library/13-EXECUTION-LAYERS.md
  Created: 2026-03-09 -- Session 41 Part 10
- Updated: 2026-03-09 -- Session 41 Part 11 (Phase 2 deployed)
- Status: 7 layers operational (L52-L56, L57, L58), 17 layers planned (L59-L75)
+ Updated: 2026-03-09 -- Session 41 Part 11 (Phases 2 & 3 deployed)
+ Status: 9 layers operational (L52-L60), 15 layers planned (L61-L75)
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md (phased deployment plan)
          docs/library/99-layers-design-20260309-0935.md (canonical numbering)
@@ -918,19 +918,155 @@
   ```
 
 ================================================================================
- PHASE 3-6 PREVIEW -- 17 MORE LAYERS (L59-L75)
+ PHASE 3 LAYERS (SESSION 41 PART 11) -- 2 LAYERS OPERATIONAL
+================================================================================
+
+--------------------------------------------------------------------------------
+ L59 -- work_pattern_applications (CHILD OF L52 WORK UNITS)
+--------------------------------------------------------------------------------
+
+  PURPOSE: Pattern usage tracking for continuous improvement
+  STATUS: Deployed March 9, 2026 (Session 41 Part 11)
+  SCHEMA: schema/work_pattern_applications.schema.json
+  PRIMARY KEY: id (format: application-{work_unit_id}-{seq})
+  PARENT: work_execution_units (CASCADE on delete)
+
+  FIELD CATALOG
+  -------------
+  id                         PK, string, pattern: ^application-[a-z0-9-]+-[0-9]{3,}$
+  
+  work_unit_id               FK to L52 work_execution_units, required (CASCADE)
+                             Which work unit applied this pattern
+  
+  pattern_id                 FK to L58 work_reusable_patterns, required (RESTRICT)
+                             Which pattern was applied
+  
+  applied_at                 datetime, required
+                             When pattern was applied to the work unit
+  
+  adaptations_made           Array of objects, nullable
+                             Adaptations or deviations from pattern template
+                             [{ step_number, adaptation_description, adaptation_type }]
+                             adaptation_type: skip | modify | add_step | reorder
+  
+  success_score              number, required, 0.0-1.0
+                             Success rating (0.0 = failed, 1.0 = perfect execution)
+  
+  feedback                   string, nullable, 10-2000 chars
+                             Freeform effectiveness feedback
+  
+  outcome_id                 FK to L56 work_outcomes, nullable
+                             Link to outcome produced by applying this pattern
+  
+  notes                      string, nullable
+  
+  created_at                 datetime, auto-generated
+  updated_at                 datetime, auto-updated
+  created_by                 string, required
+  updated_by                 string, nullable
+
+  GRAPH EDGES
+  -----------
+  applies_pattern: work_pattern_applications (L59) → work_reusable_patterns (L58) via pattern_id
+  pattern_applied_to: work_pattern_applications (L59) → work_execution_units (L52) via work_unit_id (CASCADE)
+
+  USE CASES
+  ---------
+  1. Agent applies pattern: Create application record when pattern used
+  2. Track adaptations: Record why pattern was modified for this context
+  3. Measure effectiveness: success_score feeds into L60 performance profiles
+  4. Query: "Show all applications of pattern-incremental-schema-migration with success_score < 0.5"
+  5. Feedback loop: Identify patterns that frequently require adaptations (signal for pattern refinement)
+
+--------------------------------------------------------------------------------
+ L60 -- work_pattern_performance_profiles (AGGREGATE LAYER)
+--------------------------------------------------------------------------------
+
+  PURPOSE: Aggregate pattern effectiveness metrics for selection guidance
+  STATUS: Deployed March 9, 2026 (Session 41 Part 11)
+  SCHEMA: schema/work_pattern_performance_profiles.schema.json
+  PRIMARY KEY: id (format: profile-{pattern_id})
+  PARENT: None (computed/view layer)
+
+  FIELD CATALOG
+  -------------
+  id                         PK, string, pattern: ^profile-pattern-[a-z0-9-]+$
+  
+  pattern_id                 FK to L58 work_reusable_patterns, required (RESTRICT)
+                             Which pattern this profile tracks
+  
+  total_applications         integer, required, minimum 0
+                             Count of L59 records for this pattern
+  
+  success_rate               number, required, 0.0-1.0
+                             Aggregate success rate (avg of all success_score from L59)
+  
+  successful_applications    integer, required, minimum 0
+                             Count with success_score >= 0.8
+  
+  failed_applications        integer, required, minimum 0
+                             Count with success_score < 0.4
+  
+  avg_duration_seconds       number, nullable, minimum 0
+                             Average work unit duration when pattern applied
+  
+  p50_duration_seconds       number, nullable, minimum 0
+                             Median duration
+  
+  p95_duration_seconds       number, nullable, minimum 0
+                             95th percentile (high-water mark)
+  
+  common_adaptations         Array of objects, nullable, max 5 items
+                             Top 5 most frequent adaptations across all applications
+                             [{ adaptation_description, frequency, step_numbers[], adaptation_type }]
+  
+  source_application_ids     Array of strings (FK to L59), nullable
+                             All application IDs used to compute this profile
+  
+  last_updated               datetime, required
+                             When profile was re-computed
+  
+  computation_method         enum: manual | scheduled_batch | on_demand | real_time
+                             How profile was computed (transparency)
+  
+  notes                      string, nullable
+  
+  created_at                 datetime, auto-generated
+  updated_at                 datetime, auto-updated
+  created_by                 string, required
+  updated_by                 string, nullable
+
+  GRAPH EDGES
+  -----------
+  profiles_pattern: work_pattern_performance_profiles (L60) → work_reusable_patterns (L58) via pattern_id
+  profile_sourced_from: work_pattern_performance_profiles (L60) → work_pattern_applications (L59) via source_application_ids[]
+
+  USE CASES
+  ---------
+  1. Pattern selection: Agent queries "Which approved deployment patterns have success_rate > 0.9?"
+  2. Performance comparison: Compare avg_duration across alternative patterns for same task
+  3. Tuning signals: common_adaptations array reveals where patterns need refinement
+  4. Pattern validation: Low success_rate triggers pattern review/deprecation workflow
+  5. Dashboard: Display pattern effectiveness leaderboard for factory optimization
+
+  COMPUTATION STRATEGY
+  --------------------
+  Profiles are computed periodically (nightly batch or on-demand trigger):
+  1. Query all L59 records for pattern_id
+  2. Calculate aggregate metrics (count, avg, percentiles)
+  3. Extract top 5 common adaptations by frequency
+  4. Update L60 record with computed values
+  5. Set last_updated timestamp
+
+  Profiles enable data-driven pattern selection without re-scanning all applications.
+
+================================================================================
+ PHASE 4-6 PREVIEW -- 15 MORE LAYERS (L61-L75)
 ================================================================================
 
   Phase 1 deployed 4 layers (L52-L56). Phase 2 deployed 3 layers (L55, L57, L58).
-  17 more layers planned across 4 phases.
+  Phase 3 deployed 2 layers (L59, L60). 15 more layers planned across 3 phases.
   See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md for full phased plan.
-
-  PHASE 3 (L59-L60) -- PATTERN APPLICATION & PERFORMANCE
-  -------------------------------------------------------
-  L59 work_pattern_applications     Instances where patterns were applied
-  L60 work_pattern_perf_profiles    Performance profiles per pattern
-
-  Use case: Agents query L58 for proven patterns, apply via L59, measure via L60
 
   PHASE 4 (L61-L66) -- WORK FACTORY SERVICES
   -------------------------------------------
@@ -966,7 +1102,7 @@
   -------------------
   Phase 1 (L52-L56):     March 2026    ✅ DEPLOYED (Session 41 Part 10)
   Phase 2 (L55,L57-L58): March 2026    ✅ DEPLOYED (Session 41 Part 11)
-  Phase 3 (L59-L60):     TBD
+  Phase 3 (L59-L60):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 4 (L61-L66):     TBD  
   Phase 5 (L67-L70):     TBD
   Phase 6 (L71-L75):     TBD

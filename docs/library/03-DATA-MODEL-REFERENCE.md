@@ -1,11 +1,11 @@
 ================================================================================
- EVA DATA MODEL -- 94-LAYER REFERENCE
+ EVA DATA MODEL -- 96-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 94 operational layers; 12 ontology domains; Session 41 Part 11
+ Updated: 2026-03-09 -- 96 operational layers; 12 ontology domains; Session 41 Part 11
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
          docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
-         docs/library/13-EXECUTION-LAYERS.md (Phases 1 & 2: L52-L58 deployed)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1, 2, 3: L52-L60 deployed)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -1055,6 +1055,53 @@
   Use cases: Factory capabilities (Phase 4), agent pattern selection, performance tracking (Phase 3)
   Query: GET /model/work_reusable_patterns/?approval_status=approved&pattern_type=deployment
 
+  L59 work_pattern_applications    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Pattern usage tracking for continuous improvement
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 3)
+  Schema: schema/work_pattern_applications.schema.json
+  
+  Key fields:
+    id                     -- Primary key: application-{work_unit_id}-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE on delete)
+    pattern_id             -- FK to L58 work_reusable_patterns (RESTRICT on delete)
+    applied_at             -- When pattern was applied
+    adaptations_made[]     -- Array of { step_number, adaptation_description, adaptation_type }
+                              adaptation_type: skip | modify | add_step | reorder
+    success_score          -- 0.0-1.0 (0.0 = failed, 1.0 = perfect execution)
+    feedback               -- Freeform effectiveness feedback (10-2000 chars)
+    outcome_id             -- FK to L56 work_outcomes (optional)
+  
+  Graph edges: applies_pattern (L59→L58), pattern_applied_to (L59→L52 CASCADE)
+  Use cases: Track pattern usage, measure effectiveness, identify adaptation patterns
+  Query: GET /model/work_pattern_applications/?pattern_id={id}&success_score<0.5
+
+  L60 work_pattern_performance_profiles    0 items (schema deployed, aggregate layer)
+  -----------------------------------------------------------------------
+  Purpose: Aggregate pattern effectiveness metrics for selection guidance
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 3)
+  Schema: schema/work_pattern_performance_profiles.schema.json
+  
+  Key fields:
+    id                     -- Primary key: profile-{pattern_id}
+    pattern_id             -- FK to L58 work_reusable_patterns (RESTRICT on delete)
+    total_applications     -- Count of L59 records for this pattern
+    success_rate           -- Aggregate success rate (avg of success_score from L59)
+    successful_applications -- Count with success_score >= 0.8
+    failed_applications    -- Count with success_score < 0.4
+    avg_duration_seconds   -- Average work unit duration (nullable)
+    p50_duration_seconds   -- Median duration
+    p95_duration_seconds   -- 95th percentile
+    common_adaptations[]   -- Top 5 most frequent adaptations (max 5 items)
+                              Array of { adaptation_description, frequency, step_numbers[], adaptation_type }
+    source_application_ids[] -- FK array to L59 (audit trail)
+    last_updated           -- When profile was re-computed
+    computation_method     -- manual | scheduled_batch | on_demand | real_time
+  
+  Graph edges: profiles_pattern (L60→L58), profile_sourced_from (L60→L59)
+  Use cases: Pattern selection, performance comparison, tuning signals, pattern validation
+  Query: GET /model/work_pattern_performance_profiles/?success_rate>0.9&pattern_type=deployment
+
   SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
     - 4 execution layers deployed (L52, L53, L54, L56)
     - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
@@ -1065,13 +1112,18 @@
     - See docs/library/13-EXECUTION-LAYERS.md for complete specification
 
   SESSION 41 PART 11 UPDATE (March 9, 2026 4:00 PM ET):
-    - 3 more execution layers deployed (L55, L57, L58) -- Phase 2 complete
-    - Obligations tracking from decisions (L54→L55 inverse FK)
-    - Adaptive learning feedback layer (L57) with confidence scoring
-    - Reusable pattern library (L58) derived from learning
-    - 6 new FK edge types added (38 → 44 total)
-    - Layer count: 91 → 94 operational
-    - Remaining: 17 layers (L59-L75 in Phases 3-6)
+    - Phase 2: 3 layers deployed (L55, L57, L58) -- Obligations, Learning, Patterns
+      • Obligations tracking from decisions (L54→L55 inverse FK)
+      • Adaptive learning feedback layer (L57) with confidence scoring
+      • Reusable pattern library (L58) derived from learning
+      • 6 new FK edge types added (38 → 44 total)
+    - Phase 3: 2 layers deployed (L59, L60) -- Pattern Application & Performance
+      • Pattern usage tracking (L59) with adaptations and success scoring
+      • Performance profiles (L60) computed from applications (aggregate layer)
+      • 4 new FK edge types added (44 → 48 total)
+    - Layer count: 91 → 96 operational
+    - Edge types: 38 → 48 total
+    - Remaining: 15 layers (L61-L75 in Phases 4-6)
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)
