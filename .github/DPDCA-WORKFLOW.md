@@ -209,6 +209,162 @@ Return to D -- DISCOVER for the next sprint.
 
 ---
 
+## Memory Management (Checkpoints & Continuation)
+
+Purpose: preserve context across sessions to prevent re-discovery overhead.
+
+### When to Create Memory Checkpoints
+
+Create memory checkpoint file in `/memories/session/` at these DPDCA boundary transitions:
+
+1. **DISCOVER → PLAN**: Document what was discovered (baseline state, current layer count, governance status)
+2. **PLAN → DO**: Document the plan (what will be built, commit sequence, expected deltas)
+3. **DO → CHECK**: Document implementation results (files created, tests added, actual deltas)
+4. **CHECK → ACT**: Document validation results (test counts, MTI scores, production readiness)
+5. **ACT → Next Cycle**: Document completion status (what shipped, next priorities, blockers)
+
+### Memory Checkpoint Template
+
+```markdown
+# [Phase Name] - [Status]
+
+**Date**: [YYYY-MM-DD HH:MM TZ]
+**Session**: [Session number + part]
+**Branch**: [feature-branch-name]
+**Status**: [Complete/In Progress/Blocked]
+
+## What Was Completed
+- [Deliverable 1 with evidence]
+- [Deliverable 2 with evidence]
+
+## Current State
+- Branch: [branch-name]
+- Commits: [commit-hash] (N commits)
+- Files changed: [count] ([list key files])
+- Layer count: [baseline] → [current]
+- Tests: [N/M passing]
+
+## Next Actions
+1. [Next step 1 with clear acceptance criteria]
+2. [Next step 2 with clear acceptance criteria]
+
+## Lessons Learned (capture immediately)
+- [What worked well - specific pattern/tool/approach]
+- [What didn't work - root cause + corrective action]
+- [Unexpected discovery - impact + documentation location]
+
+## Blockers & Risks
+- [Blocker 1: description + mitigation]
+- [Risk 1: impact + monitoring plan]
+
+## Context for Next Agent
+[1-2 paragraphs: where we are, what's ready, what to do next]
+```
+
+### Memory Checkpoint Locations
+
+Store memory files in `/memories/session/` with these naming conventions:
+
+- **Phase checkpoints**: `phase-[N]-[name]-[status].md`
+  - Example: `phase-3-execution-layers-discovery.md`
+  - Example: `phase-3-execution-layers-complete.md`
+
+- **Session checkpoints**: `session-[N]-part-[M]-[status].md`
+  - Example: `session-41-part-9-completion.md`
+  - Example: `session-41-part-10-blocked.md`
+
+- **Critical incidents**: `incident-[date]-[brief-name].md`
+  - Example: `incident-2026-03-09-github-auth-failure.md`
+
+### Bootstrap Pattern (New Agent Session)
+
+When starting a new session, bootstrap in this order:
+
+```powershell
+# Step 1: Read most recent session checkpoint
+ls /memories/session/ | Sort-Object -Descending | Select-Object -First 1
+# Read that file to understand current state
+
+# Step 2: Bootstrap from data model API
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+$guide = Invoke-RestMethod "$base/model/agent-guide"
+# This returns query patterns, write cycle rules, common mistakes, available layers
+
+# Step 3: Get current baseline
+$summary = Invoke-RestMethod "$base/model/agent-summary"
+# Record layer count, evidence count - this is your DISCOVER baseline
+
+# Step 4: Read project governance docs (in order)
+cat README.md PLAN.md STATUS.md ACCEPTANCE.md
+
+# Step 5: Check git state
+git status
+git branch -a
+git log --oneline -5
+# Understand which branch you're on and what was last committed
+```
+
+**Total bootstrap time**: <60 seconds (vs 10-30 minutes re-discovering everything)
+
+### Memory vs Documentation
+
+**Memory** (session checkpoints):
+- Temporary working state
+- Current blockers & risks
+- "What I'm doing right now"
+- Ephemeral (deleted after session concludes)
+
+**Documentation** (docs/sessions/, docs/library/):
+- Permanent knowledge
+- Lessons learned (what worked/didn't)
+- "What we learned that applies to future work"
+- Archived (never deleted, moves to docs/sessions/)
+
+**Pattern**: Write memory checkpoint immediately (5 min), consolidate to documentation in ACT phase (20 min).
+
+### Critical: Memory Refresh in Long Sessions
+
+For sessions >2 hours or >20 tool calls, create intermediate checkpoints:
+
+1. **Every major sub-phase completion** (e.g., "schemas done", "tests done")
+2. **Before context switches** (e.g., switching from development to git operations)
+3. **After resolving blockers** (e.g., "GitHub auth fixed - ready to retry PR")
+4. **Before asking user for input** (preserve state in case session pauses)
+
+**Why**: LLM context windows can overflow. Memory checkpoints let new agent pick up exactly where you left off.
+
+### Memory Checkpoint Anti-Patterns
+
+❌ **Don't**: Write checkpoint after entire DPDCA cycle (too late - context already lost)  
+✅ **Do**: Write checkpoint at EACH phase boundary (D→P, P→D, D→C, C→A)
+
+❌ **Don't**: Write "we did some stuff" (vague, not actionable)  
+✅ **Do**: Write "created 4 schemas (433 lines), committed as a5ec5b5" (specific, verifiable)
+
+❌ **Don't**: Skip lessons learned section ("will document later")  
+✅ **Do**: Capture lessons **immediately** (fresh in context, details accurate)
+
+❌ **Don't**: Store memory in project files (mixes working state with permanent docs)  
+✅ **Do**: Store memory in `/memories/session/` (clear separation, easy cleanup)
+
+### Evidence: Session 41 Memory Pattern Success
+
+Session 41 spanned 6 hours with 4 memory checkpoints:
+1. Part 9 completion (5 DPDCA cycles)
+2. Phase 3 discovery (design specs read)
+3. Phase 3 plan (schemas + test architecture)
+4. Phase 3 complete (ready for PR)
+
+**Result**:
+- Zero context loss across 2 major transitions
+- New agent resumed from checkpoint in <5 min (vs 30 min re-discovery)
+- No duplicate work (exact file list preserved)
+- Clear continuation path (next actions documented)
+
+**Template Location**: This pattern is now the standard for all future sessions.
+
+---
+
 ## Quick Reference: Command Cheat Sheet
 
 | Step | Command |

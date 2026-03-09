@@ -1,0 +1,192 @@
+name: Deploy to Production (msub-eva-data-model)
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Image tag (default: auto-generated timestamp)'
+        required: false
+        default: ''
+      skip_verify:
+        description: 'Skip post-deployment verification'
+        required: false
+        type: boolean
+        default: false
+  push:
+    branches:
+      - main
+    paths:
+      - 'api/**'
+      - 'schema/**'
+      - 'model/**'
+      - 'Dockerfile'
+      - 'requirements.txt'
+      - '.github/workflows/deploy-production.yml'
+
+env:
+  TARGET_SUBSCRIPTION: 'c59ee575-eb2a-4b51-a865-4b618f9add0a'  # MarcoSub
+  TARGET_ACR: 'msubsandacr202603031449'
+  IMAGE_NAME: 'eva/eva-data-model'
+  CONTAINER_APP: 'msub-eva-data-model'
+  RESOURCE_GROUP: 'EVA-Sandbox-dev'
+  CLOUD_URL: 'https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io'
+
+jobs:
+  deploy:
+    name: Build and Deploy to Production
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate image tag
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            TAG="${{ github.event.inputs.tag }}"
+          else
+            TAG=$(date -u +"%Y%m%d-%H%M")
+          fi
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "📦 Image tag: ${TAG}"
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.TARGET_SUBSCRIPTION }}
+
+      - name: Set Azure subscription
+        run: |
+          az account set --subscription ${{ env.TARGET_SUBSCRIPTION }}
+          CURRENT_SUB=$(az account show --query name -o tsv)
+          echo "✓ Current subscription: ${CURRENT_SUB}"
+
+      - name: Build Docker image in ACR
+        id: build
+        run: |
+          echo "🔨 Building image in ACR..."
+          FULL_IMAGE="${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}"
+          echo "full_image=${FULL_IMAGE}" >> $GITHUB_OUTPUT
+          
+          BUILD_START=$(date +%s)
+          az acr build \
+            --registry ${{ env.TARGET_ACR }} \
+            --image "${FULL_IMAGE}" \
+            --file Dockerfile \
+            .
+          BUILD_END=$(date +%s)
+          BUILD_DURATION=$((BUILD_END - BUILD_START))
+          
+          echo "✓ Image built successfully in ${BUILD_DURATION}s"
+          echo "  Image: ${{ env.TARGET_ACR }}.azurecr.io/${FULL_IMAGE}"
+
+      - name: Verify image in ACR
+        run: |
+          echo "🔍 Verifying image in ACR..."
+          TAGS=$(az acr repository show-tags \
+            --name ${{ env.TARGET_ACR }} \
+            --repository ${{ env.IMAGE_NAME }} \
+            --output json)
+          
+          if echo "$TAGS" | grep -q "${{ steps.tag.outputs.tag }}"; then
+            echo "✓ Image verified in ACR: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          else
+            echo "✗ Image not found in ACR after build"
+            exit 1
+          fi
+
+      - name: Update Container App
+        id: update
+        run: |
+          echo "🚀 Updating Container App..."
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image "${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          
+          REVISION=$(az containerapp revision list \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "[0].name" \
+            --output tsv)
+          
+          echo "revision=${REVISION}" >> $GITHUB_OUTPUT
+          echo "✓ Container App updated successfully"
+          echo "  New revision: ${REVISION}"
+
+      - name: Wait for deployment
+        run: |
+          echo "⏳ Waiting 90 seconds for Container App to restart..."
+          sleep 90
+
+      - name: Verify deployment
+        if: ${{ !github.event.inputs.skip_verify }}
+        run: |
+          echo "🔍 Verifying deployment..."
+          
+          # Health check
+          echo "Testing health endpoint..."
+          HEALTH=$(curl -f -s "${{ env.CLOUD_URL }}/health" || echo "FAILED")
+          
+          if [ "$HEALTH" = "FAILED" ]; then
+            echo "✗ Health check FAILED"
+            exit 1
+          fi
+          
+          UPTIME=$(echo "$HEALTH" | jq -r '.uptime_seconds')
+          if [ "$UPTIME" -lt 120 ]; then
+            echo "✓ Health check PASS (uptime: ${UPTIME}s - recently restarted)"
+          else
+            echo "⚠ Health check PASS but uptime unexpected (${UPTIME}s - may not have restarted)"
+          fi
+          
+          # Agent summary check
+          echo "Testing agent-summary endpoint..."
+          SUMMARY=$(curl -f -s "${{ env.CLOUD_URL }}/model/agent-summary" || echo "FAILED")
+          
+          if [ "$SUMMARY" = "FAILED" ]; then
+            echo "✗ Agent summary check FAILED"
+            exit 1
+          fi
+          
+          LAYER_COUNT=$(echo "$SUMMARY" | jq '.layers | length')
+          EVIDENCE_COUNT=$(echo "$SUMMARY" | jq -r '.layers.evidence // 0')
+          
+          echo "✓ Agent summary PASS"
+          echo "  Layers: ${LAYER_COUNT}"
+          echo "  Evidence: ${EVIDENCE_COUNT}"
+          
+          # Check execution layers (L52-L56)
+          HAS_L52=$(echo "$SUMMARY" | jq -r '.layers.work_execution_units // "null"')
+          HAS_L53=$(echo "$SUMMARY" | jq -r '.layers.work_step_events // "null"')
+          HAS_L54=$(echo "$SUMMARY" | jq -r '.layers.work_decision_records // "null"')
+          HAS_L56=$(echo "$SUMMARY" | jq -r '.layers.work_outcomes // "null"')
+          
+          if [ "$HAS_L52" != "null" ] && [ "$HAS_L53" != "null" ] && [ "$HAS_L54" != "null" ] && [ "$HAS_L56" != "null" ]; then
+            echo "✓ Phase 1 Execution layers detected (L52-L56)"
+            echo "  L52 work_execution_units: ${HAS_L52} objects"
+            echo "  L53 work_step_events: ${HAS_L53} objects"
+            echo "  L54 work_decision_records: ${HAS_L54} objects"
+            echo "  L56 work_outcomes: ${HAS_L56} objects"
+          else
+            echo "⚠ Phase 1 Execution layers NOT fully detected"
+            echo "  L52 work_execution_units: $([ "$HAS_L52" != "null" ] && echo '✓' || echo '✗')"
+            echo "  L53 work_step_events: $([ "$HAS_L53" != "null" ] && echo '✓' || echo '✗')"
+            echo "  L54 work_decision_records: $([ "$HAS_L54" != "null" ] && echo '✓' || echo '✗')"
+            echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '✓' || echo '✗')"
+          fi
+
+      - name: Deployment summary
+        if: always()
+        run: |
+          echo "━━━ Deployment Complete ━━━"
+          echo "✓ Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          echo "✓ Container App: ${{ env.CONTAINER_APP }}"
+          echo "✓ Revision: ${{ steps.update.outputs.revision }}"
+          echo "✓ Cloud URL: ${{ env.CLOUD_URL }}"
