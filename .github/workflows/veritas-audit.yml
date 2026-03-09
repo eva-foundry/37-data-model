@@ -34,14 +34,20 @@ jobs:
     - name: Run veritas audit
       working-directory: 48-eva-veritas
       run: |
-        node src/cli.js audit --repo ../37-data-model --format json > audit-result.json
+        node src/cli.js audit --repo ../37-data-model --threshold 70
         
     - name: Check MTI threshold
       shell: pwsh
-      working-directory: 48-eva-veritas
       run: |
-        $result = Get-Content audit-result.json | ConvertFrom-Json
-        $mti = $result.mti_score
+        $trustPath = "37-data-model/.eva/trust.json"
+        
+        if (-not (Test-Path $trustPath)) {
+          Write-Error "❌ trust.json not found at $trustPath - audit may have failed"
+          exit 1
+        }
+        
+        $trust = Get-Content $trustPath | ConvertFrom-Json
+        $mti = $trust.score
         $threshold = 70
         
         Write-Host "MTI Score: $mti (threshold: $threshold)"
