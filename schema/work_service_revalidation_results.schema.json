@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L69 - work_service_revalidation_results",
+  "description": "Post-remediation verification results — validates whether remediation (L68) successfully resolved breach (L67). Compares pre/post metrics, determines if SLO is now compliant, and feeds learning feedback (L57) for continuous improvement.",
+  "required": [
+    "id",
+    "breach_id",
+    "remediation_plan_id",
+    "service_id",
+    "revalidation_performed_at",
+    "passed",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: revalidation-{breach_id}",
+      "pattern": "^revalidation-breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$",
+      "examples": ["revalidation-breach-slo-service-schema-migrator-success_rate-20260309-01"]
+    },
+    "breach_id": {
+      "type": "string",
+      "description": "FK to L67 work_service_breaches (CASCADE on delete). Which breach was remediated.",
+      "pattern": "^breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+    },
+    "remediation_plan_id": {
+      "type": "string",
+      "description": "FK to L68 work_service_remediation_plans (CASCADE on delete). Remediation plan that was executed.",
+      "pattern": "^remediation-breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services (RESTRICT on delete). Service that was remediated.",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "slo_id": {
+      "type": "string",
+      "description": "FK to L66 work_service_level_objectives (RESTRICT on delete). SLO being revalidated.",
+      "pattern": "^slo-service-[a-z0-9-]+-[a-z0-9_-]+$"
+    },
+    "revalidation_performed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When revalidation was performed (ISO8601 timestamp)"
+    },
+    "measurement_window_hours": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Measurement window used for revalidation (typically same as SLO)"
+    },
+    "metric_name": {
+      "type": "string",
+      "description": "Which metric was revalidated (copied from SLO)"
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value for the metric (copied from SLO)"
+    },
+    "pre_remediation_value": {
+      "type": "number",
+      "description": "Metric value before remediation (from breach record)"
+    },
+    "post_remediation_value": {
+      "type": "number",
+      "description": "Metric value after remediation (measured during revalidation)"
+    },
+    "threshold_critical": {
+      "type": "number",
+      "description": "Critical threshold (copied from SLO for reference)"
+    },
+    "passed": {
+      "type": "boolean",
+      "description": "Whether service now meets SLO target (true = breach resolved, false = still non-compliant)"
+    },
+    "improvement_percentage": {
+      "type": ["number", "null"],
+      "description": "Percentage improvement: (post - pre) / |pre| * 100"
+    },
+    "result_status": {
+      "type": "string",
+      "enum": ["fully_resolved", "partially_resolved", "no_improvement", "degraded"],
+      "description": "Revalidation outcome: fully_resolved (meets target), partially_resolved (better but not at target), no_improvement (same), degraded (worse)"
+    },
+    "sample_size": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of service runs used for revalidation measurement"
+    },
+    "sample_run_ids": {
+      "type": "array",
+      "description": "FK array to L64 work_service_runs. Sample runs used for measurement.",
+      "items": {
+        "type": "string",
+        "pattern": "^run-request-[0-9]{8}-[0-9]{3,}-[0-9]{2}$"
+      }
+    },
+    "comparison_data": {
+      "type": "object",
+      "description": "Detailed pre/post comparison",
+      "properties": {
+        "pre_remediation": {
+          "type": "object",
+          "description": "Metrics before remediation",
+          "properties": {
+            "total_runs": {"type": "integer"},
+            "success_count": {"type": "integer"},
+            "failure_count": {"type": "integer"},
+            "avg_duration_seconds": {"type": "number"}
+          }
+        },
+        "post_remediation": {
+          "type": "object",
+          "description": "Metrics after remediation",
+          "properties": {
+            "total_runs": {"type": "integer"},
+            "success_count": {"type": "integer"},
+            "failure_count": {"type": "integer"},
+            "avg_duration_seconds": {"type": "number"}
+          }
+        }
+      }
+    },
+    "next_steps": {
+      "type": ["string", "null"],
+      "description": "Recommended next steps (e.g., 'Continue monitoring', 'Escalate to manual intervention', 'Apply pattern to other services')"
+    },
+    "learning_feedback_id": {
+      "type": ["string", "null"],
+      "description": "FK to L57 work_learning_feedback (SET_NULL). Learning captured from this remediation.",
+      "pattern": "^learning-[0-9]{8}-[0-9]{3,}$"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional revalidation notes or observations"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (typically automated revalidation system)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

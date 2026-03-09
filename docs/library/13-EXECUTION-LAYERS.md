@@ -1,9 +1,9 @@
 ================================================================================
- EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1-4: L52-L66)
+ EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1-5: L52-L70)
  File: docs/library/13-EXECUTION-LAYERS.md
  Created: 2026-03-09 -- Session 41 Part 10
- Updated: 2026-03-09 -- Session 41 Part 11 (Phases 2, 3, 4 deployed)
- Status: 15 layers operational (L52-L66), 9 layers planned (L67-L75)
+ Updated: 2026-03-09 -- Session 41 Part 11 (Phases 2, 3, 4, 5 deployed)
+ Status: 19 layers operational (L52-L70), 5 layers planned (L71-L75)
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md (phased deployment plan)
          docs/library/99-layers-design-20260309-0935.md (canonical numbering)
@@ -1393,20 +1393,279 @@
   - Track breach trends over time
 
 ================================================================================
- PHASE 5-6 PREVIEW -- 9 MORE LAYERS (L67-L75)
+ PHASE 5 LAYERS (SESSION 41 PART 11) -- 4 LAYERS OPERATIONAL
 ================================================================================
 
-  Phase 4 deployed 6 layers (L61-L66). 9 more layers planned across 2 phases.
+  Status: L67-L70 deployed (March 2026 6:37 PM ET)
+  
+  PURPOSE: Breach Remediation & Lifecycle Management
+  
+  Complete self-healing loop for service quality violations. When SLOs (L66) are
+  breached, automated breach detection creates incidents (L67), generates remediation
+  plans (L68), executes recovery, validates success (L69), and captures lessons (L57).
+  Lifecycle tracking (L70) provides audit trail for all service transitions.
+  
+  This enables:
+  - Automated SLO breach detection and alerting
+  - Runbook-driven remediation with approval workflows
+  - Post-remediation verification with pre/post comparison
+  - Learning capture for continuous improvement
+  - Service lifecycle audit trail (deploy, upgrade, scale, retire)
+
+--------------------------------------------------------------------------------
+ L67 -- work_service_breaches
+--------------------------------------------------------------------------------
+
+  Purpose: SLA breach incident records
+  
+  Triggered automatically when service performance (L65) violates SLO thresholds (L66).
+  Tracks severity, impact, affected requests, and links to remediation plan (L68).
+  
+  PRIMARY KEY: breach-{slo_id}-{YYYYMMDD}-{seq}
+  Examples: breach-slo-service-schema-migrator-success_rate-20260309-01
+  
+  SCHEMA:
+  {
+    "id": "breach-slo-service-schema-migrator-success_rate-20260309-01",
+    "slo_id": "slo-service-schema-migrator-success_rate",  # FK to L66 (RESTRICT)
+    "service_id": "service-schema-migrator",  # FK to L62 (RESTRICT)
+    "breach_detected_at": "2026-03-09T18:15:00Z",
+    "breach_resolved_at": "2026-03-09T18:37:00Z",
+    "duration_minutes": 22,
+    "severity": "critical",  # warning|critical
+    "status": "resolved",  # active|remediating|resolved|acknowledged|false_positive
+    "metric_name": "success_rate",
+    "target_value": 0.99,
+    "actual_value": 0.89,
+    "threshold_breached": 0.90,  # Critical threshold
+    "measurement_window_hours": 24,
+    "impact_assessment": "Service success rate dropped to 89%, 150 requests failed",
+    "root_cause_hypothesis": "Database connection pool exhausted",
+    "affected_requests": ["request-20260309-042", "..."],  # FK to L63
+    "failed_runs": ["run-request-20260309-042-01", "..."],  # FK to L64
+    "notification_sent": true,
+    "acknowledged_by": "agent-sre-oncall",
+    "remediation_plan_id": "remediation-breach-slo-service-schema-migrator-success_rate-20260309-01",  # FK to L68
+    "revalidation_result_id": "revalidation-breach-slo-service-schema-migrator-success_rate-20260309-01"  # FK to L69
+  }
+  
+  FK relationships:
+  - slo_id → L66 (RESTRICT - cannot delete SLO with active breaches)
+  - service_id → L62 (RESTRICT)
+  - affected_requests[] → L63 (impact tracking)
+  - failed_runs[] → L64 (root cause analysis)
+  - remediation_plan_id → L68 (SET_NULL)
+  - revalidation_result_id → L69 (SET_NULL)
+  
+  Graph edges:
+  - breaches_slo: L67 → L66 (breach of SLO)
+  - breach_for_service: L67 → L62 (breach for service)
+  - breach_affects_requests: L67 → L63 (affected requests)
+  - breach_failed_runs: L67 → L64 (failed runs)
+  
+  Use cases:
+  - Automated SLO breach detection
+  - Impact assessment (how many requests failed)
+  - Root cause hypothesis tracking
+  - Breach lifecycle management (active → remediating → resolved)
+
+--------------------------------------------------------------------------------
+ L68 -- work_service_remediation_plans
+--------------------------------------------------------------------------------
+
+  Purpose: Step-by-step remediation plans for breaches
+  
+  Generated automatically from runbooks or created manually by operators. Includes
+  step-by-step procedures, resource requirements, risks, and approval workflow.
+  
+  PRIMARY KEY: remediation-{breach_id}
+  Examples: remediation-breach-slo-service-schema-migrator-success_rate-20260309-01
+  
+  SCHEMA:
+  {
+    "id": "remediation-breach-slo-service-schema-migrator-success_rate-20260309-01",
+    "breach_id": "breach-slo-service-schema-migrator-success_rate-20260309-01",  # FK to L67 (CASCADE)
+    "service_id": "service-schema-migrator",  # FK to L62 (RESTRICT)
+    "plan_type": "semi_automated",  # automated|semi_automated|manual|escalation
+    "status": "completed",  # draft|approved|executing|completed|failed|cancelled
+    "priority": "critical",
+    "title": "Scale database connection pool and restart service",
+    "description": "Increase connection pool from 20 to 50, restart service instances",
+    "remediation_steps": [
+      {
+        "step_number": 1,
+        "step_name": "Increase connection pool size",
+        "step_description": "Update database.connection_pool_size from 20 to 50",
+        "required": true,
+        "estimated_duration_minutes": 5,
+        "automation_available": true,
+        "validation_criteria": ["Config deployed", "No errors in logs"],
+        "rollback_instructions": "Revert config to 20"
+      }
+    ],
+    "estimated_duration_minutes": 20,
+    "resource_requirements": {
+      "agent_type": "agent-infrastructure-manager",
+      "infrastructure_changes": ["Database connection pool scaling"],
+      "estimated_cost_usd": 0.05
+    },
+    "risks": [
+      {"risk_description": "Restart causes brief downtime", "likelihood": "medium", "mitigation": "Rolling restart"}
+    ],
+    "approved_by": "agent-sre-oncall",
+    "work_unit_id": "workunit-20260309-remediation-001",  # FK to L52 (SET_NULL)
+    "success": true,
+    "lessons_learned": "Connection pool was undersized for peak load"
+  }
+  
+  FK relationships:
+  - breach_id → L67 (CASCADE - remediation deleted with breach)
+  - service_id → L62 (RESTRICT)
+  - work_unit_id → L52 (SET_NULL, execution tracking)
+  
+  Graph edges:
+  - remediates_breach: L68 → L67 (remediation for breach, CASCADE)
+  - remediation_for_service: L68 → L62 (remediation for service)
+  - remediation_work: L68 → L52 (work unit executing remediation)
+  
+  Use cases:
+  - Codify runbook procedures as structured steps
+  - Require approval for high-risk remediations
+  - Track resource requirements and costs
+  - Feed lessons learned to L57 for pattern creation
+
+--------------------------------------------------------------------------------
+ L69 -- work_service_revalidation_results
+--------------------------------------------------------------------------------
+
+  Purpose: Post-remediation verification
+  
+  Validates whether remediation successfully resolved the breach. Compares pre/post
+  metrics, determines SLO compliance, and feeds learning feedback (L57).
+  
+  PRIMARY KEY: revalidation-{breach_id}
+  Examples: revalidation-breach-slo-service-schema-migrator-success_rate-20260309-01
+  
+  SCHEMA:
+  {
+    "id": "revalidation-breach-slo-service-schema-migrator-success_rate-20260309-01",
+    "breach_id": "breach-slo-service-schema-migrator-success_rate-20260309-01",  # FK to L67 (CASCADE)
+    "remediation_plan_id": "remediation-breach-slo-service-schema-migrator-success_rate-20260309-01",  # FK to L68 (CASCADE)
+    "service_id": "service-schema-migrator",  # FK to L62 (RESTRICT)
+    "slo_id": "slo-service-schema-migrator-success_rate",  # FK to L66 (RESTRICT)
+    "revalidation_performed_at": "2026-03-09T18:37:00Z",
+    "measurement_window_hours": 24,
+    "metric_name": "success_rate",
+    "target_value": 0.99,
+    "pre_remediation_value": 0.89,
+    "post_remediation_value": 0.991,
+    "threshold_critical": 0.90,
+    "passed": true,
+    "improvement_percentage": 11.3,
+    "result_status": "fully_resolved",  # fully_resolved|partially_resolved|no_improvement|degraded
+    "sample_size": 237,
+    "sample_run_ids": ["run-request-20260309-180-01", "..."],  # FK to L64
+    "comparison_data": {
+      "pre_remediation": {"total_runs": 1000, "success_count": 890, "failure_count": 110},
+      "post_remediation": {"total_runs": 237, "success_count": 235, "failure_count": 2}
+    },
+    "next_steps": "Continue monitoring for 48 hours. Apply connection pool pattern to similar services.",
+    "learning_feedback_id": "learning-20260309-042"  # FK to L57 (SET_NULL)
+  }
+  
+  FK relationships:
+  - breach_id → L67 (CASCADE - revalidation deleted with breach)
+  - remediation_plan_id → L68 (CASCADE)
+  - service_id → L62 (RESTRICT)
+  - slo_id → L66 (RESTRICT)
+  - sample_run_ids[] → L64 (measurement sample)
+  - learning_feedback_id → L57 (SET_NULL, continuous improvement)
+  
+  Graph edges:
+  - revalidates_breach: L69 → L67 (revalidation for breach, CASCADE)
+  - revalidates_remediation: L69 → L68 (revalidation of plan, CASCADE)
+  - revalidation_samples: L69 → L64 (runs sampled for measurement)
+  - revalidation_learning: L69 → L57 (learning captured)
+  
+  Use cases:
+  - Verify remediation effectiveness
+  - Compare pre/post metrics objectively
+  - Determine if breach truly resolved or requires escalation
+  - Feed success/failure patterns to learning layer (L57)
+
+--------------------------------------------------------------------------------
+ L70 -- work_service_lifecycle
+--------------------------------------------------------------------------------
+
+  Purpose: Service lifecycle event audit trail
+  
+  Tracks all major service transitions: deployment, upgrades, scaling, maintenance,
+  deprecation, retirement. Provides operational history and links to work units (L52)
+  and breach-driven changes (L67, L68).
+  
+  PRIMARY KEY: lifecycle-{service_id}-{YYYYMMDD}-{seq}
+  Examples: lifecycle-service-schema-migrator-20260309-01
+  
+  SCHEMA:
+  {
+    "id": "lifecycle-service-schema-migrator-20260309-01",
+    "service_id": "service-schema-migrator",  # FK to L62 (CASCADE)
+    "event_type": "upgraded",  # deployed|upgraded|downgraded|scaled_up|scaled_down|maintenance_started|maintenance_completed|deprecated|retired|restored|configuration_changed|endpoint_migrated
+    "event_timestamp": "2026-03-09T18:30:00Z",
+    "triggered_by_type": "agent",  # agent|cp_agent|human|automated_system|scheduled_job
+    "triggered_by_id": "agent-infrastructure-manager",
+    "reason": "Remediation plan for SLO breach (connection pool scaling)",
+    "previous_state": {
+      "version": "2.1.0",
+      "status": "production",
+      "deployment_target": "Azure Container App"
+    },
+    "new_state": {
+      "version": "2.1.1",
+      "status": "production",
+      "deployment_target": "Azure Container App"
+    },
+    "change_details": {
+      "version_from": "2.1.0",
+      "version_to": "2.1.1",
+      "configuration_diff": "{\"database.connection_pool_size\": {\"old\": 20, \"new\": 50}}",
+      "infrastructure_changes": ["Database connection pool scaled"],
+      "breaking_changes": false
+    },
+    "duration_minutes": 12,
+    "downtime_minutes": 0,  # Zero-downtime rolling restart
+    "success": true,
+    "work_unit_id": "workunit-20260309-remediation-001",  # FK to L52 (SET_NULL)
+    "breach_id": "breach-slo-service-schema-migrator-success_rate-20260309-01",  # FK to L67 (SET_NULL)
+    "remediation_plan_id": "remediation-breach-slo-service-schema-migrator-success_rate-20260309-01"  # FK to L68 (SET_NULL)
+  }
+  
+  FK relationships:
+  - service_id → L62 (CASCADE - lifecycle events deleted with service)
+  - work_unit_id → L52 (SET_NULL, execution provenance)
+  - breach_id → L67 (SET_NULL, breach-driven changes)
+  - remediation_plan_id → L68 (SET_NULL, remediation-driven changes)
+  - evidence_ids[] → L31 (deployment artifacts, logs)
+  
+  Graph edges:
+  - lifecycle_for_service: L70 → L62 (lifecycle event for service, CASCADE)
+  - lifecycle_work: L70 → L52 (work unit executing event)
+  - lifecycle_breach_driven: L70 → L67 (triggered by breach)
+  - lifecycle_remediation_driven: L70 → L68 (part of remediation)
+  
+  Use cases:
+  - Audit trail for service changes
+  - Track upgrade/downgrade history
+  - Link operational events to breaches (root cause)
+  - Zero-downtime deployment verification
+  - Compliance reporting (who changed what, when, why)
+
+================================================================================
+ PHASE 6 PREVIEW -- 5 MORE LAYERS (L71-L75)
+================================================================================
+
+  Phase 5 deployed 4 layers (L67-L70). 5 more layers planned for Phase 6.
   See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md for full phased plan.
-
-  PHASE 5 (L67-L70) -- BREACH REMEDIATION & LIFECYCLE
-  ----------------------------------------------------
-  L67 work_service_breaches         SLA breach records
-  L68 work_service_remed_plans      Remediation plans for breaches
-  L69 work_service_reval_results    Re-evaluation after remediation
-  L70 work_service_lifecycle        Service lifecycle events (deploy/retire/upgrade)
-
-  Complete self-healing loop: breach → plan → remediate → re-evaluate → learn
 
   PHASE 6 (L71-L75) -- STRATEGY & PORTFOLIO (DOMAIN 12)
   ------------------------------------------------------
@@ -1424,7 +1683,7 @@
   Phase 2 (L55,L57-L58): March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 3 (L59-L60):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 4 (L61-L66):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
-  Phase 5 (L67-L70):     TBD  
+  Phase 5 (L67-L70):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 6 (L71-L75):     TBD
 
   Strategy: Deploy phases incrementally as operational needs emerge.

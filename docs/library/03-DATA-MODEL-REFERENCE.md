@@ -1,11 +1,11 @@
 ================================================================================
- EVA DATA MODEL -- 102-LAYER REFERENCE
+ EVA DATA MODEL -- 106-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 102 operational layers; 12 ontology domains; Session 41 Part 11
+ Updated: 2026-03-09 -- 106 operational layers; 12 ontology domains; Session 41 Part 11
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
          docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
-         docs/library/13-EXECUTION-LAYERS.md (Phases 1-4: L52-L66 deployed)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1-5: L52-L70 deployed)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -1209,6 +1209,96 @@
   Use cases: SLA monitoring, breach detection, alert routing, compliance reporting
   Query: GET /model/work_service_level_objectives/?status=active&breach_count_24h>0
 
+## L67 work_service_breaches
+
+  SLA breach incident records — triggered automatically when service performance violates SLO thresholds.
+  
+  Primary key: breach-{slo_id}-{YYYYMMDD}-{seq}
+  Parent: work_service_level_objectives (tracks which SLO was breached)
+  FK: slo_id → L66 (RESTRICT), service_id → L62 (RESTRICT),
+      affected_requests[] → L63, failed_runs[] → L64,
+      remediation_plan_id → L68 (SET_NULL), revalidation_result_id → L69 (SET_NULL)
+  
+  Field catalog:
+    id, slo_id, service_id, breach_detected_at, breach_resolved_at, duration_minutes,
+    severity (warning|critical), status (active|remediating|resolved|acknowledged|false_positive),
+    metric_name, target_value, actual_value, threshold_breached, measurement_window_hours,
+    impact_assessment, root_cause_hypothesis, affected_requests[], failed_runs[],
+    notification_sent, acknowledged_by, remediation_plan_id, revalidation_result_id
+  
+  Graph edges: breaches_slo (L67→L66), breach_for_service (L67→L62),
+               breach_affects_requests (L67→L63), breach_failed_runs (L67→L64)
+  Use cases: Automated SLO breach detection, impact assessment, breach lifecycle management
+  Query: GET /model/work_service_breaches/?status=active&severity=critical
+
+## L68 work_service_remediation_plans
+
+  Remediation plans for SLA breaches — step-by-step recovery procedures with resource estimates.
+  
+  Primary key: remediation-{breach_id}
+  Parent: work_service_breaches (CASCADE on breach delete)
+  FK: breach_id → L67 (CASCADE), service_id → L62 (RESTRICT), work_unit_id → L52 (SET_NULL)
+  
+  Field catalog:
+    id, breach_id, service_id, plan_type (automated|semi_automated|manual|escalation),
+    status (draft|approved|executing|completed|failed|cancelled), priority, title, description,
+    remediation_steps[] (step_number, step_name, step_description, required, estimated_duration_minutes,
+    automation_available, validation_criteria[], rollback_instructions),
+    estimated_duration_minutes, resource_requirements {agent_type, human_expertise, infrastructure_changes[],
+    estimated_cost_usd}, risks[], approved_by, work_unit_id, success, failure_reason, lessons_learned
+  
+  Graph edges: remediates_breach (L68→L67, CASCADE), remediation_for_service (L68→L62),
+               remediation_work (L68→L52)
+  Use cases: Runbook codification, approval workflows, resource planning, lessons capture
+  Query: GET /model/work_service_remediation_plans/?status=executing
+
+## L69 work_service_revalidation_results
+
+  Post-remediation verification — validates whether remediation successfully resolved breach.
+  
+  Primary key: revalidation-{breach_id}
+  Parent: work_service_breaches (CASCADE on breach delete)
+  FK: breach_id → L67 (CASCADE), remediation_plan_id → L68 (CASCADE),
+      service_id → L62 (RESTRICT), slo_id → L66 (RESTRICT),
+      sample_run_ids[] → L64, learning_feedback_id → L57 (SET_NULL)
+  
+  Field catalog:
+    id, breach_id, remediation_plan_id, service_id, slo_id, revalidation_performed_at,
+    measurement_window_hours, metric_name, target_value, pre_remediation_value,
+    post_remediation_value, threshold_critical, passed (boolean), improvement_percentage,
+    result_status (fully_resolved|partially_resolved|no_improvement|degraded),
+    sample_size, sample_run_ids[], comparison_data {pre_remediation{}, post_remediation{}},
+    next_steps, learning_feedback_id
+  
+  Graph edges: revalidates_breach (L69→L67, CASCADE), revalidates_remediation (L69→L68, CASCADE),
+               revalidation_samples (L69→L64), revalidation_learning (L69→L57)
+  Use cases: Remediation effectiveness verification, pre/post comparison, learning capture
+  Query: GET /model/work_service_revalidation_results/?passed=false
+
+## L70 work_service_lifecycle
+
+  Service lifecycle events — tracks major transitions: deployment, upgrades, scaling, maintenance, deprecation.
+  
+  Primary key: lifecycle-{service_id}-{YYYYMMDD}-{seq}
+  Parent: work_factory_services (CASCADE on service delete)
+  FK: service_id → L62 (CASCADE), work_unit_id → L52 (SET_NULL),
+      breach_id → L67 (SET_NULL), remediation_plan_id → L68 (SET_NULL), evidence_ids[] → L31
+  
+  Field catalog:
+    id, service_id, event_type (deployed|upgraded|downgraded|scaled_up|scaled_down|
+    maintenance_started|maintenance_completed|deprecated|retired|restored|configuration_changed|
+    endpoint_migrated), event_timestamp, triggered_by_type, triggered_by_id, reason,
+    previous_state {version, status, deployment_target, endpoint_url},
+    new_state {version, status, deployment_target, endpoint_url},
+    change_details {version_from, version_to, configuration_diff, infrastructure_changes[], breaking_changes},
+    duration_minutes, downtime_minutes, success, error_details, rollback_performed,
+    approval_required, approved_by, work_unit_id, breach_id, remediation_plan_id, evidence_ids[]
+  
+  Graph edges: lifecycle_for_service (L70→L62, CASCADE), lifecycle_work (L70→L52),
+               lifecycle_breach_driven (L70→L67), lifecycle_remediation_driven (L70→L68)
+  Use cases: Service change audit trail, upgrade/downgrade history, breach-driven changes, compliance
+  Query: GET /model/work_service_lifecycle/?event_type=upgraded&service_id=service-schema-migrator
+
   SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
     - 4 execution layers deployed (L52, L53, L54, L56)
     - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
@@ -1218,7 +1308,7 @@
     - Phase 1 complete, Phase 2-6 ready for deployment
     - See docs/library/13-EXECUTION-LAYERS.md for complete specification
 
-  SESSION 41 PART 11 UPDATE (March 9, 2026 6:00 PM ET):
+  SESSION 41 PART 11 UPDATE (March 9, 2026 6:37 PM ET):
     - Phase 2: 3 layers deployed (L55, L57, L58) -- Obligations, Learning, Patterns
       • Obligations tracking from decisions (L54→L55 inverse FK)
       • Adaptive learning feedback layer (L57) with confidence scoring
@@ -1236,9 +1326,16 @@
       • Performance profiles (L65) for service health monitoring
       • SLO definitions (L66) for breach detection (feeds L67 in Phase 5)
       • 11 new FK edge types added (48 → 59 total)
-    - Layer count: 91 → 96 → 102 operational
-    - Edge types: 38 → 48 → 59 total
-    - Remaining: 9 layers (L67-L75 in Phases 5-6)
+    - Phase 5: 4 layers deployed (L67-L70) -- Breach Remediation & Lifecycle
+      • Breach tracking (L67) with automated detection and impact assessment
+      • Remediation planning (L68) with runbook codification and approval workflows
+      • Revalidation results (L69) with pre/post comparison and learning capture
+      • Lifecycle events (L70) for service change audit trail
+      • 16 new FK edge types added (59 → 75 total)
+      • COMPLETE SELF-HEALING LOOP: breach → plan → remediate → revalidate → learn
+    - Layer count: 91 → 96 → 102 → 106 operational
+    - Edge types: 38 → 48 → 59 → 75 total
+    - Remaining: 5 layers (L71-L75 in Phase 6: Strategy & Portfolio)
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)
