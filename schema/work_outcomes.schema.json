@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/work_outcomes.schema.json",
+  "title": "Work Outcome",
+  "description": "Result ledger. Records what was actually delivered vs what was expected. Layer 56 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["outcome_id", "work_unit_id", "result", "outcome_type", "recorded_at"],
+  "additionalProperties": false,
+  "properties": {
+    "outcome_id": {
+      "type": "string",
+      "description": "Primary key. Format: {work_unit_id}-out-{sequence}",
+      "pattern": "^.+-wu-.+-out-[0-9]{3,}$",
+      "examples": ["51-ACA-wu-20260309-001-out-001"]
+    },
+    "work_unit_id": {
+      "type": "string",
+      "description": "Foreign key to L52 work_execution_units (CASCADE on delete)"
+    },
+    "result": {
+      "type": "string",
+      "enum": ["delivered", "not_delivered", "partially_delivered"],
+      "description": "High-level result status"
+    },
+    "outcome_type": {
+      "type": "string",
+      "enum": ["technical", "governance", "quality", "operational", "business"],
+      "description": "Category of outcome"
+    },
+    "recorded_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp when outcome was recorded"
+    },
+    "expected_vs_actual": {
+      "type": ["string", "null"],
+      "description": "Narrative comparison of what was expected vs what was delivered"
+    },
+    "delivered_changes": {
+      "type": ["object", "null"],
+      "description": "Structured summary of changes delivered (files, commits, deployments, etc.)",
+      "properties": {
+        "files_created": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "files_modified": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "files_deleted": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "commits": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "deployments": {
+          "type": ["array", "null"],
+          "items": { "type": "string" }
+        },
+        "metrics": {
+          "type": ["object", "null"]
+        }
+      }
+    },
+    "evidence_ids": {
+      "type": ["array", "null"],
+      "description": "Array of evidence_ids from L31 evidence layer proving outcome",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decision_ids": {
+      "type": ["array", "null"],
+      "description": "Array of decision_ids from L54 that influenced this outcome",
+      "items": {
+        "type": "string"
+      }
+    },
+    "learning_ids": {
+      "type": ["array", "null"],
+      "description": "Array of learning_ids from L57 work_learning_feedback (Phase 2 FK)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metrics": {
+      "type": ["object", "null"],
+      "description": "Quantitative measures (time, cost, quality scores, etc.)"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Additional observations or context"
+    }
+  }
+}

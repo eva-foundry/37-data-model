@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/work_execution_units.schema.json",
+  "title": "Work Execution Unit",
+  "description": "Operational work ledger. Each record represents a governed unit of work (e.g., implement feature, deploy service, fix bug, execute script). Layer 52 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["work_unit_id", "project_id", "title", "status", "assigned_to_type", "assigned_to_id", "created_at", "updated_at"],
+  "additionalProperties": false,
+  "properties": {
+    "work_unit_id": {
+      "type": "string",
+      "description": "Primary key. Format: {project-id}-wu-{YYYYMMDD}-{sequence}",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$",
+      "examples": ["51-ACA-wu-20260309-001", "37-data-model-wu-20260309-001"]
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Foreign key to L25 projects layer",
+      "examples": ["37-data-model", "51-ACA"]
+    },
+    "wbs_id": {
+      "type": ["string", "null"],
+      "description": "Foreign key to L26 wbs layer. Work breakdown structure element."
+    },
+    "sprint_id": {
+      "type": ["string", "null"],
+      "description": "Foreign key to L27 sprints layer. Sprint this work belongs to."
+    },
+    "title": {
+      "type": "string",
+      "description": "Brief title of the work unit",
+      "minLength": 3,
+      "maxLength": 200
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "Detailed description of the work"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "in-progress", "paused", "succeeded", "failed", "cancelled"],
+      "description": "Current execution status of this work unit"
+    },
+    "assigned_to_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "human"],
+      "description": "Type of actor assigned to this work"
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Polymorphic FK: agent_id (L9), cp_agent_id (L15), or persona_id (L2)"
+    },
+    "milestone_id": {
+      "type": ["string", "null"],
+      "description": "Foreign key to L28 milestones layer"
+    },
+    "workflow_id": {
+      "type": ["string", "null"],
+      "description": "Foreign key to L18 cp_workflows layer. Governing workflow."
+    },
+    "project_work_id": {
+      "type": ["string", "null"],
+      "description": "Foreign key to L34 project_work layer. Session-level container."
+    },
+    "parent_work_unit_id": {
+      "type": ["string", "null"],
+      "description": "Self-referencing FK. Parent work unit if this is a sub-task."
+    },
+    "depends_on": {
+      "type": ["array", "null"],
+      "description": "Array of work_unit_ids this work depends on",
+      "items": {
+        "type": "string"
+      }
+    },
+    "instruction_type": {
+      "type": ["string", "null"],
+      "enum": ["manual", "automation", "agent_workflow", "github_action", null],
+      "description": "How this work should be executed"
+    },
+    "instruction_payload": {
+      "type": ["object", "null"],
+      "description": "Freeform execution instructions (parsed by agent or automation)"
+    },
+    "policy_refs": {
+      "type": ["array", "null"],
+      "description": "Array of policy_ids from L16 cp_policies layer",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_ids": {
+      "type": ["array", "null"],
+      "description": "Array of evidence_ids from L31 evidence layer",
+      "items": {
+        "type": "string"
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp when work unit was created"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp of last update"
+    },
+    "started_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When execution actually started"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When execution completed (succeeded or failed)"
+    },
+    "duration_seconds": {
+      "type": ["integer", "null"],
+      "description": "Total elapsed time from start to completion",
+      "minimum": 0
+    },
+    "retry_count": {
+      "type": ["integer", "null"],
+      "description": "Number of retry attempts",
+      "minimum": 0,
+      "default": 0
+    },
+    "error_message": {
+      "type": ["string", "null"],
+      "description": "Error details if status is failed"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Additional notes or context"
+    }
+  }
+}
