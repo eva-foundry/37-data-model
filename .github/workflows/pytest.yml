@@ -1,5 +1,15 @@
 name: pytest
 
+# ⚠️ DEPRECATED: This workflow is superseded by quality-gates.yml
+# 
+# quality-gates.yml now runs pytest on both Ubuntu and Windows with comprehensive
+# static analysis (pylint, flake8). This standalone pytest workflow will be removed
+# in a future session after verifying quality-gates.yml stability.
+#
+# Migration: Session 41 (March 9, 2026)
+# Reason: Consolidate redundant test workflows (DRY principle)
+# Timeline: Remove after 2 weeks of quality-gates.yml stability
+
 on:
   push:
     branches: [ main ]

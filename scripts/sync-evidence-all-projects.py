@@ -391,15 +391,20 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
     print(f"  Total projects to scan: {len(projects_to_scan)}")
     print()
     
-    for scan_project in projects_to_scan:
+    for idx, scan_project in enumerate(projects_to_scan, 1):
         project_folder = scan_project["path"]
         project_id = scan_project["id"]
+        project_label = scan_project["label"]
         
         evidence_rel_path = config.get("project_discovery.structure.evidence_dir", ".eva/evidence")
         evidence_dir = project_folder / Path(evidence_rel_path)
         
+        # Progress indicator (Session 41: Operations visibility standard)
+        print(f"[{idx}/{len(projects_to_scan)}] {project_id} ({project_label})...", end=" ", flush=True)
+        
         if not evidence_dir.exists():
             # Skip: no evidence directory
+            print("⊘ No evidence directory")
             continue
         
         # Found a project with evidence!
@@ -407,15 +412,22 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
         
         # Extract
         project_start = datetime.now(timezone.utc)
+        print("Extracting...", end=" ", flush=True)
         records, extract_errors = extract_project_evidence(project_folder, config)
         total_files += len(list(evidence_dir.glob("*.json")))
         total_extracted += len(records)
+        extract_duration = (datetime.now(timezone.utc) - project_start).total_seconds()
+        print(f"{len(records)} files ({extract_duration:.2f}s)", end=" → ", flush=True)
         
         # Transform
+        transform_start = datetime.now(timezone.utc)
+        print("Transforming...", end=" ", flush=True)
         transformed, transform_errors = transform_project_evidence(
             records, project_id, schema, config
         )
         total_transformed += len(transformed)
+        transform_duration = (datetime.now(timezone.utc) - transform_start).total_seconds()
+        print(f"{len(transformed)} records ({transform_duration:.2f}s)", end=" → ", flush=True)
         
         # Validate transformed records
         validation_counts = {
@@ -428,6 +440,8 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
             validation_counts[test_result] = validation_counts.get(test_result, 0) + 1
         
         # Merge
+        merge_start = datetime.now(timezone.utc)
+        print("Merging...", end=" ", flush=True)
         merged, merge_errors = merge_into_portfolio(
             evidence_file,
             transformed,
@@ -435,6 +449,7 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
             config
         )
         total_merged += merged
+        merge_duration = (datetime.now(timezone.utc) - merge_start).total_seconds()
         
         project_end = datetime.now(timezone.utc)
         duration = (project_end - project_start).total_seconds() * 1000
@@ -452,13 +467,14 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
             "duration_ms": duration,
         }
         
-        status = "[OK]" if not (extract_errors or transform_errors or merge_errors) else "[WN]"
-        print(f"  {status} {project_id}: {len(records)} files -> "
-              f"{len(transformed)} transformed -> {merged} merged")
-        
-        if extract_errors or transform_errors or merge_errors:
-            for error in (extract_errors + transform_errors + merge_errors)[:3]:
-                print(f"      - {error}")
+        # Status with progress visibility
+        all_errors = extract_errors + transform_errors + merge_errors
+        if all_errors:
+            print(f"⚠ {merged} merged ({merge_duration:.2f}s) - {len(all_errors)} errors")
+            for error in all_errors[:2]:  # Show first 2 errors
+                print(f"      ⚠ {error}")
+        else:
+            print(f"✅ {merged} merged ({merge_duration:.2f}s) - Total: {duration/1000:.2f}s")
     print()
     print(f"[STAGE 2] MERGE: Consolidating records into portfolio...")
     print(f"  Total files: {total_files}")

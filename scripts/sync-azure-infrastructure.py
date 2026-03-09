@@ -35,6 +35,8 @@ except ImportError:
     print("ERROR: requests not installed. Run: pip install requests")
     sys.exit(1)
 
+import time  # For retry backoff
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Configuration
 # ─────────────────────────────────────────────────────────────────────────────
@@ -89,36 +91,61 @@ def log(message: str, level: str = "INFO") -> None:
     print(f"{color}[{timestamp}] [{level}] {message}{reset}")
 
 
-def query_azure_resource_graph() -> List[Dict[str, Any]]:
-    """Query Azure Resource Graph for all resources in subscription."""
+def query_azure_resource_graph(retry_count: int = 3) -> List[Dict[str, Any]]:
+    """Query Azure Resource Graph for all resources in subscription.
+    
+    Args:
+        retry_count: Number of retry attempts on transient failures (default: 3)
+        
+    Returns:
+        List of resource dictionaries
+        
+    Raises:
+        Exception: After all retry attempts exhausted
+    """
     log(f"Querying Azure Resource Graph for subscription {SUBSCRIPTION_ID}...")
     
     # Determine Azure CLI command (Windows uses az.cmd)
     az_cmd = "az.cmd" if sys.platform == "win32" else "az"
     
-    try:
-        # Use Azure CLI to query Resource Graph
-        result = subprocess.run(
-            [az_cmd, "graph", "query", "-q", RESOURCE_QUERY, "--query", "data", "-o", "json"],
-            capture_output=True,
-            text=True,
-            check=True,
-            timeout=60
-        )
-        
-        resources = json.loads(result.stdout)
-        log(f"✓ Retrieved {len(resources)} resources from Azure", "SUCCESS")
-        return resources
-        
-    except subprocess.CalledProcessError as e:
-        log(f"✗ Azure Resource Graph query failed: {e.stderr}", "ERROR")
-        sys.exit(1)
-    except subprocess.TimeoutExpired:
-        log("✗ Azure Resource Graph query timed out (60s)", "ERROR")
-        sys.exit(1)
-    except json.JSONDecodeError as e:
-        log(f"✗ Failed to parse Azure response: {e}", "ERROR")
-        sys.exit(1)
+    # Retry loop for transient failures (Session 41: Production resilience)
+    last_error = None
+    for attempt in range(1, retry_count + 1):
+        try:
+            if attempt > 1:
+                backoff = min(2 ** (attempt - 1), 60)  # Exponential backoff (max 60s)
+                log(f"Retry attempt {attempt}/{retry_count} after {backoff}s backoff...", "WARNING")
+                time.sleep(backoff)
+            
+            # Use Azure CLI to query Resource Graph
+            result = subprocess.run(
+                [az_cmd, "graph", "query", "-q", RESOURCE_QUERY, "--query", "data", "-o", "json"],
+                capture_output=True,
+                text=True,
+                check=True,
+                timeout=60
+            )
+            
+            resources = json.loads(result.stdout)
+            log(f"✓ Retrieved {len(resources)} resources from Azure", "SUCCESS")
+            return resources
+            
+        except (subprocess.CalledProcessError, subprocess.TimeoutExpired, json.JSONDecodeError) as e:
+            last_error = e
+            error_msg = str(e) if not isinstance(e, subprocess.CalledProcessError) else e.stderr
+            log(f"✗ Attempt {attempt}/{retry_count} failed: {error_msg}", "WARNING")
+            
+            if attempt >= retry_count:
+                # All retries exhausted
+                log(f"✗ All {retry_count} retry attempts exhausted", "ERROR")
+                if isinstance(e, subprocess.CalledProcessError):
+                    log(f"Azure CLI error: {e.stderr}", "ERROR")
+                elif isinstance(e, subprocess.TimeoutExpired):
+                    log("Azure Resource Graph query timed out (60s)", "ERROR")
+                else:
+                    log(f"Failed to parse Azure response: {e}", "ERROR")
+                sys.exit(1)
+            # Otherwise, continue to next retry attempt
 
 
 def transform_to_l42_schema(resource: Dict[str, Any]) -> Dict[str, Any]:

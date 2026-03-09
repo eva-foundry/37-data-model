@@ -16,8 +16,12 @@ on:
 
 jobs:
   quality-check:
-    name: Static Analysis + Tests
-    runs-on: ubuntu-latest
+    name: Static Analysis + Tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+      fail-fast: false
     
     steps:
       - name: Checkout code
@@ -76,6 +80,8 @@ jobs:
       - name: Run pytest
         id: pytest
         continue-on-error: true
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           echo "::group::Pytest Results"
           pytest tests/ -v --tb=short --junitxml=pytest-report.xml

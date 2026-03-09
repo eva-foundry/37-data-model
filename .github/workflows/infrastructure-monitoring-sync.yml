@@ -197,6 +197,36 @@ jobs:
           echo "| L49 (resource_costs) | sync-costs | ${{ needs.sync-costs.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "| L41 (agent_performance_metrics) | sync-agent-metrics | ${{ needs.sync-agent-metrics.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
+      
+      - name: Notify sync status
+        if: always()
+        run: |
+          # Determine overall status
+          INFRA_STATUS="${{ needs.sync-infrastructure.result }}"
+          COSTS_STATUS="${{ needs.sync-costs.result }}"
+          METRICS_STATUS="${{ needs.sync-agent-metrics.result }}"
+          
+          if [ "$INFRA_STATUS" = "failure" ] || [ "$COSTS_STATUS" = "failure" ] || [ "$METRICS_STATUS" = "failure" ]; then
+            OVERALL="❌ FAILED"
+            COLOR="danger"
+          elif [ "$INFRA_STATUS" = "success" ] && [ "$COSTS_STATUS" = "success" ] && [ "$METRICS_STATUS" = "success" ]; then
+            OVERALL="✅ SUCCESS"
+            COLOR="good"
+          else
+            OVERALL="⚠️ PARTIAL"
+            COLOR="warning"
+          fi
+          
+          echo "${OVERALL}"
+          echo "  L42 Infrastructure: ${INFRA_STATUS}"
+          echo "  L49 Costs: ${COSTS_STATUS}"
+          echo "  L41 Metrics: ${METRICS_STATUS}"
+          
+          # TODO: Add Slack/Teams notification when webhook configured
+          # Uncomment after setting SLACK_WEBHOOK_URL secret:
+          # curl -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+          #   -H 'Content-Type: application/json' \
+          #   -d '{"text": "Infrastructure Monitoring Sync: '${OVERALL}'", "color": "'${COLOR}'"}'
           
           if [ "${{ needs.sync-infrastructure.result }}" == "success" ] && \
              [ "${{ needs.sync-costs.result }}" == "success" ] && \

@@ -126,6 +126,7 @@ jobs:
           sleep 90
 
       - name: Verify deployment
+        id: verify
         if: ${{ !github.event.inputs.skip_verify }}
         run: |
           echo "🔍 Verifying deployment..."
@@ -182,10 +183,63 @@ jobs:
             echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '✓' || echo '✗')"
           fi
 
+      - name: Rollback on verification failure
+        if: failure() && steps.verify.outcome == 'failure'
+        run: |
+          echo "🔄 Verification failed, initiating rollback..."
+          
+          # Get previous revision (index [1] in list)
+          PREVIOUS_REVISION=$(az containerapp revision list \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "[1].name" \
+            --output tsv)
+          
+          if [ -z "$PREVIOUS_REVISION" ]; then
+            echo "✗ No previous revision found - cannot rollback"
+            exit 1
+          fi
+          
+          echo "  Previous revision: ${PREVIOUS_REVISION}"
+          
+          # Activate previous revision
+          az containerapp revision activate \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --revision "${PREVIOUS_REVISION}"
+          
+          echo "✓ Rolled back to revision: ${PREVIOUS_REVISION}"
+          echo "⚠ DEPLOYMENT FAILED - Rolled back to previous version"
+          exit 1
+
+      - name: Notify deployment status
+        if: always()
+        run: |
+          STATUS="${{ job.status }}"
+          if [ "$STATUS" = "success" ]; then
+            EMOJI="✅"
+            COLOR="good"
+          else
+            EMOJI="❌"
+            COLOR="danger"
+          fi
+          
+          echo "${EMOJI} Deployment ${STATUS}"
+          echo "  Image: ${{ steps.build.outputs.full_image }}"
+          echo "  Revision: ${{ steps.update.outputs.revision }}"
+          echo "  Triggered by: ${{ github.actor }}"
+          
+          # TODO: Add Slack/Teams notification when webhook configured
+          # Uncomment after setting SLACK_WEBHOOK_URL secret:
+          # curl -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+          #   -H 'Content-Type: application/json' \
+          #   -d '{"text": "'${EMOJI}' Deployment to msub-eva-data-model: '${STATUS}'", "color": "'${COLOR}'"}'
+
       - name: Deployment summary
         if: always()
         run: |
           echo "━━━ Deployment Complete ━━━"
+          echo "Status: ${{ job.status }}"
           echo "✓ Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
           echo "✓ Container App: ${{ env.CONTAINER_APP }}"
           echo "✓ Revision: ${{ steps.update.outputs.revision }}"
