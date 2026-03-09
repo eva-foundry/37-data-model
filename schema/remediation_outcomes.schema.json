@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Remediation Outcomes",
+  "description": "Impact analysis and effectiveness metrics per remediation execution",
+  "type": "object",
+  "properties": {
+    "outcome_id": {
+      "type": "string",
+      "pattern": "^outcome:[a-z0-9-]+$",
+      "description": "Unique outcome identifier (e.g., outcome:restart-agent-20260308-1430)"
+    },
+    "execution_id": {
+      "type": "string",
+      "pattern": "^exec:[a-z0-9-]+$",
+      "description": "FK to L49 auto_fix_execution_history - which execution this analyzes"
+    },
+    "issue_id": {
+      "type": "string",
+      "description": "Identifier of the original issue that triggered remediation"
+    },
+    "resolution_status": {
+      "type": "string",
+      "enum": ["RESOLVED", "PARTIAL", "FAILED", "REVERTED", "NO_CHANGE"],
+      "description": "Whether remediation resolved the issue"
+    },
+    "mttr_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Mean time to remediation (from trigger to resolution)"
+    },
+    "root_cause_fixed": {
+      "type": "boolean",
+      "description": "Whether root cause was addressed (true) or only symptom (false)"
+    },
+    "side_effects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "effect": {"type": "string", "description": "What side effect occurred"},
+          "severity": {"type": "string", "enum": ["critical", "high", "medium", "low"], "description": "Severity level  "},
+          "resolved": {"type": "boolean", "description": "Whether side effect was resolved"}
+        }
+      },
+      "description": "Unintended consequences of the remediation"
+    },
+    "safety_violations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "violation": {"type": "string", "description": "Which safety rule was violated"},
+          "policy_ref": {"type": "string", "description": "Reference to violated policy (L33/L36/L37)"},
+          "remediated": {"type": "boolean", "description": "Whether violation was fixed"}
+        }
+      },
+      "description": "Safety issues encountered"
+    },
+    "customer_impact": {
+      "type": "object",
+      "properties": {
+        "users_affected": {"type": "integer", "minimum": 0, "description": "Number of users impacted"},
+        "downtime_minutes": {"type": "number", "minimum": 0, "description": "Service downtime caused/prevented"},
+        "downtime_prevented": {"type": "boolean", "description": "Whether remediation prevented downtime (true) or caused it (false)"},
+        "customer_impact_statement": {"type": "string", "description": "Human-readable impact summary"}
+      },
+      "description": "Customer/user impact metrics"
+    },
+    "cost_savings_usd": {
+      "type": "number",
+      "description": "Estimated cost savings (positive) or cost incurred (negative)"
+    },
+    "performance_improvement": {
+      "type": "object",
+      "properties": {
+        "metric": {"type": "string", "description": "Which metric improved (e.g., reliability, latency)"},
+        "before_value": {"type": "number", "description": "Metric value before remediation"},
+        "after_value": {"type": "number", "description": "Metric value after remediation"},
+        "improvement_percent": {"type": "number", "description": "Percentage improvement"}
+      },
+      "description": "Performance metrics improvement"
+    },
+    "false_positive": {
+      "type": "boolean",
+      "description": "Whether remediation was unnecessary (trigger was false alarm)"
+    },
+    "escalation_required": {
+      "type": "boolean",
+      "description": "Whether human intervention was needed after remediation"
+    },
+    "lessons_learned": {
+      "type": "string",
+      "description": "What was learned from this remediation (for continuous improvement)"
+    },
+    "analyzed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this outcome analysis was performed"
+    },
+    "analyst": {
+      "type": "string",
+      "enum": ["system", "human", "hybrid"],
+      "description": "Who performed the outcome analysis"
+    }
+  },
+  "required": ["outcome_id", "execution_id", "resolution_status", "mttr_minutes", "root_cause_fixed", "analyzed_at"]
+}

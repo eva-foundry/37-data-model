@@ -1,0 +1,156 @@
+name: Quality Gates
+
+# Session 41: Prevent regressions via automated CHECK phase
+# Runs pylint, flake8, and pytest on all PRs and pushes to main/dev branches
+# 
+# Motivation: Session 41 bug (lowercase 'true') would have been caught by:
+# - pylint: E0602 (undefined variable 'true')
+# - flake8: F821 (undefined name 'true')
+# - pytest: Runtime NameError in test_agent_guide.py
+
+on:
+  push:
+    branches: [main, 'docs/**', 'feat/**', 'fix/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-check:
+    name: Static Analysis + Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pylint flake8 pytest
+      
+      - name: Run pylint (E errors only)
+        id: pylint
+        continue-on-error: true
+        run: |
+          echo "::group::Pylint Results"
+          pylint api/ --disable=C,R,W --exit-zero > pylint-report.txt
+          cat pylint-report.txt
+          echo "::endgroup::"
+          
+          # Check for E errors (blockers)
+          if grep -q "^E[0-9]" pylint-report.txt; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "::error::Pylint found E errors (blockers). See report above."
+            exit 1
+          else
+            echo "status=passed" >> $GITHUB_OUTPUT
+            echo "::notice::Pylint passed - no E errors found"
+          fi
+      
+      - name: Run flake8 (F/E errors only)
+        id: flake8
+        continue-on-error: true
+        run: |
+          echo "::group::Flake8 Results"
+          flake8 api/ --select=F,E --extend-ignore=E501 --exit-zero > flake8-report.txt
+          cat flake8-report.txt
+          echo "::endgroup::"
+          
+          # Check if any errors found
+          if [ -s flake8-report.txt ]; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "::error::Flake8 found F/E errors. See report above."
+            exit 1
+          else
+            echo "status=passed" >> $GITHUB_OUTPUT
+            echo "::notice::Flake8 passed - no F/E errors found (E501 ignored)"
+          fi
+      
+      - name: Run pytest
+        id: pytest
+        continue-on-error: true
+        run: |
+          echo "::group::Pytest Results"
+          pytest tests/ -v --tb=short --junitxml=pytest-report.xml
+          TEST_EXIT=$?
+          echo "::endgroup::"
+          
+          if [ $TEST_EXIT -eq 0 ]; then
+            echo "status=passed" >> $GITHUB_OUTPUT
+            echo "::notice::Pytest passed - all tests successful"
+          else
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "::error::Pytest failed - see test results above"
+            exit 1
+          fi
+      
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-gate-reports
+          path: |
+            pylint-report.txt
+            flake8-report.txt
+            pytest-report.xml
+      
+      - name: Quality Gate Summary
+        if: always()
+        run: |
+          echo "# Quality Gate Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Pylint (E errors) | ${{ steps.pylint.outputs.status == 'passed' && '✅ PASS' || '❌ FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Flake8 (F/E errors) | ${{ steps.flake8.outputs.status == 'passed' && '✅ PASS' || '❌ FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Pytest | ${{ steps.pytest.outputs.status == 'passed' && '✅ PASS' || '❌ FAIL' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.pylint.outputs.status }}" = "failed" ] || [ "${{ steps.flake8.outputs.status }}" = "failed" ] || [ "${{ steps.pytest.outputs.status }}" = "failed" ]; then
+            echo "::error::Quality gate FAILED. Fix errors before merging."
+            echo "**Result**: ❌ FAILED" >> $GITHUB_STEP_SUMMARY
+            exit 1
+          else
+            echo "::notice::Quality gate PASSED. All checks successful."
+            echo "**Result**: ✅ PASSED" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Comment PR (on failure)
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const fs = require('fs');
+            
+            let comment = '## ❌ Quality Gate Failed\\n\\n';
+            comment += 'The following checks failed:\\n\\n';
+            
+            if ('${{ steps.pylint.outputs.status }}' === 'failed') {
+              comment += '- **Pylint**: Found E errors (undefined variables, syntax issues)\\n';
+            }
+            if ('${{ steps.flake8.outputs.status }}' === 'failed') {
+              comment += '- **Flake8**: Found F/E errors (undefined names, syntax issues)\\n';
+            }
+            if ('${{ steps.pytest.outputs.status }}' === 'failed') {
+              comment += '- **Pytest**: Test failures detected\\n';
+            }
+            
+            comment += '\\n### Session 41 Reminder\\n\\n';
+            comment += 'These checks prevent bugs like lowercase `true` (JavaScript) in Python dicts.\\n';
+            comment += 'Fix all E/F errors before merging.\\n\\n';
+            comment += 'Download reports from Artifacts for details.';
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

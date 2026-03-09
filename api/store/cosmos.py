@@ -43,16 +43,16 @@ _INDEXING_POLICY = {
     "excludedPaths": [{"path": '/"_etag"/?'}],
     "compositeIndexes": [
         [
-            {"path": "/layer",      "order": "ascending"},
-            {"path": "/obj_id",     "order": "ascending"},
+            {"path": "/layer", "order": "ascending"},
+            {"path": "/obj_id", "order": "ascending"},
         ],
         [
-            {"path": "/layer",      "order": "ascending"},
-            {"path": "/is_active",  "order": "ascending"},
+            {"path": "/layer", "order": "ascending"},
+            {"path": "/is_active", "order": "ascending"},
         ],
         [
-            {"path": "/layer",      "order": "ascending"},
-            {"path": "/modified_at","order": "descending"},
+            {"path": "/layer", "order": "ascending"},
+            {"path": "/modified_at", "order": "descending"},
         ],
     ],
 }
@@ -60,7 +60,12 @@ _INDEXING_POLICY = {
 
 class CosmosStore(AbstractStore):
 
-    def __init__(self, url: str, key: str, db_name: str, container_name: str) -> None:
+    def __init__(
+            self,
+            url: str,
+            key: str,
+            db_name: str,
+            container_name: str) -> None:
         self._url = url
         self._key = key
         self._db_name = db_name
@@ -81,7 +86,8 @@ class CosmosStore(AbstractStore):
     # READ
     # ──────────────────────────────────────────────────────────────────────
 
-    async def get_all(self, layer: str, active_only: bool = True) -> list[dict[str, Any]]:
+    async def get_all(self, layer: str,
+                      active_only: bool = True) -> list[dict[str, Any]]:
         query = "SELECT * FROM c WHERE c.layer = @layer"
         params: list[dict] = [{"name": "@layer", "value": layer}]
         if active_only:
@@ -161,9 +167,9 @@ class CosmosStore(AbstractStore):
                 continue
             ex = existing_map.get(obj_id)
             doc: dict[str, Any] = deepcopy(obj)
-            doc["id"]        = _cosmos_id(layer, obj_id)
-            doc["obj_id"]    = obj_id
-            doc["layer"]     = layer
+            doc["id"] = _cosmos_id(layer, obj_id)
+            doc["obj_id"] = obj_id
+            doc["layer"] = layer
             doc["is_active"] = doc.get("is_active", True)
             # Preserve whatever the JSON already knows; fill gaps only.
             if "created_by" not in doc:
@@ -211,8 +217,7 @@ class CosmosStore(AbstractStore):
     async def get_audit(self, limit: int = 50) -> list[dict[str, Any]]:
         query = (
             "SELECT c.layer, c.obj_id, c.modified_by, c.modified_at, c.row_version, c.is_active "
-            "FROM c ORDER BY c.modified_at DESC OFFSET 0 LIMIT @limit"
-        )
+            "FROM c ORDER BY c.modified_at DESC OFFSET 0 LIMIT @limit")
         params = [{"name": "@limit", "value": limit}]
         rows = []
         async for item in self._container.query_items(

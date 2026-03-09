@@ -8,7 +8,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore", populate_by_name=True)
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+        populate_by_name=True)
 
     # --- Cosmos DB (optional — if not set, MemoryStore is used) ---
     cosmos_url: str = ""
@@ -19,7 +23,8 @@ class Settings(BaseSettings):
     # --- Redis (optional — if not set, MemoryCache is used) ---
     redis_url: str = ""
     # TTL=0 disables caching entirely (best for local dev + agent write-verify cycles).
-    # Set to 60+ only for read-heavy dashboards. Agents must use 0 to avoid stale GET after PUT.
+    # Set to 60+ only for read-heavy dashboards. Agents must use 0 to avoid
+    # stale GET after PUT.
     cache_ttl_seconds: int = 0
 
     # --- API ---
@@ -36,7 +41,8 @@ class Settings(BaseSettings):
 
     # Path to the model directory.
     # Override with MODEL_DIR env var to run an isolated instance pointing at a
-    # different model data folder (e.g. a side project with its own layer JSON files).
+    # different model data folder (e.g. a side project with its own layer JSON
+    # files).
     model_dir_override: str = Field(default="", validation_alias="MODEL_DIR")
 
     @property

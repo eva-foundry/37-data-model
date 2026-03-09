@@ -15,7 +15,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Any
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field
 
 
 def _utcnow() -> datetime:
@@ -30,7 +30,8 @@ class ModelObject(BaseModel):
     """
 
     # ── identity ──────────────────────────────────────────────────────────
-    obj_id: str = Field(..., description="Original business key, e.g. 'GET /v1/translations'")
+    obj_id: str = Field(...,
+                        description="Original business key, e.g. 'GET /v1/translations'")
     layer: str = Field(
         ...,
         description="Layer this object belongs to",
@@ -38,11 +39,14 @@ class ModelObject(BaseModel):
     )
 
     # ── audit ─────────────────────────────────────────────────────────────
-    created_by: str = Field(default="system", description="Actor id that created this record")
+    created_by: str = Field(default="system",
+                            description="Actor id that created this record")
     created_at: datetime = Field(
         default_factory=_utcnow, description="UTC creation timestamp"
     )
-    modified_by: str = Field(default="system", description="Actor id of last writer")
+    modified_by: str = Field(
+        default="system",
+        description="Actor id of last writer")
     modified_at: datetime = Field(
         default_factory=_utcnow, description="UTC last-write timestamp"
     )

@@ -1,0 +1,1258 @@
+{
+  "layers": [
+    {
+      "layer_number": 1,
+      "layer_name": "projects",
+      "description": "Project catalog with 56 numbered initiatives",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "project.schema.json",
+      "fk_references": [],
+      "referenced_by": [
+        "sprints",
+        "evidence",
+        "services",
+        "agent_policies"
+      ],
+      "automation": "manual",
+      "notes": "Core foundation layer - 56 active projects"
+    },
+    {
+      "layer_number": 2,
+      "layer_name": "sprints",
+      "description": "Sprint tracking with velocity and completion metrics",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "sprint.schema.json",
+      "fk_references": [
+        "projects"
+      ],
+      "referenced_by": [
+        "evidence"
+      ],
+      "automation": "manual",
+      "notes": "Portfolio-level sprint management"
+    },
+    {
+      "layer_number": 3,
+      "layer_name": "stories",
+      "description": "User stories and requirements (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "story.schema.json",
+      "fk_references": [
+        "projects",
+        "sprints"
+      ],
+      "referenced_by": [
+        "tasks",
+        "evidence"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 4,
+      "layer_name": "tasks",
+      "description": "Task breakdown and tracking (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "task.schema.json",
+      "fk_references": [
+        "stories"
+      ],
+      "referenced_by": [
+        "evidence"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 5,
+      "layer_name": "evidence",
+      "description": "DPDCA proof artifacts and receipts",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "evidence.schema.json",
+      "fk_references": [
+        "projects",
+        "sprints",
+        "services"
+      ],
+      "referenced_by": [
+        "evidence_correlation"
+      ],
+      "automation": "manual",
+      "notes": "Immutable audit trail - 120+ objects"
+    },
+    {
+      "layer_number": 6,
+      "layer_name": "coverage_summary",
+      "description": "Test coverage aggregations (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "coverage_summary.schema.json",
+      "fk_references": [
+        "projects",
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 7,
+      "layer_name": "services",
+      "description": "Backend services, APIs, microservices catalog",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "service.schema.json",
+      "fk_references": [
+        "projects"
+      ],
+      "referenced_by": [
+        "endpoints",
+        "repos",
+        "tech_stack",
+        "evidence"
+      ],
+      "automation": "manual",
+      "notes": "34 active services"
+    },
+    {
+      "layer_number": 8,
+      "layer_name": "repos",
+      "description": "Repository registry (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "repo.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [
+        "deployment_history"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 9,
+      "layer_name": "tech_stack",
+      "description": "Technology inventory (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "tech_stack.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 10,
+      "layer_name": "architecture_decisions",
+      "description": "Architectural Decision Records (ADRs) (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "architecture_decision.schema.json",
+      "fk_references": [
+        "projects",
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 11,
+      "layer_name": "endpoints",
+      "description": "HTTP API endpoints (METHOD /path)",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "endpoint.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [
+        "api_contracts"
+      ],
+      "automation": "automated",
+      "notes": "186 documented endpoints"
+    },
+    {
+      "layer_number": 12,
+      "layer_name": "api_contracts",
+      "description": "OpenAPI/AsyncAPI contracts (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "api_contract.schema.json",
+      "fk_references": [
+        "endpoints"
+      ],
+      "referenced_by": [
+        "request_response_samples"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 13,
+      "layer_name": "request_response_samples",
+      "description": "API request/response samples (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "request_response_sample.schema.json",
+      "fk_references": [
+        "api_contracts"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 14,
+      "layer_name": "deployment_targets",
+      "description": "Deployment targets (dev/staging/prod) (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "deployment_target.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [
+        "deployment_history"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 15,
+      "layer_name": "ci_cd_pipelines",
+      "description": "CI/CD pipeline definitions (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "ci_cd_pipeline.schema.json",
+      "fk_references": [
+        "repos",
+        "services"
+      ],
+      "referenced_by": [
+        "deployment_history"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 16,
+      "layer_name": "deployment_history",
+      "description": "Deployment audit log (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "deployment_history.schema.json",
+      "fk_references": [
+        "services",
+        "repos",
+        "deployment_targets"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 17,
+      "layer_name": "config_defs",
+      "description": "Configuration definitions (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "config_def.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [
+        "runtime_config"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 18,
+      "layer_name": "runtime_config",
+      "description": "Runtime configuration values (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "runtime_config.schema.json",
+      "fk_references": [
+        "config_defs",
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 19,
+      "layer_name": "secrets_catalog",
+      "description": "Secrets inventory (Key Vault references) (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "secrets_catalog.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 20,
+      "layer_name": "env_vars",
+      "description": "Environment variables catalog (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "env_var.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 21,
+      "layer_name": "prompts",
+      "description": "LLM prompt templates and library",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "prompt.schema.json",
+      "fk_references": [],
+      "referenced_by": [
+        "personas",
+        "agentic_workflows"
+      ],
+      "automation": "manual",
+      "notes": "15 prompt templates"
+    },
+    {
+      "layer_number": 22,
+      "layer_name": "personas",
+      "description": "Agent personas and identity definitions",
+      "priority": "P0",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "persona.schema.json",
+      "fk_references": [
+        "prompts"
+      ],
+      "referenced_by": [
+        "agent_policies",
+        "agentic_workflows"
+      ],
+      "automation": "manual",
+      "notes": "10 agent personas"
+    },
+    {
+      "layer_number": 23,
+      "layer_name": "instructions",
+      "description": "Agent instruction sets (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "instruction.schema.json",
+      "fk_references": [
+        "personas"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 24,
+      "layer_name": "agentic_workflows",
+      "description": "Workflow definitions and orchestration (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "agentic_workflow.schema.json",
+      "fk_references": [
+        "prompts",
+        "personas"
+      ],
+      "referenced_by": [
+        "session_transcripts",
+        "workflow_metrics"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 25,
+      "layer_name": "session_transcripts",
+      "description": "Agent session logs and transcripts (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "session_transcript.schema.json",
+      "fk_references": [
+        "agentic_workflows",
+        "personas"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 26,
+      "layer_name": "workflow_metrics",
+      "description": "Workflow execution metrics (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "workflow_metric.schema.json",
+      "fk_references": [
+        "agentic_workflows"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 27,
+      "layer_name": "error_catalog",
+      "description": "Error taxonomy and resolution patterns (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "error_catalog.schema.json",
+      "fk_references": [],
+      "referenced_by": [
+        "remediation_policies"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 28,
+      "layer_name": "model_telemetry",
+      "description": "LLM model usage telemetry (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "model_telemetry.schema.json",
+      "fk_references": [
+        "personas",
+        "agentic_workflows"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 29,
+      "layer_name": "cost_tracking",
+      "description": "Per-agent cost tracking (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "cost_tracking.schema.json",
+      "fk_references": [
+        "personas",
+        "agentic_workflows"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 30,
+      "layer_name": "evidence_correlation",
+      "description": "Evidence cross-referencing and links (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "evidence_correlation.schema.json",
+      "fk_references": [
+        "evidence"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 31,
+      "layer_name": "decision_provenance",
+      "description": "Decision audit trail with reasoning (stub)",
+      "priority": "P1",
+      "category": "Foundation",
+      "operational": true,
+      "schema_file": "decision_provenance.schema.json",
+      "fk_references": [
+        "evidence"
+      ],
+      "referenced_by": [
+        "auto_fix_execution_history"
+      ],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 32,
+      "layer_name": "agent_policies",
+      "description": "Agent capabilities and safety constraints",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "agent_policy.schema.json",
+      "fk_references": [
+        "projects",
+        "personas"
+      ],
+      "referenced_by": [
+        "remediation_policies"
+      ],
+      "automation": "manual",
+      "notes": "Session 28 - governance framework"
+    },
+    {
+      "layer_number": 33,
+      "layer_name": "quality_gates",
+      "description": "MTI thresholds and quality criteria",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "quality_gate.schema.json",
+      "fk_references": [
+        "projects"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 28 - MTI enforcement"
+    },
+    {
+      "layer_number": 34,
+      "layer_name": "github_rules",
+      "description": "Branch protection and commit standards",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "github_rule.schema.json",
+      "fk_references": [],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 28 - GitHub governance"
+    },
+    {
+      "layer_number": 35,
+      "layer_name": "verification_records",
+      "description": "Verification and validation records (stub)",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "verification_record.schema.json",
+      "fk_references": [
+        "quality_gates"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 36,
+      "layer_name": "deployment_policies",
+      "description": "Pre/post-flight checks and rollback rules",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "deployment_policy.schema.json",
+      "fk_references": [],
+      "referenced_by": [
+        "remediation_policies"
+      ],
+      "automation": "manual",
+      "notes": "Deployment governance"
+    },
+    {
+      "layer_number": 37,
+      "layer_name": "runbooks",
+      "description": "Operational procedures and playbooks",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "runbook.schema.json",
+      "fk_references": [],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "8 runbook procedures"
+    },
+    {
+      "layer_number": 38,
+      "layer_name": "test_cases",
+      "description": "Test case registry (stub)",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "test_case.schema.json",
+      "fk_references": [
+        "stories",
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "manual",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 39,
+      "layer_name": "synthetic_tests",
+      "description": "Synthetic monitoring tests (stub)",
+      "priority": "P2",
+      "category": "Governance",
+      "operational": true,
+      "schema_file": "synthetic_test.schema.json",
+      "fk_references": [
+        "services",
+        "endpoints"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 41 - Populated with comprehensive data (1,144 records total)"
+    },
+    {
+      "layer_number": 40,
+      "layer_name": "agent_performance_metrics",
+      "description": "Real-time agent reliability, speed, cost metrics",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "agent_performance_metric.schema.json",
+      "fk_references": [
+        "personas"
+      ],
+      "referenced_by": [
+        "auto_fix_execution_history",
+        "remediation_effectiveness"
+      ],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync every 1 hour"
+    },
+    {
+      "layer_number": 41,
+      "layer_name": "service_health_metrics",
+      "description": "Service availability and health status",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "service_health_metric.schema.json",
+      "fk_references": [
+        "services"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync"
+    },
+    {
+      "layer_number": 42,
+      "layer_name": "resource_inventory",
+      "description": "Azure resource inventory (actual state)",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "resource_inventory.schema.json",
+      "fk_references": [],
+      "referenced_by": [
+        "resource_costs"
+      ],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync every 30 minutes"
+    },
+    {
+      "layer_number": 43,
+      "layer_name": "usage_metrics",
+      "description": "Resource usage patterns and trends",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "usage_metric.schema.json",
+      "fk_references": [
+        "resource_inventory"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync"
+    },
+    {
+      "layer_number": 44,
+      "layer_name": "cost_allocation",
+      "description": "Granular cost allocation by resource",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "cost_allocation.schema.json",
+      "fk_references": [
+        "resource_inventory"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync"
+    },
+    {
+      "layer_number": 45,
+      "layer_name": "infrastructure_events",
+      "description": "Infrastructure change events log",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "infrastructure_event.schema.json",
+      "fk_references": [
+        "resource_inventory"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync"
+    },
+    {
+      "layer_number": 46,
+      "layer_name": "agent_execution_history",
+      "description": "Complete agent action audit trail",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "agent_execution_history.schema.json",
+      "fk_references": [
+        "personas"
+      ],
+      "referenced_by": [
+        "auto_fix_execution_history"
+      ],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync"
+    },
+    {
+      "layer_number": 47,
+      "layer_name": "resource_costs",
+      "description": "Per-resource cost tracking (daily)",
+      "priority": "P3",
+      "category": "Infrastructure",
+      "operational": true,
+      "schema_file": "resource_cost.schema.json",
+      "fk_references": [
+        "resource_inventory"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 39 - automated sync every 24 hours"
+    },
+    {
+      "layer_number": 48,
+      "layer_name": "remediation_policies",
+      "description": "Decision framework (WHEN/HOW/WHO to remediate)",
+      "priority": "P4",
+      "category": "Remediation",
+      "operational": true,
+      "schema_file": "remediation_policy.schema.json",
+      "fk_references": [
+        "agent_policies",
+        "deployment_policies"
+      ],
+      "referenced_by": [
+        "auto_fix_execution_history",
+        "remediation_effectiveness"
+      ],
+      "automation": "manual",
+      "notes": "Session 40 - automated remediation framework"
+    },
+    {
+      "layer_number": 49,
+      "layer_name": "auto_fix_execution_history",
+      "description": "Audit trail of automated remediation actions",
+      "priority": "P4",
+      "category": "Remediation",
+      "operational": true,
+      "schema_file": "auto_fix_execution_history.schema.json",
+      "fk_references": [
+        "remediation_policies",
+        "agent_performance_metrics",
+        "agent_execution_history",
+        "decision_provenance"
+      ],
+      "referenced_by": [
+        "remediation_outcomes"
+      ],
+      "automation": "automated",
+      "notes": "Session 40 - self-healing audit log"
+    },
+    {
+      "layer_number": 50,
+      "layer_name": "remediation_outcomes",
+      "description": "Impact analytics (MTTR, resolution rates)",
+      "priority": "P4",
+      "category": "Remediation",
+      "operational": true,
+      "schema_file": "remediation_outcome.schema.json",
+      "fk_references": [
+        "auto_fix_execution_history"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 40 - remediation effectiveness tracking"
+    },
+    {
+      "layer_number": 51,
+      "layer_name": "remediation_effectiveness",
+      "description": "System KPIs (trends, false positives)",
+      "priority": "P4",
+      "category": "Remediation",
+      "operational": true,
+      "schema_file": "remediation_effectiveness.schema.json",
+      "fk_references": [
+        "remediation_policies",
+        "agent_performance_metrics"
+      ],
+      "referenced_by": [],
+      "automation": "automated",
+      "notes": "Session 40 - system-wide metrics aggregation"
+    }
+  ],
+  "fk_matrix": {
+    "projects": {
+      "outbound": [],
+      "inbound": [
+        "sprints",
+        "evidence",
+        "services",
+        "agent_policies",
+        "quality_gates",
+        "stories",
+        "architecture_decisions"
+      ]
+    },
+    "sprints": {
+      "outbound": [
+        "projects"
+      ],
+      "inbound": [
+        "evidence",
+        "stories"
+      ]
+    },
+    "stories": {
+      "outbound": [
+        "projects",
+        "sprints"
+      ],
+      "inbound": [
+        "tasks",
+        "evidence",
+        "test_cases"
+      ]
+    },
+    "tasks": {
+      "outbound": [
+        "stories"
+      ],
+      "inbound": [
+        "evidence"
+      ]
+    },
+    "evidence": {
+      "outbound": [
+        "projects",
+        "sprints",
+        "services"
+      ],
+      "inbound": [
+        "evidence_correlation",
+        "decision_provenance"
+      ]
+    },
+    "coverage_summary": {
+      "outbound": [
+        "projects",
+        "services"
+      ],
+      "inbound": []
+    },
+    "services": {
+      "outbound": [
+        "projects"
+      ],
+      "inbound": [
+        "endpoints",
+        "repos",
+        "tech_stack",
+        "evidence",
+        "deployment_targets",
+        "ci_cd_pipelines",
+        "deployment_history",
+        "config_defs",
+        "runtime_config",
+        "secrets_catalog",
+        "env_vars",
+        "service_health_metrics",
+        "test_cases",
+        "synthetic_tests"
+      ]
+    },
+    "repos": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": [
+        "deployment_history",
+        "ci_cd_pipelines"
+      ]
+    },
+    "tech_stack": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": []
+    },
+    "architecture_decisions": {
+      "outbound": [
+        "projects",
+        "services"
+      ],
+      "inbound": []
+    },
+    "endpoints": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": [
+        "api_contracts",
+        "synthetic_tests"
+      ]
+    },
+    "api_contracts": {
+      "outbound": [
+        "endpoints"
+      ],
+      "inbound": [
+        "request_response_samples"
+      ]
+    },
+    "request_response_samples": {
+      "outbound": [
+        "api_contracts"
+      ],
+      "inbound": []
+    },
+    "deployment_targets": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": [
+        "deployment_history"
+      ]
+    },
+    "ci_cd_pipelines": {
+      "outbound": [
+        "repos",
+        "services"
+      ],
+      "inbound": [
+        "deployment_history"
+      ]
+    },
+    "deployment_history": {
+      "outbound": [
+        "services",
+        "repos",
+        "deployment_targets"
+      ],
+      "inbound": []
+    },
+    "config_defs": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": [
+        "runtime_config"
+      ]
+    },
+    "runtime_config": {
+      "outbound": [
+        "config_defs",
+        "services"
+      ],
+      "inbound": []
+    },
+    "secrets_catalog": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": []
+    },
+    "env_vars": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": []
+    },
+    "prompts": {
+      "outbound": [],
+      "inbound": [
+        "personas",
+        "agentic_workflows"
+      ]
+    },
+    "personas": {
+      "outbound": [
+        "prompts"
+      ],
+      "inbound": [
+        "agent_policies",
+        "agentic_workflows",
+        "instructions",
+        "session_transcripts",
+        "model_telemetry",
+        "cost_tracking",
+        "agent_performance_metrics",
+        "agent_execution_history"
+      ]
+    },
+    "instructions": {
+      "outbound": [
+        "personas"
+      ],
+      "inbound": []
+    },
+    "agentic_workflows": {
+      "outbound": [
+        "prompts",
+        "personas"
+      ],
+      "inbound": [
+        "session_transcripts",
+        "workflow_metrics",
+        "model_telemetry",
+        "cost_tracking"
+      ]
+    },
+    "session_transcripts": {
+      "outbound": [
+        "agentic_workflows",
+        "personas"
+      ],
+      "inbound": []
+    },
+    "workflow_metrics": {
+      "outbound": [
+        "agentic_workflows"
+      ],
+      "inbound": []
+    },
+    "error_catalog": {
+      "outbound": [],
+      "inbound": [
+        "remediation_policies"
+      ]
+    },
+    "model_telemetry": {
+      "outbound": [
+        "personas",
+        "agentic_workflows"
+      ],
+      "inbound": []
+    },
+    "cost_tracking": {
+      "outbound": [
+        "personas",
+        "agentic_workflows"
+      ],
+      "inbound": []
+    },
+    "evidence_correlation": {
+      "outbound": [
+        "evidence"
+      ],
+      "inbound": []
+    },
+    "decision_provenance": {
+      "outbound": [
+        "evidence"
+      ],
+      "inbound": [
+        "auto_fix_execution_history"
+      ]
+    },
+    "agent_policies": {
+      "outbound": [
+        "projects",
+        "personas"
+      ],
+      "inbound": [
+        "remediation_policies"
+      ]
+    },
+    "quality_gates": {
+      "outbound": [
+        "projects"
+      ],
+      "inbound": [
+        "verification_records"
+      ]
+    },
+    "github_rules": {
+      "outbound": [],
+      "inbound": []
+    },
+    "verification_records": {
+      "outbound": [
+        "quality_gates"
+      ],
+      "inbound": []
+    },
+    "deployment_policies": {
+      "outbound": [],
+      "inbound": [
+        "remediation_policies"
+      ]
+    },
+    "runbooks": {
+      "outbound": [],
+      "inbound": []
+    },
+    "test_cases": {
+      "outbound": [
+        "stories",
+        "services"
+      ],
+      "inbound": []
+    },
+    "synthetic_tests": {
+      "outbound": [
+        "services",
+        "endpoints"
+      ],
+      "inbound": []
+    },
+    "agent_performance_metrics": {
+      "outbound": [
+        "personas"
+      ],
+      "inbound": [
+        "auto_fix_execution_history",
+        "remediation_effectiveness"
+      ]
+    },
+    "service_health_metrics": {
+      "outbound": [
+        "services"
+      ],
+      "inbound": []
+    },
+    "resource_inventory": {
+      "outbound": [],
+      "inbound": [
+        "resource_costs",
+        "usage_metrics",
+        "cost_allocation",
+        "infrastructure_events"
+      ]
+    },
+    "usage_metrics": {
+      "outbound": [
+        "resource_inventory"
+      ],
+      "inbound": []
+    },
+    "cost_allocation": {
+      "outbound": [
+        "resource_inventory"
+      ],
+      "inbound": []
+    },
+    "infrastructure_events": {
+      "outbound": [
+        "resource_inventory"
+      ],
+      "inbound": []
+    },
+    "agent_execution_history": {
+      "outbound": [
+        "personas"
+      ],
+      "inbound": [
+        "auto_fix_execution_history"
+      ]
+    },
+    "resource_costs": {
+      "outbound": [
+        "resource_inventory"
+      ],
+      "inbound": []
+    },
+    "remediation_policies": {
+      "outbound": [
+        "agent_policies",
+        "deployment_policies"
+      ],
+      "inbound": [
+        "auto_fix_execution_history",
+        "remediation_effectiveness"
+      ]
+    },
+    "auto_fix_execution_history": {
+      "outbound": [
+        "remediation_policies",
+        "agent_performance_metrics",
+        "agent_execution_history",
+        "decision_provenance"
+      ],
+      "inbound": [
+        "remediation_outcomes"
+      ]
+    },
+    "remediation_outcomes": {
+      "outbound": [
+        "auto_fix_execution_history"
+      ],
+      "inbound": []
+    },
+    "remediation_effectiveness": {
+      "outbound": [
+        "remediation_policies",
+        "agent_performance_metrics"
+      ],
+      "inbound": []
+    }
+  },
+  "category_counts": {
+    "Foundation": 32,
+    "Governance": 8,
+    "Infrastructure": 8,
+    "Remediation": 4
+  },
+  "priority_counts": {
+    "P0": 9,
+    "P1": 23,
+    "P2": 8,
+    "P3": 8,
+    "P4": 4
+  },
+  "operational_count": 19,
+  "stub_count": 32,
+  "last_updated": "2026-03-08T18:58:00Z"
+}
