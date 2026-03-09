@@ -260,6 +260,49 @@ EDGE_TYPES: list[EdgeTypeMeta] = [
         via_field="trace_ids",
         cardinality="many-to-many",
         description="Step event references LLM call traces"),
+    # ── Execution Engine Edges Phase 2 (L55, L57, L58) Session 41 Part 11 ──
+    EdgeTypeMeta(
+        edge_type="obligates",
+        from_layer="work_decision_records",
+        to_layer="work_obligations",
+        via_field="decision_id",
+        cardinality="one-to-many",
+        description="Decision creates follow-up obligation (inverse lookup: obligation.decision_id)"),
+    EdgeTypeMeta(
+        edge_type="obligation_evidence",
+        from_layer="work_obligations",
+        to_layer="evidence",
+        via_field="completion_evidence_id",
+        cardinality="many-to-one",
+        description="Obligation linked to completion evidence artifact"),
+    EdgeTypeMeta(
+        edge_type="learns_from",
+        from_layer="work_learning_feedback",
+        to_layer="work_execution_units",
+        via_field="work_unit_ids",
+        cardinality="many-to-many",
+        description="Learning derived from work unit execution"),
+    EdgeTypeMeta(
+        edge_type="learning_references_pattern",
+        from_layer="work_learning_feedback",
+        to_layer="work_reusable_patterns",
+        via_field="pattern_ids",
+        cardinality="many-to-many",
+        description="Learning references pattern (backfill relationship)"),
+    EdgeTypeMeta(
+        edge_type="derives_pattern",
+        from_layer="work_reusable_patterns",
+        to_layer="work_learning_feedback",
+        via_field="derived_from_learning_ids",
+        cardinality="many-to-many",
+        description="Pattern derived from learning feedback"),
+    EdgeTypeMeta(
+        edge_type="pattern_examples",
+        from_layer="work_reusable_patterns",
+        to_layer="work_execution_units",
+        via_field="example_work_units",
+        cardinality="many-to-many",
+        description="Pattern demonstrated by work unit examples"),
 ]
 
 # Fast lookup by edge_type string

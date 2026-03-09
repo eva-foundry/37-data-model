@@ -1,8 +1,9 @@
 ================================================================================
- EVA DATA MODEL -- EXECUTION ENGINE (PHASE 1: L52-L56)
+ EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1 & 2: L52-L58)
  File: docs/library/13-EXECUTION-LAYERS.md
  Created: 2026-03-09 -- Session 41 Part 10
- Status: 4 layers operational (L52, L53, L54, L56), 15 layers planned (L55, L57-L70)
+ Updated: 2026-03-09 -- Session 41 Part 11 (Phase 2 deployed)
+ Status: 7 layers operational (L52-L56, L57, L58), 17 layers planned (L59-L75)
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md (phased deployment plan)
          docs/library/99-layers-design-20260309-0935.md (canonical numbering)
@@ -643,22 +644,286 @@
   5. Feed into learning layer (L57, Phase 2)
 
 ================================================================================
- PHASE 2-6 PREVIEW -- 15 MORE LAYERS (L55, L57-L70)
+ PHASE 2 LAYERS (SESSION 41 PART 11) -- 3 LAYERS OPERATIONAL
 ================================================================================
 
-  Phase 1 deployed 4 layers. 15 more layers planned across 5 phases.
+--------------------------------------------------------------------------------
+ L55 -- work_obligations (CHILD OF L54 DECISIONS)
+--------------------------------------------------------------------------------
+
+  PURPOSE: Follow-up obligations from work decisions and policy enforcement
+  STATUS: Deployed March 9, 2026 (Session 41 Part 11)
+  SCHEMA: schema/work_obligations.schema.json
+  PRIMARY KEY: id (format: {project-id}-obl-{YYYYMMDD}-{seq})
+  PARENT: Inverse FK from L54 work_decision_records
+
+  FIELD CATALOG
+  -------------
+  id                         PK, string, pattern: ^[a-z0-9-]+-obl-[0-9]{8}-[0-9]{3,}$
+  
+  decision_id                FK to L54 work_decision_records, required
+                             Which decision created this obligation
+  
+  work_unit_id               FK to L52 work_execution_units, nullable
+                             Optional context (which work unit triggered this)
+  
+  policy_id                  FK to L16 cp_policies, nullable
+                             If policy-mandated obligation
+  
+  obligation_text            string, required, 10-2000 chars
+                             Actionable description of what must be done
+  
+  status                     enum, required: open | in_progress | blocked | completed | cancelled
+                             Lifecycle tracking
+  
+  priority                   enum, required: critical | high | medium | low
+                             Urgency level
+  
+  assigned_to_type           enum, required: agent | cp_agent | human
+                             Polymorphic actor type
+  
+  assigned_to_id             string, required
+                             Polymorphic FK (resolve via assigned_to_type)
+  
+  due_date                   date, nullable
+                             Optional deadline
+  
+  blocked_reason             string, nullable, 10-1000 chars
+                             Why this obligation is blocked (if status=blocked)
+  
+  completion_evidence_id     FK to L31 evidence, nullable
+                             Proof of completion
+  
+  notes                      string, nullable
+                             Additional context
+  
+  created_at                 datetime, auto-generated
+  updated_at                 datetime, auto-updated
+  created_by                 string, required
+  updated_by                 string, nullable
+
+  GRAPH EDGES
+  -----------
+  obligates: work_decision_records (L54) → work_obligations (L55) via decision_id (inverse)
+  obligation_evidence: work_obligations (L55) → evidence (L31) via completion_evidence_id
+
+  USE CASES
+  ---------
+  1. Decision creates remediation obligation (security vulnerability → patch required)
+  2. Policy violation triggers compliance obligation (license check failed → resolve before merge)
+  3. WBS task generates follow-up (deploy to staging → verify in prod)
+  4. Agent query: "What open obligations am I assigned to?"
+  5. Dashboard: Overdue obligations by priority
+
+--------------------------------------------------------------------------------
+ L57 -- work_learning_feedback (ADAPTIVE LEARNING)
+--------------------------------------------------------------------------------
+
+  PURPOSE: Lessons learned, tuning signals, improvement insights from execution
+  STATUS: Deployed March 9, 2026 (Session 41 Part 11)
+  SCHEMA: schema/work_learning_feedback.schema.json
+  PRIMARY KEY: id (format: learning-{YYYYMMDD}-{seq})
+  PARENT: None (learning aggregates across work units)
+
+  FIELD CATALOG
+  -------------
+  id                         PK, string, pattern: ^learning-[0-9]{8}-[0-9]{3,}$
+  
+  work_unit_ids              Array of FK to L52 work_execution_units, required
+                             Source work units this learning was extracted from
+  
+  learning_type              enum, required: success_factor | failure_cause | optimization |
+                             anti_pattern | best_practice | edge_case | tuning_signal
+  
+  observation                string, required, 20-2000 chars
+                             What was observed (factual description)
+  
+  recommendation             string, required, 10-2000 chars
+                             Actionable advice based on observation
+  
+  confidence_score           number, required, 0.0-1.0
+                             Quality indicator (higher = more reliable, based on sample size)
+  
+  validation_status          enum, required: draft | under_review | validated | rejected | archived
+                             Review lifecycle
+  
+  author_type                enum, required: agent | cp_agent | human
+                             Who created this learning
+  
+  author_id                  string, required
+                             Polymorphic FK
+  
+  pattern_ids                Array of FK to L58 work_reusable_patterns, nullable
+                             Backfill: patterns derived from this learning
+  
+  tags                       Array of strings, nullable
+                             Searchable categorization
+  
+  notes                      string, nullable
+  
+  created_at                 datetime, auto-generated
+  validated_at               datetime, nullable
+  validated_by               string, nullable
+
+  GRAPH EDGES
+  -----------
+  learns_from: work_learning_feedback (L57) → work_execution_units (L52) via work_unit_ids[]
+  learning_references_pattern: work_learning_feedback (L57) → work_reusable_patterns (L58) via pattern_ids[]
+
+  USE CASES
+  ---------
+  1. Capture what worked: "success_factor: Incremental schema changes prevented migration failures"
+  2. Capture what failed: "failure_cause: Missing validation caused corrupt records"
+  3. Tuning signal: "optimization: API response time improved 40% after caching"
+  4. Anti-pattern detection: "anti_pattern: Bulk operations without checkpoints led to data loss"
+  5. Agent query: "Show validated learnings with confidence > 0.8 tagged 'deployment'"
+  6. Feed into pattern creation (L58)
+
+  CONFIDENCE SCORING GUIDANCE
+  ---------------------------
+  1.0 = Validated across 20+ executions, no exceptions observed
+  0.8 = Consistent across 10+ executions, rare exceptions acceptable
+  0.6 = Observed in 5+ executions, some contradictory evidence
+  0.4 = Observed in 2-4 executions, limited sample size
+  0.2 = Single observation, hypothesis only
+
+--------------------------------------------------------------------------------
+ L58 -- work_reusable_patterns (PATTERN LIBRARY)
+--------------------------------------------------------------------------------
+
+  PURPOSE: Approved execution templates derived from learning feedback
+  STATUS: Deployed March 9, 2026 (Session 41 Part 11)
+  SCHEMA: schema/work_reusable_patterns.schema.json
+  PRIMARY KEY: id (format: pattern-{kebab-case-name})
+  PARENT: None (library entity)
+
+  FIELD CATALOG
+  -------------
+  id                         PK, string, pattern: ^pattern-[a-z0-9-]+$
+                             Example: "pattern-incremental-schema-migration"
+  
+  pattern_name               string, required, 3-100 chars
+                             Human-readable name
+  
+  pattern_type               enum, required: workflow | quality_gate | deployment |
+                             testing | refactoring | analysis | remediation
+  
+  description                string, required, 20-2000 chars
+                             Detailed guidance on when to apply this pattern
+  
+  applicability_conditions   Array of objects, nullable
+                             [{ condition_type, condition_text }]
+                             condition_type: project_type | tech_stack | complexity | risk_level | team_size | custom
+  
+  steps                      Array of objects, required
+                             [{ step_number, step_name, step_description, required, validation_criteria[] }]
+                             Executable steps with validation criteria
+  
+  expected_outcomes          Array of strings, nullable
+                             What should be achieved if pattern followed correctly
+  
+  derived_from_learning_ids  Array of FK to L57 work_learning_feedback, nullable
+                             Source learnings that informed this pattern
+  
+  example_work_units         Array of FK to L52 work_execution_units, nullable
+                             Examples where this pattern was successfully applied
+  
+  approval_status            enum, required: draft | under_review | approved | deprecated
+                             Governance lifecycle
+  
+  approval_date              datetime, nullable
+  approver                   string, nullable
+  
+  version                    string, required, pattern: ^[0-9]+\.[0-9]+\.[0-9]+$
+                             Semantic versioning (major.minor.patch)
+  
+  deprecation_reason         string, nullable
+                             Why this pattern was deprecated (if status=deprecated)
+  
+  notes                      string, nullable
+  
+  created_at                 datetime, auto-generated
+  updated_at                 datetime, auto-updated
+  created_by                 string, required
+
+  GRAPH EDGES
+  -----------
+  derives_pattern: work_reusable_patterns (L58) → work_learning_feedback (L57) via derived_from_learning_ids[]
+  pattern_examples: work_reusable_patterns (L58) → work_execution_units (L52) via example_work_units[]
+
+  USE CASES
+  ---------
+  1. Agent query: "Show approved workflow patterns for deployment work_type"
+  2. Pattern application: Before starting work, query relevant patterns
+  3. Pattern versioning: Update pattern based on new learnings, increment version
+  4. Factory service registration (Phase 4): Services declare which patterns they implement
+  5. Performance tracking (Phase 3): Measure pattern effectiveness via L59, L60
+
+  EXAMPLE PATTERN: INCREMENTAL SCHEMA MIGRATION
+  ----------------------------------------------
+  ```json
+  {
+    "id": "pattern-incremental-schema-migration",
+    "pattern_name": "Incremental Schema Migration (Zero-Downtime)",
+    "pattern_type": "deployment",
+    "description": "Migrate database schema incrementally to avoid production downtime",
+    "applicability_conditions": [
+      {
+        "condition_type": "tech_stack",
+        "condition_text": "Azure Cosmos DB, PostgreSQL, or other online-migration-capable DB"
+      },
+      {
+        "condition_type": "risk_level",
+        "condition_text": "High-risk schema changes affecting production data"
+      }
+    ],
+    "steps": [
+      {
+        "step_number": 1,
+        "step_name": "Add new nullable field",
+        "step_description": "Add new field as nullable to avoid breaking existing writes",
+        "required": true,
+        "validation_criteria": ["Field exists in schema", "No write errors logged"]
+      },
+      {
+        "step_number": 2,
+        "step_name": "Backfill existing records",
+        "step_description": "Script to populate new field for existing records",
+        "required": true,
+        "validation_criteria": ["100% records backfilled", "No null values for active records"]
+      },
+      {
+        "step_number": 3,
+        "step_name": "Deploy code using new field",
+        "step_description": "Application code now reads/writes new field",
+        "required": true,
+        "validation_criteria": ["Deployment successful", "No rollback triggered"]
+      },
+      {
+        "step_number": 4,
+        "step_name": "Make field required (if needed)",
+        "step_description": "Update schema validation to mark field as required",
+        "required": false,
+        "validation_criteria": ["Schema validation passes", "No validation errors"]
+      }
+    ],
+    "expected_outcomes": [
+      "Zero downtime during migration",
+      "No data loss",
+      "Rollback possible at any step"
+    ],
+    "approval_status": "approved",
+    "version": "1.0.0"
+  }
+  ```
+
+================================================================================
+ PHASE 3-6 PREVIEW -- 17 MORE LAYERS (L59-L75)
+================================================================================
+
+  Phase 1 deployed 4 layers (L52-L56). Phase 2 deployed 3 layers (L55, L57, L58).
+  17 more layers planned across 4 phases.
   See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md for full phased plan.
-
-  PHASE 2 (L55, L57-L58) -- LEARNING & OBLIGATIONS
-  -------------------------------------------------
-  L55 work_obligations         Compliance obligations triggered by work execution
-  L57 work_learning_feedback   Lessons learned, retrospectives, improvement actions
-  L58 work_reusable_patterns   Pattern library extracted from successful executions
-
-  Key relationships:
-  - L54 work_decision_records → obligation_ids[] → L55 work_obligations
-  - L56 work_outcomes → learning_ids[] → L57 work_learning_feedback
-  - L57 → pattern_id FK → L58 work_reusable_patterns
 
   PHASE 3 (L59-L60) -- PATTERN APPLICATION & PERFORMANCE
   -------------------------------------------------------
@@ -699,12 +964,12 @@
 
   DEPLOYMENT TIMELINE
   -------------------
-  Phase 1 (L52-L56):   March 2026    ✅ DEPLOYED
-  Phase 2 (L55,L57-L58): TBD
-  Phase 3 (L59-L60):   TBD
-  Phase 4 (L61-L66):   TBD  
-  Phase 5 (L67-L70):   TBD
-  Phase 6 (L71-L75):   TBD
+  Phase 1 (L52-L56):     March 2026    ✅ DEPLOYED (Session 41 Part 10)
+  Phase 2 (L55,L57-L58): March 2026    ✅ DEPLOYED (Session 41 Part 11)
+  Phase 3 (L59-L60):     TBD
+  Phase 4 (L61-L66):     TBD  
+  Phase 5 (L67-L70):     TBD
+  Phase 6 (L71-L75):     TBD
 
   Strategy: Deploy phases incrementally as operational needs emerge.
   No fixed timeline. Demand-driven deployment.

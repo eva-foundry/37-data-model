@@ -1,10 +1,11 @@
 ================================================================================
- EVA DATA MODEL -- 87-LAYER REFERENCE
+ EVA DATA MODEL -- 94-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 87 operational layers; 12 ontology domains; Session 41
+ Updated: 2026-03-09 -- 94 operational layers; 12 ontology domains; Session 41 Part 11
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
-         docs/COMPLETE-LAYER-CATALOG.md (definitive catalog with all 87+24 layers)
+         docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1 & 2: L52-L58 deployed)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -976,6 +977,84 @@
   Use cases: Delivery verification, lesson learned capture, variance analysis
   Query: GET /model/work_outcomes/?work_unit_id={id}&result=delivered
 
+  L55 work_obligations    0 items (schema deployed, inverse FK from L54)
+  -----------------------------------------------------------------------
+  Purpose: Follow-up obligations from decisions and policy enforcement
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 2)
+  Schema: schema/work_obligations.schema.json
+  
+  Key fields:
+    id                     -- Primary key: {project-id}-obl-{YYYYMMDD}-{seq}
+    decision_id            -- FK to L54 work_decision_records (REQUIRED inverse relationship)
+    work_unit_id           -- FK to L52 work_execution_units (optional context)
+    policy_id              -- FK to L16 cp_policies (if policy-mandated)
+    obligation_text        -- Actionable description (10-2000 chars)
+    status                 -- open | in_progress | blocked | completed | cancelled
+    priority               -- critical | high | medium | low
+    assigned_to_type       -- agent | cp_agent | human (polymorphic)
+    assigned_to_id         -- Polymorphic FK
+    due_date               -- Optional deadline
+    blocked_reason         -- Why blocked (if status=blocked)
+    completion_evidence_id -- FK to L31 evidence
+  
+  Graph edges: obligates (L54→L55), obligation_evidence (L55→L31)
+  Use cases: Remediation tracking, policy compliance, decision follow-up
+  Query: GET /model/work_obligations/?status=open&assigned_to_id={agent-id}
+
+  L57 work_learning_feedback    0 items (schema deployed, adaptive learning)
+  -----------------------------------------------------------------------
+  Purpose: Lessons learned and improvement insights from work execution
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 2)
+  Schema: schema/work_learning_feedback.schema.json
+  
+  Key fields:
+    id                     -- Primary key: learning-{YYYYMMDD}-{seq}
+    work_unit_ids[]        -- FK array to L52 work_execution_units (sources, REQUIRED)
+    learning_type          -- success_factor | failure_cause | optimization | anti_pattern |
+                              best_practice | edge_case | tuning_signal
+    observation            -- Factual description (20-2000 chars)
+    recommendation         -- Actionable advice (10-2000 chars)
+    confidence_score       -- 0.0-1.0 (quality indicator, higher = more reliable)
+    validation_status      -- draft | under_review | validated | rejected | archived
+    author_type            -- agent | cp_agent | human (polymorphic)
+    author_id              -- Polymorphic FK
+    pattern_ids[]          -- FK array to L58 work_reusable_patterns (backfill)
+    tags[]                 -- Searchable categorization
+  
+  Graph edges: learns_from (L57→L52), learning_references_pattern (L57→L58)
+  Use cases: Retrospectives, tuning signals, pattern derivation, continuous improvement
+  Query: GET /model/work_learning_feedback/?validation_status=validated&confidence_score>=0.8
+
+  L58 work_reusable_patterns    0 items (schema deployed, pattern library)
+  -----------------------------------------------------------------------
+  Purpose: Approved execution templates derived from learning feedback
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 2)
+  Schema: schema/work_reusable_patterns.schema.json
+  
+  Key fields:
+    id                     -- Primary key: pattern-{kebab-case-name}
+    pattern_name           -- Human-readable name (3-100 chars)
+    pattern_type           -- workflow | quality_gate | deployment | testing | 
+                              refactoring | analysis | remediation
+    description            -- Detailed guidance (20-2000 chars)
+    applicability_conditions[] -- Array of { condition_type, condition_text }
+                                  condition_type: project_type | tech_stack | complexity |
+                                  risk_level | team_size | custom
+    steps[]                -- Array of { step_number, step_name, step_description, required,
+                              validation_criteria[] } -- executable steps
+    expected_outcomes[]    -- What should be achieved
+    derived_from_learning_ids[] -- FK array to L57 work_learning_feedback (sources)
+    example_work_units[]   -- FK array to L52 work_execution_units (examples)
+    approval_status        -- draft | under_review | approved | deprecated
+    approval_date          -- When approved
+    approver               -- Who approved
+    version                -- Semantic version (major.minor.patch)
+    deprecation_reason     -- Why deprecated (if status=deprecated)
+  
+  Graph edges: derives_pattern (L58→L57), pattern_examples (L58→L52)
+  Use cases: Factory capabilities (Phase 4), agent pattern selection, performance tracking (Phase 3)
+  Query: GET /model/work_reusable_patterns/?approval_status=approved&pattern_type=deployment
+
   SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
     - 4 execution layers deployed (L52, L53, L54, L56)
     - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
@@ -984,6 +1063,15 @@
     - Planned layers: 24 → 20 (still L55, L57-L75 to deploy)
     - Phase 1 complete, Phase 2-6 ready for deployment
     - See docs/library/13-EXECUTION-LAYERS.md for complete specification
+
+  SESSION 41 PART 11 UPDATE (March 9, 2026 4:00 PM ET):
+    - 3 more execution layers deployed (L55, L57, L58) -- Phase 2 complete
+    - Obligations tracking from decisions (L54→L55 inverse FK)
+    - Adaptive learning feedback layer (L57) with confidence scoring
+    - Reusable pattern library (L58) derived from learning
+    - 6 new FK edge types added (38 → 44 total)
+    - Layer count: 91 → 94 operational
+    - Remaining: 17 layers (L59-L75 in Phases 3-6)
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)
