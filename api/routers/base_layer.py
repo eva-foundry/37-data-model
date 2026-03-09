@@ -263,7 +263,7 @@ def make_layer_router(layer: str, prefix: str, tags: list[str]) -> APIRouter:
         
         # Also invalidate Redis cache for agent-summary (Session 41 Part 7)
         try:
-            from api.cache import cache_client
+            from api.simple_cache import cache_client
             await cache_client.delete("agent-summary:v1")
         except Exception:
             pass  # Non-fatal, old cache exists as fallback
@@ -292,7 +292,7 @@ def make_layer_router(layer: str, prefix: str, tags: list[str]) -> APIRouter:
         
         # Also invalidate Redis cache for agent-summary (Session 41 Part 7)
         try:
-            from api.cache import cache_client
+            from api.simple_cache import cache_client
             await cache_client.delete("agent-summary:v1")
         except Exception:
             pass  # Non-fatal, old cache exists as fallback

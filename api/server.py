@@ -477,7 +477,7 @@ def create_app() -> FastAPI:
         ENHANCED (Session 41 Part 7): Added Redis caching for 5-10× faster responses.
         Cache invalidated on seed/commit operations.
         """
-        from api.cache import cache_client
+        from api.simple_cache import cache_client
         from api.routers.admin import _LAYER_FILES
         from api.store.cosmos import CosmosStore as _CS
         

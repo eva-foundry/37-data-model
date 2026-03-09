@@ -5,7 +5,7 @@ Provides Redis-backed caching with graceful fallback to in-memory dict.
 Supports cache invalidation patterns for write operations.
 
 Usage:
-    from api.cache import cache_client
+    from api.simple_cache import cache_client
     
     # Get from cache
     data = await cache_client.get("agent-summary:v1")

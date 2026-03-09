@@ -451,7 +451,7 @@ async def seed(
     
     # Invalidate Redis cache after seed (Session 41 Part 7)
     try:
-        from api.cache import invalidate_all_cache
+        from api.simple_cache import invalidate_all_cache
         await invalidate_all_cache()
         log.info("Seed: Redis cache invalidated successfully")
     except Exception as cache_err:
@@ -1108,7 +1108,7 @@ async def commit(
     # Invalidate Redis cache after commit (Session 41 Part 7)
     if overall_ok:
         try:
-            from api.cache import invalidate_all_cache
+            from api.simple_cache import invalidate_all_cache
             await invalidate_all_cache()
             log.info("Commit: Redis cache invalidated successfully (PASS)")
         except Exception as cache_err:
