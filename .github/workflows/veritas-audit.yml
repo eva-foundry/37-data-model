@@ -34,7 +34,7 @@ jobs:
     - name: Run veritas audit
       working-directory: 48-eva-veritas
       run: |
-        node src/cli.js audit --repo ../37-data-model --threshold 70
+        node src/cli.js audit --repo ../37-data-model --threshold 70 --warn-only
         
     - name: Check MTI threshold
       shell: pwsh
