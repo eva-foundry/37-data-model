@@ -449,6 +449,14 @@ async def seed(
     layers_with_data = sum(1 for c in counts.values() if c > 0)
     layers_skipped = len(_LAYER_FILES) - len(counts)
     
+    # Invalidate Redis cache after seed (Session 41 Part 7)
+    try:
+        from api.cache import invalidate_all_cache
+        await invalidate_all_cache()
+        log.info("Seed: Redis cache invalidated successfully")
+    except Exception as cache_err:
+        log.warning("Seed: Cache invalidation failed (non-fatal): %s", cache_err)
+    
     progress.append("=== SEED OPERATION COMPLETED ===")
     progress.append(f"Total records loaded: {total_records:,}")
     progress.append(f"Layers in _LAYER_FILES: {len(_LAYER_FILES)}")
@@ -982,6 +990,15 @@ async def commit(
                     f"agent '{aid}' output_screens references unknown screen '{s}'")
 
     overall_ok = not violations and assemble_result["ok"] and not export_errors
+    
+    # Invalidate Redis cache after commit (Session 41 Part 7)
+    if overall_ok:
+        try:
+            from api.cache import invalidate_all_cache
+            await invalidate_all_cache()
+            log.info("Commit: Redis cache invalidated successfully (PASS)")
+        except Exception as cache_err:
+            log.warning("Commit: Cache invalidation failed (non-fatal): %s", cache_err)
 
     return {
         "status": "PASS" if overall_ok else "FAIL",
