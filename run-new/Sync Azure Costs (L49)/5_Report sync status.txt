@@ -1,0 +1,16 @@
+﻿2026-03-08T14:04:38.9868618Z ##[group]Run if ($LASTEXITCODE -eq 0) ***
+2026-03-08T14:04:38.9869038Z [36;1mif ($LASTEXITCODE -eq 0) ***[0m
+2026-03-08T14:04:38.9869529Z [36;1m  Write-Host "✓ Cost sync completed successfully" -ForegroundColor Green[0m
+2026-03-08T14:04:38.9869983Z [36;1m*** else ***[0m
+2026-03-08T14:04:38.9870299Z [36;1m  Write-Host "✗ Cost sync failed" -ForegroundColor Red[0m
+2026-03-08T14:04:38.9870642Z [36;1m  exit 1[0m
+2026-03-08T14:04:38.9870881Z [36;1m***[0m
+2026-03-08T14:04:38.9921906Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T14:04:38.9922232Z env:
+2026-03-08T14:04:38.9922526Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T14:04:38.9923326Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T14:04:38.9923923Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T14:04:38.9924233Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T14:04:38.9924541Z ##[endgroup]
+2026-03-08T14:04:39.6703882Z ✗ Cost sync failed
+2026-03-08T14:04:39.7148726Z ##[error]Process completed with exit code 1.

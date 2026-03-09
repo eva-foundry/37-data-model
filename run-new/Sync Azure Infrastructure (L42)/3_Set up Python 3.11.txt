@@ -1,0 +1,17 @@
+﻿2026-03-08T14:04:10.3530764Z ##[group]Run actions/setup-python@v5
+2026-03-08T14:04:10.3532068Z with:
+2026-03-08T14:04:10.3532937Z   python-version: 3.11
+2026-03-08T14:04:10.3533951Z   check-latest: false
+2026-03-08T14:04:10.3535415Z   token: ***
+2026-03-08T14:04:10.3536348Z   update-environment: true
+2026-03-08T14:04:10.3537458Z   allow-prereleases: false
+2026-03-08T14:04:10.3538549Z   freethreaded: false
+2026-03-08T14:04:10.3539499Z env:
+2026-03-08T14:04:10.3605224Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T14:04:10.3609640Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T14:04:10.3613417Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T14:04:10.3615841Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T14:04:10.3617983Z ##[endgroup]
+2026-03-08T14:04:10.5389754Z ##[group]Installed versions
+2026-03-08T14:04:10.5488129Z Successfully set up CPython (3.11.14)
+2026-03-08T14:04:10.5491122Z ##[endgroup]

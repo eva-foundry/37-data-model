@@ -1,0 +1,477 @@
+﻿2026-03-08T13:59:01.5932856Z Current runner version: '2.332.0'
+2026-03-08T13:59:01.5957081Z ##[group]Runner Image Provisioner
+2026-03-08T13:59:01.5958050Z Hosted Compute Agent
+2026-03-08T13:59:01.5959036Z Version: 20260213.493
+2026-03-08T13:59:01.5959728Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-08T13:59:01.5960619Z Build Date: 2026-02-13T00:28:41Z
+2026-03-08T13:59:01.5961448Z Worker ID: ***a3b9b118-a8b4-4715-8f2d-4e96613a8b09***
+2026-03-08T13:59:01.5962332Z Azure Region: westus2
+2026-03-08T13:59:01.5963065Z ##[endgroup]
+2026-03-08T13:59:01.5964582Z ##[group]Operating System
+2026-03-08T13:59:01.5965377Z Ubuntu
+2026-03-08T13:59:01.5965965Z 24.04.3
+2026-03-08T13:59:01.5966572Z LTS
+2026-03-08T13:59:01.5967269Z ##[endgroup]
+2026-03-08T13:59:01.5967863Z ##[group]Runner Image
+2026-03-08T13:59:01.5968748Z Image: ubuntu-24.04
+2026-03-08T13:59:01.5969392Z Version: 20260302.42.1
+2026-03-08T13:59:01.5970800Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-08T13:59:01.5972371Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-08T13:59:01.5973515Z ##[endgroup]
+2026-03-08T13:59:01.5977049Z ##[group]GITHUB_TOKEN Permissions
+2026-03-08T13:59:01.5979360Z Actions: write
+2026-03-08T13:59:01.5980022Z ArtifactMetadata: write
+2026-03-08T13:59:01.5980807Z Attestations: write
+2026-03-08T13:59:01.5981500Z Checks: write
+2026-03-08T13:59:01.5982152Z Contents: write
+2026-03-08T13:59:01.5982770Z Deployments: write
+2026-03-08T13:59:01.5983369Z Discussions: write
+2026-03-08T13:59:01.5984039Z Issues: write
+2026-03-08T13:59:01.5984694Z Metadata: read
+2026-03-08T13:59:01.5985403Z Models: read
+2026-03-08T13:59:01.5986000Z Packages: write
+2026-03-08T13:59:01.5986587Z Pages: write
+2026-03-08T13:59:01.5987386Z PullRequests: write
+2026-03-08T13:59:01.5988063Z RepositoryProjects: write
+2026-03-08T13:59:01.5989140Z SecurityEvents: write
+2026-03-08T13:59:01.5989799Z Statuses: write
+2026-03-08T13:59:01.5990503Z ##[endgroup]
+2026-03-08T13:59:01.5992738Z Secret source: Actions
+2026-03-08T13:59:01.5993584Z Prepare workflow directory
+2026-03-08T13:59:01.6440182Z Prepare all required actions
+2026-03-08T13:59:01.6477694Z Getting action download info
+2026-03-08T13:59:02.0835473Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-08T13:59:02.2382799Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-03-08T13:59:02.3584108Z Download action repository 'azure/login@v2' (SHA:a457da9ea143d694b1b9c7c869ebb04ebe844ef5)
+2026-03-08T13:59:02.8044569Z Complete job name: Sync Azure Infrastructure (L42)
+2026-03-08T13:59:02.8770803Z ##[group]Run actions/checkout@v4
+2026-03-08T13:59:02.8771679Z with:
+2026-03-08T13:59:02.8772140Z   repository: eva-foundry/37-data-model
+2026-03-08T13:59:02.8772860Z   token: ***
+2026-03-08T13:59:02.8773290Z   ssh-strict: true
+2026-03-08T13:59:02.8773737Z   ssh-user: git
+2026-03-08T13:59:02.8774185Z   persist-credentials: true
+2026-03-08T13:59:02.8774705Z   clean: true
+2026-03-08T13:59:02.8775162Z   sparse-checkout-cone-mode: true
+2026-03-08T13:59:02.8775690Z   fetch-depth: 1
+2026-03-08T13:59:02.8776117Z   fetch-tags: false
+2026-03-08T13:59:02.8776561Z   show-progress: true
+2026-03-08T13:59:02.8777013Z   lfs: false
+2026-03-08T13:59:02.8777426Z   submodules: false
+2026-03-08T13:59:02.8777877Z   set-safe-directory: true
+2026-03-08T13:59:02.8778744Z env:
+2026-03-08T13:59:02.8779303Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:02.8780463Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:02.8781508Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:02.8782085Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:02.8782694Z ##[endgroup]
+2026-03-08T13:59:02.9866381Z Syncing repository: eva-foundry/37-data-model
+2026-03-08T13:59:02.9868201Z ##[group]Getting Git version info
+2026-03-08T13:59:02.9869338Z Working directory is '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:59:02.9870756Z [command]/usr/bin/git version
+2026-03-08T13:59:02.9948057Z git version 2.53.0
+2026-03-08T13:59:02.9974523Z ##[endgroup]
+2026-03-08T13:59:02.9988842Z Temporarily overriding HOME='/home/runner/work/_temp/78b08c6a-750e-4729-b5dd-51ca19415e9a' before making global git config changes
+2026-03-08T13:59:02.9991218Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:59:03.0001454Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:59:03.0043095Z Deleting the contents of '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:59:03.0046434Z ##[group]Initializing the repository
+2026-03-08T13:59:03.0050983Z [command]/usr/bin/git init /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:59:03.0151778Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-08T13:59:03.0153086Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-08T13:59:03.0154786Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-08T13:59:03.0156110Z hint: call:
+2026-03-08T13:59:03.0156789Z hint:
+2026-03-08T13:59:03.0157690Z hint: 	git config --global init.defaultBranch <name>
+2026-03-08T13:59:03.0158772Z hint:
+2026-03-08T13:59:03.0159432Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-08T13:59:03.0160410Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-08T13:59:03.0161152Z hint:
+2026-03-08T13:59:03.0161595Z hint: 	git branch -m <name>
+2026-03-08T13:59:03.0162160Z hint:
+2026-03-08T13:59:03.0163247Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-08T13:59:03.0164523Z Initialized empty Git repository in /home/runner/work/37-data-model/37-data-model/.git/
+2026-03-08T13:59:03.0168843Z [command]/usr/bin/git remote add origin https://github.com/eva-foundry/37-data-model
+2026-03-08T13:59:03.0206093Z ##[endgroup]
+2026-03-08T13:59:03.0207380Z ##[group]Disabling automatic garbage collection
+2026-03-08T13:59:03.0210069Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-08T13:59:03.0239973Z ##[endgroup]
+2026-03-08T13:59:03.0241171Z ##[group]Setting up auth
+2026-03-08T13:59:03.0246254Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:59:03.0276393Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:59:03.0638253Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:59:03.0670864Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:59:03.0904233Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:59:03.0938676Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:59:03.1176568Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-08T13:59:03.1213232Z ##[endgroup]
+2026-03-08T13:59:03.1214490Z ##[group]Fetching the repository
+2026-03-08T13:59:03.1222134Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cdd9e2ed191594cc276404056ac61f5cd8fdf932:refs/remotes/origin/main
+2026-03-08T13:59:03.8376603Z From https://github.com/eva-foundry/37-data-model
+2026-03-08T13:59:03.8379466Z  * [new ref]         cdd9e2ed191594cc276404056ac61f5cd8fdf932 -> origin/main
+2026-03-08T13:59:03.8410949Z ##[endgroup]
+2026-03-08T13:59:03.8412824Z ##[group]Determining the checkout info
+2026-03-08T13:59:03.8414858Z ##[endgroup]
+2026-03-08T13:59:03.8417806Z [command]/usr/bin/git sparse-checkout disable
+2026-03-08T13:59:03.8458277Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-08T13:59:03.8485557Z ##[group]Checking out the ref
+2026-03-08T13:59:03.8488664Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-08T13:59:03.9334237Z Switched to a new branch 'main'
+2026-03-08T13:59:03.9336301Z branch 'main' set up to track 'origin/main'.
+2026-03-08T13:59:03.9351519Z ##[endgroup]
+2026-03-08T13:59:03.9395381Z [command]/usr/bin/git log -1 --format=%H
+2026-03-08T13:59:03.9426870Z cdd9e2ed191594cc276404056ac61f5cd8fdf932
+2026-03-08T13:59:03.9741754Z ##[group]Run actions/setup-python@v5
+2026-03-08T13:59:03.9742958Z with:
+2026-03-08T13:59:03.9743756Z   python-version: 3.11
+2026-03-08T13:59:03.9744700Z   check-latest: false
+2026-03-08T13:59:03.9745889Z   token: ***
+2026-03-08T13:59:03.9746748Z   update-environment: true
+2026-03-08T13:59:03.9747775Z   allow-prereleases: false
+2026-03-08T13:59:03.9748970Z   freethreaded: false
+2026-03-08T13:59:03.9749858Z env:
+2026-03-08T13:59:03.9750919Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:03.9815644Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:03.9818153Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:03.9819507Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:03.9820785Z ##[endgroup]
+2026-03-08T13:59:04.1607177Z ##[group]Installed versions
+2026-03-08T13:59:04.2004477Z Successfully set up CPython (3.11.14)
+2026-03-08T13:59:04.2007579Z ##[endgroup]
+2026-03-08T13:59:04.2152405Z ##[group]Run pip install --upgrade pip
+2026-03-08T13:59:04.2153722Z [36;1mpip install --upgrade pip[0m
+2026-03-08T13:59:04.2154861Z [36;1mpip install requests[0m
+2026-03-08T13:59:04.2302576Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:59:04.2303649Z env:
+2026-03-08T13:59:04.2304678Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:04.2307261Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:04.2309789Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:04.2311002Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:04.2312520Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:04.2314302Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:59:04.2316079Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:04.2317704Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:04.2319466Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:04.2321148Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:59:04.2322582Z ##[endgroup]
+2026-03-08T13:59:06.7430268Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (26.0.1)
+2026-03-08T13:59:07.8659908Z Collecting requests
+2026-03-08T13:59:07.9299535Z   Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+2026-03-08T13:59:08.0373994Z Collecting charset_normalizer<4,>=2 (from requests)
+2026-03-08T13:59:08.0441796Z   Downloading charset_normalizer-3.4.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (39 kB)
+2026-03-08T13:59:08.0722950Z Collecting idna<4,>=2.5 (from requests)
+2026-03-08T13:59:08.0787386Z   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2026-03-08T13:59:08.1047027Z Collecting urllib3<3,>=1.21.1 (from requests)
+2026-03-08T13:59:08.1122323Z   Downloading urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+2026-03-08T13:59:08.1371275Z Collecting certifi>=2017.4.17 (from requests)
+2026-03-08T13:59:08.1437899Z   Downloading certifi-2026.2.25-py3-none-any.whl.metadata (2.5 kB)
+2026-03-08T13:59:08.1547337Z Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+2026-03-08T13:59:08.1675527Z Downloading charset_normalizer-3.4.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (193 kB)
+2026-03-08T13:59:08.1814197Z Downloading idna-3.11-py3-none-any.whl (71 kB)
+2026-03-08T13:59:08.1900289Z Downloading urllib3-2.6.3-py3-none-any.whl (131 kB)
+2026-03-08T13:59:08.1989312Z Downloading certifi-2026.2.25-py3-none-any.whl (153 kB)
+2026-03-08T13:59:08.2291265Z Installing collected packages: urllib3, idna, charset_normalizer, certifi, requests
+2026-03-08T13:59:08.4722735Z 
+2026-03-08T13:59:08.4733434Z Successfully installed certifi-2026.2.25 charset_normalizer-3.4.5 idna-3.11 requests-2.32.5 urllib3-2.6.3
+2026-03-08T13:59:08.5294756Z ##[group]Run azure/login@v2
+2026-03-08T13:59:08.5295123Z with:
+2026-03-08T13:59:08.5296070Z   creds: ***
+2026-03-08T13:59:08.5296338Z   enable-AzPSSession: false
+2026-03-08T13:59:08.5296603Z   environment: azurecloud
+2026-03-08T13:59:08.5296851Z   allow-no-subscriptions: false
+2026-03-08T13:59:08.5297138Z   audience: api://AzureADTokenExchange
+2026-03-08T13:59:08.5297460Z   auth-type: SERVICE_PRINCIPAL
+2026-03-08T13:59:08.5297702Z env:
+2026-03-08T13:59:08.5297967Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:08.5298847Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:08.5299433Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:08.5299753Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:08.5300129Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:08.5300562Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:59:08.5301032Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:08.5301421Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:08.5301806Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:08.5302198Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:59:08.5302527Z ##[endgroup]
+2026-03-08T13:59:08.5686995Z Running Azure CLI Login.
+2026-03-08T13:59:22.2448025Z [command]/usr/bin/az cloud set -n azurecloud
+2026-03-08T13:59:22.4733285Z Done setting cloud: "azurecloud"
+2026-03-08T13:59:22.4736586Z Note: Azure/login action also supports OIDC login mechanism. Refer https://github.com/azure/login#configure-a-service-principal-with-a-federated-credential-to-use-oidc-based-authentication for more details.
+2026-03-08T13:59:22.4740401Z Attempting Azure CLI login by using service principal with secret...
+2026-03-08T13:59:23.7521279Z Subscription is set successfully.
+2026-03-08T13:59:23.7522100Z Azure CLI login succeeds by using service principal with secret.
+2026-03-08T13:59:23.7606260Z ##[group]Run if [ "true" == "true" ]; then
+2026-03-08T13:59:23.7606640Z [36;1mif [ "true" == "true" ]; then[0m
+2026-03-08T13:59:23.7607009Z [36;1m  python sync-azure-infrastructure.py --dry-run[0m
+2026-03-08T13:59:23.7607358Z [36;1melse[0m
+2026-03-08T13:59:23.7607610Z [36;1m  python sync-azure-infrastructure.py[0m
+2026-03-08T13:59:23.7607919Z [36;1mfi[0m
+2026-03-08T13:59:23.7659398Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:59:23.7659674Z env:
+2026-03-08T13:59:23.7659962Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:23.7660622Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:23.7661217Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:23.7661526Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:23.7661901Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:23.7662386Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:59:23.7662826Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:23.7663226Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:23.7663621Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:23.7664021Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:59:23.7664544Z   X_ACTOR: github-actions:infrastructure-sync
+2026-03-08T13:59:23.7664842Z ##[endgroup]
+2026-03-08T13:59:31.9384004Z 
+2026-03-08T13:59:31.9384476Z ================================================================================
+2026-03-08T13:59:31.9384970Z   EVA INFRASTRUCTURE SYNC - Azure Resource Graph to L42
+2026-03-08T13:59:31.9385352Z ================================================================================
+2026-03-08T13:59:31.9385601Z 
+2026-03-08T13:59:31.9385963Z [96m[2026-03-08 13:59:23] [INFO] Configuration:[0m
+2026-03-08T13:59:31.9386516Z [96m[2026-03-08 13:59:23] [INFO]   Subscription: c59ee575-eb2a-4b51-a865-4b618f9add0a[0m
+2026-03-08T13:59:31.9387437Z [96m[2026-03-08 13:59:23] [INFO]   Data Model: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io[0m
+2026-03-08T13:59:31.9388275Z [96m[2026-03-08 13:59:23] [INFO]   Actor: github-actions:infrastructure-sync[0m
+2026-03-08T13:59:31.9389019Z [96m[2026-03-08 13:59:23] [INFO]   Dry Run: True[0m
+2026-03-08T13:59:31.9389247Z 
+2026-03-08T13:59:31.9389705Z [96m[2026-03-08 13:59:23] [INFO] Querying Azure Resource Graph for subscription c59ee575-eb2a-4b51-a865-4b618f9add0a...[0m
+2026-03-08T13:59:31.9390426Z [92m[2026-03-08 13:59:31] [SUCCESS] ✓ Retrieved 32 resources from Azure[0m
+2026-03-08T13:59:31.9390844Z [96m[2026-03-08 13:59:31] [INFO] 
+2026-03-08T13:59:31.9391185Z Transforming and uploading 32 resources...[0m
+2026-03-08T13:59:31.9391613Z [96m[2026-03-08 13:59:31] [INFO] [1/32] Processing Dev1...[0m
+2026-03-08T13:59:31.9392657Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-Dev1[0m
+2026-03-08T13:59:31.9393867Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9394219Z   "id": "azure-Dev1",
+2026-03-08T13:59:31.9394525Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9395297Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/providers/Micr...[0m
+2026-03-08T13:59:31.9396011Z [96m[2026-03-08 13:59:31] [INFO] [2/32] Processing EVA-Lab...[0m
+2026-03-08T13:59:31.9397083Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-EVA-Lab[0m
+2026-03-08T13:59:31.9398036Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9398609Z   "id": "azure-EVA-Lab",
+2026-03-08T13:59:31.9399344Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9400125Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/providers/M...[0m
+2026-03-08T13:59:31.9400894Z [96m[2026-03-08 13:59:31] [INFO] [3/32] Processing ai-eva-data-model-20260306...[0m
+2026-03-08T13:59:31.9402056Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-ai-eva-data-model-20260306[0m
+2026-03-08T13:59:31.9403076Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9403423Z   "id": "azure-ai-eva-data-model-20260306",
+2026-03-08T13:59:31.9403787Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9404407Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sand...[0m
+2026-03-08T13:59:31.9405058Z [96m[2026-03-08 13:59:31] [INFO] [4/32] Processing ai-eva-redis-20260306-1727...[0m
+2026-03-08T13:59:31.9406194Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-ai-eva-redis-20260306-1727[0m
+2026-03-08T13:59:31.9407207Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9407708Z   "id": "azure-ai-eva-redis-20260306-1727",
+2026-03-08T13:59:31.9408075Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9408991Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sand...[0m
+2026-03-08T13:59:31.9409746Z [96m[2026-03-08 13:59:31] [INFO] [5/32] Processing managed-ai-eva-data-model-20260306-ws...[0m
+2026-03-08T13:59:31.9410991Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-managed-ai-eva-data-model-20260306-ws[0m
+2026-03-08T13:59:31.9412047Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9412415Z   "id": "azure-managed-ai-eva-data-model-20260306-ws",
+2026-03-08T13:59:31.9412801Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9413392Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGrou...[0m
+2026-03-08T13:59:31.9413991Z [96m[2026-03-08 13:59:31] [INFO] [6/32] Processing msub-eva-brain-api...[0m
+2026-03-08T13:59:31.9415081Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-eva-brain-api[0m
+2026-03-08T13:59:31.9416044Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9416375Z   "id": "azure-msub-eva-brain-api",
+2026-03-08T13:59:31.9416718Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9417365Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/...[0m
+2026-03-08T13:59:31.9418043Z [96m[2026-03-08 13:59:31] [INFO] [7/32] Processing msub-eva-data-model...[0m
+2026-03-08T13:59:31.9419382Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-eva-data-model[0m
+2026-03-08T13:59:31.9420376Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9420718Z   "id": "azure-msub-eva-data-model",
+2026-03-08T13:59:31.9421065Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9421715Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev...[0m
+2026-03-08T13:59:31.9422390Z [96m[2026-03-08 13:59:31] [INFO] [8/32] Processing msub-eva-faces...[0m
+2026-03-08T13:59:31.9423646Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-eva-faces[0m
+2026-03-08T13:59:31.9424620Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9424950Z   "id": "azure-msub-eva-faces",
+2026-03-08T13:59:31.9425284Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9425956Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/prov...[0m
+2026-03-08T13:59:31.9426641Z [96m[2026-03-08 13:59:31] [INFO] [9/32] Processing msub-eva-roles-api...[0m
+2026-03-08T13:59:31.9427736Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-eva-roles-api[0m
+2026-03-08T13:59:31.9428934Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9429272Z   "id": "azure-msub-eva-roles-api",
+2026-03-08T13:59:31.9429619Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9430302Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/...[0m
+2026-03-08T13:59:31.9431006Z [96m[2026-03-08 13:59:31] [INFO] [10/32] Processing msub-finops-evhns...[0m
+2026-03-08T13:59:31.9432093Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-finops-evhns[0m
+2026-03-08T13:59:31.9433682Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9434019Z   "id": "azure-msub-finops-evhns",
+2026-03-08T13:59:31.9434362Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9435015Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/p...[0m
+2026-03-08T13:59:31.9435689Z [96m[2026-03-08 13:59:31] [INFO] [11/32] Processing msub-sandbox-aisvc...[0m
+2026-03-08T13:59:31.9436791Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-aisvc[0m
+2026-03-08T13:59:31.9437753Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9438082Z   "id": "azure-msub-sandbox-aisvc",
+2026-03-08T13:59:31.9438712Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9439480Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/...[0m
+2026-03-08T13:59:31.9440154Z [96m[2026-03-08 13:59:31] [INFO] [12/32] Processing msub-sandbox-apim...[0m
+2026-03-08T13:59:31.9441255Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-apim[0m
+2026-03-08T13:59:31.9442265Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9442602Z   "id": "azure-msub-sandbox-apim",
+2026-03-08T13:59:31.9442945Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9443594Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/p...[0m
+2026-03-08T13:59:31.9444292Z [96m[2026-03-08 13:59:31] [INFO] [13/32] Processing msub-sandbox-appinsights...[0m
+2026-03-08T13:59:31.9445435Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-appinsights[0m
+2026-03-08T13:59:31.9446422Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9446762Z   "id": "azure-msub-sandbox-appinsights",
+2026-03-08T13:59:31.9447125Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9447750Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbo...[0m
+2026-03-08T13:59:31.9448801Z [96m[2026-03-08 13:59:31] [INFO] [14/32] Processing msub-sandbox-asp-backend...[0m
+2026-03-08T13:59:31.9450077Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-asp-backend[0m
+2026-03-08T13:59:31.9451094Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9451455Z   "id": "azure-msub-sandbox-asp-backend",
+2026-03-08T13:59:31.9451816Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9452432Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbo...[0m
+2026-03-08T13:59:31.9453109Z [96m[2026-03-08 13:59:31] [INFO] [15/32] Processing msub-sandbox-asp-enrichment...[0m
+2026-03-08T13:59:31.9454276Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-asp-enrichment[0m
+2026-03-08T13:59:31.9455271Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9455617Z   "id": "azure-msub-sandbox-asp-enrichment",
+2026-03-08T13:59:31.9455979Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9456584Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-San...[0m
+2026-03-08T13:59:31.9457360Z [96m[2026-03-08 13:59:31] [INFO] [16/32] Processing msub-sandbox-asp-func...[0m
+2026-03-08T13:59:31.9458851Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-asp-func[0m
+2026-03-08T13:59:31.9459912Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9460258Z   "id": "azure-msub-sandbox-asp-func",
+2026-03-08T13:59:31.9460613Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9461258Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-d...[0m
+2026-03-08T13:59:31.9461926Z [96m[2026-03-08 13:59:31] [INFO] [17/32] Processing msub-sandbox-backend...[0m
+2026-03-08T13:59:31.9463038Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-backend[0m
+2026-03-08T13:59:31.9464017Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9464349Z   "id": "azure-msub-sandbox-backend",
+2026-03-08T13:59:31.9464691Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9465324Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-de...[0m
+2026-03-08T13:59:31.9465978Z [96m[2026-03-08 13:59:31] [INFO] [18/32] Processing msub-sandbox-cosmos...[0m
+2026-03-08T13:59:31.9467103Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-cosmos[0m
+2026-03-08T13:59:31.9468079Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9468621Z   "id": "azure-msub-sandbox-cosmos",
+2026-03-08T13:59:31.9468987Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9469650Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev...[0m
+2026-03-08T13:59:31.9470326Z [96m[2026-03-08 13:59:31] [INFO] [19/32] Processing msub-sandbox-docint...[0m
+2026-03-08T13:59:31.9471423Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-docint[0m
+2026-03-08T13:59:31.9472409Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9472741Z   "id": "azure-msub-sandbox-docint",
+2026-03-08T13:59:31.9473234Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9473898Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev...[0m
+2026-03-08T13:59:31.9474571Z [96m[2026-03-08 13:59:31] [INFO] [20/32] Processing msub-sandbox-enrichment...[0m
+2026-03-08T13:59:31.9475710Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-enrichment[0m
+2026-03-08T13:59:31.9476685Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9477026Z   "id": "azure-msub-sandbox-enrichment",
+2026-03-08T13:59:31.9477383Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9477996Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox...[0m
+2026-03-08T13:59:31.9478870Z [96m[2026-03-08 13:59:31] [INFO] [21/32] Processing msub-sandbox-env...[0m
+2026-03-08T13:59:31.9479975Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-env[0m
+2026-03-08T13:59:31.9480935Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9481410Z   "id": "azure-msub-sandbox-env",
+2026-03-08T13:59:31.9481742Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9482411Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/pr...[0m
+2026-03-08T13:59:31.9483103Z [96m[2026-03-08 13:59:31] [INFO] [22/32] Processing msub-sandbox-finops-adf...[0m
+2026-03-08T13:59:31.9484239Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-finops-adf[0m
+2026-03-08T13:59:31.9485233Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9485576Z   "id": "azure-msub-sandbox-finops-adf",
+2026-03-08T13:59:31.9485933Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9486568Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox...[0m
+2026-03-08T13:59:31.9487237Z [96m[2026-03-08 13:59:31] [INFO] [23/32] Processing msub-sandbox-foundry...[0m
+2026-03-08T13:59:31.9488516Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-foundry[0m
+2026-03-08T13:59:31.9489612Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9489950Z   "id": "azure-msub-sandbox-foundry",
+2026-03-08T13:59:31.9490300Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9490953Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-de...[0m
+2026-03-08T13:59:31.9491610Z [96m[2026-03-08 13:59:31] [INFO] [24/32] Processing msub-sandbox-func...[0m
+2026-03-08T13:59:31.9492704Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-func[0m
+2026-03-08T13:59:31.9493680Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9494014Z   "id": "azure-msub-sandbox-func",
+2026-03-08T13:59:31.9494353Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9494994Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/p...[0m
+2026-03-08T13:59:31.9495660Z [96m[2026-03-08 13:59:31] [INFO] [25/32] Processing msub-sandbox-logs...[0m
+2026-03-08T13:59:31.9496880Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-logs[0m
+2026-03-08T13:59:31.9497871Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9498200Z   "id": "azure-msub-sandbox-logs",
+2026-03-08T13:59:31.9498741Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9499405Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev/p...[0m
+2026-03-08T13:59:31.9500083Z [96m[2026-03-08 13:59:31] [INFO] [26/32] Processing msub-sandbox-openai...[0m
+2026-03-08T13:59:31.9501188Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-openai[0m
+2026-03-08T13:59:31.9502156Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9502487Z   "id": "azure-msub-sandbox-openai",
+2026-03-08T13:59:31.9502831Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9503479Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev...[0m
+2026-03-08T13:59:31.9504161Z [96m[2026-03-08 13:59:31] [INFO] [27/32] Processing msub-sandbox-openai-v2...[0m
+2026-03-08T13:59:31.9505290Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-openai-v2[0m
+2026-03-08T13:59:31.9506412Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9506748Z   "id": "azure-msub-sandbox-openai-v2",
+2026-03-08T13:59:31.9507093Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9507719Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-...[0m
+2026-03-08T13:59:31.9508535Z [96m[2026-03-08 13:59:31] [INFO] [28/32] Processing msub-sandbox-search...[0m
+2026-03-08T13:59:31.9509691Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msub-sandbox-search[0m
+2026-03-08T13:59:31.9510670Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9510997Z   "id": "azure-msub-sandbox-search",
+2026-03-08T13:59:31.9511340Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9511974Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-dev...[0m
+2026-03-08T13:59:31.9512637Z [96m[2026-03-08 13:59:31] [INFO] [29/32] Processing msubsand202603031449...[0m
+2026-03-08T13:59:31.9513767Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msubsand202603031449[0m
+2026-03-08T13:59:31.9514732Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9515061Z   "id": "azure-msubsand202603031449",
+2026-03-08T13:59:31.9515395Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9516039Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-de...[0m
+2026-03-08T13:59:31.9516704Z [96m[2026-03-08 13:59:31] [INFO] [30/32] Processing msubsandacr202603031449...[0m
+2026-03-08T13:59:31.9517828Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msubsandacr202603031449[0m
+2026-03-08T13:59:31.9519028Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9519358Z   "id": "azure-msubsandacr202603031449",
+2026-03-08T13:59:31.9519703Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9520317Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox...[0m
+2026-03-08T13:59:31.9521166Z [96m[2026-03-08 13:59:31] [INFO] [31/32] Processing msubsandboxfinopshub...[0m
+2026-03-08T13:59:31.9522308Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msubsandboxfinopshub[0m
+2026-03-08T13:59:31.9523291Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9523631Z   "id": "azure-msubsandboxfinopshub",
+2026-03-08T13:59:31.9543015Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9544165Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-de...[0m
+2026-03-08T13:59:31.9545525Z [96m[2026-03-08 13:59:31] [INFO] [32/32] Processing msubsandkv202603031449...[0m
+2026-03-08T13:59:31.9547516Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/azure_infrastructure/azure-msubsandkv202603031449[0m
+2026-03-08T13:59:31.9549648Z [96m[2026-03-08 13:59:31] [INFO] [DRY-RUN] Payload: ***
+2026-03-08T13:59:31.9550264Z   "id": "azure-msubsandkv202603031449",
+2026-03-08T13:59:31.9550888Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:31.9552083Z   "resource_id": "/subscriptions/c59ee575-eb2a-4b51-a865-4b618f9add0a/resourceGroups/EVA-Sandbox-...[0m
+2026-03-08T13:59:31.9553103Z 
+2026-03-08T13:59:31.9553337Z ================================================================================
+2026-03-08T13:59:31.9554086Z [92m[2026-03-08 13:59:31] [SUCCESS] SYNC COMPLETE[0m
+2026-03-08T13:59:31.9554825Z [96m[2026-03-08 13:59:31] [INFO]   Total: 32[0m
+2026-03-08T13:59:31.9555503Z [96m[2026-03-08 13:59:31] [INFO]   Success: 32[0m
+2026-03-08T13:59:31.9556166Z [96m[2026-03-08 13:59:31] [INFO]   Failed: 0[0m
+2026-03-08T13:59:31.9556737Z ================================================================================
+2026-03-08T13:59:31.9557210Z 
+2026-03-08T13:59:31.9626473Z ##[group]Run if [ $? -eq 0 ]; then
+2026-03-08T13:59:31.9626814Z [36;1mif [ $? -eq 0 ]; then[0m
+2026-03-08T13:59:31.9627163Z [36;1m  echo "✓ Infrastructure sync completed successfully"[0m
+2026-03-08T13:59:31.9627525Z [36;1melse[0m
+2026-03-08T13:59:31.9627776Z [36;1m  echo "✗ Infrastructure sync failed"[0m
+2026-03-08T13:59:31.9628072Z [36;1m  exit 1[0m
+2026-03-08T13:59:31.9628285Z [36;1mfi[0m
+2026-03-08T13:59:31.9677844Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:59:31.9678120Z env:
+2026-03-08T13:59:31.9678642Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:31.9679354Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:31.9679944Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:31.9680261Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:31.9680641Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9681127Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:59:31.9681561Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9681959Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9682352Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9682747Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:59:31.9683094Z ##[endgroup]
+2026-03-08T13:59:31.9751553Z ✓ Infrastructure sync completed successfully
+2026-03-08T13:59:31.9805129Z Post job cleanup.
+2026-03-08T13:59:32.0202898Z Clearing azure cli accounts from the local cache.
+2026-03-08T13:59:32.0219597Z [command]/usr/bin/az account clear
+2026-03-08T13:59:32.6346830Z Post job cleanup.
+2026-03-08T13:59:32.8118209Z Post job cleanup.
+2026-03-08T13:59:32.9120921Z [command]/usr/bin/git version
+2026-03-08T13:59:32.9164812Z git version 2.53.0
+2026-03-08T13:59:32.9212128Z Temporarily overriding HOME='/home/runner/work/_temp/040e44e4-849b-4286-a7a4-f541ca4ae3af' before making global git config changes
+2026-03-08T13:59:32.9213506Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:59:32.9221177Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:59:32.9276639Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:59:32.9315694Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:59:32.9565220Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:59:32.9591201Z http.https://github.com/.extraheader
+2026-03-08T13:59:32.9604453Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-03-08T13:59:32.9637470Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:59:32.9879650Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:59:32.9913527Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:59:33.0267433Z Cleaning up orphan processes

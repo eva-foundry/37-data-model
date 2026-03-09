@@ -1,0 +1,44 @@
+﻿2026-03-08T14:04:29.4875225Z ##[group]Run if ("false" -eq "true") ***
+2026-03-08T14:04:29.4875804Z [36;1mif ("false" -eq "true") ***[0m
+2026-03-08T14:04:29.4876197Z [36;1m  .\sync-azure-costs.ps1 -DryRun[0m
+2026-03-08T14:04:29.4876605Z [36;1m*** else ***[0m
+2026-03-08T14:04:29.4876906Z [36;1m  .\sync-azure-costs.ps1[0m
+2026-03-08T14:04:29.4877261Z [36;1m***[0m
+2026-03-08T14:04:29.4936088Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T14:04:29.4936510Z env:
+2026-03-08T14:04:29.4936869Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T14:04:29.4937651Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T14:04:29.4938343Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T14:04:29.4938710Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T14:04:29.4939088Z   X_ACTOR: github-actions:cost-sync
+2026-03-08T14:04:29.4939423Z ##[endgroup]
+2026-03-08T14:04:33.5437038Z 
+2026-03-08T14:04:33.5441064Z  + ================================================================================
+2026-03-08T14:04:33.5441965Z   EVA COST SYNC - Azure Cost Management to L49
+2026-03-08T14:04:33.5443110Z ================================================================================ + 
+2026-03-08T14:04:33.5443591Z 
+2026-03-08T14:04:33.5698221Z [2026-03-08 14:04:33] [INFO] Configuration:
+2026-03-08T14:04:33.5706231Z [2026-03-08 14:04:33] [INFO]   Subscription: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T14:04:33.5711922Z [2026-03-08 14:04:33] [INFO]   Data Model: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T14:04:33.5717181Z [2026-03-08 14:04:33] [INFO]   Actor: github-actions:cost-sync
+2026-03-08T14:04:33.5801738Z [2026-03-08 14:04:33] [INFO]   Month: Current
+2026-03-08T14:04:33.5823203Z [2026-03-08 14:04:33] [INFO]   Dry Run: False
+2026-03-08T14:04:33.5824539Z 
+2026-03-08T14:04:33.5898945Z [2026-03-08 14:04:33] [INFO] Querying Azure Cost Management for subscription c59ee575-eb2a-4b51-a865-4b618f9add0a...
+2026-03-08T14:04:33.6119860Z [2026-03-08 14:04:33] [INFO]   Time period: 2026-03-01 to 2026-03-31
+2026-03-08T14:04:34.1025785Z [2026-03-08 14:04:34] [INFO] Querying Cost Management REST API...
+2026-03-08T14:04:37.1026573Z [2026-03-08 14:04:37] [SUCCESS] ✓ Retrieved cost data for 56 rows
+2026-03-08T14:04:37.1097521Z [2026-03-08 14:04:37] [INFO] Checking budgets via REST API...
+2026-03-08T14:04:38.3533010Z [2026-03-08 14:04:38] [WARNING] ⚠ No budgets configured for subscription
+2026-03-08T14:04:38.3617114Z [2026-03-08 14:04:38] [INFO] Transforming to L49 schema format...
+2026-03-08T14:04:38.4151481Z [2026-03-08 14:04:38] [SUCCESS] ✓ Transformed to L49 format (12 services, 3 opportunities)
+2026-03-08T14:04:38.7539925Z [2026-03-08 14:04:38] [SUCCESS] ✓ Cost data synced: c59ee575-eb2a-4b51-a865-4b618f9add0a-2026-03
+2026-03-08T14:04:38.7541391Z 
+2026-03-08T14:04:38.7547222Z  + ================================================================================
+2026-03-08T14:04:38.7547959Z [2026-03-08 14:04:38] [SUCCESS] SYNC COMPLETE
+2026-03-08T14:04:38.7569473Z [2026-03-08 14:04:38] [INFO]   Total Cost: 17.02 USD
+2026-03-08T14:04:38.7579386Z [2026-03-08 14:04:38] [INFO]   Services: 12
+2026-03-08T14:04:38.7589832Z [2026-03-08 14:04:38] [INFO]   Optimization Opportunities: 3
+2026-03-08T14:04:38.7606342Z [2026-03-08 14:04:38] [INFO]   Forecast: 65.94 USD
+2026-03-08T14:04:38.7607468Z ================================================================================ + 
+2026-03-08T14:04:38.7608246Z 

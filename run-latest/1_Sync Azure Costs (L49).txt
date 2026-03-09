@@ -1,0 +1,567 @@
+﻿2026-03-08T13:59:01.4133893Z Current runner version: '2.332.0'
+2026-03-08T13:59:01.4157692Z ##[group]Runner Image Provisioner
+2026-03-08T13:59:01.4158880Z Hosted Compute Agent
+2026-03-08T13:59:01.4159593Z Version: 20260213.493
+2026-03-08T13:59:01.4160297Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-08T13:59:01.4161075Z Build Date: 2026-02-13T00:28:41Z
+2026-03-08T13:59:01.4161868Z Worker ID: ***2daa6e0f-2940-4e3b-b3b9-8111a311eb79***
+2026-03-08T13:59:01.4162795Z Azure Region: westcentralus
+2026-03-08T13:59:01.4163477Z ##[endgroup]
+2026-03-08T13:59:01.4165018Z ##[group]Operating System
+2026-03-08T13:59:01.4165736Z Ubuntu
+2026-03-08T13:59:01.4166305Z 24.04.3
+2026-03-08T13:59:01.4166910Z LTS
+2026-03-08T13:59:01.4167486Z ##[endgroup]
+2026-03-08T13:59:01.4168096Z ##[group]Runner Image
+2026-03-08T13:59:01.4168942Z Image: ubuntu-24.04
+2026-03-08T13:59:01.4169572Z Version: 20260302.42.1
+2026-03-08T13:59:01.4170950Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-08T13:59:01.4172568Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-08T13:59:01.4173560Z ##[endgroup]
+2026-03-08T13:59:01.4176651Z ##[group]GITHUB_TOKEN Permissions
+2026-03-08T13:59:01.4179551Z Actions: write
+2026-03-08T13:59:01.4180229Z ArtifactMetadata: write
+2026-03-08T13:59:01.4180869Z Attestations: write
+2026-03-08T13:59:01.4181512Z Checks: write
+2026-03-08T13:59:01.4182146Z Contents: write
+2026-03-08T13:59:01.4183125Z Deployments: write
+2026-03-08T13:59:01.4183789Z Discussions: write
+2026-03-08T13:59:01.4184370Z Issues: write
+2026-03-08T13:59:01.4185036Z Metadata: read
+2026-03-08T13:59:01.4185628Z Models: read
+2026-03-08T13:59:01.4186242Z Packages: write
+2026-03-08T13:59:01.4186824Z Pages: write
+2026-03-08T13:59:01.4187519Z PullRequests: write
+2026-03-08T13:59:01.4188212Z RepositoryProjects: write
+2026-03-08T13:59:01.4189224Z SecurityEvents: write
+2026-03-08T13:59:01.4189892Z Statuses: write
+2026-03-08T13:59:01.4190490Z ##[endgroup]
+2026-03-08T13:59:01.4192610Z Secret source: Actions
+2026-03-08T13:59:01.4193544Z Prepare workflow directory
+2026-03-08T13:59:01.4599019Z Prepare all required actions
+2026-03-08T13:59:01.4636603Z Getting action download info
+2026-03-08T13:59:01.8600127Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-08T13:59:02.0427332Z Download action repository 'azure/login@v2' (SHA:a457da9ea143d694b1b9c7c869ebb04ebe844ef5)
+2026-03-08T13:59:02.6572088Z Complete job name: Sync Azure Costs (L49)
+2026-03-08T13:59:02.7310520Z ##[group]Run actions/checkout@v4
+2026-03-08T13:59:02.7311459Z with:
+2026-03-08T13:59:02.7311983Z   repository: eva-foundry/37-data-model
+2026-03-08T13:59:02.7312782Z   token: ***
+2026-03-08T13:59:02.7313261Z   ssh-strict: true
+2026-03-08T13:59:02.7313754Z   ssh-user: git
+2026-03-08T13:59:02.7314246Z   persist-credentials: true
+2026-03-08T13:59:02.7314790Z   clean: true
+2026-03-08T13:59:02.7315279Z   sparse-checkout-cone-mode: true
+2026-03-08T13:59:02.7315861Z   fetch-depth: 1
+2026-03-08T13:59:02.7316356Z   fetch-tags: false
+2026-03-08T13:59:02.7316845Z   show-progress: true
+2026-03-08T13:59:02.7317342Z   lfs: false
+2026-03-08T13:59:02.7317807Z   submodules: false
+2026-03-08T13:59:02.7318539Z   set-safe-directory: true
+2026-03-08T13:59:02.7319366Z env:
+2026-03-08T13:59:02.7320008Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:02.7321210Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:02.7322335Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:02.7322975Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:02.7323604Z ##[endgroup]
+2026-03-08T13:59:02.8435091Z Syncing repository: eva-foundry/37-data-model
+2026-03-08T13:59:02.8437878Z ##[group]Getting Git version info
+2026-03-08T13:59:02.8439714Z Working directory is '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:59:02.8442311Z [command]/usr/bin/git version
+2026-03-08T13:59:02.8522127Z git version 2.53.0
+2026-03-08T13:59:02.8548991Z ##[endgroup]
+2026-03-08T13:59:02.8570001Z Temporarily overriding HOME='/home/runner/work/_temp/f29ded0f-ceb6-4e9e-a1f2-7cbdba799356' before making global git config changes
+2026-03-08T13:59:02.8571672Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:59:02.8574951Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:59:02.8617767Z Deleting the contents of '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:59:02.8621795Z ##[group]Initializing the repository
+2026-03-08T13:59:02.8626998Z [command]/usr/bin/git init /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:59:02.8750122Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-08T13:59:02.8752287Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-08T13:59:02.8754218Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-08T13:59:02.8755737Z hint: call:
+2026-03-08T13:59:02.8756349Z hint:
+2026-03-08T13:59:02.8756948Z hint: 	git config --global init.defaultBranch <name>
+2026-03-08T13:59:02.8757624Z hint:
+2026-03-08T13:59:02.8758274Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-08T13:59:02.8759558Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-08T13:59:02.8760498Z hint:
+2026-03-08T13:59:02.8761099Z hint: 	git branch -m <name>
+2026-03-08T13:59:02.8761636Z hint:
+2026-03-08T13:59:02.8762328Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-08T13:59:02.8763478Z Initialized empty Git repository in /home/runner/work/37-data-model/37-data-model/.git/
+2026-03-08T13:59:02.8767676Z [command]/usr/bin/git remote add origin https://github.com/eva-foundry/37-data-model
+2026-03-08T13:59:02.8804649Z ##[endgroup]
+2026-03-08T13:59:02.8809830Z ##[group]Disabling automatic garbage collection
+2026-03-08T13:59:02.8810722Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-08T13:59:02.8846220Z ##[endgroup]
+2026-03-08T13:59:02.8847225Z ##[group]Setting up auth
+2026-03-08T13:59:02.8848031Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:59:02.8877760Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:59:02.9232541Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:59:02.9265208Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:59:02.9499979Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:59:02.9541265Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:59:02.9782189Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-08T13:59:02.9820742Z ##[endgroup]
+2026-03-08T13:59:02.9822210Z ##[group]Fetching the repository
+2026-03-08T13:59:02.9829331Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cdd9e2ed191594cc276404056ac61f5cd8fdf932:refs/remotes/origin/main
+2026-03-08T13:59:03.8263387Z From https://github.com/eva-foundry/37-data-model
+2026-03-08T13:59:03.8265028Z  * [new ref]         cdd9e2ed191594cc276404056ac61f5cd8fdf932 -> origin/main
+2026-03-08T13:59:03.8300437Z ##[endgroup]
+2026-03-08T13:59:03.8302734Z ##[group]Determining the checkout info
+2026-03-08T13:59:03.8305185Z ##[endgroup]
+2026-03-08T13:59:03.8307842Z [command]/usr/bin/git sparse-checkout disable
+2026-03-08T13:59:03.8352342Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-08T13:59:03.8381332Z ##[group]Checking out the ref
+2026-03-08T13:59:03.8384824Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-08T13:59:03.9238980Z Switched to a new branch 'main'
+2026-03-08T13:59:03.9241063Z branch 'main' set up to track 'origin/main'.
+2026-03-08T13:59:03.9255390Z ##[endgroup]
+2026-03-08T13:59:03.9294669Z [command]/usr/bin/git log -1 --format=%H
+2026-03-08T13:59:03.9320315Z cdd9e2ed191594cc276404056ac61f5cd8fdf932
+2026-03-08T13:59:03.9628176Z ##[group]Run azure/login@v2
+2026-03-08T13:59:03.9629627Z with:
+2026-03-08T13:59:03.9633627Z   creds: ***
+2026-03-08T13:59:03.9634614Z   enable-AzPSSession: false
+2026-03-08T13:59:03.9635757Z   environment: azurecloud
+2026-03-08T13:59:03.9636905Z   allow-no-subscriptions: false
+2026-03-08T13:59:03.9638149Z   audience: api://AzureADTokenExchange
+2026-03-08T13:59:03.9639796Z   auth-type: SERVICE_PRINCIPAL
+2026-03-08T13:59:03.9640913Z env:
+2026-03-08T13:59:03.9642095Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:03.9644830Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:03.9647349Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:03.9648886Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:03.9650239Z ##[endgroup]
+2026-03-08T13:59:04.0042984Z Running Azure CLI Login.
+2026-03-08T13:59:17.1746851Z [command]/usr/bin/az cloud set -n azurecloud
+2026-03-08T13:59:17.4085667Z Done setting cloud: "azurecloud"
+2026-03-08T13:59:17.4088659Z Note: Azure/login action also supports OIDC login mechanism. Refer https://github.com/azure/login#configure-a-service-principal-with-a-federated-credential-to-use-oidc-based-authentication for more details.
+2026-03-08T13:59:17.4091398Z Attempting Azure CLI login by using service principal with secret...
+2026-03-08T13:59:18.7422331Z Subscription is set successfully.
+2026-03-08T13:59:18.7423433Z Azure CLI login succeeds by using service principal with secret.
+2026-03-08T13:59:18.7653430Z ##[group]Run if ("true" -eq "true") ***
+2026-03-08T13:59:18.7654164Z [36;1mif ("true" -eq "true") ***[0m
+2026-03-08T13:59:18.7654756Z [36;1m  .\sync-azure-costs.ps1 -DryRun[0m
+2026-03-08T13:59:18.7655365Z [36;1m*** else ***[0m
+2026-03-08T13:59:18.7655825Z [36;1m  .\sync-azure-costs.ps1[0m
+2026-03-08T13:59:18.7656383Z [36;1m***[0m
+2026-03-08T13:59:18.7735228Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T13:59:18.7735815Z env:
+2026-03-08T13:59:18.7736361Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:18.7737620Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:18.7739067Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:18.7739640Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:18.7740229Z   X_ACTOR: github-actions:cost-sync
+2026-03-08T13:59:18.7740744Z ##[endgroup]
+2026-03-08T13:59:23.1436070Z 
+2026-03-08T13:59:23.1436782Z  + ================================================================================
+2026-03-08T13:59:23.1437820Z   EVA COST SYNC - Azure Cost Management to L49
+2026-03-08T13:59:23.1439315Z ================================================================================ + 
+2026-03-08T13:59:23.1439889Z 
+2026-03-08T13:59:23.1628566Z [2026-03-08 13:59:23] [INFO] Configuration:
+2026-03-08T13:59:23.1635560Z [2026-03-08 13:59:23] [INFO]   Subscription: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:23.1641567Z [2026-03-08 13:59:23] [INFO]   Data Model: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:23.1645325Z [2026-03-08 13:59:23] [INFO]   Actor: github-actions:cost-sync
+2026-03-08T13:59:23.1728944Z [2026-03-08 13:59:23] [INFO]   Month: Current
+2026-03-08T13:59:23.1751463Z [2026-03-08 13:59:23] [INFO]   Dry Run: True
+2026-03-08T13:59:23.1753014Z 
+2026-03-08T13:59:23.1854390Z [2026-03-08 13:59:23] [INFO] Querying Azure Cost Management for subscription c59ee575-eb2a-4b51-a865-4b618f9add0a...
+2026-03-08T13:59:23.2310532Z [2026-03-08 13:59:23] [INFO]   Time period: 2026-03-01 to 2026-03-31
+2026-03-08T13:59:23.6992544Z [2026-03-08 13:59:23] [INFO] Querying Cost Management REST API...
+2026-03-08T13:59:26.5223233Z [2026-03-08 13:59:26] [SUCCESS] ✓ Retrieved cost data for 56 rows
+2026-03-08T13:59:26.5291781Z [2026-03-08 13:59:26] [INFO] Checking budgets via REST API...
+2026-03-08T13:59:28.1219064Z [2026-03-08 13:59:28] [WARNING] ⚠ No budgets configured for subscription
+2026-03-08T13:59:28.1302648Z [2026-03-08 13:59:28] [INFO] Transforming to L49 schema format...
+2026-03-08T13:59:28.1763745Z [2026-03-08 13:59:28] [SUCCESS] ✓ Transformed to L49 format (12 services, 3 opportunities)
+2026-03-08T13:59:28.1802869Z [2026-03-08 13:59:28] [INFO] [DRY-RUN] Would PUT to https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/resource_costs/c59ee575-eb2a-4b51-a865-4b618f9add0a-2026-03
+2026-03-08T13:59:28.1804810Z [2026-03-08 13:59:28] [INFO] [DRY-RUN] Payload preview:
+2026-03-08T13:59:28.1830752Z ***
+2026-03-08T13:59:28.1831296Z   "budget": ***
+2026-03-08T13:59:28.1831765Z     "budget_amount": 0,
+2026-03-08T13:59:28.1832242Z     "budget_utilized_percent": 0,
+2026-03-08T13:59:28.1832741Z     "budget_name": "none",
+2026-03-08T13:59:28.1833234Z     "budget_remaining": -16.72
+2026-03-08T13:59:28.1833732Z   ***,
+2026-03-08T13:59:28.1834229Z   "subscription_id": "c59ee575-eb2a-4b51-a865-4b618f9add0a",
+2026-03-08T13:59:28.1834906Z   "metadata": ***
+2026-03-08T13:59:28.1835369Z     "sync_agent": "github-actions:cost-sync",
+2026-03-08T13:59:28.1835995Z     "data_source": "Azure Cost Management API",
+2026-03-08T13:59:28.1836582Z     "last_synced": "2026-03-08T13:59:28.174Z"
+2026-03-08T13:59:28.1837141Z   ***,
+2026-03-08T13:59:28.1837503Z   "currency": "USD",
+2026-03-08T13:59:28.1837968Z   "forecasted_cost": ***
+2026-03-08T13:59:28.1838797Z     "forecast_method": "linear_trend",
+2026-03-08T13:59:28.1839369Z     "forecast_confidence": "medium",
+2026-03-08T13:59:28.1840383Z     "days_remaining": 23,
+2026-03-08T13:59:28.1840854Z     "month_end_forecast": 64.78
+2026-03-08T13:59:28.1841405Z   ***,
+2026-03-08T13:59:28.1841798Z   "optimization_opportunities": [
+2026-03-08T13:59:28.1842331Z     ***
+2026-03-08T13:59:28.1842691Z       "current_cost": 6.62752935,
+2026-03-08T13:59:28.1843172Z       "estimated_savings": 0.99,
+2026-03-08T13:59:28.1843794Z       "recommendation": "Review resource sizing and utilization",
+2026-03-08T13:59:28.1844472Z       "service": "Redis Cache",
+2026-03-08T13:59:28.1844955Z       "percentage_of_total": 39.65
+2026-03-08T13:59:28.1845456Z     ***,
+2026-03-08T13:59:28.1845826Z     ***
+2026-03-08T13:59:28.1846207Z       "current_cost": 5.5792220500575,
+2026-03-08T13:59:28.1846745Z       "estimated_savings": 0.84,
+2026-03-08T13:59:28.1847403Z       "recommendation": "Review resource sizing and utilization",
+2026-03-08T13:59:28.1848102Z       "service": "Azure App Service",
+2026-03-08T13:59:28.1848931Z       "percentage_of_total": 33.38
+2026-03-08T13:59:28.1850125Z     ***,
+2026-03-08T13:59:28.1850683Z     ***
+2026-03-08T13:59:28.1851080Z       "current_cost": 2.986144770890900,
+2026-03-08T13:59:28.1851631Z       "estimated_savings": 0.45,
+2026-03-08T13:59:28.1852290Z       "recommendation": "Review resource sizing and utilization",
+2026-03-08T13:59:28.1853006Z       "service": "Azure Cosmos DB",
+2026-03-08T13:59:28.1853515Z       "percentage_of_total": 17.86
+2026-03-08T13:59:28.1854015Z     ***
+2026-03-08T13:59:28.1854359Z   ],
+2026-03-08T13:59:28.1854716Z   "reporting_period": "2026-03",
+2026-03-08T13:59:28.1855184Z   "cost_by_service": [
+2026-03-08T13:59:28.1855596Z     ***
+2026-03-08T13:59:28.1855942Z       "total_cost": 6.62752935,
+2026-03-08T13:59:28.1856456Z       "daily_breakdown": [
+2026-03-08T13:59:28.1856888Z         ***
+2026-03-08T13:59:28.1857239Z           "date": 20260306,
+2026-03-08T13:59:28.1857677Z           "cost": 0.58533735
+2026-03-08T13:59:28.1858137Z         ***,
+2026-03-08T13:59:28.1859085Z         ***
+2026-03-08T13:59:28.1859473Z           "date": 20260307,
+2026-03-08T13:59:28.1859914Z           "cost": 4.531644
+2026-03-08T13:59:28.1860361Z         ***,
+2026-03-08T13:59:28.1860738Z         ***
+2026-03-08T13:59:28.1861084Z           "date": 20260308,
+2026-03-08T13:59:28.1861515Z           "cost": 1.510548
+2026-03-08T13:59:28.1861966Z         ***
+2026-03-08T13:59:28.1862345Z       ],
+2026-03-08T13:59:28.1862794Z       "service_name": "Redis Cache"
+2026-03-08T13:59:28.1863359Z     ***,
+2026-03-08T13:59:28.1863752Z     ***
+2026-03-08T13:59:28.1864113Z       "total_cost": 5.5792220500575,
+2026-03-08T13:59:28.1864622Z       "daily_breakdown": [
+2026-03-08T13:59:28.1865065Z         ***
+2026-03-08T13:59:28.1865428Z           "date": 20260303,
+2026-03-08T13:59:28.1865867Z           "cost": 0.4564940500575
+2026-03-08T13:59:28.1866362Z         ***,
+2026-03-08T13:59:28.1866735Z         ***
+2026-03-08T13:59:28.1867076Z           "date": 20260304,
+2026-03-08T13:59:28.1867513Z           "cost": 1.182168
+2026-03-08T13:59:28.1867958Z         ***,
+2026-03-08T13:59:28.1868602Z         ***
+2026-03-08T13:59:28.1868988Z           "date": 20260305,
+2026-03-08T13:59:28.1869460Z           "cost": 1.182168
+2026-03-08T13:59:28.1869908Z         ***,
+2026-03-08T13:59:28.1870282Z         ***
+2026-03-08T13:59:28.1870633Z           "date": 20260306,
+2026-03-08T13:59:28.1871071Z           "cost": 1.182168
+2026-03-08T13:59:28.1871510Z         ***,
+2026-03-08T13:59:28.1871885Z         ***
+2026-03-08T13:59:28.1872248Z           "date": 20260307,
+2026-03-08T13:59:28.1872661Z           "cost": 1.182168
+2026-03-08T13:59:28.1873102Z         ***,
+2026-03-08T13:59:28.1873463Z         ***
+2026-03-08T13:59:28.1873827Z           "date": 20260308,
+2026-03-08T13:59:28.1874267Z           "cost": 0.394056
+2026-03-08T13:59:28.1874715Z         ***
+2026-03-08T13:59:28.1875069Z       ],
+2026-03-08T13:59:28.1875456Z       "service_name": "Azure App Service"
+2026-03-08T13:59:28.1875980Z     ***,
+2026-03-08T13:59:28.1876314Z     ***
+2026-03-08T13:59:28.1876949Z       "total_cost": 2.986144770890900,
+2026-03-08T13:59:28.1877474Z       "daily_breakdown": [
+2026-03-08T13:59:28.1877919Z         ***
+2026-03-08T13:59:28.1878267Z           "date": 20260305,
+2026-03-08T13:59:28.1879000Z           "cost": 0.288979705398215
+2026-03-08T13:59:28.1879540Z         ***,
+2026-03-08T13:59:28.1879898Z         ***
+2026-03-08T13:59:28.1880247Z           "date": 20260306,
+2026-03-08T13:59:28.1880673Z           "cost": 1.15592566941503
+2026-03-08T13:59:28.1881162Z         ***,
+2026-03-08T13:59:28.1881527Z         ***
+2026-03-08T13:59:28.1881877Z           "date": 20260307,
+2026-03-08T13:59:28.1882309Z           "cost": 1.15592935763141
+2026-03-08T13:59:28.1882782Z         ***,
+2026-03-08T13:59:28.1883149Z         ***
+2026-03-08T13:59:28.1883511Z           "date": 20260308,
+2026-03-08T13:59:28.1883933Z           "cost": 0.385310038446245
+2026-03-08T13:59:28.1884408Z         ***
+2026-03-08T13:59:28.1884762Z       ],
+2026-03-08T13:59:28.1885266Z       "service_name": "Azure Cosmos DB"
+2026-03-08T13:59:28.1885825Z     ***,
+2026-03-08T13:59:28.1886208Z     ***
+2026-03-08T13:59:28.1886577Z       "total_cost": 1.08447153046960,
+2026-03-08T13:59:28.1887083Z       "daily_breakdown": [
+2026-03-08T13:59:28.1887536Z         ***
+2026-03-08T13:59:28.1887873Z           "date": 20260303,
+2026-03-08T13:59:28.1888563Z           "cost": 0.08718033345385
+2026-03-08T13:59:28.1889048Z         ***,
+2026-03-08T13:59:28.1889389Z         ***
+2026-03-08T13:59:28.1889727Z           "date": 20260304,
+2026-03-08T13:59:28.1890153Z           "cost": 0.2279522736036
+2026-03-08T13:59:28.1890599Z         ***,
+2026-03-08T13:59:28.1890947Z         ***
+2026-03-08T13:59:28.1891290Z           "date": 20260305,
+2026-03-08T13:59:28.1891715Z           "cost": 0.2279522736036
+2026-03-08T13:59:28.1892183Z         ***,
+2026-03-08T13:59:28.1892544Z         ***
+2026-03-08T13:59:28.1892911Z           "date": 20260306,
+2026-03-08T13:59:28.1893356Z           "cost": 0.2279522736036
+2026-03-08T13:59:28.1893841Z         ***,
+2026-03-08T13:59:28.1894526Z         ***
+2026-03-08T13:59:28.1894898Z           "date": 20260307,
+2026-03-08T13:59:28.1895327Z           "cost": 0.2279522736036
+2026-03-08T13:59:28.1895804Z         ***,
+2026-03-08T13:59:28.1896167Z         ***
+2026-03-08T13:59:28.1896520Z           "date": 20260308,
+2026-03-08T13:59:28.1896939Z           "cost": 0.08548210260135
+2026-03-08T13:59:28.1897392Z         ***
+2026-03-08T13:59:28.1897724Z       ],
+2026-03-08T13:59:28.1898094Z       "service_name": "Container Registry"
+2026-03-08T13:59:28.1898882Z     ***,
+2026-03-08T13:59:28.1899238Z     ***
+2026-03-08T13:59:28.1899567Z       "total_cost": 0.4390366304025,
+2026-03-08T13:59:28.1900041Z       "daily_breakdown": [
+2026-03-08T13:59:28.1900499Z         ***
+2026-03-08T13:59:28.1900851Z           "date": 20260303,
+2026-03-08T13:59:28.1901293Z           "cost": 0.03263621049
+2026-03-08T13:59:28.1901755Z         ***,
+2026-03-08T13:59:28.1902120Z         ***
+2026-03-08T13:59:28.1902479Z           "date": 20260304,
+2026-03-08T13:59:28.1902932Z           "cost": 0.0941646753125
+2026-03-08T13:59:28.1903438Z         ***,
+2026-03-08T13:59:28.1903809Z         ***
+2026-03-08T13:59:28.1904137Z           "date": 20260305,
+2026-03-08T13:59:28.1904530Z           "cost": 0.0925056721875
+2026-03-08T13:59:28.1904948Z         ***,
+2026-03-08T13:59:28.1905247Z         ***
+2026-03-08T13:59:28.1905558Z           "date": 20260306,
+2026-03-08T13:59:28.1905945Z           "cost": 0.092524759275
+2026-03-08T13:59:28.1906354Z         ***,
+2026-03-08T13:59:28.1906673Z         ***
+2026-03-08T13:59:28.1906985Z           "date": 20260307,
+2026-03-08T13:59:28.1907379Z           "cost": 0.0924944525375
+2026-03-08T13:59:28.1907790Z         ***,
+2026-03-08T13:59:28.1908107Z         ***
+2026-03-08T13:59:28.1908647Z           "date": 20260308,
+2026-03-08T13:59:28.1909039Z           "cost": 0.0347108606
+2026-03-08T13:59:28.1909443Z         ***
+2026-03-08T13:59:28.1909741Z       ],
+2026-03-08T13:59:28.1910061Z       "service_name": "Storage"
+2026-03-08T13:59:28.1910499Z     ***,
+2026-03-08T13:59:28.1910814Z     ***
+2026-03-08T13:59:28.1911363Z       "total_cost": 0.0001094600,
+2026-03-08T13:59:28.1911874Z       "daily_breakdown": [
+2026-03-08T13:59:28.1912286Z         ***
+2026-03-08T13:59:28.1912612Z           "date": 20260303,
+2026-03-08T13:59:28.1913020Z           "cost": 0.0000684125
+2026-03-08T13:59:28.1913430Z         ***,
+2026-03-08T13:59:28.1913758Z         ***
+2026-03-08T13:59:28.1914083Z           "date": 20260304,
+2026-03-08T13:59:28.1914481Z           "cost": 0.0000136825
+2026-03-08T13:59:28.1914891Z         ***,
+2026-03-08T13:59:28.1915216Z         ***
+2026-03-08T13:59:28.1915544Z           "date": 20260305,
+2026-03-08T13:59:28.1915994Z           "cost": 0.0000136825
+2026-03-08T13:59:28.1916404Z         ***,
+2026-03-08T13:59:28.1916722Z         ***
+2026-03-08T13:59:28.1917053Z           "date": 20260307,
+2026-03-08T13:59:28.1917440Z           "cost": 0.0000136825
+2026-03-08T13:59:28.1917836Z         ***
+2026-03-08T13:59:28.1918158Z       ],
+2026-03-08T13:59:28.1918722Z       "service_name": "Azure Data Factory v2"
+2026-03-08T13:59:28.1919224Z     ***,
+2026-03-08T13:59:28.1919546Z     ***
+2026-03-08T13:59:28.1919871Z       "total_cost": 0.00000410475,
+2026-03-08T13:59:28.1920326Z       "daily_breakdown": [
+2026-03-08T13:59:28.1920735Z         ***
+2026-03-08T13:59:28.1921049Z           "date": 20260305,
+2026-03-08T13:59:28.1921445Z           "cost": 0.00000410475
+2026-03-08T13:59:28.1921839Z         ***
+2026-03-08T13:59:28.1922146Z       ],
+2026-03-08T13:59:28.1922476Z       "service_name": "Key Vault"
+2026-03-08T13:59:28.1922893Z     ***,
+2026-03-08T13:59:28.1923197Z     ***
+2026-03-08T13:59:28.1923519Z       "total_cost": 0.0,
+2026-03-08T13:59:28.1923916Z       "daily_breakdown": [
+2026-03-08T13:59:28.1924329Z         ***
+2026-03-08T13:59:28.1924655Z           "date": 20260303,
+2026-03-08T13:59:28.1925047Z           "cost": 0.0
+2026-03-08T13:59:28.1925423Z         ***,
+2026-03-08T13:59:28.1925754Z         ***
+2026-03-08T13:59:28.1926080Z           "date": 20260305,
+2026-03-08T13:59:28.1926721Z           "cost": 0.0
+2026-03-08T13:59:28.1927091Z         ***,
+2026-03-08T13:59:28.1927418Z         ***
+2026-03-08T13:59:28.1927738Z           "date": 20260306,
+2026-03-08T13:59:28.1928120Z           "cost": 0.0
+2026-03-08T13:59:28.1928666Z         ***,
+2026-03-08T13:59:28.1928990Z         ***
+2026-03-08T13:59:28.1929302Z           "date": 20260307,
+2026-03-08T13:59:28.1929689Z           "cost": 0.0
+2026-03-08T13:59:28.1930040Z         ***
+2026-03-08T13:59:28.1930359Z       ],
+2026-03-08T13:59:28.1930709Z       "service_name": "API Management"
+2026-03-08T13:59:28.1931174Z     ***,
+2026-03-08T13:59:28.1931494Z     ***
+2026-03-08T13:59:28.1931814Z       "total_cost": 0.0,
+2026-03-08T13:59:28.1932214Z       "daily_breakdown": [
+2026-03-08T13:59:28.1932621Z         ***
+2026-03-08T13:59:28.1932943Z           "date": 20260303,
+2026-03-08T13:59:28.1933327Z           "cost": 0.0
+2026-03-08T13:59:28.1933696Z         ***,
+2026-03-08T13:59:28.1934018Z         ***
+2026-03-08T13:59:28.1934361Z           "date": 20260305,
+2026-03-08T13:59:28.1934760Z           "cost": 0.0
+2026-03-08T13:59:28.1935116Z         ***,
+2026-03-08T13:59:28.1935447Z         ***
+2026-03-08T13:59:28.1935769Z           "date": 20260306,
+2026-03-08T13:59:28.1936150Z           "cost": 0.0
+2026-03-08T13:59:28.1936516Z         ***,
+2026-03-08T13:59:28.1936842Z         ***
+2026-03-08T13:59:28.1937168Z           "date": 20260307,
+2026-03-08T13:59:28.1937553Z           "cost": 0.0
+2026-03-08T13:59:28.1937910Z         ***
+2026-03-08T13:59:28.1938229Z       ],
+2026-03-08T13:59:28.1938738Z       "service_name": "Bandwidth"
+2026-03-08T13:59:28.1939221Z     ***,
+2026-03-08T13:59:28.1939537Z     ***
+2026-03-08T13:59:28.1939864Z       "total_cost": 0.0,
+2026-03-08T13:59:28.1940266Z       "daily_breakdown": [
+2026-03-08T13:59:28.1940665Z         ***
+2026-03-08T13:59:28.1940991Z           "date": 20260303,
+2026-03-08T13:59:28.1941379Z           "cost": 0.0
+2026-03-08T13:59:28.1941747Z         ***,
+2026-03-08T13:59:28.1942065Z         ***
+2026-03-08T13:59:28.1942578Z           "date": 20260304,
+2026-03-08T13:59:28.1942964Z           "cost": 0.0
+2026-03-08T13:59:28.1943324Z         ***,
+2026-03-08T13:59:28.1943640Z         ***
+2026-03-08T13:59:28.1943949Z           "date": 20260305,
+2026-03-08T13:59:28.1944326Z           "cost": 0.0
+2026-03-08T13:59:28.1944683Z         ***,
+2026-03-08T13:59:28.1945001Z         ***
+2026-03-08T13:59:28.1945335Z           "date": 20260306,
+2026-03-08T13:59:28.1945722Z           "cost": 0.0
+2026-03-08T13:59:28.1946088Z         ***,
+2026-03-08T13:59:28.1946410Z         ***
+2026-03-08T13:59:28.1946728Z           "date": 20260307,
+2026-03-08T13:59:28.1947120Z           "cost": 0.0
+2026-03-08T13:59:28.1947481Z         ***,
+2026-03-08T13:59:28.1947802Z         ***
+2026-03-08T13:59:28.1948132Z           "date": 20260308,
+2026-03-08T13:59:28.1948699Z           "cost": 0.0
+2026-03-08T13:59:28.1949070Z         ***
+2026-03-08T13:59:28.1949381Z       ],
+2026-03-08T13:59:28.1949747Z       "service_name": "Azure Cognitive Search"
+2026-03-08T13:59:28.1950265Z     ***,
+2026-03-08T13:59:28.1950595Z     ***
+2026-03-08T13:59:28.1950921Z       "total_cost": 0.0,
+2026-03-08T13:59:28.1951338Z       "daily_breakdown": [
+2026-03-08T13:59:28.1951736Z         ***
+2026-03-08T13:59:28.1952283Z           "date": 20260303,
+2026-03-08T13:59:28.1952684Z           "cost": 0.0
+2026-03-08T13:59:28.1953053Z         ***,
+2026-03-08T13:59:28.1953391Z         ***
+2026-03-08T13:59:28.1953710Z           "date": 20260304,
+2026-03-08T13:59:28.1954094Z           "cost": 0.0
+2026-03-08T13:59:28.1954472Z         ***,
+2026-03-08T13:59:28.1954794Z         ***
+2026-03-08T13:59:28.1955120Z           "date": 20260305,
+2026-03-08T13:59:28.1955511Z           "cost": 0.0
+2026-03-08T13:59:28.1955871Z         ***,
+2026-03-08T13:59:28.1956191Z         ***
+2026-03-08T13:59:28.1956505Z           "date": 20260306,
+2026-03-08T13:59:28.1956877Z           "cost": 0.0
+2026-03-08T13:59:28.1957237Z         ***,
+2026-03-08T13:59:28.1957549Z         ***
+2026-03-08T13:59:28.1958064Z           "date": 20260307,
+2026-03-08T13:59:28.1958615Z           "cost": 0.0
+2026-03-08T13:59:28.1958971Z         ***,
+2026-03-08T13:59:28.1959288Z         ***
+2026-03-08T13:59:28.1959597Z           "date": 20260308,
+2026-03-08T13:59:28.1959968Z           "cost": 0.0
+2026-03-08T13:59:28.1960320Z         ***
+2026-03-08T13:59:28.1960622Z       ],
+2026-03-08T13:59:28.1960946Z       "service_name": "Service Bus"
+2026-03-08T13:59:28.1961389Z     ***,
+2026-03-08T13:59:28.1961694Z     ***
+2026-03-08T13:59:28.1962025Z       "total_cost": 0.0,
+2026-03-08T13:59:28.1962429Z       "daily_breakdown": [
+2026-03-08T13:59:28.1962826Z         ***
+2026-03-08T13:59:28.1963150Z           "date": 20260303,
+2026-03-08T13:59:28.1963525Z           "cost": 0.0
+2026-03-08T13:59:28.1963877Z         ***,
+2026-03-08T13:59:28.1964204Z         ***
+2026-03-08T13:59:28.1964532Z           "date": 20260304,
+2026-03-08T13:59:28.1964914Z           "cost": 0.0
+2026-03-08T13:59:28.1965267Z         ***,
+2026-03-08T13:59:28.1965585Z         ***
+2026-03-08T13:59:28.1965927Z           "date": 20260305,
+2026-03-08T13:59:28.1966307Z           "cost": 0.0
+2026-03-08T13:59:28.1966660Z         ***,
+2026-03-08T13:59:28.1966988Z         ***
+2026-03-08T13:59:28.1967299Z           "date": 20260306,
+2026-03-08T13:59:28.1967685Z           "cost": 0.0
+2026-03-08T13:59:28.1968039Z         ***,
+2026-03-08T13:59:28.1968495Z         ***
+2026-03-08T13:59:28.1968835Z           "date": 20260307,
+2026-03-08T13:59:28.1969227Z           "cost": 0.0
+2026-03-08T13:59:28.1969580Z         ***,
+2026-03-08T13:59:28.1969910Z         ***
+2026-03-08T13:59:28.1970223Z           "date": 20260308,
+2026-03-08T13:59:28.1970607Z           "cost": 0.0
+2026-03-08T13:59:28.1970960Z         ***
+2026-03-08T13:59:28.1971265Z       ],
+2026-03-08T13:59:28.1971613Z       "service_name": "Log Analytics"
+2026-03-08T13:59:28.1972064Z     ***
+2026-03-08T13:59:28.1972360Z   ],
+2026-03-08T13:59:28.1972774Z   "id": "c59ee575-eb2a-4b51-a865-4b618f9add0a-2026-03",
+2026-03-08T13:59:28.1973305Z   "total_cost": 16.72
+2026-03-08T13:59:28.1973681Z ***
+2026-03-08T13:59:28.1974063Z 
+2026-03-08T13:59:28.1974342Z  + ================================================================================
+2026-03-08T13:59:28.1974933Z [2026-03-08 13:59:28] [SUCCESS] SYNC COMPLETE
+2026-03-08T13:59:28.1975493Z [2026-03-08 13:59:28] [INFO]   Total Cost: 16.72 USD
+2026-03-08T13:59:28.1976033Z [2026-03-08 13:59:28] [INFO]   Services: 12
+2026-03-08T13:59:28.1976612Z [2026-03-08 13:59:28] [INFO]   Optimization Opportunities: 3
+2026-03-08T13:59:28.1977282Z [2026-03-08 13:59:28] [INFO]   Forecast: 64.78 USD
+2026-03-08T13:59:28.1977859Z ================================================================================ + 
+2026-03-08T13:59:28.1978266Z 
+2026-03-08T13:59:28.4573775Z ##[group]Run if ($LASTEXITCODE -eq 0) ***
+2026-03-08T13:59:28.4574180Z [36;1mif ($LASTEXITCODE -eq 0) ***[0m
+2026-03-08T13:59:28.4574683Z [36;1m  Write-Host "✓ Cost sync completed successfully" -ForegroundColor Green[0m
+2026-03-08T13:59:28.4575138Z [36;1m*** else ***[0m
+2026-03-08T13:59:28.4575493Z [36;1m  Write-Host "✗ Cost sync failed" -ForegroundColor Red[0m
+2026-03-08T13:59:28.4575840Z [36;1m  exit 1[0m
+2026-03-08T13:59:28.4576050Z [36;1m***[0m
+2026-03-08T13:59:28.4626325Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T13:59:28.4626637Z env:
+2026-03-08T13:59:28.4626924Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:28.4627576Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:28.4628150Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:28.4628574Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:28.4628870Z ##[endgroup]
+2026-03-08T13:59:29.1029522Z ✗ Cost sync failed
+2026-03-08T13:59:29.1477707Z ##[error]Process completed with exit code 1.
+2026-03-08T13:59:29.1574043Z Post job cleanup.
+2026-03-08T13:59:29.1987436Z Clearing azure cli accounts from the local cache.
+2026-03-08T13:59:29.2002859Z [command]/usr/bin/az account clear
+2026-03-08T13:59:29.9452976Z Post job cleanup.
+2026-03-08T13:59:30.0411930Z [command]/usr/bin/git version
+2026-03-08T13:59:30.0451068Z git version 2.53.0
+2026-03-08T13:59:30.0495251Z Temporarily overriding HOME='/home/runner/work/_temp/5d4bf5bd-d9de-4b67-8731-dd9b0455e5bb' before making global git config changes
+2026-03-08T13:59:30.0496710Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:59:30.0509430Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:59:30.0546044Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:59:30.0581805Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:59:30.0833882Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:59:30.0856473Z http.https://github.com/.extraheader
+2026-03-08T13:59:30.0869676Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-03-08T13:59:30.0903093Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:59:30.1145091Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:59:30.1181711Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:59:30.1570085Z Cleaning up orphan processes

@@ -47,6 +47,11 @@ Before answering any question or writing any code:
 5. **Produce a Session Brief** -- one paragraph: active phase, last test count, next task, open blockers.
    Do not skip this. Do not start implementing before the brief is written.
 
+6. **Check the Tool Index** (before creating any new tool):
+   - Read `docs/TOOL-INDEX.md` -- comprehensive catalog of all scripts/ tools
+   - DO NOT recreate existing tools -- use what's already built
+   - If tool doesn't exist, add it to index after creation
+
 ---
 
 ### 2. DPDCA Execution Loop

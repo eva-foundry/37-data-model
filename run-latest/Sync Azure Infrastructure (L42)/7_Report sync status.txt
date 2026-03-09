@@ -1,0 +1,21 @@
+﻿2026-03-08T13:59:31.9626464Z ##[group]Run if [ $? -eq 0 ]; then
+2026-03-08T13:59:31.9626805Z [36;1mif [ $? -eq 0 ]; then[0m
+2026-03-08T13:59:31.9627159Z [36;1m  echo "✓ Infrastructure sync completed successfully"[0m
+2026-03-08T13:59:31.9627523Z [36;1melse[0m
+2026-03-08T13:59:31.9627773Z [36;1m  echo "✗ Infrastructure sync failed"[0m
+2026-03-08T13:59:31.9628070Z [36;1m  exit 1[0m
+2026-03-08T13:59:31.9628282Z [36;1mfi[0m
+2026-03-08T13:59:31.9677837Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:59:31.9678118Z env:
+2026-03-08T13:59:31.9678635Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:59:31.9679351Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:59:31.9679941Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:59:31.9680258Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:59:31.9680639Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9681086Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:59:31.9681558Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9681956Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9682350Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:59:31.9682744Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:59:31.9683092Z ##[endgroup]
+2026-03-08T13:59:31.9751540Z ✓ Infrastructure sync completed successfully
