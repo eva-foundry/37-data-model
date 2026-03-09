@@ -159,6 +159,12 @@ _LAYER_FILES: dict[str, str] = {
     "eva_model": "eva-model.json",
     "infrastructure_drift": "infrastructure_drift.json",
     "performance_trends": "performance_trends.json",
+    
+    # ── L52-L56: Execution Engine (Phase 1, Session 41 Part 10) ──
+    "work_execution_units": "work_execution_units.json",
+    "work_step_events": "work_step_events.json",
+    "work_decision_records": "work_decision_records.json",
+    "work_outcomes": "work_outcomes.json",
 }
 
 

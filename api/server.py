@@ -308,6 +308,9 @@ def create_app() -> FastAPI:
         # automated remediation (L48-L51) — Priority #4 self-healing framework
         remediation_policies_router, auto_fix_execution_history_router,
         remediation_outcomes_router, remediation_effectiveness_router,
+        # execution engine (L52-L56) — Phase 1 core work ledger (Session 41 Part 10)
+        work_execution_units_router, work_step_events_router,
+        work_decision_records_router, work_outcomes_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
@@ -365,6 +368,9 @@ def create_app() -> FastAPI:
         # automated remediation (L48-L51) — Priority #4 self-healing framework
         remediation_policies_router, auto_fix_execution_history_router,
         remediation_outcomes_router, remediation_effectiveness_router,
+        # execution engine (L52-L56) — Phase 1 core work ledger (Session 41 Part 10)
+        work_execution_units_router, work_step_events_router,
+        work_decision_records_router, work_outcomes_router,
         fp_router,
         # graph (E-11)
         graph_router,

@@ -136,3 +136,21 @@ remediation_effectiveness_router = make_layer_router(
     "remediation_effectiveness",
     "/model/remediation_effectiveness",
     ["remediation_effectiveness"])
+
+# ── Execution Engine (L52-L56) Phase 1, Session 41 Part 10 ──
+work_execution_units_router = make_layer_router(
+    "work_execution_units",
+    "/model/work_execution_units",
+    ["execution"])
+work_step_events_router = make_layer_router(
+    "work_step_events",
+    "/model/work_step_events",
+    ["execution"])
+work_decision_records_router = make_layer_router(
+    "work_decision_records",
+    "/model/work_decision_records",
+    ["execution"])
+work_outcomes_router = make_layer_router(
+    "work_outcomes",
+    "/model/work_outcomes",
+    ["execution"])
