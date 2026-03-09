@@ -1,0 +1,11 @@
+================================================================================
+Priority 1: Seed Infrastructure Monitoring Data
+================================================================================
+
+BEFORE SEED:
+----------------------------------------
+Traceback (most recent call last):
+  File "C:\AICOE\eva-foundry\37-data-model\scripts\seed-priority1.py", line 17, in <module>
+    print(f"Operational layers: {data['operational_layers']}")
+                                 ~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'operational_layers'

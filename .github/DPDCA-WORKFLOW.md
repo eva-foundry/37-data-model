@@ -45,7 +45,7 @@ Step D.2 -- Read latest findings (if exists)
   Get-ChildItem docs -Filter "*findings*" -Name | Sort-Object -Descending | Select-Object -First 1
 
 Step D.3 -- Check data model health
-  $base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+  $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
   Invoke-RestMethod "$base/health" | Select-Object status, store, version
   Invoke-RestMethod "$base/model/agent-summary" | Select-Object total
 
@@ -168,7 +168,7 @@ Step C.5 -- Review findings (optional but recommended)
   Read the generated *review_findings* doc for real violations before merging.
 
 Step C.6 -- Validate model (critical for 37-data-model)
-  $base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+  $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
   $v = Invoke-RestMethod "$base/model/admin/validate" -Headers @{"Authorization"="Bearer dev-admin"}
   $v.count       # must be 0
   $v.violations  # must be []
@@ -279,7 +279,7 @@ PLAN.md becomes the ground truth -- no separate lookup is required.
 **Cosmos Export**: Always run `POST /model/admin/commit` in Act step (writes to Cosmos 24x7)
 
 **ACA Deployment**: 37-data-model is deployed to ACA at:
-  https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
+  https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 
 **Local Dev**: Port 8010 (SQLite MemoryStore fallback)
 

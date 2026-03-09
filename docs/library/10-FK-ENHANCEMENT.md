@@ -31,7 +31,7 @@
   - No versioning (can't query "what did this screen call 3 months ago?")
 
   4,339+ objects in Cosmos DB (ACA production).
-  See: 03-DATA-MODEL-REFERENCE.md for complete entity catalog (41 layers).
+  See: 03-DATA-MODEL-REFERENCE.md for complete entity catalog (87 layers).
   20 edge types defined in graph.py (read-only materialization, no enforcement)
 
 --------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 # EVA Data Model - Agent User Guide
 
 **Version:** 3.4  
-**Last Updated:** March 8, 2026 9:13 AM ET (Session 39 - Infrastructure Monitoring Deployed)  
+**Last Updated:** March 9, 2026 10:30 AM ET (Session 41 Part 9 - Introspection Fix)  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills)
 
 ---
@@ -78,6 +78,41 @@ Invoke-RestMethod "$base/model/agent-guide" | ConvertTo-Json -Depth 10
 - Forbidden actions (what NOT to do)
 - Quick reference (all endpoints)
 - **Layer introspection** (query live counts, don't hardcode)
+
+---
+
+## How to Reason About the Model: The 12-Domain Ontology
+
+**DO NOT memorize 87 layers.** Instead, learn the **12 conceptual domains** that organize them:
+
+| Domain | Purpose | When to Query | Key Layers |
+|--------|---------|---------------|-----------|
+| **System Architecture** | How the system is built | Understand tech stack, services, endpoints | services, endpoints, schemas, infrastructure |
+| **Identity & Access** | Who can do what | Assign roles, manage secrets, check permissions | personas, security_controls, secrets_catalog |
+| **AI Runtime** | Who performs intelligent work | Load agent config, run tools, manage prompts | agents, prompts, mcp_servers, agent_policies |
+| **User Interface** | How users interact | Design screens, manage UI state | screens, literals, components, hooks, ts_types |
+| **Control Plane** | How the system operates internally | Orchestrate workflows, configure runtime | planes, connections, environments, cp_skills, feature_flags |
+| **Governance & Policy** | Rules the factory must follow | Enforce quality gates, track decisions, manage risks | quality_gates, github_rules, validation_rules, risks, decisions |
+| **Project & PM** | Plan and track work | Organize sprints, backlog items, milestones | projects, wbs, sprints, stories, tasks, milestones |
+| **DevOps & Delivery** | Build, test, deploy | Run pipelines, manage deployments, track quality | ci_cd_pipelines, deployment_history, test_cases, deployment_policies |
+| **Observability & Evidence** | Monitor and audit | Track execution, collect evidence, verify compliance | evidence, deployment_records, compliance_audit, verification_records |
+| **Infrastructure & FinOps** | Cloud resources and costs | Track Azure resources, optimize costs | azure_infrastructure, resource_costs, performance_trends, cost_allocation |
+| **Execution Engine** (planned L52-70) | Execute work units & steps | Orchestrate agent work, manage retries | work_execution_units, work_step_events, work_state |
+| **Strategy & Portfolio** (planned L71-75) | Long-term planning | Portfolio roadmaps, business strategy | work_factory_portfolio, roadmaps |
+
+**Agent workflow:**
+1. **Understand the problem** → "Which domain does this concern?" (not "which layer?")
+2. **Query the domain** → `GET /model/{domain_layer}/` for relevant objects
+3. **Navigate relationships** → Follow foreign keys to other domains as needed
+4. **Update and verify** → PUT changes, confirm via evidence layer
+
+**Example: "Add a new endpoint"**
+- Domain: System Architecture (not "find L05 endpoints")
+- Query: `GET /model/endpoints/?service=eva-da-api`
+- Update: PUT new endpoint object with cosmos_reads/writes, auth[], feature_flag
+- Verify: Evidence layer records the change with test results
+
+**Read more:** [docs/library/98-model-ontology-for-agents.md](docs/library/98-model-ontology-for-agents.md) for complete 12-domain cognitive architecture and agent reasoning patterns.
 
 ---
 

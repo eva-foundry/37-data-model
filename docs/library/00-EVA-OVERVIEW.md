@@ -1,7 +1,7 @@
 ================================================================================
  EVA FOUNDATION -- MASTER OVERVIEW
  File: docs/library/00-EVA-OVERVIEW.md
- Updated: 2026-03-06 11:12 AM ET -- Evidence Layer LIVE; Agent Automation LIVE; 41 layers
+ Updated: 2026-03-09 -- Evidence Layer LIVE; Agent Automation LIVE; 87 operational layers; 12 ontology domains
  Source: 37-data-model (single source of truth, cloud-only, store=cosmos)
 --------------------------------------------------------------------------------
  COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31) + GOVERNANCE PLANE (L33-L34) = BILLION-DOLLAR MOAT
@@ -84,13 +84,13 @@ EVA operationalizes that claim:
 --------------------------------------------------------------------------------
 
 NOT a chatbot wrapper                   -- it is an agentic operating model
-NOT a single application                -- it is a platform of ~48 projects
+NOT a single application                -- it is a platform of ~57 projects
 NOT a prototype waiting for funding     -- it has running infrastructure in Azure
 NOT coupled to one LLM                  -- model-agnostic by design (via APIM)
 NOT a one-person spike                  -- it is architecturally production-ready
 
 --------------------------------------------------------------------------------
- THE 48-PROJECT ECOSYSTEM
+ THE 57-PROJECT ECOSYSTEM
 --------------------------------------------------------------------------------
 
 Projects are numbered 01-48 under C:\AICOE\eva-foundation\.
@@ -127,7 +127,7 @@ They fall into five bands:
                              Auth, EVA DA suite, JP Spark, Chat, AssistMe
                            ops-face (26 screens) -- admin / control-plane portal
                              Admin, DevOps, Dev Tools, DevBench
-                         face field set in Cosmos on all 46 screens (PASS 0 violations).
+                         face field set in Cosmos on all 50 screens (PASS 0 violations).
                          Phases 1+2 complete. Phase 3 (wiring) next.
   44-eva-jp-spark        Next-gen portal-integrated JP assistant. Phase 3.
                          Inherits EVA-JP-v1.2 rebuild as reference impl.
@@ -265,7 +265,7 @@ They fall into five bands:
   01-AGENTIC-STATE.md            The Berlin paper <-> EVA mapping
   02-ARCHITECTURE.md             ASCII system architecture (DIAGRAM 8: two-portal split)
   03-DATA-MODEL-REFERENCE.md     Complete entity catalog + Evidence Layer guide
-  04-PORTAL-SCREENS.md           All 46 screens by face (assistant/ops)
+  04-PORTAL-SCREENS.md           All 50 screens by face (assistant/ops)
   05-GOVERNANCE-MODEL.md         Actor model, MTI, decision engine, domains
 
   External reading:
