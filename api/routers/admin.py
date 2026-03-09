@@ -714,6 +714,7 @@ async def audit_log(
 async def validate(
     store: AbstractStore = Depends(get_store),
     cache: AbstractCache = Depends(get_cache),
+    enhanced: bool = False,  # Session 41 Part 7: enhanced response with severity & remediation
     settings=Depends(lambda: None),   # unused but future-proof
     actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
@@ -726,16 +727,27 @@ async def validate(
     5. literal.screens[]            → screens
     6. requirement.satisfied_by[]   → endpoints + screens
     7. agent.output_screens[]       → screens
+    
+    Query params:
+    - enhanced=true : Return detailed categorization with severity levels and remediation
+    - enhanced=false : Return legacy format (default, backward compatible)
     """
+    # Load all layers
+    layers: dict[str, list[dict]] = {}
+    for lname in _LAYER_FILES:
+        layers[lname] = await store.get_all(lname, active_only=False)
+    
+    # Use enhanced validation if requested
+    if enhanced:
+        from api.validation import enhanced_validate
+        return enhanced_validate(layers)
+    
+    # Otherwise use legacy validation (backward compatible)
     violations: list[str] = []
 
     def _ids(layer_data: list[dict]) -> set[str]:
         return {str(d.get("id") or d.get("obj_id") or "")
                 for d in layer_data if d}
-
-    layers: dict[str, list[dict]] = {}
-    for lname in _LAYER_FILES:
-        layers[lname] = await store.get_all(lname, active_only=False)
 
     container_ids = _ids(layers["containers"])
     feature_flag_ids = _ids(layers["feature_flags"])
@@ -801,6 +813,108 @@ async def validate(
         "count": len(violations),
         "status": "PASS" if not violations else "FAIL",
     }
+
+
+# ── CASCADE IMPACT CHECK (Session 41 Part 7) ─────────────────────────────
+
+@router.get("/cascade-check/{layer}/{obj_id:path}",
+            summary="Analyze cascade impact: identify all references to a target object")
+async def cascade_check(
+    layer: str,
+    obj_id: str,
+    store: AbstractStore = Depends(get_store),
+    actor: str = Depends(require_admin),
+) -> dict[str, Any]:
+    """
+    Perform cascade impact analysis for a target object.
+    
+    Returns detailed information about all objects that reference the target,
+    including whether it's safe to delete without creating orphaned references.
+    
+    Example:
+        GET /admin/cascade-check/screens/S001
+        
+        Returns:
+        {
+          "target": {"layer": "screens", "id": "S001", "exists": true, "is_active": true},
+          "references": [
+            {"layer": "literals", "field": "screens", "referencing_objects": [...], "count": 2},
+            {"layer": "agents", "field": "output_screens", "referencing_objects": [...], "count": 1}
+          ],
+          "total_references": 3,
+          "safe_to_delete": false,
+          "warning": "Deleting this object would create 3 orphaned references",
+          "remediation": ["Remove S001 from literals...", "Remove S001 from agents..."]
+        }
+    """
+    from api.validation import build_reverse_index, cascade_impact_check
+    
+    # Load all layers
+    layers_data: dict[str, list[dict]] = {}
+    for lname in _LAYER_FILES:
+        layers_data[lname] = await store.get_all(lname, active_only=False)
+    
+    # Build reverse index for fast lookups
+    reverse_index = build_reverse_index(layers_data)
+    
+    # Perform cascade check
+    result = cascade_impact_check(layer, obj_id, layers_data, reverse_index)
+    
+    return result
+
+
+# ── REVERSE REFERENCE LOOKUP (Session 41 Part 7) ──────────────────────────
+
+@router.get("/references/{layer}/{obj_id:path}",
+            summary="Lookup all objects that reference a specific target (who references me?)")
+async def references(
+    layer: str,
+    obj_id: str,
+    store: AbstractStore = Depends(get_store),
+    actor: str = Depends(require_admin),
+) -> dict[str, Any]:
+    """
+    Answer the question "Who references me?" for any object.
+    
+    Returns all objects that have FK references to the target, grouped by layer and field.
+    Useful for understanding object dependencies, planning migrations, and impact analysis.
+    
+    Example:
+        GET /admin/references/containers/users
+        
+        Returns:
+        {
+          "target": {"layer": "containers", "id": "users", "exists": true, "is_active": true},
+          "referenced_by": {
+            "endpoints_cosmos_reads": {
+              "field": "cosmos_reads",
+              "references": [{"id": "user-profile-get", "is_active": true}, ...],
+              "count": 2
+            },
+            "endpoints_cosmos_writes": {
+              "field": "cosmos_writes",
+              "references": [{"id": "user-update-post", "is_active": true}, ...],
+              "count": 2
+            }
+          },
+          "total_references": 4,
+          "usage_summary": "Referenced by: 2 endpoints via cosmos_reads, 2 endpoints via cosmos_writes"
+        }
+    """
+    from api.validation import build_reverse_index, reverse_reference_lookup
+    
+    # Load all layers
+    layers_data: dict[str, list[dict]] = {}
+    for lname in _LAYER_FILES:
+        layers_data[lname] = await store.get_all(lname, active_only=False)
+    
+    # Build reverse index for fast lookups
+    reverse_index = build_reverse_index(layers_data)
+    
+    # Perform reverse lookup
+    result = reverse_reference_lookup(layer, obj_id, layers_data, reverse_index)
+    
+    return result
 
 
 # ── COMMIT (export + assemble + validate in one call) ───────────────────
