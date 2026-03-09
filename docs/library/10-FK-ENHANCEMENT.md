@@ -1,8 +1,8 @@
 ================================================================================
  EVA DATA MODEL -- FK ENHANCEMENT (SIEBEL-STYLE RELATIONAL INTEGRITY)
  File: docs/library/10-FK-ENHANCEMENT.md
- Updated: 2026-02-28 17:53 ET -- Opus 4.6 reviewed, CONDITIONAL GO, 403h/12 sprints
- Status: Approved design, Phase 0 start March 2026
+ Updated: 2026-03-09 14:00 ET -- 38 edge types (27 + 11 from Phase 1 Execution)
+ Status: Approved design, Phase 0 start March 2026, Phase 1 L52-L56 deployed
  Source docs: docs/FK-ENHANCEMENT-*.md (4 documents, ~7000 lines total)
 ================================================================================
 
@@ -38,7 +38,7 @@
  FK ENHANCEMENT DESIGN
 --------------------------------------------------------------------------------
 
-  27 edge types (20 existing + 7 new for CI/CD):
+  38 edge types (27 original + 11 from Phase 1 Execution L52-L56):
 
   From Layer          Edge Type           To Layer          Cascade
   -----------------   -----------------   ---------------   --------
@@ -62,17 +62,30 @@
   projects            project_wbs         wbs               CASCADE
   personas            persona_flags       feature_flags     SET_NULL
   runbooks            runbook_skill       cp_skills         RESTRICT
-  infrastructure      deployed_to (NEW)   environments      RESTRICT
-  infrastructure      owned_by (NEW)      projects          CASCADE
+  infrastructure      deployed_to         environments      RESTRICT
+  infrastructure      owned_by            projects          CASCADE
   projects            targets_milestone   milestones        SET_NULL
-  sprints             has_story (NEW)     wbs               RESTRICT
-  cp_workflows        workflow_impl (NEW) runbooks          RESTRICT
-  cp_workflows        workflow_tgt (NEW)  environments      RESTRICT
-  projects            uses_plane (NEW)    planes            RESTRICT
+  sprints             has_story           wbs               RESTRICT
+  cp_workflows        workflow_impl       runbooks          RESTRICT
+  cp_workflows        workflow_tgt        environments      RESTRICT
+  projects            uses_plane          planes            RESTRICT
+  
+  -- Phase 1 Execution (L52-L56) -- Session 41 Part 10, March 9, 2026
+  work_execution_units  work_unit_to_project      projects          RESTRICT
+  work_execution_units  work_unit_to_wbs          wbs               RESTRICT
+  work_execution_units  work_unit_to_sprint       sprints           RESTRICT
+  work_execution_units  work_unit_to_milestone    milestones        SET_NULL
+  work_execution_units  work_unit_to_workflow     cp_workflows      RESTRICT
+  work_execution_units  work_unit_to_project_work project_work      RESTRICT
+  work_execution_units  work_unit_parent          work_execution_units  RESTRICT
+  work_step_events      work_step_to_work_unit    work_execution_units  CASCADE
+  work_decision_records work_decision_to_work_unit work_execution_units CASCADE
+  work_outcomes         work_outcome_to_work_unit work_execution_units  CASCADE
+  work_step_events      work_step_to_decisions    work_decision_records RESTRICT
 
   CASCADE POLICIES:
   - RESTRICT:   Block delete if children exist (most relationships)
-  - CASCADE:    Auto-delete children (project -> wbs tree)
+  - CASCADE:    Auto-delete children (project -> wbs tree, L52 -> L53/L54/L56)
   - SET_NULL:   Nullify FK in children (soft degradation for flags/milestones)
   - NO_ACTION:  Allow delete, leave dangling (admin override, requirements)
 

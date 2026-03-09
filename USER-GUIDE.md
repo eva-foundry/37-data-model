@@ -478,6 +478,158 @@ Project-specific rules (README/PLAN/STATUS)
 
 ---
 
+## Using Execution Layers (L52-L56) - Phase 1
+
+**Session 41 Part 10 (March 9, 2026):** 4 execution layers now operational for governed agent work tracking.
+
+### The 4-Layer Architecture
+
+| Layer | Purpose | Parent/Child | Cascade |
+|-------|---------|--------------|---------|
+| **L52 work_execution_units** | Work ledger - smallest governed unit | PARENT | Deletes cascade to L53/L54/L56 |
+| **L53 work_step_events** | Event timeline - step-by-step execution log | Child of L52 | CASCADE on parent delete |
+| **L54 work_decision_records** | Decision ledger - runtime decisions | Child of L52 | CASCADE on parent delete |
+| **L56 work_outcomes** | Result ledger - delivered vs expected | Child of L52 | CASCADE on parent delete |
+
+**Read full spec:** [docs/library/13-EXECUTION-LAYERS.md](docs/library/13-EXECUTION-LAYERS.md)
+
+### Usage Pattern: Create Governed Work Unit
+
+```powershell
+# 1. Create parent work unit (L52)
+$wu = @{
+    work_unit_id = "37-data-model-wu-20260309-001"
+    project_id = "37-data-model"
+    wbs_id = "WBS-037-S41P10"
+    sprint_id = "37-data-model-sprint-2026-03-09"
+    title = "Deploy Phase 1 execution layers"
+    status = "in-progress"
+    assigned_to_type = "agent"
+    assigned_to_id = "copilot"
+    created_at = (Get-Date).ToUniversalTime().ToString("o")
+    updated_at = (Get-Date).ToUniversalTime().ToString("o")
+}
+
+Invoke-RestMethod "$($session.base)/model/work_execution_units/$($wu.work_unit_id)" `
+    -Method PUT `
+    -Headers @{"X-Actor"="agent:copilot"; "Content-Type"="application/json"} `
+    -Body ($wu | ConvertTo-Json -Depth 5)
+
+# 2. Log execution steps (L53)
+$step = @{
+    event_id = "$($wu.work_unit_id)-evt-001"
+    work_unit_id = $wu.work_unit_id
+    sequence_no = 1
+    event_type = "state_change"
+    timestamp = (Get-Date).ToUniversalTime().ToString("o")
+    actor_type = "agent"
+    actor_id = "copilot"
+    state_before = "queued"
+    state_after = "in-progress"
+    action_taken = "Started deployment of execution layer schemas"
+}
+
+Invoke-RestMethod "$($session.base)/model/work_step_events/$($step.event_id)" `
+    -Method PUT `
+    -Headers @{"X-Actor"="agent:copilot"; "Content-Type"="application/json"} `
+    -Body ($step | ConvertTo-Json -Depth 5)
+
+# 3. Record decisions made (L54)
+$decision = @{
+    decision_id = "$($wu.work_unit_id)-dec-001"
+    work_unit_id = $wu.work_unit_id
+    decision_question = "Deploy all 4 layers together or incrementally?"
+    options_considered = @("all-at-once", "incremental-L52-first")
+    selected_option_id = "all-at-once"
+    decision_scope = "execution"
+    basis = "heuristic"
+    decided_by_type = "agent"
+    decided_by_id = "copilot"
+    decided_at = (Get-Date).ToUniversalTime().ToString("o")
+    rationale = "Parent-child cascade requires atomic deployment"
+}
+
+Invoke-RestMethod "$($session.base)/model/work_decision_records/$($decision.decision_id)" `
+    -Method PUT `
+    -Headers @{"X-Actor"="agent:copilot"; "Content-Type"="application/json"} `
+    -Body ($decision | ConvertTo-Json -Depth 5)
+
+# 4. Record outcomes (L56)
+$outcome = @{
+    outcome_id = "$($wu.work_unit_id)-out-001"
+    work_unit_id = $wu.work_unit_id
+    result = "delivered"
+    outcome_type = "technical"
+    recorded_at = (Get-Date).ToUniversalTime().ToString("o")
+    expected_vs_actual = "All 4 schemas deployed as planned"
+    delivered_changes = @{
+        files_created = @(
+            "schema/work_execution_units.schema.json",
+            "schema/work_step_events.schema.json",
+            "schema/work_decision_records.schema.json",
+            "schema/work_outcomes.schema.json"
+        )
+        metrics = @{ layer_count_before = 87; layer_count_after = 91 }
+    }
+}
+
+Invoke-RestMethod "$($session.base)/model/work_outcomes/$($outcome.outcome_id)" `
+    -Method PUT `
+    -Headers @{"X-Actor"="agent:copilot"; "Content-Type"="application/json"} `
+    -Body ($outcome | ConvertTo-Json -Depth 5)
+```
+
+### Key Behaviors
+
+**Cascade Delete:**
+- Deleting L52 work unit AUTO-DELETES all child records (L53/L54/L56)
+- Ensures atomic cleanup - no orphaned events/decisions/outcomes
+
+**Polymorphic Actors:**
+- `assigned_to_type`: `agent` | `cp_agent` | `human`
+- `assigned_to_id`: agent_id (L9), cp_agent_id (L15), or persona_id (L2)
+- Supports human-in-the-loop + full automation
+
+**DPDCA Integration:**
+- Link work units to evidence layer (L31) via `evidence_ids[]`
+- Track DPDCA phases in `work_step_events` metadata
+- Map to WBS (L26), sprints (L27), project_work (L34)
+
+**Gate Validation:**
+- Use `event_type=gate_check` in work_step_events
+- Record `gate_result`: PASS | FAIL | WARN | SKIP
+- Link to quality gates (L23) via gate_name field
+
+### Query Patterns
+
+```powershell
+# All active work for project
+$active = (Invoke-RestMethod "$($session.base)/model/work_execution_units/?project_id=37-data-model&status=in-progress").data
+
+# Event timeline for work unit
+$events = (Invoke-RestMethod "$($session.base)/model/work_step_events/?work_unit_id=$wu_id&limit=100").data | 
+    Sort-Object sequence_no
+
+# All decisions by agent
+$decisions = (Invoke-RestMethod "$($session.base)/model/work_decision_records/?decided_by_id=copilot").data
+
+# Outcomes by result
+$delivered = (Invoke-RestMethod "$($session.base)/model/work_outcomes/?result=delivered").data
+```
+
+### Phase 2-6 Preview (L55, L57-L75)
+
+**Coming:** 15 more execution layers
+- L55 work_obligations (Phase 2) - Compliance obligations
+- L57 work_learning_feedback (Phase 2) - Lessons learned
+- L58-L60 (Phase 3) - Pattern library & performance
+- L61-L66 (Phase 4) - Work factory services & SLAs  
+- L67-L70 (Phase 5) - Breach remediation & lifecycle
+
+**Read phased plan:** [docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md](docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md)
+
+---
+
 ## API Availability & Reliability (24x7 Production)
 
 MSub API is designed for **24x7 production operation**:

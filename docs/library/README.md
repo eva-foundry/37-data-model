@@ -118,6 +118,18 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 sprints, projects. API-first bootstrap (2 calls vs
                                 236 file reads). Status: LIVE. 10/11 endpoints operational.
 
+  13-EXECUTION-LAYERS.md        EXECUTION ENGINE: PHASE 1 (Session 41 Part 10).
+                                L52-L56 operational layers for governed agent work.
+                                Parent-child cascade architecture (L52 work_execution_units
+                                is parent, L53/L54/L56 are children with CASCADE delete).
+                                Complete FK design: 11 new edge types (27 → 38 total).
+                                DPDCA integration patterns, polymorphic actors
+                                (agent/cp_agent/human), retry strategies, gate checks.
+                                Phase 1: 4 layers deployed (L52/L53/L54/L56).
+                                Phase 2-6: 15 more layers (L55, L57-L70) planned.
+                                JSON examples, schema references, usage patterns.
+                                Status: OPERATIONAL (schemas deployed, awaiting seed data).
+
   98-model-ontology-for-agents.md  12-DOMAIN ONTOLOGY (Session 41).
                                 Semantic compression: 87 layers → 12 conceptual
                                 domains. AI reasoning model. Agents load this as

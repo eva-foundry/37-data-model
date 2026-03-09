@@ -100,9 +100,10 @@
 
   THE 12 ONTOLOGY DOMAINS (see docs/library/98-model-ontology-for-agents.md)
   -----------------------------------------------------------------------
-  Agents reason over 12 conceptual domains, not 87 individual layers.
-  87 operational layers + 24 planned (L52-L75) = 111 total.
+  Agents reason over 12 conceptual domains, not 91 individual layers.
+  91 operational layers + 20 planned (L55, L57-L75) = 111 total.
   36 organic layers (no L-number) added by sessions beyond original L1-L51.
+  4 Phase 1 execution layers (L52-L56) deployed Session 41 Part 10.
   Agents query by layer NAME. L-numbers are historical identifiers only.
 
    Domain                       Layers  Key Layers
@@ -117,7 +118,7 @@
    8. DevOps & Delivery         10      deployment_policies, repos, ci_cd_pipelines, test_cases
    9. Observability & Evidence  13      evidence, agent_execution_history, verification_records
   10. Infrastructure & FinOps    9      azure_infrastructure, resource_costs, cost_tracking
-  11. Execution Engine (planned)19      work_execution_units, work_step_events (L52-L70)
+  11. Execution Engine          4 (+15) work_execution_units, work_step_events (L52-L56 operational)
   12. Strategy & Portfolio (planned) 5  work_factory_portfolio, roadmaps (L71-L75)
 
   See docs/COMPLETE-LAYER-CATALOG.md for the definitive per-layer catalog.
@@ -857,6 +858,132 @@
   Implementation location: to be built in 37-data-model api/docs_generator.py
   API endpoint (planned): POST /model/docs/generate
   Async trigger (planned): background task in POST /model/admin/commit
+
+--------------------------------------------------------------------------------
+ EXECUTION ENGINE PLANE (L52-L56) -- PHASE 1 SESSION 41 PART 10
+--------------------------------------------------------------------------------
+
+  L52 work_execution_units    0 items (schema deployed, parent layer for cascade)
+  -----------------------------------------------------------------------
+  Purpose: Operational work ledger tracking each governed unit of work
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- parent layer with CASCADE children
+  Schema: schema/work_execution_units.schema.json
+  
+  Key fields:
+    work_unit_id           -- Primary key: {project-id}-wu-{YYYYMMDD}-{seq}
+    project_id             -- FK to L25 projects
+    wbs_id                 -- FK to L26 wbs
+    sprint_id              -- FK to L27 sprints
+    title                  -- Brief description of work
+    status                 -- queued | in-progress | paused | succeeded | failed | cancelled
+    assigned_to_type       -- agent | cp_agent | human
+    assigned_to_id         -- Polymorphic FK (agent_id, cp_agent_id, or persona_id)
+    milestone_id           -- FK to L28 milestones
+    workflow_id            -- FK to L18 cp_workflows (governing workflow)
+    project_work_id        -- FK to L34 project_work (session container)
+    parent_work_unit_id    -- Self-referencing FK for sub-tasks
+    depends_on[]           -- Array of work_unit_ids (dependencies)
+    policy_refs[]          -- FK array to L16 cp_policies
+    evidence_ids[]         -- FK array to L31 evidence
+  
+  Parent-child cascade: L53, L54, L56 CASCADE on delete
+  Use cases: Govern agent work, DPDCA tracking, audit trail
+  Query: GET /model/work_execution_units/?project_id={id}&status=in-progress
+
+  L53 work_step_events    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Execution event stream capturing step-by-step timeline of work units
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- event log with CASCADE delete
+  Schema: schema/work_step_events.schema.json
+  
+  Key fields:
+    event_id               -- Primary key: {work_unit_id}-evt-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE)
+    sequence_no            -- Event order within work unit
+    event_type             -- state_change | gate_check | action_execution | error_occurred | retry_attempt
+    timestamp              -- ISO8601 timestamp
+    actor_type             -- agent | cp_agent | human | system
+    actor_id               -- Identifier of actor
+    state_before           -- Status before event (for state_change)
+    state_after            -- Status after event (for state_change)
+    action_taken           -- Description of action performed
+    gate_name              -- Quality gate identifier (for gate_check)
+    gate_result            -- PASS | FAIL | WARN | SKIP
+    evidence_ids[]         -- FK array to L31 evidence
+    trace_ids[]            -- FK array to L32 traces (LLM traces)
+    decision_ids[]         -- FK array to L54 work_decision_records
+    error_details          -- Error details (for error_occurred)
+  
+  Parent: L52 work_execution_units (CASCADE on parent delete)
+  Use cases: Event timeline, audit trail, retry analysis, gate verification
+  Query: GET /model/work_step_events/?work_unit_id={id}&event_type=gate_check
+
+  L54 work_decision_records    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Runtime decision ledger capturing decisions made during execution
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- distinct from L30 decisions (architectural ADRs)
+  Schema: schema/work_decision_records.schema.json
+  
+  Key fields:
+    decision_id            -- Primary key: {work_unit_id}-dec-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE)
+    decision_question      -- What decision was being made
+    options_considered[]   -- Alternative options evaluated
+    selected_option_id     -- The option that was chosen
+    decision_scope         -- execution | governance | quality | deployment | exception
+    basis                  -- policy | evidence | heuristic | human_judgment
+    decided_by_type        -- agent | human
+    decided_by_id          -- Identifier of decision maker
+    decided_at             -- ISO8601 timestamp
+    rationale              -- Explanation of choice
+    policy_refs[]          -- FK array to L16 cp_policies
+    evidence_refs[]        -- Supporting evidence IDs or documents
+    obligation_ids[]       -- FK array to L55 work_obligations (Phase 2)
+    reversible             -- Boolean: can decision be undone?
+    risk_level             -- low | medium | high
+  
+  Parent: L52 work_execution_units (CASCADE on parent delete)
+  Contrast with L30 decisions: L30 = architectural ADRs, L54 = runtime execution decisions
+  Use cases: Decision audit, basis documentation, reversibility tracking
+  Query: GET /model/work_decision_records/?work_unit_id={id}&basis=policy
+
+  L56 work_outcomes    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Result ledger recording what was delivered vs what was expected
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 10) -- realized outcomes vs expectations
+  Schema: schema/work_outcomes.schema.json
+  
+  Key fields:
+    outcome_id             -- Primary key: {work_unit_id}-out-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE)
+    result                 -- delivered | not_delivered | partially_delivered
+    outcome_type           -- technical | governance | quality | operational | business
+    recorded_at            -- ISO8601 timestamp
+    expected_vs_actual     -- Narrative comparison
+    delivered_changes{}    -- Structured summary (files, commits, deployments, metrics)
+      - files_created[]    -- Array of created file paths
+      - files_modified[]   -- Array of modified file paths
+      - files_deleted[]    -- Array of deleted file paths
+      - commits[]          -- Array of commit SHAs
+      - deployments[]      -- Array of deployment IDs
+      - metrics{}          -- Quantitative measures
+    evidence_ids[]         -- FK array to L31 evidence
+    decision_ids[]         -- FK array to L54 (decisions that influenced outcome)
+    learning_ids[]         -- FK array to L57 work_learning_feedback (Phase 2)
+    metrics{}              -- Time, cost, quality scores
+  
+  Parent: L52 work_execution_units (CASCADE on parent delete)
+  Use cases: Delivery verification, lesson learned capture, variance analysis
+  Query: GET /model/work_outcomes/?work_unit_id={id}&result=delivered
+
+  SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
+    - 4 execution layers deployed (L52, L53, L54, L56)
+    - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
+    - 11 new FK edge types added (27 → 38 total)
+    - Layer count: 87 → 91 operational
+    - Planned layers: 24 → 20 (still L55, L57-L75 to deploy)
+    - Phase 1 complete, Phase 2-6 ready for deployment
+    - See docs/library/13-EXECUTION-LAYERS.md for complete specification
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)

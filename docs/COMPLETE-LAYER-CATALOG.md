@@ -1,11 +1,12 @@
 ================================================================================
  EVA DATA MODEL -- COMPLETE LAYER CATALOG
  File: docs/COMPLETE-LAYER-CATALOG.md
- Updated: 2026-03-09 -- 87 operational layers; 24 planned; 12 ontology domains
+ Updated: 2026-03-09 -- 91 operational layers; 20 planned; 12 ontology domains
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
          docs/library/99-layers-design-20260309-0935.md (75-layer canonical numbering)
          docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md (L52-L75 phased plan)
+         docs/library/13-EXECUTION-LAYERS.md (Phase 1: L52-L56 specification)
 ================================================================================
 
   PURPOSE
@@ -23,8 +24,8 @@
   Layers grow organically. Any agent or session may propose new layers
   when operational needs emerge. The 12-domain ontology absorbs them.
 
-  Current operational:  87 layers  (51 canonical L1-L51 + 36 organic)
-  Planned (L52-L75):   24 layers  (Execution Engine + Strategy)
+  Current operational:  91 layers  (51 canonical L1-L51 + 36 organic + 4 Phase 1)
+  Planned (L52-L75):   20 layers  (Execution Engine Phase 2-6 + Strategy)
   Total when complete: 111+ layers (and growing)
 
   AGENT LIFECYCLE MAPPING
@@ -248,18 +249,18 @@
   Subtotal: 9 layers, 85 objects (5 layers awaiting seed data)
 
 ================================================================================
- DOMAIN 11 -- EXECUTION ENGINE (PLANNED)
+ DOMAIN 11 -- EXECUTION ENGINE
  "How work gets done"
  Agent lifecycle: DO (the core production runtime)
 ================================================================================
 
   Layer                       L#    Objects   Status
   --------------------------  ----  --------  ------
-  work_execution_units        L52   --        planned (Phase 1)
-  work_step_events            L53   --        planned (Phase 1)
-  work_decision_records       L54   --        planned (Phase 1)
+  work_execution_units        L52   0         operational (Phase 1 deployed)
+  work_step_events            L53   0         operational (Phase 1 deployed)
+  work_decision_records       L54   0         operational (Phase 1 deployed)
   work_obligations            L55   --        planned (Phase 2)
-  work_outcomes               L56   --        planned (Phase 1)
+  work_outcomes               L56   0         operational (Phase 1 deployed)
   work_learning_feedback      L57   --        planned (Phase 2)
   work_reusable_patterns      L58   --        planned (Phase 2)
   work_pattern_applications   L59   --        planned (Phase 3)
@@ -275,7 +276,7 @@
   work_service_reval_results  L69   --        planned (Phase 5)
   work_service_lifecycle      L70   --        planned (Phase 5)
 
-  Subtotal: 19 layers, 0 objects (Phase 1 = L52/L53/L54/L56, see EXECUTION-LAYERS-ASSESSMENT.md)
+  Subtotal: 19 layers, 0 objects (Phase 1 operational: L52/L53/L54/L56, see docs/library/13-EXECUTION-LAYERS.md)
 
 ================================================================================
  DOMAIN 12 -- STRATEGY & PORTFOLIO (PLANNED)
