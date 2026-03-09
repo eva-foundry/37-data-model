@@ -1,0 +1,390 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "L73 - work_factory_investments",
+  "description": "Investment decisions and business justification for new capabilities or service enhancements. Tracks business cases, ROI calculations, approval workflows, funding allocation, and actual returns. Enables investment portfolio management and budget planning.",
+  "type": "object",
+  "required": [
+    "id",
+    "investment_name",
+    "portfolio_id",
+    "investment_type",
+    "status",
+    "requested_by",
+    "requested_at",
+    "requested_amount_usd"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: investment-{name-slug}-{YYYYMMDD}",
+      "pattern": "^investment-[a-z0-9-]+-[0-9]{8}$",
+      "examples": ["investment-ai-auto-scaling-20260309"]
+    },
+    "investment_name": {
+      "type": "string",
+      "description": "Human-readable investment name",
+      "minLength": 3,
+      "maxLength": 200,
+      "examples": ["AI Auto-scaling Infrastructure", "Documentation Service Enhancement"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Business case summary and strategic rationale",
+      "examples": ["Implement auto-scaling to handle 10x request volume growth while maintaining 99.9% SLO"]
+    },
+    "portfolio_id": {
+      "type": "string",
+      "description": "FK to L71 work_factory_portfolio.id (portfolio this investment belongs to, RESTRICT on delete)",
+      "pattern": "^portfolio-[a-z0-9-]+$"
+    },
+    "roadmap_id": {
+      "type": "string",
+      "description": "FK to L72 work_factory_roadmaps.id (roadmap this investment supports, SET_NULL)",
+      "pattern": "^roadmap-[a-z0-9-]+$"
+    },
+    "investment_type": {
+      "type": "string",
+      "description": "Type of investment",
+      "enum": [
+        "new_capability",
+        "service_enhancement",
+        "infrastructure_upgrade",
+        "reliability_improvement",
+        "cost_optimization",
+        "technical_debt_reduction",
+        "security_hardening",
+        "compliance_requirement"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "description": "Investment lifecycle status",
+      "enum": [
+        "draft",
+        "submitted",
+        "under_review",
+        "approved",
+        "rejected",
+        "funded",
+        "in_progress",
+        "completed",
+        "cancelled",
+        "deferred"
+      ]
+    },
+    "requested_by": {
+      "type": "string",
+      "description": "Polymorphic FK to requesting entity (cp_agent, agent, or human identifier)",
+      "examples": ["cp-agent-eva-foundation", "agent-code-generator"]
+    },
+    "requested_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Investment request submission timestamp"
+    },
+    "requested_amount_usd": {
+      "type": "number",
+      "description": "Requested funding amount (USD)",
+      "minimum": 0
+    },
+    "approved_amount_usd": {
+      "type": "number",
+      "description": "Approved funding amount (USD, if different from requested)",
+      "minimum": 0
+    },
+    "actual_spent_usd": {
+      "type": "number",
+      "description": "Actual amount spent to date (USD)",
+      "minimum": 0
+    },
+    "financial_breakdown": {
+      "type": "object",
+      "description": "Detailed financial breakdown",
+      "properties": {
+        "infrastructure_cost_usd": {
+          "type": "number",
+          "description": "Infrastructure and compute cost",
+          "minimum": 0
+        },
+        "development_cost_usd": {
+          "type": "number",
+          "description": "Development and engineering cost",
+          "minimum": 0
+        },
+        "operational_cost_usd": {
+          "type": "number",
+          "description": "Ongoing operational cost",
+          "minimum": 0
+        },
+        "training_cost_usd": {
+          "type": "number",
+          "description": "Training and documentation cost",
+          "minimum": 0
+        },
+        "contingency_percentage": {
+          "type": "number",
+          "description": "Contingency buffer percentage (0-100)",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "roi_analysis": {
+      "type": "object",
+      "description": "Return on Investment analysis",
+      "properties": {
+        "expected_annual_savings_usd": {
+          "type": "number",
+          "description": "Expected annual cost savings (USD)",
+          "minimum": 0
+        },
+        "expected_annual_revenue_usd": {
+          "type": "number",
+          "description": "Expected annual revenue increase (USD)",
+          "minimum": 0
+        },
+        "payback_period_months": {
+          "type": "number",
+          "description": "Expected payback period in months",
+          "minimum": 0
+        },
+        "net_present_value_usd": {
+          "type": "number",
+          "description": "Net present value over 3 years (USD)"
+        },
+        "internal_rate_of_return_percentage": {
+          "type": "number",
+          "description": "Internal rate of return percentage",
+          "minimum": 0
+        },
+        "actual_annual_savings_usd": {
+          "type": "number",
+          "description": "Realized annual cost savings (USD) after completion",
+          "minimum": 0
+        },
+        "actual_annual_revenue_usd": {
+          "type": "number",
+          "description": "Realized annual revenue increase (USD) after completion",
+          "minimum": 0
+        }
+      }
+    },
+    "target_capability_ids": {
+      "type": "array",
+      "description": "FK to L61 work_factory_capabilities.id (capabilities being created/enhanced)",
+      "items": {
+        "type": "string",
+        "pattern": "^capability-[a-z0-9-]+$"
+      }
+    },
+    "target_service_ids": {
+      "type": "array",
+      "description": "FK to L62 work_factory_services.id (services being created/enhanced)",
+      "items": {
+        "type": "string",
+        "pattern": "^service-[a-z0-9-]+$"
+      }
+    },
+    "benefits": {
+      "type": "array",
+      "description": "Expected strategic and operational benefits",
+      "items": {
+        "type": "object",
+        "properties": {
+          "benefit_category": {
+            "type": "string",
+            "enum": [
+              "cost_reduction",
+              "revenue_increase",
+              "efficiency_gain",
+              "quality_improvement",
+              "risk_mitigation",
+              "compliance",
+              "customer_satisfaction",
+              "competitive_advantage"
+            ]
+          },
+          "benefit_description": {
+            "type": "string",
+            "description": "Detailed benefit description"
+          },
+          "quantified_value": {
+            "type": "string",
+            "description": "Quantified benefit value (e.g., '50% reduction in incidents', '10x throughput increase')"
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "Investment risks and mitigation strategies",
+      "items": {
+        "type": "object",
+        "properties": {
+          "risk_description": {
+            "type": "string",
+            "description": "Risk description"
+          },
+          "likelihood": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "impact": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "mitigation_plan": {
+            "type": "string",
+            "description": "Risk mitigation strategy"
+          }
+        }
+      }
+    },
+    "approval_workflow": {
+      "type": "object",
+      "description": "Investment approval workflow tracking",
+      "properties": {
+        "approval_required_from": {
+          "type": "array",
+          "description": "List of approvers required",
+          "items": {
+            "type": "string"
+          }
+        },
+        "approvals_received": {
+          "type": "array",
+          "description": "Approvals received so far",
+          "items": {
+            "type": "object",
+            "properties": {
+              "approver_id": {
+                "type": "string",
+                "description": "Approver identifier"
+              },
+              "approved_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Approval timestamp"
+              },
+              "comments": {
+                "type": "string",
+                "description": "Approval comments or conditions"
+              }
+            }
+          }
+        },
+        "rejections": {
+          "type": "array",
+          "description": "Rejections received",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rejector_id": {
+                "type": "string",
+                "description": "Rejector identifier"
+              },
+              "rejected_at": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Rejection timestamp"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Rejection reason"
+              }
+            }
+          }
+        }
+      }
+    },
+    "implementation_timeline": {
+      "type": "object",
+      "description": "Implementation timeline tracking",
+      "properties": {
+        "planned_start_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Planned implementation start date (YYYY-MM-DD)"
+        },
+        "planned_completion_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Planned completion date (YYYY-MM-DD)"
+        },
+        "actual_start_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Actual start date (YYYY-MM-DD)"
+        },
+        "actual_completion_date": {
+          "type": "string",
+          "format": "date",
+          "description": "Actual completion date (YYYY-MM-DD)"
+        },
+        "variance_days": {
+          "type": "integer",
+          "description": "Timeline variance in days (negative = ahead, positive = delayed)"
+        }
+      }
+    },
+    "work_unit_ids": {
+      "type": "array",
+      "description": "FK to L52 work_execution_units.work_unit_id (work units executing this investment)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "description": "FK to L31 evidence.id (supporting evidence: business case docs, ROI analysis, approval records)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "success_metrics": {
+      "type": "array",
+      "description": "Post-implementation success metrics and actual results",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric_name": {
+            "type": "string",
+            "description": "Success metric name"
+          },
+          "target_value": {
+            "type": "string",
+            "description": "Target value"
+          },
+          "actual_value": {
+            "type": "string",
+            "description": "Actual achieved value"
+          },
+          "measurement_date": {
+            "type": "string",
+            "format": "date",
+            "description": "When metric was measured"
+          }
+        }
+      }
+    },
+    "lessons_learned": {
+      "type": "string",
+      "description": "Post-implementation lessons learned and recommendations for future investments"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Investment record creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last updated timestamp"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or observations"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,11 +1,11 @@
 ================================================================================
- EVA DATA MODEL -- 106-LAYER REFERENCE
+ EVA DATA MODEL -- 111-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 106 operational layers; 12 ontology domains; Session 41 Part 11
+ Updated: 2026-03-09 -- 111 operational layers; 12 ontology domains; Session 41 Part 11
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
          docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
-         docs/library/13-EXECUTION-LAYERS.md (Phases 1-5: L52-L70 deployed)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1-6 COMPLETE: All 24 execution layers deployed)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -1299,6 +1299,123 @@
   Use cases: Service change audit trail, upgrade/downgrade history, breach-driven changes, compliance
   Query: GET /model/work_service_lifecycle/?event_type=upgraded&service_id=service-schema-migrator
 
+## L71 work_factory_portfolio
+
+  Portfolio management view of all work services — executive-level oversight with aggregate health and capacity.
+  
+  Primary key: portfolio-{name-slug}
+  FK: service_ids[] → L62 (many-to-many), roadmap_ids[] → L72, active_investment_ids[] → L73, governance_policy_ids[] → L75
+  
+  Field catalog:
+    id, portfolio_name, description, owner_type, owner_id, status (active|planning|maintenance|deprecated|retired),
+    service_ids[], service_count, health_summary {healthy_services, degraded_services, critical_services, offline_services,
+    overall_health_score, last_updated_at}, capacity_summary {total_requests_24h, total_runs_24h, average_success_rate,
+    total_active_breaches, peak_load_services[]}, strategic_priority (critical|high|medium|low),
+    investment_level (flagship|growth|maintenance|harvest|divest), cost_summary {total_cost_usd_mtd,
+    budget_allocation_usd, burn_rate_percentage, projected_end_of_month_usd}, roadmap_ids[], active_investment_ids[],
+    governance_policy_ids[], tags[], created_at, updated_at, retired_at, notes
+  
+  Graph edges: portfolio_services (L71→L62), portfolio_roadmaps (L71→L72), portfolio_investments (L71→L73),
+               portfolio_governance (L71→L75)
+  Use cases: Portfolio dashboard, strategic planning, resource allocation, executive reporting
+  Query: GET /model/work_factory_portfolio/?status=active&strategic_priority=critical
+
+## L72 work_factory_roadmaps
+
+  Strategic roadmaps for capability and service evolution — forward-looking initiatives with milestones and dependencies.
+  
+  Primary key: roadmap-{name-slug}
+  Parent: work_factory_portfolio (RESTRICT on delete)
+  FK: portfolio_id → L71 (RESTRICT), initiatives[].target_capability_ids[] → L61, initiatives[].target_service_ids[] → L62,
+      initiatives[].investment_id → L73 (SET_NULL), initiatives[].milestone_ids[] → L28
+  
+  Field catalog:
+    id, roadmap_name, description, portfolio_id, owner_type, owner_id, status (draft|proposed|approved|active|on_hold|
+    completed|cancelled), planning_horizon (short_term_3mo|medium_term_6mo|long_term_12mo|multi_year), start_date,
+    target_end_date, actual_completion_date, initiatives[] {initiative_id, initiative_name, description, status, priority,
+    target_capability_ids[], target_service_ids[], investment_id, milestone_ids[], dependencies[], target_start_date,
+    target_completion_date, actual_start_date, actual_completion_date, estimated_effort_person_days, actual_effort_person_days},
+    strategic_themes[], success_criteria[], risks[], stakeholders[], approval_required, approved_by, approved_at, progress_percentage
+  
+  Graph edges: roadmap_for_portfolio (L72→L71, RESTRICT), roadmap_target_capabilities (L72→L61),
+               roadmap_target_services (L72→L62), roadmap_milestones (L72→L28)
+  Use cases: Strategic planning, dependency management, progress tracking, investment prioritization
+  Query: GET /model/work_factory_roadmaps/?status=active&portfolio_id=portfolio-ai-automation
+
+## L73 work_factory_investments
+
+  Investment decisions and business justification — ROI tracking, approval workflows, funding allocation, actual returns.
+  
+  Primary key: investment-{name-slug}-{YYYYMMDD}
+  Parent: work_factory_portfolio (RESTRICT on delete)
+  FK: portfolio_id → L71 (RESTRICT), roadmap_id → L72 (SET_NULL), target_capability_ids[] → L61,
+      target_service_ids[] → L62, work_unit_ids[] → L52, evidence_ids[] → L31
+  
+  Field catalog:
+    id, investment_name, description, portfolio_id, roadmap_id, investment_type (new_capability|service_enhancement|
+    infrastructure_upgrade|reliability_improvement|cost_optimization|technical_debt_reduction|security_hardening|
+    compliance_requirement), status (draft|submitted|under_review|approved|rejected|funded|in_progress|completed|
+    cancelled|deferred), requested_by, requested_at, requested_amount_usd, approved_amount_usd, actual_spent_usd,
+    financial_breakdown {infrastructure_cost_usd, development_cost_usd, operational_cost_usd, training_cost_usd,
+    contingency_percentage}, roi_analysis {expected_annual_savings_usd, expected_annual_revenue_usd, payback_period_months,
+    net_present_value_usd, internal_rate_of_return_percentage, actual_annual_savings_usd, actual_annual_revenue_usd},
+    target_capability_ids[], target_service_ids[], benefits[], risks[], approval_workflow, implementation_timeline,
+    work_unit_ids[], evidence_ids[], success_metrics[], lessons_learned
+  
+  Graph edges: investment_for_portfolio (L73→L71, RESTRICT), investment_for_roadmap (L73→L72, SET_NULL),
+               investment_target_capabilities (L73→L61), investment_target_services (L73→L62),
+               investment_work (L73→L52), investment_evidence (L73→L31)
+  Use cases: Business case management, approval workflow, ROI tracking, portfolio optimization
+  Query: GET /model/work_factory_investments/?status=approved&portfolio_id=portfolio-ai-automation
+
+## L74 work_factory_metrics
+
+  Factory-level KPIs and aggregate health metrics — executive dashboard data with trend analysis and benchmarks.
+  
+  Primary key: metric-{category}-{name-slug}-{YYYYMMDD}-{HHMM}
+  FK: portfolio_id → L71 (SET_NULL), service_id → L62 (SET_NULL), capability_id → L61 (SET_NULL),
+      breach_ids[] → L67, related_governance_policy_ids[] → L75, evidence_ids[] → L31
+  
+  Field catalog:
+    id, metric_name, metric_category (availability|performance|cost|capacity|quality|efficiency|reliability|security),
+    description, measurement_timestamp, measurement_period (realtime|hourly|daily|weekly|monthly|quarterly|yearly),
+    value, unit, target_value, threshold_warning, threshold_critical, status (healthy|warning|critical|unknown),
+    scope (factory_wide|portfolio|service|capability), portfolio_id, service_id, capability_id,
+    aggregation_details {sample_size, source_layers[], calculation_method, weighting_strategy},
+    trend_analysis {previous_value, change_absolute, change_percentage, trend_direction, moving_average_7d,
+    moving_average_30d}, benchmark_comparison {internal_benchmark, external_benchmark, best_in_class, comparison_status},
+    contributing_factors[] {factor_type, factor_id, factor_name, contribution_percentage}, breach_ids[],
+    related_governance_policy_ids[], evidence_ids[], alert_triggered, alert_details
+  
+  Graph edges: metric_for_portfolio (L74→L71), metric_for_service (L74→L62), metric_for_capability (L74→L61),
+               metric_breaches (L74→L67), metric_governance (L74→L75), metric_evidence (L74→L31)
+  Use cases: Executive dashboard, trend analysis, threshold governance, benchmarking
+  Query: GET /model/work_factory_metrics/?status=critical&scope=factory_wide
+
+## L75 work_factory_governance
+
+  Governance policies and compliance rules — policy definitions, approval thresholds, audit procedures, enforcement mechanisms.
+  
+  Primary key: governance-policy-{name-slug}
+  FK: portfolio_ids[] → L71, service_ids[] → L62, capability_ids[] → L61,
+      related_cp_policy_ids[] → L16, related_metric_ids[] → L74, evidence_ids[] → L31
+  
+  Field catalog:
+    id, policy_name, description, policy_type (approval_workflow|compliance_requirement|quality_gate|cost_control|
+    security_control|operational_standard|slo_enforcement|risk_management|audit_rule), scope (factory_wide|portfolio|
+    service|capability|project), portfolio_ids[], service_ids[], capability_ids[], status (draft|proposed|active|
+    deprecated|retired), effective_date, expiration_date, owner_type, owner_id, enforcement_mechanism (automated_blocking|
+    automated_warning|manual_review_required|advisory_only|audit_post_facto), policy_rules[] {rule_id, rule_description,
+    condition_type, condition_details, enforcement_action, exemption_criteria}, compliance_mappings[] {framework_name,
+    control_id, control_description}, related_cp_policy_ids[], related_metric_ids[], violation_history,
+    audit_trail[] {event_type, event_timestamp, event_actor, event_details}, evidence_ids[], review_frequency,
+    last_reviewed_at, next_review_due
+  
+  Graph edges: governance_for_portfolios (L75→L71), governance_for_services (L75→L62),
+               governance_for_capabilities (L75→L61), governance_cp_policies (L75→L16), governance_evidence (L75→L31)
+  Use cases: Policy enforcement, compliance auditing, approval workflows, threshold governance
+  Query: GET /model/work_factory_governance/?status=active&policy_type=security_control
+
   SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
     - 4 execution layers deployed (L52, L53, L54, L56)
     - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
@@ -1333,9 +1450,17 @@
       • Lifecycle events (L70) for service change audit trail
       • 16 new FK edge types added (59 → 75 total)
       • COMPLETE SELF-HEALING LOOP: breach → plan → remediate → revalidate → learn
-    - Layer count: 91 → 96 → 102 → 106 operational
-    - Edge types: 38 → 48 → 59 → 75 total
-    - Remaining: 5 layers (L71-L75 in Phase 6: Strategy & Portfolio)
+    - Phase 6: 5 layers deployed (L71-L75) -- Strategy & Portfolio Management
+      • Portfolio management (L71) with aggregate health, capacity, and cost tracking
+      • Strategic roadmaps (L72) with initiatives, milestones, and dependency tracking
+      • Investment decisions (L73) with ROI analysis, approval workflows, and actual returns
+      • Factory metrics (L74) with aggregate KPIs, trend analysis, and benchmarking
+      • Governance policies (L75) with compliance mapping and automated enforcement
+      • 24 new FK edge types added (75 → 99 total)
+      • COMPLETE EXECUTION ENGINE: Work → Learn → Services → Self-heal → Strategy → Governance
+    - Layer count: 91 → 96 → 102 → 106 → 111 operational
+    - Edge types: 38 → 48 → 59 → 75 → 99 total
+    - ALL 24 EXECUTION LAYERS DEPLOYED (L52-L75)
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)

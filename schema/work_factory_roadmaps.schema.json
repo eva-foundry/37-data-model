@@ -1,0 +1,303 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "L72 - work_factory_roadmaps",
+  "description": "Strategic roadmaps for capability and service evolution. Defines forward-looking initiatives, milestones, dependencies, and timelines for developing new capabilities or enhancing existing services. Enables strategic planning and capability gap analysis.",
+  "type": "object",
+  "required": [
+    "id",
+    "roadmap_name",
+    "portfolio_id",
+    "owner_type",
+    "owner_id",
+    "status",
+    "planning_horizon",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: roadmap-{name-slug}",
+      "pattern": "^roadmap-[a-z0-9-]+$",
+      "examples": ["roadmap-ai-automation-q2-2026", "roadmap-service-reliability"]
+    },
+    "roadmap_name": {
+      "type": "string",
+      "description": "Human-readable roadmap name",
+      "minLength": 3,
+      "maxLength": 200,
+      "examples": ["AI Automation Expansion Q2 2026", "Service Reliability Improvements"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Strategic vision and objectives for this roadmap",
+      "examples": ["Expand AI-driven automation capabilities to cover full SDLC with 99.9% SLO compliance"]
+    },
+    "portfolio_id": {
+      "type": "string",
+      "description": "FK to L71 work_factory_portfolio.id (portfolio this roadmap belongs to, RESTRICT on delete)",
+      "pattern": "^portfolio-[a-z0-9-]+$"
+    },
+    "owner_type": {
+      "type": "string",
+      "description": "Type of entity that owns this roadmap",
+      "enum": ["cp_agent", "human", "team", "department"]
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Polymorphic FK to owning entity",
+      "examples": ["cp-agent-eva-foundation", "team-platform-engineering"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Roadmap status",
+      "enum": ["draft", "proposed", "approved", "active", "on_hold", "completed", "cancelled"]
+    },
+    "planning_horizon": {
+      "type": "string",
+      "description": "Planning timeframe",
+      "enum": ["short_term_3mo", "medium_term_6mo", "long_term_12mo", "multi_year"]
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Roadmap start date (YYYY-MM-DD)"
+    },
+    "target_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Target completion date (YYYY-MM-DD)"
+    },
+    "actual_completion_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Actual completion date if status=completed (YYYY-MM-DD)"
+    },
+    "initiatives": {
+      "type": "array",
+      "description": "Array of strategic initiatives within this roadmap",
+      "items": {
+        "type": "object",
+        "required": ["initiative_id", "initiative_name", "status", "priority"],
+        "properties": {
+          "initiative_id": {
+            "type": "string",
+            "description": "Unique identifier for initiative within roadmap",
+            "pattern": "^init-[a-z0-9-]+$"
+          },
+          "initiative_name": {
+            "type": "string",
+            "description": "Initiative name",
+            "examples": ["Implement auto-scaling for code generation service"]
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed initiative description"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["planned", "in_progress", "blocked", "completed", "cancelled"]
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"]
+          },
+          "target_capability_ids": {
+            "type": "array",
+            "description": "FK to L61 work_factory_capabilities.id (capabilities being created/enhanced)",
+            "items": {
+              "type": "string",
+              "pattern": "^capability-[a-z0-9-]+$"
+            }
+          },
+          "target_service_ids": {
+            "type": "array",
+            "description": "FK to L62 work_factory_services.id (services being created/enhanced)",
+            "items": {
+              "type": "string",
+              "pattern": "^service-[a-z0-9-]+$"
+            }
+          },
+          "investment_id": {
+            "type": "string",
+            "description": "FK to L73 work_factory_investments.id (SET_NULL, business case for this initiative)",
+            "pattern": "^investment-[a-z0-9-]+$"
+          },
+          "milestone_ids": {
+            "type": "array",
+            "description": "FK to L28 milestones.milestone_id (key milestones)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "dependencies": {
+            "type": "array",
+            "description": "Dependencies on other initiatives or external factors",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dependency_type": {
+                  "type": "string",
+                  "enum": ["initiative", "external_system", "approval", "resource", "technology"]
+                },
+                "dependency_id": {
+                  "type": "string",
+                  "description": "Reference to dependency (initiative ID or external identifier)"
+                },
+                "dependency_name": {
+                  "type": "string",
+                  "description": "Human-readable dependency name"
+                },
+                "blocking": {
+                  "type": "boolean",
+                  "description": "Whether this dependency is blocking progress"
+                }
+              }
+            }
+          },
+          "target_start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Target start date (YYYY-MM-DD)"
+          },
+          "target_completion_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Target completion date (YYYY-MM-DD)"
+          },
+          "actual_start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Actual start date (YYYY-MM-DD)"
+          },
+          "actual_completion_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Actual completion date (YYYY-MM-DD)"
+          },
+          "estimated_effort_person_days": {
+            "type": "number",
+            "description": "Estimated effort in person-days",
+            "minimum": 0
+          },
+          "actual_effort_person_days": {
+            "type": "number",
+            "description": "Actual effort spent in person-days",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "strategic_themes": {
+      "type": "array",
+      "description": "High-level strategic themes driving this roadmap",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["automation", "reliability", "cost-efficiency"]]
+    },
+    "success_criteria": {
+      "type": "array",
+      "description": "Measurable success criteria for roadmap completion",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric_name": {
+            "type": "string",
+            "description": "Success metric name",
+            "examples": ["Service availability"]
+          },
+          "target_value": {
+            "type": "string",
+            "description": "Target value for metric",
+            "examples": ["99.9%"]
+          },
+          "current_value": {
+            "type": "string",
+            "description": "Current baseline value"
+          }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "Identified risks to roadmap success",
+      "items": {
+        "type": "object",
+        "properties": {
+          "risk_description": {
+            "type": "string",
+            "description": "Risk description"
+          },
+          "likelihood": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "impact": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          },
+          "mitigation_plan": {
+            "type": "string",
+            "description": "Risk mitigation strategy"
+          }
+        }
+      }
+    },
+    "stakeholders": {
+      "type": "array",
+      "description": "Key stakeholders for this roadmap",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stakeholder_type": {
+            "type": "string",
+            "enum": ["sponsor", "owner", "contributor", "reviewer", "consumer"]
+          },
+          "stakeholder_id": {
+            "type": "string",
+            "description": "Polymorphic FK to agent, cp_agent, or human identifier"
+          },
+          "stakeholder_name": {
+            "type": "string",
+            "description": "Human-readable stakeholder name"
+          }
+        }
+      }
+    },
+    "approval_required": {
+      "type": "boolean",
+      "description": "Whether formal approval is required before execution",
+      "default": false
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "Identifier of approving authority (if approval_required=true)"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Approval timestamp"
+    },
+    "progress_percentage": {
+      "type": "number",
+      "description": "Overall roadmap completion percentage (0-100), calculated from initiative statuses",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Roadmap creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last updated timestamp"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context, lessons learned, or observations"
+    }
+  },
+  "additionalProperties": false
+}

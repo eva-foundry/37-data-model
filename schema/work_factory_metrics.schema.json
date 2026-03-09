@@ -1,0 +1,275 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "L74 - work_factory_metrics",
+  "description": "Factory-level KPIs and aggregate health metrics. Provides executive dashboard data with aggregate metrics across all portfolios and services, trend analyses, benchmarks, and target governance. Enables strategic decision-making and performance monitoring.",
+  "type": "object",
+  "required": [
+    "id",
+    "metric_name",
+    "metric_category",
+    "measurement_timestamp",
+    "value",
+    "unit"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: metric-{category}-{name-slug}-{YYYYMMDD}-{HHMM}",
+      "pattern": "^metric-[a-z0-9-]+-[a-z0-9-]+-[0-9]{8}-[0-9]{4}$",
+      "examples": ["metric-service-availability-overall-20260309-1430"]
+    },
+    "metric_name": {
+      "type": "string",
+      "description": "Metric name",
+      "minLength": 3,
+      "maxLength": 200,
+      "examples": ["Overall Service Availability", "Total Request Volume", "Factory-wide Success Rate"]
+    },
+    "metric_category": {
+      "type": "string",
+      "description": "Metric category for organization",
+      "enum": [
+        "availability",
+        "performance",
+        "cost",
+        "capacity",
+        "quality",
+        "efficiency",
+        "reliability",
+        "security"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Metric description and calculation methodology",
+      "examples": ["Weighted average availability across all services, measured as (total_successful_runs / total_runs) * 100"]
+    },
+    "measurement_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When metric was measured"
+    },
+    "measurement_period": {
+      "type": "string",
+      "description": "Measurement period covered by this metric",
+      "enum": ["realtime", "hourly", "daily", "weekly", "monthly", "quarterly", "yearly"]
+    },
+    "value": {
+      "type": "number",
+      "description": "Metric value"
+    },
+    "unit": {
+      "type": "string",
+      "description": "Metric unit of measurement",
+      "examples": ["percentage", "count", "milliseconds", "USD", "requests_per_second"]
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value for this metric (governance threshold)"
+    },
+    "threshold_warning": {
+      "type": "number",
+      "description": "Warning threshold (between target and critical)"
+    },
+    "threshold_critical": {
+      "type": "number",
+      "description": "Critical threshold (breach requires immediate action)"
+    },
+    "status": {
+      "type": "string",
+      "description": "Metric status relative to thresholds",
+      "enum": ["healthy", "warning", "critical", "unknown"]
+    },
+    "scope": {
+      "type": "string",
+      "description": "Scope of metric aggregation",
+      "enum": ["factory_wide", "portfolio", "service", "capability"]
+    },
+    "portfolio_id": {
+      "type": "string",
+      "description": "FK to L71 work_factory_portfolio.id (SET_NULL, if scope=portfolio)",
+      "pattern": "^portfolio-[a-z0-9-]+$"
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services.id (SET_NULL, if scope=service)",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "capability_id": {
+      "type": "string",
+      "description": "FK to L61 work_factory_capabilities.id (SET_NULL, if scope=capability)",
+      "pattern": "^capability-[a-z0-9-]+$"
+    },
+    "aggregation_details": {
+      "type": "object",
+      "description": "Details about how metric was aggregated",
+      "properties": {
+        "sample_size": {
+          "type": "integer",
+          "description": "Number of data points included in aggregation",
+          "minimum": 0
+        },
+        "source_layers": {
+          "type": "array",
+          "description": "Source layers contributing to this metric",
+          "items": {
+            "type": "string"
+          },
+          "examples": [["L64", "L65", "L66"]]
+        },
+        "calculation_method": {
+          "type": "string",
+          "description": "Calculation methodology (mean, median, sum, weighted_average, percentile)",
+          "enum": ["mean", "median", "sum", "weighted_average", "min", "max", "p50", "p95", "p99"]
+        },
+        "weighting_strategy": {
+          "type": "string",
+          "description": "Weighting strategy for aggregation (if applicable)",
+          "examples": ["by_request_volume", "by_strategic_priority", "equal_weight"]
+        }
+      }
+    },
+    "trend_analysis": {
+      "type": "object",
+      "description": "Trend analysis over time",
+      "properties": {
+        "previous_value": {
+          "type": "number",
+          "description": "Value from previous measurement period"
+        },
+        "change_absolute": {
+          "type": "number",
+          "description": "Absolute change from previous period (value - previous_value)"
+        },
+        "change_percentage": {
+          "type": "number",
+          "description": "Percentage change from previous period ((value - previous_value) / previous_value * 100)"
+        },
+        "trend_direction": {
+          "type": "string",
+          "description": "Trend direction",
+          "enum": ["improving", "stable", "degrading"]
+        },
+        "moving_average_7d": {
+          "type": "number",
+          "description": "7-day moving average (if daily measurements)"
+        },
+        "moving_average_30d": {
+          "type": "number",
+          "description": "30-day moving average (if daily measurements)"
+        }
+      }
+    },
+    "benchmark_comparison": {
+      "type": "object",
+      "description": "Comparison to benchmarks and historical performance",
+      "properties": {
+        "internal_benchmark": {
+          "type": "number",
+          "description": "Internal historical benchmark (e.g., previous quarter average)"
+        },
+        "external_benchmark": {
+          "type": "number",
+          "description": "External industry benchmark (if available)"
+        },
+        "best_in_class": {
+          "type": "number",
+          "description": "Best-in-class performance target"
+        },
+        "comparison_status": {
+          "type": "string",
+          "description": "Performance relative to benchmarks",
+          "enum": ["above_benchmark", "at_benchmark", "below_benchmark"]
+        }
+      }
+    },
+    "contributing_factors": {
+      "type": "array",
+      "description": "Factors contributing to metric value (for root cause or performance attribution)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "factor_type": {
+            "type": "string",
+            "description": "Type of contributing factor",
+            "enum": ["service", "portfolio", "capability", "infrastructure", "external"]
+          },
+          "factor_id": {
+            "type": "string",
+            "description": "ID of contributing entity (service, portfolio, etc.)"
+          },
+          "factor_name": {
+            "type": "string",
+            "description": "Human-readable factor name"
+          },
+          "contribution_percentage": {
+            "type": "number",
+            "description": "Percentage contribution to overall metric (0-100)",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "breach_ids": {
+      "type": "array",
+      "description": "FK to L67 work_service_breaches.id (breaches contributing to degraded metric)",
+      "items": {
+        "type": "string",
+        "pattern": "^breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+      }
+    },
+    "related_governance_policy_ids": {
+      "type": "array",
+      "description": "FK to L75 work_factory_governance.id (governance policies governing this metric)",
+      "items": {
+        "type": "string",
+        "pattern": "^governance-policy-[a-z0-9-]+$"
+      }
+    },
+    "evidence_ids": {
+      "type": "array",
+      "description": "FK to L31 evidence.id (supporting evidence: dashboards, reports, raw data)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "alert_triggered": {
+      "type": "boolean",
+      "description": "Whether an alert was triggered based on this metric",
+      "default": false
+    },
+    "alert_details": {
+      "type": "object",
+      "description": "Alert details if alert_triggered=true",
+      "properties": {
+        "alert_severity": {
+          "type": "string",
+          "enum": ["warning", "critical"]
+        },
+        "alert_sent_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When alert was sent"
+        },
+        "alert_recipients": {
+          "type": "array",
+          "description": "Alert recipients",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Metric record creation timestamp"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or observations about this measurement"
+    }
+  },
+  "additionalProperties": false
+}

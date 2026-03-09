@@ -1,9 +1,9 @@
 ================================================================================
- EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1-5: L52-L70)
+ EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1-6 COMPLETE: L52-L75)
  File: docs/library/13-EXECUTION-LAYERS.md
  Created: 2026-03-09 -- Session 41 Part 10
- Updated: 2026-03-09 -- Session 41 Part 11 (Phases 2, 3, 4, 5 deployed)
- Status: 19 layers operational (L52-L70), 5 layers planned (L71-L75)
+ Updated: 2026-03-09 -- Session 41 Part 11 (All 24 execution layers deployed)
+ Status: 24 layers operational (L52-L75) -- COMPLETE EXECUTION ENGINE
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md (phased deployment plan)
          docs/library/99-layers-design-20260309-0935.md (canonical numbering)
@@ -1661,33 +1661,447 @@
   - Compliance reporting (who changed what, when, why)
 
 ================================================================================
- PHASE 6 PREVIEW -- 5 MORE LAYERS (L71-L75)
+ PHASE 6 LAYERS (SESSION 41 PART 11) -- 5 LAYERS OPERATIONAL
 ================================================================================
 
-  Phase 5 deployed 4 layers (L67-L70). 5 more layers planned for Phase 6.
-  See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md for full phased plan.
+ Status: ALL 24 execution layers operational (L52-L75)
 
-  PHASE 6 (L71-L75) -- STRATEGY & PORTFOLIO (DOMAIN 12)
-  ------------------------------------------------------
-  L71 work_factory_portfolio        Portfolio of all work services
-  L72 work_factory_roadmaps         Strategic roadmaps for capability evolution
-  L73 work_factory_investments      Investment decisions for new capabilities
-  L74 work_factory_metrics          Factory-level KPIs and health metrics
-  L75 work_factory_governance       Governance policies for the work factory
+ Phase 6 deploys 5 layers (L71-L75) for Strategy & Portfolio Management.
+ This completes the EVA Execution Engine with full portfolio governance,
+ strategic roadmaps, investment tracking, KPI monitoring, and policy enforcement.
 
-  Vision: EVA Foundation as self-managing work factory with strategic planning
+ Updated: March 9, 2026 6:37 PM ET
 
-  DEPLOYMENT TIMELINE
-  -------------------
+─────────────────────────────────────────────────────────────────────────────
+ L71 work_factory_portfolio
+─────────────────────────────────────────────────────────────────────────────
+
+  PURPOSE:
+    Portfolio management view of all work services. Executive-level oversight
+    with service inventory, health rollups, capacity tracking, and strategic
+    prioritization. Enables portfolio-level reporting and resource allocation.
+
+  PRIMARY KEY:
+    portfolio-{name-slug}
+    Examples: portfolio-core-services, portfolio-ai-automation
+
+  FOREIGN KEYS:
+    service_ids[]           → L62 work_factory_services (many-to-many)
+    roadmap_ids[]           → L72 work_factory_roadmaps (many-to-many)
+    active_investment_ids[] → L73 work_factory_investments (many-to-many)
+    governance_policy_ids[] → L75 work_factory_governance (many-to-many)
+
+  KEY FIELDS:
+    - portfolio_name: Human-readable name
+    - description: Portfolio purpose and scope
+    - owner_type/owner_id: Polymorphic owner (cp_agent, human, team, department)
+    - status: active, planning, maintenance, deprecated, retired
+    - service_ids[]: Services in portfolio
+    - service_count: Total services (calculated)
+    - health_summary: {
+        healthy_services: Count meeting SLOs,
+        degraded_services: Count with warnings,
+        critical_services: Count with active breaches,
+        offline_services: Count unavailable,
+        overall_health_score: 0-100 weighted score,
+        last_updated_at: Refresh timestamp
+      }
+    - capacity_summary: {
+        total_requests_24h: Request volume,
+        total_runs_24h: Execution volume,
+        average_success_rate: 0-1,
+        total_active_breaches: Breach count,
+        peak_load_services[]: Services at capacity
+      }
+    - strategic_priority: critical, high, medium, low
+    - investment_level: flagship, growth, maintenance, harvest, divest
+    - cost_summary: {
+        total_cost_usd_mtd: Month-to-date cost,
+        budget_allocation_usd: Budget for period,
+        burn_rate_percentage: Budget burn rate,
+        projected_end_of_month_usd: Projected cost
+      }
+    - tags[]: Classification tags
+
+  GRAPH EDGES (4):
+    portfolio_services: L71 → L62 (many-to-many via service_ids)
+    portfolio_roadmaps: L71 → L72 (many-to-many via roadmap_ids)
+    portfolio_investments: L71 → L73 (many-to-many via active_investment_ids)
+    portfolio_governance: L71 → L75 (many-to-many via governance_policy_ids)
+
+  USE CASES:
+    1. Portfolio Dashboard: Aggregate health/capacity/cost metrics across services
+    2. Strategic Planning: Identify investment priorities based on health + priority
+    3. Resource Allocation: Balance budgets across portfolio based on burn rates
+    4. Executive Reporting: High-level status for leadership with drill-down to services
+
+  SAMPLE SCHEMA:
+    {
+      "id": "portfolio-ai-automation",
+      "portfolio_name": "AI Automation Suite",
+      "description": "Portfolio of AI-driven automation services for SDLC",
+      "owner_type": "cp_agent",
+      "owner_id": "cp-agent-eva-foundation",
+      "status": "active",
+      "service_ids": ["service-code-generation", "service-documentation"],
+      "service_count": 2,
+      "health_summary": {
+        "healthy_services": 1,
+        "degraded_services": 1,
+        "critical_services": 0,
+        "overall_health_score": 85.5
+      },
+      "strategic_priority": "critical",
+      "investment_level": "flagship"
+    }
+
+─────────────────────────────────────────────────────────────────────────────
+ L72 work_factory_roadmaps
+─────────────────────────────────────────────────────────────────────────────
+
+  PURPOSE:
+    Strategic roadmaps for capability and service evolution. Forward-looking
+    initiatives with milestones, dependencies, timelines. Enables strategic
+    planning and capability gap analysis.
+
+  PRIMARY KEY:
+    roadmap-{name-slug}
+    Examples: roadmap-ai-automation-q2-2026, roadmap-service-reliability
+
+  FOREIGN KEYS:
+    portfolio_id                    → L71 work_factory_portfolio (RESTRICT)
+    initiatives[].target_capability_ids[] → L61 work_factory_capabilities
+    initiatives[].target_service_ids[]    → L62 work_factory_services
+    initiatives[].investment_id           → L73 work_factory_investments (SET_NULL)
+    initiatives[].milestone_ids[]         → L28 milestones
+
+  KEY FIELDS:
+    - roadmap_name: Human-readable name
+    - description: Strategic vision and objectives
+    - portfolio_id: FK to portfolio (RESTRICT)
+    - owner_type/owner_id: Polymorphic owner
+    - status: draft, proposed, approved, active, on_hold, completed, cancelled
+    - planning_horizon: short_term_3mo, medium_term_6mo, long_term_12mo, multi_year
+    - start_date/target_end_date/actual_completion_date: Timeline tracking
+    - initiatives[]: Array of strategic initiatives with:
+      - initiative_id/initiative_name/description
+      - status: planned, in_progress, blocked, completed, cancelled
+      - priority: critical, high, medium, low
+      - target_capability_ids[]/target_service_ids[]: FKs to targets
+      - investment_id: FK to business case
+      - milestone_ids[]: FK to milestones
+      - dependencies[]: {dependency_type, dependency_id, blocking}
+      - estimated_effort_person_days/actual_effort_person_days
+    - strategic_themes[]: High-level themes
+    - success_criteria[]: Measurable success metrics
+    - risks[]: {risk_description, likelihood, impact, mitigation_plan}
+    - progress_percentage: 0-100 (calculated from initiatives)
+
+  GRAPH EDGES (4):
+    roadmap_for_portfolio: L72 → L71 (many-to-one via portfolio_id, RESTRICT)
+    roadmap_target_capabilities: L72 → L61 (many-to-many via initiatives)
+    roadmap_target_services: L72 → L62 (many-to-many via initiatives)
+    roadmap_milestones: L72 → L28 (many-to-many via initiatives)
+
+  USE CASES:
+    1. Strategic Planning: Define forward-looking capability development
+    2. Dependency Management: Track initiative dependencies and blockers
+    3. Progress Tracking: Monitor roadmap execution vs plan
+    4. Investment Prioritization: Link initiatives to business cases (L73)
+
+  SAMPLE SCHEMA:
+    {
+      "id": "roadmap-ai-auto-scaling-2026",
+      "roadmap_name": "AI Service Auto-scaling Initiative 2026",
+      "portfolio_id": "portfolio-ai-automation",
+      "status": "active",
+      "planning_horizon": "medium_term_6mo",
+      "initiatives": [
+        {
+          "initiative_id": "init-autoscale-codegen",
+          "initiative_name": "Auto-scale code generation service",
+          "status": "in_progress",
+          "priority": "high",
+          "target_service_ids": ["service-code-generation"],
+          "investment_id": "investment-ai-auto-scaling-20260309"
+        }
+      ],
+      "progress_percentage": 35
+    }
+
+─────────────────────────────────────────────────────────────────────────────
+ L73 work_factory_investments
+─────────────────────────────────────────────────────────────────────────────
+
+  PURPOSE:
+    Investment decisions and business justification. ROI tracking, approval
+    workflows, funding allocation, actual returns. Enables investment portfolio
+    management and budget planning.
+
+  PRIMARY KEY:
+    investment-{name-slug}-{YYYYMMDD}
+    Examples: investment-ai-auto-scaling-20260309
+
+  FOREIGN KEYS:
+    portfolio_id             → L71 work_factory_portfolio (RESTRICT)
+    roadmap_id               → L72 work_factory_roadmaps (SET_NULL)
+    target_capability_ids[]  → L61 work_factory_capabilities
+    target_service_ids[]     → L62 work_factory_services
+    work_unit_ids[]          → L52 work_execution_units
+    evidence_ids[]           → L31 evidence
+
+  KEY FIELDS:
+    - investment_name: Human-readable name
+    - description: Business case summary and strategic rationale
+    - portfolio_id: FK to portfolio (RESTRICT)
+    - roadmap_id: FK to roadmap (SET_NULL)
+    - investment_type: new_capability, service_enhancement, infrastructure_upgrade,
+      reliability_improvement, cost_optimization, technical_debt_reduction,
+      security_hardening, compliance_requirement
+    - status: draft, submitted, under_review, approved, rejected, funded,
+      in_progress, completed, cancelled, deferred
+    - requested_by: Polymorphic FK to requester
+    - requested_at/approved_at: Timeline
+    - requested_amount_usd/approved_amount_usd/actual_spent_usd: Financial tracking
+    - financial_breakdown: {infrastructure, development, operational, training costs}
+    - roi_analysis: {
+        expected_annual_savings_usd/revenue_usd,
+        payback_period_months,
+        net_present_value_usd,
+        internal_rate_of_return_percentage,
+        actual_annual_savings_usd/revenue_usd (post-completion)
+      }
+    - benefits[]: {benefit_category, description, quantified_value}
+    - risks[]: {risk_description, likelihood, impact, mitigation_plan}
+    - approval_workflow: {approvals_received[], rejections[]}
+    - success_metrics[]: Post-implementation results
+
+  GRAPH EDGES (6):
+    investment_for_portfolio: L73 → L71 (many-to-one via portfolio_id, RESTRICT)
+    investment_for_roadmap: L73 → L72 (many-to-one via roadmap_id, SET_NULL)
+    investment_target_capabilities: L73 → L61 (many-to-many)
+    investment_target_services: L73 → L62 (many-to-many)
+    investment_work: L73 → L52 (many-to-many via work_unit_ids)
+    investment_evidence: L73 → L31 (many-to-many via evidence_ids)
+
+  USE CASES:
+    1. Business Case Management: Track investment requests with ROI analysis
+    2. Approval Workflow: Multi-stakeholder approval for high-value investments
+    3. ROI Tracking: Compare expected vs actual returns post-implementation
+    4. Portfolio Optimization: Prioritize investments by ROI and strategic fit
+
+  SAMPLE SCHEMA:
+    {
+      "id": "investment-ai-auto-scaling-20260309",
+      "investment_name": "AI Auto-scaling Infrastructure",
+      "portfolio_id": "portfolio-ai-automation",
+      "roadmap_id": "roadmap-ai-auto-scaling-2026",
+      "investment_type": "infrastructure_upgrade",
+      "status": "approved",
+      "requested_amount_usd": 250000,
+      "approved_amount_usd": 250000,
+      "roi_analysis": {
+        "expected_annual_savings_usd": 500000,
+        "payback_period_months": 6
+      }
+    }
+
+─────────────────────────────────────────────────────────────────────────────
+ L74 work_factory_metrics
+─────────────────────────────────────────────────────────────────────────────
+
+  PURPOSE:
+    Factory-level KPIs and aggregate health metrics. Executive dashboard data
+    with aggregate metrics across portfolios/services, trend analyses, benchmarks,
+    target governance. Enables strategic decision-making and performance monitoring.
+
+  PRIMARY KEY:
+    metric-{category}-{name-slug}-{YYYYMMDD}-{HHMM}
+    Examples: metric-service-availability-overall-20260309-1430
+
+  FOREIGN KEYS:
+    portfolio_id               → L71 work_factory_portfolio (SET_NULL)
+    service_id                 → L62 work_factory_services (SET_NULL)
+    capability_id              → L61 work_factory_capabilities (SET_NULL)
+    breach_ids[]               → L67 work_service_breaches
+    related_governance_policy_ids[] → L75 work_factory_governance
+    evidence_ids[]             → L31 evidence
+
+  KEY FIELDS:
+    - metric_name: Metric name
+    - metric_category: availability, performance, cost, capacity, quality,
+      efficiency, reliability, security
+    - description: Calculation methodology
+    - measurement_timestamp: When measured
+    - measurement_period: realtime, hourly, daily, weekly, monthly, quarterly, yearly
+    - value: Metric value
+    - unit: percentage, count, milliseconds, USD, requests_per_second
+    - target_value/threshold_warning/threshold_critical: Governance thresholds
+    - status: healthy, warning, critical, unknown
+    - scope: factory_wide, portfolio, service, capability
+    - aggregation_details: {
+        sample_size, source_layers[], calculation_method, weighting_strategy
+      }
+    - trend_analysis: {
+        previous_value, change_absolute, change_percentage,
+        trend_direction (improving/stable/degrading),
+        moving_average_7d, moving_average_30d
+      }
+    - benchmark_comparison: {
+        internal_benchmark, external_benchmark, best_in_class,
+        comparison_status (above/at/below benchmark)
+      }
+    - contributing_factors[]: {factor_type, factor_id, contribution_percentage}
+
+  GRAPH EDGES (6):
+    metric_for_portfolio: L74 → L71 (many-to-one via portfolio_id, SET_NULL)
+    metric_for_service: L74 → L62 (many-to-one via service_id, SET_NULL)
+    metric_for_capability: L74 → L61 (many-to-one via capability_id, SET_NULL)
+    metric_breaches: L74 → L67 (many-to-many via breach_ids)
+    metric_governance: L74 → L75 (many-to-many via related_governance_policy_ids)
+    metric_evidence: L74 → L31 (many-to-many via evidence_ids)
+
+  USE CASES:
+    1. Executive Dashboard: Real-time factory health with aggregate KPIs
+    2. Trend Analysis: Identify improving/degrading metrics over time
+    3. Threshold Governance: Auto-alert when metrics breach thresholds
+    4. Benchmarking: Compare performance to internal/external benchmarks
+
+  SAMPLE SCHEMA:
+    {
+      "id": "metric-availability-overall-20260309-1430",
+      "metric_name": "Overall Service Availability",
+      "metric_category": "availability",
+      "measurement_timestamp": "2026-03-09T14:30:00Z",
+      "measurement_period": "hourly",
+      "value": 99.87,
+      "unit": "percentage",
+      "target_value": 99.9,
+      "status": "warning",
+      "scope": "factory_wide",
+      "trend_analysis": {
+        "previous_value": 99.95,
+        "change_percentage": -0.08,
+        "trend_direction": "degrading"
+      }
+    }
+
+─────────────────────────────────────────────────────────────────────────────
+ L75 work_factory_governance
+─────────────────────────────────────────────────────────────────────────────
+
+  PURPOSE:
+    Governance policies and compliance rules. Policy definitions, compliance
+    requirements, approval thresholds, audit procedures, enforcement mechanisms.
+    Enables policy-driven governance and automated enforcement.
+
+  PRIMARY KEY:
+    governance-policy-{name-slug}
+    Examples: governance-policy-security-review-required,
+              governance-policy-cost-approval-threshold
+
+  FOREIGN KEYS:
+    portfolio_ids[]         → L71 work_factory_portfolio (scope=portfolio)
+    service_ids[]           → L62 work_factory_services (scope=service)
+    capability_ids[]        → L61 work_factory_capabilities (scope=capability)
+    related_cp_policy_ids[] → L16 cp_policies
+    related_metric_ids[]    → L74 work_factory_metrics
+    evidence_ids[]          → L31 evidence
+
+  KEY FIELDS:
+    - policy_name: Human-readable name
+    - description: Policy rationale
+    - policy_type: approval_workflow, compliance_requirement, quality_gate,
+      cost_control, security_control, operational_standard, slo_enforcement,
+      risk_management, audit_rule
+    - scope: factory_wide, portfolio, service, capability, project
+    - status: draft, proposed, active, deprecated, retired
+    - effective_date/expiration_date: Policy lifecycle
+    - owner_type/owner_id: Polymorphic owner
+    - enforcement_mechanism: automated_blocking, automated_warning,
+      manual_review_required, advisory_only, audit_post_facto
+    - policy_rules[]: Array of detailed rules with:
+      - rule_id/rule_description
+      - condition_type: metric_threshold, cost_threshold, approval_required,
+        mandatory_step, prohibited_action, time_based, risk_level
+      - condition_details: {metric_name, operator, threshold_value, required_approvers}
+      - enforcement_action: block_execution, require_approval, send_alert,
+        log_warning, escalate, trigger_audit
+    - compliance_mappings[]: {framework_name, control_id} (ISO 27001, SOC 2, GDPR, HIPAA)
+    - violation_history: {total_violations_count, violations_last_30d}
+    - review_frequency: monthly, quarterly, semi_annual, annual, ad_hoc
+
+  GRAPH EDGES (5):
+    governance_for_portfolios: L75 → L71 (many-to-many via portfolio_ids)
+    governance_for_services: L75 → L62 (many-to-many via service_ids)
+    governance_for_capabilities: L75 → L61 (many-to-many via capability_ids)
+    governance_cp_policies: L75 → L16 (many-to-many via related_cp_policy_ids)
+    governance_evidence: L75 → L31 (many-to-many via evidence_ids)
+
+  USE CASES:
+    1. Policy Enforcement: Block deployments violating security policies
+    2. Compliance Auditing: Track compliance with ISO 27001, SOC 2, etc.
+    3. Approval Workflows: Enforce multi-stakeholder approvals for high-risk changes
+    4. Threshold Governance: Alert when metrics breach policy-defined thresholds
+
+  SAMPLE SCHEMA:
+    {
+      "id": "governance-policy-security-review-required",
+      "policy_name": "Security Review Required for Production Deployments",
+      "policy_type": "security_control",
+      "scope": "factory_wide",
+      "status": "active",
+      "enforcement_mechanism": "automated_blocking",
+      "policy_rules": [
+        {
+          "rule_id": "rule-01-approval",
+          "condition_type": "approval_required",
+          "condition_details": {
+            "required_approvers": ["team-security"],
+            "minimum_approvals_required": 1
+          },
+          "enforcement_action": "block_execution"
+        }
+      ],
+      "compliance_mappings": [
+        {"framework_name": "ISO 27001", "control_id": "A.12.1.2"}
+      ]
+    }
+
+================================================================================
+ DEPLOYMENT TIMELINE (COMPLETE)
+================================================================================
+
   Phase 1 (L52-L56):     March 2026    ✅ DEPLOYED (Session 41 Part 10)
   Phase 2 (L55,L57-L58): March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 3 (L59-L60):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 4 (L61-L66):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 5 (L67-L70):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
-  Phase 6 (L71-L75):     TBD
+  Phase 6 (L71-L75):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
 
-  Strategy: Deploy phases incrementally as operational needs emerge.
-  No fixed timeline. Demand-driven deployment.
+  ALL 24 EXECUTION LAYERS DEPLOYED (L52-L75)
+
+  STRATEGIC IMPACT:
+    EVA Foundation now has COMPLETE EXECUTION ENGINE with:
+    1. Work Execution (L52-L56): Governed AI work with full audit trail
+    2. Learning & Patterns (L57-L60): Continuous improvement feedback loop
+    3. Service Factory (L61-L66): Agent-as-service with SLA governance
+    4. Self-Healing (L67-L70): Automated breach detection & remediation
+    5. Strategy & Portfolio (L71-L75): Executive oversight & governance
+
+  COMPETITIVE ADVANTAGE:
+    ZERO other AI coding platforms have:
+    - Portfolio-level health dashboards (L71, L74)
+    - Strategic roadmaps with ROI tracking (L72, L73)
+    - Policy-driven governance with compliance mapping (L75)
+    - Self-healing services with continuous learning (L67-L70 → L57-L58)
+
+  MARKET DIFFERENTIATION:
+    Enterprise customers (insurance, banks, FDA-regulated) can now:
+    - Track AI service portfolios like traditional IT services
+    - Justify AI investments with quantified ROI analysis
+    - Enforce governance policies with compliance audit trails
+    - Manage AI services with strategic roadmaps and KPIs
 
 ================================================================================
  KNOWN LIMITATIONS & FUTURE WORK

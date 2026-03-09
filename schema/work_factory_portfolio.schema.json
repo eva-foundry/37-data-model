@@ -1,0 +1,223 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "L71 - work_factory_portfolio",
+  "description": "Portfolio management view of all work services. Provides executive-level oversight with service inventory, health rollups, capacity overview, and strategic prioritization. Enables portfolio-level reporting and resource allocation decisions.",
+  "type": "object",
+  "required": [
+    "id",
+    "portfolio_name",
+    "owner_type",
+    "owner_id",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: portfolio-{name-slug}",
+      "pattern": "^portfolio-[a-z0-9-]+$",
+      "examples": ["portfolio-core-services", "portfolio-ai-automation"]
+    },
+    "portfolio_name": {
+      "type": "string",
+      "description": "Human-readable portfolio name",
+      "minLength": 3,
+      "maxLength": 200,
+      "examples": ["Core Infrastructure Services", "AI Automation Suite"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Purpose and scope of this portfolio",
+      "examples": ["Portfolio of foundational infrastructure services supporting all EVA projects"]
+    },
+    "owner_type": {
+      "type": "string",
+      "description": "Type of entity that owns this portfolio",
+      "enum": ["cp_agent", "human", "team", "department"]
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Polymorphic FK to owning entity (cp_agent id, agent id, or human identifier)",
+      "examples": ["cp-agent-eva-foundation", "team-ai-coe"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Portfolio lifecycle status",
+      "enum": ["active", "planning", "maintenance", "deprecated", "retired"]
+    },
+    "service_ids": {
+      "type": "array",
+      "description": "Array of FK to L62 work_factory_services.id (services in this portfolio)",
+      "items": {
+        "type": "string",
+        "pattern": "^service-[a-z0-9-]+$"
+      },
+      "examples": [["service-code-generation", "service-documentation-creation"]]
+    },
+    "service_count": {
+      "type": "integer",
+      "description": "Total number of services in portfolio (calculated from service_ids.length)",
+      "minimum": 0
+    },
+    "health_summary": {
+      "type": "object",
+      "description": "Aggregate health metrics across all portfolio services",
+      "properties": {
+        "healthy_services": {
+          "type": "integer",
+          "description": "Count of services meeting all SLOs",
+          "minimum": 0
+        },
+        "degraded_services": {
+          "type": "integer",
+          "description": "Count of services with SLO warnings",
+          "minimum": 0
+        },
+        "critical_services": {
+          "type": "integer",
+          "description": "Count of services with active critical breaches",
+          "minimum": 0
+        },
+        "offline_services": {
+          "type": "integer",
+          "description": "Count of services that are unavailable",
+          "minimum": 0
+        },
+        "overall_health_score": {
+          "type": "number",
+          "description": "Aggregate health score (0-100), weighted by service criticality",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "last_updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When health summary was last refreshed"
+        }
+      }
+    },
+    "capacity_summary": {
+      "type": "object",
+      "description": "Aggregate capacity and utilization across portfolio",
+      "properties": {
+        "total_requests_24h": {
+          "type": "integer",
+          "description": "Total service requests in last 24 hours",
+          "minimum": 0
+        },
+        "total_runs_24h": {
+          "type": "integer",
+          "description": "Total service runs in last 24 hours",
+          "minimum": 0
+        },
+        "average_success_rate": {
+          "type": "number",
+          "description": "Average success rate across all services (0-1)",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "total_active_breaches": {
+          "type": "integer",
+          "description": "Count of active SLO breaches across portfolio",
+          "minimum": 0
+        },
+        "peak_load_services": {
+          "type": "array",
+          "description": "Services currently at or near capacity",
+          "items": {
+            "type": "string",
+            "pattern": "^service-[a-z0-9-]+$"
+          }
+        }
+      }
+    },
+    "strategic_priority": {
+      "type": "string",
+      "description": "Strategic importance classification",
+      "enum": ["critical", "high", "medium", "low"]
+    },
+    "investment_level": {
+      "type": "string",
+      "description": "Investment allocation tier",
+      "enum": ["flagship", "growth", "maintenance", "harvest", "divest"]
+    },
+    "cost_summary": {
+      "type": "object",
+      "description": "Aggregate cost metrics for portfolio",
+      "properties": {
+        "total_cost_usd_mtd": {
+          "type": "number",
+          "description": "Total cost month-to-date (USD)",
+          "minimum": 0
+        },
+        "budget_allocation_usd": {
+          "type": "number",
+          "description": "Budget allocated for current period (USD)",
+          "minimum": 0
+        },
+        "burn_rate_percentage": {
+          "type": "number",
+          "description": "Budget burn rate as percentage (0-100+)",
+          "minimum": 0
+        },
+        "projected_end_of_month_usd": {
+          "type": "number",
+          "description": "Projected cost at end of current month (USD)",
+          "minimum": 0
+        }
+      }
+    },
+    "roadmap_ids": {
+      "type": "array",
+      "description": "Array of FK to L72 work_factory_roadmaps.id (strategic roadmaps for this portfolio)",
+      "items": {
+        "type": "string",
+        "pattern": "^roadmap-[a-z0-9-]+$"
+      }
+    },
+    "active_investment_ids": {
+      "type": "array",
+      "description": "Array of FK to L73 work_factory_investments.id (active investment initiatives)",
+      "items": {
+        "type": "string",
+        "pattern": "^investment-[a-z0-9-]+$"
+      }
+    },
+    "governance_policy_ids": {
+      "type": "array",
+      "description": "Array of FK to L75 work_factory_governance.id (governance policies applicable to this portfolio)",
+      "items": {
+        "type": "string",
+        "pattern": "^governance-policy-[a-z0-9-]+$"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Classification tags for portfolio organization",
+      "items": {
+        "type": "string"
+      },
+      "examples": [["ai-services", "infrastructure", "customer-facing"]]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Portfolio creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last updated timestamp"
+    },
+    "retired_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Portfolio retirement timestamp (if status=retired)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context, strategic notes, or observations"
+    }
+  },
+  "additionalProperties": false
+}
