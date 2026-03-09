@@ -1,7 +1,7 @@
 ================================================================================
  EVA DATA MODEL LIBRARY -- INDEX
  File: docs/library/README.md
- Updated: 2026-03-06 11:12 AM ET -- 12 files; 41 layers; Session 30 COMPLETE
+ Updated: 2026-03-09 -- 15 files; 87 operational layers; 12 ontology domains; Session 41
 ================================================================================
 
 This library captures the full current state of the EVA ecosystem.
@@ -16,7 +16,7 @@ No Mermaid. No emoji. ASCII only. Printable.
 
   File                          What it covers
   ----------------------------  -----------------------------------------------
-  00-EVA-OVERVIEW.md            Master orientation. What EVA is, the 48-project
+  00-EVA-OVERVIEW.md            Master orientation. What EVA is, the 57-project
                                 ecosystem, Azure infra, 5 design principles,
                                 data model snapshot, key files to read next.
 
@@ -37,12 +37,13 @@ No Mermaid. No emoji. ASCII only. Printable.
                                     ops-face (26) -- face field in Cosmos.
 
   03-DATA-MODEL-REFERENCE.md    Complete entity catalog with counts, notes, key fields.
-                                Canonical layer count registry (see header).
+                                87-layer reference organized by 12 ontology domains.
+                                Canonical layer registry (see header).
                                 Write cycle protocol. Query reference (what API
                                 call to make instead of grepping files).
                                 Validation rules for PASS 0 violations.
 
-  04-PORTAL-SCREENS.md          All 46 screens by face (assistant-face / ops-face).
+  04-PORTAL-SCREENS.md          All 50 screens by face (assistant-face / ops-face).
                                 TWO-PORTAL SPLIT ratified 2026-02-24.
                                 assistant-face (20): Auth, EVA DA, JP Spark,
                                   EVAHome, ChatPane, AssistMe.
@@ -117,6 +118,20 @@ No Mermaid. No emoji. ASCII only. Printable.
                                 sprints, projects. API-first bootstrap (2 calls vs
                                 236 file reads). Status: LIVE. 10/11 endpoints operational.
 
+  98-model-ontology-for-agents.md  12-DOMAIN ONTOLOGY (Session 41).
+                                Semantic compression: 87 layers → 12 conceptual
+                                domains. AI reasoning model. Agents load this as
+                                their mental map. Domains: System Architecture,
+                                Identity, AI Runtime, UI, Control Plane, Governance,
+                                Project & PM, DevOps, Observability, FinOps,
+                                Execution Engine, Strategy & Portfolio.
+
+  99-layers-design-20260309-0935.md  75-LAYER CANONICAL DESIGN (Session 41).
+                                Clean consolidated catalog with layer numbers,
+                                names, goals, domains, primary keys. Covers L1-L75
+                                (L1-L51 operational, L52-L75 planned). Machine-readable
+                                format suitable for YAML/JSON schema generation.
+
 --------------------------------------------------------------------------------
  FOUNDING REFERENCE
 --------------------------------------------------------------------------------
@@ -127,7 +142,9 @@ No Mermaid. No emoji. ASCII only. Printable.
   Authors: Luukas Ilves, Manuel Kilian + 20 global digital gov leaders
   URL: https://edrm.net/2025/10/the-agentic-state-a-global-framework-for-
        secure-and-accountable-ai-powered-government/
-  Layers: 41 (L0-L38 -- Agent Automation L33-L38 added Mar 5-6, 2026)
+  Layers: 87 operational (51 canonical L1-L51 + 36 organic extensions)
+  Planned: L52-L75 Execution Engine + Strategy (24 layers)
+  Ontology: 12 conceptual domains (see 98-model-ontology-for-agents.md)
   Faces: assistant-face:20 (citizen/AI), ops-face:26 (admin/ops)
   Entity types: endpoints, screens, services, containers, agents, evidence, traces,
                 workspace_config, project_work

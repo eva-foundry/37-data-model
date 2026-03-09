@@ -1,7 +1,7 @@
 # GitHub Copilot Instructions -- EVA Data Model
 
 **Template Version**: 3.4.0
-**Last Updated**: March 1, 2026
+**Last Updated**: March 9, 2026
 **Project**: EVA Data Model -- Single source of truth API (port 8010)
 **Path**: `C:\AICOE\eva-foundry\37-data-model\`
 **Stack**: Python, FastAPI, Cosmos DB
@@ -23,7 +23,7 @@
 Before answering any question or writing any code:
 
 1. **Establish $base** (ACA primary -- run the bootstrap block in Section 3.1 first):
-   - ACA (24x7, Cosmos-backed, no auth): `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io`
+   - ACA (24x7, Cosmos-backed, no auth): `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io`
    - Local dev fallback only: `http://localhost:8010`
    - `$base` must be set before any model query in this session.
 
@@ -86,7 +86,7 @@ Loop      --> return to Discover if tasks remain
 
 ```powershell
 # Primary -- ACA (24x7 Cosmos-backed, no auth required, always up)
-$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
 $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
 # Local fallback -- only if ACA is in a rare maintenance window
 if (-not $h) {
@@ -424,7 +424,7 @@ automatically audited on every write.
 
 ```powershell
 # Option A -- ACA (24x7 Cosmos-backed, no auth required, always up)
-$base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
+$base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
 $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
 
 # Option B -- localhost:8010 (local dev / fallback)

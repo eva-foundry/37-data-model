@@ -332,7 +332,7 @@ Write-Host "MTI: $($t.mti)  Gate: 95  Status: $(if ($t.mti -ge 95) { 'PASS' } el
 
 ## DEPENDENCIES
 
-- Data model API: `https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io`
+- Data model API: `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io`
 - Veritas CLI: `C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js`
 - PowerShell 7+
 

@@ -1,13 +1,13 @@
 ================================================================================
  EVA PORTAL -- 46-SCREEN CATALOG
  File: docs/library/04-PORTAL-SCREENS.md
- Updated: 2026-02-24 @ 15:30 ET -- Two-portal split. face field set on all 46.
+ Updated: 2026-03-09 -- Two-portal split. face field set on all 50.
  Source: http://localhost:8010/model/screens/  (PASS 0 violations)
 ================================================================================
 
 All screens: WCAG 2.1 AA (jest-axe enforced) + react-i18next (EN/FR)
 Faces: assistant-face (20 screens) | ops-face (26 screens)
-Two SWA deployment targets. face field set in Cosmos on all 46 screens.
+Two SWA deployment targets. face field set in Cosmos on all 50 screens.
 New screens (Feb 24 catalog): marked [NEW]
 
 --------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ New screens (Feb 24 catalog): marked [NEW]
   --------                  React 19 SWA (eva-faces/ops)
   26 screens                Admin, DevOps/Platform, Dev Tools, DevBench
 
-  Face field set in Cosmos on all 46 screens. GET /model/screens/ is authoritative.
+  Face field set in Cosmos on all 50 screens. GET /model/screens/ is authoritative.
 
 --------------------------------------------------------------------------------
  SCREEN STATUS LEGEND
@@ -396,7 +396,7 @@ New screens (Feb 24 catalog): marked [NEW]
   -----------------------  --
   Subtotal              26
 
-  TOTAL                 46   (face field set in Cosmos on all 46)
+  TOTAL                 50   (face field set in Cosmos on all 50)
   (45-aicoe-page: 2 screens are public-page, outside both portals)
 
 ================================================================================
