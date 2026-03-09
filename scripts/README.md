@@ -29,3 +29,28 @@ repo stays generic and has no hard dependency on any consumer directory layout.
 | `backfill-metadata.ps1` | Backfill `created_at/by`, `modified_at/by`, `row_version` fields |
 | `ado-generate-artifacts.ps1` | Generate ADO work item import JSON from model data |
 | `add-precedence-fields.ps1` | Add `precedence` / `provision_order` fields to infra objects |
+| **`pre-commit-hook.py`** | **Auto-fix F541, Unicode before commit (local developer tool)** |
+| **`install-pre-commit-hook.ps1`** | **Install pre-commit hook in .git/hooks/** |
+
+## Quality Automation (Session 41)
+
+**Problem**: Banal quality issues (F541 f-strings, Unicode characters) waste developer time and block PRs.
+
+**Solution**: Three-layer automation:
+
+1. **Local Pre-Commit Hook** (`pre-commit-hook.py`)
+   - Runs before each `git commit`
+   - Auto-fixes F541 and Unicode issues
+   - Install: `.\scripts\install-pre-commit-hook.ps1`
+   - Bypass (not recommended): `git commit --no-verify`
+
+2. **GitHub Auto-Fix Action** (`.github/workflows/auto-fix-quality.yml`)
+   - Runs on PR creation/update
+   - Auto-commits fixes back to PR branch
+   - Comments on PR with what was fixed
+
+3. **Quality Gate** (`.github/workflows/quality-gates.yml`)
+   - Blocks merge if fixable issues remain
+   - Runs pylint, flake8, pytest
+
+**Workspace Encoding Standard**: Never use Unicode in Python scripts — enterprise Windows cp1252 encoding causes crashes. See `.github/standards-specification.md`.
