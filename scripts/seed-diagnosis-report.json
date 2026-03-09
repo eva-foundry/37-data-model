@@ -1,0 +1,576 @@
+[
+  {
+    "File": "agent_execution_history.json",
+    "Size": "12,353",
+    "Structure": "DICT_OTHER_ARRAY_KEY: execution_records",
+    "Objects": 5,
+    "Issue": ""
+  },
+  {
+    "File": "agent_performance_metrics.json",
+    "Size": "15,121",
+    "Structure": "DICT_OTHER_ARRAY_KEY: agent_metrics",
+    "Objects": 5,
+    "Issue": ""
+  },
+  {
+    "File": "agent_policies.json",
+    "Size": "4,942",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "agentic_workflows.json",
+    "Size": "30,797",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 30,
+    "Issue": ""
+  },
+  {
+    "File": "agents.json",
+    "Size": "7,754",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 10,
+    "Issue": ""
+  },
+  {
+    "File": "api_contracts.json",
+    "Size": "7,604",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 6,
+    "Issue": ""
+  },
+  {
+    "File": "architecture_decisions.json",
+    "Size": "34,465",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 36,
+    "Issue": ""
+  },
+  {
+    "File": "auto_fix_execution_history.json",
+    "Size": "3,415",
+    "Structure": "RAW_ARRAY",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "azure_infrastructure.json",
+    "Size": "8,620",
+    "Structure": "DICT_OTHER_ARRAY_KEY: deployment_sequence",
+    "Objects": 8,
+    "Issue": ""
+  },
+  {
+    "File": "ci_cd_pipelines.json",
+    "Size": "13,056",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 15,
+    "Issue": ""
+  },
+  {
+    "File": "compliance_audit.json",
+    "Size": "7,540",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 6,
+    "Issue": ""
+  },
+  {
+    "File": "components.json",
+    "Size": "31,328",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 32,
+    "Issue": ""
+  },
+  {
+    "File": "config_defs.json",
+    "Size": "11,718",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 20,
+    "Issue": ""
+  },
+  {
+    "File": "connections.json",
+    "Size": "3,454",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "containers.json",
+    "Size": "24,444",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 13,
+    "Issue": ""
+  },
+  {
+    "File": "cost_tracking.json",
+    "Size": "24,421",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 40,
+    "Issue": ""
+  },
+  {
+    "File": "coverage_summary.json",
+    "Size": "55,447",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 72,
+    "Issue": ""
+  },
+  {
+    "File": "cp_agents.json",
+    "Size": "3,813",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "cp_policies.json",
+    "Size": "2,601",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "cp_skills.json",
+    "Size": "6,574",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 7,
+    "Issue": ""
+  },
+  {
+    "File": "cp_workflows.json",
+    "Size": "3,996",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 2,
+    "Issue": ""
+  },
+  {
+    "File": "decision_provenance.json",
+    "Size": "25,664",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 35,
+    "Issue": ""
+  },
+  {
+    "File": "decisions.json",
+    "Size": "7,597",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "deployment_history.json",
+    "Size": "60,763",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 76,
+    "Issue": ""
+  },
+  {
+    "File": "deployment_policies.json",
+    "Size": "6,797",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "deployment_quality_scores.json",
+    "Size": "14,166",
+    "Structure": "DICT_OTHER_ARRAY_KEY: quality_scores",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "deployment_records.json",
+    "Size": "4,289",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 2,
+    "Issue": ""
+  },
+  {
+    "File": "deployment_targets.json",
+    "Size": "14,127",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 21,
+    "Issue": ""
+  },
+  {
+    "File": "endpoints.json",
+    "Size": "151,720",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 187,
+    "Issue": ""
+  },
+  {
+    "File": "env_vars.json",
+    "Size": "75,759",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 138,
+    "Issue": ""
+  },
+  {
+    "File": "environments.json",
+    "Size": "2,887",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "error_catalog.json",
+    "Size": "14,978",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 22,
+    "Issue": ""
+  },
+  {
+    "File": "eva_model.json",
+    "Size": "4",
+    "Structure": "DICT_NO_ARRAYS (keys: )",
+    "Objects": 0,
+    "Issue": ""
+  },
+  {
+    "File": "evidence_correlation.json",
+    "Size": "23,101",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 40,
+    "Issue": ""
+  },
+  {
+    "File": "evidence.json",
+    "Size": "605",
+    "Structure": "DICT_NO_ARRAYS (keys: objects)",
+    "Objects": 0,
+    "Issue": ""
+  },
+  {
+    "File": "feature_flags.json",
+    "Size": "12,717",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 15,
+    "Issue": ""
+  },
+  {
+    "File": "github_rules.json",
+    "Size": "4,749",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "hooks.json",
+    "Size": "15,726",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 19,
+    "Issue": ""
+  },
+  {
+    "File": "infrastructure_drift.json",
+    "Size": "4,446",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "infrastructure.json",
+    "Size": "30,466",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 46,
+    "Issue": ""
+  },
+  {
+    "File": "instructions.json",
+    "Size": "9,165",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 15,
+    "Issue": ""
+  },
+  {
+    "File": "literals.json",
+    "Size": "274,250",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 458,
+    "Issue": ""
+  },
+  {
+    "File": "mcp_servers.json",
+    "Size": "3,790",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "milestones.json",
+    "Size": "4,560",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "model_telemetry.json",
+    "Size": "31,358",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 50,
+    "Issue": ""
+  },
+  {
+    "File": "performance_trends.json",
+    "Size": "16,628",
+    "Structure": "DICT_OTHER_ARRAY_KEY: trend_records",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "personas.json",
+    "Size": "8,059",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 10,
+    "Issue": ""
+  },
+  {
+    "File": "planes.json",
+    "Size": "3,018",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "project_work.json",
+    "Size": "25",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 0,
+    "Issue": ""
+  },
+  {
+    "File": "projects.json",
+    "Size": "56,287",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 50,
+    "Issue": ""
+  },
+  {
+    "File": "prompts.json",
+    "Size": "4,392",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 5,
+    "Issue": ""
+  },
+  {
+    "File": "quality_gates.json",
+    "Size": "6,934",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "remediation_effectiveness.json",
+    "Size": "3,124",
+    "Structure": "DICT_OTHER_ARRAY_KEY: by_policy",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "remediation_outcomes.json",
+    "Size": "3,112",
+    "Structure": "RAW_ARRAY",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "remediation_policies.json",
+    "Size": "4,652",
+    "Structure": "RAW_ARRAY",
+    "Objects": 3,
+    "Issue": ""
+  },
+  {
+    "File": "repos.json",
+    "Size": "15,950",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 20,
+    "Issue": ""
+  },
+  {
+    "File": "request_response_samples.json",
+    "Size": "17,701",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 18,
+    "Issue": ""
+  },
+  {
+    "File": "requirements.json",
+    "Size": "21,390",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 29,
+    "Issue": ""
+  },
+  {
+    "File": "resource_costs.json",
+    "Size": "4,995",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "risks.json",
+    "Size": "5,817",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 5,
+    "Issue": ""
+  },
+  {
+    "File": "runbooks.json",
+    "Size": "16,587",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "runtime_config.json",
+    "Size": "25,054",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 45,
+    "Issue": ""
+  },
+  {
+    "File": "schemas.json",
+    "Size": "52,680",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 39,
+    "Issue": ""
+  },
+  {
+    "File": "screens.json",
+    "Size": "57,465",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 50,
+    "Issue": ""
+  },
+  {
+    "File": "secrets_catalog.json",
+    "Size": "21,504",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 30,
+    "Issue": ""
+  },
+  {
+    "File": "security_controls.json",
+    "Size": "9,465",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 10,
+    "Issue": ""
+  },
+  {
+    "File": "services.json",
+    "Size": "31,062",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 36,
+    "Issue": ""
+  },
+  {
+    "File": "session_transcripts.json",
+    "Size": "43,505",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 43,
+    "Issue": ""
+  },
+  {
+    "File": "sprints.json",
+    "Size": "23,655",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 20,
+    "Issue": ""
+  },
+  {
+    "File": "stories.json",
+    "Size": "46,168",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 55,
+    "Issue": ""
+  },
+  {
+    "File": "synthetic_tests.json",
+    "Size": "36,281",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 46,
+    "Issue": ""
+  },
+  {
+    "File": "tasks.json",
+    "Size": "46,143",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 73,
+    "Issue": ""
+  },
+  {
+    "File": "tech_stack.json",
+    "Size": "10,887",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 19,
+    "Issue": ""
+  },
+  {
+    "File": "test_cases.json",
+    "Size": "65,991",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 80,
+    "Issue": ""
+  },
+  {
+    "File": "testing_policies.json",
+    "Size": "8,514",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "traces.json",
+    "Size": "631",
+    "Structure": "DICT_LAYER_KEY_NOT_ARRAY",
+    "Objects": 0,
+    "Issue": ""
+  },
+  {
+    "File": "ts_types.json",
+    "Size": "21,862",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 26,
+    "Issue": ""
+  },
+  {
+    "File": "validation_rules.json",
+    "Size": "8,482",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 4,
+    "Issue": ""
+  },
+  {
+    "File": "verification_records.json",
+    "Size": "42,777",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 60,
+    "Issue": ""
+  },
+  {
+    "File": "wbs.json",
+    "Size": "2,747,471",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 3212,
+    "Issue": ""
+  },
+  {
+    "File": "workflow_metrics.json",
+    "Size": "17,138",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 30,
+    "Issue": ""
+  },
+  {
+    "File": "workspace_config.json",
+    "Size": "29",
+    "Structure": "DICT_WITH_LAYER_KEY",
+    "Objects": 0,
+    "Issue": ""
+  }
+]
