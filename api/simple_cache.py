@@ -20,9 +20,7 @@ Usage:
 
 import json
 import logging
-import asyncio
 from typing import Optional, Any, Dict
-from datetime import timedelta
 import os
 
 # Try importing Redis, fall back gracefully
