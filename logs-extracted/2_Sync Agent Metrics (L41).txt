@@ -1,0 +1,197 @@
+﻿2026-03-08T13:55:00.5272387Z Current runner version: '2.332.0'
+2026-03-08T13:55:00.5306753Z ##[group]Runner Image Provisioner
+2026-03-08T13:55:00.5308429Z Hosted Compute Agent
+2026-03-08T13:55:00.5309841Z Version: 20260213.493
+2026-03-08T13:55:00.5311003Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-08T13:55:00.5312432Z Build Date: 2026-02-13T00:28:41Z
+2026-03-08T13:55:00.5314064Z Worker ID: ***788f1b0c-4e07-4e5b-8116-4fc83d55962b***
+2026-03-08T13:55:00.5315461Z Azure Region: eastus2
+2026-03-08T13:55:00.5316706Z ##[endgroup]
+2026-03-08T13:55:00.5319096Z ##[group]Operating System
+2026-03-08T13:55:00.5320507Z Ubuntu
+2026-03-08T13:55:00.5321437Z 24.04.3
+2026-03-08T13:55:00.5322286Z LTS
+2026-03-08T13:55:00.5323217Z ##[endgroup]
+2026-03-08T13:55:00.5324259Z ##[group]Runner Image
+2026-03-08T13:55:00.5325449Z Image: ubuntu-24.04
+2026-03-08T13:55:00.5326569Z Version: 20260302.42.1
+2026-03-08T13:55:00.5329025Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-08T13:55:00.5332314Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-08T13:55:00.5334388Z ##[endgroup]
+2026-03-08T13:55:00.5340091Z ##[group]GITHUB_TOKEN Permissions
+2026-03-08T13:55:00.5344076Z Actions: write
+2026-03-08T13:55:00.5345162Z ArtifactMetadata: write
+2026-03-08T13:55:00.5346334Z Attestations: write
+2026-03-08T13:55:00.5347395Z Checks: write
+2026-03-08T13:55:00.5348424Z Contents: write
+2026-03-08T13:55:00.5349758Z Deployments: write
+2026-03-08T13:55:00.5350758Z Discussions: write
+2026-03-08T13:55:00.5351745Z Issues: write
+2026-03-08T13:55:00.5352711Z Metadata: read
+2026-03-08T13:55:00.5353687Z Models: read
+2026-03-08T13:55:00.5354796Z Packages: write
+2026-03-08T13:55:00.5355728Z Pages: write
+2026-03-08T13:55:00.5356965Z PullRequests: write
+2026-03-08T13:55:00.5357997Z RepositoryProjects: write
+2026-03-08T13:55:00.5359081Z SecurityEvents: write
+2026-03-08T13:55:00.5360584Z Statuses: write
+2026-03-08T13:55:00.5361658Z ##[endgroup]
+2026-03-08T13:55:00.5365532Z Secret source: Actions
+2026-03-08T13:55:00.5367342Z Prepare workflow directory
+2026-03-08T13:55:00.5918438Z Prepare all required actions
+2026-03-08T13:55:00.5974318Z Getting action download info
+2026-03-08T13:55:00.8799908Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-08T13:55:01.0486313Z Download action repository 'azure/login@v2' (SHA:a457da9ea143d694b1b9c7c869ebb04ebe844ef5)
+2026-03-08T13:55:01.3562828Z Complete job name: Sync Agent Metrics (L41)
+2026-03-08T13:55:01.4280934Z ##[group]Run actions/checkout@v4
+2026-03-08T13:55:01.4281822Z with:
+2026-03-08T13:55:01.4282281Z   repository: eva-foundry/37-data-model
+2026-03-08T13:55:01.4283023Z   token: ***
+2026-03-08T13:55:01.4283457Z   ssh-strict: true
+2026-03-08T13:55:01.4283909Z   ssh-user: git
+2026-03-08T13:55:01.4284360Z   persist-credentials: true
+2026-03-08T13:55:01.4284867Z   clean: true
+2026-03-08T13:55:01.4285323Z   sparse-checkout-cone-mode: true
+2026-03-08T13:55:01.4285858Z   fetch-depth: 1
+2026-03-08T13:55:01.4286316Z   fetch-tags: false
+2026-03-08T13:55:01.4286763Z   show-progress: true
+2026-03-08T13:55:01.4287213Z   lfs: false
+2026-03-08T13:55:01.4287623Z   submodules: false
+2026-03-08T13:55:01.4288072Z   set-safe-directory: true
+2026-03-08T13:55:01.4288760Z env:
+2026-03-08T13:55:01.4289301Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:01.4290576Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:01.4291634Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:01.4292217Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:01.4292798Z ##[endgroup]
+2026-03-08T13:55:01.5533140Z Syncing repository: eva-foundry/37-data-model
+2026-03-08T13:55:01.5534984Z ##[group]Getting Git version info
+2026-03-08T13:55:01.5535778Z Working directory is '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:55:01.5536839Z [command]/usr/bin/git version
+2026-03-08T13:55:01.5639810Z git version 2.53.0
+2026-03-08T13:55:01.5674502Z ##[endgroup]
+2026-03-08T13:55:01.5691299Z Temporarily overriding HOME='/home/runner/work/_temp/59918505-035c-4e21-aed1-6dd81fde8d72' before making global git config changes
+2026-03-08T13:55:01.5693838Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:55:01.5706781Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:55:01.5755602Z Deleting the contents of '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:55:01.5761529Z ##[group]Initializing the repository
+2026-03-08T13:55:01.5766692Z [command]/usr/bin/git init /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:55:01.5892144Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-08T13:55:01.5900783Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-08T13:55:01.5902445Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-08T13:55:01.5903732Z hint: call:
+2026-03-08T13:55:01.5904400Z hint:
+2026-03-08T13:55:01.5905713Z hint: 	git config --global init.defaultBranch <name>
+2026-03-08T13:55:01.5906761Z hint:
+2026-03-08T13:55:01.5907739Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-08T13:55:01.5909294Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-08T13:55:01.5910701Z hint:
+2026-03-08T13:55:01.5911994Z hint: 	git branch -m <name>
+2026-03-08T13:55:01.5912870Z hint:
+2026-03-08T13:55:01.5913936Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-08T13:55:01.5915774Z Initialized empty Git repository in /home/runner/work/37-data-model/37-data-model/.git/
+2026-03-08T13:55:01.5918720Z [command]/usr/bin/git remote add origin https://github.com/eva-foundry/37-data-model
+2026-03-08T13:55:01.5975754Z ##[endgroup]
+2026-03-08T13:55:01.5979137Z ##[group]Disabling automatic garbage collection
+2026-03-08T13:55:01.5980653Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-08T13:55:01.6010510Z ##[endgroup]
+2026-03-08T13:55:01.6011263Z ##[group]Setting up auth
+2026-03-08T13:55:01.6017768Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:55:01.6051474Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:55:01.6433129Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:55:01.6466428Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:55:01.6698830Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:55:01.6733827Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:55:01.6970036Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-08T13:55:01.7007212Z ##[endgroup]
+2026-03-08T13:55:01.7008267Z ##[group]Fetching the repository
+2026-03-08T13:55:01.7016917Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cdd9e2ed191594cc276404056ac61f5cd8fdf932:refs/remotes/origin/main
+2026-03-08T13:55:02.2984207Z From https://github.com/eva-foundry/37-data-model
+2026-03-08T13:55:02.2985409Z  * [new ref]         cdd9e2ed191594cc276404056ac61f5cd8fdf932 -> origin/main
+2026-03-08T13:55:02.3024685Z ##[endgroup]
+2026-03-08T13:55:02.3026165Z ##[group]Determining the checkout info
+2026-03-08T13:55:02.3028138Z ##[endgroup]
+2026-03-08T13:55:02.3030673Z [command]/usr/bin/git sparse-checkout disable
+2026-03-08T13:55:02.3078159Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-08T13:55:02.3109252Z ##[group]Checking out the ref
+2026-03-08T13:55:02.3111309Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-08T13:55:02.3961261Z Switched to a new branch 'main'
+2026-03-08T13:55:02.3963102Z branch 'main' set up to track 'origin/main'.
+2026-03-08T13:55:02.3976720Z ##[endgroup]
+2026-03-08T13:55:02.4018299Z [command]/usr/bin/git log -1 --format=%H
+2026-03-08T13:55:02.4042276Z cdd9e2ed191594cc276404056ac61f5cd8fdf932
+2026-03-08T13:55:02.4333643Z ##[group]Run azure/login@v2
+2026-03-08T13:55:02.4334919Z with:
+2026-03-08T13:55:02.4338540Z   creds: ***
+2026-03-08T13:55:02.4339762Z   enable-AzPSSession: false
+2026-03-08T13:55:02.4340951Z   environment: azurecloud
+2026-03-08T13:55:02.4342136Z   allow-no-subscriptions: false
+2026-03-08T13:55:02.4343413Z   audience: api://AzureADTokenExchange
+2026-03-08T13:55:02.4344721Z   auth-type: SERVICE_PRINCIPAL
+2026-03-08T13:55:02.4345858Z env:
+2026-03-08T13:55:02.4347091Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:02.4349795Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:02.4352197Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:02.4353544Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:02.4354896Z ##[endgroup]
+2026-03-08T13:55:02.4745648Z Running Azure CLI Login.
+2026-03-08T13:55:17.1435410Z [command]/usr/bin/az cloud set -n azurecloud
+2026-03-08T13:55:17.3762060Z Done setting cloud: "azurecloud"
+2026-03-08T13:55:17.3764549Z Note: Azure/login action also supports OIDC login mechanism. Refer https://github.com/azure/login#configure-a-service-principal-with-a-federated-credential-to-use-oidc-based-authentication for more details.
+2026-03-08T13:55:17.3767335Z Attempting Azure CLI login by using service principal with secret...
+2026-03-08T13:55:18.6868721Z Subscription is set successfully.
+2026-03-08T13:55:18.6869990Z Azure CLI login succeeds by using service principal with secret.
+2026-03-08T13:55:18.7054497Z ##[group]Run if ("false" -eq "true") ***
+2026-03-08T13:55:18.7055027Z [36;1mif ("false" -eq "true") ***[0m
+2026-03-08T13:55:18.7055606Z [36;1m  .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1 -DryRun[0m
+2026-03-08T13:55:18.7056150Z [36;1m*** else ***[0m
+2026-03-08T13:55:18.7056571Z [36;1m  .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1[0m
+2026-03-08T13:55:18.7057044Z [36;1m***[0m
+2026-03-08T13:55:18.7114026Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T13:55:18.7114438Z env:
+2026-03-08T13:55:18.7114809Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:18.7115538Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:18.7116197Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:18.7116554Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:18.7116935Z   X_ACTOR: github-actions:metrics-sync
+2026-03-08T13:55:18.7117326Z ##[endgroup]
+2026-03-08T13:55:21.7420001Z [31;1mParserError: [0m/home/runner/work/37-data-model/37-data-model/scripts/update-agent-metrics-from-appinsights.ps1:182[0m
+2026-03-08T13:55:21.7421353Z [31;1m[0m[36;1mLine |[0m
+2026-03-08T13:55:21.7421856Z [31;1m[0m[36;1m[36;1m 182 | [0m [36;1m***[0m
+2026-03-08T13:55:21.7422296Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m     | [31;1m ~[0m
+2026-03-08T13:55:21.7422959Z [31;1m[0m[36;1m[36;1m[0m[36;1m[0m[36;1m[31;1m[31;1m[36;1m     | [31;1mUnexpected token '***' in expression or statement.[0m
+2026-03-08T13:55:21.7941616Z ##[error]Process completed with exit code 1.
+2026-03-08T13:55:21.7988846Z ##[group]Run if ($LASTEXITCODE -eq 0) ***
+2026-03-08T13:55:21.7989241Z [36;1mif ($LASTEXITCODE -eq 0) ***[0m
+2026-03-08T13:55:21.7989961Z [36;1m  Write-Host "✓ Agent metrics sync completed successfully" -ForegroundColor Green[0m
+2026-03-08T13:55:21.7990459Z [36;1m*** else ***[0m
+2026-03-08T13:55:21.7991066Z [36;1m  Write-Host "✗ Agent metrics sync failed" -ForegroundColor Red[0m
+2026-03-08T13:55:21.7991494Z [36;1m  exit 1[0m
+2026-03-08T13:55:21.7991716Z [36;1m***[0m
+2026-03-08T13:55:21.8044225Z shell: /usr/bin/pwsh -command ". '***0***'"
+2026-03-08T13:55:21.8044538Z env:
+2026-03-08T13:55:21.8044828Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:21.8045471Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:21.8046042Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:21.8046351Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:21.8046687Z ##[endgroup]
+2026-03-08T13:55:23.3019968Z ✗ Agent metrics sync failed
+2026-03-08T13:55:23.3420250Z ##[error]Process completed with exit code 1.
+2026-03-08T13:55:23.3499220Z Post job cleanup.
+2026-03-08T13:55:23.3892696Z Clearing azure cli accounts from the local cache.
+2026-03-08T13:55:23.3901850Z [command]/usr/bin/az account clear
+2026-03-08T13:55:24.0969283Z Post job cleanup.
+2026-03-08T13:55:24.1935498Z [command]/usr/bin/git version
+2026-03-08T13:55:24.1974706Z git version 2.53.0
+2026-03-08T13:55:24.2019114Z Temporarily overriding HOME='/home/runner/work/_temp/a4a7db38-dfba-4cf7-b489-68513055d18b' before making global git config changes
+2026-03-08T13:55:24.2020714Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:55:24.2033743Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:55:24.2072721Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:55:24.2105803Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:55:24.2352718Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:55:24.2375268Z http.https://github.com/.extraheader
+2026-03-08T13:55:24.2388933Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-03-08T13:55:24.2421329Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:55:24.2653579Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:55:24.2685531Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:55:24.3026309Z Cleaning up orphan processes

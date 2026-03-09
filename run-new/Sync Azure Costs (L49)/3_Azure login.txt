@@ -1,0 +1,21 @@
+﻿2026-03-08T14:04:11.2467569Z ##[group]Run azure/login@v2
+2026-03-08T14:04:11.2468756Z with:
+2026-03-08T14:04:11.2473038Z   creds: ***
+2026-03-08T14:04:11.2474025Z   enable-AzPSSession: false
+2026-03-08T14:04:11.2475175Z   environment: azurecloud
+2026-03-08T14:04:11.2476305Z   allow-no-subscriptions: false
+2026-03-08T14:04:11.2477567Z   audience: api://AzureADTokenExchange
+2026-03-08T14:04:11.2478868Z   auth-type: SERVICE_PRINCIPAL
+2026-03-08T14:04:11.2479985Z env:
+2026-03-08T14:04:11.2481161Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T14:04:11.2484041Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T14:04:11.2486607Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T14:04:11.2487910Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T14:04:11.2489238Z ##[endgroup]
+2026-03-08T14:04:11.2899393Z Running Azure CLI Login.
+2026-03-08T14:04:27.9800744Z [command]/usr/bin/az cloud set -n azurecloud
+2026-03-08T14:04:28.2170476Z Done setting cloud: "azurecloud"
+2026-03-08T14:04:28.2173807Z Note: Azure/login action also supports OIDC login mechanism. Refer https://github.com/azure/login#configure-a-service-principal-with-a-federated-credential-to-use-oidc-based-authentication for more details.
+2026-03-08T14:04:28.2177247Z Attempting Azure CLI login by using service principal with secret...
+2026-03-08T14:04:29.4692933Z Subscription is set successfully.
+2026-03-08T14:04:29.4694038Z Azure CLI login succeeds by using service principal with secret.

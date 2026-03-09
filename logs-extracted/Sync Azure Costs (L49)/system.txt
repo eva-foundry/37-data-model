@@ -1,0 +1,9 @@
+2026-03-08T13:54:58.1690000Z Requested labels: ubuntu-latest
+2026-03-08T13:54:58.1690000Z Job defined at: eva-foundry/37-data-model/.github/workflows/infrastructure-monitoring-sync.yml@refs/heads/main
+2026-03-08T13:54:58.1690000Z Waiting for a runner to pick up this job...
+2026-03-08T13:54:58.1950000Z Job is about to start running on the hosted runner: GitHub Actions 1000002068
+2026-03-08T13:54:58.1950000Z Job is waiting for a hosted runner to come online.
+2026-03-08T13:54:58.1670000Z Evaluating sync-costs.if
+2026-03-08T13:54:58.1670000Z Evaluating: (success() && ((((github.event_name == 'schedule') && (github.event.schedule == '0 11 * * *')) || ((github.event_name == 'workflow_dispatch') && (((github.event.inputs.sync_target == 'all') || (github.event.inputs.sync_target == 'costs')))))))
+2026-03-08T13:54:58.1670000Z Expanded: (true && ((('workflow_dispatch' == 'schedule') && (github.event.schedule == '0 11 * * *')) || (('workflow_dispatch' == 'workflow_dispatch') && (('all' == 'all') || (github.event.inputs.sync_target == 'costs')))))
+2026-03-08T13:54:58.1670000Z Result: true

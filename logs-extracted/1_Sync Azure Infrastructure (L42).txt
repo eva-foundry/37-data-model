@@ -1,0 +1,349 @@
+﻿2026-03-08T13:55:01.2575804Z Current runner version: '2.332.0'
+2026-03-08T13:55:01.2600114Z ##[group]Runner Image Provisioner
+2026-03-08T13:55:01.2601090Z Hosted Compute Agent
+2026-03-08T13:55:01.2601745Z Version: 20260213.493
+2026-03-08T13:55:01.2602486Z Commit: 5c115507f6dd24b8de37d8bbe0bb4509d0cc0fa3
+2026-03-08T13:55:01.2603266Z Build Date: 2026-02-13T00:28:41Z
+2026-03-08T13:55:01.2604065Z Worker ID: ***dbbbfa95-14f7-4718-8521-f6473bb591ab***
+2026-03-08T13:55:01.2605247Z Azure Region: westus
+2026-03-08T13:55:01.2605857Z ##[endgroup]
+2026-03-08T13:55:01.2607517Z ##[group]Operating System
+2026-03-08T13:55:01.2608212Z Ubuntu
+2026-03-08T13:55:01.2608779Z 24.04.3
+2026-03-08T13:55:01.2609405Z LTS
+2026-03-08T13:55:01.2609974Z ##[endgroup]
+2026-03-08T13:55:01.2610589Z ##[group]Runner Image
+2026-03-08T13:55:01.2611271Z Image: ubuntu-24.04
+2026-03-08T13:55:01.2611854Z Version: 20260302.42.1
+2026-03-08T13:55:01.2613240Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260302.42/images/ubuntu/Ubuntu2404-Readme.md
+2026-03-08T13:55:01.2615093Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260302.42
+2026-03-08T13:55:01.2616088Z ##[endgroup]
+2026-03-08T13:55:01.2619613Z ##[group]GITHUB_TOKEN Permissions
+2026-03-08T13:55:01.2621774Z Actions: write
+2026-03-08T13:55:01.2622557Z ArtifactMetadata: write
+2026-03-08T13:55:01.2623194Z Attestations: write
+2026-03-08T13:55:01.2623812Z Checks: write
+2026-03-08T13:55:01.2624763Z Contents: write
+2026-03-08T13:55:01.2625416Z Deployments: write
+2026-03-08T13:55:01.2626116Z Discussions: write
+2026-03-08T13:55:01.2626687Z Issues: write
+2026-03-08T13:55:01.2627280Z Metadata: read
+2026-03-08T13:55:01.2627883Z Models: read
+2026-03-08T13:55:01.2628472Z Packages: write
+2026-03-08T13:55:01.2629112Z Pages: write
+2026-03-08T13:55:01.2629785Z PullRequests: write
+2026-03-08T13:55:01.2630439Z RepositoryProjects: write
+2026-03-08T13:55:01.2631170Z SecurityEvents: write
+2026-03-08T13:55:01.2631744Z Statuses: write
+2026-03-08T13:55:01.2632501Z ##[endgroup]
+2026-03-08T13:55:01.2634834Z Secret source: Actions
+2026-03-08T13:55:01.2635785Z Prepare workflow directory
+2026-03-08T13:55:01.3017516Z Prepare all required actions
+2026-03-08T13:55:01.3073507Z Getting action download info
+2026-03-08T13:55:01.7745635Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2026-03-08T13:55:01.9320192Z Download action repository 'actions/setup-python@v5' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-03-08T13:55:02.0212487Z Download action repository 'azure/login@v2' (SHA:a457da9ea143d694b1b9c7c869ebb04ebe844ef5)
+2026-03-08T13:55:02.5564478Z Complete job name: Sync Azure Infrastructure (L42)
+2026-03-08T13:55:02.6282405Z ##[group]Run actions/checkout@v4
+2026-03-08T13:55:02.6283276Z with:
+2026-03-08T13:55:02.6283729Z   repository: eva-foundry/37-data-model
+2026-03-08T13:55:02.6284674Z   token: ***
+2026-03-08T13:55:02.6285114Z   ssh-strict: true
+2026-03-08T13:55:02.6285548Z   ssh-user: git
+2026-03-08T13:55:02.6286216Z   persist-credentials: true
+2026-03-08T13:55:02.6286864Z   clean: true
+2026-03-08T13:55:02.6287460Z   sparse-checkout-cone-mode: true
+2026-03-08T13:55:02.6288015Z   fetch-depth: 1
+2026-03-08T13:55:02.6288446Z   fetch-tags: false
+2026-03-08T13:55:02.6288881Z   show-progress: true
+2026-03-08T13:55:02.6289325Z   lfs: false
+2026-03-08T13:55:02.6289752Z   submodules: false
+2026-03-08T13:55:02.6290219Z   set-safe-directory: true
+2026-03-08T13:55:02.6291044Z env:
+2026-03-08T13:55:02.6291594Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:02.6292727Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:02.6294024Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:02.6294768Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:02.6295344Z ##[endgroup]
+2026-03-08T13:55:02.7367773Z Syncing repository: eva-foundry/37-data-model
+2026-03-08T13:55:02.7369563Z ##[group]Getting Git version info
+2026-03-08T13:55:02.7370364Z Working directory is '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:55:02.7371767Z [command]/usr/bin/git version
+2026-03-08T13:55:02.7469356Z git version 2.53.0
+2026-03-08T13:55:02.7495593Z ##[endgroup]
+2026-03-08T13:55:02.7515995Z Temporarily overriding HOME='/home/runner/work/_temp/e233cbe4-f322-4572-b3e7-3e951d889cf5' before making global git config changes
+2026-03-08T13:55:02.7517475Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:55:02.7520624Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:55:02.7562697Z Deleting the contents of '/home/runner/work/37-data-model/37-data-model'
+2026-03-08T13:55:02.7566727Z ##[group]Initializing the repository
+2026-03-08T13:55:02.7571007Z [command]/usr/bin/git init /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:55:02.7701026Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-03-08T13:55:02.7702158Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-03-08T13:55:02.7703201Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-03-08T13:55:02.7704002Z hint: call:
+2026-03-08T13:55:02.7704585Z hint:
+2026-03-08T13:55:02.7705141Z hint: 	git config --global init.defaultBranch <name>
+2026-03-08T13:55:02.7705859Z hint:
+2026-03-08T13:55:02.7707028Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-03-08T13:55:02.7708589Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-03-08T13:55:02.7710249Z hint:
+2026-03-08T13:55:02.7711147Z hint: 	git branch -m <name>
+2026-03-08T13:55:02.7712204Z hint:
+2026-03-08T13:55:02.7713443Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-03-08T13:55:02.7715705Z Initialized empty Git repository in /home/runner/work/37-data-model/37-data-model/.git/
+2026-03-08T13:55:02.7721470Z [command]/usr/bin/git remote add origin https://github.com/eva-foundry/37-data-model
+2026-03-08T13:55:02.7757395Z ##[endgroup]
+2026-03-08T13:55:02.7758737Z ##[group]Disabling automatic garbage collection
+2026-03-08T13:55:02.7762478Z [command]/usr/bin/git config --local gc.auto 0
+2026-03-08T13:55:02.7792633Z ##[endgroup]
+2026-03-08T13:55:02.7794001Z ##[group]Setting up auth
+2026-03-08T13:55:02.7800422Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:55:02.7833119Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:55:02.8191343Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:55:02.8223730Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:55:02.8457253Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:55:02.8496003Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:55:02.8730911Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-03-08T13:55:02.8766738Z ##[endgroup]
+2026-03-08T13:55:02.8768123Z ##[group]Fetching the repository
+2026-03-08T13:55:02.8776595Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cdd9e2ed191594cc276404056ac61f5cd8fdf932:refs/remotes/origin/main
+2026-03-08T13:55:03.6768486Z From https://github.com/eva-foundry/37-data-model
+2026-03-08T13:55:03.6769262Z  * [new ref]         cdd9e2ed191594cc276404056ac61f5cd8fdf932 -> origin/main
+2026-03-08T13:55:03.6803832Z ##[endgroup]
+2026-03-08T13:55:03.6805074Z ##[group]Determining the checkout info
+2026-03-08T13:55:03.6806753Z ##[endgroup]
+2026-03-08T13:55:03.6812430Z [command]/usr/bin/git sparse-checkout disable
+2026-03-08T13:55:03.6856886Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-03-08T13:55:03.6884113Z ##[group]Checking out the ref
+2026-03-08T13:55:03.6889049Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-03-08T13:55:03.7728448Z Switched to a new branch 'main'
+2026-03-08T13:55:03.7732432Z branch 'main' set up to track 'origin/main'.
+2026-03-08T13:55:03.7745023Z ##[endgroup]
+2026-03-08T13:55:03.7785001Z [command]/usr/bin/git log -1 --format=%H
+2026-03-08T13:55:03.7809599Z cdd9e2ed191594cc276404056ac61f5cd8fdf932
+2026-03-08T13:55:03.8042818Z ##[group]Run actions/setup-python@v5
+2026-03-08T13:55:03.8043324Z with:
+2026-03-08T13:55:03.8043689Z   python-version: 3.11
+2026-03-08T13:55:03.8044083Z   check-latest: false
+2026-03-08T13:55:03.8044778Z   token: ***
+2026-03-08T13:55:03.8045159Z   update-environment: true
+2026-03-08T13:55:03.8045575Z   allow-prereleases: false
+2026-03-08T13:55:03.8046005Z   freethreaded: false
+2026-03-08T13:55:03.8046377Z env:
+2026-03-08T13:55:03.8046818Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:03.8047653Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:03.8048408Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:03.8048871Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:03.8112605Z ##[endgroup]
+2026-03-08T13:55:03.9797106Z ##[group]Installed versions
+2026-03-08T13:55:03.9902317Z Successfully set up CPython (3.11.14)
+2026-03-08T13:55:03.9903750Z ##[endgroup]
+2026-03-08T13:55:04.0022640Z ##[group]Run pip install --upgrade pip
+2026-03-08T13:55:04.0023263Z [36;1mpip install --upgrade pip[0m
+2026-03-08T13:55:04.0023731Z [36;1mpip install requests[0m
+2026-03-08T13:55:04.0255407Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:55:04.0255870Z env:
+2026-03-08T13:55:04.0256302Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:04.0257189Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:04.0257969Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:04.0258427Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:04.0258958Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:04.0259587Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:55:04.0260198Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:04.0260781Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:04.0261389Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:04.0261965Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:55:04.0262459Z ##[endgroup]
+2026-03-08T13:55:08.1886291Z Requirement already satisfied: pip in /opt/hostedtoolcache/Python/3.11.14/x64/lib/python3.11/site-packages (26.0.1)
+2026-03-08T13:55:08.8225352Z Collecting requests
+2026-03-08T13:55:08.8745399Z   Downloading requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+2026-03-08T13:55:08.9733115Z Collecting charset_normalizer<4,>=2 (from requests)
+2026-03-08T13:55:08.9762083Z   Downloading charset_normalizer-3.4.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (39 kB)
+2026-03-08T13:55:08.9978149Z Collecting idna<4,>=2.5 (from requests)
+2026-03-08T13:55:09.0003463Z   Downloading idna-3.11-py3-none-any.whl.metadata (8.4 kB)
+2026-03-08T13:55:09.0230455Z Collecting urllib3<3,>=1.21.1 (from requests)
+2026-03-08T13:55:09.0257447Z   Downloading urllib3-2.6.3-py3-none-any.whl.metadata (6.9 kB)
+2026-03-08T13:55:09.0441086Z Collecting certifi>=2017.4.17 (from requests)
+2026-03-08T13:55:09.0465454Z   Downloading certifi-2026.2.25-py3-none-any.whl.metadata (2.5 kB)
+2026-03-08T13:55:09.0532530Z Downloading requests-2.32.5-py3-none-any.whl (64 kB)
+2026-03-08T13:55:09.0611165Z Downloading charset_normalizer-3.4.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (193 kB)
+2026-03-08T13:55:09.0697928Z Downloading idna-3.11-py3-none-any.whl (71 kB)
+2026-03-08T13:55:09.0753169Z Downloading urllib3-2.6.3-py3-none-any.whl (131 kB)
+2026-03-08T13:55:09.0808633Z Downloading certifi-2026.2.25-py3-none-any.whl (153 kB)
+2026-03-08T13:55:09.1049533Z Installing collected packages: urllib3, idna, charset_normalizer, certifi, requests
+2026-03-08T13:55:09.3349686Z 
+2026-03-08T13:55:09.3360039Z Successfully installed certifi-2026.2.25 charset_normalizer-3.4.5 idna-3.11 requests-2.32.5 urllib3-2.6.3
+2026-03-08T13:55:09.3882713Z ##[group]Run azure/login@v2
+2026-03-08T13:55:09.3882999Z with:
+2026-03-08T13:55:09.3883926Z   creds: ***
+2026-03-08T13:55:09.3884160Z   enable-AzPSSession: false
+2026-03-08T13:55:09.3884814Z   environment: azurecloud
+2026-03-08T13:55:09.3885073Z   allow-no-subscriptions: false
+2026-03-08T13:55:09.3885356Z   audience: api://AzureADTokenExchange
+2026-03-08T13:55:09.3885684Z   auth-type: SERVICE_PRINCIPAL
+2026-03-08T13:55:09.3885930Z env:
+2026-03-08T13:55:09.3886194Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:09.3886854Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:09.3887460Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:09.3887774Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:09.3888144Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:09.3888577Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:55:09.3889049Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:09.3889437Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:09.3889819Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:09.3890238Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:55:09.3890574Z ##[endgroup]
+2026-03-08T13:55:09.4266895Z Running Azure CLI Login.
+2026-03-08T13:55:23.3230495Z [command]/usr/bin/az cloud set -n azurecloud
+2026-03-08T13:55:23.5499089Z Done setting cloud: "azurecloud"
+2026-03-08T13:55:23.5502534Z Note: Azure/login action also supports OIDC login mechanism. Refer https://github.com/azure/login#configure-a-service-principal-with-a-federated-credential-to-use-oidc-based-authentication for more details.
+2026-03-08T13:55:23.5504820Z Attempting Azure CLI login by using service principal with secret...
+2026-03-08T13:55:25.1495725Z Subscription is set successfully.
+2026-03-08T13:55:25.1497152Z Azure CLI login succeeds by using service principal with secret.
+2026-03-08T13:55:25.1582535Z ##[group]Run if [ "false" == "true" ]; then
+2026-03-08T13:55:25.1582912Z [36;1mif [ "false" == "true" ]; then[0m
+2026-03-08T13:55:25.1583304Z [36;1m  python sync-azure-infrastructure.py --dry-run[0m
+2026-03-08T13:55:25.1583655Z [36;1melse[0m
+2026-03-08T13:55:25.1583904Z [36;1m  python sync-azure-infrastructure.py[0m
+2026-03-08T13:55:25.1584442Z [36;1mfi[0m
+2026-03-08T13:55:25.1636670Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:55:25.1636957Z env:
+2026-03-08T13:55:25.1637255Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:25.1637948Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:25.1638561Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:25.1638875Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:25.1639259Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:25.1639764Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:55:25.1640227Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:25.1640650Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:25.1641049Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:25.1641457Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:55:25.1642062Z   X_ACTOR: github-actions:infrastructure-sync
+2026-03-08T13:55:25.1642368Z ##[endgroup]
+2026-03-08T13:55:40.4295000Z 
+2026-03-08T13:55:40.4297404Z ================================================================================
+2026-03-08T13:55:40.4298401Z   EVA INFRASTRUCTURE SYNC - Azure Resource Graph to L42
+2026-03-08T13:55:40.4299209Z ================================================================================
+2026-03-08T13:55:40.4299727Z 
+2026-03-08T13:55:40.4300334Z [96m[2026-03-08 13:55:25] [INFO] Configuration:[0m
+2026-03-08T13:55:40.4301493Z [96m[2026-03-08 13:55:25] [INFO]   Subscription: c59ee575-eb2a-4b51-a865-4b618f9add0a[0m
+2026-03-08T13:55:40.4302938Z [96m[2026-03-08 13:55:25] [INFO]   Data Model: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io[0m
+2026-03-08T13:55:40.4304007Z [96m[2026-03-08 13:55:25] [INFO]   Actor: github-actions:infrastructure-sync[0m
+2026-03-08T13:55:40.4304832Z [96m[2026-03-08 13:55:25] [INFO]   Dry Run: False[0m
+2026-03-08T13:55:40.4305126Z 
+2026-03-08T13:55:40.4305734Z [96m[2026-03-08 13:55:25] [INFO] Querying Azure Resource Graph for subscription c59ee575-eb2a-4b51-a865-4b618f9add0a...[0m
+2026-03-08T13:55:40.4306662Z [92m[2026-03-08 13:55:33] [SUCCESS] ✓ Retrieved 32 resources from Azure[0m
+2026-03-08T13:55:40.4307158Z [96m[2026-03-08 13:55:33] [INFO] 
+2026-03-08T13:55:40.4307559Z Transforming and uploading 32 resources...[0m
+2026-03-08T13:55:40.4308065Z [96m[2026-03-08 13:55:33] [INFO] [1/32] Processing Dev1...[0m
+2026-03-08T13:55:40.4308568Z [92m[2026-03-08 13:55:33] [SUCCESS] ✓ Dev1 synced[0m
+2026-03-08T13:55:40.4309081Z [96m[2026-03-08 13:55:33] [INFO] [2/32] Processing EVA-Lab...[0m
+2026-03-08T13:55:40.4309610Z [92m[2026-03-08 13:55:33] [SUCCESS] ✓ EVA-Lab synced[0m
+2026-03-08T13:55:40.4310205Z [96m[2026-03-08 13:55:33] [INFO] [3/32] Processing ai-eva-data-model-20260306...[0m
+2026-03-08T13:55:40.4310867Z [92m[2026-03-08 13:55:33] [SUCCESS] ✓ ai-eva-data-model-20260306 synced[0m
+2026-03-08T13:55:40.4311525Z [96m[2026-03-08 13:55:33] [INFO] [4/32] Processing ai-eva-redis-20260306-1727...[0m
+2026-03-08T13:55:40.4312162Z [92m[2026-03-08 13:55:34] [SUCCESS] ✓ ai-eva-redis-20260306-1727 synced[0m
+2026-03-08T13:55:40.4312870Z [96m[2026-03-08 13:55:34] [INFO] [5/32] Processing managed-ai-eva-data-model-20260306-ws...[0m
+2026-03-08T13:55:40.4313670Z [92m[2026-03-08 13:55:34] [SUCCESS] ✓ managed-ai-eva-data-model-20260306-ws synced[0m
+2026-03-08T13:55:40.4316046Z [96m[2026-03-08 13:55:34] [INFO] [6/32] Processing msub-eva-brain-api...[0m
+2026-03-08T13:55:40.4317568Z [92m[2026-03-08 13:55:34] [SUCCESS] ✓ msub-eva-brain-api synced[0m
+2026-03-08T13:55:40.4318421Z [96m[2026-03-08 13:55:34] [INFO] [7/32] Processing msub-eva-data-model...[0m
+2026-03-08T13:55:40.4318959Z [92m[2026-03-08 13:55:34] [SUCCESS] ✓ msub-eva-data-model synced[0m
+2026-03-08T13:55:40.4319451Z [96m[2026-03-08 13:55:34] [INFO] [8/32] Processing msub-eva-faces...[0m
+2026-03-08T13:55:40.4319935Z [92m[2026-03-08 13:55:34] [SUCCESS] ✓ msub-eva-faces synced[0m
+2026-03-08T13:55:40.4320417Z [96m[2026-03-08 13:55:34] [INFO] [9/32] Processing msub-eva-roles-api...[0m
+2026-03-08T13:55:40.4320954Z [92m[2026-03-08 13:55:35] [SUCCESS] ✓ msub-eva-roles-api synced[0m
+2026-03-08T13:55:40.4321455Z [96m[2026-03-08 13:55:35] [INFO] [10/32] Processing msub-finops-evhns...[0m
+2026-03-08T13:55:40.4321942Z [92m[2026-03-08 13:55:35] [SUCCESS] ✓ msub-finops-evhns synced[0m
+2026-03-08T13:55:40.4322434Z [96m[2026-03-08 13:55:35] [INFO] [11/32] Processing msub-sandbox-aisvc...[0m
+2026-03-08T13:55:40.4322946Z [92m[2026-03-08 13:55:35] [SUCCESS] ✓ msub-sandbox-aisvc synced[0m
+2026-03-08T13:55:40.4323436Z [96m[2026-03-08 13:55:35] [INFO] [12/32] Processing msub-sandbox-apim...[0m
+2026-03-08T13:55:40.4323922Z [92m[2026-03-08 13:55:35] [SUCCESS] ✓ msub-sandbox-apim synced[0m
+2026-03-08T13:55:40.4324829Z [96m[2026-03-08 13:55:35] [INFO] [13/32] Processing msub-sandbox-appinsights...[0m
+2026-03-08T13:55:40.4325619Z [92m[2026-03-08 13:55:36] [SUCCESS] ✓ msub-sandbox-appinsights synced[0m
+2026-03-08T13:55:40.4326167Z [96m[2026-03-08 13:55:36] [INFO] [14/32] Processing msub-sandbox-asp-backend...[0m
+2026-03-08T13:55:40.4326700Z [92m[2026-03-08 13:55:36] [SUCCESS] ✓ msub-sandbox-asp-backend synced[0m
+2026-03-08T13:55:40.4327243Z [96m[2026-03-08 13:55:36] [INFO] [15/32] Processing msub-sandbox-asp-enrichment...[0m
+2026-03-08T13:55:40.4327797Z [92m[2026-03-08 13:55:36] [SUCCESS] ✓ msub-sandbox-asp-enrichment synced[0m
+2026-03-08T13:55:40.4328326Z [96m[2026-03-08 13:55:36] [INFO] [16/32] Processing msub-sandbox-asp-func...[0m
+2026-03-08T13:55:40.4328852Z [92m[2026-03-08 13:55:36] [SUCCESS] ✓ msub-sandbox-asp-func synced[0m
+2026-03-08T13:55:40.4329373Z [96m[2026-03-08 13:55:36] [INFO] [17/32] Processing msub-sandbox-backend...[0m
+2026-03-08T13:55:40.4329880Z [92m[2026-03-08 13:55:37] [SUCCESS] ✓ msub-sandbox-backend synced[0m
+2026-03-08T13:55:40.4330385Z [96m[2026-03-08 13:55:37] [INFO] [18/32] Processing msub-sandbox-cosmos...[0m
+2026-03-08T13:55:40.4330890Z [92m[2026-03-08 13:55:37] [SUCCESS] ✓ msub-sandbox-cosmos synced[0m
+2026-03-08T13:55:40.4331411Z [96m[2026-03-08 13:55:37] [INFO] [19/32] Processing msub-sandbox-docint...[0m
+2026-03-08T13:55:40.4331896Z [92m[2026-03-08 13:55:37] [SUCCESS] ✓ msub-sandbox-docint synced[0m
+2026-03-08T13:55:40.4332400Z [96m[2026-03-08 13:55:37] [INFO] [20/32] Processing msub-sandbox-enrichment...[0m
+2026-03-08T13:55:40.4332923Z [92m[2026-03-08 13:55:37] [SUCCESS] ✓ msub-sandbox-enrichment synced[0m
+2026-03-08T13:55:40.4333426Z [96m[2026-03-08 13:55:37] [INFO] [21/32] Processing msub-sandbox-env...[0m
+2026-03-08T13:55:40.4333907Z [92m[2026-03-08 13:55:37] [SUCCESS] ✓ msub-sandbox-env synced[0m
+2026-03-08T13:55:40.4334792Z [96m[2026-03-08 13:55:37] [INFO] [22/32] Processing msub-sandbox-finops-adf...[0m
+2026-03-08T13:55:40.4335339Z [92m[2026-03-08 13:55:38] [SUCCESS] ✓ msub-sandbox-finops-adf synced[0m
+2026-03-08T13:55:40.4335869Z [96m[2026-03-08 13:55:38] [INFO] [23/32] Processing msub-sandbox-foundry...[0m
+2026-03-08T13:55:40.4336381Z [92m[2026-03-08 13:55:38] [SUCCESS] ✓ msub-sandbox-foundry synced[0m
+2026-03-08T13:55:40.4336897Z [96m[2026-03-08 13:55:38] [INFO] [24/32] Processing msub-sandbox-func...[0m
+2026-03-08T13:55:40.4337413Z [92m[2026-03-08 13:55:38] [SUCCESS] ✓ msub-sandbox-func synced[0m
+2026-03-08T13:55:40.4337944Z [96m[2026-03-08 13:55:38] [INFO] [25/32] Processing msub-sandbox-logs...[0m
+2026-03-08T13:55:40.4338425Z [92m[2026-03-08 13:55:38] [SUCCESS] ✓ msub-sandbox-logs synced[0m
+2026-03-08T13:55:40.4339095Z [96m[2026-03-08 13:55:38] [INFO] [26/32] Processing msub-sandbox-openai...[0m
+2026-03-08T13:55:40.4339606Z [92m[2026-03-08 13:55:39] [SUCCESS] ✓ msub-sandbox-openai synced[0m
+2026-03-08T13:55:40.4340119Z [96m[2026-03-08 13:55:39] [INFO] [27/32] Processing msub-sandbox-openai-v2...[0m
+2026-03-08T13:55:40.4340666Z [92m[2026-03-08 13:55:39] [SUCCESS] ✓ msub-sandbox-openai-v2 synced[0m
+2026-03-08T13:55:40.4341243Z [96m[2026-03-08 13:55:39] [INFO] [28/32] Processing msub-sandbox-search...[0m
+2026-03-08T13:55:40.4341730Z [92m[2026-03-08 13:55:39] [SUCCESS] ✓ msub-sandbox-search synced[0m
+2026-03-08T13:55:40.4342220Z [96m[2026-03-08 13:55:39] [INFO] [29/32] Processing msubsand202603031449...[0m
+2026-03-08T13:55:40.4342714Z [92m[2026-03-08 13:55:39] [SUCCESS] ✓ msubsand202603031449 synced[0m
+2026-03-08T13:55:40.4343224Z [96m[2026-03-08 13:55:39] [INFO] [30/32] Processing msubsandacr202603031449...[0m
+2026-03-08T13:55:40.4343735Z [92m[2026-03-08 13:55:40] [SUCCESS] ✓ msubsandacr202603031449 synced[0m
+2026-03-08T13:55:40.4344484Z [96m[2026-03-08 13:55:40] [INFO] [31/32] Processing msubsandboxfinopshub...[0m
+2026-03-08T13:55:40.4345105Z [92m[2026-03-08 13:55:40] [SUCCESS] ✓ msubsandboxfinopshub synced[0m
+2026-03-08T13:55:40.4345616Z [96m[2026-03-08 13:55:40] [INFO] [32/32] Processing msubsandkv202603031449...[0m
+2026-03-08T13:55:40.4346129Z [92m[2026-03-08 13:55:40] [SUCCESS] ✓ msubsandkv202603031449 synced[0m
+2026-03-08T13:55:40.4346558Z 
+2026-03-08T13:55:40.4346692Z ================================================================================
+2026-03-08T13:55:40.4347108Z [92m[2026-03-08 13:55:40] [SUCCESS] SYNC COMPLETE[0m
+2026-03-08T13:55:40.4347490Z [96m[2026-03-08 13:55:40] [INFO]   Total: 32[0m
+2026-03-08T13:55:40.4347853Z [96m[2026-03-08 13:55:40] [INFO]   Success: 32[0m
+2026-03-08T13:55:40.4348232Z [96m[2026-03-08 13:55:40] [INFO]   Failed: 0[0m
+2026-03-08T13:55:40.4348555Z ================================================================================
+2026-03-08T13:55:40.4348793Z 
+2026-03-08T13:55:40.4497630Z ##[group]Run if [ $? -eq 0 ]; then
+2026-03-08T13:55:40.4497953Z [36;1mif [ $? -eq 0 ]; then[0m
+2026-03-08T13:55:40.4498292Z [36;1m  echo "✓ Infrastructure sync completed successfully"[0m
+2026-03-08T13:55:40.4498651Z [36;1melse[0m
+2026-03-08T13:55:40.4498889Z [36;1m  echo "✗ Infrastructure sync failed"[0m
+2026-03-08T13:55:40.4499184Z [36;1m  exit 1[0m
+2026-03-08T13:55:40.4499399Z [36;1mfi[0m
+2026-03-08T13:55:40.4548187Z shell: /usr/bin/bash -e ***0***
+2026-03-08T13:55:40.4548460Z env:
+2026-03-08T13:55:40.4548746Z   AZURE_SUBSCRIPTION_ID: c59ee575-eb2a-4b51-a865-4b618f9add0a
+2026-03-08T13:55:40.4549407Z   DATA_MODEL_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+2026-03-08T13:55:40.4550000Z   RESOURCE_GROUP: EVA-Sandbox-dev
+2026-03-08T13:55:40.4550304Z   APP_INSIGHTS_NAME: msub-sandbox-appinsights
+2026-03-08T13:55:40.4550687Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:40.4551171Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib/pkgconfig
+2026-03-08T13:55:40.4551606Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:40.4552003Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:40.4552390Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.14/x64
+2026-03-08T13:55:40.4552783Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.14/x64/lib
+2026-03-08T13:55:40.4553127Z ##[endgroup]
+2026-03-08T13:55:40.4620572Z ✓ Infrastructure sync completed successfully
+2026-03-08T13:55:40.4692810Z Post job cleanup.
+2026-03-08T13:55:40.5088114Z Clearing azure cli accounts from the local cache.
+2026-03-08T13:55:40.5103423Z [command]/usr/bin/az account clear
+2026-03-08T13:55:41.3551862Z Post job cleanup.
+2026-03-08T13:55:41.5223912Z Post job cleanup.
+2026-03-08T13:55:41.6177170Z [command]/usr/bin/git version
+2026-03-08T13:55:41.6213971Z git version 2.53.0
+2026-03-08T13:55:41.6257888Z Temporarily overriding HOME='/home/runner/work/_temp/b8afd6d1-164c-455b-90f1-27ce8558215e' before making global git config changes
+2026-03-08T13:55:41.6259375Z Adding repository directory to the temporary git global config as a safe directory
+2026-03-08T13:55:41.6272492Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/37-data-model/37-data-model
+2026-03-08T13:55:41.6308744Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-03-08T13:55:41.6341605Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-03-08T13:55:41.6596295Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-03-08T13:55:41.6623088Z http.https://github.com/.extraheader
+2026-03-08T13:55:41.6638772Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-03-08T13:55:41.6674802Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-03-08T13:55:41.6938345Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-03-08T13:55:41.6975848Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-03-08T13:55:41.7356300Z Cleaning up orphan processes
