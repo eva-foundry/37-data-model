@@ -37,8 +37,8 @@ Invoke-RestMethod "$base/model/agent-summary" # all layer counts (51 layers)
 ---
 
 **Component:** 37-data-model  
-**Status:** GA (Cloud Only) - **51 LAYERS OPERATIONAL** (Session 38, Mar 7 6:03 PM ET) - Priority #4 infrastructure monitoring deployed - validate-model PASS - Cloud: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io - ACA deployed (Cosmos 24x7 backing store) - MTI=100 - **PAPERLESS GOVERNANCE** (README + ACCEPTANCE mandatory, all else via API) - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
-**Last Updated:** March 7, 2026 6:03 PM ET -- **Session 38 COMPLETE**: All 51 layers deployed to cloud. Paperless governance model activated - STATUS.md, PLAN.md, sprint tracking, risks, ADRs, evidence all flow through data model API. Only README.md and ACCEPTANCE.md remain mandatory on disk. API serves complete governance metadata via 51 operational layers.
+**Status:** GA (Cloud Only) - **87 LAYERS REGISTERED, 77 OPERATIONAL** (Session 41, Mar 9 6:07 AM ET) - Seed fix ready for deployment (1.1% → 93.9% success rate improvement) - Cloud: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io - ACA deployed (Cosmos 24x7 backing store) - MTI=100 - **PAPERLESS GOVERNANCE** (README + ACCEPTANCE mandatory, all else via API) - **DATA-MODEL-FIRST ARCHITECTURE** (Bootstrap queries API, not files) - Evidence Layer LIVE (L31, patent-worthy) - Branch Protection ACTIVE  
+**Last Updated:** March 9, 2026 6:07 AM ET -- **Session 41 Part 5 COMPLETE**: Applied DPDCA methodology to fix seed operation. Discovered 9 problematic JSON structures, implemented smart parser with 5 pattern handlers. Created comprehensive discovery and testing tools. Integration test: 5,521 records (77 layers), 0.31s, 0 errors. Improvement: 1.1% → 93.9% success rate (86× better). Seed fix branch ready for deployment. See [MARCH-7-9-TIMELINE.md](docs/MARCH-7-9-TIMELINE.md) for 36-hour detailed timeline (Session 38 + Session 41 Parts 1-5).
 
 ---
 
