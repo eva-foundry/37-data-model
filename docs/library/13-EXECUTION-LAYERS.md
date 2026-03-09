@@ -1,9 +1,9 @@
 ================================================================================
- EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1, 2, 3: L52-L60)
+ EVA DATA MODEL -- EXECUTION ENGINE (PHASES 1-4: L52-L66)
  File: docs/library/13-EXECUTION-LAYERS.md
  Created: 2026-03-09 -- Session 41 Part 10
- Updated: 2026-03-09 -- Session 41 Part 11 (Phases 2 & 3 deployed)
- Status: 9 layers operational (L52-L60), 15 layers planned (L61-L75)
+ Updated: 2026-03-09 -- Session 41 Part 11 (Phases 2, 3, 4 deployed)
+ Status: 15 layers operational (L52-L66), 9 layers planned (L67-L75)
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md (phased deployment plan)
          docs/library/99-layers-design-20260309-0935.md (canonical numbering)
@@ -1061,23 +1061,343 @@
   Profiles enable data-driven pattern selection without re-scanning all applications.
 
 ================================================================================
- PHASE 4-6 PREVIEW -- 15 MORE LAYERS (L61-L75)
+ PHASE 4 LAYERS (SESSION 41 PART 11) -- 6 LAYERS OPERATIONAL
 ================================================================================
 
-  Phase 1 deployed 4 layers (L52-L56). Phase 2 deployed 3 layers (L55, L57, L58).
-  Phase 3 deployed 2 layers (L59, L60). 15 more layers planned across 3 phases.
+  Status: L61-L66 deployed (March 2026)
+  
+  PURPOSE: Work Factory Services with SLAs
+  
+  Agents register as executable services with defined capabilities, performance
+  profiles, and service level objectives. Service requests track demand. Service
+  runs track execution attempts with resource consumption and error details.
+  
+  This enables:
+  - Service-oriented architecture for AI agents
+  - Demand-based work routing
+  - SLA-driven quality assurance
+  - Performance-based service selection
+  - Automated breach detection (feeds Phase 5 remediation)
+
+--------------------------------------------------------------------------------
+ L61 -- work_factory_capabilities
+--------------------------------------------------------------------------------
+
+  Purpose: Capability catalog backed by patterns (L58)
+  
+  Abstract, compositional capabilities that can be assembled into services.
+  Each capability is backed by one or more proven patterns from L58.
+  
+  PRIMARY KEY: capability-{kebab-case-name}
+  Examples: capability-schema-migration, capability-api-deployment
+  
+  SCHEMA:
+  {
+    "id": "capability-schema-migration",
+    "capability_name": "Schema Migration",
+    "description": "Migrate database schemas safely with rollback support",
+    "maturity_level": "stable",  # experimental|beta|stable|deprecated
+    "backed_by_pattern_ids": ["pattern-blue-green-migration", "pattern-rollback-script"],
+    "required_patterns": ["pattern-blue-green-migration"],
+    "optional_patterns": ["pattern-rollback-script"],
+    "prerequisites": [
+      {
+        "prerequisite_type": "infrastructure",
+        "prerequisite_description": "Database with migration support"
+      }
+    ],
+    "input_schema_ref": "schema-migration-input",  # FK to L21 schemas (optional)
+    "output_schema_ref": "schema-migration-output",
+    "owner_type": "agent",
+    "owner_id": "agent-database-expert",
+    "created_at": "2026-03-09T18:00:00Z",
+    "created_by": "platform-admin"
+  }
+  
+  FK relationships:
+  - backed_by_pattern_ids[] → L58 work_reusable_patterns (SET_NULL on pattern delete)
+  - input_schema_ref/output_schema_ref → L21 schemas (optional validation)
+  - Polymorphic: owner_type/owner_id (agent/cp_agent/persona)
+  
+  Graph edges:
+  - backs_capability: L61 → L58 (capabilities backed by patterns)
+  
+  Use cases:
+  - Catalog available automation capabilities
+  - Track capability maturity lifecycle
+  - Define prerequisites for service deployment
+  - Compose capabilities into services (L62)
+
+--------------------------------------------------------------------------------
+ L62 -- work_factory_services
+--------------------------------------------------------------------------------
+
+  Purpose: Service packaging of capabilities - concrete invocable implementations
+  
+  Services are deployed, versioned, invocable units that provide one or more
+  capabilities. Each service has a provider (agent/external API/human), endpoint,
+  authentication method, and links to performance profile (L65) and SLAs (L66).
+  
+  PRIMARY KEY: service-{kebab-case-name}
+  Examples: service-schema-migrator, service-api-deployer
+  
+  SCHEMA:
+  {
+    "id": "service-schema-migrator",
+    "service_name": "Schema Migration Service",
+    "description": "Automated database schema migration with rollback",
+    "service_type": "asynchronous",  # synchronous|asynchronous|streaming|batch
+    "required_capability_ids": ["capability-schema-migration"],
+    "optional_capability_ids": ["capability-health-check"],
+    "input_schema": { "type": "object", "properties": {...} },  # Embedded JSON schema
+    "output_schema": { "type": "object", "properties": {...} },
+    "provider_type": "agent",  # agent|cp_agent|external_api|human
+    "provider_id": "agent-database-expert",
+    "endpoint_url": "https://eva-services.internal/schema-migrator",
+    "authentication_method": "managed_identity",  # none|api_key|oauth2|managed_identity|custom
+    "status": "production",  # planned|development|testing|production|maintenance|deprecated
+    "availability_sla_ref": "slo-service-schema-migrator-success_rate",  # FK to L66
+    "performance_profile_ref": "profile-service-schema-migrator",  # FK to L65
+    "version": "2.1.0",
+    "deployment_target": "Azure Container App",
+    "created_at": "2026-03-09T18:00:00Z",
+    "created_by": "platform-admin"
+  }
+  
+  FK relationships:
+  - required_capability_ids[] → L61 (RESTRICT on capability delete)
+  - optional_capability_ids[] → L61 (RESTRICT)
+  - availability_sla_ref → L66 (primary SLA)
+  - performance_profile_ref → L65 (current performance)
+  - Polymorphic: provider_type/provider_id
+  
+  Graph edges:
+  - requires_capability: L62 → L61 (service requires capability)
+  - provides_optional_capability: L62 → L61 (service provides optional capability)
+  
+  Use cases:
+  - Register agent capabilities as invocable services
+  - Track service lifecycle (development → production → deprecated)
+  - Link services to SLAs for breach monitoring
+  - Route requests based on service availability
+
+--------------------------------------------------------------------------------
+ L63 -- work_service_requests
+--------------------------------------------------------------------------------
+
+  Purpose: Service invocation requests - demand intake
+  
+  Each request represents a demand for a service (L62). Requests track priority,
+  lifecycle status (queued → completed/failed), and optional project/work context.
+  
+  PRIMARY KEY: request-{YYYYMMDD}-{seq}
+  Examples: request-20260309-001, request-20260309-042
+  
+  SCHEMA:
+  {
+    "id": "request-20260309-001",
+    "service_id": "service-schema-migrator",  # FK to L62 (RESTRICT)
+    "requester_type": "agent",  # agent|cp_agent|persona|external_system
+    "requester_id": "agent-project-manager",
+    "project_id": "project-eva-foundry",  # FK to L25 (optional context)
+    "work_unit_id": "workunit-20260309-schema-updates",  # FK to L52 (optional trigger)
+    "input_payload": { "migration_script": "...", "target_db": "..." },
+    "priority": "high",  # critical|high|medium|low
+    "status": "in_progress",  # queued|assigned|in_progress|completed|failed|cancelled
+    "requested_at": "2026-03-09T18:00:00Z",
+    "assigned_at": "2026-03-09T18:00:30Z",
+    "completed_at": null
+  }
+  
+  FK relationships:
+  - service_id → L62 (RESTRICT - cannot delete service with pending requests)
+  - Polymorphic: requester_type/requester_id
+  - project_id → L25 (optional context)
+  - work_unit_id → L52 (optional trigger)
+  
+  Graph edges:
+  - requests_service: L63 → L62 (request for service)
+  - request_context_project: L63 → L25 (project context)
+  - request_triggered_by: L63 → L52 (work unit trigger)
+  
+  Use cases:
+  - Track service demand and backlog
+  - Priority-based work scheduling
+  - Tie service requests to projects (L25) and work units (L52)
+  - Cancel pending requests when project priorities change
+
+--------------------------------------------------------------------------------
+ L64 -- work_service_runs
+--------------------------------------------------------------------------------
+
+  Purpose: Service runtime execution instances - child of requests (L63)
+  
+  Each run is an execution attempt for a service request. Tracks timing, status,
+  output, errors, retry attempts, and resource consumption. Feeds performance
+  profiles (L65) and SLO breach detection (L67).
+  
+  PRIMARY KEY: run-{request_id}-{attempt}
+  Examples: run-request-20260309-001-01, run-request-20260309-001-02 (retry)
+  
+  SCHEMA:
+  {
+    "id": "run-request-20260309-001-01",
+    "request_id": "request-20260309-001",  # FK to L63 (CASCADE on request delete)
+    "work_unit_id": "workunit-20260309-schema-updates",  # FK to L52 (SET_NULL, optional provenance)
+    "started_at": "2026-03-09T18:00:35Z",
+    "completed_at": "2026-03-09T18:02:10Z",
+    "duration_seconds": 95,
+    "status": "succeeded",  # running|succeeded|failed|timeout|cancelled
+    "output_payload": { "migration_status": "success", "rows_affected": 1523 },
+    "error_details": null,
+    "retry_attempt": 1,  # 1 = first attempt, 2+ = retries
+    "resource_consumption": {
+      "cpu_seconds": 45.2,
+      "memory_mb": 512,
+      "tokens_consumed": 0,
+      "cost_usd": 0.012
+    },
+    "trace_ids": ["trace-llm-20260309-001"],  # FK to L32 traces (LLM observability)
+    "evidence_ids": ["evidence-migration-diff-001"]  # FK to L31 evidence (artifacts)
+  }
+  
+  FK relationships:
+  - request_id → L63 (CASCADE - runs deleted with request)
+  - work_unit_id → L52 (SET_NULL, optional provenance)
+  - trace_ids[] → L32 traces
+  - evidence_ids[] → L31 evidence
+  
+  Graph edges:
+  - fulfills_request: L64 → L63 (run fulfills request, CASCADE)
+  - run_creates_work: L64 → L52 (run creates work unit, SET_NULL)
+  
+  Use cases:
+  - Track execution attempts with retry logic
+  - Measure resource consumption for cost analysis
+  - Link LLM traces (L32) to specific service runs
+  - Feed performance profiles (L65) with timing/success data
+
+--------------------------------------------------------------------------------
+ L65 -- work_service_perf_profiles
+--------------------------------------------------------------------------------
+
+  Purpose: Aggregate service performance metrics (computed view)
+  
+  Per-service performance profile computed from service runs (L64). Tracks
+  success rate, timing percentiles, cost, and common errors. Used for
+  service selection, capacity planning, and SLO compliance checking.
+  
+  PRIMARY KEY: profile-{service_id}
+  Examples: profile-service-schema-migrator
+  
+  SCHEMA:
+  {
+    "id": "profile-service-schema-migrator",
+    "service_id": "service-schema-migrator",  # FK to L62 (RESTRICT)
+    "total_runs": 1523,
+    "success_rate": 0.987,
+    "successful_runs": 1503,
+    "failed_runs": 18,
+    "timeout_runs": 2,
+    "avg_duration_seconds": 94.3,
+    "p50_duration_seconds": 87.0,
+    "p95_duration_seconds": 142.0,
+    "p99_duration_seconds": 201.5,
+    "avg_cost_usd": 0.011,
+    "total_cost_usd": 16.75,
+    "common_errors": [
+      {
+        "error_code": "DB_CONNECTION_TIMEOUT",
+        "frequency": 12,
+        "sample_message": "Connection to database timed out after 30s",
+        "retryable": true
+      }
+    ],
+    "source_run_ids": ["run-request-20260309-001-01", "..."],  # FK to L64 (audit trail)
+    "last_updated": "2026-03-09T18:30:00Z",
+    "computation_method": "scheduled_batch",  # manual|scheduled_batch|on_demand|real_time
+    "time_window_hours": 168,  # 7 days
+    "notes": "Service performing well. 98.7% success rate exceeds SLA (95%)."
+  }
+  
+  FK relationships:
+  - service_id → L62 (RESTRICT)
+  - source_run_ids[] → L64 (audit trail)
+  
+  Graph edges:
+  - profiles_service: L65 → L62 (performance profile for service)
+  - profile_based_on_runs: L65 → L64 (computed from runs)
+  
+  Use cases:
+  - Monitor service health and performance trends
+  - Detect degradation before SLO breach
+  - Compare services for demand routing
+  - Capacity planning (cost per run, timing percentiles)
+
+--------------------------------------------------------------------------------
+ L66 -- work_service_level_objectives
+--------------------------------------------------------------------------------
+
+  Purpose: SLA definitions and thresholds per service
+  
+  Service Level Objectives (SLOs) define expected performance, availability,
+  and quality metrics. Breaches create L67 breach records for auto-remediation.
+  
+  PRIMARY KEY: slo-{service_id}-{metric_name}
+  Examples: slo-service-schema-migrator-success_rate
+  
+  SCHEMA:
+  {
+    "id": "slo-service-schema-migrator-success_rate",
+    "service_id": "service-schema-migrator",  # FK to L62 (CASCADE on service delete)
+    "metric_name": "success_rate",  # success_rate|p95_duration_seconds|avg_cost_usd|...
+    "target_value": 0.99,  # Target: 99% success rate
+    "threshold_warning": 0.95,  # Warning at 95%
+    "threshold_critical": 0.90,  # Critical (breach) at 90%
+    "measurement_window_hours": 24,
+    "evaluation_frequency_minutes": 15,
+    "comparison_operator": ">=",  # >=|<=|==|>|<
+    "status": "active",  # active|paused|archived
+    "priority": "high",  # critical|high|medium|low
+    "description": "Service must maintain 99% success rate over 24-hour window",
+    "remediation_runbook_url": "https://wiki.internal/runbooks/schema-migrator-breach",
+    "notification_channels": [
+      {
+        "channel_type": "slack",
+        "channel_address": "#eva-alerts",
+        "severity_levels": ["critical"]
+      }
+    ],
+    "last_breach_at": "2026-02-15T14:30:00Z",
+    "last_evaluation_at": "2026-03-09T18:30:00Z",
+    "last_evaluation_result": {
+      "actual_value": 0.987,
+      "target_value": 0.99,
+      "status": "ok",
+      "evaluated_at": "2026-03-09T18:30:00Z"
+    },
+    "breach_count_24h": 0,
+    "breach_count_7d": 2
+  }
+  
+  FK relationships:
+  - service_id → L62 (CASCADE - SLOs deleted with service)
+  
+  Graph edges:
+  - defines_slo: L66 → L62 (SLO for service)
+  
+  Use cases:
+  - Define quality expectations for services
+  - Automated SLO breach detection (feeds L67 in Phase 5)
+  - Alert routing based on severity
+  - Track breach trends over time
+
+================================================================================
+ PHASE 5-6 PREVIEW -- 9 MORE LAYERS (L67-L75)
+================================================================================
+
+  Phase 4 deployed 6 layers (L61-L66). 9 more layers planned across 2 phases.
   See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md for full phased plan.
-
-  PHASE 4 (L61-L66) -- WORK FACTORY SERVICES
-  -------------------------------------------
-  L61 work_factory_capabilities     Available automation capabilities
-  L62 work_factory_services         Registered work services (agents as services)
-  L63 work_service_requests         Service invocation requests
-  L64 work_service_runs             Service execution records
-  L65 work_service_perf_profiles    Per-service performance metrics
-  L66 work_service_level_objs       SLA definitions for work services
-
-  Vision: Agents register as work services, receive requests, deliver under SLA
 
   PHASE 5 (L67-L70) -- BREACH REMEDIATION & LIFECYCLE
   ----------------------------------------------------
@@ -1103,8 +1423,8 @@
   Phase 1 (L52-L56):     March 2026    ✅ DEPLOYED (Session 41 Part 10)
   Phase 2 (L55,L57-L58): March 2026    ✅ DEPLOYED (Session 41 Part 11)
   Phase 3 (L59-L60):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
-  Phase 4 (L61-L66):     TBD  
-  Phase 5 (L67-L70):     TBD
+  Phase 4 (L61-L66):     March 2026    ✅ DEPLOYED (Session 41 Part 11)
+  Phase 5 (L67-L70):     TBD  
   Phase 6 (L71-L75):     TBD
 
   Strategy: Deploy phases incrementally as operational needs emerge.

@@ -1,11 +1,11 @@
 ================================================================================
- EVA DATA MODEL -- 96-LAYER REFERENCE
+ EVA DATA MODEL -- 102-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 96 operational layers; 12 ontology domains; Session 41 Part 11
+ Updated: 2026-03-09 -- 102 operational layers; 12 ontology domains; Session 41 Part 11
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
          docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
-         docs/library/13-EXECUTION-LAYERS.md (Phases 1, 2, 3: L52-L60 deployed)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1-4: L52-L66 deployed)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -1102,6 +1102,113 @@
   Use cases: Pattern selection, performance comparison, tuning signals, pattern validation
   Query: GET /model/work_pattern_performance_profiles/?success_rate>0.9&pattern_type=deployment
 
+## L61 work_factory_capabilities
+
+  Capability catalog backed by patterns (L58). Abstract, compositional capabilities.
+  
+  Primary key: capability-{kebab-case-name}
+  FK: backed_by_pattern_ids[] → L58 (SET_NULL), owner_type/owner_id (polymorphic)
+  
+  Field catalog:
+    id, capability_name, description, maturity_level (experimental|beta|stable|deprecated),
+    backed_by_pattern_ids[], required_patterns[], optional_patterns[], prerequisites[],
+    input_schema_ref (L21), output_schema_ref (L21), owner_type, owner_id
+  
+  Graph edges: backs_capability (L61→L58)
+  Use cases: Capability registry, maturity tracking, prerequisite checking, service composition
+  Query: GET /model/work_factory_capabilities/?maturity_level=stable
+
+## L62 work_factory_services
+
+  Service packaging of capabilities - concrete invocable implementations.
+  
+  Primary key: service-{kebab-case-name}
+  FK: required_capability_ids[] → L61 (RESTRICT), optional_capability_ids[] → L61 (RESTRICT),
+      availability_sla_ref → L66, performance_profile_ref → L65,
+      provider_type/provider_id (polymorphic: agent/cp_agent/external_api/human)
+  
+  Field catalog:
+    id, service_name, description, service_type (synchronous|asynchronous|streaming|batch),
+    required_capability_ids[], optional_capability_ids[], input_schema, output_schema,
+    provider_type, provider_id, endpoint_url, authentication_method, status,
+    availability_sla_ref, performance_profile_ref, version, deployment_target
+  
+  Graph edges: requires_capability (L62→L61), provides_optional_capability (L62→L61)
+  Use cases: Service registry, agent-as-service routing, SLA monitoring, version management
+  Query: GET /model/work_factory_services/?status=production&service_type=asynchronous
+
+## L63 work_service_requests
+
+  Service invocation requests - demand intake for services (L62). Fulfilled via runs (L64).
+  
+  Primary key: request-{YYYYMMDD}-{seq}
+  FK: service_id → L62 (RESTRICT), requester_type/requester_id (polymorphic),
+      project_id → L25 (optional), work_unit_id → L52 (optional)
+  
+  Field catalog:
+    id, service_id, requester_type, requester_id, project_id, work_unit_id, input_payload,
+    priority (critical|high|medium|low), status (queued|assigned|in_progress|completed|failed|cancelled),
+    requested_at, assigned_at, completed_at, cancellation_reason
+  
+  Graph edges: requests_service (L63→L62), request_context_project (L63→L25),
+               request_triggered_by (L63→L52)
+  Use cases: Demand tracking, priority-based scheduling, backlog management, context tracing
+  Query: GET /model/work_service_requests/?status=in_progress&priority=critical
+
+## L64 work_service_runs
+
+  Service runtime execution instances - child of requests (L63). Actual execution attempts.
+  
+  Primary key: run-{request_id}-{attempt}
+  Parent: work_service_requests (CASCADE on delete)
+  FK: request_id → L63 (CASCADE), work_unit_id → L52 (SET_NULL),
+      trace_ids[] → L32, evidence_ids[] → L31
+  
+  Field catalog:
+    id, request_id, work_unit_id, started_at, completed_at, duration_seconds,
+    status (running|succeeded|failed|timeout|cancelled), output_payload, error_details,
+    retry_attempt, resource_consumption {cpu_seconds, memory_mb, tokens_consumed, cost_usd},
+    trace_ids[], evidence_ids[]
+  
+  Graph edges: fulfills_request (L64→L63, CASCADE), run_creates_work (L64→L52)
+  Use cases: Execution tracking, retry logic, resource accounting, observability linking
+  Query: GET /model/work_service_runs/?status=failed&retry_attempt=1
+
+## L65 work_service_perf_profiles
+
+  Aggregate service performance metrics - computed view tracking success, timing, cost per service.
+  
+  Primary key: profile-{service_id}
+  FK: service_id → L62 (RESTRICT), source_run_ids[] → L64 (audit trail)
+  
+  Field catalog:
+    id, service_id, total_runs, success_rate, successful_runs, failed_runs, timeout_runs,
+    avg_duration_seconds, p50_duration_seconds, p95_duration_seconds, p99_duration_seconds,
+    avg_cost_usd, total_cost_usd, common_errors[], source_run_ids[], last_updated,
+    computation_method (manual|scheduled_batch|on_demand|real_time), time_window_hours
+  
+  Graph edges: profiles_service (L65→L62), profile_based_on_runs (L65→L64)
+  Use cases: Service health monitoring, performance comparison, capacity planning, degradation detection
+  Query: GET /model/work_service_perf_profiles/?success_rate<0.95
+
+## L66 work_service_level_objectives
+
+  Service Level Objective (SLO) definitions and thresholds per service. Breaches feed L67.
+  
+  Primary key: slo-{service_id}-{metric_name}
+  FK: service_id → L62 (CASCADE on service delete)
+  
+  Field catalog:
+    id, service_id, metric_name, target_value, threshold_warning, threshold_critical,
+    measurement_window_hours, evaluation_frequency_minutes, comparison_operator,
+    status (active|paused|archived), priority, description, remediation_runbook_url,
+    notification_channels[], last_breach_at, last_evaluation_at, last_evaluation_result,
+    breach_count_24h, breach_count_7d
+  
+  Graph edges: defines_slo (L66→L62, CASCADE)
+  Use cases: SLA monitoring, breach detection, alert routing, compliance reporting
+  Query: GET /model/work_service_level_objectives/?status=active&breach_count_24h>0
+
   SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
     - 4 execution layers deployed (L52, L53, L54, L56)
     - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
@@ -1111,7 +1218,7 @@
     - Phase 1 complete, Phase 2-6 ready for deployment
     - See docs/library/13-EXECUTION-LAYERS.md for complete specification
 
-  SESSION 41 PART 11 UPDATE (March 9, 2026 4:00 PM ET):
+  SESSION 41 PART 11 UPDATE (March 9, 2026 6:00 PM ET):
     - Phase 2: 3 layers deployed (L55, L57, L58) -- Obligations, Learning, Patterns
       • Obligations tracking from decisions (L54→L55 inverse FK)
       • Adaptive learning feedback layer (L57) with confidence scoring
@@ -1121,9 +1228,17 @@
       • Pattern usage tracking (L59) with adaptations and success scoring
       • Performance profiles (L60) computed from applications (aggregate layer)
       • 4 new FK edge types added (44 → 48 total)
-    - Layer count: 91 → 96 operational
-    - Edge types: 38 → 48 total
-    - Remaining: 15 layers (L61-L75 in Phases 4-6)
+    - Phase 4: 6 layers deployed (L61-L66) -- Factory Services with SLAs
+      • Capability catalog (L61) backed by patterns (L58)
+      • Service registry (L62) with agent-as-service packaging
+      • Request tracking (L63) for demand intake and priority scheduling
+      • Run tracking (L64) for execution attempts with resource consumption
+      • Performance profiles (L65) for service health monitoring
+      • SLO definitions (L66) for breach detection (feeds L67 in Phase 5)
+      • 11 new FK edge types added (48 → 59 total)
+    - Layer count: 91 → 96 → 102 operational
+    - Edge types: 38 → 48 → 59 total
+    - Remaining: 9 layers (L67-L75 in Phases 5-6)
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)

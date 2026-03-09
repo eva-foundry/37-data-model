@@ -332,6 +332,85 @@ EDGE_TYPES: list[EdgeTypeMeta] = [
         via_field="source_application_ids",
         cardinality="many-to-many",
         description="Profile computed from pattern application records"),
+    
+    # ── Phase 4: Factory Services (L61-L66) ────────────────────────────
+    EdgeTypeMeta(
+        edge_type="backs_capability",
+        from_layer="work_factory_capabilities",
+        to_layer="work_reusable_patterns",
+        via_field="backed_by_pattern_ids",
+        cardinality="many-to-many",
+        description="Capability backed by patterns (SET_NULL on pattern delete)"),
+    EdgeTypeMeta(
+        edge_type="requires_capability",
+        from_layer="work_factory_services",
+        to_layer="work_factory_capabilities",
+        via_field="required_capability_ids",
+        cardinality="many-to-many",
+        description="Service requires capability (RESTRICT on capability delete)"),
+    EdgeTypeMeta(
+        edge_type="provides_optional_capability",
+        from_layer="work_factory_services",
+        to_layer="work_factory_capabilities",
+        via_field="optional_capability_ids",
+        cardinality="many-to-many",
+        description="Service provides optional capability (RESTRICT on capability delete)"),
+    EdgeTypeMeta(
+        edge_type="requests_service",
+        from_layer="work_service_requests",
+        to_layer="work_factory_services",
+        via_field="service_id",
+        cardinality="many-to-one",
+        description="Request for service (RESTRICT on service delete)"),
+    EdgeTypeMeta(
+        edge_type="request_context_project",
+        from_layer="work_service_requests",
+        to_layer="projects",
+        via_field="project_id",
+        cardinality="many-to-one",
+        description="Request associated with project (optional context)"),
+    EdgeTypeMeta(
+        edge_type="request_triggered_by",
+        from_layer="work_service_requests",
+        to_layer="work_execution_units",
+        via_field="work_unit_id",
+        cardinality="many-to-one",
+        description="Request triggered by work unit (optional context)"),
+    EdgeTypeMeta(
+        edge_type="fulfills_request",
+        from_layer="work_service_runs",
+        to_layer="work_service_requests",
+        via_field="request_id",
+        cardinality="many-to-one",
+        description="Run fulfills service request (CASCADE on request delete)"),
+    EdgeTypeMeta(
+        edge_type="run_creates_work",
+        from_layer="work_service_runs",
+        to_layer="work_execution_units",
+        via_field="work_unit_id",
+        cardinality="many-to-one",
+        description="Run creates work unit (SET_NULL, optional provenance)"),
+    EdgeTypeMeta(
+        edge_type="profiles_service",
+        from_layer="work_service_perf_profiles",
+        to_layer="work_factory_services",
+        via_field="service_id",
+        cardinality="many-to-one",
+        description="Performance profile tracks service effectiveness (RESTRICT on service delete)"),
+    EdgeTypeMeta(
+        edge_type="profile_based_on_runs",
+        from_layer="work_service_perf_profiles",
+        to_layer="work_service_runs",
+        via_field="source_run_ids",
+        cardinality="many-to-many",
+        description="Profile computed from service run records"),
+    EdgeTypeMeta(
+        edge_type="defines_slo",
+        from_layer="work_service_level_objectives",
+        to_layer="work_factory_services",
+        via_field="service_id",
+        cardinality="many-to-one",
+        description="SLO definition for service (CASCADE on service delete)"),
 ]
 
 # Fast lookup by edge_type string

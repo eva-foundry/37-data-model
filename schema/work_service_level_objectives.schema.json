@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L66 - work_service_level_objectives",
+  "description": "Service Level Objective (SLO) definitions and thresholds per service (L62). Defines expected performance, availability, and quality metrics. Breaches feed L67 work_service_breaches for automated remediation.",
+  "required": [
+    "id",
+    "service_id",
+    "metric_name",
+    "target_value",
+    "threshold_warning",
+    "threshold_critical",
+    "measurement_window_hours",
+    "status",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: slo-{service_id}-{metric_name}",
+      "pattern": "^slo-service-[a-z0-9-]+-[a-z0-9_-]+$",
+      "examples": ["slo-service-schema-migrator-success_rate", "slo-service-api-deployer-p95_duration"]
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services (CASCADE on delete). SLOs deleted when service deleted.",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "metric_name": {
+      "type": "string",
+      "description": "Name of the metric being tracked (corresponds to L65 profile fields)",
+      "enum": [
+        "success_rate",
+        "avg_duration_seconds",
+        "p50_duration_seconds",
+        "p95_duration_seconds",
+        "p99_duration_seconds",
+        "avg_cost_usd",
+        "total_cost_usd",
+        "error_rate",
+        "timeout_rate",
+        "availability"
+      ]
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value for this metric (e.g., 0.99 for 99% success rate, 5.0 for 5 seconds p95 duration)"
+    },
+    "threshold_warning": {
+      "type": "number",
+      "description": "Warning threshold — triggers alert but not incident (e.g., 0.95 for success_rate)"
+    },
+    "threshold_critical": {
+      "type": "number",
+      "description": "Critical threshold — triggers incident and remediation (e.g., 0.90 for success_rate). Creates L67 breach record."
+    },
+    "measurement_window_hours": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Time window for measuring this SLO (e.g., 1 hour, 24 hours, 168 hours for weekly)"
+    },
+    "evaluation_frequency_minutes": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "How often to check this SLO (e.g., 5 minutes, 15 minutes, 60 minutes)"
+    },
+    "comparison_operator": {
+      "type": "string",
+      "enum": [">=", "<=", "==", ">", "<"],
+      "description": "How to compare actual vs target. For success_rate: >= target. For duration: <= target."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "paused", "archived"],
+      "description": "Whether this SLO is currently being monitored"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "SLO priority — affects breach severity scoring"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Human-readable description of this SLO and why it matters"
+    },
+    "remediation_runbook_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "URL to runbook for remediation procedures when SLO breached"
+    },
+    "notification_channels": {
+      "type": "array",
+      "description": "Where to send alerts for breaches (email, Slack, PagerDuty, etc.)",
+      "items": {
+        "type": "object",
+        "required": ["channel_type", "channel_address"],
+        "properties": {
+          "channel_type": {
+            "type": "string",
+            "enum": ["email", "slack", "teams", "pagerduty", "webhook"],
+            "description": "Notification mechanism"
+          },
+          "channel_address": {
+            "type": "string",
+            "description": "Email address, webhook URL, or channel ID"
+          },
+          "severity_levels": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["warning", "critical"]
+            },
+            "description": "Which severity levels trigger this notification (default: both)"
+          }
+        }
+      }
+    },
+    "last_breach_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When this SLO was last breached (ISO8601 timestamp, nullable if never breached)"
+    },
+    "last_evaluation_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When this SLO was last checked (ISO8601 timestamp)"
+    },
+    "last_evaluation_result": {
+      "type": ["object", "null"],
+      "description": "Result of most recent evaluation",
+      "properties": {
+        "actual_value": {
+          "type": "number",
+          "description": "Actual measured value"
+        },
+        "target_value": {
+          "type": "number",
+          "description": "Target value (copied from parent)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["ok", "warning", "critical"],
+          "description": "Evaluation status"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this evaluation was performed"
+        }
+      }
+    },
+    "breach_count_24h": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of breaches in the last 24 hours (for trend analysis)"
+    },
+    "breach_count_7d": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of breaches in the last 7 days"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or tuning guidance"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (service owner or platform admin)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}
