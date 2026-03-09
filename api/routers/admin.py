@@ -33,6 +33,7 @@ import asyncio
 import json
 import logging
 import os
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -186,20 +187,39 @@ async def seed(
     Increments row_version on existing objects.
     Idempotent: safe to call on first run, re-runs, and migrations.
     """
+    start_time = time.time()
     counts: dict[str, int] = {}
     errors: list[str] = []
+    progress: list[str] = []
+
+    progress.append("=== SEED OPERATION STARTED ===")
+    progress.append(f"Total layers to process: {len(_LAYER_FILES)}")
+    progress.append(f"Actor: {actor}")
+    progress.append("")
 
     try:
-        for layer, filename in _LAYER_FILES.items():
+        for idx, (layer, filename) in enumerate(_LAYER_FILES.items(), 1):
+            layer_start = time.time()
             path = _get_model_dir() / filename
+            
+            progress.append(f"[{idx}/{len(_LAYER_FILES)}] Processing {layer}...")
+            
             if not path.exists():
+                msg = f"  ⚠ File not found: {filename}, skipping"
+                progress.append(msg)
                 log.warning("Seed: %s not found, skipping", path)
                 continue
 
+            # Read file
             try:
+                file_size = path.stat().st_size
+                progress.append(
+                    f"  [FILE] Reading {filename} ({file_size:,} bytes)...")
                 raw = json.loads(path.read_text(encoding="utf-8"))
             except Exception as exc:
-                errors.append(f"{layer}: Failed to read/parse {filename} — {exc}")
+                error_msg = f"{layer}: Failed to read/parse {filename} — {exc}"
+                errors.append(error_msg)
+                progress.append(f"  [WARN] Read failed: {exc}")
                 log.error("Seed: %s read failed — %s", filename, exc)
                 continue
 
@@ -219,7 +239,10 @@ async def seed(
                             objects = v
                             break
             else:
-                errors.append(f"{layer}: Unexpected JSON type {type(raw).__name__} in {filename}")
+                error_msg = f"{layer}: Unexpected JSON type {type(raw).__name__} in {filename}"
+                errors.append(error_msg)
+                progress.append(
+                    f"  [ERROR] Unexpected JSON type: {type(raw).__name__}")
                 log.error("Seed: %s unexpected type — %s", filename, type(raw))
                 continue
 
@@ -237,31 +260,56 @@ async def seed(
             # and carried forward into every subsequent cold-deploy seed cycle.
             for obj in objects:
                 obj.setdefault("source_file", f"model/{filename}")
+            
+            progress.append(f"  [DATA] Found {len(objects)} objects")
+            
             try:
                 # bulk_load preserves audit fields from JSON; only fills defaults
                 # for gaps
+                progress.append("  [PROCESSING] Upserting to store...")
                 log.info("Seed: Starting %s with %d objects", layer, len(objects))
                 loaded = await store.bulk_load(layer, objects, actor)
-                log.info("Seed: Completed %s — %d objects loaded", layer, loaded)
+                
+                layer_time = time.time() - layer_start
+                progress.append(
+                    f"  [PASS] Loaded {loaded} objects in {layer_time:.2f}s")
+                log.info("Seed: Completed %s — %d objects loaded in %.2fs", layer, loaded, layer_time)
             except Exception as exc:
                 error_msg = f"{layer}: bulk_load failed — {type(exc).__name__}: {exc}"
                 errors.append(error_msg)
+                progress.append(
+                    f"  [ERROR] Load failed: {type(exc).__name__}: {exc}")
                 log.error("Seed: %s", error_msg, exc_info=True)
                 loaded = 0
 
             await cache.invalidate_layer(layer)
             counts[layer] = loaded
+            progress.append("")  # Blank line between layers
 
     except Exception as exc:
         error_msg = f"Seed operation failed — {type(exc).__name__}: {exc}"
         errors.append(error_msg)
+        progress.append(f"[ERROR] FATAL ERROR: {error_msg}")
         log.error("Seed: Fatal error — %s", exc, exc_info=True)
+
+    total_time = time.time() - start_time
+    total_records = sum(counts.values())
+    
+    progress.append("=== SEED OPERATION COMPLETED ===")
+    progress.append(f"Total records loaded: {total_records:,}")
+    progress.append(f"Total layers processed: {len(counts)}/{len(_LAYER_FILES)}")
+    progress.append(f"Total errors: {len(errors)}")
+    progress.append(f"Total time: {total_time:.2f}s")
+    if total_records > 0:
+        progress.append(f"Average speed: {total_records/total_time:.0f} records/sec")
 
     return {
         "seeded": counts,
-        "total": sum(counts.values()),
+        "total": total_records,
         "errors": errors,
         "actor": actor,
+        "progress": progress,  # ← Verbose log of all operations
+        "duration_seconds": round(total_time, 2),
     }
 
 
