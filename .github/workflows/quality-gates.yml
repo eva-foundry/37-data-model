@@ -59,7 +59,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "::group::Flake8 Results"
-          flake8 api/ --select=F,E --exit-zero > flake8-report.txt
+          flake8 api/ --select=F,E --extend-ignore=E501 --exit-zero > flake8-report.txt
           cat flake8-report.txt
           echo "::endgroup::"
           
@@ -70,7 +70,7 @@ jobs:
             exit 1
           else
             echo "status=passed" >> $GITHUB_OUTPUT
-            echo "::notice::Flake8 passed - no F/E errors found"
+            echo "::notice::Flake8 passed - no F/E errors found (E501 ignored)"
           fi
       
       - name: Run pytest

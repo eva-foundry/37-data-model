@@ -7,7 +7,8 @@ from typing import Any
 class AbstractStore(ABC):
 
     @abstractmethod
-    async def get_all(self, layer: str, active_only: bool = True) -> list[dict[str, Any]]:
+    async def get_all(self, layer: str,
+                      active_only: bool = True) -> list[dict[str, Any]]:
         """Return all objects for a layer, optionally filtering out inactive ones."""
 
     @abstractmethod
@@ -15,7 +16,8 @@ class AbstractStore(ABC):
         """Return a single object by (layer, obj_id), or None if not found."""
 
     @abstractmethod
-    async def upsert(self, layer: str, obj_id: str, payload: dict[str, Any], actor: str) -> dict[str, Any]:
+    async def upsert(self, layer: str, obj_id: str,
+                     payload: dict[str, Any], actor: str) -> dict[str, Any]:
         """
         Create or update an object (live business write).
         - On create: stamps created_by, created_at, row_version=1
@@ -35,7 +37,8 @@ class AbstractStore(ABC):
         """
 
     @abstractmethod
-    async def soft_delete(self, layer: str, obj_id: str, actor: str) -> dict[str, Any] | None:
+    async def soft_delete(self, layer: str, obj_id: str,
+                          actor: str) -> dict[str, Any] | None:
         """Set is_active=False, increment row_version. Returns updated doc or None."""
 
     @abstractmethod

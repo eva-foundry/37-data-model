@@ -6,7 +6,7 @@ GET /model/endpoints/filter?status=stub&cosmos_writes=jobs&auth=admin&feature_fl
 """
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import Depends, Query
 from typing import Any
 
 from api.routers.base_layer import make_layer_router
@@ -19,21 +19,20 @@ from api.config import Settings, get_settings
 router = make_layer_router("endpoints", "/model/endpoints", ["endpoints"])
 
 
-@router.get(
-    "/filter",
-    tags=["endpoints"],
-    summary="Filter endpoints by any combination of status, cosmos_writes, cosmos_reads, auth, feature_flag",
-)
+@router.get("/filter",
+            tags=["endpoints"],
+            summary="Filter endpoints by any combination of status, cosmos_writes, cosmos_reads, auth, feature_flag",
+            )
 async def filter_endpoints(
-    status: str | None        = Query(None, description="implemented | stub | planned"),
+    status: str | None = Query(None, description="implemented | stub | planned"),
     cosmos_writes: str | None = Query(None, description="Container id written to, e.g. 'jobs'"),
-    cosmos_reads: str | None  = Query(None, description="Container id read from"),
-    auth: str | None          = Query(None, description="Persona id that can call this endpoint"),
-    feature_flag: str | None  = Query(None, description="Feature flag id"),
-    service: str | None       = Query(None, description="Service id, e.g. 'eva-brain-api'"),
-    store: AbstractStore      = Depends(get_store),
-    cache: AbstractCache      = Depends(get_cache),
-    settings: Settings        = Depends(get_settings),
+    cosmos_reads: str | None = Query(None, description="Container id read from"),
+    auth: str | None = Query(None, description="Persona id that can call this endpoint"),
+    feature_flag: str | None = Query(None, description="Feature flag id"),
+    service: str | None = Query(None, description="Service id, e.g. 'eva-brain-api'"),
+    store: AbstractStore = Depends(get_store),
+    cache: AbstractCache = Depends(get_cache),
+    settings: Settings = Depends(get_settings),
 ) -> list[dict[str, Any]]:
     # Serve from cache if available
     items: list[dict[str, Any]] | None = await cache.get_layer("endpoints")
@@ -45,9 +44,13 @@ async def filter_endpoints(
     if status:
         result = [e for e in result if e.get("status") == status]
     if cosmos_writes:
-        result = [e for e in result if cosmos_writes in (e.get("cosmos_writes") or [])]
+        result = [
+            e for e in result if cosmos_writes in (
+                e.get("cosmos_writes") or [])]
     if cosmos_reads:
-        result = [e for e in result if cosmos_reads in (e.get("cosmos_reads") or [])]
+        result = [
+            e for e in result if cosmos_reads in (
+                e.get("cosmos_reads") or [])]
     if auth:
         result = [e for e in result if auth in (e.get("auth") or [])]
     if feature_flag:
@@ -58,7 +61,7 @@ async def filter_endpoints(
     return result
 
 
-# ── Route ordering fix ────────────────────────────────────────────────────────
+# ── Route ordering fix ──────────────────────────────────────────────────
 # FastAPI evaluates routes in registration order.
 # make_layer_router() registers /{obj_id:path} first, which would shadow /filter.
 # Move all exact/non-parameterised paths before the catch-all path routes.

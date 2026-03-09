@@ -50,7 +50,12 @@ class MemoryCache(AbstractCache):
             return deepcopy(entry.data)
         return None
 
-    async def set_obj(self, layer: str, obj_id: str, data: dict, ttl: int) -> None:
+    async def set_obj(
+            self,
+            layer: str,
+            obj_id: str,
+            data: dict,
+            ttl: int) -> None:
         if ttl == 0:
             return  # TTL=0 means no-cache -- never store, reads always go to store
         self._objs[f"{layer}::{obj_id}"] = _Entry(deepcopy(data), ttl)
@@ -59,7 +64,8 @@ class MemoryCache(AbstractCache):
 
     async def invalidate_layer(self, layer: str) -> None:
         self._layers.pop(layer, None)
-        # Also evict per-object entries for this layer so stale data is never served
+        # Also evict per-object entries for this layer so stale data is never
+        # served
         prefix = f"{layer}::"
         stale = [k for k in self._objs if k.startswith(prefix)]
         for k in stale:

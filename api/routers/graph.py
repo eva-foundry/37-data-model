@@ -38,37 +38,157 @@ from api.models.graph import GraphNode, GraphEdge, GraphResponse, EdgeTypeMeta
 router = APIRouter(prefix="/model/graph", tags=["graph"])
 
 
-# ── Edge type vocabulary ───────────────────────────────────────────────────────
+# ── Edge type vocabulary ────────────────────────────────────────────────
 # Each entry defines one directed edge type between two layers via one field.
 
 EDGE_TYPES: list[EdgeTypeMeta] = [
-    EdgeTypeMeta(edge_type="calls",          from_layer="screens",       to_layer="endpoints",      via_field="api_calls",         cardinality="many-to-many", description="Screen calls endpoint"),
-    EdgeTypeMeta(edge_type="reads",          from_layer="endpoints",     to_layer="containers",     via_field="cosmos_reads",      cardinality="many-to-many", description="Endpoint reads from Cosmos container"),
-    EdgeTypeMeta(edge_type="writes",         from_layer="endpoints",     to_layer="containers",     via_field="cosmos_writes",     cardinality="many-to-many", description="Endpoint writes to Cosmos container"),
-    EdgeTypeMeta(edge_type="uses_component", from_layer="screens",       to_layer="components",     via_field="components",        cardinality="many-to-many", description="Screen uses React component"),
-    EdgeTypeMeta(edge_type="uses_hook",      from_layer="screens",       to_layer="hooks",          via_field="hooks",             cardinality="many-to-many", description="Screen uses custom hook"),
-    EdgeTypeMeta(edge_type="hook_calls",     from_layer="hooks",         to_layer="endpoints",      via_field="calls_endpoints",   cardinality="many-to-many", description="Hook calls endpoint"),
-    EdgeTypeMeta(edge_type="implemented_by", from_layer="endpoints",     to_layer="services",       via_field="service",           cardinality="many-to-one",  description="Endpoint is implemented in service"),
-    EdgeTypeMeta(edge_type="depends_on",     from_layer="services",      to_layer="services",       via_field="depends_on",        cardinality="many-to-many", description="Service depends on another service"),
-    EdgeTypeMeta(edge_type="gated_by",       from_layer="endpoints",     to_layer="feature_flags",  via_field="feature_flag",      cardinality="many-to-one",  description="Endpoint is gated by feature flag"),
-    EdgeTypeMeta(edge_type="reads_schema",   from_layer="endpoints",     to_layer="schemas",        via_field="request_schema",    cardinality="many-to-one",  description="Endpoint request body uses schema"),
-    EdgeTypeMeta(edge_type="writes_schema",  from_layer="endpoints",     to_layer="schemas",        via_field="response_schema",   cardinality="many-to-one",  description="Endpoint response uses schema"),
-    EdgeTypeMeta(edge_type="agent_reads",    from_layer="agents",        to_layer="endpoints",      via_field="input_endpoints",   cardinality="many-to-many", description="Agent reads from endpoint"),
-    EdgeTypeMeta(edge_type="agent_outputs",  from_layer="agents",        to_layer="screens",        via_field="output_screens",    cardinality="many-to-many", description="Agent produces output consumed by screen"),
-    EdgeTypeMeta(edge_type="satisfies",      from_layer="endpoints",     to_layer="requirements",   via_field="satisfied_by",      cardinality="many-to-many", description="Endpoint satisfies requirement (inverse lookup)"),
-    EdgeTypeMeta(edge_type="wbs_depends",    from_layer="wbs",           to_layer="wbs",            via_field="depends_on_wbs",    cardinality="many-to-many", description="WBS node depends on another WBS node"),
-    EdgeTypeMeta(edge_type="project_depends",from_layer="projects",      to_layer="projects",       via_field="depends_on",        cardinality="many-to-many", description="Project depends on another project"),
-    EdgeTypeMeta(edge_type="project_wbs",    from_layer="projects",      to_layer="wbs",            via_field="wbs_id",            cardinality="many-to-one",  description="Project has WBS root node"),
-    EdgeTypeMeta(edge_type="persona_flags",  from_layer="personas",      to_layer="feature_flags",  via_field="feature_flags",     cardinality="many-to-many", description="Persona can access feature flag"),
-    EdgeTypeMeta(edge_type="runbook_skill",  from_layer="runbooks",      to_layer="cp_skills",      via_field="skills",            cardinality="many-to-many", description="Runbook exercises a control-plane skill"),
-    EdgeTypeMeta(edge_type="wbs_runbook",    from_layer="wbs",           to_layer="runbooks",       via_field="ci_runbook",        cardinality="many-to-one",  description="WBS node references CI runbook evidence"),
+    EdgeTypeMeta(
+        edge_type="calls",
+        from_layer="screens",
+        to_layer="endpoints",
+        via_field="api_calls",
+        cardinality="many-to-many",
+        description="Screen calls endpoint"),
+    EdgeTypeMeta(
+        edge_type="reads",
+        from_layer="endpoints",
+        to_layer="containers",
+        via_field="cosmos_reads",
+        cardinality="many-to-many",
+        description="Endpoint reads from Cosmos container"),
+    EdgeTypeMeta(
+        edge_type="writes",
+        from_layer="endpoints",
+        to_layer="containers",
+        via_field="cosmos_writes",
+        cardinality="many-to-many",
+        description="Endpoint writes to Cosmos container"),
+    EdgeTypeMeta(
+        edge_type="uses_component",
+        from_layer="screens",
+        to_layer="components",
+        via_field="components",
+        cardinality="many-to-many",
+        description="Screen uses React component"),
+    EdgeTypeMeta(
+        edge_type="uses_hook",
+        from_layer="screens",
+        to_layer="hooks",
+        via_field="hooks",
+        cardinality="many-to-many",
+        description="Screen uses custom hook"),
+    EdgeTypeMeta(
+        edge_type="hook_calls",
+        from_layer="hooks",
+        to_layer="endpoints",
+        via_field="calls_endpoints",
+        cardinality="many-to-many",
+        description="Hook calls endpoint"),
+    EdgeTypeMeta(
+        edge_type="implemented_by",
+        from_layer="endpoints",
+        to_layer="services",
+        via_field="service",
+        cardinality="many-to-one",
+        description="Endpoint is implemented in service"),
+    EdgeTypeMeta(
+        edge_type="depends_on",
+        from_layer="services",
+        to_layer="services",
+        via_field="depends_on",
+        cardinality="many-to-many",
+        description="Service depends on another service"),
+    EdgeTypeMeta(
+        edge_type="gated_by",
+        from_layer="endpoints",
+        to_layer="feature_flags",
+        via_field="feature_flag",
+        cardinality="many-to-one",
+        description="Endpoint is gated by feature flag"),
+    EdgeTypeMeta(
+        edge_type="reads_schema",
+        from_layer="endpoints",
+        to_layer="schemas",
+        via_field="request_schema",
+        cardinality="many-to-one",
+        description="Endpoint request body uses schema"),
+    EdgeTypeMeta(
+        edge_type="writes_schema",
+        from_layer="endpoints",
+        to_layer="schemas",
+        via_field="response_schema",
+        cardinality="many-to-one",
+        description="Endpoint response uses schema"),
+    EdgeTypeMeta(
+        edge_type="agent_reads",
+        from_layer="agents",
+        to_layer="endpoints",
+        via_field="input_endpoints",
+        cardinality="many-to-many",
+        description="Agent reads from endpoint"),
+    EdgeTypeMeta(
+        edge_type="agent_outputs",
+        from_layer="agents",
+        to_layer="screens",
+        via_field="output_screens",
+        cardinality="many-to-many",
+        description="Agent produces output consumed by screen"),
+    EdgeTypeMeta(
+        edge_type="satisfies",
+        from_layer="endpoints",
+        to_layer="requirements",
+        via_field="satisfied_by",
+        cardinality="many-to-many",
+        description="Endpoint satisfies requirement (inverse lookup)"),
+    EdgeTypeMeta(
+        edge_type="wbs_depends",
+        from_layer="wbs",
+        to_layer="wbs",
+        via_field="depends_on_wbs",
+        cardinality="many-to-many",
+        description="WBS node depends on another WBS node"),
+    EdgeTypeMeta(
+        edge_type="project_depends",
+        from_layer="projects",
+        to_layer="projects",
+        via_field="depends_on",
+        cardinality="many-to-many",
+        description="Project depends on another project"),
+    EdgeTypeMeta(
+        edge_type="project_wbs",
+        from_layer="projects",
+        to_layer="wbs",
+        via_field="wbs_id",
+        cardinality="many-to-one",
+        description="Project has WBS root node"),
+    EdgeTypeMeta(
+        edge_type="persona_flags",
+        from_layer="personas",
+        to_layer="feature_flags",
+        via_field="feature_flags",
+        cardinality="many-to-many",
+        description="Persona can access feature flag"),
+    EdgeTypeMeta(
+        edge_type="runbook_skill",
+        from_layer="runbooks",
+        to_layer="cp_skills",
+        via_field="skills",
+        cardinality="many-to-many",
+        description="Runbook exercises a control-plane skill"),
+    EdgeTypeMeta(
+        edge_type="wbs_runbook",
+        from_layer="wbs",
+        to_layer="runbooks",
+        via_field="ci_runbook",
+        cardinality="many-to-one",
+        description="WBS node references CI runbook evidence"),
 ]
 
 # Fast lookup by edge_type string
 _EDGE_TYPE_MAP: dict[str, EdgeTypeMeta] = {e.edge_type: e for e in EDGE_TYPES}
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
+# ── Helpers ─────────────────────────────────────────────────────────────
 
 async def _layer(
     name: str,
@@ -142,11 +262,14 @@ async def _build_all_edges(
     # Determine which edge types to materialise
     types_to_build = EDGE_TYPES
     if edge_type_filter:
-        types_to_build = [e for e in EDGE_TYPES if e.edge_type == edge_type_filter]
+        types_to_build = [
+            e for e in EDGE_TYPES if e.edge_type == edge_type_filter]
     if from_layer_filter:
-        types_to_build = [e for e in types_to_build if e.from_layer == from_layer_filter]
+        types_to_build = [
+            e for e in types_to_build if e.from_layer == from_layer_filter]
     if to_layer_filter:
-        types_to_build = [e for e in types_to_build if e.to_layer == to_layer_filter]
+        types_to_build = [
+            e for e in types_to_build if e.to_layer == to_layer_filter]
 
     # Cache loaded layers to avoid redundant store calls
     layer_cache: dict[str, list[dict]] = {}
@@ -215,7 +338,12 @@ def _bfs_subgraph(
         next_frontier: set[str] = set()
         for nk in frontier:
             for e in adj.get(nk, []):
-                eid = (e.from_id, e.from_layer, e.to_id, e.to_layer, e.edge_type)
+                eid = (
+                    e.from_id,
+                    e.from_layer,
+                    e.to_id,
+                    e.to_layer,
+                    e.edge_type)
                 if eid not in seen_edge_ids:
                     matched_edges.append(e)
                     seen_edge_ids.add(eid)
@@ -230,7 +358,7 @@ def _bfs_subgraph(
     return visited, matched_edges
 
 
-# ── Mermaid output ─────────────────────────────────────────────────────────────
+# ── Mermaid output ──────────────────────────────────────────────────────
 
 def _safe_mid(node_id: str, layer: str) -> str:
     """Return a Mermaid-safe node identifier prefixed with layer."""
@@ -262,7 +390,7 @@ def _to_mermaid(nodes: list[GraphNode], edges: list[GraphEdge]) -> str:
     return "\n".join(lines)
 
 
-# ── Routes ────────────────────────────────────────────────────────────────────
+# ── Routes ──────────────────────────────────────────────────────────────
 
 @router.get(
     "/edge-types",
@@ -277,15 +405,30 @@ async def get_edge_types() -> list[dict[str, Any]]:
     summary="Typed edge list -- full graph or filtered/traversed subgraph. Pass ?format=mermaid for Mermaid diagram output.",
 )
 async def get_graph(
-    from_layer: str | None = Query(None, description="Filter: only edges whose from-node is in this layer"),
-    to_layer:   str | None = Query(None, description="Filter: only edges whose to-node is in this layer"),
-    edge_type:  str | None = Query(None, description="Filter: only edges of this type"),
-    node_id:    str | None = Query(None, description="BFS root node id -- combined with depth"),
-    depth:      int        = Query(1,   ge=1, le=5, description="BFS hop depth (default 1, max 5)"),
-    fmt:        str | None = Query(None, alias="format", description="Output format: omit for JSON, 'mermaid' for Mermaid flowchart text"),
-    store: AbstractStore   = Depends(get_store),
-    cache: AbstractCache   = Depends(get_cache),
-    settings: Settings     = Depends(get_settings),
+    from_layer: str | None = Query(
+        None,
+        description="Filter: only edges whose from-node is in this layer"),
+    to_layer: str | None = Query(
+        None,
+        description="Filter: only edges whose to-node is in this layer"),
+    edge_type: str | None = Query(
+        None,
+        description="Filter: only edges of this type"),
+    node_id: str | None = Query(
+        None,
+        description="BFS root node id -- combined with depth"),
+    depth: int = Query(
+        1,
+        ge=1,
+        le=5,
+        description="BFS hop depth (default 1, max 5)"),
+        fmt: str | None = Query(
+            None,
+            alias="format",
+            description="Output format: omit for JSON, 'mermaid' for Mermaid flowchart text"),
+        store: AbstractStore = Depends(get_store),
+        cache: AbstractCache = Depends(get_cache),
+        settings: Settings = Depends(get_settings),
 ) -> Any:
     t0 = time.monotonic()
 
@@ -320,7 +463,8 @@ async def get_graph(
         if tk not in node_keys:
             node_keys[tk] = GraphNode(id=e.to_id, layer=e.to_layer)
 
-    # Enrich nodes with label + status from the store (best-effort, no 404 on miss)
+    # Enrich nodes with label + status from the store (best-effort, no 404 on
+    # miss)
     layer_cache2: dict[str, dict[str, dict]] = {}
     for nk, node in node_keys.items():
         lyr = node.layer
@@ -332,7 +476,8 @@ async def get_graph(
                 layer_cache2[lyr] = {}
         obj = layer_cache2[lyr].get(node.id)
         if obj:
-            node.label = obj.get("label") or obj.get("summary") or obj.get("title") or None
+            node.label = obj.get("label") or obj.get(
+                "summary") or obj.get("title") or None
             node.status = obj.get("status") or None
 
     duration_ms = round((time.monotonic() - t0) * 1000)
@@ -345,13 +490,13 @@ async def get_graph(
         nodes=list(node_keys.values()),
         edges=edges,
         meta={
-            "node_count":     len(node_keys),
-            "edge_count":     len(edges),
-            "depth":          depth if bfs_mode else None,
-            "node_id":        node_id,
-            "edge_type":      edge_type,
-            "from_layer":     from_layer,
-            "to_layer":       to_layer,
-            "duration_ms":    duration_ms,
+            "node_count": len(node_keys),
+            "edge_count": len(edges),
+            "depth": depth if bfs_mode else None,
+            "node_id": node_id,
+            "edge_type": edge_type,
+            "from_layer": from_layer,
+            "to_layer": to_layer,
+            "duration_ms": duration_ms,
         },
     ).model_dump()

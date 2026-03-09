@@ -74,7 +74,12 @@ class RedisCache(AbstractCache):
     async def get_obj(self, layer: str, obj_id: str) -> dict | None:
         return await self._get(self._ok(layer, obj_id))
 
-    async def set_obj(self, layer: str, obj_id: str, data: dict, ttl: int) -> None:
+    async def set_obj(
+            self,
+            layer: str,
+            obj_id: str,
+            data: dict,
+            ttl: int) -> None:
         await self._set(self._ok(layer, obj_id), data, ttl)
 
     # ── invalidation ──────────────────────────────────────────────────────
