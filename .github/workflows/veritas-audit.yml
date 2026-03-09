@@ -13,7 +13,8 @@ jobs:
     steps:
     - name: Checkout 37-data-model
       uses: actions/checkout@v4
-      path: 37-data-model
+      with:
+        path: 37-data-model
       
     - name: Checkout 48-eva-veritas
       uses: actions/checkout@v4
