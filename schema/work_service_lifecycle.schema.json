@@ -1,0 +1,186 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L70 - work_service_lifecycle",
+  "description": "Service lifecycle events — tracks major transitions for work factory services (L62): deployment, upgrades, scaling, maintenance, deprecation, retirement. Provides audit trail for service evolution and operational history.",
+  "required": [
+    "id",
+    "service_id",
+    "event_type",
+    "event_timestamp",
+    "triggered_by_type",
+    "triggered_by_id",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: lifecycle-{service_id}-{YYYYMMDD}-{seq}",
+      "pattern": "^lifecycle-service-[a-z0-9-]+-[0-9]{8}-[0-9]{2}$",
+      "examples": ["lifecycle-service-schema-migrator-20260309-01"]
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services (CASCADE on delete). Which service experienced this event.",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "deployed",
+        "upgraded",
+        "downgraded",
+        "scaled_up",
+        "scaled_down",
+        "maintenance_started",
+        "maintenance_completed",
+        "deprecated",
+        "retired",
+        "restored",
+        "configuration_changed",
+        "endpoint_migrated"
+      ],
+      "description": "Type of lifecycle event"
+    },
+    "event_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this lifecycle event occurred (ISO8601 timestamp)"
+    },
+    "triggered_by_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "human", "automated_system", "scheduled_job"],
+      "description": "Who or what triggered this event"
+    },
+    "triggered_by_id": {
+      "type": "string",
+      "description": "Polymorphic FK to agent/cp_agent/persona/automated_system"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Why this lifecycle event was triggered (e.g., 'Security patch', 'Performance degradation', 'Planned upgrade')"
+    },
+    "previous_state": {
+      "type": ["object", "null"],
+      "description": "Service state BEFORE this event",
+      "properties": {
+        "version": {"type": "string"},
+        "status": {"type": "string"},
+        "deployment_target": {"type": "string"},
+        "endpoint_url": {"type": "string"}
+      }
+    },
+    "new_state": {
+      "type": "object",
+      "description": "Service state AFTER this event",
+      "properties": {
+        "version": {"type": "string"},
+        "status": {"type": "string"},
+        "deployment_target": {"type": "string"},
+        "endpoint_url": {"type": "string"}
+      }
+    },
+    "change_details": {
+      "type": "object",
+      "description": "Detailed change information",
+      "properties": {
+        "version_from": {"type": ["string", "null"]},
+        "version_to": {"type": ["string", "null"]},
+        "configuration_diff": {"type": ["string", "null"], "description": "JSON diff of configuration changes"},
+        "infrastructure_changes": {"type": "array", "items": {"type": "string"}},
+        "breaking_changes": {"type": "boolean", "description": "Whether this event introduced breaking changes"}
+      }
+    },
+    "duration_minutes": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "How long the lifecycle event took (e.g., deployment time, maintenance window)"
+    },
+    "downtime_minutes": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Service downtime during this event (0 for zero-downtime deployments)"
+    },
+    "success": {
+      "type": "boolean",
+      "description": "Whether the lifecycle event completed successfully"
+    },
+    "error_details": {
+      "type": ["object", "null"],
+      "description": "Error information if success=false",
+      "properties": {
+        "error_code": {"type": "string"},
+        "error_message": {"type": "string"},
+        "stack_trace": {"type": "string"}
+      }
+    },
+    "rollback_performed": {
+      "type": "boolean",
+      "description": "Whether a rollback was performed due to failure"
+    },
+    "rollback_details": {
+      "type": ["string", "null"],
+      "description": "Rollback procedure details (if applicable)"
+    },
+    "approval_required": {
+      "type": "boolean",
+      "description": "Whether this event required approval"
+    },
+    "approved_by": {
+      "type": ["string", "null"],
+      "description": "Who approved this lifecycle event (if approval_required=true)"
+    },
+    "approved_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When approval was granted (ISO8601 timestamp)"
+    },
+    "work_unit_id": {
+      "type": ["string", "null"],
+      "description": "FK to L52 work_execution_units (SET_NULL). Work unit that executed this lifecycle event.",
+      "pattern": "^workunit-[0-9]{8}-[a-z0-9-]+$"
+    },
+    "breach_id": {
+      "type": ["string", "null"],
+      "description": "FK to L67 work_service_breaches (SET_NULL). Breach that triggered remediation-driven lifecycle event.",
+      "pattern": "^breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+    },
+    "remediation_plan_id": {
+      "type": ["string", "null"],
+      "description": "FK to L68 work_service_remediation_plans (SET_NULL). Remediation plan that included this lifecycle event.",
+      "pattern": "^remediation-breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+    },
+    "evidence_ids": {
+      "type": "array",
+      "description": "FK array to L31 evidence. Artifacts/logs from this lifecycle event.",
+      "items": {
+        "type": "string",
+        "pattern": "^evidence-[a-z0-9-]+$"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional lifecycle event notes or observations"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (automated system or human operator)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

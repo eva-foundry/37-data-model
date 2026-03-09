@@ -1,10 +1,11 @@
 ================================================================================
- EVA DATA MODEL -- 87-LAYER REFERENCE
+ EVA DATA MODEL -- 111-LAYER REFERENCE
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 87 operational layers; 12 ontology domains; Session 41
+ Updated: 2026-03-09 -- 111 operational layers; 12 ontology domains; Session 41 Part 11
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
-         docs/COMPLETE-LAYER-CATALOG.md (definitive catalog with all 87+24 layers)
+         docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1-6 COMPLETE: All 24 execution layers deployed)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -976,6 +977,445 @@
   Use cases: Delivery verification, lesson learned capture, variance analysis
   Query: GET /model/work_outcomes/?work_unit_id={id}&result=delivered
 
+  L55 work_obligations    0 items (schema deployed, inverse FK from L54)
+  -----------------------------------------------------------------------
+  Purpose: Follow-up obligations from decisions and policy enforcement
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 2)
+  Schema: schema/work_obligations.schema.json
+  
+  Key fields:
+    id                     -- Primary key: {project-id}-obl-{YYYYMMDD}-{seq}
+    decision_id            -- FK to L54 work_decision_records (REQUIRED inverse relationship)
+    work_unit_id           -- FK to L52 work_execution_units (optional context)
+    policy_id              -- FK to L16 cp_policies (if policy-mandated)
+    obligation_text        -- Actionable description (10-2000 chars)
+    status                 -- open | in_progress | blocked | completed | cancelled
+    priority               -- critical | high | medium | low
+    assigned_to_type       -- agent | cp_agent | human (polymorphic)
+    assigned_to_id         -- Polymorphic FK
+    due_date               -- Optional deadline
+    blocked_reason         -- Why blocked (if status=blocked)
+    completion_evidence_id -- FK to L31 evidence
+  
+  Graph edges: obligates (L54→L55), obligation_evidence (L55→L31)
+  Use cases: Remediation tracking, policy compliance, decision follow-up
+  Query: GET /model/work_obligations/?status=open&assigned_to_id={agent-id}
+
+  L57 work_learning_feedback    0 items (schema deployed, adaptive learning)
+  -----------------------------------------------------------------------
+  Purpose: Lessons learned and improvement insights from work execution
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 2)
+  Schema: schema/work_learning_feedback.schema.json
+  
+  Key fields:
+    id                     -- Primary key: learning-{YYYYMMDD}-{seq}
+    work_unit_ids[]        -- FK array to L52 work_execution_units (sources, REQUIRED)
+    learning_type          -- success_factor | failure_cause | optimization | anti_pattern |
+                              best_practice | edge_case | tuning_signal
+    observation            -- Factual description (20-2000 chars)
+    recommendation         -- Actionable advice (10-2000 chars)
+    confidence_score       -- 0.0-1.0 (quality indicator, higher = more reliable)
+    validation_status      -- draft | under_review | validated | rejected | archived
+    author_type            -- agent | cp_agent | human (polymorphic)
+    author_id              -- Polymorphic FK
+    pattern_ids[]          -- FK array to L58 work_reusable_patterns (backfill)
+    tags[]                 -- Searchable categorization
+  
+  Graph edges: learns_from (L57→L52), learning_references_pattern (L57→L58)
+  Use cases: Retrospectives, tuning signals, pattern derivation, continuous improvement
+  Query: GET /model/work_learning_feedback/?validation_status=validated&confidence_score>=0.8
+
+  L58 work_reusable_patterns    0 items (schema deployed, pattern library)
+  -----------------------------------------------------------------------
+  Purpose: Approved execution templates derived from learning feedback
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 2)
+  Schema: schema/work_reusable_patterns.schema.json
+  
+  Key fields:
+    id                     -- Primary key: pattern-{kebab-case-name}
+    pattern_name           -- Human-readable name (3-100 chars)
+    pattern_type           -- workflow | quality_gate | deployment | testing | 
+                              refactoring | analysis | remediation
+    description            -- Detailed guidance (20-2000 chars)
+    applicability_conditions[] -- Array of { condition_type, condition_text }
+                                  condition_type: project_type | tech_stack | complexity |
+                                  risk_level | team_size | custom
+    steps[]                -- Array of { step_number, step_name, step_description, required,
+                              validation_criteria[] } -- executable steps
+    expected_outcomes[]    -- What should be achieved
+    derived_from_learning_ids[] -- FK array to L57 work_learning_feedback (sources)
+    example_work_units[]   -- FK array to L52 work_execution_units (examples)
+    approval_status        -- draft | under_review | approved | deprecated
+    approval_date          -- When approved
+    approver               -- Who approved
+    version                -- Semantic version (major.minor.patch)
+    deprecation_reason     -- Why deprecated (if status=deprecated)
+  
+  Graph edges: derives_pattern (L58→L57), pattern_examples (L58→L52)
+  Use cases: Factory capabilities (Phase 4), agent pattern selection, performance tracking (Phase 3)
+  Query: GET /model/work_reusable_patterns/?approval_status=approved&pattern_type=deployment
+
+  L59 work_pattern_applications    0 items (schema deployed, child of L52 with CASCADE)
+  -----------------------------------------------------------------------
+  Purpose: Pattern usage tracking for continuous improvement
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 3)
+  Schema: schema/work_pattern_applications.schema.json
+  
+  Key fields:
+    id                     -- Primary key: application-{work_unit_id}-{seq}
+    work_unit_id           -- FK to L52 work_execution_units (CASCADE on delete)
+    pattern_id             -- FK to L58 work_reusable_patterns (RESTRICT on delete)
+    applied_at             -- When pattern was applied
+    adaptations_made[]     -- Array of { step_number, adaptation_description, adaptation_type }
+                              adaptation_type: skip | modify | add_step | reorder
+    success_score          -- 0.0-1.0 (0.0 = failed, 1.0 = perfect execution)
+    feedback               -- Freeform effectiveness feedback (10-2000 chars)
+    outcome_id             -- FK to L56 work_outcomes (optional)
+  
+  Graph edges: applies_pattern (L59→L58), pattern_applied_to (L59→L52 CASCADE)
+  Use cases: Track pattern usage, measure effectiveness, identify adaptation patterns
+  Query: GET /model/work_pattern_applications/?pattern_id={id}&success_score<0.5
+
+  L60 work_pattern_performance_profiles    0 items (schema deployed, aggregate layer)
+  -----------------------------------------------------------------------
+  Purpose: Aggregate pattern effectiveness metrics for selection guidance
+  Status: DEPLOYED Mar 9, 2026 (Session 41 Part 11, Phase 3)
+  Schema: schema/work_pattern_performance_profiles.schema.json
+  
+  Key fields:
+    id                     -- Primary key: profile-{pattern_id}
+    pattern_id             -- FK to L58 work_reusable_patterns (RESTRICT on delete)
+    total_applications     -- Count of L59 records for this pattern
+    success_rate           -- Aggregate success rate (avg of success_score from L59)
+    successful_applications -- Count with success_score >= 0.8
+    failed_applications    -- Count with success_score < 0.4
+    avg_duration_seconds   -- Average work unit duration (nullable)
+    p50_duration_seconds   -- Median duration
+    p95_duration_seconds   -- 95th percentile
+    common_adaptations[]   -- Top 5 most frequent adaptations (max 5 items)
+                              Array of { adaptation_description, frequency, step_numbers[], adaptation_type }
+    source_application_ids[] -- FK array to L59 (audit trail)
+    last_updated           -- When profile was re-computed
+    computation_method     -- manual | scheduled_batch | on_demand | real_time
+  
+  Graph edges: profiles_pattern (L60→L58), profile_sourced_from (L60→L59)
+  Use cases: Pattern selection, performance comparison, tuning signals, pattern validation
+  Query: GET /model/work_pattern_performance_profiles/?success_rate>0.9&pattern_type=deployment
+
+## L61 work_factory_capabilities
+
+  Capability catalog backed by patterns (L58). Abstract, compositional capabilities.
+  
+  Primary key: capability-{kebab-case-name}
+  FK: backed_by_pattern_ids[] → L58 (SET_NULL), owner_type/owner_id (polymorphic)
+  
+  Field catalog:
+    id, capability_name, description, maturity_level (experimental|beta|stable|deprecated),
+    backed_by_pattern_ids[], required_patterns[], optional_patterns[], prerequisites[],
+    input_schema_ref (L21), output_schema_ref (L21), owner_type, owner_id
+  
+  Graph edges: backs_capability (L61→L58)
+  Use cases: Capability registry, maturity tracking, prerequisite checking, service composition
+  Query: GET /model/work_factory_capabilities/?maturity_level=stable
+
+## L62 work_factory_services
+
+  Service packaging of capabilities - concrete invocable implementations.
+  
+  Primary key: service-{kebab-case-name}
+  FK: required_capability_ids[] → L61 (RESTRICT), optional_capability_ids[] → L61 (RESTRICT),
+      availability_sla_ref → L66, performance_profile_ref → L65,
+      provider_type/provider_id (polymorphic: agent/cp_agent/external_api/human)
+  
+  Field catalog:
+    id, service_name, description, service_type (synchronous|asynchronous|streaming|batch),
+    required_capability_ids[], optional_capability_ids[], input_schema, output_schema,
+    provider_type, provider_id, endpoint_url, authentication_method, status,
+    availability_sla_ref, performance_profile_ref, version, deployment_target
+  
+  Graph edges: requires_capability (L62→L61), provides_optional_capability (L62→L61)
+  Use cases: Service registry, agent-as-service routing, SLA monitoring, version management
+  Query: GET /model/work_factory_services/?status=production&service_type=asynchronous
+
+## L63 work_service_requests
+
+  Service invocation requests - demand intake for services (L62). Fulfilled via runs (L64).
+  
+  Primary key: request-{YYYYMMDD}-{seq}
+  FK: service_id → L62 (RESTRICT), requester_type/requester_id (polymorphic),
+      project_id → L25 (optional), work_unit_id → L52 (optional)
+  
+  Field catalog:
+    id, service_id, requester_type, requester_id, project_id, work_unit_id, input_payload,
+    priority (critical|high|medium|low), status (queued|assigned|in_progress|completed|failed|cancelled),
+    requested_at, assigned_at, completed_at, cancellation_reason
+  
+  Graph edges: requests_service (L63→L62), request_context_project (L63→L25),
+               request_triggered_by (L63→L52)
+  Use cases: Demand tracking, priority-based scheduling, backlog management, context tracing
+  Query: GET /model/work_service_requests/?status=in_progress&priority=critical
+
+## L64 work_service_runs
+
+  Service runtime execution instances - child of requests (L63). Actual execution attempts.
+  
+  Primary key: run-{request_id}-{attempt}
+  Parent: work_service_requests (CASCADE on delete)
+  FK: request_id → L63 (CASCADE), work_unit_id → L52 (SET_NULL),
+      trace_ids[] → L32, evidence_ids[] → L31
+  
+  Field catalog:
+    id, request_id, work_unit_id, started_at, completed_at, duration_seconds,
+    status (running|succeeded|failed|timeout|cancelled), output_payload, error_details,
+    retry_attempt, resource_consumption {cpu_seconds, memory_mb, tokens_consumed, cost_usd},
+    trace_ids[], evidence_ids[]
+  
+  Graph edges: fulfills_request (L64→L63, CASCADE), run_creates_work (L64→L52)
+  Use cases: Execution tracking, retry logic, resource accounting, observability linking
+  Query: GET /model/work_service_runs/?status=failed&retry_attempt=1
+
+## L65 work_service_perf_profiles
+
+  Aggregate service performance metrics - computed view tracking success, timing, cost per service.
+  
+  Primary key: profile-{service_id}
+  FK: service_id → L62 (RESTRICT), source_run_ids[] → L64 (audit trail)
+  
+  Field catalog:
+    id, service_id, total_runs, success_rate, successful_runs, failed_runs, timeout_runs,
+    avg_duration_seconds, p50_duration_seconds, p95_duration_seconds, p99_duration_seconds,
+    avg_cost_usd, total_cost_usd, common_errors[], source_run_ids[], last_updated,
+    computation_method (manual|scheduled_batch|on_demand|real_time), time_window_hours
+  
+  Graph edges: profiles_service (L65→L62), profile_based_on_runs (L65→L64)
+  Use cases: Service health monitoring, performance comparison, capacity planning, degradation detection
+  Query: GET /model/work_service_perf_profiles/?success_rate<0.95
+
+## L66 work_service_level_objectives
+
+  Service Level Objective (SLO) definitions and thresholds per service. Breaches feed L67.
+  
+  Primary key: slo-{service_id}-{metric_name}
+  FK: service_id → L62 (CASCADE on service delete)
+  
+  Field catalog:
+    id, service_id, metric_name, target_value, threshold_warning, threshold_critical,
+    measurement_window_hours, evaluation_frequency_minutes, comparison_operator,
+    status (active|paused|archived), priority, description, remediation_runbook_url,
+    notification_channels[], last_breach_at, last_evaluation_at, last_evaluation_result,
+    breach_count_24h, breach_count_7d
+  
+  Graph edges: defines_slo (L66→L62, CASCADE)
+  Use cases: SLA monitoring, breach detection, alert routing, compliance reporting
+  Query: GET /model/work_service_level_objectives/?status=active&breach_count_24h>0
+
+## L67 work_service_breaches
+
+  SLA breach incident records — triggered automatically when service performance violates SLO thresholds.
+  
+  Primary key: breach-{slo_id}-{YYYYMMDD}-{seq}
+  Parent: work_service_level_objectives (tracks which SLO was breached)
+  FK: slo_id → L66 (RESTRICT), service_id → L62 (RESTRICT),
+      affected_requests[] → L63, failed_runs[] → L64,
+      remediation_plan_id → L68 (SET_NULL), revalidation_result_id → L69 (SET_NULL)
+  
+  Field catalog:
+    id, slo_id, service_id, breach_detected_at, breach_resolved_at, duration_minutes,
+    severity (warning|critical), status (active|remediating|resolved|acknowledged|false_positive),
+    metric_name, target_value, actual_value, threshold_breached, measurement_window_hours,
+    impact_assessment, root_cause_hypothesis, affected_requests[], failed_runs[],
+    notification_sent, acknowledged_by, remediation_plan_id, revalidation_result_id
+  
+  Graph edges: breaches_slo (L67→L66), breach_for_service (L67→L62),
+               breach_affects_requests (L67→L63), breach_failed_runs (L67→L64)
+  Use cases: Automated SLO breach detection, impact assessment, breach lifecycle management
+  Query: GET /model/work_service_breaches/?status=active&severity=critical
+
+## L68 work_service_remediation_plans
+
+  Remediation plans for SLA breaches — step-by-step recovery procedures with resource estimates.
+  
+  Primary key: remediation-{breach_id}
+  Parent: work_service_breaches (CASCADE on breach delete)
+  FK: breach_id → L67 (CASCADE), service_id → L62 (RESTRICT), work_unit_id → L52 (SET_NULL)
+  
+  Field catalog:
+    id, breach_id, service_id, plan_type (automated|semi_automated|manual|escalation),
+    status (draft|approved|executing|completed|failed|cancelled), priority, title, description,
+    remediation_steps[] (step_number, step_name, step_description, required, estimated_duration_minutes,
+    automation_available, validation_criteria[], rollback_instructions),
+    estimated_duration_minutes, resource_requirements {agent_type, human_expertise, infrastructure_changes[],
+    estimated_cost_usd}, risks[], approved_by, work_unit_id, success, failure_reason, lessons_learned
+  
+  Graph edges: remediates_breach (L68→L67, CASCADE), remediation_for_service (L68→L62),
+               remediation_work (L68→L52)
+  Use cases: Runbook codification, approval workflows, resource planning, lessons capture
+  Query: GET /model/work_service_remediation_plans/?status=executing
+
+## L69 work_service_revalidation_results
+
+  Post-remediation verification — validates whether remediation successfully resolved breach.
+  
+  Primary key: revalidation-{breach_id}
+  Parent: work_service_breaches (CASCADE on breach delete)
+  FK: breach_id → L67 (CASCADE), remediation_plan_id → L68 (CASCADE),
+      service_id → L62 (RESTRICT), slo_id → L66 (RESTRICT),
+      sample_run_ids[] → L64, learning_feedback_id → L57 (SET_NULL)
+  
+  Field catalog:
+    id, breach_id, remediation_plan_id, service_id, slo_id, revalidation_performed_at,
+    measurement_window_hours, metric_name, target_value, pre_remediation_value,
+    post_remediation_value, threshold_critical, passed (boolean), improvement_percentage,
+    result_status (fully_resolved|partially_resolved|no_improvement|degraded),
+    sample_size, sample_run_ids[], comparison_data {pre_remediation{}, post_remediation{}},
+    next_steps, learning_feedback_id
+  
+  Graph edges: revalidates_breach (L69→L67, CASCADE), revalidates_remediation (L69→L68, CASCADE),
+               revalidation_samples (L69→L64), revalidation_learning (L69→L57)
+  Use cases: Remediation effectiveness verification, pre/post comparison, learning capture
+  Query: GET /model/work_service_revalidation_results/?passed=false
+
+## L70 work_service_lifecycle
+
+  Service lifecycle events — tracks major transitions: deployment, upgrades, scaling, maintenance, deprecation.
+  
+  Primary key: lifecycle-{service_id}-{YYYYMMDD}-{seq}
+  Parent: work_factory_services (CASCADE on service delete)
+  FK: service_id → L62 (CASCADE), work_unit_id → L52 (SET_NULL),
+      breach_id → L67 (SET_NULL), remediation_plan_id → L68 (SET_NULL), evidence_ids[] → L31
+  
+  Field catalog:
+    id, service_id, event_type (deployed|upgraded|downgraded|scaled_up|scaled_down|
+    maintenance_started|maintenance_completed|deprecated|retired|restored|configuration_changed|
+    endpoint_migrated), event_timestamp, triggered_by_type, triggered_by_id, reason,
+    previous_state {version, status, deployment_target, endpoint_url},
+    new_state {version, status, deployment_target, endpoint_url},
+    change_details {version_from, version_to, configuration_diff, infrastructure_changes[], breaking_changes},
+    duration_minutes, downtime_minutes, success, error_details, rollback_performed,
+    approval_required, approved_by, work_unit_id, breach_id, remediation_plan_id, evidence_ids[]
+  
+  Graph edges: lifecycle_for_service (L70→L62, CASCADE), lifecycle_work (L70→L52),
+               lifecycle_breach_driven (L70→L67), lifecycle_remediation_driven (L70→L68)
+  Use cases: Service change audit trail, upgrade/downgrade history, breach-driven changes, compliance
+  Query: GET /model/work_service_lifecycle/?event_type=upgraded&service_id=service-schema-migrator
+
+## L71 work_factory_portfolio
+
+  Portfolio management view of all work services — executive-level oversight with aggregate health and capacity.
+  
+  Primary key: portfolio-{name-slug}
+  FK: service_ids[] → L62 (many-to-many), roadmap_ids[] → L72, active_investment_ids[] → L73, governance_policy_ids[] → L75
+  
+  Field catalog:
+    id, portfolio_name, description, owner_type, owner_id, status (active|planning|maintenance|deprecated|retired),
+    service_ids[], service_count, health_summary {healthy_services, degraded_services, critical_services, offline_services,
+    overall_health_score, last_updated_at}, capacity_summary {total_requests_24h, total_runs_24h, average_success_rate,
+    total_active_breaches, peak_load_services[]}, strategic_priority (critical|high|medium|low),
+    investment_level (flagship|growth|maintenance|harvest|divest), cost_summary {total_cost_usd_mtd,
+    budget_allocation_usd, burn_rate_percentage, projected_end_of_month_usd}, roadmap_ids[], active_investment_ids[],
+    governance_policy_ids[], tags[], created_at, updated_at, retired_at, notes
+  
+  Graph edges: portfolio_services (L71→L62), portfolio_roadmaps (L71→L72), portfolio_investments (L71→L73),
+               portfolio_governance (L71→L75)
+  Use cases: Portfolio dashboard, strategic planning, resource allocation, executive reporting
+  Query: GET /model/work_factory_portfolio/?status=active&strategic_priority=critical
+
+## L72 work_factory_roadmaps
+
+  Strategic roadmaps for capability and service evolution — forward-looking initiatives with milestones and dependencies.
+  
+  Primary key: roadmap-{name-slug}
+  Parent: work_factory_portfolio (RESTRICT on delete)
+  FK: portfolio_id → L71 (RESTRICT), initiatives[].target_capability_ids[] → L61, initiatives[].target_service_ids[] → L62,
+      initiatives[].investment_id → L73 (SET_NULL), initiatives[].milestone_ids[] → L28
+  
+  Field catalog:
+    id, roadmap_name, description, portfolio_id, owner_type, owner_id, status (draft|proposed|approved|active|on_hold|
+    completed|cancelled), planning_horizon (short_term_3mo|medium_term_6mo|long_term_12mo|multi_year), start_date,
+    target_end_date, actual_completion_date, initiatives[] {initiative_id, initiative_name, description, status, priority,
+    target_capability_ids[], target_service_ids[], investment_id, milestone_ids[], dependencies[], target_start_date,
+    target_completion_date, actual_start_date, actual_completion_date, estimated_effort_person_days, actual_effort_person_days},
+    strategic_themes[], success_criteria[], risks[], stakeholders[], approval_required, approved_by, approved_at, progress_percentage
+  
+  Graph edges: roadmap_for_portfolio (L72→L71, RESTRICT), roadmap_target_capabilities (L72→L61),
+               roadmap_target_services (L72→L62), roadmap_milestones (L72→L28)
+  Use cases: Strategic planning, dependency management, progress tracking, investment prioritization
+  Query: GET /model/work_factory_roadmaps/?status=active&portfolio_id=portfolio-ai-automation
+
+## L73 work_factory_investments
+
+  Investment decisions and business justification — ROI tracking, approval workflows, funding allocation, actual returns.
+  
+  Primary key: investment-{name-slug}-{YYYYMMDD}
+  Parent: work_factory_portfolio (RESTRICT on delete)
+  FK: portfolio_id → L71 (RESTRICT), roadmap_id → L72 (SET_NULL), target_capability_ids[] → L61,
+      target_service_ids[] → L62, work_unit_ids[] → L52, evidence_ids[] → L31
+  
+  Field catalog:
+    id, investment_name, description, portfolio_id, roadmap_id, investment_type (new_capability|service_enhancement|
+    infrastructure_upgrade|reliability_improvement|cost_optimization|technical_debt_reduction|security_hardening|
+    compliance_requirement), status (draft|submitted|under_review|approved|rejected|funded|in_progress|completed|
+    cancelled|deferred), requested_by, requested_at, requested_amount_usd, approved_amount_usd, actual_spent_usd,
+    financial_breakdown {infrastructure_cost_usd, development_cost_usd, operational_cost_usd, training_cost_usd,
+    contingency_percentage}, roi_analysis {expected_annual_savings_usd, expected_annual_revenue_usd, payback_period_months,
+    net_present_value_usd, internal_rate_of_return_percentage, actual_annual_savings_usd, actual_annual_revenue_usd},
+    target_capability_ids[], target_service_ids[], benefits[], risks[], approval_workflow, implementation_timeline,
+    work_unit_ids[], evidence_ids[], success_metrics[], lessons_learned
+  
+  Graph edges: investment_for_portfolio (L73→L71, RESTRICT), investment_for_roadmap (L73→L72, SET_NULL),
+               investment_target_capabilities (L73→L61), investment_target_services (L73→L62),
+               investment_work (L73→L52), investment_evidence (L73→L31)
+  Use cases: Business case management, approval workflow, ROI tracking, portfolio optimization
+  Query: GET /model/work_factory_investments/?status=approved&portfolio_id=portfolio-ai-automation
+
+## L74 work_factory_metrics
+
+  Factory-level KPIs and aggregate health metrics — executive dashboard data with trend analysis and benchmarks.
+  
+  Primary key: metric-{category}-{name-slug}-{YYYYMMDD}-{HHMM}
+  FK: portfolio_id → L71 (SET_NULL), service_id → L62 (SET_NULL), capability_id → L61 (SET_NULL),
+      breach_ids[] → L67, related_governance_policy_ids[] → L75, evidence_ids[] → L31
+  
+  Field catalog:
+    id, metric_name, metric_category (availability|performance|cost|capacity|quality|efficiency|reliability|security),
+    description, measurement_timestamp, measurement_period (realtime|hourly|daily|weekly|monthly|quarterly|yearly),
+    value, unit, target_value, threshold_warning, threshold_critical, status (healthy|warning|critical|unknown),
+    scope (factory_wide|portfolio|service|capability), portfolio_id, service_id, capability_id,
+    aggregation_details {sample_size, source_layers[], calculation_method, weighting_strategy},
+    trend_analysis {previous_value, change_absolute, change_percentage, trend_direction, moving_average_7d,
+    moving_average_30d}, benchmark_comparison {internal_benchmark, external_benchmark, best_in_class, comparison_status},
+    contributing_factors[] {factor_type, factor_id, factor_name, contribution_percentage}, breach_ids[],
+    related_governance_policy_ids[], evidence_ids[], alert_triggered, alert_details
+  
+  Graph edges: metric_for_portfolio (L74→L71), metric_for_service (L74→L62), metric_for_capability (L74→L61),
+               metric_breaches (L74→L67), metric_governance (L74→L75), metric_evidence (L74→L31)
+  Use cases: Executive dashboard, trend analysis, threshold governance, benchmarking
+  Query: GET /model/work_factory_metrics/?status=critical&scope=factory_wide
+
+## L75 work_factory_governance
+
+  Governance policies and compliance rules — policy definitions, approval thresholds, audit procedures, enforcement mechanisms.
+  
+  Primary key: governance-policy-{name-slug}
+  FK: portfolio_ids[] → L71, service_ids[] → L62, capability_ids[] → L61,
+      related_cp_policy_ids[] → L16, related_metric_ids[] → L74, evidence_ids[] → L31
+  
+  Field catalog:
+    id, policy_name, description, policy_type (approval_workflow|compliance_requirement|quality_gate|cost_control|
+    security_control|operational_standard|slo_enforcement|risk_management|audit_rule), scope (factory_wide|portfolio|
+    service|capability|project), portfolio_ids[], service_ids[], capability_ids[], status (draft|proposed|active|
+    deprecated|retired), effective_date, expiration_date, owner_type, owner_id, enforcement_mechanism (automated_blocking|
+    automated_warning|manual_review_required|advisory_only|audit_post_facto), policy_rules[] {rule_id, rule_description,
+    condition_type, condition_details, enforcement_action, exemption_criteria}, compliance_mappings[] {framework_name,
+    control_id, control_description}, related_cp_policy_ids[], related_metric_ids[], violation_history,
+    audit_trail[] {event_type, event_timestamp, event_actor, event_details}, evidence_ids[], review_frequency,
+    last_reviewed_at, next_review_due
+  
+  Graph edges: governance_for_portfolios (L75→L71), governance_for_services (L75→L62),
+               governance_for_capabilities (L75→L61), governance_cp_policies (L75→L16), governance_evidence (L75→L31)
+  Use cases: Policy enforcement, compliance auditing, approval workflows, threshold governance
+  Query: GET /model/work_factory_governance/?status=active&policy_type=security_control
+
   SESSION 41 PART 10 SUMMARY (March 9, 2026 2:00 PM ET):
     - 4 execution layers deployed (L52, L53, L54, L56)
     - Parent-child cascade architecture: L52 parent, L53/L54/L56 children
@@ -984,6 +1424,43 @@
     - Planned layers: 24 → 20 (still L55, L57-L75 to deploy)
     - Phase 1 complete, Phase 2-6 ready for deployment
     - See docs/library/13-EXECUTION-LAYERS.md for complete specification
+
+  SESSION 41 PART 11 UPDATE (March 9, 2026 6:37 PM ET):
+    - Phase 2: 3 layers deployed (L55, L57, L58) -- Obligations, Learning, Patterns
+      • Obligations tracking from decisions (L54→L55 inverse FK)
+      • Adaptive learning feedback layer (L57) with confidence scoring
+      • Reusable pattern library (L58) derived from learning
+      • 6 new FK edge types added (38 → 44 total)
+    - Phase 3: 2 layers deployed (L59, L60) -- Pattern Application & Performance
+      • Pattern usage tracking (L59) with adaptations and success scoring
+      • Performance profiles (L60) computed from applications (aggregate layer)
+      • 4 new FK edge types added (44 → 48 total)
+    - Phase 4: 6 layers deployed (L61-L66) -- Factory Services with SLAs
+      • Capability catalog (L61) backed by patterns (L58)
+      • Service registry (L62) with agent-as-service packaging
+      • Request tracking (L63) for demand intake and priority scheduling
+      • Run tracking (L64) for execution attempts with resource consumption
+      • Performance profiles (L65) for service health monitoring
+      • SLO definitions (L66) for breach detection (feeds L67 in Phase 5)
+      • 11 new FK edge types added (48 → 59 total)
+    - Phase 5: 4 layers deployed (L67-L70) -- Breach Remediation & Lifecycle
+      • Breach tracking (L67) with automated detection and impact assessment
+      • Remediation planning (L68) with runbook codification and approval workflows
+      • Revalidation results (L69) with pre/post comparison and learning capture
+      • Lifecycle events (L70) for service change audit trail
+      • 16 new FK edge types added (59 → 75 total)
+      • COMPLETE SELF-HEALING LOOP: breach → plan → remediate → revalidate → learn
+    - Phase 6: 5 layers deployed (L71-L75) -- Strategy & Portfolio Management
+      • Portfolio management (L71) with aggregate health, capacity, and cost tracking
+      • Strategic roadmaps (L72) with initiatives, milestones, and dependency tracking
+      • Investment decisions (L73) with ROI analysis, approval workflows, and actual returns
+      • Factory metrics (L74) with aggregate KPIs, trend analysis, and benchmarking
+      • Governance policies (L75) with compliance mapping and automated enforcement
+      • 24 new FK edge types added (75 → 99 total)
+      • COMPLETE EXECUTION ENGINE: Work → Learn → Services → Self-heal → Strategy → Governance
+    - Layer count: 91 → 96 → 102 → 106 → 111 operational
+    - Edge types: 38 → 48 → 59 → 75 → 99 total
+    - ALL 24 EXECUTION LAYERS DEPLOYED (L52-L75)
 
 --------------------------------------------------------------------------------
  QUERY REFERENCE (don't grep when model has the answer)

@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L64 - work_service_runs",
+  "description": "Service runtime execution instances — child records of service requests (L63). Each run represents an actual execution attempt of a service, with timing, status, output, and error tracking. Feeds performance profiles (L65) and SLO breach detection (L67).",
+  "required": [
+    "id",
+    "request_id",
+    "started_at",
+    "status",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: run-{request_id}-{attempt}",
+      "pattern": "^run-request-[0-9]{8}-[0-9]{3,}-[0-9]{2}$",
+      "examples": ["run-request-20260309-001-01", "run-request-20260309-042-03"]
+    },
+    "request_id": {
+      "type": "string",
+      "description": "FK to L63 work_service_requests (CASCADE on delete). Which request this run fulfills.",
+      "pattern": "^request-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": ["string", "null"],
+      "description": "FK to L52 work_execution_units (SET_NULL on delete). Work unit created for this service run (optional linkage for provenance)."
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this run started execution (ISO8601)"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When this run completed (successfully or with error)"
+    },
+    "duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Calculated duration (completed_at - started_at) in seconds. Nullable if not yet completed."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["running", "succeeded", "failed", "timeout", "cancelled"],
+      "description": "Run execution status"
+    },
+    "output_payload": {
+      "type": ["object", "null"],
+      "description": "Service output data (must conform to service.output_schema from L62). Nullable until run completes."
+    },
+    "error_details": {
+      "type": ["object", "null"],
+      "description": "Error information if status=failed or timeout. { error_code, error_message, stack_trace, retryable }",
+      "properties": {
+        "error_code": {"type": "string"},
+        "error_message": {"type": "string"},
+        "stack_trace": {"type": "string"},
+        "retryable": {"type": "boolean"}
+      }
+    },
+    "retry_attempt": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Attempt number for this request (1 = first attempt, 2+ = retries)"
+    },
+    "resource_consumption": {
+      "type": ["object", "null"],
+      "description": "Resource usage metrics for this run (CPU time, memory, tokens, cost, etc.)",
+      "properties": {
+        "cpu_seconds": {"type": "number", "minimum": 0},
+        "memory_mb": {"type": "number", "minimum": 0},
+        "tokens_consumed": {"type": "integer", "minimum": 0},
+        "cost_usd": {"type": "number", "minimum": 0}
+      }
+    },
+    "trace_ids": {
+      "type": "array",
+      "description": "FK array to L32 traces. LLM call traces for this run (if service uses LLM).",
+      "items": {"type": "string"}
+    },
+    "evidence_ids": {
+      "type": "array",
+      "description": "FK array to L31 evidence. Evidence artifacts produced by this run.",
+      "items": {"type": "string"}
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional execution notes or debugging context"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (typically the service runtime itself)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

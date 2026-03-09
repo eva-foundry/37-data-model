@@ -1,0 +1,137 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L60 - work_pattern_performance_profiles",
+  "description": "Aggregate pattern performance metrics — computed view layer tracking how well each reusable pattern (L58) performs across all applications (L59). Provides success rates, timing data, and common adaptations for pattern tuning and selection guidance. Parent: None (aggregate/view layer, RESTRICT on pattern delete).",
+  "required": [
+    "id",
+    "pattern_id",
+    "total_applications",
+    "success_rate",
+    "last_updated",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: profile-{pattern_id}",
+      "pattern": "^profile-pattern-[a-z0-9-]+$",
+      "examples": ["profile-pattern-incremental-schema-migration", "profile-pattern-zero-downtime-deployment"]
+    },
+    "pattern_id": {
+      "type": "string",
+      "description": "FK to L58 work_reusable_patterns (RESTRICT on delete). Which pattern this profile tracks.",
+      "pattern": "^pattern-[a-z0-9-]+$"
+    },
+    "total_applications": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of times this pattern has been applied (count of L59 records for this pattern)"
+    },
+    "success_rate": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Aggregate success rate: average of all success_score values from L59 applications (0.0 = all failed, 1.0 = all succeeded)"
+    },
+    "successful_applications": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of applications with success_score >= 0.8"
+    },
+    "failed_applications": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of applications with success_score < 0.4"
+    },
+    "avg_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Average duration of work units that applied this pattern (nullable if duration not tracked)"
+    },
+    "p50_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Median (50th percentile) duration"
+    },
+    "p95_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "95th percentile duration (high-water mark for most applications)"
+    },
+    "common_adaptations": {
+      "type": "array",
+      "description": "Most frequently made adaptations across all applications (top 5 by frequency). Helps identify pattern improvement opportunities.",
+      "items": {
+        "type": "object",
+        "required": ["adaptation_description", "frequency", "step_numbers"],
+        "properties": {
+          "adaptation_description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "description": "Description of the common adaptation (aggregated from L59.adaptations_made)"
+          },
+          "frequency": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many times this adaptation was made across all applications"
+          },
+          "step_numbers": {
+            "type": "array",
+            "items": {"type": "integer"},
+            "description": "Which pattern steps are typically adapted (references L58 pattern.steps[].step_number)"
+          },
+          "adaptation_type": {
+            "type": "string",
+            "enum": ["skip", "modify", "add_step", "reorder"],
+            "description": "Type of adaptation"
+          }
+        }
+      },
+      "maxItems": 5
+    },
+    "source_application_ids": {
+      "type": "array",
+      "description": "FK array to L59 work_pattern_applications. All application IDs used to compute this profile (for audit trail and backfill).",
+      "items": {
+        "type": "string",
+        "pattern": "^application-[a-z0-9-]+-[0-9]{3,}$"
+      }
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this profile was last re-computed (ISO8601 timestamp)"
+    },
+    "computation_method": {
+      "type": "string",
+      "enum": ["manual", "scheduled_batch", "on_demand", "real_time"],
+      "description": "How this profile was computed (for transparency)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional observations or tuning guidance based on profile analysis"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (typically system/agent that computes profiles)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

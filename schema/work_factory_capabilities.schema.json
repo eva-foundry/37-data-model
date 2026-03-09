@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L61 - work_factory_capabilities",
+  "description": "Capability catalog backed by patterns (L58). Each capability represents a cohesive automation capability (e.g., 'schema migration automation', 'API deployment', 'test generation') that can be packaged into services (L62). Capabilities are abstract/compositional, services are concrete implementations.",
+  "required": [
+    "id",
+    "capability_name",
+    "description",
+    "maturity_level",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: capability-{kebab-case-name}",
+      "pattern": "^capability-[a-z0-9-]+$",
+      "examples": ["capability-schema-migration", "capability-api-deployment", "capability-test-generation"]
+    },
+    "capability_name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable capability name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000,
+      "description": "Detailed description of what this capability does, when to use it, and its value proposition"
+    },
+    "maturity_level": {
+      "type": "string",
+      "enum": ["experimental", "beta", "stable", "deprecated"],
+      "description": "Capability maturity/stability level"
+    },
+    "backed_by_pattern_ids": {
+      "type": "array",
+      "description": "FK array to L58 work_reusable_patterns. Patterns that implement this capability (SET_NULL on pattern delete).",
+      "items": {
+        "type": "string",
+        "pattern": "^pattern-[a-z0-9-]+$"
+      }
+    },
+    "required_patterns": {
+      "type": "array",
+      "description": "Subset of backed_by_pattern_ids that are required for this capability to function (minimum viable capability).",
+      "items": {
+        "type": "string",
+        "pattern": "^pattern-[a-z0-9-]+$"
+      }
+    },
+    "optional_patterns": {
+      "type": "array",
+      "description": "Subset of backed_by_pattern_ids that are optional enhancements (improved capability but not essential).",
+      "items": {
+        "type": "string",
+        "pattern": "^pattern-[a-z0-9-]+$"
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "description": "What must be in place before this capability can be used (tech stack requirements, access permissions, etc.)",
+      "items": {
+        "type": "object",
+        "required": ["prerequisite_type", "prerequisite_description"],
+        "properties": {
+          "prerequisite_type": {
+            "type": "string",
+            "enum": ["tech_stack", "permission", "infrastructure", "data", "configuration", "dependency"],
+            "description": "Type of prerequisite"
+          },
+          "prerequisite_description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "description": "Description of what is required"
+          }
+        }
+      }
+    },
+    "input_schema_ref": {
+      "type": ["string", "null"],
+      "description": "FK to L21 schemas (optional). JSON schema defining valid inputs for this capability."
+    },
+    "output_schema_ref": {
+      "type": ["string", "null"],
+      "description": "FK to L21 schemas (optional). JSON schema defining expected outputs."
+    },
+    "tags": {
+      "type": "array",
+      "description": "Searchable categorization tags (deployment, testing, refactoring, analysis, etc.)",
+      "items": {"type": "string"}
+    },
+    "owner_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "persona"],
+      "description": "Type of owner/maintainer (polymorphic)"
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Polymorphic FK to owner (agent/cp_agent/persona who maintains this capability)"
+    },
+    "deprecation_reason": {
+      "type": ["string", "null"],
+      "minLength": 10,
+      "maxLength": 1000,
+      "description": "Why this capability was deprecated (if maturity_level=deprecated)"
+    },
+    "replacement_capability_id": {
+      "type": ["string", "null"],
+      "description": "FK to L61 (self-reference). If deprecated, which capability replaced this one."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or implementation guidance"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.foundation/schema/work_learning_feedback.schema.json",
+  "title": "Work Learning Feedback (L57)",
+  "description": "Adaptive learning layer capturing lessons, tuning signals, and improvement insights from work execution. Feeds into pattern creation (L58) and continuous improvement cycles.",
+  "type": "object",
+  "required": [
+    "id",
+    "work_unit_ids",
+    "learning_type",
+    "observation",
+    "recommendation",
+    "confidence_score",
+    "validation_status",
+    "author_type",
+    "author_id",
+    "created_by",
+    "created_at",
+    "modified_by",
+    "modified_at",
+    "row_version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^learning-[0-9]{8}-[0-9]{3,}$",
+      "description": "Learning ID. Format: learning-{YYYYMMDD}-{seq}. Example: 'learning-20260309-001'"
+    },
+    "work_unit_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "FK array to L52 work_execution_units. Source work units for this learning."
+    },
+    "pattern_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "FK array to L58 work_reusable_patterns. Patterns derived from this learning (backfill)."
+    },
+    "learning_type": {
+      "type": "string",
+      "enum": ["success_factor", "failure_cause", "optimization", "anti_pattern", "best_practice", "edge_case", "tuning_signal"],
+      "description": "Category of learning insight."
+    },
+    "observation": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000,
+      "description": "What was observed. Detailed description of the finding."
+    },
+    "recommendation": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "Actionable recommendation based on observation."
+    },
+    "confidence_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence in this learning (0=low, 1=high). Based on sample size and repeatability."
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": ["draft", "under_review", "validated", "rejected", "archived"],
+      "description": "Validation lifecycle status."
+    },
+    "author_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "human"],
+      "description": "Type of actor who created this learning."
+    },
+    "author_id": {
+      "type": "string",
+      "description": "Polymorphic FK. Resolves to: agent→L9, cp_agent→L15, human→L2."
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags for categorization."
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Actor who created this record."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO 8601)."
+    },
+    "modified_by": {
+      "type": "string",
+      "description": "Actor who last modified this record."
+    },
+    "modified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last modification timestamp (ISO 8601)."
+    },
+    "row_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Optimistic concurrency control. Increments on each update."
+    }
+  },
+  "additionalProperties": false
+}

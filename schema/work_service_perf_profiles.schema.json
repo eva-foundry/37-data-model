@@ -1,0 +1,158 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L65 - work_service_perf_profiles",
+  "description": "Aggregate service performance metrics — computed view tracking success rates, timing, and resource consumption per service (L62). Derived from service runs (L64). Used for performance monitoring, capacity planning, and SLO compliance checking (L66, L67).",
+  "required": [
+    "id",
+    "service_id",
+    "total_runs",
+    "success_rate",
+    "last_updated",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: profile-{service_id}",
+      "pattern": "^profile-service-[a-z0-9-]+$",
+      "examples": ["profile-service-schema-migrator", "profile-service-api-deployer"]
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services (RESTRICT on delete). Which service this profile tracks.",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "total_runs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of service runs (count of L64 records for this service)"
+    },
+    "success_rate": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Aggregate success rate (runs with status=succeeded / total_runs)"
+    },
+    "successful_runs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of runs with status=succeeded"
+    },
+    "failed_runs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of runs with status=failed"
+    },
+    "timeout_runs": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of runs with status=timeout"
+    },
+    "avg_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Average duration of successful runs (in seconds)"
+    },
+    "p50_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Median duration (50th percentile)"
+    },
+    "p95_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "95th percentile duration (SLA threshold reference)"
+    },
+    "p99_duration_seconds": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "99th percentile duration (extreme high-water mark)"
+    },
+    "avg_cost_usd": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Average cost per run (based on resource_consumption.cost_usd from L64)"
+    },
+    "total_cost_usd": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "description": "Total cost across all runs"
+    },
+    "common_errors": {
+      "type": "array",
+      "description": "Top 5 most frequent error patterns (aggregated from L64.error_details)",
+      "items": {
+        "type": "object",
+        "required": ["error_code", "frequency", "sample_message"],
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "description": "Error code or category"
+          },
+          "frequency": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "How many times this error occurred"
+          },
+          "sample_message": {
+            "type": "string",
+            "description": "Example error message"
+          },
+          "retryable": {
+            "type": "boolean",
+            "description": "Whether this error is retryable"
+          }
+        }
+      },
+      "maxItems": 5
+    },
+    "source_run_ids": {
+      "type": "array",
+      "description": "FK array to L64 work_service_runs. All run IDs used to compute this profile (audit trail).",
+      "items": {
+        "type": "string",
+        "pattern": "^run-request-[0-9]{8}-[0-9]{3,}-[0-9]{2}$"
+      }
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this profile was last re-computed (ISO8601 timestamp)"
+    },
+    "computation_method": {
+      "type": "string",
+      "enum": ["manual", "scheduled_batch", "on_demand", "real_time"],
+      "description": "How this profile was computed"
+    },
+    "time_window_hours": {
+      "type": ["integer", "null"],
+      "minimum": 1,
+      "description": "Time window for this profile (e.g., 24 hours, 7 days). Null = all-time."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional analysis notes or tuning recommendations"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (typically automated profiling system)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}
