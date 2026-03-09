@@ -1,4 +1,4 @@
-﻿# EVA-FEATURE: F37-01
+# EVA-FEATURE: F37-01
 # EVA-STORY: F37-01-001
 # EVA-STORY: F37-01-002
 # EVA-STORY: F37-01-003
@@ -49,12 +49,12 @@ from api.config import get_settings
 
 log = logging.getLogger(__name__)
 
-# ── global uptime + call counter ──────────────────────────────────────────────
+# ── global uptime + call counter ────────────────────────────────────────
 _started_at: float = time.time()
 _request_count: int = 0
 
 
-# ── lifespan — wires store + cache ────────────────────────────────────────────
+# ── lifespan — wires store + cache ──────────────────────────────────────
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -64,8 +64,7 @@ async def lifespan(app: FastAPI):
     if not settings.dev_mode and settings.admin_token == "dev-admin":
         raise RuntimeError(
             "SECURITY: ADMIN_TOKEN is still 'dev-admin' but DEV_MODE=false. "
-            "Set a strong ADMIN_TOKEN in your environment before starting in production."
-        )
+            "Set a strong ADMIN_TOKEN in your environment before starting in production.")
     if not settings.dev_mode:
         log.info("Production mode — admin token validation enforced")
     else:
@@ -87,7 +86,10 @@ async def lifespan(app: FastAPI):
         # instead of silently killing the process with an unhandled exception.
         try:
             await store.init()
-            log.info("Store: CosmosDB — %s / %s", settings.model_db_name, settings.model_container_name)
+            log.info(
+                "Store: CosmosDB — %s / %s",
+                settings.model_db_name,
+                settings.model_container_name)
         except Exception as exc:
             log.error(
                 "STARTUP FAILED: CosmosStore.init() raised %s: %s",
@@ -102,18 +104,26 @@ async def lifespan(app: FastAPI):
     else:
         from api.store.memory import MemoryStore
         store = MemoryStore()
-        log.info("Store: MemoryStore (in-process, ephemeral — set COSMOS_URL to persist)")
+        log.info(
+            "Store: MemoryStore (in-process, ephemeral — set COSMOS_URL to persist)")
 
     # ── Cache ──────────────────────────────────────────────────────────────
     if settings.use_redis:
         from api.cache.redis_cache import RedisCache
-        cache = RedisCache(redis_url=settings.redis_url, ttl=settings.cache_ttl_seconds)
+        cache = RedisCache(
+            redis_url=settings.redis_url,
+            ttl=settings.cache_ttl_seconds)
         await cache.init()
-        log.info("Cache: Redis — %s  TTL=%ds", settings.redis_url, settings.cache_ttl_seconds)
+        log.info(
+            "Cache: Redis — %s  TTL=%ds",
+            settings.redis_url,
+            settings.cache_ttl_seconds)
     else:
         from api.cache.memory import MemoryCache
         cache = MemoryCache()
-        log.info("Cache: MemoryCache (in-process)  TTL=%ds", settings.cache_ttl_seconds)
+        log.info(
+            "Cache: MemoryCache (in-process)  TTL=%ds",
+            settings.cache_ttl_seconds)
 
     app.state.store = store
     app.state.cache = cache
@@ -134,7 +144,8 @@ async def lifespan(app: FastAPI):
             if not path.exists():
                 continue
             raw = json.loads(path.read_text(encoding="utf-8-sig"))
-            # Handle both formats: direct array (from export) or dict with layer key (from disk)
+            # Handle both formats: direct array (from export) or dict with
+            # layer key (from disk)
             if isinstance(raw, list):
                 objects = raw
             else:
@@ -165,14 +176,22 @@ async def lifespan(app: FastAPI):
     # next cold-start auto-seed picks up all changes made since the last manual export.
     # Cosmos store: persistence is inherent — no export needed.
     # Dev mode (dev_mode=True): skip export to avoid polluting model/*.json during
-    # local development and test runs (TestClient teardown triggers lifespan cleanup).
+    # local development and test runs (TestClient teardown triggers lifespan
+    # cleanup).
     from api.store.memory import MemoryStore as _MSShutdown
     if isinstance(store, _MSShutdown) and not settings.dev_mode:
         log.info("Shutdown: exporting MemoryStore to disk JSON layer files...")
         try:
             import json as _json
             from api.routers.admin import _LAYER_FILES, _get_model_dir
-            _STRIP = {"obj_id", "layer", "_rid", "_self", "_etag", "_attachments", "_ts"}
+            _STRIP = {
+                "obj_id",
+                "layer",
+                "_rid",
+                "_self",
+                "_etag",
+                "_attachments",
+                "_ts"}
             _total = 0
             for _layer, _filename in _LAYER_FILES.items():
                 _path = _get_model_dir() / _filename
@@ -183,30 +202,40 @@ async def lifespan(app: FastAPI):
                 _schema_url = ""
                 if _path.exists():
                     try:
-                        _existing = _json.loads(_path.read_text(encoding="utf-8-sig"))
+                        _existing = _json.loads(
+                            _path.read_text(encoding="utf-8-sig"))
                         _schema_url = _existing.get("$schema", "")
                     except Exception:
                         pass
-                _clean = [{k: v for k, v in doc.items() if k not in _STRIP} for doc in _objects]
+                _clean = [{k: v for k, v in doc.items() if k not in _STRIP}
+                          for doc in _objects]
                 _file_content: dict = {}
                 if _schema_url:
                     _file_content["$schema"] = _schema_url
                 _file_content[_layer] = _clean
                 try:
                     _path.write_text(
-                        _json.dumps(_file_content, indent=2, ensure_ascii=False) + "\n",
+                        _json.dumps(
+                            _file_content,
+                            indent=2,
+                            ensure_ascii=False) +
+                        "\n",
                         encoding="utf-8",
                     )
                     _total += len(_clean)
                 except Exception as _we:
-                    log.warning("Shutdown export: failed to write %s — %s", _filename, _we)
-            log.info("Shutdown export complete: %d objects written to %d layer files", _total, len(_LAYER_FILES))
+                    log.warning(
+                        "Shutdown export: failed to write %s — %s", _filename, _we)
+            log.info(
+                "Shutdown export complete: %d objects written to %d layer files",
+                _total,
+                len(_LAYER_FILES))
         except Exception as _exc:
             log.error("Shutdown export failed: %s", _exc)
     # Cosmos / Redis clients close themselves via GC
 
 
-# ── app ───────────────────────────────────────────────────────────────────────
+# ── app ─────────────────────────────────────────────────────────────────
 
 def create_app() -> FastAPI:
     settings = get_settings()
@@ -266,27 +295,43 @@ def create_app() -> FastAPI:
         # governance plane (L32-L35) — agent automation safety
         workspace_config_router, project_work_router,
         agent_policies_router, quality_gates_router, github_rules_router,
-        # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
+        # deployment & testing (L36-L38) — deployment policies + testing
+        # automation + validation rules
         deployment_policies_router, testing_policies_router, validation_rules_router,
-        # infrastructure monitoring (L40-L49) — agent execution, performance, deployment quality
+        # infrastructure monitoring (L40-L47) — agent execution, performance,
+        # deployment quality
         agent_execution_history_router, agent_performance_metrics_router,
         azure_infrastructure_router, compliance_audit_router,
         deployment_quality_scores_router, deployment_records_router,
         eva_model_router, infrastructure_drift_router,
         performance_trends_router, resource_costs_router,
+        # automated remediation (L48-L51) — Priority #4 self-healing framework
+        remediation_policies_router, auto_fix_execution_history_router,
+        remediation_outcomes_router, remediation_effectiveness_router,
     )
     from api.routers.fp import router as fp_router  # noqa: E402
     from api.routers.filter_endpoints import router as endpoints_router
     from api.routers.impact import router as impact_router
     from api.routers.graph import router as graph_router
     from api.routers.admin import router as admin_router
-    from api.routers.introspection import router as introspection_router  # Session 26: schema introspection
-    from api.routers.aggregation import router as aggregation_router  # Session 26: metrics & analytics
+    # Session 26: schema introspection
+    from api.routers.introspection import router as introspection_router
+    # Session 26: metrics & analytics
+    from api.routers.aggregation import router as aggregation_router
+    # Session 41: layer metadata query
+    from api.routers.metadata import router as metadata_router
+    # Session 41: debug agent-guide 500 error
+    from api.routers.debug import router as debug_router
 
     for r in [
-        # introspection & aggregation (Session 26) — register FIRST for path precedence
+        # introspection & aggregation (Session 26) — register FIRST for path
+        # precedence
         introspection_router,
         aggregation_router,
+        # metadata (Session 41) — register SECOND for layer discovery endpoint
+        metadata_router,
+        # debug (Session 41) — debug agent-guide 500 error investigation
+        debug_router,
         # layer routers (generic /{obj_id} path)
         services_router, personas_router, feature_flags_router,
         containers_router, endpoints_router, schemas_router,
@@ -311,12 +356,15 @@ def create_app() -> FastAPI:
         agent_policies_router, quality_gates_router, github_rules_router,
         # deployment & testing (L36-L38)
         deployment_policies_router, testing_policies_router, validation_rules_router,
-        # infrastructure monitoring (L40-L49) — Priority #4 layers
+        # infrastructure monitoring (L40-L47) — Priority #3 layers
         agent_execution_history_router, agent_performance_metrics_router,
         azure_infrastructure_router, compliance_audit_router,
         deployment_quality_scores_router, deployment_records_router,
         eva_model_router, infrastructure_drift_router,
         performance_trends_router, resource_costs_router,
+        # automated remediation (L48-L51) — Priority #4 self-healing framework
+        remediation_policies_router, auto_fix_execution_history_router,
+        remediation_outcomes_router, remediation_effectiveness_router,
         fp_router,
         # graph (E-11)
         graph_router,
@@ -324,14 +372,15 @@ def create_app() -> FastAPI:
     ]:
         app.include_router(r)
 
-    @app.get("/health", tags=["health"], summary="Liveness check — process alive + store type")
+    @app.get("/health",
+             tags=["health"],
+             summary="Liveness check — process alive + store type")
     async def health() -> dict:
         """
         Liveness probe: is the process up?
         Returns store/cache type, uptime, request count, and a hint to /model/agent-guide.
         Does NOT probe Cosmos — use /ready for that (readiness probe).
         """
-        from api.store.memory import MemoryStore as _MS
         from api.store.cosmos import CosmosStore as _CS
         from api.cache.redis_cache import RedisCache as _RC
         import datetime
@@ -344,20 +393,22 @@ def create_app() -> FastAPI:
         ).isoformat()
 
         return {
-            "status":        "ok",
-            "service":       "model-api",
-            "version":       settings.api_version,
-            "store":         store_type,
-            "cache":         cache_type,
-            "cache_ttl":     settings.cache_ttl_seconds,
-            "started_at":    started_iso,
+            "status": "ok",
+            "service": "model-api",
+            "version": settings.api_version,
+            "store": store_type,
+            "cache": cache_type,
+            "cache_ttl": settings.cache_ttl_seconds,
+            "started_at": started_iso,
             "uptime_seconds": uptime,
             "request_count": _request_count,
-            "agent_guide":   "/model/agent-guide",
-            "readiness":     "/ready",
+            "agent_guide": "/model/agent-guide",
+            "readiness": "/ready",
         }
 
-    @app.get("/ready", tags=["health"], summary="Readiness probe — store connectivity verified")
+    @app.get("/ready",
+             tags=["health"],
+             summary="Readiness probe — store connectivity verified")
     async def ready() -> dict:
         """
         Readiness probe: is the store reachable?
@@ -398,15 +449,15 @@ def create_app() -> FastAPI:
         ).isoformat()
 
         body = {
-            "status":            "ready" if store_reachable else "not_ready",
-            "service":           "model-api",
-            "version":           settings.api_version,
-            "store":             store_type,
-            "store_reachable":   store_reachable,
-            "store_latency_ms":  store_latency_ms,
-            "started_at":        started_iso,
-            "uptime_seconds":    uptime,
-            "request_count":     _request_count,
+            "status": "ready" if store_reachable else "not_ready",
+            "service": "model-api",
+            "version": settings.api_version,
+            "store": store_type,
+            "store_reachable": store_reachable,
+            "store_latency_ms": store_latency_ms,
+            "started_at": started_iso,
+            "uptime_seconds": uptime,
+            "request_count": _request_count,
         }
         if store_error:
             body["store_error"] = store_error
@@ -414,18 +465,16 @@ def create_app() -> FastAPI:
         status_code = 200 if store_reachable else 503
         return JSONResponse(content=body, status_code=status_code)
 
-    @app.get(
-        "/model/agent-summary",
-        tags=["health"],
-        summary="All layer counts in one call — use this instead of querying each layer separately",
-    )
+    @app.get("/model/agent-summary",
+             tags=["health"],
+             summary="All layer counts in one call — use this instead of querying each layer separately",
+             )
     async def agent_summary() -> dict:
         """Returns item count for every layer + total.  No auth required.
         One call replaces 27 separate GET /model/{layer}/ count queries.
         Response includes store type and cache_ttl so agents know the write-safety profile.
         """
         from api.routers.admin import _LAYER_FILES
-        from api.store.memory import MemoryStore as _MS
         from api.store.cosmos import CosmosStore as _CS
         store = app.state.store
         store_type = "cosmos" if isinstance(store, _CS) else "memory"
@@ -437,11 +486,12 @@ def create_app() -> FastAPI:
             except Exception:
                 counts[layer] = -1
         return {
-            "layers":    counts,
-            "total":     sum(v for v in counts.values() if v >= 0),
-            "store":     store_type,
+            "layers": counts,
+            "total": sum(
+                v for v in counts.values() if v >= 0),
+            "store": store_type,
             "cache_ttl": settings.cache_ttl_seconds,
-            "note":      "cache_ttl=0 means every GET goes to store -- safe for agent write-verify cycles",
+            "note": "cache_ttl=0 means every GET goes to store -- safe for agent write-verify cycles",
         }
 
     @app.get(
@@ -455,23 +505,34 @@ def create_app() -> FastAPI:
         The JSON model files (model/*.json) are an internal implementation
         detail. Agents MUST NOT read, parse, or reference them directly.
         This endpoint is the only bootstrap an agent needs.
-        
+
         ENHANCED: Session 26 (2026-03-05) — Added discovery_journey, query_capabilities,
         terminal_safety, common_mistakes, examples for agent experience excellence.
+        Session 41: Phase 2 - Load layers from layer-metadata-index.json for FK support.
         """
-        from api.routers.admin import _LAYER_FILES
-        layers = list(_LAYER_FILES.keys())
+        # Load layers from layer-metadata-index.json (Phase 2)
+        # Use metadata router's helper function
+        from api.routers.metadata import _load_metadata_index
+        layer_metadata_index = _load_metadata_index()
+        layers = [entry["layer_name"]
+                  for entry in layer_metadata_index["layers"]]
+        operational_count = sum(
+            1 for entry in layer_metadata_index["layers"] if entry.get(
+                "operational", False))
+        # Session 41 marker - verifying code reload
+        debug_timestamp = "2026-03-08T21:15:00Z"
         return {
+            "session_41_reload_marker": debug_timestamp,
             "identity": {
-                "service":     "EVA Data Model API",
+                "service": "EVA Data Model API",
                 "description": (
                     "Single source of truth for all declared EVA platform entities. "
                     "27+ layers. Every object has an immutable audit trail. "
                     "Store=Cosmos in production. Store=memory in local dev."
                 ),
-                "base_url":    "http://localhost:8010",
-                "cloud_url":   "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
-                "apim_base":   "https://marco-sandbox-apim.azure-api.net/data-model",
+                "base_url": "http://localhost:8010",
+                "cloud_url": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
+                "apim_base": "https://marco-sandbox-apim.azure-api.net/data-model",
                 "apim_header": "Ocp-Apim-Subscription-Key: <EVA_APIM_KEY>",
             },
             "golden_rule": (
@@ -492,8 +553,8 @@ def create_app() -> FastAPI:
                     {
                         "step": 2,
                         "title": "Discover Available Layers",
-                        "calls": ["GET /model/layers", "GET /model/agent-summary"],
-                        "what_you_learn": "34 layers with counts, which have data vs schemas only"
+                        "calls": ["GET /model/layers", "GET /model/agent-summary", "GET /model/layer-metadata/?operational=true"],
+                        "what_you_learn": "51 layers with counts, FK relationships, priorities, categories, operational status flags"
                     },
                     {
                         "step": 3,
@@ -577,22 +638,29 @@ def create_app() -> FastAPI:
                 "fast_counts": "Use GET /model/{layer}/count for instant totals (no data transfer)"
             },
             "query_patterns": {
-                "all_layer_counts":        "GET /model/agent-summary",
-                "object_by_id":            "GET /model/{layer}/{id}",
-                "all_objects_in_layer":    "GET /model/{layer}/",
+                "all_layer_counts": "GET /model/agent-summary",
+                "discover_layers": "GET /model/layer-metadata/ (all 51 layers with FK relationships)",
+                "discover_operational": "GET /model/layer-metadata/?operational=true (only 19 operational layers)",
+                "discover_by_priority": "GET /model/layer-metadata/?priority=P0,P1 (foundation layers)",
+                "discover_by_category": "GET /model/layer-metadata/?category=Remediation (L48-L51)",
+                "discover_with_fks": "GET /model/layer-metadata/?with_fk=true (layers with FK relationships)",
+                "layer_fk_details": "GET /model/layer-metadata/{layer} (single layer with fk_references and referenced_by)",
+                "fk_relationship_matrix": "GET /model/fk-matrix (complete FK map for all layers)",
+                "object_by_id": "GET /model/{layer}/{id}",
+                "all_objects_in_layer": "GET /model/{layer}/",
                 "filter_endpoints_status": "GET /model/endpoints/filter?status=stub",
-                "filter_other_layers":     "GET /model/{layer}/ then filter client-side with Where-Object",
-                "what_screen_calls":       "GET /model/screens/{id}  -> .api_calls",
-                "auth_or_feature_flag":    "GET /model/endpoints/{id}  -> .auth  .feature_flag",
+                "filter_other_layers": "GET /model/{layer}/ then filter client-side with Where-Object",
+                "what_screen_calls": "GET /model/screens/{id}  -> .api_calls",
+                "auth_or_feature_flag": "GET /model/endpoints/{id}  -> .auth  .feature_flag",
                 "cosmos_container_schema": "GET /model/containers/{id}  -> .fields  .partition_key",
-                "navigate_to_source":      ".repo_path + .repo_line  -> code --goto (line ref only, never grep)",
-                "impact_analysis":         "GET /model/impact/?container=X",
-                "relationship_graph":      "GET /model/graph/?node_id=X&depth=2",
-                "services_list":           "GET /model/services/  -> obj_id, status, is_active, notes",
-                "schema_introspection":    "GET /model/schemas/{layer} → full JSON schema",
-                "example_object":          "GET /model/{layer}/example → first real object",
-                "field_discovery":         "GET /model/{layer}/fields → array of field names",
-                "fast_count":              "GET /model/{layer}/count → instant count without data"
+                "navigate_to_source": ".repo_path + .repo_line  -> code --goto (line ref only, never grep)",
+                "impact_analysis": "GET /model/impact/?container=X",
+                "relationship_graph": "GET /model/graph/?node_id=X&depth=2",
+                "services_list": "GET /model/services/  -> obj_id, status, is_active, notes",
+                "schema_introspection": "GET /model/schemas/{layer} → full JSON schema",
+                "example_object": "GET /model/{layer}/example → first real object",
+                "field_discovery": "GET /model/{layer}/fields → array of field names",
+                "fast_count": "GET /model/{layer}/count → instant count without data"
             },
             "write_cycle": {
                 "critical_rule": (
@@ -708,6 +776,29 @@ def create_app() -> FastAPI:
                     "cause": "Layers evolve - hardcoded counts become stale immediately",
                     "symptoms": "Documentation says '41 layers' but API has 51; examples reference removed fields",
                     "fix": "Always tell agents to introspect: GET /model/agent-summary for live counts, GET /model/{layer}/example for current schema"
+                },
+                "mistake_14": {
+                    "error": "Not discovering FK relationships before querying linked layers",
+                    "cause": "Assumed FK structure instead of using layer-metadata endpoint",
+                    "symptoms": "Manual FK resolution attempts; hardcoded layer names; missed referenced_by relationships",
+                    "fix": "Use GET /model/layer-metadata/{layer} to see fk_references[] and referenced_by[] arrays. Example: GET /model/layer-metadata/remediation_policies shows links to agent_policies and deployment_policies"
+                },
+                "mistake_15": {
+                    "error": "Not following FK resolution pattern for L48-L51 remediation framework",
+                    "cause": "Fetched execution history but didn't resolve policy_id to full policy object",
+                    "symptoms": "Incomplete data; missing policy details like triggers, actions, thresholds",
+                    "fix": [
+                        "1. GET /model/auto_fix_execution_history/{exec_id} → extract policy_id",
+                        "2. GET /model/remediation_policies/{policy_id} → get full policy with triggers/actions",
+                        "3. For agent context: extract executor_agent_id → GET /model/agent_performance_metrics/{agent_id}",
+                        "4. For provenance: extract decision_ids[] → GET /model/decision_provenance/{decision_id}"
+                    ]
+                },
+                "mistake_16": {
+                    "error": "Querying all layers without knowing which have data vs stubs",
+                    "cause": "No pre-query check of operational status",
+                    "symptoms": "Empty responses; wasted queries; unclear which layers are production-ready",
+                    "fix": "Use GET /model/layer-metadata/?operational=true to get only the 19 operational layers. Stub layers (32) are designed but not populated yet"
                 }
             },
             "examples": {
@@ -745,21 +836,160 @@ def create_app() -> FastAPI:
                     ]
                 }
             },
+            "remediation_framework": {
+                "overview": "L48-L51 automated remediation with policy-driven self-healing (Session 40)",
+                "description": (
+                    "4-layer framework for automated incident response: "
+                    "L48 (policies) defines WHEN/HOW/WHO to remediate. "
+                    "L49 (execution_history) records every auto-fix attempt. "
+                    "L50 (outcomes) tracks resolution success/failure. "
+                    "L51 (effectiveness) aggregates system-wide KPIs."
+                ),
+                "examples": {
+                    "list_policies": {
+                        "method": "GET",
+                        "url": "/model/remediation_policies/",
+                        "description": "Get all remediation policies with triggers and actions",
+                        "response_fields": ["policy_id", "policy_name", "triggers", "actions", "linked_policies"]
+                    },
+                    "get_policy": {
+                        "method": "GET",
+                        "url": "/model/remediation_policies/policy:agent-performance-recovery",
+                        "description": "Fetch specific policy by ID",
+                        "use_case": "Understand what triggers a specific remediation action"
+                    },
+                    "execution_history": {
+                        "method": "GET",
+                        "url": "/model/auto_fix_execution_history/",
+                        "description": "View audit trail of all remediation actions",
+                        "query_params": ["?limit=20", "?executor_agent_id=X"],
+                        "response_fields": ["execution_id", "policy_id", "timestamp", "outcome", "duration_seconds"]
+                    },
+                    "fk_resolution_pattern": {
+                        "description": "Follow FK from execution to policy to agent metrics (4 API calls)",
+                        "pattern": [
+                            "1. GET /model/auto_fix_execution_history/exec:20260308-142035-abc -> extract policy_id, executor_agent_id",
+                            "2. GET /model/remediation_policies/{policy_id} -> get triggers[], actions[], linked_policies[]",
+                            "3. GET /model/agent_performance_metrics/{executor_agent_id} -> verify agent reliability",
+                            "4. GET /model/decision_provenance/{decision_id} -> trace reasoning (if decision_ids[] populated)"
+                        ],
+                        "code_example": [
+                            "$exec = (irm http://localhost:8010/model/auto_fix_execution_history/exec:xyz).data",
+                            "$policy = (irm http://localhost:8010/model/remediation_policies/$($exec.policy_id)).data",
+                            "$agent = (irm http://localhost:8010/model/agent_performance_metrics/$($exec.executor_agent_id)).data",
+                            "Write-Host \"Policy: $($policy.policy_name), Agent: $($agent.agent_id), Reliability: $($agent.reliability_percent)%\""
+                        ]
+                    },
+                    "effectiveness_metrics": {
+                        "method": "GET",
+                        "url": "/model/remediation_effectiveness/2026-03",
+                        "description": "System-wide success rates and trends for March 2026",
+                        "aggregations": {
+                            "by_policy": "Success rate per policy type (agent restart, scale-up, rollback)",
+                            "by_agent": "Which agents have highest auto-fix success rates",
+                            "by_severity": "How quickly critical vs warning issues are resolved"
+                        }
+                    },
+                    "outcomes_analysis": {
+                        "method": "GET",
+                        "url": "/model/remediation_outcomes/?resolution_status=resolved",
+                        "description": "Analyze successful vs failed remediation attempts",
+                        "use_case": "Identify which policies need tuning (high false positive rate)"
+                    },
+                    "layer_metadata_integration": {
+                        "method": "GET",
+                        "url": "/model/layer-metadata/?category=Remediation",
+                        "description": "Get metadata for all 4 remediation layers (L48-L51)",
+                        "returns": "Layer definitions with FK relationships, priorities, operational status",
+                        "next_step": "Use fk_references[] to discover linked layers without hardcoding"
+                    },
+                    "discover_fk_relationships": {
+                        "method": "GET",
+                        "url": "/model/layer-metadata/auto_fix_execution_history",
+                        "description": "See all FK relationships for execution history layer",
+                        "returns": {
+                            "fk_references": ["remediation_policies", "agent_performance_metrics", "agent_execution_history", "decision_provenance"],
+                            "referenced_by": ["remediation_outcomes"]
+                        }
+                    },
+                    "query_by_priority": {
+                        "method": "GET",
+                        "url": "/model/layer-metadata/?priority=P4",
+                        "description": "Get all Priority #4 layers (automated remediation framework)",
+                        "use_case": "Discover complete remediation layer set without hardcoding layer names"
+                    }
+                },
+                "common_patterns": {
+                    "trigger_policy": "Check L48 for policy_id, verify triggers match current metrics (latency_threshold, error_rate, etc.)",
+                    "track_execution": "L49 records all execution attempts with timestamps, outcomes, and duration",
+                    "analyze_outcome": "L50 links execution_id to resolution_status (resolved, failed, partial)",
+                    "measure_effectiveness": "L51 aggregates by policy/agent/severity for trend analysis and false positive detection",
+                    "cross_layer_workflow": [
+                        "Metrics drop (L40-L47) -> Trigger policy (L48) -> Execute remediation (L49) -> Record outcome (L50) -> Update effectiveness (L51)"
+                    ]
+                },
+                "fk_navigation": {
+                    "description": "How to navigate FK relationships across remediation layers",
+                    "outbound_fks": {
+                        "L48_remediation_policies": {
+                            "fk_to": ["L33:agent_policies", "L36:deployment_policies"],
+                            "use_case": "Fetch governance constraints before executing policy"
+                        },
+                        "L49_auto_fix_execution_history": {
+                            "fk_to": ["L48:remediation_policies", "L40:agent_performance_metrics", "L46:agent_execution_history", "L31:decision_provenance"],
+                            "use_case": "Full context for execution: policy definition + agent state + reasoning"
+                        },
+                        "L50_remediation_outcomes": {
+                            "fk_to": ["L49:auto_fix_execution_history"],
+                            "use_case": "Link outcome metrics back to execution details"
+                        },
+                        "L51_remediation_effectiveness": {
+                            "fk_to": ["L48:remediation_policies", "L40:agent_performance_metrics"],
+                            "use_case": "Aggregate effectiveness by policy type and agent"
+                        }
+                    },
+                    "inbound_fks": {
+                        "L48_remediation_policies": {
+                            "referenced_by": ["L49:auto_fix_execution_history", "L51:remediation_effectiveness"],
+                            "use_case": "Find all executions and effectiveness records for a policy"
+                        },
+                        "L49_auto_fix_execution_history": {
+                            "referenced_by": ["L50:remediation_outcomes"],
+                            "use_case": "Get outcome analysis for a specific execution"
+                        }
+                    }
+                },
+                "ready_for_production": {
+                    "status": "All 4 layers operational (Session 40)",
+                    "data_available": True,
+                    "sample_policies": "agent-performance-recovery, infrastructure-scale-up, deployment-rollback",
+                    "sample_executions": "8+ historical executions across all policies",
+                    "next_session": "Phase 4 - populate remaining 32 stub layers with realistic data"
+                }
+            },
             "layers_available": layers,
+            "layers_total": len(layers),
+            "layers_operational": operational_count,
+            "layers_complete_percent": round((operational_count / len(layers) * 100) if layers else 0, 1),
             "layer_notes": {
-                "endpoints":     "id = 'METHOD /path' (exact). Filter by status with ?status=",
-                "screens":       ".api_calls[] lists every endpoint id the screen calls",
-                "services":      "uses obj_id not id field; no type or port fields at root level",
-                "requirements":  "type: capability|epic|feature|story|pbi|proposal. project scoped.",
-                "wbs":           "programme decomposition. ado_epic_id populated after ado-import.ps1",
-                "containers":    "Cosmos containers. .fields + .partition_key are the schema source",
-                "projects":      "all 48 eva-foundation numbered project folders",
-                "mcp_servers":   "registered MCP servers. used by agents to resolve skill endpoints",
-                "agents":        "registered agent definitions. .skills[] links to mcp_servers",
-                "project_work":  "session-based work tracking. id format: '{project_id}-{YYYY-MM-DD}'. Contains session_summary (number, date, objective, status), tasks[], metrics{}, next_steps[]",
+                "endpoints": "id = 'METHOD /path' (exact). Filter by status with ?status=",
+                "screens": ".api_calls[] lists every endpoint id the screen calls",
+                "services": "uses obj_id not id field; no type or port fields at root level",
+                "requirements": "type: capability|epic|feature|story|pbi|proposal. project scoped.",
+                "wbs": "programme decomposition. ado_epic_id populated after ado-import.ps1",
+                "containers": "Cosmos containers. .fields + .partition_key are the schema source",
+                "projects": "all 48 eva-foundation numbered project folders",
+                "mcp_servers": "registered MCP servers. used by agents to resolve skill endpoints",
+                "agents": "registered agent definitions. .skills[] links to mcp_servers",
+                "project_work": "session-based work tracking. id format: '{project_id}-{YYYY-MM-DD}'. Contains session_summary (number, date, objective, status), tasks[], metrics{}, next_steps[]",
                 "agent_policies": "(L33) Agent capabilities, safety constraints, project access. evidence tech_stack='agent-policies'",
-                "quality_gates":  "(L34) MTI thresholds, test coverage gates, phase-specific blockers. evidence tech_stack='quality-gates'",
-                "github_rules":   "(L35) Branch protection, commit standards, naming conventions. evidence tech_stack='github-rules'",
+                "quality_gates": "(L34) MTI thresholds, test coverage gates, phase-specific blockers. evidence tech_stack='quality-gates'",
+                "github_rules": "(L35) Branch protection, commit standards, naming conventions. evidence tech_stack='github-rules'",
+                "remediation_policies": "(L48) Decision framework for when/how/who to remediate. Triggers, actions, linked_policies. FK to agent_policies, deployment_policies",
+                "auto_fix_execution_history": "(L49) Audit trail of automated remediation attempts. FK to remediation_policies, agent_performance_metrics, agent_execution_history, decision_provenance",
+                "remediation_outcomes": "(L50) Resolution status and impact analytics. FK to auto_fix_execution_history",
+                "remediation_effectiveness": "(L51) System-wide KPIs aggregated by policy/agent/severity. FK to remediation_policies, agent_performance_metrics",
+                "layer_metadata": "Use GET /model/layer-metadata/ to discover all 51 layers with FK relationships, priorities, categories, operational status. Query params: operational, priority, category, sort, with_fk"
             },
             "forbidden": [
                 "Reading model/*.json files directly",
@@ -771,20 +1001,23 @@ def create_app() -> FastAPI:
                 "Writing new skills in a project repo (skills are mastered in 29-foundry)",
             ],
             "quick_reference": {
-                "health_check":    "GET /health  (liveness — uptime, store type, request_count)",
+                "health_check": "GET /health  (liveness — uptime, store type, request_count)",
                 "readiness_check": "GET /ready   (readiness — Cosmos ping, store_reachable field)",
-                "layer_counts":    "GET /model/agent-summary",
-                "layer_list":      "GET /model/layers (all layers with schema + count metadata)",
-                "schema":          "GET /model/schemas/{layer} (full JSON Schema draft-07)",
-                "fields":          "GET /model/{layer}/fields (field names + required list)",
-                "example":         "GET /model/{layer}/example (first real object)",
-                "count":           "GET /model/{layer}/count (fast total without data)",
-                "commit":          "POST /model/admin/commit  (Bearer dev-admin)",
-                "validate":        "POST /model/admin/validate  (Bearer dev-admin)",
-                "export":          "POST /model/admin/export  (Bearer dev-admin)",
-                "impact":          "GET /model/impact/?container=X",
-                "graph":           "GET /model/graph/?node_id=X&depth=2",
-                "this_guide":      "GET /model/agent-guide",
+                "layer_counts": "GET /model/agent-summary",
+                "layer_list": "GET /model/layers (all layers with schema + count metadata)",
+                "layer_metadata": "GET /model/layer-metadata/ (51 layer definitions with FK relationships, priorities, categories)",
+                "layer_metadata_single": "GET /model/layer-metadata/{layer} (single layer with fk_references and referenced_by)",
+                "fk_matrix": "GET /model/fk-matrix (complete FK relationship matrix for all layers)",
+                "schema": "GET /model/schemas/{layer} (full JSON Schema draft-07)",
+                "fields": "GET /model/{layer}/fields (field names + required list)",
+                "example": "GET /model/{layer}/example (first real object)",
+                "count": "GET /model/{layer}/count (fast total without data)",
+                "commit": "POST /model/admin/commit  (Bearer dev-admin)",
+                "validate": "POST /model/admin/validate  (Bearer dev-admin)",
+                "export": "POST /model/admin/export  (Bearer dev-admin)",
+                "impact": "GET /model/impact/?container=X",
+                "graph": "GET /model/graph/?node_id=X&depth=2",
+                "this_guide": "GET /model/agent-guide",
             },
         }
 

@@ -1,8 +1,208 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 8, 2026 12:07 PM UTC -- Session 39: INFRASTRUCTURE LAYERS L40-L49 DEPLOYED & VALIDATED ✅
+**Last Updated:** March 8, 2026 20:35 PM ET -- Session 41: Phase 4 Bug Fix + Data Seeding COMPLETE ✅
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- 51 LAYERS OPERATIONAL -- CLOUD-ONLY ARCHITECTURE ✅
-**Snapshot (2026-03-08 S39 COMPLETE):** All 51 layers deployed to cloud API. **Session 39 validation complete**: All 10 infrastructure monitoring layers (L40-L49) confirmed operational with successful endpoint testing (10/10 pass rate). Cloud Container App deployment provisioning state: Succeeded. All layers accessible via HTTPS with trailing slash requirement. Cloud URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+**Snapshot (2026-03-08 S41 Phase 4 COMPLETE):** Fixed agent-guide 500 error (lowercase boolean bug), seeded 10 agent_performance_metrics records. Applied DPDCA debugging methodology with debug endpoint and professional evidence trail. Local endpoint fully operational. Azure deployment pending manual ACR rebuild. Commits: 6 total (c0fd544 through 2c75810). Bug detection gap: Violated CHECK phase by not running pylint/flake8/manual test before commits. Total Cosmos DB objects: 1,272 (10 new agents). Branch: docs/session-39-completion-and-51-layer-catalog ready for merge.
+
+---
+
+## Session 41: Comprehensive Audit Script + Layer-Metadata Endpoint + Agent-Guide Enhancement (6:58 PM ET) ✅
+
+**MISSION**: Fix audit script bugs, implement layer-metadata query endpoint, document L48-L51 remediation patterns
+
+**PHASE 1 COMPLETE (6:58 PM ET)**:
+- ✅ Normalized all 51 layer definitions (added Operational + FK properties)
+- ✅ Integrated FK testing into main audit flow (Test 4 section)
+- ✅ Script tested successfully - no PropertyNotFoundException errors
+- ✅ FK validation working (L49→L48, L49→L41, L50→L49 resolution tested)
+
+**PHASE 2 COMPLETE (6:58 PM ET)**:
+- ✅ Created api/routers/metadata.py (250+ lines)
+  - GET /model/layer-metadata/ (main query with 5 filters)
+  - GET /model/layer-metadata/{layer} (single layer lookup)
+  - GET /model/fk-matrix (FK relationship matrix)
+  - Query params: operational, priority, category, sort, with_fk
+- ✅ Created model/layer-metadata-index.json (51 complete layer definitions)
+  - Categories: Foundation(32), Governance(8), Infrastructure(8), Remediation(4)
+  - FK matrix: L48-L51 relationships + all other layer dependencies
+  - Operational status: 19 operational, 32 stub layers
+- ✅ Registered router in api/server.py (metadata_router added before layer routers)
+- ✅ Added L48-L51 to admin.py _LAYER_FILES and layers.py routers
+- ✅ Committed with comprehensive documentation
+
+**FILES MODIFIED**:
+- scripts/comprehensive-layer-audit.ps1 (450 lines)
+- api/routers/metadata.py (NEW - 250+ lines)
+- model/layer-metadata-index.json (NEW - 51 layer definitions)
+- api/server.py (metadata router registration)
+- api/routers/admin.py (L48-L51 layer files)
+- api/routers/layers.py (L48-L51 routers)
+
+**METADATA ENDPOINT FEATURES**:
+```powershell
+# Query all layers
+GET /model/layer-metadata/
+
+# Filter by operational status
+GET /model/layer-metadata/?operational=true
+
+# Filter by priority (comma-separated)
+GET /model/layer-metadata/?priority=P0,P1
+
+# Filter by category
+GET /model/layer-metadata/?category=Remediation
+
+# Filter by FK presence
+GET /model/layer-metadata/?with_fk=true
+
+# Sort results
+GET /model/layer-metadata/?sort=layer_name
+
+# Single layer lookup
+GET /model/layer-metadata/remediation_policies
+GET /model/layer-metadata/48
+
+# FK matrix
+GET /model/fk-matrix
+```
+
+**RESPONSE STRUCTURE**:
+```json
+{
+  "data": [
+    {
+      "layer_number": 48,
+      "layer_name": "remediation_policies",
+      "description": "Decision framework (WHEN/HOW/WHO to remediate)",
+      "priority": "P4",
+      "category": "Remediation",
+      "operational": true,
+      "schema_file": "remediation_policy.schema.json",
+      "fk_references": ["agent_policies", "deployment_policies"],
+      "referenced_by": ["auto_fix_execution_history", "remediation_effectiveness"],
+      "automation": "manual"
+    }
+  ],
+  "metadata": {
+    "total_layers": 51,
+    "filtered_count": 4,
+    "operational_count": 19,
+    "stub_count": 32,
+    "last_updated": "2026-03-08T18:58:00Z",
+    "fk_matrix_available": true
+  }
+}
+```
+
+**TEST RESULTS** (Phase 1 Audit Script):
+- Total Layers: 51
+- Available (HTTP 200): 19/51 (37%)
+- Operational: 24 layers
+- With Data: 17/19 (89%)
+- L48-L51 Verification: 4/4 available, 4/4 with data ✅
+
+**PHASE 3 COMPLETE (6:58 PM ET)**:
+- ✅ Added 'remediation_framework' section to agent-guide
+  - Overview of L48-L51 automated remediation layers
+  - 10 comprehensive examples (list policies, execution history, FK resolution, effectiveness metrics)
+  - FK navigation patterns (outbound/inbound relationships for L48-L51)
+  - Code examples for FK resolution workflow (4-step pattern)
+  - Ready for production flag
+- ✅ Enhanced 'common_mistakes' with FK patterns
+  - mistake_14: Using layer-metadata to discover FK relationships
+  - mistake_15: Following FK resolution pattern for L48-L51 (4-step workflow)
+  - mistake_16: Checking operational status before querying
+- ✅ Updated discovery_journey Step 2
+  - Added GET /model/layer-metadata/?operational=true to layer discovery
+- ✅ Enhanced query_patterns section
+  - Added 7 new layer-metadata query patterns
+  - FK discovery patterns (discover_layers, discover_operational, discover_by_priority, discover_by_category, discover_with_fks)
+  - Category/priority filtering
+- ✅ Updated quick_reference section
+  - layer_metadata, layer_metadata_single, fk_matrix endpoints
+- ✅ Enhanced layer_notes section
+  - Added L48-L51 layer descriptions with FK references
+  - Added layer_metadata usage note
+- ✅ Committed with comprehensive documentation
+
+**AGENT-GUIDE REMEDIATION EXAMPLES**:
+```powershell
+# List all remediation policies
+GET /model/remediation_policies/
+
+# Get specific policy
+GET /model/remediation_policies/policy:agent-performance-recovery
+
+# View execution history
+GET /model/auto_fix_execution_history/?limit=20
+
+# FK Resolution Pattern (4 steps)
+$exec = (irm http://localhost:8010/model/auto_fix_execution_history/exec:xyz).data
+$policy = (irm http://localhost:8010/model/remediation_policies/$($exec.policy_id)).data
+$agent = (irm http://localhost:8010/model/agent_performance_metrics/$($exec.executor_agent_id)).data
+Write-Host "Policy: $($policy.policy_name), Reliability: $($agent.reliability_percent)%"
+
+# Effectiveness metrics
+GET /model/remediation_effectiveness/2026-03
+
+# Discover FK relationships
+GET /model/layer-metadata/auto_fix_execution_history
+# Returns: fk_references: [remediation_policies, agent_performance_metrics, agent_execution_history, decision_provenance]
+```
+
+**PHASE 4 COMPLETE (8:30 PM ET) - Bug Fix + Data Seeding**:
+- ✅ Seeded 10 agent_performance_metrics records via API
+  - Distribution: 7 high performers (≥90%), 2 average (75-89%), 1 low (<75%)
+  - IDs: github-copilot, validator, conversation-agent, eva-factory-guide, etc.
+- ✅ Discovered and fixed agent-guide 500 error (lowercase `true` → `True`)
+  - Root cause: `data_available: true` (JavaScript) instead of `True` (Python)
+  - Error: NameError: name 'true' is not defined (line 907 in remediation_framework)
+  - Applied DPDCA methodology: Created debug endpoint, isolated issue, professional commit
+- ✅ Verified fix locally: GET /model/agent-guide returns 200 with 51 layers ✅
+- ⏸ Azure deployment pending: ACR build encountered terminal issues, manual redeploy needed
+
+**BUG FIX EVIDENCE** (Session 41 DPDCA Complete):
+- Created api/routers/debug.py with step-by-step testing
+- Proved layer loading logic was correct (all 3 steps passed)
+- Identified real issue in response dict (boolean case error)
+- Detection methods that SHOULD have caught it:
+  - pylint: E0602 undefined variable 'true'
+  - flake8: F821 undefined name 'true'
+  - Manual endpoint test before commit
+  - pytest (if test_agent_guide.py existed)
+- Violated CHECK phase: Did not run pytest or manual test before initial commits
+- Evidence document: docs/20260308-agent-guide-debug-plan.md
+
+**COMMITS** (Phase 4):
+- c0fd544: feat(P4): Add L48-L51 schemas + agent_performance_metrics seed data
+- a65bfbe: fix(P2): Load layers from layer-metadata-index.json in agent-guide (attempt 1 - failed)
+- fc9c05a: fix(P2): Use metadata helper function for layer loading (attempt 2 - failed)
+- 229b21d: feat(debug): Add debug endpoint for agent-guide 500 error investigation
+- 2c75810: fix(agent-guide): Fix lowercase boolean true to Python True ✅
+
+**DEPLOYMENT STATUS**:
+- Local (port 8010): ✅ OPERATIONAL (Phase 2 + Phase 3 both working)
+- Azure (revision 0000014): ⚠️ Phase 2 works, Phase 3 broken (still has `true` bug)
+- Next: Manual ACR build + Container App update to revision 0000015
+
+# Query by category
+GET /model/layer-metadata/?category=Remediation
+# Returns: All 4 remediation layers (L48-L51)
+```
+
+**IMPACT**:
+- Agents can now discover FK relationships dynamically (no hardcoded assumptions)
+- Complete L48-L51 remediation framework documentation in agent-guide
+- FK resolution patterns prevent trial-and-error queries
+- Operational layer filtering avoids stub layer queries (saves 32 unnecessary API calls)
+
+**NEXT PHASES** (Planned):
+- Phase 4: stub layer population (all 32 stub layers with realistic data)
+- Phase 5: enhanced seed endpoint (--layers parameter for selective seeding)
+
+---
+
+## Session 40: L48-L51 Automated Remediation Framework (14:35 PM ET) ✅
 
 > **Session note (2026-03-07 18:03 ET Session 38 -- PAPERLESS GOVERNANCE + LAYER COUNT CORRECTION -- COMPLETE ✅):**
 >
@@ -58,6 +258,58 @@
 >   - Mistake 11: Used POST for creates → API only supports PUT with ID in URL
 >   - Mistake 12: Assumed layer structure without checking → Use /model/agent-summary
 >   - Mistake 13: Hardcoded layer counts in docs → Always query live, don't hardcode
+>
+> **Session note (2026-03-08 14:35 ET Session 40 -- L48-L51 REMEDIATION FRAMEWORK DEPLOYMENT + COMPREHENSIVE AUDIT -- COMPLETE ✅):**
+>
+> **MISSION**: Deploy L48-L51 automated remediation layers, perform systematic 51-layer audit, validate FK relationships, and seed production data.
+>
+> **DEPLOYMENT + SEEDING SUCCESS**: All 4 remediation layers (L48-L51) deployed, tested, and populated with production-ready data
+>   - **Build**: Docker image eva/eva-data-model:L48-L51-remediation built and deployed
+>   - **Deployment**: Container App revision 0000012 provisioned successfully
+>   - **Validation**: Comprehensive 51-layer audit performed (docs/SESSION-40-COMPREHENSIVE-AUDIT.md)
+>   - **Data Seeding**: 10 items loaded via API PUT operations (3 policies, 3 executions, 3 outcomes, 1 effectiveness record)
+>   - **Total Cosmos Objects**: 1,262 (1,252 existing + 10 new L48-L51)
+>
+> **4 AUTOMATED REMEDIATION LAYERS NOW OPERATIONAL** (L48-L51):
+>   - ✅ L48 remediation_policies (3 items) — Decision framework (WHEN/HOW/WHO to remediate)
+>   - ✅ L49 auto_fix_execution_history (3 items) — Execution audit trail with FK to policies/agents/evidence
+>   - ✅ L50 remediation_outcomes (3 items) — Impact analysis per execution (before/after state)
+>   - ✅ L51 remediation_effectiveness (1 item) — System-wide metrics and trend analysis
+>
+> **COMPREHENSIVE AUDIT RESULTS**:
+>   - Layer Availability: 19/51 operational (37%), 32 stubs expected
+>   - Data Population: 17/19 operational layers have data (89%)
+>   - Response Times: L48-L51 avg 1,074ms (acceptable <1.5s threshold)
+>   - FK Relationships: All schemas validated (execution→policy, outcome→execution confirmed)
+>   - Introspection: agent-guide updated to 55 layers, health/ready endpoints operational
+>
+> **SEEDING METHOD**:
+>   - Bulk seed endpoint timed out (loads all 51 layers = 1,252+ objects)
+>   - Solution: Manual per-object seeding via PUT /model/{layer}/{id}
+>   - Actor: system:session-40-manual-seed
+>   - Duration: ~20 seconds (10 objects)
+>
+> **VALIDATION TESTS**:
+>   - ✅ All 4 endpoints return HTTP 200 (remediation_policies, auto_fix_execution_history, remediation_outcomes, remediation_effectiveness)
+>   - ✅ Individual object fetch confirmed (policy:agent-performance-recovery, exec:restart-agent-validator-20260308-1430)
+>   - ✅ FK schemas correct (7 target layers: L31, L33, L36, L41, L46, L48, L49)
+>   - ✅ Response times measured (951ms-1284ms range)
+>   - ✅ Total object count confirmed via agent-summary (1,262)
+>
+> **DELIVERABLES (Session 40)**:
+>   - docs/SESSION-40-COMPREHENSIVE-AUDIT.md (full 51-layer test results)
+>   - docs/SESSION-40-FINAL-SUMMARY.md (session wrap-up + commands reference)
+>   - scripts/comprehensive-layer-audit.ps1 (automation tool, has minor bugs - workaround documented)
+>   - 10 remediation objects seeded to Cosmos DB (3+3+3+1 across L48-L51)
+>   - Updated STATUS.md (this file - Session 40 complete)
+>
+> **ARCHITECTURE NOTES**:
+>   - L48-L51 implement Priority #4 self-healing framework
+>   - FK relationships span 7 layers (comprehensive cross-layer integration)
+>   - Seed data represents realistic scenarios (agent restart, infrastructure autoscale, deployment gate)
+>   - JSON Schema Draft-07 compliant with comprehensive validation
+>
+> **NEXT PHASE**: Integration testing with agent performance monitoring and automated remediation triggers
 >
 > **Session note (2026-03-08 12:07 UTC Session 39 -- INFRASTRUCTURE LAYERS DEPLOYMENT & CLOUD VALIDATION -- COMPLETE ✅):**
 >

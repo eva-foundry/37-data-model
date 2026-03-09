@@ -54,11 +54,11 @@ from api.store.base import AbstractStore
 router = APIRouter(prefix="/model/fp", tags=["fp-estimator"])
 
 # IFPUG UFP complexity weights
-_ILF_WEIGHTS = {"Low": 7,  "Med": 10, "High": 15}
-_EIF_WEIGHTS = {"Low": 5,  "Med": 7,  "High": 10}
-_EI_WEIGHTS  = {"Low": 3,  "Med": 4,  "High": 6}
-_EO_WEIGHTS  = {"Low": 4,  "Med": 5,  "High": 7}
-_EQ_WEIGHTS  = {"Low": 3,  "Med": 4,  "High": 6}
+_ILF_WEIGHTS = {"Low": 7, "Med": 10, "High": 15}
+_EIF_WEIGHTS = {"Low": 5, "Med": 7, "High": 10}
+_EI_WEIGHTS = {"Low": 3, "Med": 4, "High": 6}
+_EO_WEIGHTS = {"Low": 4, "Med": 5, "High": 7}
+_EQ_WEIGHTS = {"Low": 3, "Med": 4, "High": 6}
 
 
 def _det_complexity(det_count: int) -> str:
@@ -82,32 +82,34 @@ def _ftr_complexity(ftr_count: int) -> str:
     summary="Get IFPUG UFP estimate for a project (or all projects)",
     response_description="UFP breakdown, story point estimate, and effort estimate in person-days",
 )
-async def fp_estimate(
-    project_id: str | None = Query(None, description="Filter by project id (e.g. 33-eva-brain-v2). Omit for portfolio total."),
-    store: AbstractStore = Depends(get_store),
-) -> dict[str, Any]:
+async def fp_estimate(project_id: str | None = Query(None,
+                                                     description="Filter by project id (e.g. 33-eva-brain-v2). Omit for portfolio total."),
+                      store: AbstractStore = Depends(get_store),
+                      ) -> dict[str,
+                                Any]:
 
     containers = await store.get_all("containers", active_only=True)
-    endpoints  = await store.get_all("endpoints",  active_only=True)
+    endpoints = await store.get_all("endpoints", active_only=True)
 
     # Optionally restrict to a single project via service cross-reference
     # (endpoints have a .service field; containers are global -- use all of them)
     if project_id:
         # filter endpoints by service whose repo_path starts with project_id
         services = await store.get_all("services", active_only=True)
-        svc_ids = {s["id"] for s in services if (s.get("repo_path") or "").startswith(project_id)}
+        svc_ids = {s["id"] for s in services if (
+            s.get("repo_path") or "").startswith(project_id)}
         endpoints = [e for e in endpoints if e.get("service") in svc_ids]
 
     ufp = 0
     breakdown: dict[str, Any] = {
         "ILF": {"count": 0, "ufp": 0, "items": []},
         "EIF": {"count": 0, "ufp": 0, "items": []},
-        "EI":  {"count": 0, "ufp": 0, "items": []},
-        "EO":  {"count": 0, "ufp": 0, "items": []},
-        "EQ":  {"count": 0, "ufp": 0, "items": []},
+        "EI": {"count": 0, "ufp": 0, "items": []},
+        "EO": {"count": 0, "ufp": 0, "items": []},
+        "EQ": {"count": 0, "ufp": 0, "items": []},
     }
     untyped_containers = 0
-    untyped_endpoints  = 0
+    untyped_endpoints = 0
 
     # ── Data Function Types (ILF / EIF) ──────────────────────────────────────
     for c in containers:
@@ -138,8 +140,9 @@ async def fp_estimate(
             untyped_endpoints += 1
             continue
 
-        # FTRs: use ftr_count if set, else derive from cosmos_reads + cosmos_writes
-        reads  = e.get("cosmos_reads") or []
+        # FTRs: use ftr_count if set, else derive from cosmos_reads +
+        # cosmos_writes
+        reads = e.get("cosmos_reads") or []
         writes = e.get("cosmos_writes") or []
         ftr_count = e.get("ftr_count") or len(set(reads) | set(writes))
 
@@ -172,12 +175,11 @@ async def fp_estimate(
     effort_days_estimate = round(ufp * 0.5)
 
     total_containers = len(containers)
-    total_endpoints  = len(endpoints)
+    total_endpoints = len(endpoints)
     typed_containers = total_containers - untyped_containers
-    typed_endpoints  = total_endpoints  - untyped_endpoints
-    coverage_pct = round(
-        (typed_containers + typed_endpoints) / max(1, total_containers + total_endpoints) * 100
-    )
+    typed_endpoints = total_endpoints - untyped_endpoints
+    coverage_pct = round((typed_containers + typed_endpoints) /
+                         max(1, total_containers + total_endpoints) * 100)
 
     return {
         "project_id": project_id or "all",

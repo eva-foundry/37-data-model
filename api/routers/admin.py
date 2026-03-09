@@ -33,7 +33,6 @@ import asyncio
 import json
 import logging
 import os
-import subprocess
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -51,66 +50,74 @@ router = APIRouter(prefix="/model/admin", tags=["model-admin"])
 
 # Ordered — matches assemble-model.ps1 layer order
 _LAYER_FILES: dict[str, str] = {
-    "services":       "services.json",
-    "personas":       "personas.json",
-    "feature_flags":  "feature_flags.json",
-    "containers":     "containers.json",
-    "endpoints":      "endpoints.json",
-    "schemas":        "schemas.json",
-    "screens":        "screens.json",
-    "literals":       "literals.json",
-    "agents":         "agents.json",
+    "services": "services.json",
+    "personas": "personas.json",
+    "feature_flags": "feature_flags.json",
+    "containers": "containers.json",
+    "endpoints": "endpoints.json",
+    "schemas": "schemas.json",
+    "screens": "screens.json",
+    "literals": "literals.json",
+    "agents": "agents.json",
     "infrastructure": "infrastructure.json",
-    "requirements":   "requirements.json",
+    "requirements": "requirements.json",
     # control-plane catalog
-    "planes":         "planes.json",
-    "connections":    "connections.json",
-    "environments":   "environments.json",
-    "cp_skills":      "cp_skills.json",
-    "cp_agents":      "cp_agents.json",
-    "runbooks":       "runbooks.json",
-    "cp_workflows":   "cp_workflows.json",
-    "cp_policies":    "cp_policies.json",
+    "planes": "planes.json",
+    "connections": "connections.json",
+    "environments": "environments.json",
+    "cp_skills": "cp_skills.json",
+    "cp_agents": "cp_agents.json",
+    "runbooks": "runbooks.json",
+    "cp_workflows": "cp_workflows.json",
+    "cp_policies": "cp_policies.json",
     # catalog extensions (precedence fields + new layers)
-    "mcp_servers":     "mcp_servers.json",
-    "prompts":         "prompts.json",
+    "mcp_servers": "mcp_servers.json",
+    "prompts": "prompts.json",
     "security_controls": "security_controls.json",
     # frontend object layers (E-01/E-02/E-03)
-    "components":      "components.json",
-    "hooks":           "hooks.json",
-    "ts_types":        "ts_types.json",
+    "components": "components.json",
+    "hooks": "hooks.json",
+    "ts_types": "ts_types.json",
     # project plane (E-07/E-08) — waterfall WBS + agile scrum + CI/CD linkage
-    "projects":        "projects.json",
-    "wbs":             "wbs.json",
-    "sprints":         "sprints.json",
-    "milestones":      "milestones.json",
-    "risks":           "risks.json",
-    "decisions":       "decisions.json",
-    "traces":          "traces.json",
+    "projects": "projects.json",
+    "wbs": "wbs.json",
+    "sprints": "sprints.json",
+    "milestones": "milestones.json",
+    "risks": "risks.json",
+    "decisions": "decisions.json",
+    "traces": "traces.json",
     # observability plane (L11) — proof-of-completion + call tracing
-    "evidence":        "evidence.json",
-    # governance plane (L32-L35) — data-model-first architecture + agent automation safety
+    "evidence": "evidence.json",
+    # governance plane (L32-L35) — data-model-first architecture + agent
+    # automation safety
     "workspace_config": "workspace_config.json",
-    "project_work":     "project_work.json",
-    "agent_policies":   "agent_policies.json",
-    "quality_gates":    "quality_gates.json",
-    "github_rules":     "github_rules.json",
-    # deployment & testing (L36-L38) — deployment policies + testing automation + validation rules
+    "project_work": "project_work.json",
+    "agent_policies": "agent_policies.json",
+    "quality_gates": "quality_gates.json",
+    "github_rules": "github_rules.json",
+    # deployment & testing (L36-L38) — deployment policies + testing
+    # automation + validation rules
     "deployment_policies": "deployment_policies.json",
-    "testing_policies":    "testing_policies.json",
-    "validation_rules":    "validation_rules.json",
-    # infrastructure monitoring (L48-L51) — Priority #4 observability layers
-    "agent_execution_history":       "agent_execution_history.json",
-    "agent_performance_metrics":     "agent_performance_metrics.json",
-    "azure_infrastructure":          "azure_infrastructure.json",
-    "compliance_audit":              "compliance_audit.json",
-    "deployment_quality_scores":     "deployment_quality_scores.json",
-    "deployment_records":            "deployment_records.json",
-    "eva_model":                     "eva-model.json",
-    "infrastructure_drift":          "infrastructure_drift.json",
-    "performance_trends":            "performance_trends.json",
-    "resource_costs":                "resource_costs.json",
+    "testing_policies": "testing_policies.json",
+    "validation_rules": "validation_rules.json",
+    # infrastructure monitoring (L40-L47) — Priority #3 observability layers
+    "agent_execution_history": "agent_execution_history.json",
+    "agent_performance_metrics": "agent_performance_metrics.json",
+    "azure_infrastructure": "azure_infrastructure.json",
+    "compliance_audit": "compliance_audit.json",
+    "deployment_quality_scores": "deployment_quality_scores.json",
+    "deployment_records": "deployment_records.json",
+    "eva_model": "eva-model.json",
+    "infrastructure_drift": "infrastructure_drift.json",
+    "performance_trends": "performance_trends.json",
+    "resource_costs": "resource_costs.json",
+    # automated remediation (L48-L51) — Priority #4 self-healing framework
+    "remediation_policies": "remediation_policies.json",
+    "auto_fix_execution_history": "auto_fix_execution_history.json",
+    "remediation_outcomes": "remediation_outcomes.json",
+    "remediation_effectiveness": "remediation_effectiveness.json",
 }
+
 
 def _get_model_dir() -> Path:
     """Return the model data directory, honouring MODEL_DIR env override."""
@@ -121,16 +128,15 @@ def _get_model_dir() -> Path:
     return Path(__file__).parents[2] / "model"
 
 
-# ── SEED ──────────────────────────────────────────────────────────────────────
+# ── SEED ────────────────────────────────────────────────────────────────
 
-@router.post(
-    "/seed",
-    summary="Seed store from disk JSON layer files (idempotent — safe to re-run)",
-)
+@router.post("/seed",
+             summary="Seed store from disk JSON layer files (idempotent — safe to re-run)",
+             )
 async def seed(
     store: AbstractStore = Depends(get_store),
     cache: AbstractCache = Depends(get_cache),
-    actor: str           = Depends(require_admin),
+    actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
     """
     Reads each model/&lt;layer&gt;.json file and upserts every object into the store.
@@ -172,7 +178,8 @@ async def seed(
         for obj in objects:
             obj.setdefault("source_file", f"model/{filename}")
         try:
-            # bulk_load preserves audit fields from JSON; only fills defaults for gaps
+            # bulk_load preserves audit fields from JSON; only fills defaults
+            # for gaps
             loaded = await store.bulk_load(layer, objects, actor)
         except Exception as exc:
             errors.append(f"{layer}: bulk_load failed — {exc}")
@@ -183,23 +190,22 @@ async def seed(
         log.info("Seed: %s — %d objects", layer, loaded)
 
     return {
-        "seeded":  counts,
-        "total":   sum(counts.values()),
-        "errors":  errors,
-        "actor":   actor,
+        "seeded": counts,
+        "total": sum(counts.values()),
+        "errors": errors,
+        "actor": actor,
     }
 
 
-# ── EXPORT ────────────────────────────────────────────────────────────────────
+# ── EXPORT ──────────────────────────────────────────────────────────────
 
-@router.post(
-    "/export",
-    summary="Export store back to disk JSON layer files (completes the write cycle)",
-)
+@router.post("/export",
+             summary="Export store back to disk JSON layer files (completes the write cycle)",
+             )
 async def export_to_disk(
     store: AbstractStore = Depends(get_store),
     cache: AbstractCache = Depends(get_cache),
-    actor: str           = Depends(require_admin),
+    actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
     """
     Step 3 of the correct write cycle:
@@ -216,7 +222,14 @@ async def export_to_disk(
     errors: list[str] = []
 
     # Cosmos-internal fields to strip from every exported object
-    _STRIP = {"obj_id", "layer", "_rid", "_self", "_etag", "_attachments", "_ts"}
+    _STRIP = {
+        "obj_id",
+        "layer",
+        "_rid",
+        "_self",
+        "_etag",
+        "_attachments",
+        "_ts"}
 
     for layer, filename in _LAYER_FILES.items():
         path = _get_model_dir() / filename
@@ -255,20 +268,25 @@ async def export_to_disk(
                 encoding="utf-8",
             )
             counts[layer] = len(clean)
-            log.info("Export: %s — %d objects written to %s", layer, len(clean), path)
+            log.info(
+                "Export: %s — %d objects written to %s",
+                layer,
+                len(clean),
+                path)
         except Exception as exc:
             errors.append(f"{layer}: write failed — {exc}")
 
     return {
         "exported": counts,
-        "total":    sum(counts.values()),
-        "errors":   errors,
-        "actor":    actor,
-        "note":     "Run assemble-model.ps1 to rebuild eva-model.json after export",
+        "total": sum(
+            counts.values()),
+        "errors": errors,
+        "actor": actor,
+        "note": "Run assemble-model.ps1 to rebuild eva-model.json after export",
     }
 
 
-# ── CACHE FLUSH ───────────────────────────────────────────────────────────────
+# ── CACHE FLUSH ─────────────────────────────────────────────────────────
 
 @router.post(
     "/cache/flush",
@@ -276,46 +294,44 @@ async def export_to_disk(
 )
 async def flush_cache(
     cache: AbstractCache = Depends(get_cache),
-    actor: str           = Depends(require_admin),
+    actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
     await cache.flush_all()
     return {"flushed": True, "actor": actor}
 
 
-# ── BACKFILL ──────────────────────────────────────────────────────────────────
+# ── BACKFILL ────────────────────────────────────────────────────────────
 
 # Fields that every live object should carry.  We also try to derive source_file
-# from whichever existing field the layer uses to point at the real-world artifact.
-_AUDIT_FIELDS   = {"created_by", "created_at", "modified_by", "modified_at",
-                   "row_version", "is_active"}
+# from whichever existing field the layer uses to point at the real-world
+# artifact.
+_AUDIT_FIELDS = {"created_by", "created_at", "modified_by", "modified_at",
+                 "row_version", "is_active"}
 
 # Per-layer hint: which existing field contains the repo path for the object?
 _SOURCE_FILE_HINT: dict[str, str] = {
-    "endpoints":        "implemented_in",
-    "screens":          "component_path",
-    "services":         "repo_path",
-    "components":       "file_path",
-    "hooks":            "file_path",
-    "ts_types":         "file_path",
-    "runbooks":         "workflow_file",
-    "cp_workflows":     "workflow_file",
-    "agents":           "file_path",
-    "cp_agents":        "file_path",
+    "endpoints": "implemented_in",
+    "screens": "component_path",
+    "services": "repo_path",
+    "components": "file_path",
+    "hooks": "file_path",
+    "ts_types": "file_path",
+    "runbooks": "workflow_file",
+    "cp_workflows": "workflow_file",
+    "agents": "file_path",
+    "cp_agents": "file_path",
 }
 
 
-@router.post(
-    "/backfill",
-    summary=(
-        "One-shot: stamp missing audit fields on all legacy objects. "
-        "Derives source_file from layer-specific path fields where possible. "
-        "Idempotent — safe to re-run; only touches objects that are still missing fields."
-    ),
-)
+@router.post("/backfill",
+             summary=("One-shot: stamp missing audit fields on all legacy objects. "
+                      "Derives source_file from layer-specific path fields where possible. "
+                      "Idempotent — safe to re-run; only touches objects that are still missing fields."),
+             )
 async def backfill_metadata(
     store: AbstractStore = Depends(get_store),
     cache: AbstractCache = Depends(get_cache),
-    actor: str           = Depends(require_admin),
+    actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
     """
     Walks every object in every layer.  For each object that is missing any
@@ -332,7 +348,7 @@ async def backfill_metadata(
     """
     touched: dict[str, int] = {}
     skipped: dict[str, int] = {}
-    errors:  list[str]      = []
+    errors: list[str] = []
 
     for layer in _LAYER_FILES:
         try:
@@ -343,7 +359,7 @@ async def backfill_metadata(
 
         layer_touched = 0
         layer_skipped = 0
-        hint_field    = _SOURCE_FILE_HINT.get(layer)
+        hint_field = _SOURCE_FILE_HINT.get(layer)
 
         for obj in objects:
             obj_id = str(obj.get("obj_id") or obj.get("id") or "")
@@ -359,8 +375,8 @@ async def backfill_metadata(
 
             # Build a patch payload — carry all existing fields forward
             patch = dict(obj)
-            patch.pop("obj_id",  None)
-            patch.pop("layer",   None)
+            patch.pop("obj_id", None)
+            patch.pop("layer", None)
             for f in ("_rid", "_self", "_etag", "_attachments", "_ts"):
                 patch.pop(f, None)
 
@@ -385,37 +401,36 @@ async def backfill_metadata(
         "skipped": skipped,
         "total_touched": sum(touched.values()),
         "total_skipped": sum(skipped.values()),
-        "errors":  errors,
-        "actor":   actor,
-        "note":    "Run POST /model/admin/export then assemble-model.ps1 to persist changes",
+        "errors": errors,
+        "actor": actor,
+        "note": "Run POST /model/admin/export then assemble-model.ps1 to persist changes",
     }
 
 
-# ── AUDIT LOG ─────────────────────────────────────────────────────────────────
+# ── AUDIT LOG ───────────────────────────────────────────────────────────
 
 @router.get(
     "/audit",
     summary="Last N write events across all layers — audit trail",
 )
 async def audit_log(
-    limit: int           = Query(50, ge=1, le=500, description="Number of events to return"),
+    limit: int = Query(50, ge=1, le=500, description="Number of events to return"),
     store: AbstractStore = Depends(get_store),
-    actor: str           = Depends(require_admin),
+    actor: str = Depends(require_admin),
 ) -> list[dict[str, Any]]:
     return await store.get_audit(limit=limit)
 
 
-# ── VALIDATE ──────────────────────────────────────────────────────────────────
+# ── VALIDATE ────────────────────────────────────────────────────────────
 
-@router.get(
-    "/validate",
-    summary="Run cross-reference integrity check in-process — equivalent to validate-model.ps1",
-)
+@router.get("/validate",
+            summary="Run cross-reference integrity check in-process — equivalent to validate-model.ps1",
+            )
 async def validate(
     store: AbstractStore = Depends(get_store),
     cache: AbstractCache = Depends(get_cache),
-    settings             = Depends(lambda: None),   # unused but future-proof
-    actor: str           = Depends(require_admin),
+    settings=Depends(lambda: None),   # unused but future-proof
+    actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
     """
     Checks:
@@ -430,47 +445,54 @@ async def validate(
     violations: list[str] = []
 
     def _ids(layer_data: list[dict]) -> set[str]:
-        return {str(d.get("id") or d.get("obj_id") or "") for d in layer_data if d}
+        return {str(d.get("id") or d.get("obj_id") or "")
+                for d in layer_data if d}
 
     layers: dict[str, list[dict]] = {}
     for lname in _LAYER_FILES:
         layers[lname] = await store.get_all(lname, active_only=False)
 
-    container_ids   = _ids(layers["containers"])
+    container_ids = _ids(layers["containers"])
     feature_flag_ids = _ids(layers["feature_flags"])
-    persona_ids     = _ids(layers["personas"])
-    endpoint_ids    = _ids(layers["endpoints"])
-    screen_ids      = _ids(layers["screens"])
+    persona_ids = _ids(layers["personas"])
+    endpoint_ids = _ids(layers["endpoints"])
+    screen_ids = _ids(layers["screens"])
 
     # 1 & 2 & 3 — endpoints
     for ep in layers["endpoints"]:
         eid = ep.get("id") or ep.get("obj_id")
         for c in ep.get("cosmos_reads", []) or []:
             if c and c not in container_ids:
-                violations.append(f"endpoint '{eid}' cosmos_reads references unknown container '{c}'")
+                violations.append(
+                    f"endpoint '{eid}' cosmos_reads references unknown container '{c}'")
         for c in ep.get("cosmos_writes", []) or []:
             if c and c not in container_ids:
-                violations.append(f"endpoint '{eid}' cosmos_writes references unknown container '{c}'")
+                violations.append(
+                    f"endpoint '{eid}' cosmos_writes references unknown container '{c}'")
         ff = ep.get("feature_flag")
         if ff and ff not in feature_flag_ids:
-            violations.append(f"endpoint '{eid}' feature_flag '{ff}' not in feature_flags")
+            violations.append(
+                f"endpoint '{eid}' feature_flag '{ff}' not in feature_flags")
         for p in ep.get("auth", []) or []:
             if p and p not in persona_ids:
-                violations.append(f"endpoint '{eid}' auth references unknown persona '{p}'")
+                violations.append(
+                    f"endpoint '{eid}' auth references unknown persona '{p}'")
 
     # 4 — screens
     for sc in layers["screens"]:
         sid = sc.get("id") or sc.get("obj_id")
         for call in sc.get("api_calls", []) or []:
             if call and call not in endpoint_ids:
-                violations.append(f"screen '{sid}' api_calls references unknown endpoint '{call}'")
+                violations.append(
+                    f"screen '{sid}' api_calls references unknown endpoint '{call}'")
 
     # 5 — literals
     for lit in layers["literals"]:
         lid = lit.get("id") or lit.get("obj_id")
         for s in lit.get("screens", []) or []:
             if s and s not in screen_ids:
-                violations.append(f"literal '{lid}' screens references unknown screen '{s}'")
+                violations.append(
+                    f"literal '{lid}' screens references unknown screen '{s}'")
 
     # 6 — requirements
     all_obj_ids = endpoint_ids | screen_ids
@@ -478,23 +500,25 @@ async def validate(
         rid = req.get("id") or req.get("obj_id")
         for s in req.get("satisfied_by", []) or []:
             if s and s not in all_obj_ids:
-                violations.append(f"requirement '{rid}' satisfied_by references unknown object '{s}'")
+                violations.append(
+                    f"requirement '{rid}' satisfied_by references unknown object '{s}'")
 
     # 7 — agents
     for ag in layers["agents"]:
         aid = ag.get("id") or ag.get("obj_id")
         for s in ag.get("output_screens", []) or []:
             if s and s not in screen_ids:
-                violations.append(f"agent '{aid}' output_screens references unknown screen '{s}'")
+                violations.append(
+                    f"agent '{aid}' output_screens references unknown screen '{s}'")
 
     return {
         "violations": violations,
-        "count":      len(violations),
-        "status":     "PASS" if not violations else "FAIL",
+        "count": len(violations),
+        "status": "PASS" if not violations else "FAIL",
     }
 
 
-# ── COMMIT (export + assemble + validate in one call) ─────────────────────────
+# ── COMMIT (export + assemble + validate in one call) ───────────────────
 
 _SCRIPTS_DIR = Path(__file__).parents[2] / "scripts"
 
@@ -503,7 +527,8 @@ async def _run_ps1(script_name: str) -> dict[str, Any]:
     """Run a PowerShell script and return stdout/stderr + exit code."""
     script = _SCRIPTS_DIR / script_name
     if not script.exists():
-        return {"ok": False, "rc": -1, "stdout": "", "stderr": f"Script not found: {script}"}
+        return {"ok": False, "rc": -1, "stdout": "",
+                "stderr": f"Script not found: {script}"}
     try:
         proc = await asyncio.create_subprocess_exec(
             "pwsh", "-NonInteractive", "-NoProfile", "-File", str(script),
@@ -513,13 +538,17 @@ async def _run_ps1(script_name: str) -> dict[str, Any]:
         stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=120)
         rc = proc.returncode
         return {
-            "ok":     rc == 0,
-            "rc":     rc,
+            "ok": rc == 0,
+            "rc": rc,
             "stdout": stdout.decode("utf-8", errors="replace").strip(),
             "stderr": stderr.decode("utf-8", errors="replace").strip(),
         }
     except asyncio.TimeoutError:
-        return {"ok": False, "rc": -1, "stdout": "", "stderr": "Timeout after 120s"}
+        return {
+            "ok": False,
+            "rc": -1,
+            "stdout": "",
+            "stderr": "Timeout after 120s"}
     except Exception as exc:
         return {"ok": False, "rc": -1, "stdout": "", "stderr": str(exc)}
 
@@ -529,13 +558,12 @@ async def _run_ps1(script_name: str) -> dict[str, Any]:
     summary=(
         "One-call write cycle shortcut: export to disk + assemble eva-model.json + validate. "
         "Returns {status, violations, counts, exported, assemble, validate}. "
-        "Replaces steps 3-5 of the manual write cycle."
-    ),
+        "Replaces steps 3-5 of the manual write cycle."),
 )
 async def commit(
     store: AbstractStore = Depends(get_store),
     cache: AbstractCache = Depends(get_cache),
-    actor: str           = Depends(require_admin),
+    actor: str = Depends(require_admin),
 ) -> dict[str, Any]:
     """
     Shortcut for the final three steps of the write cycle:
@@ -557,7 +585,14 @@ async def commit(
     # ── Step 3: export ────────────────────────────────────────────────────
     export_counts: dict[str, int] = {}
     export_errors: list[str] = []
-    _STRIP = {"obj_id", "layer", "_rid", "_self", "_etag", "_attachments", "_ts"}
+    _STRIP = {
+        "obj_id",
+        "layer",
+        "_rid",
+        "_self",
+        "_etag",
+        "_attachments",
+        "_ts"}
 
     for layer, filename in _LAYER_FILES.items():
         path = _get_model_dir() / filename
@@ -596,7 +631,9 @@ async def commit(
         except Exception as exc:
             export_errors.append(f"{layer}: write failed — {exc}")
 
-    log.info("Commit: export complete — %d total objects", sum(export_counts.values()))
+    log.info(
+        "Commit: export complete — %d total objects", sum(
+            export_counts.values()))
 
     # ── Step 4: assemble ──────────────────────────────────────────────────
     assemble_result = await _run_ps1("assemble-model.ps1")
@@ -606,87 +643,95 @@ async def commit(
     violations: list[str] = []
 
     def _ids(layer_data: list[dict]) -> set[str]:
-        return {str(d.get("id") or d.get("obj_id") or "") for d in layer_data if d}
+        return {str(d.get("id") or d.get("obj_id") or "")
+                for d in layer_data if d}
 
     layers_data: dict[str, list[dict]] = {}
     for lname in _LAYER_FILES:
         layers_data[lname] = await store.get_all(lname, active_only=False)
 
-    container_ids    = _ids(layers_data["containers"])
+    container_ids = _ids(layers_data["containers"])
     feature_flag_ids = _ids(layers_data["feature_flags"])
-    persona_ids      = _ids(layers_data["personas"])
-    endpoint_ids     = _ids(layers_data["endpoints"])
-    screen_ids       = _ids(layers_data["screens"])
+    persona_ids = _ids(layers_data["personas"])
+    endpoint_ids = _ids(layers_data["endpoints"])
+    screen_ids = _ids(layers_data["screens"])
 
     for ep in layers_data["endpoints"]:
         eid = ep.get("id") or ep.get("obj_id")
         for c in ep.get("cosmos_reads", []) or []:
             if c and c not in container_ids:
-                violations.append(f"endpoint '{eid}' cosmos_reads references unknown container '{c}'")
+                violations.append(
+                    f"endpoint '{eid}' cosmos_reads references unknown container '{c}'")
         for c in ep.get("cosmos_writes", []) or []:
             if c and c not in container_ids:
-                violations.append(f"endpoint '{eid}' cosmos_writes references unknown container '{c}'")
+                violations.append(
+                    f"endpoint '{eid}' cosmos_writes references unknown container '{c}'")
         ff = ep.get("feature_flag")
         if ff and ff not in feature_flag_ids:
-            violations.append(f"endpoint '{eid}' feature_flag '{ff}' not in feature_flags")
+            violations.append(
+                f"endpoint '{eid}' feature_flag '{ff}' not in feature_flags")
         for p in ep.get("auth", []) or []:
             if p and p not in persona_ids:
-                violations.append(f"endpoint '{eid}' auth references unknown persona '{p}'")
+                violations.append(
+                    f"endpoint '{eid}' auth references unknown persona '{p}'")
 
     for sc in layers_data["screens"]:
         sid = sc.get("id") or sc.get("obj_id")
         for call in sc.get("api_calls", []) or []:
             if call and call not in endpoint_ids:
-                violations.append(f"screen '{sid}' api_calls references unknown endpoint '{call}'")
+                violations.append(
+                    f"screen '{sid}' api_calls references unknown endpoint '{call}'")
 
     for lit in layers_data["literals"]:
         lid = lit.get("id") or lit.get("obj_id")
         for s in lit.get("screens", []) or []:
             if s and s not in screen_ids:
-                violations.append(f"literal '{lid}' screens references unknown screen '{s}'")
+                violations.append(
+                    f"literal '{lid}' screens references unknown screen '{s}'")
 
     all_obj_ids = endpoint_ids | screen_ids
     for req in layers_data["requirements"]:
         rid = req.get("id") or req.get("obj_id")
         for s in req.get("satisfied_by", []) or []:
             if s and s not in all_obj_ids:
-                violations.append(f"requirement '{rid}' satisfied_by references unknown object '{s}'")
+                violations.append(
+                    f"requirement '{rid}' satisfied_by references unknown object '{s}'")
 
     for ag in layers_data["agents"]:
         aid = ag.get("id") or ag.get("obj_id")
         for s in ag.get("output_screens", []) or []:
             if s and s not in screen_ids:
-                violations.append(f"agent '{aid}' output_screens references unknown screen '{s}'")
+                violations.append(
+                    f"agent '{aid}' output_screens references unknown screen '{s}'")
 
     overall_ok = not violations and assemble_result["ok"] and not export_errors
 
     return {
-        "status":          "PASS" if overall_ok else "FAIL",
-        "violations":      violations,
+        "status": "PASS" if overall_ok else "FAIL",
+        "violations": violations,
         "violation_count": len(violations),
-        "exported":        export_counts,
-        "exported_total":  sum(export_counts.values()),
-        "export_errors":   export_errors,
-        "assemble":        assemble_result,
-        "actor":           actor,
-        "note":            "PASS = export written, eva-model.json rebuilt, 0 cross-ref violations",
+        "exported": export_counts,
+        "exported_total": sum(
+            export_counts.values()),
+        "export_errors": export_errors,
+        "assemble": assemble_result,
+        "actor": actor,
+        "note": "PASS = export written, eva-model.json rebuilt, 0 cross-ref violations",
     }
 
 
 # ── AUDIT-REPO (eva-veritas proxy) ───────────────────────────────────────────
 
 _EVA_VERITAS_DEFAULT = "http://localhost:8031"
-_VERITAS_PORTFOLIO   = Path(__file__).parents[3]          # C:\AICOE\eva-foundation
+# C:\AICOE\eva-foundation
+_VERITAS_PORTFOLIO = Path(__file__).parents[3]
 
 
-@router.post(
-    "/audit-repo",
-    summary=(
-        "Proxy to eva-veritas MCP: verify that declared project progress matches "
-        "real artifacts on disk. Returns trust score, coverage, and gap list. "
-        "Override MCP server URL: env var EVA_VERITAS_MCP_URL (default http://localhost:8031)"
-    ),
-)
+@router.post("/audit-repo",
+             summary=("Proxy to eva-veritas MCP: verify that declared project progress matches "
+                      "real artifacts on disk. Returns trust score, coverage, and gap list. "
+                      "Override MCP server URL: env var EVA_VERITAS_MCP_URL (default http://localhost:8031)"),
+             )
 async def audit_repo(
     body: dict[str, Any],
     actor: str = Depends(require_admin),
@@ -713,7 +758,7 @@ async def audit_repo(
       }
     """
     project_id: str = body.get("project_id", "")
-    repo_path:  str = body.get("repo_path", "")
+    repo_path: str = body.get("repo_path", "")
 
     if not project_id and not repo_path:
         raise HTTPException(
@@ -733,9 +778,11 @@ async def audit_repo(
         repo_path = str(candidate)
 
     # Call eva-veritas MCP server
-    mcp_base = os.environ.get("EVA_VERITAS_MCP_URL", _EVA_VERITAS_DEFAULT).rstrip("/")
-    url      = f"{mcp_base}/tools/audit_repo"
-    payload  = json.dumps({"repo_path": repo_path}).encode("utf-8")
+    mcp_base = os.environ.get(
+        "EVA_VERITAS_MCP_URL",
+        _EVA_VERITAS_DEFAULT).rstrip("/")
+    url = f"{mcp_base}/tools/audit_repo"
+    payload = json.dumps({"repo_path": repo_path}).encode("utf-8")
 
     try:
         req = urllib.request.Request(
@@ -764,12 +811,12 @@ async def audit_repo(
 
     result = raw.get("result", raw)
     return {
-        "project_id":  project_id or None,
-        "repo_path":   repo_path,
+        "project_id": project_id or None,
+        "repo_path": repo_path,
         "trust_score": result.get("trust_score"),
-        "coverage":    result.get("coverage", {}),
-        "gaps":        result.get("gaps", []),
-        "actions":     result.get("actions", []),
-        "mcp_url":     mcp_base,
-        "actor":       actor,
+        "coverage": result.get("coverage", {}),
+        "gaps": result.get("gaps", []),
+        "actions": result.get("actions", []),
+        "mcp_url": mcp_base,
+        "actor": actor,
     }

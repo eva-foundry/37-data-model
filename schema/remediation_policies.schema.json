@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Remediation Policies",
+  "description": "Automated remediation policies defining triggers, actions, and approval workflows",
+  "type": "object",
+  "properties": {
+    "policy_id": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9-]+$",
+      "description": "Unique policy identifier (e.g., policy:agent-performance-recovery)"
+    },
+    "policy_name": {
+      "type": "string",
+      "description": "Human-readable policy name"
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["agent_self_healing", "infrastructure_remediation", "policy_enforcement", "cost_optimization"],
+      "description": "Remediation scope category"
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric": {"type": "string", "description": "Metric name (e.g., reliability, latency_p95, error_rate)"},
+          "threshold": {"type": "number", "description": "Threshold value"},
+          "comparison": {"type": "string", "enum": ["less_than", "greater_than", "equals", "not_equals"], "description": "Comparison operator"},
+          "duration_minutes": {"type": "integer", "minimum": 0, "description": "How long condition must persist"},
+          "condition": {"type": "string", "description": "Human-readable condition statement"}
+        },
+        "required": ["metric", "threshold", "comparison", "condition"]
+      },
+      "description": "Conditions that trigger this policy"
+    },
+    "remediation_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action_id": {"type": "string", "pattern": "^action:[a-z0-9-]+$", "description": "Unique action identifier"},
+          "action_name": {"type": "string", "description": "Human-readable action name"},
+          "order": {"type": "integer", "minimum": 1, "description": "Execution order (1 = first)"},
+          "command": {"type": "string", "description": "Command or function to execute"},
+          "expected_impact": {"type": "string", "description": "What this action is expected to achieve"},
+          "estimated_duration_seconds": {"type": "integer", "minimum": 0, "description": "Expected execution time"},
+          "rollback_strategy": {"type": "string", "description": "How to undo this action if needed"}
+        },
+        "required": ["action_id", "action_name", "order", "command"]
+      },
+      "description": "Actions to execute when policy triggers"
+    },
+    "approval_required": {
+      "type": "boolean",
+      "description": "Whether human approval is required before execution"
+    },
+    "auto_execute": {
+      "type": "boolean",
+      "description": "Whether this policy auto-executes without approval"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether this policy is currently active"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Policy priority level"
+    },
+    "linked_policies": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "References to related policies in L33, L36, L37 (e.g., L33:agent-restart-policy)"
+    },
+    "cost_limits_usd_per_month": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Optional cost ceiling for this policy's actions"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this policy was created"
+    },
+    "last_modified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this policy was last updated"
+    },
+    "execution_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of times this policy has triggered"
+    },
+    "success_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Success rate percentage (populated from L50/L51)"
+    }
+  },
+  "required": ["policy_id", "policy_name", "scope", "triggers", "remediation_actions", "approval_required", "auto_execute", "enabled", "priority"]
+}

@@ -15,8 +15,17 @@ from typing import Any
 from api.store.base import AbstractStore
 
 _LAYERS = [
-    "services", "personas", "feature_flags", "containers", "endpoints",
-    "schemas", "screens", "literals", "agents", "infrastructure", "requirements",
+    "services",
+    "personas",
+    "feature_flags",
+    "containers",
+    "endpoints",
+    "schemas",
+    "screens",
+    "literals",
+    "agents",
+    "infrastructure",
+    "requirements",
 ]
 
 
@@ -31,14 +40,16 @@ class MemoryStore(AbstractStore):
 
     def __init__(self) -> None:
         # {layer: {obj_id: dict}}
-        self._data: dict[str, dict[str, dict[str, Any]]] = {l: {} for l in _LAYERS}
+        self._data: dict[str, dict[str, dict[str, Any]]] = {
+            layer: {} for layer in _LAYERS}
         self._lock = asyncio.Lock()
 
     # ──────────────────────────────────────────────────────────────────────
     # READ
     # ──────────────────────────────────────────────────────────────────────
 
-    async def get_all(self, layer: str, active_only: bool = True) -> list[dict[str, Any]]:
+    async def get_all(self, layer: str,
+                      active_only: bool = True) -> list[dict[str, Any]]:
         bucket = self._data.get(layer, {})
         items = list(bucket.values())
         if active_only:
@@ -106,12 +117,12 @@ class MemoryStore(AbstractStore):
         for layer, bucket in self._data.items():
             for doc in bucket.values():
                 rows.append({
-                    "layer":       layer,
-                    "obj_id":      doc.get("obj_id"),
+                    "layer": layer,
+                    "obj_id": doc.get("obj_id"),
                     "modified_by": doc.get("modified_by"),
                     "modified_at": doc.get("modified_at"),
                     "row_version": doc.get("row_version"),
-                    "is_active":   doc.get("is_active", True),
+                    "is_active": doc.get("is_active", True),
                 })
         rows.sort(key=lambda r: r.get("modified_at") or "", reverse=True)
         return rows[:limit]
@@ -144,10 +155,11 @@ class MemoryStore(AbstractStore):
                     self._data[layer] = {}
                 existing = self._data[layer].get(obj_id)
                 doc: dict[str, Any] = deepcopy(obj)
-                doc["obj_id"]   = obj_id
-                doc["layer"]    = layer
+                doc["obj_id"] = obj_id
+                doc["layer"] = layer
                 doc["is_active"] = doc.get("is_active", True)
-                # Preserve whatever the JSON already knows; fill gaps with seed defaults
+                # Preserve whatever the JSON already knows; fill gaps with seed
+                # defaults
                 if "created_by" not in doc:
                     doc["created_by"] = existing["created_by"] if existing else actor
                 if "created_at" not in doc:

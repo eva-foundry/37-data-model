@@ -744,6 +744,8 @@ Violations are reported by `scripts/validate-model.ps1`.
 
 ## Anti-Patterns
 
+### Data Model Operations
+
 | Do NOT do this | Do this instead |
 |----------------|-----------------|
 | Run file_search to find all endpoints | `$m.endpoints \| Select-Object id, path` |
@@ -755,6 +757,20 @@ Violations are reported by `scripts/validate-model.ps1`.
 | Hand-edit `eva-model.json` | Edit the layer file, then run `assemble-model.ps1` |
 | Edit JSON files directly to update model objects | `PUT /model/{layer}/{id}` -> `POST /model/admin/commit` |
 | Defer model update to next session | Update in same commit as source change |
+
+### GitHub Actions Workflows
+
+**Session 39 Lessons**: See [docs/workflows/ANTI-PATTERNS-AND-BEST-PRACTICES.md](../docs/workflows/ANTI-PATTERNS-AND-BEST-PRACTICES.md) for complete guide.
+
+| Do NOT do this | Do this instead |
+|----------------|-----------------|
+| Check `$LASTEXITCODE` in separate step after script | Let GitHub Actions handle exit codes natively OR use `steps.<id>.outcome` |
+| End PowerShell scripts without explicit exit code | Add `exit 0` on success, `exit 1` on failure |
+| Single-step workflows without evidence collection | Generate correlation ID, create evidence receipt, upload artifacts with `if: always()` |
+| Fail fast without collecting all issues | Use `continue-on-error: true` for check steps, collect results, report all |
+| No communication between workflow jobs | Use `outputs:` in jobs, access via `needs.<job>.outputs.<key>` |
+
+**Critical Insight**: Each workflow step runs in a **NEW shell session**. Exit codes, `$LASTEXITCODE`, and environment variables do NOT persist across steps. Use job outputs or step outcomes (`steps.<id>.outcome`) for cross-step checks.
 
 ---
 

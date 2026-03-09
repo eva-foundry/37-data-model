@@ -32,11 +32,11 @@ router = APIRouter(prefix="/model/impact", tags=["impact"])
     response_description="Endpoints, screens, agents, requirements referencing the target container",
 )
 async def impact_analysis(
-    container: str        = Query(...,  description="Container id, e.g. 'translations'"),
-    field: str | None     = Query(None, description="Optional field name — narrows the result set"),
-    store: AbstractStore  = Depends(get_store),
-    cache: AbstractCache  = Depends(get_cache),
-    settings: Settings    = Depends(get_settings),
+    container: str = Query(..., description="Container id, e.g. 'translations'"),
+    field: str | None = Query(None, description="Optional field name — narrows the result set"),
+    store: AbstractStore = Depends(get_store),
+    cache: AbstractCache = Depends(get_cache),
+    settings: Settings = Depends(get_settings),
 ) -> dict[str, Any]:
 
     async def _layer(name: str) -> list[dict[str, Any]]:
@@ -47,11 +47,11 @@ async def impact_analysis(
         await cache.set_layer(name, data, settings.cache_ttl_seconds)
         return data
 
-    endpoints     = await _layer("endpoints")
-    screens       = await _layer("screens")
-    agents        = await _layer("agents")
-    requirements  = await _layer("requirements")
-    schemas       = await _layer("schemas")
+    endpoints = await _layer("endpoints")
+    screens = await _layer("screens")
+    agents = await _layer("agents")
+    requirements = await _layer("requirements")
+    schemas = await _layer("schemas")
 
     # ── endpoints that read or write the target container ─────────────────
     hit_endpoints = [
@@ -93,28 +93,28 @@ async def impact_analysis(
 
     def _ep_summary(e: dict) -> dict:
         return {
-            "id":     e.get("id") or e.get("obj_id"),
+            "id": e.get("id") or e.get("obj_id"),
             "status": e.get("status"),
-            "cosmos_reads":  e.get("cosmos_reads"),
+            "cosmos_reads": e.get("cosmos_reads"),
             "cosmos_writes": e.get("cosmos_writes"),
         }
 
     def _sc_summary(s: dict) -> dict:
         return {
-            "id":     s.get("id") or s.get("obj_id"),
-            "route":  s.get("route"),
+            "id": s.get("id") or s.get("obj_id"),
+            "route": s.get("route"),
             "status": s.get("status"),
         }
 
     return {
         "container": container,
-        "field":     field,
+        "field": field,
         "impact": {
-            "total":        len(hit_endpoints) + len(hit_screens) + len(hit_agents) + len(hit_reqs),
-            "endpoints":    [_ep_summary(e) for e in hit_endpoints],
-            "screens":      [_sc_summary(s) for s in hit_screens],
-            "schemas":      [{"id": s.get("id") or s.get("obj_id")} for s in hit_schemas],
-            "agents":       [{"id": a.get("id") or a.get("obj_id")} for a in hit_agents],
+            "total": len(hit_endpoints) + len(hit_screens) + len(hit_agents) + len(hit_reqs),
+            "endpoints": [_ep_summary(e) for e in hit_endpoints],
+            "screens": [_sc_summary(s) for s in hit_screens],
+            "schemas": [{"id": s.get("id") or s.get("obj_id")} for s in hit_schemas],
+            "agents": [{"id": a.get("id") or a.get("obj_id")} for a in hit_agents],
             "requirements": [{"id": r.get("id") or r.get("obj_id"), "title": r.get("title")} for r in hit_reqs],
         },
     }
