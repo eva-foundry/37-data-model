@@ -260,6 +260,14 @@ def make_layer_router(layer: str, prefix: str, tags: list[str]) -> APIRouter:
         result = await store.upsert(layer, obj_id, body, actor)
         await cache.invalidate_layer(layer)
         await cache.invalidate_obj(layer, obj_id)
+        
+        # Also invalidate Redis cache for agent-summary (Session 41 Part 7)
+        try:
+            from api.simple_cache import cache_client
+            await cache_client.delete("agent-summary:v1")
+        except Exception:
+            pass  # Non-fatal, old cache exists as fallback
+        
         return result
 
     # ── SOFT DELETE ───────────────────────────────────────────────────────
@@ -281,6 +289,14 @@ def make_layer_router(layer: str, prefix: str, tags: list[str]) -> APIRouter:
             )
         await cache.invalidate_layer(layer)
         await cache.invalidate_obj(layer, obj_id)
+        
+        # Also invalidate Redis cache for agent-summary (Session 41 Part 7)
+        try:
+            from api.simple_cache import cache_client
+            await cache_client.delete("agent-summary:v1")
+        except Exception:
+            pass  # Non-fatal, old cache exists as fallback
+        
         return {
             "deleted": obj_id,
             "layer": layer,

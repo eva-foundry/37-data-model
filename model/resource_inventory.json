@@ -1,0 +1,175 @@
+{
+  "resource_inventory": [
+    {
+      "id": "rsc-001",
+      "layer": "resource_inventory",
+      "subscription_id": "msub-eva-production",
+      "resource_group": "rg-eva-data-model",
+      "resource_name": "msub-eva-data-model",
+      "resource_type": "Microsoft.App/containerApps",
+      "region": "canadacentral",
+      "status": "running",
+      "created_date": "2026-02-15T10:30:00Z",
+      "updated_date": "2026-03-09T09:45:52Z",
+      "tags": {
+        "environment": "production",
+        "project": "37-data-model",
+        "owner": "eva-coe",
+        "cost-center": "ai-platform"
+      },
+      "configuration": {
+        "revision": "0000021",
+        "replicas": 1,
+        "cpu": "0.5",
+        "memory": "1Gi",
+        "ingress_enabled": true,
+        "external_traffic": true,
+        "min_replicas": 1,
+        "max_replicas": 3
+      },
+      "security_config": {
+        "managed_identity": "system-assigned",
+        "https_only": true,
+        "cors_enabled": true,
+        "authentication": "none"
+      },
+      "cost_tracking": {
+        "monthly_estimate_usd": 45.5,
+        "current_month_actual_usd": 28.3,
+        "budget_allocation": "operations"
+      }
+    },
+    {
+      "id": "rsc-002",
+      "layer": "resource_inventory",
+      "subscription_id": "msub-eva-production",
+      "resource_group": "rg-eva-data-model",
+      "resource_name": "eva-data-cosmos",
+      "resource_type": "Microsoft.DocumentDB/databaseAccounts",
+      "region": "canadacentral",
+      "status": "online",
+      "created_date": "2026-02-10T08:15:00Z",
+      "updated_date": "2026-03-05T14:22:00Z",
+      "tags": {
+        "environment": "production",
+        "project": "37-data-model",
+        "owner": "eva-coe",
+        "cost-center": "data-platform"
+      },
+      "configuration": {
+        "throughput_mode": "serverless",
+        "consistency_level": "Session",
+        "multi_region": false,
+        "backup_policy": "Continuous",
+        "analytical_storage": false
+      },
+      "security_config": {
+        "firewall_enabled": true,
+        "virtual_network_filter": false,
+        "key_vault_key_uri": null,
+        "private_endpoint": false
+      },
+      "cost_tracking": {
+        "monthly_estimate_usd": 125.0,
+        "current_month_actual_usd": 78.45,
+        "budget_allocation": "data-storage"
+      }
+    },
+    {
+      "id": "rsc-003",
+      "layer": "resource_inventory",
+      "subscription_id": "msub-eva-production",
+      "resource_group": "rg-eva-data-model",
+      "resource_name": "msubsandacr202603031449",
+      "resource_type": "Microsoft.ContainerRegistry/registries",
+      "region": "canadacentral",
+      "status": "running",
+      "created_date": "2026-03-03T14:49:00Z",
+      "updated_date": "2026-03-09T09:40:00Z",
+      "tags": {
+        "environment": "production",
+        "project": "37-data-model",
+        "owner": "eva-coe"
+      },
+      "configuration": {
+        "sku": "Basic",
+        "admin_enabled": false,
+        "public_network_access": true,
+        "zone_redundancy": false
+      },
+      "security_config": {
+        "trust_policy_enabled": false,
+        "quarantine_policy_enabled": false,
+        "retention_policy_days": 30
+      },
+      "cost_tracking": {
+        "monthly_estimate_usd": 15.0,
+        "current_month_actual_usd": 8.25,
+        "budget_allocation": "operations"
+      }
+    },
+    {
+      "id": "rsc-004",
+      "layer": "resource_inventory",
+      "subscription_id": "msub-eva-production",
+      "resource_group": "rg-eva-shared",
+      "resource_name": "kv-eva-secrets",
+      "resource_type": "Microsoft.KeyVault/vaults",
+      "region": "canadacentral",
+      "status": "active",
+      "created_date": "2026-01-15T09:00:00Z",
+      "updated_date": "2026-03-08T16:30:00Z",
+      "tags": {
+        "environment": "production",
+        "cost-center": "security"
+      },
+      "configuration": {
+        "sku": "Standard",
+        "soft_delete_enabled": true,
+        "purge_protection_enabled": true,
+        "rbac_authorization_enabled": true
+      },
+      "security_config": {
+        "network_acls_default_action": "Deny",
+        "virtual_network_rules_count": 2,
+        "ip_rules_count": 1,
+        "private_endpoint_enabled": false
+      },
+      "cost_tracking": {
+        "monthly_estimate_usd": 5.0,
+        "current_month_actual_usd": 3.15,
+        "budget_allocation": "security"
+      }
+    },
+    {
+      "id": "rsc-005",
+      "layer": "resource_inventory",
+      "subscription_id": "msub-eva-production",
+      "resource_group": "rg-eva-monitoring",
+      "resource_name": "log-eva-central",
+      "resource_type": "Microsoft.OperationalInsights/workspaces",
+      "region": "canadacentral",
+      "status": "active",
+      "created_date": "2026-01-20T11:30:00Z",
+      "updated_date": "2026-03-09T08:00:00Z",
+      "tags": {
+        "environment": "production",
+        "cost-center": "observability"
+      },
+      "configuration": {
+        "sku": "PerGB2018",
+        "retention_days": 90,
+        "daily_quota_gb": 10
+      },
+      "security_config": {
+        "customer_managed_key": false,
+        "public_network_access": true
+      },
+      "cost_tracking": {
+        "monthly_estimate_usd": 85.0,
+        "current_month_actual_usd": 52.3,
+        "budget_allocation": "observability"
+      }
+    }
+  ]
+}

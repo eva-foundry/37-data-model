@@ -45,7 +45,7 @@ $ErrorActionPreference = "Stop"
 $RegistryName = "msubsandacr202603031449"
 $ImageName = "eva/eva-data-model"
 $ImageTag = "seed-fix-v1"
-$FullImage = "$RegistryName.azurecr.io/$ImageName:$ImageTag"
+$FullImage = "${RegistryName}.azurecr.io/${ImageName}:${ImageTag}"
 $ContainerAppName = "msub-eva-data-model"
 $ResourceGroup = "EVA-Sandbox-dev"
 $ProdBase = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
@@ -112,8 +112,8 @@ if (-not $SkipBuild) {
         Write-Host "  → az acr build..." -ForegroundColor Gray
         az acr build `
             --registry $RegistryName `
-            --image "$ImageName:$ImageTag" `
-            --image "$ImageName:latest" `
+            --image "${ImageName}:${ImageTag}" `
+            --image "${ImageName}:latest" `
             --file Dockerfile `
             .
         

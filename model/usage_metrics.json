@@ -1,0 +1,154 @@
+{
+  "usage_metrics": [
+    {
+      "id": "usage-001",
+      "layer": "usage_metrics",
+      "metric_type": "api_usage",
+      "service_id": "eva-data-model-api",
+      "time_period": "2026-03-09",
+      "time_granularity": "daily",
+      "total_requests": 18450,
+      "unique_clients": 12,
+      "top_endpoints": [
+        {
+          "path": "/model/agent-summary",
+          "count": 5230
+        },
+        {
+          "path": "/model/wbs/",
+          "count": 3820
+        },
+        {
+          "path": "/model/evidence/",
+          "count": 2450
+        },
+        {
+          "path": "/model/projects/",
+          "count": 1890
+        },
+        {
+          "path": "/model/sprints/",
+          "count": 1650
+        }
+      ],
+      "client_breakdown": {
+        "agent:copilot": 14250,
+        "user:human": 3100,
+        "system:automation": 1100
+      },
+      "peak_requests_per_minute": 42,
+      "average_requests_per_minute": 12.8,
+      "bandwidth_mb": 125.5
+    },
+    {
+      "id": "usage-002",
+      "layer": "usage_metrics",
+      "metric_type": "feature_adoption",
+      "service_id": "eva-data-model-api",
+      "time_period": "2026-03-01_2026-03-09",
+      "time_granularity": "weekly",
+      "feature_usage": {
+        "agent_guide": {
+          "usage_count": 145,
+          "unique_users": 8,
+          "adoption_rate_percent": 66.7
+        },
+        "evidence_layer": {
+          "usage_count": 892,
+          "unique_users": 12,
+          "adoption_rate_percent": 100
+        },
+        "paperless_governance": {
+          "usage_count": 234,
+          "unique_users": 6,
+          "adoption_rate_percent": 50.0
+        },
+        "universal_query_operators": {
+          "usage_count": 1567,
+          "unique_users": 11,
+          "adoption_rate_percent": 91.7
+        }
+      },
+      "new_users_this_period": 2,
+      "churned_users_this_period": 0,
+      "user_satisfaction_score": 4.5
+    },
+    {
+      "id": "usage-003",
+      "layer": "usage_metrics",
+      "metric_type": "data_access_patterns",
+      "service_id": "eva-data-model-api",
+      "time_period": "2026-03-09",
+      "time_granularity": "daily",
+      "most_queried_layers": [
+        {
+          "layer": "wbs",
+          "query_count": 3272
+        },
+        {
+          "layer": "evidence",
+          "query_count": 2450
+        },
+        {
+          "layer": "projects",
+          "query_count": 1890
+        },
+        {
+          "layer": "endpoints",
+          "query_count": 1567
+        },
+        {
+          "layer": "literals",
+          "query_count": 1234
+        }
+      ],
+      "query_complexity_distribution": {
+        "simple_get": 12450,
+        "filtered_query": 4890,
+        "aggregation": 980,
+        "complex_join": 130
+      },
+      "cache_hit_rate_percent": 0,
+      "average_query_latency_ms": 45
+    },
+    {
+      "id": "usage-004",
+      "layer": "usage_metrics",
+      "metric_type": "write_operations",
+      "service_id": "eva-data-model-api",
+      "time_period": "2026-03-09",
+      "time_granularity": "daily",
+      "total_write_operations": 156,
+      "operations_by_type": {
+        "PUT": 142,
+        "POST_admin_seed": 8,
+        "POST_admin_commit": 6
+      },
+      "most_updated_layers": [
+        {
+          "layer": "evidence",
+          "update_count": 45
+        },
+        {
+          "layer": "wbs",
+          "update_count": 32
+        },
+        {
+          "layer": "project_work",
+          "update_count": 28
+        },
+        {
+          "layer": "sprints",
+          "update_count": 18
+        },
+        {
+          "layer": "decisions",
+          "update_count": 12
+        }
+      ],
+      "write_success_rate_percent": 99.4,
+      "average_write_latency_ms": 120,
+      "commits_with_violations": 0
+    }
+  ]
+}

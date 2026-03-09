@@ -1,0 +1,154 @@
+{
+  "infrastructure_events": [
+    {
+      "id": "event-001",
+      "layer": "infrastructure_events",
+      "event_type": "deployment",
+      "timestamp": "2026-03-09T09:45:52Z",
+      "severity": "info",
+      "service_id": "eva-data-model-api",
+      "resource_name": "msub-eva-data-model",
+      "event_summary": "Deployed revision 0000021 with seed-fix-v1 image",
+      "event_details": {
+        "deployment_method": "automated_script",
+        "previous_revision": "0000020",
+        "new_revision": "0000021",
+        "image": "msubsandacr202603031449.azurecr.io/eva/eva-data-model:seed-fix-v1",
+        "deployment_duration_seconds": 1265,
+        "health_check_result": "PASS",
+        "rollback_available": true
+      },
+      "initiated_by": "agent:copilot",
+      "correlation_id": "session-41-deployment",
+      "resolution_status": "completed",
+      "impact": "Production data increased from 5,521 to 5,796 records"
+    },
+    {
+      "id": "event-002",
+      "layer": "infrastructure_events",
+      "event_type": "seed_operation",
+      "timestamp": "2026-03-09T09:50:15Z",
+      "severity": "info",
+      "service_id": "eva-data-model-api",
+      "resource_name": "cosmos-db-eva",
+      "event_summary": "Production seed operation completed - 5,796 records across 81 layers",
+      "event_details": {
+        "seed_method": "POST /model/admin/seed",
+        "records_before": 50,
+        "records_after": 5796,
+        "layers_operational_before": 1,
+        "layers_operational_after": 81,
+        "success_rate_percent": 93.1,
+        "error_count": 0,
+        "duration_seconds": 8,
+        "data_sources": [
+          "model/*.json files",
+          "REST API uploads"
+        ]
+      },
+      "initiated_by": "agent:copilot",
+      "correlation_id": "session-41-deployment",
+      "resolution_status": "completed",
+      "impact": "116× data increase, 81× layer increase"
+    },
+    {
+      "id": "event-003",
+      "layer": "infrastructure_events",
+      "event_type": "incident",
+      "timestamp": "2026-03-09T03:30:00Z",
+      "severity": "warning",
+      "service_id": "agent-fleet-api",
+      "resource_name": "agent-fleet-local",
+      "event_summary": "High memory usage detected - container restarted",
+      "event_details": {
+        "incident_type": "resource_exhaustion",
+        "memory_usage_mb": 1450,
+        "memory_limit_mb": 1024,
+        "cpu_usage_percent": 85.5,
+        "container_restart_count": 5,
+        "restart_reason": "OOMKilled",
+        "affected_users": 0,
+        "data_loss": false
+      },
+      "initiated_by": "system:kubernetes",
+      "correlation_id": "incident-2026-03-09-001",
+      "resolution_status": "mitigated",
+      "impact": "Brief service interruption (2 minutes), automatic recovery"
+    },
+    {
+      "id": "event-004",
+      "layer": "infrastructure_events",
+      "event_type": "configuration_change",
+      "timestamp": "2026-03-07T18:03:00Z",
+      "severity": "info",
+      "service_id": "eva-data-model-api",
+      "resource_name": "governance-system",
+      "event_summary": "Paperless governance activated - README+ACCEPTANCE only",
+      "event_details": {
+        "change_type": "governance_model",
+        "previous_model": "file-based (4 files per project)",
+        "new_model": "api-first (README+ACCEPTANCE on disk, rest via API)",
+        "affected_projects": 59,
+        "file_reduction": "236 files → 118 files (50% reduction)",
+        "api_endpoints_added": [
+          "GET /model/project_work/{project_id}",
+          "GET /model/workspace_config/{workspace_id}"
+        ]
+      },
+      "initiated_by": "agent:copilot",
+      "correlation_id": "session-38-paperless",
+      "resolution_status": "completed",
+      "impact": "Single source of truth established, 50% file reduction"
+    },
+    {
+      "id": "event-005",
+      "layer": "infrastructure_events",
+      "event_type": "capacity_scaling",
+      "timestamp": "2026-03-08T14:20:00Z",
+      "severity": "info",
+      "service_id": "cosmos-db-eva",
+      "resource_name": "eva-data-cosmos",
+      "event_summary": "Serverless RU consumption spike detected",
+      "event_details": {
+        "scaling_trigger": "high_request_volume",
+        "ru_consumption_before": 250,
+        "ru_consumption_peak": 1200,
+        "ru_consumption_after": 350,
+        "duration_minutes": 15,
+        "cost_impact_usd": 2.45,
+        "throttling_detected": false,
+        "auto_scaling_applied": true
+      },
+      "initiated_by": "system:cosmos",
+      "correlation_id": "scaling-2026-03-08-001",
+      "resolution_status": "completed",
+      "impact": "Temporary cost increase, no performance degradation"
+    },
+    {
+      "id": "event-006",
+      "layer": "infrastructure_events",
+      "event_type": "security_event",
+      "timestamp": "2026-03-06T11:45:00Z",
+      "severity": "info",
+      "service_id": "kv-eva-secrets",
+      "resource_name": "kv-eva-secrets",
+      "event_summary": "Secret rotation completed for production keys",
+      "event_details": {
+        "event_subtype": "secret_rotation",
+        "secrets_rotated": 5,
+        "rotation_method": "automated",
+        "services_updated": [
+          "eva-data-model-api",
+          "eva-brain-api",
+          "agent-fleet-api"
+        ],
+        "downtime_seconds": 0,
+        "compliance_requirement": "90-day rotation policy"
+      },
+      "initiated_by": "system:key_vault",
+      "correlation_id": "rotation-2026-03-06",
+      "resolution_status": "completed",
+      "impact": "Zero downtime, compliance maintained"
+    }
+  ]
+}

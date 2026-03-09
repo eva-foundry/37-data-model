@@ -1,26 +1,84 @@
 {
-  "traces": {
-    "created_at": "2026-03-01T13:35:00Z",
-    "total_cost_usd": 1.234E-05,
-    "lm_calls": [
-      {
-        "tokens_in": 100,
-        "tokens_out": 50,
-        "model": "gpt-4o-mini",
-        "cost_usd": 1.234E-05,
-        "latency_ms": 850
-      }
-    ],
-    "sprint_id": "37-data-model-sprint-1",
-    "id": "test-trace-001",
-    "is_active": true,
-    "total_latency_ms": 850,
-    "status": "active",
-    "notes": "Phase 3 test trace",
-    "layer": "traces",
-    "modified_by": "agent:copilot",
-    "modified_at": "2026-03-01T15:35:50.901102-03:00",
-    "created_by": "agent:copilot",
-    "row_version": 1
-  }
+  "traces": [
+    {
+      "id": "trace-session-41-deploy",
+      "layer": "traces",
+      "sprint_id": "37-data-model-sprint-8",
+      "story_id": "37-data-model-session-41",
+      "correlation_id": "session-41-deployment",
+      "created_at": "2026-03-09T09:30:00Z",
+      "status": "completed",
+      "is_active": false,
+      "total_cost_usd": 0.0245,
+      "total_latency_ms": 125000,
+      "lm_calls": [
+        {
+          "model": "claude-sonnet-4.5",
+          "tokens_in": 35000,
+          "tokens_out": 2500,
+          "cost_usd": 0.0185,
+          "latency_ms": 42000
+        },
+        {
+          "model": "claude-sonnet-4.5",
+          "tokens_in": 15000,
+          "tokens_out": 1200,
+          "cost_usd": 0.006,
+          "latency_ms": 18000
+        }
+      ],
+      "notes": "Session 41 Part 6-7: DPDCA deployment + infrastructure monitoring"
+    },
+    {
+      "id": "trace-session-41-analysis",
+      "layer": "traces",
+      "sprint_id": "37-data-model-sprint-8",
+      "story_id": "37-data-model-session-41",
+      "correlation_id": "session-41-analysis",
+      "created_at": "2026-03-09T08:00:00Z",
+      "status": "completed",
+      "is_active": false,
+      "total_cost_usd": 0.0156,
+      "total_latency_ms": 85000,
+      "lm_calls": [
+        {
+          "model": "claude-sonnet-4.5",
+          "tokens_in": 25000,
+          "tokens_out": 1800,
+          "cost_usd": 0.0125,
+          "latency_ms": 35000
+        },
+        {
+          "model": "claude-sonnet-4.5",
+          "tokens_in": 8000,
+          "tokens_out": 600,
+          "cost_usd": 0.0031,
+          "latency_ms": 12000
+        }
+      ],
+      "notes": "Analysis of seed-results and documentation updates"
+    },
+    {
+      "id": "trace-priority-1-generation",
+      "layer": "traces",
+      "sprint_id": "37-data-model-sprint-8",
+      "story_id": "37-data-model-priority-1",
+      "correlation_id": "priority-1-infrastructure",
+      "created_at": "2026-03-09T09:45:00Z",
+      "status": "active",
+      "is_active": true,
+      "total_cost_usd": 0.0328,
+      "total_latency_ms": 180000,
+      "lm_calls": [
+        {
+          "model": "claude-sonnet-4.5",
+          "tokens_in": 52000,
+          "tokens_out": 4500,
+          "cost_usd": 0.0328,
+          "latency_ms": 65000
+        }
+      ],
+      "notes": "Priority 1: Infrastructure monitoring data generation (in progress)"
+    }
+  ]
 }
