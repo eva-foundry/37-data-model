@@ -1,0 +1,233 @@
+﻿{
+    "deployment_scope":  "Execution Engine (Phase 2-6) + Schema Updates",
+    "timestamp":  "2026-03-09T21:56:48.8389779-03:00",
+    "expected_results":  {
+                             "api_endpoints":  0,
+                             "total_schemas":  64,
+                             "code_lines":  15316,
+                             "execution_schemas":  24
+                         },
+    "deployed_by":  "marco",
+    "deployment_tracking":  {
+                                "target_environment":  "MarcoSub (msub-eva-data-model)",
+                                "registry":  "msubsandacr202603031449",
+                                "docker_image":  "eva/eva-data-model",
+                                "cloud_url":  "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+                            },
+    "git_commit":  "ba4a0b134c9839351c455e2c294ec877140958a2",
+    "deployment_phases":  [
+                              {
+                                  "phase":  "Phase 1: Core Execution",
+                                  "layers":  [
+                                                 "L52-Execution Units",
+                                                 "L53-Step Events",
+                                                 "L54-Decisions",
+                                                 "L56-Outcomes"
+                                             ],
+                                  "schemas":  4
+                              },
+                              {
+                                  "phase":  "Phase 2: Factory Governance",
+                                  "layers":  [
+                                                 "L57-Fabric",
+                                                 "L58-Capabilities",
+                                                 "L59-Focus",
+                                                 "L60-Market",
+                                                 "L61-Metrics"
+                                             ],
+                                  "schemas":  9
+                              },
+                              {
+                                  "phase":  "Phase 3: Portfolio Management",
+                                  "layers":  [
+                                                 "L62-Portfolio",
+                                                 "L63-Roadmaps",
+                                                 "L64-Services",
+                                                 "L65-Requests",
+                                                 "L66-Status"
+                                             ],
+                                  "schemas":  5
+                              },
+                              {
+                                  "phase":  "Phase 4: Pattern Framework",
+                                  "layers":  [
+                                                 "L67-Patterns",
+                                                 "L68-Performance",
+                                                 "L69-Learning"
+                                             ],
+                                  "schemas":  3
+                              },
+                              {
+                                  "phase":  "Phase 5: Service Orchestration",
+                                  "layers":  [
+                                                 "L70-SLOs",
+                                                 "L71-Lifecycle",
+                                                 "L72-Performance",
+                                                 "L73-Breaches",
+                                                 "L74-Remediation"
+                                             ],
+                                  "schemas":  5
+                              },
+                              {
+                                  "phase":  "Phase 6: Execution Records",
+                                  "layers":  [
+                                                 "L75-Runs",
+                                                 "L76-Validation"
+                                             ],
+                                  "schemas":  2
+                              }
+                          ],
+    "changes":  {
+                    "modified_schemas":  [
+
+                                         ],
+                    "new_layer_types":  [
+                                            "work_execution_units",
+                                            "work_step_events",
+                                            "work_decision_records",
+                                            "work_outcomes",
+                                            "work_factory_capabilities",
+                                            "work_factory_governance",
+                                            "work_factory_investments",
+                                            "work_factory_metrics",
+                                            "work_factory_portfolio",
+                                            "work_factory_roadmaps",
+                                            "work_factory_services",
+                                            "work_learning_feedback",
+                                            "work_obligations",
+                                            "work_pattern_applications",
+                                            "work_pattern_performance_profiles",
+                                            "work_reusable_patterns",
+                                            "work_service_breaches",
+                                            "work_service_level_objectives",
+                                            "work_service_lifecycle",
+                                            "work_service_perf_profiles",
+                                            "work_service_remediation_plans",
+                                            "work_service_requests",
+                                            "work_service_revalidation_results",
+                                            "work_service_runs"
+                                        ],
+                    "new_schemas":  [
+                                        {
+                                            "lines":  101,
+                                            "name":  "work_decision_records.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  139,
+                                            "name":  "work_execution_units.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  139,
+                                            "name":  "work_factory_capabilities.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  328,
+                                            "name":  "work_factory_governance.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  390,
+                                            "name":  "work_factory_investments.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  275,
+                                            "name":  "work_factory_metrics.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  223,
+                                            "name":  "work_factory_portfolio.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  303,
+                                            "name":  "work_factory_roadmaps.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  145,
+                                            "name":  "work_factory_services.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  113,
+                                            "name":  "work_learning_feedback.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  103,
+                                            "name":  "work_obligations.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  98,
+                                            "name":  "work_outcomes.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  102,
+                                            "name":  "work_pattern_applications.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  137,
+                                            "name":  "work_pattern_performance_profiles.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  151,
+                                            "name":  "work_reusable_patterns.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  155,
+                                            "name":  "work_service_breaches.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  189,
+                                            "name":  "work_service_level_objectives.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  186,
+                                            "name":  "work_service_lifecycle.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  158,
+                                            "name":  "work_service_perf_profiles.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  215,
+                                            "name":  "work_service_remediation_plans.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  105,
+                                            "name":  "work_service_requests.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  158,
+                                            "name":  "work_service_revalidation_results.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  113,
+                                            "name":  "work_service_runs.schema.json",
+                                            "type":  "work_*"
+                                        },
+                                        {
+                                            "lines":  95,
+                                            "name":  "work_step_events.schema.json",
+                                            "type":  "work_*"
+                                        }
+                                    ]
+                }
+}

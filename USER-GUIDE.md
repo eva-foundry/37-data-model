@@ -1,7 +1,7 @@
 # EVA Data Model - Agent User Guide
 
-**Version:** 3.4  
-**Last Updated:** March 9, 2026 10:30 AM ET (Session 41 Part 9 - Introspection Fix)  
+**Version:** 3.5  
+**Last Updated:** March 10, 2026 @ 03:15 ET (Session 43 - API-Only Architecture + Session 42 Bootstrap)  
 **Audience:** AI agents (GitHub Copilot, Claude, custom skills)
 
 ---

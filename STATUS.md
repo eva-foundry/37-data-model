@@ -1,21 +1,8 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 9, 2026 2:00 PM ET -- Session 41 Part 10: Execution Engine Phase 1 (L52-L56) ✅  
-**Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- **12-DOMAIN ARCHITECTURE** (System Architecture, Identity & Access, AI Runtime, User Interface, Control Plane, Governance & Policy, Project & PM, DevOps & Delivery, Observability & Evidence, Infrastructure & FinOps, Execution Engine, Strategy & Portfolio) -- 91 operational layers across 12 domains -- CLOUD-ONLY ARCHITECTURE ✅  
-**Snapshot (2026-03-09 S41 Part 10):** Added 4 execution layers (work_execution_units L52, work_step_events L53, work_decision_records L54, work_outcomes L56) with parent-child cascade architecture. 11 new FK edge types increase total from 27 → 38. Layer count: 87 → 91. Planned layers: 24 → 20 (still L55, L57-L75 to deploy). See **[docs/library/13-EXECUTION-LAYERS.md](docs/library/13-EXECUTION-LAYERS.md)** for complete Phase 1 specification and **[docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md](docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md)** for phased deployment plan.
-
----
-
-## 📋 STATUS.md Deprecation Notice
-
-**⚠️ This file is transitioning to paperless governance per Session 38 (March 7, 2026)**
-
-Starting Session 42, status tracking moves to:
-- **Timeline docs**: `docs/MARCH-*.md` for multi-session narratives
-- **Data model API**: `GET /model/project_work/37-data-model` for real-time status
-- **Session summaries**: `docs/SESSION-*-COMPLETE-SUMMARY.md` for detailed session reports
-
-**Current location for March 7-9, 2026 status**: See **[docs/MARCH-7-9-TIMELINE.md](docs/MARCH-7-9-TIMELINE.md)**
+**Last Updated:** March 10, 2026 @ 03:15 ET -- Session 43: API-Only Architecture Hardening ✅  
+**Phase:** GA (PRODUCTION) -- **API-ONLY ARCHITECTURE** -- **12-DOMAIN ARCHITECTURE** (System Architecture, Identity & Access, AI Runtime, User Interface, Control Plane, Governance & Policy, Project & PM, DevOps & Delivery, Observability & Evidence, Infrastructure & FinOps, Execution Engine, Strategy & Portfolio) -- 91 operational layers + 20 planned = 111 target layers -- NO DISK FALLBACK ✅  
+**Snapshot (2026-03-10 S43):** Cloud API mandatory for ALL operations (not just governance). Fatal error if msub API unavailable. No local port 8010 fallback. Agents must use `/model/agent-guide` and `/model/user-guide` for bootstrap. 6 category runbooks operational (session_tracking, sprint_tracking, evidence_tracking, governance_events, infra_observability, ontology_domains).
 
 ---
 

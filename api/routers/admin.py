@@ -160,11 +160,40 @@ _LAYER_FILES: dict[str, str] = {
     "infrastructure_drift": "infrastructure_drift.json",
     "performance_trends": "performance_trends.json",
     
-    # ── L52-L56: Execution Engine (Phase 1, Session 41 Part 10) ──
-    "work_execution_units": "work_execution_units.json",
-    "work_step_events": "work_step_events.json",
-    "work_decision_records": "work_decision_records.json",
-    "work_outcomes": "work_outcomes.json",
+    # ── L52-L75: Execution Engine (Phases 1-6, Session 41 Part 11) ──
+    # Phase 1: Core Execution (L52-L56)
+    "work_execution_units": "work_execution_units.json",           # L52
+    "work_step_events": "work_step_events.json",                   # L53
+    "work_decision_records": "work_decision_records.json",         # L54
+    "work_outcomes": "work_outcomes.json",                         # L56
+    
+    # Phase 2: Factory Governance (L57-L61)
+    "work_factory_capabilities": "work_factory_capabilities.json",
+    "work_factory_governance": "work_factory_governance.json",
+    "work_factory_investments": "work_factory_investments.json",
+    "work_factory_metrics": "work_factory_metrics.json",
+    "work_factory_portfolio": "work_factory_portfolio.json",
+    "work_factory_roadmaps": "work_factory_roadmaps.json",
+    "work_factory_services": "work_factory_services.json",
+    
+    # Phase 3: Obligations & Learning (L62-L64)
+    "work_obligations": "work_obligations.json",
+    "work_learning_feedback": "work_learning_feedback.json",
+    
+    # Phase 4: Pattern Framework (L65-L67)
+    "work_pattern_applications": "work_pattern_applications.json",
+    "work_pattern_performance_profiles": "work_pattern_performance_profiles.json",
+    "work_reusable_patterns": "work_reusable_patterns.json",
+    
+    # Phase 5: Service Orchestration (L68-L73)
+    "work_service_breaches": "work_service_breaches.json",
+    "work_service_level_objectives": "work_service_level_objectives.json",
+    "work_service_lifecycle": "work_service_lifecycle.json",
+    "work_service_perf_profiles": "work_service_perf_profiles.json",
+    "work_service_remediation_plans": "work_service_remediation_plans.json",
+    "work_service_requests": "work_service_requests.json",
+    "work_service_revalidation_results": "work_service_revalidation_results.json",
+    "work_service_runs": "work_service_runs.json",
 }
 
 

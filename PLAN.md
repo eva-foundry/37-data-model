@@ -14,7 +14,7 @@ NOTE (March 5, 2026): Local port 8010 permanently disabled. Cloud API is sole au
 # Project Plan
 
 <!-- veritas-normalized 2026-02-25 prefix=F37 source=PLAN.md -->
-<!-- Last updated: 2026-03-05 ET -- MTI=100, Cosmos 24x7, Data-Model-First Architecture COMPLETE -->
+<!-- Last updated: 2026-03-10 ET -- MTI=100, 91 operational layers, API-Only Architecture (no disk fallback) -->
 
 ## Feature: Guiding Principle [ID=F37-01]
 The model is the single source of truth. One HTTP call beats 10 file reads.
@@ -78,6 +78,32 @@ Update workspace copilot-instructions.md to reflect data-model-first bootstrap.
 Step 2 changes from "Read project copilot-instructions" to "Query GET /model/projects/{id}".
 Add fallback strategy: If API timeout, read local governance files.
 Document new query patterns (governance, acceptance_criteria, project_work).
+
+### Story: Harden /model/user-guide with Deterministic Runbooks [ID=F37-11-011] [DONE - 2026-03-09]
+Completed 2026-03-09 Session 42. Applied fractal DPDCA to prevent "data model becoming trash can".
+ADDED per-category enhancements:
+- id_format patterns (with examples & validation rules)
+- query_sequence with exact step order (DISCOVER → PLAN → DO → CHECK → ACT)
+- anti_trash_rules (FK validation, no duplicates, required fields)
+- common_mistakes arrays per category
+- expected_status HTTP codes per operation
+CATEGORIES ENHANCED (6):
+1. session_tracking: 5-step sequence, ID {project_id}-{YYYY-MM-DD}
+2. sprint_tracking: 6-step sequence, sequential sprint numbers
+3. evidence_tracking: 6-step sequence, immutable audit trail, correlation_id required
+4. governance_events: 4 sub-layers (verification_records, quality_gates, decisions, risks)
+5. infra_observability: 3 sub-layers, fire-and-forget events, millisecond timestamps
+6. ontology_domains: 12 domains with start_here layers, common_queries templates
+PREVENTS:
+- Orphaned records (FK validation required before writes)
+- Duplicate IDs (exact ID format specifications)
+- Vague evidence (artifact_type must be specific, not generic)
+- Backwards sprint transitions (status must progress forward only)
+- Missing correlation IDs (evidence must link to session/sprint)
+[PASS] Syntax validation (python -m py_compile). [PASS] Route registered (/model/user-guide).
+Lines modified: ~566 lines added (1100-1629 in api/server.py).
+Commit: 61738df on feat/execution-layers-phase2-6.
+Next: Deploy to production (revision 0000022), test on cloud endpoint.
 
 ### Story: Deploy Pilot - 07-foundation-layer [ID=F37-11-008] [NOT STARTED]
 Execute 3-step PUT sequence:
