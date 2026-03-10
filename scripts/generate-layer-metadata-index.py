@@ -1,4 +1,4 @@
-procee#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 Generate layer-metadata-index.json from Data Model API.
 This runs during deployment to ensure the metadata index reflects Cosmos DB truth.
