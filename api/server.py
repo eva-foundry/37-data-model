@@ -1063,6 +1063,572 @@ def create_app() -> FastAPI:
             },
         }
 
+    @app.get(
+        "/model/user-guide",
+        tags=["health"],
+        summary="Paperless user guide for sprint/session work",
+    )
+    async def user_guide() -> dict:
+        """
+        Return API-native paperless guidance for sprint/session operations.
+        No markdown/file dependency: data model API is authoritative.
+        """
+        return {
+            "status": "ok",
+            "source": "data-model-api",
+            "paperless": {
+                "authority": "data-model-api",
+                "bootstrap": [
+                    "GET /model/agent-guide",
+                    "GET /model/user-guide",
+                    "GET /model/project_work/{id}",
+                    "GET /model/sprints/?project_id={id}",
+                ],
+                "write_cycle": {
+                    "correct": "PUT /model/project_work/{id}",
+                    "verify": "GET /model/project_work/{id}",
+                    "commit": "POST /model/admin/commit",
+                },
+                "not_supported": "POST /model/project_work/",
+            },
+            "category_instructions": {
+                "session_tracking": {
+                    "layer": "project_work",
+                    "objective": "Track session-level progress, blockers, and next steps paperlessly.",
+                    "id_format": {
+                        "pattern": "{project_id}-{YYYY-MM-DD}",
+                        "examples": ["37-data-model-2026-03-09", "48-eva-veritas-2026-03-08"],
+                        "validation": "project_id must exist in projects layer; date must be valid ISO format"
+                    },
+                    "query_sequence": [
+                        {
+                            "step": 1,
+                            "action": "DISCOVER",
+                            "method": "GET /model/projects/{project_id}",
+                            "purpose": "Verify project exists and read current phase",
+                            "expected_status": 200,
+                            "abort_if": "404 (project not found)"
+                        },
+                        {
+                            "step": 2,
+                            "action": "DISCOVER",
+                            "method": "GET /model/project_work/{id}",
+                            "purpose": "Check if session record already exists",
+                            "expected_status": [200, 404],
+                            "note": "404 is OK for first session of the day"
+                        },
+                        {
+                            "step": 3,
+                            "action": "DO",
+                            "method": "PUT /model/project_work/{id}",
+                            "headers": {"X-Actor": "agent:copilot"},
+                            "purpose": "Create or update session record",
+                            "expected_status": 200,
+                            "required_fields": ["project_id", "current_phase", "session_summary", "tasks", "metrics"]
+                        },
+                        {
+                            "step": 4,
+                            "action": "CHECK",
+                            "method": "GET /model/project_work/{id}",
+                            "purpose": "Verify write succeeded and row_version incremented",
+                            "expected_status": 200,
+                            "validate": "row_version == previous + 1"
+                        },
+                        {
+                            "step": 5,
+                            "action": "ACT",
+                            "method": "POST /model/admin/commit",
+                            "headers": {"Authorization": "Bearer dev-admin"},
+                            "purpose": "Validate model consistency after write",
+                            "expected_status": 200,
+                            "validate": "response.status == 'PASS' AND violation_count == 0"
+                        }
+                    ],
+                    "anti_trash_rules": [
+                        "No duplicate dates per project (use PUT to update existing record)",
+                        "session_summary must be non-empty dict with completed_tasks and next_steps",
+                        "tasks array must have at least one task",
+                        "metrics must include at least: tests_passing, tests_added, files_changed",
+                        "current_phase must match project.current_phase unless phase transition documented"
+                    ],
+                    "common_mistakes": [
+                        "Using POST instead of PUT (POST not supported)",
+                        "Forgetting X-Actor header (write will fail)",
+                        "Not verifying project exists before creating session (leads to orphaned records)",
+                        "Creating multiple session records for same date (use same ID to update)",
+                        "Not running admin/commit after writes (consistency violations may accumulate)"
+                    ]
+                },
+                "sprint_tracking": {
+                    "layer": "sprints",
+                    "objective": "Track sprint commitments, velocity, and delivery status.",
+                    "id_format": {
+                        "pattern": "{project_id}-sprint-{N}",
+                        "examples": ["37-data-model-sprint-41", "48-eva-veritas-sprint-12"],
+                        "validation": "project_id must exist; sprint number sequential (no gaps)"
+                    },
+                    "query_sequence": [
+                        {
+                            "step": 1,
+                            "action": "DISCOVER",
+                            "method": "GET /model/projects/{project_id}",
+                            "purpose": "Verify project exists and read governance context",
+                            "expected_status": 200
+                        },
+                        {
+                            "step": 2,
+                            "action": "DISCOVER",
+                            "method": "GET /model/sprints/?project_id={project_id}&limit=10",
+                            "purpose": "Read recent sprint history to determine next sprint number",
+                            "expected_status": 200,
+                            "note": "Sort by sprint number descending to get latest"
+                        },
+                        {
+                            "step": 3,
+                            "action": "DISCOVER",
+                            "method": "GET /model/wbs/?project_id={project_id}",
+                            "purpose": "Read backlog to link committed stories",
+                            "expected_status": 200,
+                            "note": "Filter for stories in ready or in-progress status"
+                        },
+                        {
+                            "step": 4,
+                            "action": "DO",
+                            "method": "PUT /model/sprints/{id}",
+                            "headers": {"X-Actor": "agent:copilot"},
+                            "purpose": "Create sprint with committed stories and velocity target",
+                            "expected_status": 200,
+                            "required_fields": ["project_id", "sprint_number", "start_date", "end_date", "committed_stories", "velocity_target"]
+                        },
+                        {
+                            "step": 5,
+                            "action": "CHECK",
+                            "method": "GET /model/sprints/{id}",
+                            "purpose": "Verify sprint created with correct story links",
+                            "expected_status": 200,
+                            "validate": "committed_stories array contains valid wbs ids"
+                        },
+                        {
+                            "step": 6,
+                            "action": "ACT",
+                            "method": "POST /model/admin/commit",
+                            "headers": {"Authorization": "Bearer dev-admin"},
+                            "purpose": "Validate sprint references and model consistency",
+                            "expected_status": 200,
+                            "validate": "response.status == 'PASS'"
+                        }
+                    ],
+                    "anti_trash_rules": [
+                        "Sprint numbers must be sequential (no skipping numbers)",
+                        "Start and end dates must not overlap with active sprints for same project",
+                        "committed_stories must reference existing wbs items from same project",
+                        "velocity_target must be > 0 and reasonable (typically 3-20 story points)",
+                        "Sprint must have at least one committed story (no empty sprints)",
+                        "Sprint status must progress: planned → active → closed (no backwards transitions)"
+                    ],
+                    "common_mistakes": [
+                        "Not checking for active sprints before creating new one (causes overlap)",
+                        "Linking stories from different projects (FK violation)",
+                        "Creating sprint-0 or negative sprint numbers",
+                        "Not updating sprint status to 'closed' when complete",
+                        "Forgetting to link sprint to evidence when closing (no audit trail)"
+                    ]
+                },
+                "evidence_tracking": {
+                    "layer": "evidence",
+                    "objective": "Persist DPDCA artifacts and validation proof with immutable audit trail.",
+                    "id_format": {
+                        "pattern": "{project_id}-{phase}-{artifact_type}-{YYYYMMDD-HHMMSS}",
+                        "examples": [
+                            "37-data-model-discover-baseline-20260309-143022",
+                            "48-eva-veritas-check-test-results-20260308-091544",
+                            "07-foundation-act-session-summary-20260307-180315"
+                        ],
+                        "validation": "phase must be one of: discover, plan, do, check, act; artifact_type must be kebab-case"
+                    },
+                    "query_sequence": [
+                        {
+                            "step": 1,
+                            "action": "DISCOVER",
+                            "method": "GET /model/projects/{project_id}",
+                            "purpose": "Verify project exists",
+                            "expected_status": 200
+                        },
+                        {
+                            "step": 2,
+                            "action": "DISCOVER",
+                            "method": "GET /model/project_work/{project_id}-{date}",
+                            "purpose": "Get current session context for linking evidence",
+                            "expected_status": 200,
+                            "note": "Evidence should link to session or sprint for traceability"
+                        },
+                        {
+                            "step": 3,
+                            "action": "DO",
+                            "method": "PUT /model/evidence/{id}",
+                            "headers": {"X-Actor": "agent:copilot"},
+                            "purpose": "Create immutable evidence record with artifact and metadata",
+                            "expected_status": 200,
+                            "required_fields": ["project_id", "phase", "artifact_type", "artifact_content", "correlation_id", "timestamp"]
+                        },
+                        {
+                            "step": 4,
+                            "action": "DO",
+                            "method": "PUT /model/project_work/{project_id}-{date}",
+                            "headers": {"X-Actor": "agent:copilot"},
+                            "purpose": "Link evidence id to session record",
+                            "expected_status": 200,
+                            "note": "Add evidence id to project_work.evidence_ids array"
+                        },
+                        {
+                            "step": 5,
+                            "action": "CHECK",
+                            "method": "GET /model/evidence/{id}",
+                            "purpose": "Verify evidence persisted correctly",
+                            "expected_status": 200,
+                            "validate": "correlation_id matches session/sprint id"
+                        },
+                        {
+                            "step": 6,
+                            "action": "ACT",
+                            "method": "POST /model/admin/commit",
+                            "headers": {"Authorization": "Bearer dev-admin"},
+                            "purpose": "Validate evidence links and model consistency",
+                            "expected_status": 200
+                        }
+                    ],
+                    "anti_trash_rules": [
+                        "correlation_id is REQUIRED (links evidence to session/sprint/story)",
+                        "No orphaned evidence (must link to valid project_work or sprint)",
+                        "artifact_content must be non-empty (no placeholder evidence)",
+                        "timestamp must be ISO 8601 UTC format",
+                        "phase must be valid DPDCA phase (discover, plan, do, check, act)",
+                        "Evidence is immutable once written (no updates, only new records)",
+                        "artifact_type must describe WHAT was captured (e.g., test-results, not generic-data)"
+                    ],
+                    "common_mistakes": [
+                        "Creating evidence without correlation_id (becomes orphaned, no traceability)",
+                        "Using vague artifact_type like 'data' or 'output' instead of specific types",
+                        "Not linking evidence back to project_work or sprint (breaks audit trail)",
+                        "Trying to UPDATE evidence (evidence is append-only, create new record instead)",
+                        "Forgetting to capture test results as evidence (breaks quality gate validation)",
+                        "Using local timestamps instead of UTC (causes timezone confusion)"
+                    ]
+                },
+                "governance_events": {
+                    "layers": ["verification_records", "quality_gates", "decisions", "risks"],
+                    "objective": "Record governance outcomes and gate evaluations in model layers.",
+                    "id_formats": {
+                        "verification_records": {
+                            "pattern": "{project_id}-verification-{gate_name}-{YYYYMMDD-HHMMSS}",
+                            "examples": ["37-data-model-verification-mti-gate-20260309-140022"],
+                            "validation": "gate_name must reference existing quality_gate"
+                        },
+                        "quality_gates": {
+                            "pattern": "{layer_name}-{gate_type}",
+                            "examples": ["project_work-mti-threshold", "sprints-velocity-minimum"],
+                            "validation": "gate_type must be one of: threshold, ratio, count, existence"
+                        },
+                        "decisions": {
+                            "pattern": "{project_id}-decision-{sequence}",
+                            "examples": ["37-data-model-decision-001", "48-eva-veritas-decision-042"],
+                            "validation": "sequence must be zero-padded 3 digits"
+                        },
+                        "risks": {
+                            "pattern": "{project_id}-risk-{sequence}",
+                            "examples": ["37-data-model-risk-001", "07-foundation-risk-012"],
+                            "validation": "sequence must be sequential"
+                        }
+                    },
+                    "query_sequences": {
+                        "verification_records": [
+                            {"step": 1, "action": "DISCOVER", "method": "GET /model/quality_gates/{gate_id}", "purpose": "Read gate definition and thresholds"},
+                            {"step": 2, "action": "DO", "method": "Execute gate evaluation logic", "purpose": "Calculate actual vs expected"},
+                            {"step": 3, "action": "DO", "method": "PUT /model/verification_records/{id}", "purpose": "Store gate result (PASS/FAIL/WARN)"},
+                            {"step": 4, "action": "CHECK", "method": "GET /model/verification_records/{id}", "purpose": "Verify result persisted"},
+                            {"step": 5, "action": "ACT", "method": "PUT /model/project_work/{session_id}", "purpose": "Link verification to session"},
+                            {"step": 6, "action": "ACT", "method": "POST /model/admin/commit", "purpose": "Validate governance consistency"}
+                        ],
+                        "quality_gates": [
+                            {"step": 1, "action": "PLAN", "method": "Define gate criteria", "purpose": "What must be true for PASS"},
+                            {"step": 2, "action": "DO", "method": "PUT /model/quality_gates/{id}", "purpose": "Store gate definition"},
+                            {"step": 3, "action": "CHECK", "method": "GET /model/quality_gates/{id}", "purpose": "Verify gate stored with all thresholds"},
+                            {"step": 4, "action": "ACT", "method": "POST /model/admin/commit", "purpose": "Validate gate definition"}
+                        ],
+                        "decisions": [
+                            {"step": 1, "action": "DISCOVER", "method": "GET /model/decisions/?project_id={id}", "purpose": "Read past decisions for context"},
+                            {"step": 2, "action": "PLAN", "method": "Document alternatives considered", "purpose": "ADR must show options evaluated"},
+                            {"step": 3, "action": "DO", "method": "PUT /model/decisions/{id}", "purpose": "Store decision with rationale and alternatives"},
+                            {"step": 4, "action": "CHECK", "method": "GET /model/decisions/{id}", "purpose": "Verify decision has alternatives array"},
+                            {"step": 5, "action": "ACT", "method": "POST /model/admin/commit", "purpose": "Validate decision consistency"}
+                        ],
+                        "risks": [
+                            {"step": 1, "action": "DISCOVER", "method": "GET /model/risks/?project_id={id}&status=open", "purpose": "Check for duplicate risks"},
+                            {"step": 2, "action": "DO", "method": "PUT /model/risks/{id}", "purpose": "Create risk with probability, impact, mitigation"},
+                            {"step": 3, "action": "CHECK", "method": "GET /model/risks/{id}", "purpose": "Verify risk has mitigation plan"},
+                            {"step": 4, "action": "ACT", "method": "PUT /model/project_work/{session_id}", "purpose": "Link risk to session blockers"},
+                            {"step": 5, "action": "ACT", "method": "POST /model/admin/commit", "purpose": "Validate risk references"}
+                        ]
+                    },
+                    "anti_trash_rules": [
+                        "verification_records: No duplicate gate evaluations for same session (one result per gate per session)",
+                        "quality_gates: Must have measurable criteria (no vague 'code quality' gates without metrics)",
+                        "decisions: Must include alternatives array with at least 2 options considered",
+                        "risks: Must have probability (1-5), impact (1-5), and mitigation plan (non-empty)",
+                        "All: Must link to valid project_id (no orphaned governance records)",
+                        "verification_records: result must be one of: PASS, FAIL, WARN, CONDITIONAL",
+                        "quality_gates: threshold values must be numeric and positive"
+                    ],
+                    "common_mistakes": [
+                        "Running gate without storing verification_record (no audit trail)",
+                        "Creating quality_gate without clear pass/fail thresholds",
+                        "Writing decision without alternatives (violates ADR pattern)",
+                        "Creating risk without mitigation plan (incomplete risk management)",
+                        "Not linking verification_records to evidence (breaks traceability)",
+                        "Reusing gate IDs across projects (gates should be project-specific or layer-global)",
+                        "Forgetting to update risk status when mitigated (stale open risks)"
+                    ],
+                    "fail_closed_note": "Governance is API-only in paperless mode. If API unreachable, operations must fail (no disk fallback in compliance mode)."
+                },
+                "infra_observability": {
+                    "layers": ["infrastructure_events", "agent_execution_history", "deployment_records"],
+                    "objective": "Persist operational events and execution traces for auditability.",
+                    "id_formats": {
+                        "infrastructure_events": {
+                            "pattern": "{resource_id}-{event_type}-{timestamp_ms}",
+                            "examples": ["msub-eva-data-model-scale-20260309143022456", "redis-cache-failover-20260308091544123"],
+                            "validation": "timestamp_ms must include milliseconds for uniqueness; resource_id must exist in infrastructure layer"
+                        },
+                        "agent_execution_history": {
+                            "pattern": "agent-{agent_id}-{session_id}-{timestamp_ms}",
+                            "examples": ["agent-copilot-37-data-model-2026-03-09-20260309143022789"],
+                            "validation": "agent_id must exist in agents layer; session_id should link to project_work"
+                        },
+                        "deployment_records": {
+                            "pattern": "{service_id}-deploy-{revision}-{timestamp}",
+                            "examples": ["msub-eva-data-model-deploy-0000022-20260309-140022"],
+                            "validation": "revision must be zero-padded 7 digits; service_id must exist in services layer"
+                        }
+                    },
+                    "query_sequences": {
+                        "infrastructure_events": [
+                            {"step": 1, "action": "DISCOVER (optional)", "method": "GET /model/infrastructure/{resource_id}", "purpose": "Validate resource exists (optional for high-volume events)"},
+                            {"step": 2, "action": "DO", "method": "PUT /model/infrastructure_events/{id}", "purpose": "Fire-and-forget event capture"},
+                            {"step": 3, "action": "SKIP CHECK", "note": "High-volume events skip verification for performance"}
+                        ],
+                        "agent_execution_history": [
+                            {"step": 1, "action": "DISCOVER", "method": "GET /model/agents/{agent_id}", "purpose": "Verify agent exists"},
+                            {"step": 2, "action": "DO", "method": "PUT /model/agent_execution_history/{id}", "purpose": "Capture agent invocation with inputs, outputs, duration"},
+                            {"step": 3, "action": "CHECK", "method": "GET /model/agent_execution_history/{id}", "purpose": "Verify execution logged"},
+                            {"step": 4, "action": "ACT", "method": "POST /model/admin/commit", "purpose": "Optional: validate if needed for audit"}
+                        ],
+                        "deployment_records": [
+                            {"step": 1, "action": "DISCOVER", "method": "GET /model/services/{service_id}", "purpose": "Read service metadata and current version"},
+                            {"step": 2, "action": "DISCOVER", "method": "GET /model/deployment_records/?service_id={id}&limit=1", "purpose": "Get previous deployment for comparison"},
+                            {"step": 3, "action": "DO", "method": "PUT /model/deployment_records/{id}", "purpose": "Capture deployment with revision, artifacts, and status"},
+                            {"step": 4, "action": "DO", "method": "PUT /model/services/{service_id}", "purpose": "Update service.current_revision to match deployment"},
+                            {"step": 5, "action": "CHECK", "method": "GET /model/deployment_records/{id}", "purpose": "Verify deployment logged"},
+                            {"step": 6, "action": "ACT", "method": "POST /model/admin/commit", "purpose": "Validate deployment references"}
+                        ]
+                    },
+                    "anti_trash_rules": [
+                        "infrastructure_events: Use millisecond timestamps for uniqueness (no duplicate events)",
+                        "agent_execution_history: Must capture duration_ms and outcome (success/failure/timeout)",
+                        "deployment_records: Revision must increment (no backwards deployments)",
+                        "All: resource_id/service_id/agent_id must reference valid entities (FK validation)",
+                        "infrastructure_events: event_type must be from controlled vocabulary (scale, failover, error, restart, etc.)",
+                        "deployment_records: Must link to evidence (deployment artifacts, test results)",
+                        "agent_execution_history: Must capture actual inputs/outputs (not placeholders)"
+                    ],
+                    "common_mistakes": [
+                        "Using same timestamp for multiple events (causes ID collision)",
+                        "Not including milliseconds in timestamp (events within same second collide)",
+                        "Logging deployment without updating service.current_revision (data inconsistency)",
+                        "Creating agent_execution_history without session_id link (no traceability)",
+                        "Forgetting to capture deployment failures (only logging successes)",
+                        "Not linking deployment to evidence/artifacts (can't reproduce builds)",
+                        "Using local timestamps instead of UTC (timezone confusion in logs)"
+                    ],
+                    "performance_note": "infrastructure_events are fire-and-forget (high volume). Skip CHECK step for performance. agent_execution_history and deployment_records require verification."
+                },
+                "ontology_domains": {
+                    "objective": "Reason by domain, then query layers within that domain. Agents think in 12 domains, not 111 layers.",
+                    "reasoning_pattern": [
+                        "Step 1: Identify which domain(s) your task belongs to",
+                        "Step 2: Query the 'start_here' layer for that domain to orient",
+                        "Step 3: Follow cross_layer_queries for multi-layer operations",
+                        "Step 4: Use domain-specific query patterns for common tasks"
+                    ],
+                    "domains": {
+                        "system_architecture": {
+                            "layers": ["services", "endpoints", "schemas", "infrastructure", "containers"],
+                            "start_here": "services",
+                            "common_queries": [
+                                "GET /model/services/?status=active -> list all running services",
+                                "GET /model/services/{id} -> read service details then GET /model/endpoints/?service_id={id}",
+                                "GET /model/infrastructure/ -> understand deployment targets"
+                            ],
+                            "cross_layer_queries": [
+                                "Service → Endpoints → Schemas (trace API surface)",
+                                "Infrastructure → Services → Containers (understand deployments)"
+                            ]
+                        },
+                        "identity_access": {
+                            "layers": ["personas", "security_controls", "secrets_catalog"],
+                            "start_here": "personas",
+                            "common_queries": [
+                                "GET /model/personas/ -> understand all actors in system",
+                                "GET /model/security_controls/?persona_id={id} -> what can this persona access",
+                                "GET /model/secrets_catalog/ -> audit what secrets exist"
+                            ],
+                            "cross_layer_queries": [
+                                "Personas → Security Controls → Endpoints (trace access paths)"
+                            ]
+                        },
+                        "ai_runtime": {
+                            "layers": ["agents", "prompts", "mcp_servers", "agent_policies"],
+                            "start_here": "agents",
+                            "common_queries": [
+                                "GET /model/agents/?status=active -> list deployed agents",
+                                "GET /model/agents/{id} -> read agent then GET /model/prompts/?agent_id={id}",
+                                "GET /model/mcp_servers/ -> discover available MCP tools"
+                            ],
+                            "cross_layer_queries": [
+                                "Agents → Prompts → Agent Policies (understand agent behavior)",
+                                "Agents → MCP Servers (trace tool availability)"
+                            ]
+                        },
+                        "user_interface": {
+                            "layers": ["screens", "literals", "components", "hooks", "ts_types"],
+                            "start_here": "screens",
+                            "common_queries": [
+                                "GET /model/screens/ -> understand UI structure",
+                                "GET /model/screens/{id} -> read screen then GET /model/components/?screen_id={id}",
+                                "GET /model/literals/?screen_id={id} -> get all text for i18n"
+                            ],
+                            "cross_layer_queries": [
+                                "Screens → Components → Hooks (trace UI interactions)",
+                                "Screens → Literals (localization)"
+                            ]
+                        },
+                        "control_plane": {
+                            "layers": ["planes", "connections", "environments", "cp_skills", "feature_flags"],
+                            "start_here": "planes",
+                            "common_queries": [
+                                "GET /model/planes/ -> understand control plane structure",
+                                "GET /model/environments/ -> list dev, staging, prod configs",
+                                "GET /model/feature_flags/?status=enabled -> active feature flags"
+                            ],
+                            "cross_layer_queries": [
+                                "Planes → Connections → Environments (trace data flows)"
+                            ]
+                        },
+                        "governance_policy": {
+                            "layers": ["quality_gates", "github_rules", "validation_rules", "risks", "decisions"],
+                            "start_here": "quality_gates",
+                            "common_queries": [
+                                "GET /model/quality_gates/ -> list all gates",
+                                "GET /model/verification_records/?project_id={id} -> check gate results",
+                                "GET /model/risks/?project_id={id}&status=open -> active risks"
+                            ],
+                            "cross_layer_queries": [
+                                "Quality Gates → Verification Records → Evidence (audit trail)",
+                                "Risks → Decisions → Project Work (governance events)"
+                            ]
+                        },
+                        "project_pm": {
+                            "layers": ["projects", "wbs", "sprints", "stories", "tasks", "milestones"],
+                            "start_here": "projects",
+                            "common_queries": [
+                                "GET /model/projects/{id} -> read project context",
+                                "GET /model/sprints/?project_id={id}&status=active -> current sprint",
+                                "GET /model/wbs/?project_id={id}&status=in-progress -> active work"
+                            ],
+                            "cross_layer_queries": [
+                                "Projects → Sprints → WBS (trace sprint commitments)",
+                                "WBS → Tasks → Evidence (verify story completion)",
+                                "Projects → Milestones → Sprints (roadmap view)"
+                            ]
+                        },
+                        "devops_delivery": {
+                            "layers": ["ci_cd_pipelines", "deployment_history", "test_cases", "deployment_policies", "repos"],
+                            "start_here": "repos",
+                            "common_queries": [
+                                "GET /model/repos/ -> list all repositories",
+                                "GET /model/deployment_history/?service_id={id}&limit=10 -> recent deploys",
+                                "GET /model/test_cases/?repo_id={id} -> test coverage"
+                            ],
+                            "cross_layer_queries": [
+                                "Repos → CI/CD Pipelines → Deployment History (trace deployments)",
+                                "Test Cases → Evidence (verify testing)"
+                            ]
+                        },
+                        "observability_evidence": {
+                            "layers": ["evidence", "deployment_records", "compliance_audit", "verification_records", "agent_execution_history"],
+                            "start_here": "evidence",
+                            "common_queries": [
+                                "GET /model/evidence/?project_id={id}&phase=check -> test results",
+                                "GET /model/verification_records/?project_id={id} -> gate outcomes",
+                                "GET /model/agent_execution_history/?session_id={id} -> agent activity"
+                            ],
+                            "cross_layer_queries": [
+                                "Evidence → Verification Records → Quality Gates (audit trail)",
+                                "Deployment Records → Evidence (deployment artifacts)"
+                            ]
+                        },
+                        "infrastructure_finops": {
+                            "layers": ["azure_infrastructure", "resource_costs", "performance_trends", "cost_allocation"],
+                            "start_here": "azure_infrastructure",
+                            "common_queries": [
+                                "GET /model/azure_infrastructure/ -> list all Azure resources",
+                                "GET /model/resource_costs/?resource_id={id} -> cost breakdown",
+                                "GET /model/cost_allocation/?project_id={id} -> project costs"
+                            ],
+                            "cross_layer_queries": [
+                                "Azure Infrastructure → Resource Costs → Cost Allocation (billing)",
+                                "Azure Infrastructure → Services (map Azure resources to EVA services)"
+                            ]
+                        },
+                        "execution_engine": {
+                            "layers": ["work_execution_units", "work_step_events", "work_outcomes", "work_session_trace"],
+                            "start_here": "work_execution_units",
+                            "common_queries": [
+                                "GET /model/work_execution_units/?status=in-progress -> running work",
+                                "GET /model/work_step_events/?execution_id={id} -> trace execution steps",
+                                "GET /model/work_outcomes/?execution_id={id} -> execution results"
+                            ],
+                            "cross_layer_queries": [
+                                "Work Execution Units → Work Step Events → Work Outcomes (trace execution)",
+                                "Work Execution Units → Evidence (link to DPDCA artifacts)"
+                            ],
+                            "note": "24 execution layers (L52-L75) operational as of Session 41. See docs/library/13-EXECUTION-LAYERS.md"
+                        },
+                        "strategy_portfolio": {
+                            "layers": ["work_factory_portfolio", "work_factory_roadmaps", "work_factory_investments", "work_factory_initiatives", "work_factory_okrs"],
+                            "start_here": "work_factory_portfolio",
+                            "common_queries": [
+                                "GET /model/work_factory_portfolio/ -> list all portfolio items",
+                                "GET /model/work_factory_roadmaps/?portfolio_id={id} -> roadmap view",
+                                "GET /model/work_factory_okrs/?quarter={q} -> objectives and key results"
+                            ],
+                            "cross_layer_queries": [
+                                "Portfolio → Roadmaps → Projects (strategic alignment)",
+                                "Portfolio → Investments → Resource Costs (ROI tracking)"
+                            ],
+                            "note": "5 strategy layers (L71-L75) part of execution engine Phase 6. See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md"
+                        }
+                    },
+                    "anti_trash_thinking": [
+                        "DO NOT query all 111 layers individually (use domain-first approach)",
+                        "DO NOT skip 'start_here' layer (provides context for domain)",
+                        "DO follow cross_layer_queries patterns (domain-specific best practices)",
+                        "DO use common_queries as templates (proven query patterns)",
+                        "DO NOT mix domains without clear reasoning (respect domain boundaries)"
+                    ]
+                }
+            }
+        }
+
     return app
 
 
