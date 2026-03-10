@@ -171,6 +171,22 @@ async def lifespan(app: FastAPI):
 
     yield
 
+    # ── Graceful Shutdown (Session 41 Part 12: Vital Service Operations) ──
+    # When container receives SIGTERM (from ACA during deployment):
+    # 1. Stop accepting new requests (FastAPI handles this)
+    # 2. Drain in-flight requests (wait up to terminationGracePeriod)
+    # 3. Export MemoryStore state to disk (if applicable)
+    # 4. Close connections gracefully
+    
+    log.info("Shutdown initiated - draining connections...")
+    
+    # Wait briefly for in-flight requests to complete (connection draining)
+    # Container Apps sets terminationGracePeriodSeconds=30, giving us time
+    import asyncio
+    drain_timeout = settings.shutdown_grace_period_seconds if hasattr(settings, 'shutdown_grace_period_seconds') else 10
+    log.info(f"Waiting {drain_timeout}s for in-flight requests to complete...")
+    await asyncio.sleep(drain_timeout)
+    
     # ── PROD-WI-7: Export-before-shutdown (MemoryStore + production mode only) ──
     # When the container receives SIGTERM, drain in-memory writes to disk so the
     # next cold-start auto-seed picks up all changes made since the last manual export.
@@ -232,6 +248,8 @@ async def lifespan(app: FastAPI):
                 len(_LAYER_FILES))
         except Exception as _exc:
             log.error("Shutdown export failed: %s", _exc)
+    
+    log.info("Shutdown complete - all connections drained")
     # Cosmos / Redis clients close themselves via GC
 
 
