@@ -11,9 +11,10 @@
 ### Production API
 - **URL**: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
 - **Status**: ✅ Operational
-- **Started**: March 9, 2026 @ 09:46 AM ET
-- **Revision**: 0000021 (100% traffic) ✅ LATEST
+- **Started**: March 10, 2026 @ 04:50 AM ET
+- **Revision**: 0000028 (100% traffic) ✅ LATEST (Session 42+43)
 - **Image**: seed-fix-v1
+- **New Features**: `/model/user-guide` with 6 category runbooks, API-only architecture
 
 ### Data Status
 - **JSON Files (Git)**: ✅ 82 files, 5,796 records (source data)
@@ -29,10 +30,14 @@
 - **GitHub Actions**: ✅ Auto-fix enabled
 
 ### Last Deployment
-- **Date**: March 9, 2026 @ 09:45 AM ET
-- **PR**: #46 (fix/seed-smart-parser-full-data-load)
-- **Result**: ✅ SUCCESS - 5,796 records, 81 layers, 0 errors
-- **Actual Impact**: 50 → 5,796 records (116× increase)
+- **Date**: March 10, 2026 @ 04:50 AM ET
+- **PR**: #54 (feat/execution-layers-phase2-6 - Session 42+43)
+- **Result**: ✅ SUCCESS - Revision 0000028 deployed
+- **Key Changes**:
+  - Added `/model/user-guide` endpoint with 6 category runbooks
+  - API-only architecture enforced (no local fallback)
+  - Fractal DPDCA patterns documented
+  - Critical ID format corrections (4 mismatches fixed)
 
 ---
 
