@@ -4,6 +4,9 @@ Used automatically when COSMOS_URL is not set.
 Data persists for the lifetime of the process only.
 
 Thread-safety: asyncio.Lock per layer — safe for async handlers.
+
+PRODUCTION RIGOR: Layer list derived from admin._LAYER_FILES (single source of truth).
+No hardcoded layer literals. Automatically includes all 75 layers (51 base + 24 execution).
 """
 from __future__ import annotations
 
@@ -12,21 +15,12 @@ from copy import deepcopy
 from datetime import datetime, timezone
 from typing import Any
 
+from api.routers.admin import _LAYER_FILES
 from api.store.base import AbstractStore
 
-_LAYERS = [
-    "services",
-    "personas",
-    "feature_flags",
-    "containers",
-    "endpoints",
-    "schemas",
-    "screens",
-    "literals",
-    "agents",
-    "infrastructure",
-    "requirements",
-]
+# Derive layers from single source of truth (admin._LAYER_FILES registry)
+# Ensures dev env has same layer catalog as production
+_LAYERS = list(_LAYER_FILES.keys())
 
 
 def _now() -> str:
