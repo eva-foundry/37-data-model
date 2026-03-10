@@ -1,8 +1,8 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 9, 2026 2:00 PM ET -- Session 41 Part 10: Execution Engine Phase 1 (L52-L56) ✅  
+**Last Updated:** March 9, 2026 7:40 PM ET -- Session 42: /model/user-guide Hardening ✅ (feat branch)  
 **Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- **12-DOMAIN ARCHITECTURE** (System Architecture, Identity & Access, AI Runtime, User Interface, Control Plane, Governance & Policy, Project & PM, DevOps & Delivery, Observability & Evidence, Infrastructure & FinOps, Execution Engine, Strategy & Portfolio) -- 91 operational layers across 12 domains -- CLOUD-ONLY ARCHITECTURE ✅  
-**Snapshot (2026-03-09 S41 Part 10):** Added 4 execution layers (work_execution_units L52, work_step_events L53, work_decision_records L54, work_outcomes L56) with parent-child cascade architecture. 11 new FK edge types increase total from 27 → 38. Layer count: 87 → 91. Planned layers: 24 → 20 (still L55, L57-L75 to deploy). See **[docs/library/13-EXECUTION-LAYERS.md](docs/library/13-EXECUTION-LAYERS.md)** for complete Phase 1 specification and **[docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md](docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md)** for phased deployment plan.
+**Snapshot (2026-03-09 S42):** Hardened /model/user-guide endpoint with deterministic, category-by-category runbooks to prevent "data model becoming trash can". Added id_format patterns, query_sequence steps, anti_trash_rules, and common_mistakes for 6 categories (session_tracking, sprint_tracking, evidence_tracking, governance_events, infra_observability, ontology_domains). 566 lines added to api/server.py (lines 1100-1629). Commit 61738df on feat/execution-layers-phase2-6 branch. Pending deployment to production (revision 0000022).
 
 ---
 
