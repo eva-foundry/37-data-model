@@ -1,8 +1,8 @@
 # patch-registry-table.ps1
-# Replaces the project registry table in C:\AICOE\.github\copilot-instructions.md
+# Replaces the project registry table in C:\eva-foundry\.github\copilot-instructions.md
 # with the full 45-project table (all on-disk folders).
 
-$file = "C:\AICOE\.github\copilot-instructions.md"
+$file = "C:\eva-foundry\.github\copilot-instructions.md"
 $content = Get-Content $file -Raw -Encoding utf8
 
 $newTable = @"

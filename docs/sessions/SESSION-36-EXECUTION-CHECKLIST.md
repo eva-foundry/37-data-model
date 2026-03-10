@@ -29,7 +29,7 @@
 
 ```powershell
 # Execute in terminal
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # Step 1: Deploy Redis
 .\scripts\deploy-redis-infrastructure.ps1

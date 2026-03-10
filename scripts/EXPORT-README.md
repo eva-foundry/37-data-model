@@ -383,9 +383,9 @@ curl https://<api>/model/services | jq '.[] | select(.id == "eva-brain-api")'
 
 ### Documentation References
 
-- EVA Data Model User Guide: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md`
-- API Bootstrap Guide: `C:\AICOE\eva-foundry\37-data-model\copilot-instructions.md#3-eva-data-model-api`
-- Cosmos Best Practices: `C:\AICOE\eva-foundry\18-azure-best\02-well-architected\reliability.md`
+- EVA Data Model User Guide: `C:\eva-foundry\37-data-model\USER-GUIDE.md`
+- API Bootstrap Guide: `C:\eva-foundry\37-data-model\copilot-instructions.md#3-eva-data-model-api`
+- Cosmos Best Practices: `C:\eva-foundry\18-azure-best\02-well-architected\reliability.md`
 
 ---
 

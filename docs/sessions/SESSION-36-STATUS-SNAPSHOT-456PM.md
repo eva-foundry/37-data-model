@@ -62,7 +62,7 @@
 
 **Commands Ready**:
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\scripts\deploy-redis-infrastructure.ps1
 ```
 
@@ -235,7 +235,7 @@ READINESS SCORE: 95/100 ✅ EXCELLENT
 
 ### DevOps Lead
 - [ ] Open terminal
-- [ ] Navigate to: `C:\AICOE\eva-foundry\37-data-model`
+- [ ] Navigate to: `C:\eva-foundry\37-data-model`
 - [ ] Verify Redis deploy script exists: `ls scripts/deploy-redis-*`
 - [ ] Review: PHASE-3-DO-INTEGRATION-GUIDE.md Task 1
 - [ ] Stand by for GO signal

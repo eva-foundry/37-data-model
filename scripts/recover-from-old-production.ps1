@@ -313,7 +313,7 @@ Write-Host "      - Check key layers (wbs, evidence, literals)" -ForegroundColor
 Write-Host "      - Verify object counts match expectations" -ForegroundColor Gray
 Write-Host ""
 Write-Host "   2. Commit to git (CRITICAL - prevents future loss):" -ForegroundColor White
-Write-Host "      cd C:\AICOE\eva-foundry\37-data-model" -ForegroundColor Gray
+Write-Host "      cd C:\eva-foundry\37-data-model" -ForegroundColor Gray
 Write-Host "      git add model/" -ForegroundColor Gray
 Write-Host "      git commit -m ""fix(data): Recover $finalTotal objects from old production""" -ForegroundColor Gray
 Write-Host "      git push origin main" -ForegroundColor Gray

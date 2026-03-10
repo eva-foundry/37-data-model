@@ -18,10 +18,14 @@ Pipeline:
 5. Report Stage: Generate sync report (JSON)
 
 All operations are pure JSON transformations. No API calls, no cloud services.
+
+Revisions:
+    2026-03-10: Refactored to use eva_script_infra (Session 44 compliance)
 """
 
 import json
-import logging
+import sys
+import time
 from pathlib import Path
 from typing import Optional, Literal
 from dataclasses import dataclass, field
@@ -29,16 +33,15 @@ from datetime import datetime
 from enum import Enum
 import hashlib
 
-
-# ============================================================================
-# LOGGING
-# ============================================================================
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(asctime)s] %(levelname)s: %(message)s"
+# Professional Coding Standards infrastructure
+from eva_script_infra import (
+    setup_logging, save_evidence, save_error_evidence, ensure_directories,
+    timestamped_filename, check_directory_exists, check_file_exists,
+    STATUS_PASS, STATUS_FAIL, STATUS_INFO, STATUS_ERROR, STATUS_WARN,
+    format_status
 )
-logger = logging.getLogger(__name__)
+
+logger = None  # Will be initialized in main
 
 
 # ============================================================================
@@ -156,7 +159,7 @@ def extract_51_aca_evidence(repo_path: Path) -> tuple[list[tuple[str, dict]], li
                 continue
             
             records.append((receipt_file.name, data))
-            logger.info(f"[EXTRACT] ✓ {receipt_file.name}")
+            logger.info(f"{format_status(STATUS_PASS, f'[EXTRACT] {receipt_file.name}')}")
             
         except json.JSONDecodeError as e:
             errors.append(f"{receipt_file.name}: JSON decode error: {e}")
@@ -286,7 +289,8 @@ def transform_51_aca_receipts(
             logger.warning(f"[TRANSFORM] ✗ {filename}: {error}")
         else:
             transformed.append(canonical)
-            logger.info(f"[TRANSFORM] ✓ {filename} → {canonical.id}")
+            arrow = "→"  # Unicode arrow (for display only, not in log formatting)
+            logger.info(f"{format_status(STATUS_PASS, f'[TRANSFORM] {filename} {arrow} {canonical.id}')}")
     
     logger.info(f"[TRANSFORM] Transformed {len(transformed)} records, {len(errors)} errors")
     return transformed, errors
@@ -434,7 +438,7 @@ def write_merged_evidence(
         
         # Atomic rename
         temp_path.replace(evidence_json_path)
-        logger.info(f"[WRITE] ✓ Wrote {len(merged_records)} records to {evidence_json_path}")
+        logger.info(f"{format_status(STATUS_PASS, f'[WRITE] Wrote {len(merged_records)} records to {evidence_json_path}')}")
         
     except Exception as e:
         errors.append(f"Write error: {e}")
@@ -563,24 +567,102 @@ def orchestrate_evidence_sync(
 # ============================================================================
 
 if __name__ == "__main__":
-    import sys
+    # Initialize module-level logger for use by all functions
+    logger = setup_logging('sync-evidence-from-51-aca')
     
-    # Paths
-    aca_repo = Path("C:/AICOE/eva-foundry/51-ACA")
-    data_model_repo = Path("C:/AICOE/eva-foundry/37-data-model")
-    report_path = data_model_repo / "sync-evidence-report.json"
+    # Professional Coding Standards: Create mandatory directories
+    ensure_directories()
     
-    if len(sys.argv) > 1:
-        aca_repo = Path(sys.argv[1])
-    if len(sys.argv) > 2:
-        data_model_repo = Path(sys.argv[2])
+    try:
+        # Parse arguments
+        aca_repo = Path("C:/eva-foundry/51-ACA")
+        data_model_repo = Path("C:/eva-foundry/37-data-model")
+        
+        if len(sys.argv) > 1:
+            aca_repo = Path(sys.argv[1])
+        if len(sys.argv) > 2:
+            data_model_repo = Path(sys.argv[2])
+        
+        logger.info(format_status(STATUS_INFO, "Script: sync-evidence-from-51-aca"))
+        logger.info(format_status(STATUS_INFO, f"Source: {aca_repo}"))
+        logger.info(format_status(STATUS_INFO, f"Target: {data_model_repo}"))
+        
+        # Professional Coding Standards: Evidence at operation start
+        save_evidence(
+            operation="sync-evidence-from-51-aca",
+            status="started",
+            metrics={
+                "source_repo": str(aca_repo),
+                "target_repo": str(data_model_repo),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        )
+        
+        # Professional Coding Standards: Pre-flight checks
+        logger.info(format_status(STATUS_INFO, "Running pre-flight checks"))
+        
+        if not check_directory_exists(aca_repo, "51-ACA source repo", logger):
+            logger.error(format_status(STATUS_ERROR, f"Source repo not found: {aca_repo}"))
+            sys.exit(2)
+        
+        if not check_directory_exists(data_model_repo, "37-data-model target repo", logger):
+            logger.error(format_status(STATUS_ERROR, f"Target repo not found: {data_model_repo}"))
+            sys.exit(2)
+        
+        evidence_json_path = data_model_repo / "model" / "evidence.json"
+        if not check_file_exists(evidence_json_path, "evidence file", logger):
+            logger.error(format_status(STATUS_ERROR, f"Evidence file not found: {evidence_json_path}"))
+            sys.exit(2)
+        
+        schema_path = data_model_repo / "schema" / "evidence.schema.json"
+        if not check_file_exists(schema_path, "evidence schema", logger):
+            logger.error(format_status(STATUS_ERROR, f"Schema file not found: {schema_path}"))
+            sys.exit(2)
+        
+        logger.info(format_status(STATUS_PASS, "Pre-flight checks passed"))
+        
+        # Run orchestration
+        result = orchestrate_evidence_sync(aca_repo, data_model_repo)
+        
+        # Professional Coding Standards: Timestamped output filename
+        report_filename = timestamped_filename("sync-evidence-report", "51-aca", "json")
+        report_path = data_model_repo / "evidence" / report_filename
+        
+        # Write report
+        generate_sync_report(result, report_path)
+        
+        # Professional Coding Standards: Evidence at operation completion
+        save_evidence(
+            operation="sync-evidence-from-51-aca",
+            status=result.status.lower(),
+            metrics={
+                "extracted_count": result.extracted_count,
+                "transformed_count": result.transformed_count,
+                "merged_count": result.merged_count,
+                "validated_count": result.validated_count,
+                "skipped_count": result.skipped_count,
+                "failure_count": len(result.failures),
+                "duration_ms": result.duration_ms,
+                "report_path": str(report_path)
+            }
+        )
+        
+        # Professional Coding Standards: Exit codes (0=success, 1=business fail, 2=technical error)
+        if result.status == "PASS":
+            logger.info(format_status(STATUS_PASS, "Sync completed successfully"))
+            sys.exit(0)
+        elif result.status == "WARN":
+            logger.warning(format_status(STATUS_WARN, "Sync completed with warnings"))
+            sys.exit(1)
+        else:  # FAIL
+            logger.error(format_status(STATUS_FAIL, "Sync failed"))
+            sys.exit(1)
     
-    # Run orchestration
-    result = orchestrate_evidence_sync(aca_repo, data_model_repo)
-    
-    # Write report
-    generate_sync_report(result, report_path)
-    
-    # Exit code based on status
-    exit_code = 0 if result.status == "PASS" else 1
-    sys.exit(exit_code)
+    except Exception as e:
+        # Professional Coding Standards: Structured error handling
+        error_msg = f"Fatal error during sync: {str(e)}"
+        logger.error(format_status(STATUS_ERROR, error_msg))
+        
+        save_error_evidence(e, "sync-evidence-from-51-aca")
+        
+        sys.exit(2)

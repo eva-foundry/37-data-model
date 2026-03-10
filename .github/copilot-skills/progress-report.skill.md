@@ -129,7 +129,7 @@ if ($phase1a_pct -eq 100) {
 ### Step 4: Parse recent commits for story IDs
 
 ```powershell
-$repo = "C:\AICOE\eva-foundry\37-data-model"
+$repo = "C:\eva-foundry\37-data-model"
 $recent_commits = git -C $repo log --oneline -10 2>&1
 
 $story_commits = @()
@@ -399,6 +399,6 @@ foreach ($epic in $epics) {
 }
 
 # Quick MTI check
-$t = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json
+$t = Get-Content C:\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json
 Write-Host "MTI: $($t.mti)  Gate: 95  Status: $(if ($t.mti -ge 95) { 'PASS' } else { 'FAIL' })"
 ```

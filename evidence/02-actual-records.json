@@ -1,0 +1,394 @@
+{
+  "timestamp": "2026-03-10T22:57:31.878090Z",
+  "source": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/",
+  "layer_counts": {
+    "agent_execution_history": 5,
+    "agent_performance_metrics": 15,
+    "agent_policies": 4,
+    "agentic_workflows": -1,
+    "agents": 10,
+    "api_contracts": -1,
+    "architecture_decisions": -1,
+    "auto_fix_execution_history": 3,
+    "azure_infrastructure": 36,
+    "ci_cd_pipelines": -1,
+    "compliance_audit": 6,
+    "components": 32,
+    "config_defs": -1,
+    "connections": 4,
+    "containers": 13,
+    "cost_allocation": -1,
+    "cost_tracking": -1,
+    "coverage_summary": -1,
+    "cp_agents": 4,
+    "cp_policies": 3,
+    "cp_skills": 7,
+    "cp_workflows": 2,
+    "decision_provenance": -1,
+    "decisions": 4,
+    "deployment_history": -1,
+    "deployment_policies": 4,
+    "deployment_quality_scores": 4,
+    "deployment_records": 2,
+    "deployment_targets": -1,
+    "endpoints": 187,
+    "env_vars": -1,
+    "environments": 3,
+    "error_catalog": -1,
+    "eva-model": -1,
+    "eva_model": 36,
+    "evidence": 120,
+    "evidence_correlation": -1,
+    "feature_flags": 15,
+    "github_rules": 4,
+    "hooks": 19,
+    "infrastructure": 46,
+    "infrastructure_drift": 4,
+    "infrastructure_events": -1,
+    "instructions": -1,
+    "layer-metadata-index": -1,
+    "literals": 458,
+    "mcp_servers": 4,
+    "milestones": 4,
+    "model_telemetry": -1,
+    "performance_trends": 4,
+    "personas": 10,
+    "planes": 3,
+    "project_work": 4,
+    "projects": 56,
+    "prompts": 5,
+    "quality_gates": 4,
+    "remediation_effectiveness": 2,
+    "remediation_outcomes": 6,
+    "remediation_policies": 3,
+    "repos": -1,
+    "request_response_samples": -1,
+    "requirements": 29,
+    "resource_costs": 5,
+    "resource_inventory": -1,
+    "risks": 5,
+    "runbooks": 4,
+    "runtime_config": -1,
+    "schemas": 39,
+    "screens": 50,
+    "secrets_catalog": -1,
+    "security_controls": 10,
+    "service_health_metrics": -1,
+    "services": 36,
+    "session_transcripts": -1,
+    "sprints": 20,
+    "stories": -1,
+    "synthetic_tests": -1,
+    "tasks": -1,
+    "tech_stack": -1,
+    "test_cases": -1,
+    "testing_policies": 4,
+    "traces": 0,
+    "ts_types": 26,
+    "usage_metrics": -1,
+    "validation_rules": 4,
+    "verification_records": -1,
+    "wbs": 3292,
+    "work_decision_records": 0,
+    "work_execution_units": 0,
+    "work_factory_capabilities": -1,
+    "work_factory_governance": -1,
+    "work_factory_investments": -1,
+    "work_factory_metrics": -1,
+    "work_factory_portfolio": -1,
+    "work_factory_roadmaps": -1,
+    "work_factory_services": -1,
+    "work_learning_feedback": -1,
+    "work_obligations": -1,
+    "work_outcomes": 0,
+    "work_pattern_applications": -1,
+    "work_pattern_performance_profiles": -1,
+    "work_reusable_patterns": -1,
+    "work_service_breaches": -1,
+    "work_service_level_objectives": -1,
+    "work_service_lifecycle": -1,
+    "work_service_perf_profiles": -1,
+    "work_service_remediation_plans": -1,
+    "work_service_requests": -1,
+    "work_service_revalidation_results": -1,
+    "work_service_runs": -1,
+    "work_step_events": 3,
+    "workflow_metrics": -1,
+    "workspace_config": 1
+  },
+  "total_layers": 113,
+  "total_records": 4683,
+  "errors": [
+    {
+      "layer": "agentic_workflows",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/agentic_workflows/",
+      "status_code": null
+    },
+    {
+      "layer": "api_contracts",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/api_contracts/",
+      "status_code": null
+    },
+    {
+      "layer": "architecture_decisions",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/architecture_decisions/",
+      "status_code": null
+    },
+    {
+      "layer": "ci_cd_pipelines",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/ci_cd_pipelines/",
+      "status_code": null
+    },
+    {
+      "layer": "config_defs",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/config_defs/",
+      "status_code": null
+    },
+    {
+      "layer": "cost_allocation",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/cost_allocation/",
+      "status_code": null
+    },
+    {
+      "layer": "cost_tracking",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/cost_tracking/",
+      "status_code": null
+    },
+    {
+      "layer": "coverage_summary",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/coverage_summary/",
+      "status_code": null
+    },
+    {
+      "layer": "decision_provenance",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/decision_provenance/",
+      "status_code": null
+    },
+    {
+      "layer": "deployment_history",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/deployment_history/",
+      "status_code": null
+    },
+    {
+      "layer": "deployment_targets",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/deployment_targets/",
+      "status_code": null
+    },
+    {
+      "layer": "env_vars",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/env_vars/",
+      "status_code": null
+    },
+    {
+      "layer": "error_catalog",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/error_catalog/",
+      "status_code": null
+    },
+    {
+      "layer": "eva-model",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/eva-model/",
+      "status_code": null
+    },
+    {
+      "layer": "evidence_correlation",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/evidence_correlation/",
+      "status_code": null
+    },
+    {
+      "layer": "infrastructure_events",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/infrastructure_events/",
+      "status_code": null
+    },
+    {
+      "layer": "instructions",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/instructions/",
+      "status_code": null
+    },
+    {
+      "layer": "layer-metadata-index",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/layer-metadata-index/",
+      "status_code": null
+    },
+    {
+      "layer": "model_telemetry",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/model_telemetry/",
+      "status_code": null
+    },
+    {
+      "layer": "repos",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/repos/",
+      "status_code": null
+    },
+    {
+      "layer": "request_response_samples",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/request_response_samples/",
+      "status_code": null
+    },
+    {
+      "layer": "resource_inventory",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/resource_inventory/",
+      "status_code": null
+    },
+    {
+      "layer": "runtime_config",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/runtime_config/",
+      "status_code": null
+    },
+    {
+      "layer": "secrets_catalog",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/secrets_catalog/",
+      "status_code": null
+    },
+    {
+      "layer": "service_health_metrics",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/service_health_metrics/",
+      "status_code": null
+    },
+    {
+      "layer": "session_transcripts",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/session_transcripts/",
+      "status_code": null
+    },
+    {
+      "layer": "stories",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/stories/",
+      "status_code": null
+    },
+    {
+      "layer": "synthetic_tests",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/synthetic_tests/",
+      "status_code": null
+    },
+    {
+      "layer": "tasks",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/tasks/",
+      "status_code": null
+    },
+    {
+      "layer": "tech_stack",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/tech_stack/",
+      "status_code": null
+    },
+    {
+      "layer": "test_cases",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/test_cases/",
+      "status_code": null
+    },
+    {
+      "layer": "usage_metrics",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/usage_metrics/",
+      "status_code": null
+    },
+    {
+      "layer": "verification_records",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/verification_records/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_capabilities",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_capabilities/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_governance",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_governance/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_investments",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_investments/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_metrics",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_metrics/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_portfolio",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_portfolio/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_roadmaps",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_roadmaps/",
+      "status_code": null
+    },
+    {
+      "layer": "work_factory_services",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_factory_services/",
+      "status_code": null
+    },
+    {
+      "layer": "work_learning_feedback",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_learning_feedback/",
+      "status_code": null
+    },
+    {
+      "layer": "work_obligations",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_obligations/",
+      "status_code": null
+    },
+    {
+      "layer": "work_pattern_applications",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_pattern_applications/",
+      "status_code": null
+    },
+    {
+      "layer": "work_pattern_performance_profiles",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_pattern_performance_profiles/",
+      "status_code": null
+    },
+    {
+      "layer": "work_reusable_patterns",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_reusable_patterns/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_breaches",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_breaches/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_level_objectives",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_level_objectives/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_lifecycle",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_lifecycle/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_perf_profiles",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_perf_profiles/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_remediation_plans",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_remediation_plans/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_requests",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_requests/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_revalidation_results",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_revalidation_results/",
+      "status_code": null
+    },
+    {
+      "layer": "work_service_runs",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/work_service_runs/",
+      "status_code": null
+    },
+    {
+      "layer": "workflow_metrics",
+      "error": "404 Client Error: Not Found for url: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/workflow_metrics/",
+      "status_code": null
+    }
+  ],
+  "error_count": 54
+}

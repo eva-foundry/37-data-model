@@ -1,8 +1,8 @@
 ================================================================================
 Phase 3: Portfolio-Wide Evidence Consolidation
 ================================================================================
-Workspace: C:\AICOE\eva-foundry
-Target Repo: C:\AICOE\eva-foundry\37-data-model
+Workspace: C:\eva-foundry\eva-foundry
+Target Repo: C:\eva-foundry\37-data-model
 Start Time: 2026-03-04T00:24:56.405519+00:00
 
 [SCAN] Found 48 active projects in projects.json
@@ -25,7 +25,7 @@ Start Time: 2026-03-04T00:24:56.405519+00:00
     - Schema validation failed: 'id' is a required property
 
 [STAGE 4] REPORT: Generating sync report...
-  Report: C:\AICOE\eva-foundry\37-data-model\sync-evidence-report.json
+  Report: C:\eva-foundry\37-data-model\sync-evidence-report.json
 
 ================================================================================
 Status: WARN

@@ -4,7 +4,7 @@
     {
       "label": "model-api: ensure running",
       "type": "shell",
-      "command": "try { Invoke-RestMethod 'http://localhost:8010/health' | Out-Null; Write-Host '[INFO] model-api already running on :8010' } catch { Write-Host '[INFO] Starting model-api on :8010...'; $env:PYTHONPATH='C:\\AICOE\\eva-foundation\\37-data-model'; C:\\AICOE\\.venv\\Scripts\\python.exe -m uvicorn api.server:app --port 8010 --log-level error }",
+      "command": "try { Invoke-RestMethod 'http://localhost:8010/health' | Out-Null; Write-Host '[INFO] model-api already running on :8010' } catch { Write-Host '[INFO] Starting model-api on :8010...'; $env:PYTHONPATH='C:\\eva-foundry\\eva-foundation\\37-data-model'; C:\\eva-foundry\\.venv\\Scripts\\python.exe -m uvicorn api.server:app --port 8010 --log-level error }",
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
@@ -29,7 +29,7 @@
     {
       "label": "model-api: start (foreground)",
       "type": "shell",
-      "command": "$env:PYTHONPATH='C:\\AICOE\\eva-foundation\\37-data-model'; C:\\AICOE\\.venv\\Scripts\\python.exe -m uvicorn api.server:app --port 8010 --log-level info",
+      "command": "$env:PYTHONPATH='C:\\eva-foundry\\eva-foundation\\37-data-model'; C:\\eva-foundry\\.venv\\Scripts\\python.exe -m uvicorn api.server:app --port 8010 --log-level info",
       "isBackground": true,
       "problemMatcher": [],
       "presentation": {

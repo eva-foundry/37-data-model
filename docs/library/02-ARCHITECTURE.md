@@ -389,7 +389,7 @@
 
   PROOF OF CONCEPT (2026-02-24)
   -----------------------------
-  eva discover --repo C:\AICOE\eva-foundation\48-eva-orchestrator
+  eva discover --repo C:\eva-foundry\eva-foundation\48-eva-orchestrator
   eva reconcile  -> 17/17 stories traced, 0 evidence (expected, no tags yet)
   eva compute-trust -> MTI: 60, coverage: 1.0, consistency: 1.0
   eva report     -> [PASS] all stories matched, [WARN] 0 evidence artifacts

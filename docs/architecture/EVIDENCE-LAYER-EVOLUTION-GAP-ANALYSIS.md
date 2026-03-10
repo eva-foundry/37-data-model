@@ -42,7 +42,7 @@ BLOCKING USER GOALS:
  WHAT 37-DATA-MODEL HAS (CANONICAL TEMPLATE)
 ================================================================================
 
-File: C:\AICOE\eva-foundry\37-data-model\model\evidence.json
+File: C:\eva-foundry\37-data-model\model\evidence.json
 
 Status: EMPTY
 
@@ -56,11 +56,11 @@ Structure:
 }
 
 Schema:
-  Location: C:\AICOE\eva-foundry\37-data-model\schema\evidence.schema.json
+  Location: C:\eva-foundry\37-data-model\schema\evidence.schema.json
   Status: COMPLETE & VALID (22 JSON schemas, evidence.schema.json fully defined)
   
 Documentation:
-  Location: C:\AICOE\eva-foundry\37-data-model\docs\library\11-EVIDENCE-LAYER.md
+  Location: C:\eva-foundry\37-data-model\docs\library\11-EVIDENCE-LAYER.md
   Status: COMPLETE (582 lines, DPDCA phases, query patterns, audit examples)
   
 API Support:
@@ -71,7 +71,7 @@ API Support:
   Status: READY (api/routers/evidence_router exists, fully implemented)
 
 Export:
-  Location: C:\AICOE\eva-foundry\37-data-model\eva-data-model-export-20260303\model-data\evidence.json
+  Location: C:\eva-foundry\37-data-model\eva-data-model-export-20260303\model-data\evidence.json
   Status: MALFORMED (single record, not array of objects)
   Test Record: "TEST-EVIDENCE-001" (template only)
 
@@ -80,7 +80,7 @@ Export:
 ================================================================================
 
 Evidence Receipts (Per-Story Files):
-  Location: C:\AICOE\eva-foundry\51-ACA\.eva\evidence\
+  Location: C:\eva-foundry\51-ACA\.eva\evidence\
   Count: 64 files
   Pattern: ACA-{EPIC}-{STORY}-receipt.json
   Status: OPERATIONAL (actively populated)
@@ -99,18 +99,18 @@ Example Record:
   }
 
 Evidence Seeding Script:
-  Location: C:\AICOE\eva-foundry\51-ACA\data-model\seed-evidence.py
+  Location: C:\eva-foundry\51-ACA\data-model\seed-evidence.py
   Function: db.seed_evidence(repo_root)
   Behavior: Loads 64 .eva/evidence/*-receipt.json files into SQLite
   Last Run: Unknown (script exists, need to verify recent execution)
 
 Local Data Model (SQLite):
-  Location: C:\AICOE\eva-foundry\51-ACA\data-model\db.py
+  Location: C:\eva-foundry\51-ACA\data-model\db.py
   Layer: evidence
   Records: Unknown (need query from 51-ACA) -- likely ~260 records
   
 Veritas Audit (2026-03-02):
-  File: C:\AICOE\eva-foundry\51-ACA\VERITAS-AUDIT-AND-SYNC-20260302.md
+  File: C:\eva-foundry\51-ACA\VERITAS-AUDIT-AND-SYNC-20260302.md
   Metrics:
     - Stories total: 268
     - Stories with evidence: 260 (97%)
@@ -119,7 +119,7 @@ Veritas Audit (2026-03-02):
     - Consistency score: 0.0 (⚠️ data mismatch with PLAN.md)
 
 Evidence Python Files (Template Receipts):
-  Location: C:\AICOE\eva-foundry\51-ACA\evidence\
+  Location: C:\eva-foundry\51-ACA\evidence\
   Count: 284 receipt files (ACA-01-001 through ACA-16-004)
   Type: Python files with EVIDENCE dict
   Status: SKELETON TEMPLATES (mostly placeholder, "Replace with real CI link")

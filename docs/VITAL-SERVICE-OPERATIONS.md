@@ -276,7 +276,7 @@ az deployment group create \
 
 **DO** (once):
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 az login
 az account set --subscription "c59ee575-eb2a-4b51-a865-4b618f9add0a"
 

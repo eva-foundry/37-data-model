@@ -14,7 +14,7 @@ Strategy (per layer):
   hooks      → repo_path           → search for export/function declaration of hook id
   screens    → component_path      → search for export/function declaration of screen id
 
-All paths are relative to EVA_FOUNDATION_ROOT (default: C:/AICOE/eva-foundation).
+All paths are relative to EVA_FOUNDATION_ROOT (default: C:/eva-foundry/eva-foundation).
 Objects with status=planned/stub that have no source file are skipped (repo_line stays null).
 """
 from __future__ import annotations
@@ -36,7 +36,7 @@ except ImportError:
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 
-EVA_FOUNDATION_ROOT = Path("C:/AICOE/eva-foundation")
+EVA_FOUNDATION_ROOT = Path("C:/eva-foundry/eva-foundation")
 API_BASE            = "http://localhost:8010"
 ADMIN_TOKEN         = "dev-admin"
 REQUEST_DELAY_S     = 0.05   # throttle PUTs slightly

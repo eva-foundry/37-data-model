@@ -81,7 +81,7 @@ az acr build --registry $acrName `
   --image "eva-data-model-staging:$timestamp" `
   --image "eva-data-model-staging:latest" `
   --file Dockerfile `
-  --context c:\AICOE\eva-foundry\37-data-model `
+  --context c:\eva-foundry\37-data-model `
   --quiet
 ```
 
@@ -201,7 +201,7 @@ To run Task 3 in a machine with Docker:
 
 ```powershell
 # On a local machine with Docker installed:
-cd c:\AICOE\eva-foundry\37-data-model
+cd c:\eva-foundry\37-data-model
 
 # Execute the deployment script
 pwsh -Command "& .\scripts\deploy-to-staging.ps1"
@@ -263,7 +263,7 @@ Since the staging infrastructure is prepared:
 
 ```bash
 # Task 4: Run integration tests
-cd c:\AICOE\eva-foundry\37-data-model
+cd c:\eva-foundry\37-data-model
 
 # Run test suite
 pytest tests/test_cache_integration.py -v

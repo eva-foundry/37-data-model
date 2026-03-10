@@ -172,7 +172,7 @@ Contents:
   - layers_fetched: 30
   - objects_downloaded: 4,279
   - layers dict with individual layer counts and file paths
-  - backup_location: C:\AICOE\eva-foundry\model\
+  - backup_location: C:\eva-foundry\model\
 
 Status:
   - GENERATED (auto-created by sync script)

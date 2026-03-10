@@ -1,6 +1,6 @@
 # seed-missing-projects.ps1
 # Adds the 26 numbered projects present on disk but absent from the data model.
-# Run from:  C:\AICOE\eva-foundation\37-data-model
+# Run from:  C:\eva-foundry\eva-foundation\37-data-model
 # Requires:  API running on http://localhost:8010
 
 $API   = "http://localhost:8010"

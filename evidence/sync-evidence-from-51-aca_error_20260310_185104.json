@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-03-10T21:51:04.815297Z",
+  "operation": "sync-evidence-from-51-aca",
+  "error_type": "TypeError",
+  "error_message": "check_directory_exists() missing 2 required positional arguments: 'name' and 'logger'",
+  "stack_trace": "Traceback (most recent call last):\n  File \"C:\\eva-foundry\\37-data-model\\scripts\\sync-evidence-from-51-aca.py\", line 604, in <module>\n    if not check_directory_exists(aca_repo):\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: check_directory_exists() missing 2 required positional arguments: 'name' and 'logger'\n"
+}

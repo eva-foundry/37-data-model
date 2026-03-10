@@ -79,7 +79,7 @@ Before enabling scheduled automation, test each script locally.
 ### Test L42: Infrastructure Sync
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model\scripts
+cd C:\eva-foundry\37-data-model\scripts
 
 # Dry run (preview without uploading)
 python sync-azure-infrastructure.py --dry-run
@@ -108,7 +108,7 @@ python sync-azure-infrastructure.py
 ### Test L49: Cost Sync
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model\scripts
+cd C:\eva-foundry\37-data-model\scripts
 
 # Dry run
 .\sync-azure-costs.ps1 -DryRun
@@ -136,7 +136,7 @@ cd C:\AICOE\eva-foundry\37-data-model\scripts
 ### Test L41: Agent Metrics Sync
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model\scripts
+cd C:\eva-foundry\37-data-model\scripts
 
 # Dry run (last hour)
 .\update-agent-metrics-from-appinsights.ps1 -LookbackHours 1 -DryRun
@@ -223,13 +223,13 @@ The workflow is already committed in `.github/workflows/infrastructure-monitorin
 
 ```powershell
 # Check workflow exists
-ls C:\AICOE\eva-foundry\.github\workflows\infrastructure-monitoring-sync.yml
+ls C:\eva-foundry\.github\workflows\infrastructure-monitoring-sync.yml
 ```
 
 **Push to GitHub (if not already pushed):**
 
 ```powershell
-cd C:\AICOE\eva-foundry
+cd C:\eva-foundry\eva-foundry
 
 git add .github/workflows/infrastructure-monitoring-sync.yml
 git add 37-data-model/scripts/sync-azure-infrastructure.py

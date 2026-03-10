@@ -137,31 +137,31 @@ Write-Host "Stories: $done / $total"
 
 ### discover
 ```powershell
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js discover --repo C:\AICOE\eva-foundry\37-data-model
+node C:\eva-foundry\48-eva-veritas\src\cli.js discover --repo C:\eva-foundry\37-data-model
 # Output: .eva/artifacts.json (all EVA-STORY tags found in source)
 ```
 
 ### reconcile
 ```powershell
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js reconcile --repo C:\AICOE\eva-foundry\37-data-model
+node C:\eva-foundry\48-eva-veritas\src\cli.js reconcile --repo C:\eva-foundry\37-data-model
 # Output: .eva/reconciliation.json (gap list with remediation actions)
 ```
 
 ### compute-trust
 ```powershell
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js compute-trust --repo C:\AICOE\eva-foundry\37-data-model
+node C:\eva-foundry\48-eva-veritas\src\cli.js compute-trust --repo C:\eva-foundry\37-data-model
 # Output: .eva/trust.json (MTI + component scores + action list)
 ```
 
 ### report
 ```powershell
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js report --repo C:\AICOE\eva-foundry\37-data-model
+node C:\eva-foundry\48-eva-veritas\src\cli.js report --repo C:\eva-foundry\37-data-model
 # Output: console report (trust score + gap summary + next actions)
 ```
 
 ### audit (all-in-one)
 ```powershell
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-foundry\37-data-model --warn-only
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\eva-foundry\37-data-model --warn-only
 # Runs discover -> reconcile -> compute-trust -> report in sequence
 # --warn-only: prints gaps but exits 0 (for CI tolerance of non-blocking gaps)
 ```
@@ -205,8 +205,8 @@ node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-fo
 ### Phase 1.2 -- Veritas Audit
 
 ```powershell
-$repo = "C:\AICOE\eva-foundry\37-data-model"
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo $repo --warn-only 2>&1 |
+$repo = "C:\eva-foundry\37-data-model"
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo $repo --warn-only 2>&1 |
     Tee-Object "$repo\veritas-audit-out.txt" | Select-Object -Last 30
 ```
 
@@ -254,7 +254,7 @@ foreach ($g in $gaps | Select-Object -First 10) {
 ### Step 3 -- Rerun audit
 
 ```powershell
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo $repo --warn-only
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo $repo --warn-only
 $t = Get-Content .eva\trust.json | ConvertFrom-Json
 Write-Host "MTI after fix: $($t.mti)"
 ```
@@ -304,18 +304,18 @@ Every story tagged here impacts 5+ consuming projects (31-eva-faces, 33-eva-brai
 
 ```powershell
 # Full audit (all phases)
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-foundry\37-data-model --warn-only
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\eva-foundry\37-data-model --warn-only
 
 # Check MTI only
-$t = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json
+$t = Get-Content C:\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json
 Write-Host "MTI: $($t.mti)  Gate: 95"
 
 # List gaps on DONE stories
-$r = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
+$r = Get-Content C:\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
 $r.gaps | Where-Object { $_.story_status -eq "DONE" } | Select-Object gap_type, story_id, story_title
 
 # Count artifacts by type
-$a = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
+$a = Get-Content C:\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
 Write-Host "Source tags: $(($a | Where-Object { $_.type -eq 'source' }).Count)"
 Write-Host "Test tags: $(($a | Where-Object { $_.type -eq 'test' }).Count)"
 Write-Host "Evidence receipts: $(($a | Where-Object { $_.type -eq 'receipt' }).Count)"

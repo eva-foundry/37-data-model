@@ -33,7 +33,7 @@ Write-Host ""
 Write-Host "[STEP 1] Export all 32 layer schemas" -ForegroundColor Cyan
 
 try {
-    $schemaDir = "C:\AICOE\eva-foundry\37-data-model\schema"
+    $schemaDir = "C:\eva-foundry\37-data-model\schema"
     Copy-Item "$schemaDir\*.schema.json" "$OutputPath\schemas\" -Force
     $schemaCount = (Get-ChildItem "$OutputPath\schemas\*.schema.json").Count
     Write-Host "[OK] Exported $schemaCount schema files"
@@ -145,7 +145,7 @@ $scripts = @(
 
 $copiedScripts = 0
 foreach ($script in $scripts) {
-    $srcPath = "C:\AICOE\eva-foundry\37-data-model\scripts\$script"
+    $srcPath = "C:\eva-foundry\37-data-model\scripts\$script"
     if (Test-Path $srcPath) {
         Copy-Item $srcPath "$OutputPath\scripts\" -Force
         Write-Host "[OK] Copied $script"
@@ -159,7 +159,7 @@ Write-Host ""
 Write-Host "[STEP 5] Export API configuration reference" -ForegroundColor Cyan
 
 try {
-    Copy-Item "C:\AICOE\eva-foundry\37-data-model\api\config.py" "$OutputPath\api-snippets\config.py" -Force
+    Copy-Item "C:\eva-foundry\37-data-model\api\config.py" "$OutputPath\api-snippets\config.py" -Force
     Write-Host "[OK] Copied api/config.py (reference)"
 } catch {
     Write-Host "[WARN] Could not copy config.py" -ForegroundColor Yellow

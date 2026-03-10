@@ -313,7 +313,7 @@ return {"total": len(items), "progress": progress}
 
 **Lesson**: **Any operation >5 seconds MUST provide real-time feedback**. Users shouldn't wait blindly. Professional tools show their work.
 
-**Standard**: Documented in `C:\AICOE\.github\best-practices-reference.md` (Pattern 031).
+**Standard**: Documented in `C:\eva-foundry\.github\best-practices-reference.md` (Pattern 031).
 
 ---
 
@@ -604,7 +604,7 @@ Level 3: 91 operational layers (full catalog, on-demand)
 
 **Correct Pattern**: Show progress indicators (1/N, percentages, timing, sizes).
 
-**Standard**: Documented in `C:\AICOE\.github\best-practices-reference.md` (Pattern 031).
+**Standard**: Documented in `C:\eva-foundry\.github\best-practices-reference.md` (Pattern 031).
 
 ---
 

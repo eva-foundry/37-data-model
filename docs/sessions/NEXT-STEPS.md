@@ -65,10 +65,10 @@
 
 **Next Test**: With ADO epic IDs populated
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 python scripts/sync-evidence-all-projects.py \
-  C:\AICOE\eva-foundry \
-  C:\AICOE\eva-foundry\37-data-model
+  C:\eva-foundry\eva-foundry \
+  C:\eva-foundry\37-data-model
 ```
 
 **Expected**: ADO references now available in orchestrator output for audit trail
@@ -249,19 +249,19 @@ evidence.json updated with new records
 
 ### Run Phase 3 Orchestrator
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
-python scripts/sync-evidence-all-projects.py C:\AICOE\eva-foundry .
+cd C:\eva-foundry\37-data-model
+python scripts/sync-evidence-all-projects.py C:\eva-foundry\eva-foundry .
 ```
 
 ### Test Config Loader
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 python scripts/config_loader.py
 ```
 
 ### Validate Projects Registry
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 python scripts/validate_new_projects.py
 ```
 

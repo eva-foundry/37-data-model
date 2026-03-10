@@ -100,7 +100,7 @@ $result.total               # 5,817 → 5,843 (+26 records)
 **Method B: Local Script** (Fallback):
 ```powershell
 # Use existing seed script
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 python scripts/seed-priority1.py  # If exists
 # OR
 curl -X POST "$base/admin/seed"

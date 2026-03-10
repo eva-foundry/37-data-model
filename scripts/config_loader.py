@@ -16,14 +16,21 @@ Environment Overrides:
     EVA_STORAGE_PROJECTS_REGISTRY - Override projects.json path
     EVA_AUTOMATION_SCHEDULE_SYNC_51_ACA - Override Phase 2 schedule
     ... all other config keys as EVA_SECTION_KEY=value
+
+Revisions:
+    2026-03-10: Refactored to use logging module (Session 44 compliance)
 """
 
 import os
 import json
 import sys
+import logging
 from pathlib import Path
 from typing import Any, Dict, Optional
 from dataclasses import dataclass
+
+# Module-level logger for library usage
+logger = logging.getLogger(__name__)
 
 
 def load_yaml(filepath: Path) -> dict:
@@ -34,7 +41,7 @@ def load_yaml(filepath: Path) -> dict:
             return yaml.safe_load(f)
     except ImportError:
         # Fallback: parse as JSON-like structure (simplified)
-        print(f"WARNING: PyYAML not installed, attempting JSON fallback for {filepath}")
+        logger.warning(f"PyYAML not installed, attempting JSON fallback for {filepath}")
         with open(filepath) as f:
             content = f.read()
             # Basic YAML→JSON conversion for simple configs
@@ -192,7 +199,7 @@ class EvaFactoryConfig:
     def load(cls) -> "EvaFactoryConfig":
         """Load config from file and apply overrides."""
         config_file = get_config_file()
-        print(f"[CONFIG] Loading from {config_file}")
+        logger.info(f"Loading config from {config_file}")
         
         config = load_yaml(config_file)
         config = apply_env_overrides(config)

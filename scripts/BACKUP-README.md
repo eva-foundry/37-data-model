@@ -54,7 +54,7 @@ DISASTER RECOVERY PROCEDURE
 If cloud API is unavailable:
 
 1. Verify local backup exists:
-   ls C:\AICOE\eva-foundry\model\
+   ls C:\eva-foundry\model\
 
 2. Start local service:
    powershell -File .\scripts\restore-from-backup.ps1

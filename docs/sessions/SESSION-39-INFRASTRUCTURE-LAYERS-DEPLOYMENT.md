@@ -54,7 +54,7 @@ Session 39 successfully implemented comprehensive infrastructure monitoring capa
 
 ### Immediate (Session 40)
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\deploy-to-msub.ps1
 ```
 

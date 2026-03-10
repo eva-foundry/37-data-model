@@ -11,7 +11,7 @@
 
 ## Context
 
-Eva-brain-v2 scanned all 22 numbered project folders under `C:\AICOE\eva-foundation`
+Eva-brain-v2 scanned all 22 numbered project folders under `C:\eva-foundry\eva-foundation`
 and cataloged every object that belongs in the data model but is not yet there.
 
 Two categories of gap were identified:

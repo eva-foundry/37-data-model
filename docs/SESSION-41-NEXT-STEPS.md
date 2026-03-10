@@ -82,7 +82,7 @@ Invoke-RestMethod "https://msub-eva-data-model.victoriousgrass-30debbd3.canadace
 
 **Commands**:
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # Create feature branch for PR
 git checkout -b fix/layer-files-registry-51-layers
@@ -159,7 +159,7 @@ gh pr merge --squash --delete-branch
 
 **Commands**:
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # Pull latest main (includes PR #43)
 git checkout main

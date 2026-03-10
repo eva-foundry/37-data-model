@@ -807,7 +807,7 @@ def gen_synthetic_tests():
     return synthetic
 
 def main():
-    model_path = r"c:\AICOE\eva-foundry\37-data-model\model"
+    model_path = r"c:\eva-foundry\37-data-model\model"
     
     layers = {
         "stories.json": gen_stories(),

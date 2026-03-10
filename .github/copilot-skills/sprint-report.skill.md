@@ -124,7 +124,7 @@ if ($blocked_stories) {
 ### Step 6: Get test count delta
 
 ```powershell
-$repo = "C:\AICOE\eva-foundry\37-data-model"
+$repo = "C:\eva-foundry\37-data-model"
 if (Test-Path "$repo\.eva\trust.json") {
     $trust = Get-Content "$repo\.eva\trust.json" | ConvertFrom-Json
     $test_count_current = $trust.with_evidence
@@ -235,7 +235,7 @@ This skill is invoked automatically in sprint-advance.skill.md Phase 5:
 
 ```powershell
 # After sprint manifest is created, generate report
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo . --warn-only
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo . --warn-only
 
 # Trigger: "sprint report" or "generate sprint summary"
 # This skill runs and produces:
@@ -324,7 +324,7 @@ $done = ($stories | Where-Object { $_.status -eq "done" }).Count
 Write-Host "$($sprint.label): $done / $($stories.Count) done"
 
 # MTI gate check
-$t = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json
+$t = Get-Content C:\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json
 Write-Host "MTI: $($t.mti)  Gate: 95  Status: $(if ($t.mti -ge 95) { 'PASS' } else { 'FAIL' })"
 ```
 
@@ -333,7 +333,7 @@ Write-Host "MTI: $($t.mti)  Gate: 95  Status: $(if ($t.mti -ge 95) { 'PASS' } el
 ## DEPENDENCIES
 
 - Data model API: `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io`
-- Veritas CLI: `C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js`
+- Veritas CLI: `C:\eva-foundry\48-eva-veritas\src\cli.js`
 - PowerShell 7+
 
 ---

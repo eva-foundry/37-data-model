@@ -162,4 +162,4 @@ jobs:
 # - Validation gate: Zero cross-reference violations
 # - EVA-STORY tag gate: Every modified file must have matching tag
 #
-# Reference implementation: C:\AICOE\eva-foundry\51-ACA\.github\scripts\sprint_agent.py
+# Reference implementation: C:\eva-foundry\51-ACA\.github\scripts\sprint_agent.py

@@ -41,7 +41,7 @@ $wbs = Invoke-RestMethod "$base/model/wbs/"
 ### 2. Veritas Reconciliation (`.eva/reconciliation.json`)
 
 ```powershell
-$r = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
+$r = Get-Content C:\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
 # Fields: gaps (array), gap_type, story_id, story_status, story_title, remediation
 ```
 
@@ -53,14 +53,14 @@ $r = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\reconciliation.json | C
 ### 3. Veritas Artifacts (`.eva/artifacts.json`)
 
 ```powershell
-$a = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
+$a = Get-Content C:\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
 # Fields: file_path, line_number, story_ids (array), type (source|test|receipt)
 ```
 
 ### 4. Veritas Plan (`.eva/veritas-plan.json`)
 
 ```powershell
-$vp = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
+$vp = Get-Content C:\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
 # Fields: features (array), stories (array per feature), id, title, done (bool)
 ```
 
@@ -130,7 +130,7 @@ A story has **missing evidence** if:
 ### Query
 
 ```powershell
-$r = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
+$r = Get-Content C:\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
 $missing_ev = $r.gaps | Where-Object { $_.gap_type -eq "missing_evidence" -and $_.story_status -eq "DONE" }
 
 foreach ($g in $missing_ev) {
@@ -163,8 +163,8 @@ An **orphan tag** is an EVA-STORY tag in source code whose ID does NOT exist in 
 ### Query
 
 ```powershell
-$a = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
-$vp = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
+$a = Get-Content C:\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
+$vp = Get-Content C:\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
 $valid_ids = $vp.features.stories | Select-Object -ExpandProperty id
 
 foreach ($artifact in $a) {
@@ -308,7 +308,7 @@ Write-Host "Estimate: $totalFP hours (baseline 1 FP = 1 hour)"
 
 ```powershell
 $base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
-$repo = "C:\AICOE\eva-foundry\37-data-model"
+$repo = "C:\eva-foundry\37-data-model"
 
 # WBS layer
 $wbs = Invoke-RestMethod "$base/model/wbs/"
@@ -376,7 +376,7 @@ Write-Host "Report written: docs/gap-report.md"
 # After Phase 2.3 (veritas dump)
 # Generate gap report to guide Phase 4 story selection
 
-$repo = "C:\AICOE\eva-foundry\37-data-model"
+$repo = "C:\eva-foundry\37-data-model"
 
 # Run the full report generation script
 pwsh -NoProfile -Command {
@@ -433,12 +433,12 @@ $wbs = Invoke-RestMethod "$base/model/wbs/"
 $wbs | Where-Object { $_.blockers.Count -gt 0 -and $_.status -ne "done" } | Select-Object id, title, blockers
 
 # Missing evidence count
-$r = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
+$r = Get-Content C:\eva-foundry\37-data-model\.eva\reconciliation.json | ConvertFrom-Json
 ($r.gaps | Where-Object { $_.gap_type -eq "missing_evidence" }).Count
 
 # Orphan tags
-$a = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
-$vp = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
+$a = Get-Content C:\eva-foundry\37-data-model\.eva\artifacts.json | ConvertFrom-Json
+$vp = Get-Content C:\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
 $valid = $vp.features.stories.id
 $a | ForEach-Object { $_.story_ids | Where-Object { $_ -notin $valid } }
 

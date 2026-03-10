@@ -14,7 +14,7 @@
 |-----------|------|--------|
 | No local service | `Get-Process python -like '*8010*'` | No process (port 8010 not listening) |
 | Cloud authoritative | Health check returns 200 + cosmos store type | VALID |
-| Backup exists | `Test-Path C:\AICOE\eva-foundry\model\*.json` | 30 files, 4,279 objects, 7.2 MB |
+| Backup exists | `Test-Path C:\eva-foundry\model\*.json` | 30 files, 4,279 objects, 7.2 MB |
 | Backup valid | `validate-cloud-sync.ps1` exit code | 0 (VALID) |
 | Restore ready | `restore-from-backup.ps1` successfully starts port 8010 | OPERABLE (emergency-only) |
 | Docs updated | README, PLAN, STATUS, USER-GUIDE, ACCEPTANCE reference new architecture | COMPLETE |

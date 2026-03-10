@@ -3,7 +3,7 @@
     {
       "id": "eva-foundry",
       "label": "EVA Foundry Workspace",
-      "workspace_root": "C:\\AICOE\\eva-foundry",
+      "workspace_root": "C:\\eva-foundry\\eva-foundry",
       "best_practices": {
         "encoding_safety": "ASCII-only, no Unicode characters in production code",
         "component_architecture": "DebugArtifactCollector, SessionManager, StructuredErrorHandler",

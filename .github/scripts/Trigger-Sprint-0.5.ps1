@@ -20,7 +20,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 # Read manifest
-$manifestPath = "C:\AICOE\eva-foundry\37-data-model\.github\sprints\SPRINT-0.5-manifest.json"
+$manifestPath = "C:\eva-foundry\37-data-model\.github\sprints\SPRINT-0.5-manifest.json"
 if (-not (Test-Path $manifestPath)) {
     Write-Error "Manifest not found: $manifestPath"
     exit 1

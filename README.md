@@ -9,7 +9,7 @@ procee# EVA Data Model
 | Tool | Purpose | How to Use |
 |------|---------|------------|
 | 37-data-model (CLOUD) | **SINGLE SOURCE OF TRUTH** — All project entities | `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io/model/projects/37-data-model` |
-| 29-foundry | Agentic capabilities (search, RAG, eval, observability) | C:\AICOE\eva-foundation\29-foundry |
+| 29-foundry | Agentic capabilities (search, RAG, eval, observability) | C:\eva-foundry\eva-foundation\29-foundry |
 | 48-eva-veritas | Trust score and coverage audit | MCP tool: audit_repo / get_trust_score |
 | 07-foundation-layer | Copilot instructions primer + governance templates | MCP tool: apply_primer / audit_project |
 
@@ -180,7 +180,7 @@ Use the Python library to record evidence after each phase:
 
 ```python
 import sys
-sys.path.insert(0, r"C:\AICOE\eva-foundry\37-data-model")
+sys.path.insert(0, r"C:\eva-foundry\37-data-model")
 from .github.scripts.evidence_generator import EvidenceBuilder
 
 gen = EvidenceBuilder(
@@ -224,8 +224,8 @@ For complete layer catalog, see [docs/library/03-DATA-MODEL-REFERENCE.md](docs/l
 
 ```powershell
 # Start (local / MemoryStore ? auto-seeds from disk JSON)
-$env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
-C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
+$env:PYTHONPATH = "C:\eva-foundry\eva-foundation\37-data-model"
+C:\eva-foundry\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 # Docs: http://localhost:8010/docs
 ```
 
@@ -307,8 +307,8 @@ Invoke-RestMethod http://localhost:8010/health
 If the API is not running, start it (takes ~3 s):
 
 ```powershell
-$env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
-C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
+$env:PYTHONPATH = "C:\eva-foundry\eva-foundation\37-data-model"
+C:\eva-foundry\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 ```
 
 ### Step 2 ? Query via HTTP (preferred)
@@ -346,11 +346,11 @@ Write-Host "Source:  $($ep.source_file)"
 
 # Jump directly to the route decorator in VS Code (E-10)
 $ep = Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/health"
-code --goto "C:\AICOE\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
+code --goto "C:\eva-foundry\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
 
 # Same for a React hook:
 $h = Invoke-RestMethod "http://localhost:8010/model/hooks/useTranslations"
-code --goto "C:\AICOE\eva-foundation\$($h.repo_path):$($h.repo_line)"
+code --goto "C:\eva-foundry\eva-foundation\$($h.repo_path):$($h.repo_line)"
 
 # ?? E-11 ? Graph / DER (live) ????????????????????????????????????????????????
 # Edge objects: { from_id, from_layer, to_id, to_layer, edge_type, via_field }
@@ -392,7 +392,7 @@ Invoke-RestMethod "http://localhost:8010/model/graph/?from_layer=screens&to_laye
 ### Fallback ? file-based (offline / CI only)
 
 ```powershell
-$m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
+$m = Get-Content C:\eva-foundry\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
 
 $m.endpoints | Where-Object { $_.path -eq '/v1/config/translations/{language}' }
 $m.screens   | Where-Object { $_.api_calls -contains 'GET /v1/config/translations/{language}' }

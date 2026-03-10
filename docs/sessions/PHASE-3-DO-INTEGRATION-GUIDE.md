@@ -20,7 +20,7 @@ This document contains:
 Execute the Redis deployment script:
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # Run deployment script
 .\scripts\deploy-redis-infrastructure.ps1
@@ -476,7 +476,7 @@ async def agent_summary():
 
 ```bash
 # Start local development server
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # With cache enabled
 $env:CACHE_ENABLED="true"
@@ -647,7 +647,7 @@ $env:TEST_ENV="staging"
 $env:API_BASE_URL="https://msub-eva-data-model-staging..."
 
 # Run integration tests
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 pytest tests/test_cache_integration.py -v --tb=short \
   -k "not performance" \

@@ -40,7 +40,7 @@ Each category includes:
 - [x] Route registration confirmed (`/model/user-guide` in app.routes)
 - [x] Zero breaking changes to existing endpoints
 - [x] Documentation updated (PLAN.md, STATUS.md)
-- [x] Workspace bootstrap pattern updated (C:\AICOE\.github\copilot-instructions.md)
+- [x] Workspace bootstrap pattern updated (C:\eva-foundry\.github\copilot-instructions.md)
 - [ ] Feature branch pushed to remote
 - [ ] PR created (feat/execution-layers-phase2-6 → main)
 - [ ] PR reviewed and approved
@@ -55,7 +55,7 @@ Each category includes:
 
 ```powershell
 # 1. Push feature branch
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 git push origin feat/execution-layers-phase2-6
 
 # 2. Create PR via GitHub UI or gh CLI
@@ -80,7 +80,7 @@ Invoke-RestMethod "$base/model/user-guide" | ConvertTo-Json -Depth 5
 If urgent deployment needed before merge:
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # 1. Build Docker image
 $imageTag = "user-guide-v1"

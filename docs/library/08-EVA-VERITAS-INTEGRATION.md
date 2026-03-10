@@ -45,7 +45,7 @@ Invoke-RestMethod "http://localhost:8010/model/admin/audit-repo" `
 ### With explicit path
 
 ```powershell
-$body = '{"repo_path":"C:\\AICOE\\eva-foundation\\33-eva-brain-v2"}'
+$body = '{"repo_path":"C:\\eva-foundry\\eva-foundation\\33-eva-brain-v2"}'
 Invoke-RestMethod "http://localhost:8010/model/admin/audit-repo" `
     -Method POST -ContentType "application/json" -Body $body `
     -Headers @{"Authorization"="Bearer dev-admin"}
@@ -56,7 +56,7 @@ Invoke-RestMethod "http://localhost:8010/model/admin/audit-repo" `
 ```json
 {
   "project_id":  "33-eva-brain-v2",
-  "repo_path":   "C:\\AICOE\\eva-foundation\\33-eva-brain-v2",
+  "repo_path":   "C:\\eva-foundry\\eva-foundation\\33-eva-brain-v2",
   "trust_score": 82,
   "coverage": {
     "stories_total":          24,
@@ -104,7 +104,7 @@ The endpoint proxies to the **eva-veritas MCP server** (EO-07).
 Start it before calling the endpoint:
 
 ```bash
-cd C:\AICOE\eva-foundation\48-eva-veritas
+cd C:\eva-foundry\eva-foundation\48-eva-veritas
 node src/mcp-server.js --port 8031
 ```
 

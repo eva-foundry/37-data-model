@@ -93,7 +93,7 @@ git push origin feat/session-26-agent-experience
 
 **Task 3.1: Switch to main and rebuild**
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 git checkout main
 git pull origin main
 

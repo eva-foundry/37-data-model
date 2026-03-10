@@ -259,7 +259,7 @@ The model is only valuable if it stays current.  The rules are enforced by
 **Your most useful queries**
 
 ```powershell
-$m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
+$m = Get-Content C:\eva-foundry\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
 
 # All stub endpoints — what is still to implement this sprint?
 $m.endpoints | Where-Object { $_.status -eq 'stub' } | Select-Object id | Sort-Object id
@@ -320,7 +320,7 @@ $m.infrastructure | Where-Object { $_.service -eq 'eva-brain-api' -and $_.env_va
 **Your most useful queries**
 
 ```powershell
-$m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
+$m = Get-Content C:\eva-foundry\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
 
 # Which screens are not yet implemented?
 $m.screens | Where-Object { $_.status -ne 'implemented' } | Select-Object id, status, app
@@ -374,7 +374,7 @@ $m.requirements | Where-Object { $_.satisfied_by | ForEach-Object { $_ -in $m.sc
 **Your most useful queries**
 
 ```powershell
-$m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
+$m = Get-Content C:\eva-foundry\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json
 
 # Which services depend on your OpenAI deployments?
 $m.infrastructure | Where-Object { $_.type -eq 'openai_deployment' } |

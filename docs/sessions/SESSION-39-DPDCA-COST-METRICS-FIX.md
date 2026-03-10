@@ -87,7 +87,7 @@ NEW: POST https://api.applicationinsights.io/v1/apps/{appId}/query
 ### Pre-Deployment Verification (Local)
 ```powershell
 # Test L49 with dry-run
-cd C:\AICOE\eva-foundry\37-data-model\scripts
+cd C:\eva-foundry\37-data-model\scripts
 .\sync-azure-costs.ps1 -DryRun
 
 # Test L41 with dry-run  
@@ -119,7 +119,7 @@ cd C:\AICOE\eva-foundry\37-data-model\scripts
 
 ### 1. Push Changes to GitHub
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 git status  # Verify staged files
 git commit -m "Fix: Replace Azure CLI commands with REST APIs for L41 and L49 syncs"
 git push origin main  # (requires PR if branch protection enabled)

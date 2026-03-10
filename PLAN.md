@@ -4,7 +4,7 @@
 
 - Data model (CLOUD ONLY): GET https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io/model/projects/37-data-model
 - Backup & Disaster Recovery: ./scripts/sync-cloud-to-local.ps1, validate-cloud-sync.ps1, restore-from-backup.ps1
-- 29-foundry agents: C:\AICOE\eva-foundation\29-foundry\agents\
+- 29-foundry agents: C:\eva-foundry\eva-foundation\29-foundry\agents\
 - 48-eva-veritas audit: run audit_repo MCP tool
 
 NOTE (March 5, 2026): Local port 8010 permanently disabled. Cloud API is sole authoritative source.
@@ -482,7 +482,7 @@ Completed 2026-02-25. All governance stories have evidence scripts. MTI=100.
 CosmosDB: marco-sandbox-cosmos / evamodel / model_objects (24x7 ACA-backed).
 ACA: marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io
 APIM: marco-sandbox-apim.azure-api.net/data-model (CI/cloud agents).
-Python venv: C:\AICOE\.venv\Scripts\python.exe
+Python venv: C:\eva-foundry\.venv\Scripts\python.exe
 
 ## Feature: Sprint 8-9 -- IFPUG FP Stamping + Sprint Seeds [ID=F37-10]
 In progress. F37-10-001/002/003 DONE. ACA revision cosmos-v2 (20260225-2123, image:latest, cx26) deployed. F37-10-006 DONE.

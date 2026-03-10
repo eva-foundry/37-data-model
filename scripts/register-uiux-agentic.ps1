@@ -1,6 +1,6 @@
 # register-uiux-agentic.ps1
 # Registers all UI/UX and agentic services that the EVA Data Model needs to power.
-# Run from C:\AICOE\eva-foundation\37-data-model
+# Run from C:\eva-foundry\eva-foundation\37-data-model
 # Usage: .\scripts\register-uiux-agentic.ps1
 
 $base = "http://localhost:8010"

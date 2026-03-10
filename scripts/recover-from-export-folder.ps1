@@ -13,8 +13,8 @@ Write-Host "`n╔═════════════════════
 Write-Host "║  🔄 RECOVER FROM EXPORT FOLDER (March 3, 2026)                ║" -ForegroundColor Green
 Write-Host "╚═══════════════════════════════════════════════════════════════╝`n" -ForegroundColor Green
 
-$exportDir = "C:\AICOE\eva-foundry\37-data-model\eva-data-model-export-20260303\model-data"
-$modelDir = "C:\AICOE\eva-foundry\37-data-model\model"
+$exportDir = "C:\eva-foundry\37-data-model\eva-data-model-export-20260303\model-data"
+$modelDir = "C:\eva-foundry\37-data-model\model"
 $timestamp = Get-Date -Format "yyyyMMdd-HHmm"
 
 # ==============================================================================
@@ -71,7 +71,7 @@ if ($exportWbs -lt 3000) {
 if (-not $SkipBackup) {
     Write-Host "`n2️⃣ BACKUP CURRENT MODEL" -ForegroundColor Cyan
     
-    $backupDir = "C:\AICOE\eva-foundry\37-data-model\model-backup-before-recovery-$timestamp"
+    $backupDir = "C:\eva-foundry\37-data-model\model-backup-before-recovery-$timestamp"
     Write-Host "   Creating backup: $backupDir" -ForegroundColor Gray
     
     if (Test-Path $backupDir) {
@@ -203,7 +203,7 @@ Write-Host "      Get-Content model/wbs.json | ConvertFrom-Json | Select -First 
 Write-Host "      Get-Content model/evidence.json | ConvertFrom-Json | Select -First 3" -ForegroundColor Gray
 Write-Host ""
 Write-Host "   ✅ Step 2: Commit to Git (CRITICAL)" -ForegroundColor White
-Write-Host "      cd C:\AICOE\eva-foundry\37-data-model" -ForegroundColor Gray
+Write-Host "      cd C:\eva-foundry\37-data-model" -ForegroundColor Gray
 Write-Host "      git status" -ForegroundColor Gray
 Write-Host "      git add model/" -ForegroundColor Gray
 Write-Host "      git commit -m ""fix(data): Recover $finalTotal objects from March 3 export" -ForegroundColor Gray

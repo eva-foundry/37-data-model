@@ -93,7 +93,7 @@ NOT a one-person spike                  -- it is architecturally production-read
  THE 57-PROJECT ECOSYSTEM
 --------------------------------------------------------------------------------
 
-Projects are numbered 01-48 under C:\AICOE\eva-foundation\.
+Projects are numbered 01-48 under C:\eva-foundry\eva-foundation\.
 They fall into five bands:
 
   CORE PLATFORM (always running, always needed)
@@ -111,7 +111,7 @@ They fall into five bands:
   FRONTEND / PORTAL (user-facing surfaces)
   -----------------------------------------
   EVA-JP-v1.2 **PRODUCTION APP BEING REBUILT**
-    Path:   C:\AICOE\EVA-JP-v1.2
+    Path:   C:\eva-foundry\EVA-JP-v1.2
     What:   The EXISTING bilingual JP AI assistant (EN/FR). GC federal govt.
             Case workers + legal staff query EI, CPP, OAS jurisprudence.
     Stack:  React 18 + Fluent UI v8->v9 (IN PROGRESS) + FastAPI backend.
@@ -198,8 +198,8 @@ They fall into five bands:
   37-data-model API      http://localhost:8010
   40-control-plane        http://localhost:8020
   Start command:
-    $env:PYTHONPATH="C:\AICOE\eva-foundation\37-data-model"
-    C:\AICOE\.venv\Scripts\python.exe -m uvicorn api.server:app --port 8010
+    $env:PYTHONPATH="C:\eva-foundry\eva-foundation\37-data-model"
+    C:\eva-foundry\.venv\Scripts\python.exe -m uvicorn api.server:app --port 8010
 
 --------------------------------------------------------------------------------
  DATA MODEL STATE (2026-03-05)

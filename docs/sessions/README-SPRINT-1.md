@@ -8,7 +8,7 @@
 
 ## Start Here (1 minute read)
 
-👉 **[SPRINT-1-HANDOFF.md](file:///c:\AICOE\SPRINT-1-HANDOFF.md)**
+👉 **[SPRINT-1-HANDOFF.md](file:///c:\eva-foundry\SPRINT-1-HANDOFF.md)**
 - What was delivered (5 files)
 - Research results (GitHub Models pricing)
 - Implementation time estimate (5.5-7.5 hours total)
@@ -21,7 +21,7 @@
 
 ## For Stakeholders (5 minute read)
 
-👉 **[SPRINT-1-SUMMARY.md](file:///c:\AICOE\eva-foundry\37-data-model\SPRINT-1-SUMMARY.md)**
+👉 **[SPRINT-1-SUMMARY.md](file:///c:\eva-foundry\37-data-model\SPRINT-1-SUMMARY.md)**
 - What we built & why it matters
 - Observability gap analysis (before/after)
 - GitHub Models research results (Claude NOT in free tier)
@@ -35,7 +35,7 @@
 ## For Developers (Phase 1 Implementation)
 
 ### Quick Reference (5 min)
-👉 **[QUICK-REFERENCE.md](file:///c:\AICOE\eva-foundry\37-data-model\QUICK-REFERENCE.md)**
+👉 **[QUICK-REFERENCE.md](file:///c:\eva-foundry\37-data-model\QUICK-REFERENCE.md)**
 - Correlation ID format & generation
 - Cost calculation formula + examples (copy-paste)
 - WBS hierarchy (4-level)
@@ -46,7 +46,7 @@
 - Keep this open while coding!
 
 ### Integration Guide (15 min)
-👉 **[INTEGRATION-LM-TRACING.md](file:///c:\AICOE\eva-foundry\37-data-model\INTEGRATION-LM-TRACING.md)**
+👉 **[INTEGRATION-LM-TRACING.md](file:///c:\eva-foundry\37-data-model\INTEGRATION-LM-TRACING.md)**
 - Step-by-step where to modify sprint_agent.py
 - Exact line numbers (30, 860, 920, 960)
 - Before/after code examples
@@ -56,7 +56,7 @@
 - Testing commands
 
 ### Execution Checklist (20 min)
-👉 **[SPRINT-1-PHASE-1-CHECKLIST.md](file:///c:\AICOE\eva-foundry\37-data-model\SPRINT-1-PHASE-1-CHECKLIST.md) **
+👉 **[SPRINT-1-PHASE-1-CHECKLIST.md](file:///c:\eva-foundry\37-data-model\SPRINT-1-PHASE-1-CHECKLIST.md) **
 - 5 stories with effort estimates (21 FP total)
 - Phase 1: Stories 001-002 (8 FP, 2-3 hours)
 - Prerequisites (sequential order)
@@ -72,7 +72,7 @@
 ## Code (Ready to Integrate)
 
 ### 1. LM Tracer Library (500 lines)
-📁 **[.github/scripts/lm_tracer.py](file:///c:\AICOE\eva-foundry\37-data-model\.github\scripts\lm_tracer.py)**
+📁 **[.github/scripts/lm_tracer.py](file:///c:\eva-foundry\37-data-model\.github\scripts\lm_tracer.py)**
 - Purpose: Unified logging for all LM calls
 - Key classes: `LMCall`, `LMTracer`
 - Key functions: `generate_correlation_id()`, `get_model_for_severity()`
@@ -82,7 +82,7 @@
 - Integration: Import at top of bug_fix_agent.py (1 line)
 
 ### 2. Sprint Design (200+ lines)
-📁 **[.github/sprints/SPRINT-1-agent-tracing.md](file:///c:\AICOE\eva-foundry\37-data-model\.github\sprints\SPRINT-1-agent-tracing.md)**
+📁 **[.github/sprints/SPRINT-1-agent-tracing.md](file:///c:\eva-foundry\37-data-model\.github\sprints\SPRINT-1-agent-tracing.md)**
 - 5 stories: F37-TRACE-001 through 005
 - 21 FP total, 2 sprints
 - Acceptance criteria for each story
@@ -91,7 +91,7 @@
 - Success metrics
 
 ### 3. Evidence Schema (200+ lines)
-📁 **[.eva/evidence-schema.json](file:///c:\AICOE\eva-foundry\37-data-model\.eva\evidence-schema.json)**
+📁 **[.eva/evidence-schema.json](file:///c:\eva-foundry\37-data-model\.eva\evidence-schema.json)**
 - JSON Schema draft-07
 - Enforces: correlation_id, WBS hierarchy, timeline, LM interaction
 - Required fields + enums
@@ -163,15 +163,15 @@
 
 | File | Path | Purpose |
 |------|------|---------|
-| **SPRINT-1-HANDOFF.md** | `c:\AICOE\` | Start here (decision point) |
-| **SPRINT-1-SUMMARY.md** | `c:\AICOE\eva-foundry\37-data-model\` | Stakeholder summary |
-| **QUICK-REFERENCE.md** | `c:\AICOE\eva-foundry\37-data-model\` | Developer cheat sheet |
-| **INTEGRATION-LM-TRACING.md** | `c:\AICOE\eva-foundry\37-data-model\` | Code integration guide |
-| **SPRINT-1-PHASE-1-CHECKLIST.md** | `c:\AICOE\.github\` | Execution plan |
-| **lm_tracer.py** | `c:\AICOE\eva-foundry\37-data-model\.github\scripts\` | Core library (500 lines) |
-| **SPRINT-1-agent-tracing.md** | `c:\AICOE\eva-foundry\37-data-model\.github\sprints\` | Sprint design (5 stories) |
-| **evidence-schema.json** | `c:\AICOE\eva-foundry\37-data-model\.eva\` | Validation schema |
-| **README.md** ← YOU ARE HERE | `c:\AICOE\` | This index |
+| **SPRINT-1-HANDOFF.md** | `c:\eva-foundry\` | Start here (decision point) |
+| **SPRINT-1-SUMMARY.md** | `c:\eva-foundry\37-data-model\` | Stakeholder summary |
+| **QUICK-REFERENCE.md** | `c:\eva-foundry\37-data-model\` | Developer cheat sheet |
+| **INTEGRATION-LM-TRACING.md** | `c:\eva-foundry\37-data-model\` | Code integration guide |
+| **SPRINT-1-PHASE-1-CHECKLIST.md** | `c:\eva-foundry\.github\` | Execution plan |
+| **lm_tracer.py** | `c:\eva-foundry\37-data-model\.github\scripts\` | Core library (500 lines) |
+| **SPRINT-1-agent-tracing.md** | `c:\eva-foundry\37-data-model\.github\sprints\` | Sprint design (5 stories) |
+| **evidence-schema.json** | `c:\eva-foundry\37-data-model\.eva\` | Validation schema |
+| **README.md** ← YOU ARE HERE | `c:\eva-foundry\` | This index |
 
 ---
 
@@ -244,11 +244,11 @@ You'll know Phase 1 is done when:
 
 | Document | Read Time | Purpose |
 |----------|-----------|---------|
-| [SPRINT-1-HANDOFF.md](file:///c:\AICOE\SPRINT-1-HANDOFF.md) | 5 min | **START HERE** — Decision point |
-| [QUICK-REFERENCE.md](file:///c:\AICOE\eva-foundry\37-data-model\QUICK-REFERENCE.md) | 10 min | Code reference during Phase 1 |
-| [INTEGRATION-LM-TRACING.md](file:///c:\AICOE\eva-foundry\37-data-model\INTEGRATION-LM-TRACING.md) | 15 min | Line-by-line integration guide |
-| [SPRINT-1-PHASE-1-CHECKLIST.md](file:///c:\AICOE\eva-foundry\37-data-model\SPRINT-1-PHASE-1-CHECKLIST.md) | 20 min | Verification commands |
-| [SPRINT-1-SUMMARY.md](file:///c:\AICOE\eva-foundry\37-data-model\SPRINT-1-SUMMARY.md) | 10 min | Business context |
+| [SPRINT-1-HANDOFF.md](file:///c:\eva-foundry\SPRINT-1-HANDOFF.md) | 5 min | **START HERE** — Decision point |
+| [QUICK-REFERENCE.md](file:///c:\eva-foundry\37-data-model\QUICK-REFERENCE.md) | 10 min | Code reference during Phase 1 |
+| [INTEGRATION-LM-TRACING.md](file:///c:\eva-foundry\37-data-model\INTEGRATION-LM-TRACING.md) | 15 min | Line-by-line integration guide |
+| [SPRINT-1-PHASE-1-CHECKLIST.md](file:///c:\eva-foundry\37-data-model\SPRINT-1-PHASE-1-CHECKLIST.md) | 20 min | Verification commands |
+| [SPRINT-1-SUMMARY.md](file:///c:\eva-foundry\37-data-model\SPRINT-1-SUMMARY.md) | 10 min | Business context |
 
 ---
 

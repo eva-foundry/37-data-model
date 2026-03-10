@@ -16,8 +16,8 @@ Base: https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecont
 - Any Layer: GET /model/{layer}/
 
 ## Files Archived
-- C:\AICOE\eva-foundry\37-data-model\model > model-archive-disabled-20260305-1136/
-- C:\AICOE\eva-foundry\37-data-model\model > model-archive-20260305/
+- C:\eva-foundry\37-data-model\model > model-archive-disabled-20260305-1136/
+- C:\eva-foundry\37-data-model\model > model-archive-20260305/
 
 ## Documentation Updated
 - README.md - Points to cloud endpoint only

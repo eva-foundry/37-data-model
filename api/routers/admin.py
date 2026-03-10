@@ -1166,7 +1166,7 @@ async def commit(
 # ── AUDIT-REPO (eva-veritas proxy) ───────────────────────────────────────────
 
 _EVA_VERITAS_DEFAULT = "http://localhost:8031"
-# C:\AICOE\eva-foundation
+# C:\eva-foundry\eva-foundation
 _VERITAS_PORTFOLIO = Path(__file__).parents[3]
 
 
@@ -1242,7 +1242,7 @@ async def audit_repo(
             detail=(
                 f"eva-veritas MCP server unreachable at {mcp_base}. "
                 f"Start it with: node src/mcp-server.js --port 8031 "
-                f"(from C:\\AICOE\\eva-foundation\\48-eva-veritas). "
+                f"(from C:\\eva-foundry\\eva-foundation\\48-eva-veritas). "
                 f"Error: {exc.reason if hasattr(exc, 'reason') else exc}"
             ),
         ) from exc

@@ -119,9 +119,9 @@ try {
 # 3. CHECK eva-data-model-export-20260303
 # ==============================================================================
 Write-Host "`n3️⃣ EXPORT FOLDER: eva-data-model-export-20260303" -ForegroundColor Cyan
-Write-Host "   Searching in C:\AICOE\eva-foundry..." -ForegroundColor Gray
+Write-Host "   Searching in C:\eva-foundry\eva-foundry..." -ForegroundColor Gray
 
-$exportFolder = Get-ChildItem "C:\AICOE\eva-foundry" -Recurse -Directory -Filter "eva-data-model-export-20260303" -Depth 3 -ErrorAction SilentlyContinue |
+$exportFolder = Get-ChildItem "C:\eva-foundry\eva-foundry" -Recurse -Directory -Filter "eva-data-model-export-20260303" -Depth 3 -ErrorAction SilentlyContinue |
     Select-Object -First 1
 
 if ($exportFolder) {
@@ -158,7 +158,7 @@ if ($exportFolder) {
 Write-Host "`n4️⃣ LOCAL ARCHIVE: model-archive-disabled-20260305-1136" -ForegroundColor Cyan
 Write-Host "   (Known source from RCA)" -ForegroundColor Gray
 
-$archivePath = "C:\AICOE\eva-foundry\37-data-model\model-archive-disabled-20260305-1136"
+$archivePath = "C:\eva-foundry\37-data-model\model-archive-disabled-20260305-1136"
 if (Test-Path $archivePath) {
     $wbsArchive = Get-Content "$archivePath\wbs.json" | ConvertFrom-Json
     Write-Host "   ✅ Archive exists" -ForegroundColor Green

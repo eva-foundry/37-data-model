@@ -41,6 +41,9 @@ Phase 3 Enhancement over Phase 2:
     - Portably deployable (any workspace, any project structure)
     - Environment variable overrides supported
     - Ready for scale as other projects activate
+
+Revisions:
+    2026-03-10: Refactored to use eva_script_infra (Session 44 compliance)
 """
 
 import json
@@ -52,10 +55,20 @@ from dataclasses import dataclass, asdict
 from typing import Dict, List, Optional, Tuple
 import hashlib
 
+# Professional Coding Standards infrastructure
+from eva_script_infra import (
+    setup_logging, save_evidence, save_error_evidence, ensure_directories,
+    timestamped_filename, check_directory_exists, check_file_exists,
+    STATUS_PASS, STATUS_FAIL, STATUS_INFO, STATUS_ERROR, STATUS_WARN,
+    format_status
+)
+
 # Ensure config_loader can be imported from scripts directory
 sys.path.insert(0, str(Path(__file__).parent))
 
 from config_loader import EvaFactoryConfig, resolve_path
+
+logger = None  # Will be initialized in main
 
 
 @dataclass
@@ -100,7 +113,7 @@ def load_projects_json(target_repo: str, config: EvaFactoryConfig) -> Dict[str, 
     projects_file = resolve_path(config, "storage.projects_registry", Path(target_repo))
     
     if not projects_file.exists():
-        print(f"ERROR: projects.json not found at {projects_file}")
+        logger.error(f"ERROR: projects.json not found at {projects_file}")
         sys.exit(1)
     
     with open(projects_file) as f:
@@ -128,7 +141,7 @@ def load_schema(target_repo: str, config: EvaFactoryConfig) -> dict:
     schema_file = resolve_path(config, "schema.evidence_file", Path(target_repo))
     
     if not schema_file.exists():
-        print(f"WARNING: Schema file not found at {schema_file}")
+        logger.warning(f"WARNING: Schema file not found at {schema_file}")
         return {}
     
     with open(schema_file) as f:
@@ -338,32 +351,32 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
     """
     start_time = datetime.now(timezone.utc)
     
-    print("=" * 80)
-    print("Phase 3: Portfolio-Wide Evidence Consolidation (Configuration-Driven)")
-    print("=" * 80)
-    print(f"Workspace: {workspace}")
-    print(f"Target Repo: {target_repo}")
-    print(f"Start Time: {start_time.isoformat()}")
-    print()
+    logger.info("=" * 80)
+    logger.info("Phase 3: Portfolio-Wide Evidence Consolidation (Configuration-Driven)")
+    logger.info("=" * 80)
+    logger.info(f"Workspace: {workspace}")
+    logger.info(f"Target Repo: {target_repo}")
+    logger.info(f"Start Time: {start_time.isoformat()}")
+    logger.info("")
     
     # Load config (externalized, portable)
     try:
         config = EvaFactoryConfig.load()
     except FileNotFoundError as e:
-        print(f"[ERROR] {e}")
-        return 1
+        logger.error(f"[ERROR] {e}")
+        return 2
     
-    print()
+    logger.info("")
     
     # Load projects and schema
     projects = load_projects_json(target_repo, config)
     schema = load_schema(target_repo, config)
     
-    print(f"[SCAN] Found {len(projects)} active projects in projects.json")
-    print()
+    logger.info(f"[SCAN] Found {len(projects)} active projects in projects.json")
+    logger.info("")
     
     # Scan workspace for projects with evidence
-    print("[STAGE 1] EXTRACT: Scanning workspace for evidence...")
+    logger.info("[STAGE 1] EXTRACT: Scanning workspace for evidence...")
     
     evidence_file = resolve_path(config, "storage.evidence_consolidated", Path(target_repo))
     per_project_results = {}
@@ -388,8 +401,8 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
                 "folder": folder_name,
             })
     
-    print(f"  Total projects to scan: {len(projects_to_scan)}")
-    print()
+    logger.info(f"  Total projects to scan: {len(projects_to_scan)}")
+    logger.info("")
     
     for scan_project in projects_to_scan:
         project_folder = scan_project["path"]
@@ -453,22 +466,22 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
         }
         
         status = "[OK]" if not (extract_errors or transform_errors or merge_errors) else "[WN]"
-        print(f"  {status} {project_id}: {len(records)} files -> "
+        logger.info(f"  {status} {project_id}: {len(records)} files -> "
               f"{len(transformed)} transformed -> {merged} merged")
         
         if extract_errors or transform_errors or merge_errors:
             for error in (extract_errors + transform_errors + merge_errors)[:3]:
-                print(f"      - {error}")
-    print()
-    print(f"[STAGE 2] MERGE: Consolidating records into portfolio...")
-    print(f"  Total files: {total_files}")
-    print(f"  Total extracted: {total_extracted}")
-    print(f"  Total transformed: {total_transformed}")
-    print(f"  Total merged: {total_merged}")
-    print()
+                logger.warning(f"      - {error}")
+    logger.info("")
+    logger.info(f"[STAGE 2] MERGE: Consolidating records into portfolio...")
+    logger.info(f"  Total files: {total_files}")
+    logger.info(f"  Total extracted: {total_extracted}")
+    logger.info(f"  Total transformed: {total_transformed}")
+    logger.info(f"  Total merged: {total_merged}")
+    logger.info("")
     
     # Validate portfolio
-    print("[STAGE 3] VALIDATE: Portfolio-wide validation...")
+    logger.info("[STAGE 3] VALIDATE: Portfolio-wide validation...")
     pass_count, fail_count, skip_count, validation_errors = validate_portfolio(
         evidence_file, schema
     )
@@ -476,17 +489,17 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
     total_records = pass_count + fail_count + skip_count
     validation_rate = (pass_count / total_records * 100) if total_records > 0 else 0
     
-    print(f"  Total records: {total_records}")
-    print(f"  Pass: {pass_count} ({validation_rate:.1f}%)")
-    print(f"  Fail: {fail_count}")
-    print(f"  Skip: {skip_count}")
+    logger.info(f"  Total records: {total_records}")
+    logger.info(f"  Pass: {pass_count} ({validation_rate:.1f}%)")
+    logger.info(f"  Fail: {fail_count}")
+    logger.info(f"  Skip: {skip_count}")
     
     if validation_errors:
-        print(f"  Errors: {len(validation_errors)}")
-        for error in validation_errors[:3]:
-            print(f"    - {error}")
+        logger.warning(f"  Errors: {len(validation_errors)}")
+        for error in validation_errors[:5]:
+            logger.warning(f"    - {error}")
     
-    print()
+    logger.info("")
     
     # Write portfolio validation marker
     if evidence_file.exists():
@@ -530,35 +543,85 @@ def orchestrate_portfolio_sync(workspace: str, target_repo: str) -> int:
     )
     
     # Write report
-    print("[STAGE 4] REPORT: Generating sync report...")
+    logger.info("[STAGE 4] REPORT: Generating sync report...")
     report_file = resolve_path(config, "reporting.report_file", Path(target_repo))
     report_file.parent.mkdir(parents=True, exist_ok=True)
     write_report(report_file, result)
-    print(f"  Report: {report_file}")
+    logger.info(f"  Report: {report_file}")
     
-    print()
-    print("=" * 80)
-    print(f"Status: {result.status}")
-    print(f"Duration: {duration:.0f}ms")
-    print(f"Projects with evidence: {projects_with_evidence}/{len(projects)}")
-    print(f"Records in portfolio: {total_records}")
-    print(f"Validation rate: {validation_rate:.1f}%")
-    print("=" * 80)
+    logger.info("")
+    logger.info("=" * 80)
+    logger.info(f"Status: {result.status}")
+    logger.info(f"Duration: {duration:.0f}ms")
+    logger.info(f"Projects with evidence: {projects_with_evidence}/{len(projects)}")
+    logger.info(f"Records in portfolio: {total_records}")
+    logger.info(f"Validation rate: {validation_rate:.1f}%")
+    logger.info("=" * 80)
     
     return 0 if result.status == "PASS" else 1
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: python sync-evidence-all-projects.py <workspace> <target_repo>")
-        print("\nExample:")
-        print("  python sync-evidence-all-projects.py \\")
-        print("    C:\\AICOE\\eva-foundry \\")
-        print("    C:\\AICOE\\eva-foundry\\37-data-model")
-        sys.exit(1)
+    # Initialize logger
+    logger = setup_logging('sync-evidence-all-projects')
+    ensure_directories()
     
-    workspace = sys.argv[1]
-    target_repo = sys.argv[2]
+    try:
+        if len(sys.argv) < 3:
+            logger.error(format_status(STATUS_ERROR, "Missing required arguments"))
+            logger.info("Usage: python sync-evidence-all-projects.py <workspace> <target_repo>")
+            logger.info("\nExample:")
+            logger.info("  python sync-evidence-all-projects.py \\")
+            logger.info("    C:\\eva-foundry\\eva-foundry \\")
+            logger.info("    C:\\eva-foundry\\eva-foundry\\37-data-model")
+            sys.exit(2)
+        
+        workspace = Path(sys.argv[1])
+        target_repo = Path(sys.argv[2])
+        
+        logger.info(format_status(STATUS_INFO, "Script: sync-evidence-all-projects"))
+        logger.info(format_status(STATUS_INFO, f"Workspace: {workspace}"))
+        logger.info(format_status(STATUS_INFO, f"Target repo: {target_repo}"))
+        
+        # Professional Coding Standards: Evidence at operation start
+        save_evidence(
+            operation="sync-evidence-all-projects",
+            status="started",
+            metrics={
+                "workspace": str(workspace),
+                "target_repo": str(target_repo),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        )
+        
+        # Professional Coding Standards: Pre-flight checks
+        logger.info(format_status(STATUS_INFO, "Running pre-flight checks"))
+        
+        if not check_directory_exists(workspace, "workspace directory", logger):
+            sys.exit(2)
+        
+        if not check_directory_exists(target_repo, "target repo directory", logger):
+            sys.exit(2)
+        
+        logger.info(format_status(STATUS_PASS, "Pre-flight checks passed"))
+        
+        # Run orchestration
+        exit_code = orchestrate_portfolio_sync(str(workspace), str(target_repo))
+        
+        # Professional Coding Standards: Evidence at completion
+        save_evidence(
+            operation="sync-evidence-all-projects",
+            status="completed" if exit_code == 0 else "failed",
+            metrics={
+               "exit_code": exit_code
+            }
+        )
+        
+        sys.exit(exit_code)
     
-    exit_code = orchestrate_portfolio_sync(workspace, target_repo)
-    sys.exit(exit_code)
+    except Exception as e:
+        # Professional Coding Standards: Structured error handling
+        error_msg = f"Fatal error during portfolio sync: {str(e)}"
+        logger.error(format_status(STATUS_ERROR, error_msg))
+        save_error_evidence(e, "sync-evidence-all-projects")
+        sys.exit(2)
