@@ -122,29 +122,29 @@ Invoke-RestMethod "$prodBase/model/agent-summary" | Select session_41_reload_mar
 
 ## 📚 Reference Documents Created
 
-1. **[SESSION-41-COMPLETE-SUMMARY.md](c:\AICOE\eva-foundry\37-data-model\docs\SESSION-41-COMPLETE-SUMMARY.md)**  
+1. **[SESSION-41-COMPLETE-SUMMARY.md](c:\eva-foundry\37-data-model\docs\SESSION-41-COMPLETE-SUMMARY.md)**  
    - Complete architecture understanding (memory vs Cosmos DB)
    - Storage architecture clarification
    - Data flow explanation
    - Tools that must exist
 
-2. **[TOOL-INDEX.md](c:\AICOE\eva-foundry\37-data-model\docs\TOOL-INDEX.md)**  
+2. **[TOOL-INDEX.md](c:\eva-foundry\37-data-model\docs\TOOL-INDEX.md)**  
    - 80+ tools cataloged by category
    - Usage examples for common operations
    - Missing tools identified
    - ⚠️ **CHECK THIS BEFORE CREATING ANY NEW SCRIPT**
 
-3. **[DOCUMENTATION-STRUCTURE.md](c:\AICOE\eva-foundry\37-data-model\docs\DOCUMENTATION-STRUCTURE.md)**  
+3. **[DOCUMENTATION-STRUCTURE.md](c:\eva-foundry\37-data-model\docs\DOCUMENTATION-STRUCTURE.md)**  
    - Documentation maintenance guide
    - Archive procedures
    - Quick reference patterns
 
-4. **[SESSION-41-NEXT-STEPS.md](c:\AICOE\eva-foundry\37-data-model\docs\SESSION-41-NEXT-STEPS.md)**  
+4. **[SESSION-41-NEXT-STEPS.md](c:\eva-foundry\37-data-model\docs\SESSION-41-NEXT-STEPS.md)**  
    - Step-by-step deployment workflow
    - Troubleshooting guide
    - Success criteria checklist
 
-5. **[SEED-COSMOS-GUIDE.md](c:\AICOE\eva-foundry\37-data-model\docs\SEED-COSMOS-GUIDE.md)** ← NEW  
+5. **[SEED-COSMOS-GUIDE.md](c:\eva-foundry\37-data-model\docs\SEED-COSMOS-GUIDE.md)** ← NEW  
    - Pre-flight checks
    - Seed operation commands
    - Verification steps

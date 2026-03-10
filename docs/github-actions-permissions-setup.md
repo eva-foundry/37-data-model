@@ -32,7 +32,7 @@ Grant "Monitoring Reader" role to the GitHub Actions service principal.
 ### 2. Run Permission Script
 
 ```powershell
-cd c:\AICOE\eva-foundry\37-data-model\scripts
+cd c:\eva-foundry\37-data-model\scripts
 
 # Replace <client-id> with the value from step 1
 .\grant-github-actions-permissions.ps1 -ServicePrincipalAppId "<client-id>"

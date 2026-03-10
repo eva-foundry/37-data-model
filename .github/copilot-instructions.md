@@ -3,7 +3,7 @@
 **Template Version**: 3.5.0
 **Last Updated**: March 10, 2026 @ 03:15 ET
 **Project**: EVA Data Model -- Single source of truth API
-**Path**: `C:\AICOE\eva-foundry\37-data-model\`
+**Path**: `C:\eva-foundry\37-data-model\`
 **Stack**: Python, FastAPI, Cosmos DB
 **New in v3.5.0**: API-Only Architecture (no disk fallback), Session 42 user-guide categories, 91 operational layers
 
@@ -78,7 +78,7 @@ Loop      --> return to Discover if tasks remain
 > The HTTP API is the only interface. One HTTP call beats ten file reads.
 > The API self-documents: `GET /model/agent-guide` returns the complete operating protocol.
 
-> **Full reference**: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md` (v2.5)
+> **Full reference**: `C:\eva-foundry\37-data-model\USER-GUIDE.md` (v2.5)
 > The model is the single source of truth. One HTTP call beats 10 file reads.
 > Never grep source files for something the model already knows.
 
@@ -257,7 +257,7 @@ multi_replace_string_in_file for edits to existing files.
 
 ```powershell
 # Pre-flight check
-if (Test-Path "C:\AICOE\path\to\file.ps1") {
+if (Test-Path "C:\eva-foundry\path\to\file.ps1") {
     # use replace_string_in_file -- do NOT call create_file
 } else {
     # safe to call create_file
@@ -609,8 +609,8 @@ Maintain a mental count of Do steps (file edits, terminal commands, test runs) t
 ### 6. Python Environment
 
 ```
-venv exec: C:\AICOE\.venv\Scripts\python.exe
-activate:  C:\AICOE\.venv\Scripts\Activate.ps1
+venv exec: C:\eva-foundry\.venv\Scripts\python.exe
+activate:  C:\eva-foundry\.venv\Scripts\Activate.ps1
 ```
 
 Never use bare `python` or `python3`. Always use the full venv path.
@@ -693,8 +693,8 @@ if (-not $h) {
     $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
     if (-not $h) {
         # Start local API if not running
-        $env:PYTHONPATH = "C:\AICOE\eva-foundry\37-data-model"
-        Start-Process "C:\AICOE\.venv\Scripts\python.exe" `
+        $env:PYTHONPATH = "C:\eva-foundry\37-data-model"
+        Start-Process "C:\eva-foundry\.venv\Scripts\python.exe" `
             "-m uvicorn api.server:app --port 8010 --reload" -WindowStyle Hidden
         Start-Sleep 4
         $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
@@ -704,7 +704,7 @@ if (-not $h) {
 # Option C -- file fallback (offline / CI -- no HTTP API available)
 if (-not $h) {
     Write-Warning "No HTTP API reachable -- loading from file (read-only, no audit trail)"
-    $m = Get-Content C:\AICOE\eva-foundry\37-data-model\model\eva-model.json | ConvertFrom-Json
+    $m = Get-Content C:\eva-foundry\37-data-model\model\eva-model.json | ConvertFrom-Json
     $m.meta | Select-Object last_updated, layers_complete, total_layers
 } else {
     # Readiness check (ACA store=cosmos is always reachable; local checks Cosmos connectivity)
@@ -731,9 +731,9 @@ No PowerShell, no file I/O -- any language can consume the model.
 ### Start (local dev / MemoryStore)
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 $env:PYTHONPATH = $PWD
-C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
+C:\eva-foundry\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload
 ```
 
 Interactive docs (local dev): **http://localhost:8010/docs** | ACA: `$base/docs`
@@ -859,11 +859,11 @@ $ep = Invoke-RestMethod "$base/model/endpoints/GET /v1/health"
 
 # Navigation: jump directly to route decorator in VS Code
 $ep = Invoke-RestMethod "$base/model/endpoints/GET /v1/health"
-code --goto "C:\AICOE\eva-foundry\$($ep.implemented_in):$($ep.repo_line)"
+code --goto "C:\eva-foundry\$($ep.implemented_in):$($ep.repo_line)"
 
 # Same for a React hook or component:
 $h = Invoke-RestMethod "$base/model/hooks/useTranslations"
-code --goto "C:\AICOE\eva-foundry\$($h.repo_path):$($h.repo_line)"
+code --goto "C:\eva-foundry\$($h.repo_path):$($h.repo_line)"
 ```
 
 ---
@@ -1061,7 +1061,7 @@ python scripts/sync-marco-inventory-to-model.py
 ```
 
 **Behavior**:
-- Reads: `C:\AICOE\eva-foundry\system-analysis\inventory\.eva-cache\current\MARCO-INVENTORY-*.md`
+- Reads: `C:\eva-foundry\system-analysis\inventory\.eva-cache\current\MARCO-INVENTORY-*.md`
 - Transforms: Azure resource metadata -> infrastructure layer schema
 - Maps: Resource type -> `infrastructure.type` (openai_acct, cosmos_db, blob_storage, etc.)
 - Assigns: Service bindings (which service uses this resource)
@@ -1126,7 +1126,7 @@ All must pass before merging a PR:
 
 ---
 
-*Source template*: `C:\AICOE\eva-foundry\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.3.2
-*Project 07 README*: `C:\AICOE\eva-foundry\07-foundation-layer\README.md`
-*EVA Data Model USER-GUIDE*: `C:\AICOE\eva-foundry\37-data-model\USER-GUIDE.md` v2.6
-*Evidence Layer Enhancement*: `C:\AICOE\eva-foundry\37-data-model\docs\evidence-layer-enhancement-20260301.md`
+*Source template*: `C:\eva-foundry\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md` v3.3.2
+*Project 07 README*: `C:\eva-foundry\07-foundation-layer\README.md`
+*EVA Data Model USER-GUIDE*: `C:\eva-foundry\37-data-model\USER-GUIDE.md` v2.6
+*Evidence Layer Enhancement*: `C:\eva-foundry\37-data-model\docs\evidence-layer-enhancement-20260301.md`

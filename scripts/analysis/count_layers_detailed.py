@@ -1,7 +1,7 @@
 import json
 import os
 
-model_path = r"C:\AICOE\eva-foundry\37-data-model\model"
+model_path = r"C:\eva-foundry\37-data-model\model"
 
 print("\n" + "="*70)
 print("DATA MODEL LAYER INVENTORY - DETAILED STRUCTURE")

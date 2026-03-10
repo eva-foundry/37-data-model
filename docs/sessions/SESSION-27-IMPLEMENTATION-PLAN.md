@@ -19,7 +19,7 @@
 - **New Code**: Session 26 enhancements (4 files, ~570 lines, 9 endpoints)
 
 #### 39-ado-dashboard State
-- **Location**: C:\AICOE\eva-foundry\39-ado-dashboard
+- **Location**: C:\eva-foundry\39-ado-dashboard
 - **Tech Stack**: React/TypeScript, Vite
 - **Purpose**: Visualize sprint velocity, MTI scores, evidence metrics
 - **Current**: Likely fetching all evidence client-side, calculating aggregations in browser

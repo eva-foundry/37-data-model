@@ -180,15 +180,15 @@ if (Test-Path $trustPath) {
     if ($score -ge 95) {
       Add-Gate "G09" "Veritas MTI >= 95" "PASS" "MTI=$score formula=$formula delta=$($t.sparkline_delta)" ""
     } elseif ($score -ge 70) {
-      Add-Gate "G09" "Veritas MTI >= 95" "WARN" "MTI=$score (below 95 target) formula=$formula" "Run: eva audit --repo C:\AICOE\eva-foundation\37-data-model"
+      Add-Gate "G09" "Veritas MTI >= 95" "WARN" "MTI=$score (below 95 target) formula=$formula" "Run: eva audit --repo C:\eva-foundry\eva-foundation\37-data-model"
     } else {
-      Add-Gate "G09" "Veritas MTI >= 95" "FAIL" "MTI=$score -- below passing threshold of 70" "Run: eva audit --repo C:\AICOE\eva-foundation\37-data-model"
+      Add-Gate "G09" "Veritas MTI >= 95" "FAIL" "MTI=$score -- below passing threshold of 70" "Run: eva audit --repo C:\eva-foundry\eva-foundation\37-data-model"
     }
   } catch {
     Add-Gate "G09" "Veritas MTI >= 95" "WARN" "trust.json unreadable: $_" ""
   }
 } else {
-  Add-Gate "G09" "Veritas MTI (local cache)" "WARN" "No .eva/trust.json -- run eva audit to populate" "Run: eva audit --repo C:\AICOE\eva-foundation\37-data-model"
+  Add-Gate "G09" "Veritas MTI (local cache)" "WARN" "No .eva/trust.json -- run eva audit to populate" "Run: eva audit --repo C:\eva-foundry\eva-foundation\37-data-model"
 }
 
 # ── G10 ACA image has graph endpoint ──────────────────────────────────────────

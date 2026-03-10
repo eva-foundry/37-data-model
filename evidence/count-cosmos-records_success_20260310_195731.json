@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-10T22:57:31.887125Z",
+  "operation": "count-cosmos-records",
+  "status": "success",
+  "metrics": {
+    "total_layers": 113,
+    "total_records": 4683,
+    "query_errors": 54,
+    "output_file": "evidence\\count-cosmos-records_actual_20260310_195731.json"
+  }
+}

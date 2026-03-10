@@ -13,7 +13,7 @@
 #       translations by-screen + import
 #       red-teaming
 #
-# Run from: C:\AICOE\eva-foundation\37-data-model
+# Run from: C:\eva-foundry\eva-foundation\37-data-model
 # Usage: .\scripts\register-portal-full-catalog.ps1
 
 param(

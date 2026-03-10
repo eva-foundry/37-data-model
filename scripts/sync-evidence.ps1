@@ -2,8 +2,8 @@
 # Evidence Layer Sync Wrapper for CI/CD Systems
 # 
 # Usage:
-#   pwsh scripts/sync-evidence.ps1 -SourceRepo "C:\AICOE\eva-foundry\51-ACA" 
-#                                  -TargetRepo "C:\AICOE\eva-foundry\37-data-model"
+#   pwsh scripts/sync-evidence.ps1 -SourceRepo "C:\eva-foundry\51-ACA" 
+#                                  -TargetRepo "C:\eva-foundry\37-data-model"
 #
 # Environments:
 #   - Works with GitHub Actions (via bash wrapper)

@@ -1876,7 +1876,7 @@ GET /model/layer-metadata/?category=Remediation
 >   Model Files Created:
 >     - model/workspace_config.json: Empty array (ready for seeding)
 >     - model/project_work.json: Empty array (ready for seeding)
->     - Note: projects.json already exists in workspace root (C:\AICOE\eva-foundry\model\projects.json)
+>     - Note: projects.json already exists in workspace root (C:\eva-foundry\model\projects.json)
 >
 >   API Updates (3 files modified):
 >     - api/routers/layers.py: Added workspace_config_router + project_work_router
@@ -2340,7 +2340,7 @@ GET /model/layer-metadata/?category=Remediation
 
 > **Cosmos DB live (2026-02-24):** `marco-sandbox-cosmos / evamodel / model_objects`  
 > **ACA endpoint:** `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io`  
-> **Local endpoint:** `http://localhost:8010` ? start with `$env:PYTHONPATH="C:\AICOE\eva-foundation\37-data-model"; Set-Location "C:\AICOE\eva-foundation\37-data-model"; C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010`  
+> **Local endpoint:** `http://localhost:8010` ? start with `$env:PYTHONPATH="C:\eva-foundry\eva-foundation\37-data-model"; Set-Location "C:\eva-foundry\eva-foundation\37-data-model"; C:\eva-foundry\.venv\Scripts\python -m uvicorn api.server:app --port 8010`  
 > **Both local + ACA share the same Cosmos container** ? writes on either are immediately visible on both.
 > Projects expanded from 19 to 46 on 2026-02-23 ? all 46 eva-foundation numbered folders now in model (32-logging added).  
 > Counts change frequently. Check the live API: `Invoke-RestMethod http://localhost:8010/health`
@@ -2506,7 +2506,7 @@ GET /model/layer-metadata/?category=Remediation
 
 ### Feb 22, 2026 ? 1:48 PM ET
 
-- **Full 23-project scan** completed under `C:\AICOE\eva-foundation`. Projects with active frontend code: 31-eva-faces (162 tsx), 39-ado-dashboard (13 tsx ? component sandbox for portal-face), 40-eva-devbench (112 tsx), 44-eva-jp-spark (215 tsx). All others confirmed empty or backend-only.
+- **Full 23-project scan** completed under `C:\eva-foundry\eva-foundation`. Projects with active frontend code: 31-eva-faces (162 tsx), 39-ado-dashboard (13 tsx ? component sandbox for portal-face), 40-eva-devbench (112 tsx), 44-eva-jp-spark (215 tsx). All others confirmed empty or backend-only.
 - **Anti-pattern identified and recorded**: AuditLogsPage, RbacPage, ChatPane status corrections were applied by editing JSON directly and restarting the server, bypassing the audit trail. Lesson: all model writes must go through `PUT /model/{layer}/{id}` ? `POST /model/admin/export` ? `assemble-model.ps1`. The copilot-instructions in this repo and in 44-eva-jp-spark already capture this rule.
 - **Gap catalog created**: `31-eva-faces/docs/ADO/20260226-to-be-cataloged.md` ? 96 missing literals (WI-9/10/12?16), 6 missing eva-roles-api endpoints, 5 screens with hollow component/hook arrays, 2 route mismatches, full provenance by project.
 - **Enhancement proposals created**: `31-eva-faces/docs/ADO/20260226-enhancements.md` ? 6 proposals (E-01 components layer, E-02 types layer, E-03 hooks layer, E-04 i18n_namespace field, E-05 SSE+mock_fixture fields, E-06 react_component_library type).
@@ -2665,12 +2665,12 @@ What is missing before flipping the switch:
 **Action to unblock today (ops only, no code change):**
 ```powershell
 # 1. Copy .env.example ? .env and fill in real values
-Copy-Item C:\AICOE\eva-foundation\37-data-model\.env.example `
-          C:\AICOE\eva-foundation\37-data-model\.env
+Copy-Item C:\eva-foundry\eva-foundation\37-data-model\.env.example `
+          C:\eva-foundry\eva-foundation\37-data-model\.env
 # 2. Edit .env: set COSMOS_URL and COSMOS_KEY
 # 3. Restart the API ? uvicorn picks up the env and routes to CosmosStore
 # 4. Run the sync script to seed all layers from disk JSON ? run from the consumer repo root:
-#    cd C:\AICOE\eva-foundation\44-eva-jp-spark
+#    cd C:\eva-foundry\eva-foundation\44-eva-jp-spark
 #    python scripts/sync-to-model.py
 # Or call the seed endpoint directly:
 #    POST http://localhost:8010/model/admin/seed
@@ -2796,5 +2796,5 @@ STORY F37-07-002: done
 <!-- eva-primed-status -->
 
 Data model: GET http://localhost:8010/model/projects/37-data-model
-29-foundry agents: C:\AICOE\eva-foundation\29-foundry\agents\
+29-foundry agents: C:\eva-foundry\eva-foundation\29-foundry\agents\
 48-eva-veritas: run audit_repo MCP tool

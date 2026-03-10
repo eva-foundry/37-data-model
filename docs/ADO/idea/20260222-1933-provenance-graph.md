@@ -81,15 +81,15 @@ Without this export:
 
 ```powershell
 # 1 — Start API (picks up both server.py and admin.py fixes)
-$env:PYTHONPATH = "C:\AICOE\eva-foundation\37-data-model"
-C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --log-level warning
+$env:PYTHONPATH = "C:\eva-foundry\eva-foundation\37-data-model"
+C:\eva-foundry\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --log-level warning
 
 # 2 — Trigger export
 Invoke-RestMethod -Method POST "http://localhost:8010/model/admin/export" `
     -Headers @{ Authorization = "Bearer dev-admin" } | ConvertTo-Json -Depth 4
 
 # 3 — Rebuild eva-model.json
-cd "C:\AICOE\eva-foundation\37-data-model"
+cd "C:\eva-foundry\eva-foundation\37-data-model"
 .\scripts\assemble-model.ps1
 
 # 4 — Validate
@@ -162,7 +162,7 @@ gives every agent and developer a single-click jump target.
 ```
 Input:  eva-model.json (or read each layer via HTTP)
 For each object with implemented_in / repo_path / component_path:
-  1. resolve path relative to C:\AICOE\eva-foundation\
+  1. resolve path relative to C:\eva-foundry\eva-foundation\
   2. open the file
   3. scan lines for the first match of:
        - endpoints: re.compile(r'@router\.(get|post|put|patch|delete)\s*\(')
@@ -369,11 +369,11 @@ Write-Host "Source:  $($ep.source_file)"
 # ── E-10 (repo_line) ─────────────────────────────────────────────────────────
 # Jump directly to the route decorator in VS Code:
 $ep = Invoke-RestMethod "http://localhost:8010/model/endpoints/GET /v1/health"
-code --goto "C:\AICOE\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
+code --goto "C:\eva-foundry\eva-foundation\$($ep.implemented_in):$($ep.repo_line)"
 
 # Same for a React component:
 $c = Invoke-RestMethod "http://localhost:8010/model/components/AdminListPage"
-code --goto "C:\AICOE\eva-foundation\$($c.repo_path):$($c.repo_line)"
+code --goto "C:\eva-foundry\eva-foundation\$($c.repo_path):$($c.repo_line)"
 
 # ── E-11 (graph / DER) ───────────────────────────────────────────────────────
 # Full graph — all edges, all layers

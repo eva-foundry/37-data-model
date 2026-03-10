@@ -19,6 +19,8 @@ repo stays generic and has no hard dependency on any consumer directory layout.
 
 | Script | Purpose |
 |--------|---------|
+| `generate-layer-metadata-index.py` | **[AUTO]** Generate `model/layer-metadata-index.json` from Cosmos DB ground truth (runs in GitHub Actions before every deployment) |
+| `generate-layer-metadata-index.ps1` | PowerShell version of metadata generator (requires Azure CLI + Key Vault access) |
 | `assemble-model.ps1` | Rebuild `model/eva-model.json` from all 27 layer JSON files |
 | `validate-model.ps1` | Cross-reference validation — reports violations and warnings |
 | `impact-analysis.ps1` | Show what breaks if a container / endpoint / screen changes |
@@ -29,3 +31,48 @@ repo stays generic and has no hard dependency on any consumer directory layout.
 | `backfill-metadata.ps1` | Backfill `created_at/by`, `modified_at/by`, `row_version` fields |
 | `ado-generate-artifacts.ps1` | Generate ADO work item import JSON from model data |
 | `add-precedence-fields.ps1` | Add `precedence` / `provision_order` fields to infra objects |
+
+---
+
+## Layer Metadata Generation (Session 45 - Automated)
+
+### Problem Solved
+**Before**: `layer-metadata-index.json` was manually maintained and went out of sync with Cosmos DB. API reported 51 operational layers when Cosmos actually had 87, causing confusion about deployment success.
+
+**After**: Metadata index is **auto-generated from Cosmos DB** before every deployment. API always returns accurate operational layer counts reflecting Cosmos reality.
+
+### How It Works
+```bash
+# Automatically runs in GitHub Actions (deploy-hardened.yml, deploy-production.yml)
+python scripts/generate-layer-metadata-index.py
+```
+
+**Process**:
+1. Queries `/model/agent-summary` (Cosmos DB ground truth)
+2. Counts objects per layer → sets `operational: true/false`
+3. Preserves existing `priority`/`category` mappings
+4. Generates new `model/layer-metadata-index.json`
+5. Backs up old version with timestamp
+
+**Output**: 111 total layers, 87 operational (as of March 10, 2026)
+
+### Manual Usage
+```bash
+# Local testing or investigation
+python scripts/generate-layer-metadata-index.py
+
+# Review changes
+git diff model/layer-metadata-index.json
+
+# Shows new layers seeded or data added since last generation
+```
+
+### Benefits
+- ✅ Always accurate (Cosmos DB is source of truth)
+- ✅ Detects changes (git diff shows what's new)
+- ✅ Evidence-based (no manual counting or guessing)
+- ✅ Zero maintenance (runs automatically)
+
+**See**: `scripts/README.md` in root (if moved) or workflow logs for generation output
+
+---

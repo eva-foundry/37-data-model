@@ -6,10 +6,10 @@
 #   3. If copilot-instructions.md exists but has no skills section reference -- patch it
 #
 # Reads project metadata from 37-data-model API (http://localhost:8010).
-# Run from: C:\AICOE\eva-foundation\37-data-model
+# Run from: C:\eva-foundry\eva-foundation\37-data-model
 # -----------------------------------------------------------------------
 Set-StrictMode -Off
-$BASE   = "C:\AICOE\eva-foundation"
+$BASE   = "C:\eva-foundry\eva-foundation"
 $API    = "http://localhost:8010"
 $TODAY  = "February 23, 2026"
 $ACTOR  = "agent:copilot-scaffold"
@@ -58,7 +58,7 @@ function New-CopilotInstructions($folder, $meta) {
 **Template Version**: 3.0.0
 **Last Updated**: $TODAY
 **Project**: $name -- $desc
-**Path**: ``C:\AICOE\eva-foundation\$folder\``
+**Path**: ``C:\eva-foundry\eva-foundation\$folder\``
 **Stack**: [TODO: language, framework, key libs]
 **Category**: $cat
 **Maturity**: $maturity
@@ -81,8 +81,8 @@ Before answering any question or writing any code:
 
 1. **Ping 37-data-model API**: ``Invoke-RestMethod http://localhost:8010/health``
    - If ``{"status":"ok"}`` use HTTP queries for all discovery (fastest)
-   - If down: ``${'`$'}env:PYTHONPATH="C:\AICOE\eva-foundation\37-data-model"; C:\AICOE\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload``
-   - If no venv: ``${'`$'}m = Get-Content C:\AICOE\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json``
+   - If down: ``${'`$'}env:PYTHONPATH="C:\eva-foundry\eva-foundation\37-data-model"; C:\eva-foundry\.venv\Scripts\python -m uvicorn api.server:app --port 8010 --reload``
+   - If no venv: ``${'`$'}m = Get-Content C:\eva-foundry\eva-foundation\37-data-model\model\eva-model.json | ConvertFrom-Json``
 
 2. **Read this project's governance docs** (in order):
    - ``README.md`` -- identity, stack, quick start
@@ -130,7 +130,7 @@ question then proceed.
 
 ### 3. EVA Data Model API -- Mandatory Protocol
 
-**Full reference**: ``C:\AICOE\eva-foundation\37-data-model\USER-GUIDE.md``
+**Full reference**: ``C:\eva-foundry\eva-foundation\37-data-model\USER-GUIDE.md``
 Read it at every sprint boundary or when a query pattern is unfamiliar.
 
 **Rule: query the model first -- never grep when the model has the answer**
@@ -167,8 +167,8 @@ Read it at every sprint boundary or when a query pattern is unfamiliar.
 ### 5. Python Environment
 
 ```
-venv exec: C:\AICOE\.venv\Scripts\python.exe
-activate:  C:\AICOE\.venv\Scripts\Activate.ps1
+venv exec: C:\eva-foundry\.venv\Scripts\python.exe
+activate:  C:\eva-foundry\.venv\Scripts\Activate.ps1
 ```
 
 Never use bare ``python`` or ``python3``. Always use the full venv path.
@@ -183,7 +183,7 @@ Never use bare ``python`` or ``python3``. Always use the full venv path.
 ### Project Identity
 
 **Name**: $name
-**Folder**: ``C:\AICOE\eva-foundation\$folder``
+**Folder**: ``C:\eva-foundry\eva-foundation\$folder``
 **ADO Epic**: $epicId
 **37-data-model record**: ``GET /model/projects/$folder``
 **Maturity**: $maturity
@@ -290,8 +290,8 @@ All must pass before merging a PR:
 
 ---
 
-*Source template*: ``C:\AICOE\eva-foundation\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md`` v3.0.0
-*EVA Data Model USER-GUIDE*: ``C:\AICOE\eva-foundation\37-data-model\USER-GUIDE.md``
+*Source template*: ``C:\eva-foundry\eva-foundation\07-foundation-layer\02-design\artifact-templates\copilot-instructions-template.md`` v3.0.0
+*EVA Data Model USER-GUIDE*: ``C:\eva-foundry\eva-foundation\37-data-model\USER-GUIDE.md``
 "@
 }
 
@@ -360,8 +360,8 @@ triggers:
 
 ---
 
-*Template source*: ``C:\AICOE\eva-foundation\07-foundation-layer``
-*Skill framework*: ``C:\AICOE\eva-foundation\02-poc-agent-skills``
+*Template source*: ``C:\eva-foundry\eva-foundation\07-foundation-layer``
+*Skill framework*: ``C:\eva-foundry\eva-foundation\02-poc-agent-skills``
 "@
 }
 

@@ -17,7 +17,7 @@
 
 ### Step 1: Commit Phase 2 Files
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 # Stage all Phase 2 files
 git add .github/workflows/sync-51-aca-evidence.yml
@@ -261,6 +261,6 @@ grep -i "FAIL" model/evidence.json
 
 **Ready?** Run:
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 git add . && git commit -m "feat: Phase 2 automation" && git push origin main
 ```

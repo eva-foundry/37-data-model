@@ -211,7 +211,7 @@ PASS -- 0 violations
 58 repo_line coverage gap(s):
   [WARN] repo_line backfill needed (non-blocking)
 
-Assembled: C:\AICOE\eva-foundry\37-data-model\model/eva-model.json
+Assembled: C:\eva-foundry\37-data-model\model/eva-model.json
 Layers populated: 35 / 38
   [OK] agent_policies   4 items
   [OK] quality_gates    4 items

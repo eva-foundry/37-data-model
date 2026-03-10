@@ -3,7 +3,7 @@
 #   1. All new endpoints need cosmos_reads=[] and cosmos_writes=[]
 #   2. 7 endpoints referenced in new screens were not yet registered
 #
-# Run from: C:\AICOE\eva-foundation\37-data-model
+# Run from: C:\eva-foundry\eva-foundation\37-data-model
 # Safe to re-run — PUTs are idempotent (increments row_version).
 
 param([string]$Base = "http://localhost:8010", [string]$AdminToken = "dev-admin")

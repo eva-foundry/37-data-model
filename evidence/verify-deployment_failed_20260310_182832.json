@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-03-10T21:28:32.735911Z",
+  "operation": "verify-deployment",
+  "status": "failed",
+  "metrics": {
+    "error": "Evidence 2 not found"
+  }
+}

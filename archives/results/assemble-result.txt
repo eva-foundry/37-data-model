@@ -1,8 +1,8 @@
 Drive already SUBSTed
 ]633;P;IsWindows=TrueEVA Data Model - Assembler
-Root: C:\AICOE\eva-foundation\37-data-model
+Root: C:\eva-foundry\eva-foundation\37-data-model
 
-Assembled: C:\AICOE\eva-foundation\37-data-model\model/eva-model.json
+Assembled: C:\eva-foundry\eva-foundation\37-data-model\model/eva-model.json
 Layers populated: 27 / 27
   [OK] agents           4 items
   [OK] components       32 items

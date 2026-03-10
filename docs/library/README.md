@@ -187,8 +187,8 @@ No Mermaid. No emoji. ASCII only. Printable.
   Graph view of all layers             GET /model/graph/
 
   Start API if down:
-    $env:PYTHONPATH="C:\AICOE\eva-foundation\37-data-model"
-    C:\AICOE\.venv\Scripts\python.exe -m uvicorn api.server:app --port 8010
+    $env:PYTHONPATH="C:\eva-foundry\eva-foundation\37-data-model"
+    C:\eva-foundry\.venv\Scripts\python.exe -m uvicorn api.server:app --port 8010
 
   Health check: Invoke-RestMethod http://localhost:8010/health
   Export:       Invoke-RestMethod http://localhost:8010/model/admin/export

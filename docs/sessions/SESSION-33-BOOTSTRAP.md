@@ -45,7 +45,7 @@ Implement Story F37-11-010 Task 2: Application Insights monitoring for the data 
 
 **Option 1: Full Automation (Recommended)**
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\scripts\optimize-datamodel-infra.ps1 -ApplyOpt -AddAppInsights
 ```
 
@@ -118,7 +118,7 @@ $summary | Select-Object total_layers, total_objects
 ### Deploy Infrastructure Scripts
 ```powershell
 # Quick minReplicas fix (if needed again)
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\scripts\quick-fix-minreplicas.ps1
 
 # Full orchestration with monitoring

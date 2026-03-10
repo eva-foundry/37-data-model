@@ -97,7 +97,7 @@ Write-Host "✓ All API access verified"
 ### Test L42: Infrastructure Sync
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model\scripts
+cd C:\eva-foundry\37-data-model\scripts
 
 # Ensure logged in as yourself (not service principal)
 az account show
@@ -139,7 +139,7 @@ curl "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azureco
 ### Add Workflow and Commit
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 
 git status  # Should show workflow file as untracked
 

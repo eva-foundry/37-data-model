@@ -80,7 +80,7 @@
       "deciders": ["marco.presta"],
       "tags": ["veritas", "mti", "quality"],
       "related_wbs_ids": ["F37-10-001"],
-      "evidence_path": "C:/AICOE/eva-foundation/48-eva-veritas/src/lib/trust.js",
+      "evidence_path": "C:/eva-foundry/eva-foundation/48-eva-veritas/src/lib/trust.js",
       "notes": "Activated when story_ids stamped on endpoints. Currently falls back to 3-component (MTI=86 local)."
     }
   ]

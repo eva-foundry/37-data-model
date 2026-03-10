@@ -207,7 +207,7 @@ COMPLETED_AT (optional, agent-provided):
  HOW TO RECORD EVIDENCE -- PYTHON LIBRARY
 --------------------------------------------------------------------------------
 
-Location: C:\AICOE\eva-foundry\37-data-model\.github\scripts\evidence_generator.py
+Location: C:\eva-foundry\37-data-model\.github\scripts\evidence_generator.py
 Import pattern (add to sys.path or copy to project):
 
   from pathlib import Path
@@ -327,11 +327,11 @@ QUERY 6: All evidence with correlation ID (full sprint tracing)
   GET /model/evidence/?correlation_id=ui-overhaul-wave-2
 
 QUERY 7: Using the query tool (CLI)
-  pwsh -File C:\AICOE\eva-foundry\37-data-model\scripts\evidence_query.py \
+  pwsh -File C:\eva-foundry\37-data-model\scripts\evidence_query.py \
       --sprint 51-ACA-sprint-1 \
       --format table
 
-  pwsh -File C:\AICOE\eva-foundry\37-data-model\scripts\evidence_query.py \
+  pwsh -File C:\eva-foundry\37-data-model\scripts\evidence_query.py \
       --phase D3 \
       --test-fail \
       --format json
@@ -341,7 +341,7 @@ QUERY 7: Using the query tool (CLI)
 --------------------------------------------------------------------------------
 
 VALIDATION SCRIPT:
-  Location: C:\AICOE\eva-foundry\37-data-model\scripts\evidence_validate.ps1
+  Location: C:\eva-foundry\37-data-model\scripts\evidence_validate.ps1
 
   Run in CI/CD:
     pwsh -File evidence_validate.ps1

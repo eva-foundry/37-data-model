@@ -3,7 +3,7 @@ import urllib.request
 import urllib.error
 
 BASE = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
-OUT = r"C:\AICOE\commit-result.txt"
+OUT = r"C:\eva-foundry\commit-result.txt"
 
 # write startup marker immediately so we know the script ran
 with open(OUT, "w", encoding="ascii") as _sf:

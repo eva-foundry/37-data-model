@@ -5,7 +5,7 @@
   Run AFTER the WBS schema (id=WBS) has been PUT to /model/schemas/WBS.
 
 .USAGE
-  & 'C:\AICOE\eva-foundation\37-data-model\scripts\patch-wbs-pm-fields.ps1'
+  & 'C:\eva-foundry\eva-foundation\37-data-model\scripts\patch-wbs-pm-fields.ps1'
 #>
 
 $base    = "http://localhost:8010/model/wbs"

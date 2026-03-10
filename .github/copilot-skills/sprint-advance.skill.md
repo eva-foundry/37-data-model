@@ -32,8 +32,8 @@ Never skip a phase. Never start Phase 4 before Phase 2 is clean.
 ### 1.1 Run pytest gate
 
 ```powershell
-Set-Location C:\AICOE\eva-foundry\37-data-model
-C:\AICOE\.venv\Scripts\python.exe -m pytest tests/ -x -q --tb=short 2>&1
+Set-Location C:\eva-foundry\37-data-model
+C:\eva-foundry\.venv\Scripts\python.exe -m pytest tests/ -x -q --tb=short 2>&1
 # REQUIRED: exits 0.  If non-zero: fix failures BEFORE advancing.
 ```
 
@@ -42,8 +42,8 @@ Record the test count. Write to STATUS.md under "Test count: N passing."
 ### 1.2 Run veritas full audit
 
 ```powershell
-$repo = "C:\AICOE\eva-foundry\37-data-model"
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo $repo --warn-only 2>&1 |
+$repo = "C:\eva-foundry\37-data-model"
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo $repo --warn-only 2>&1 |
     Tee-Object "$repo\veritas-audit-out.txt" | Select-Object -Last 30
 Write-Host AUDIT_DONE
 ```
@@ -94,8 +94,8 @@ if (-not $h) {
     $base = "http://localhost:8010"
     $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
     if (-not $h) {
-        $env:PYTHONPATH = "C:\AICOE\eva-foundry\37-data-model"
-        Start-Process "C:\AICOE\.venv\Scripts\python.exe" `
+        $env:PYTHONPATH = "C:\eva-foundry\37-data-model"
+        Start-Process "C:\eva-foundry\.venv\Scripts\python.exe" `
             "-m uvicorn api.server:app --port 8010 --reload" -WindowStyle Hidden
         Start-Sleep 4
     }
@@ -115,7 +115,7 @@ Write-Host "total=$($s.total)"
 ### 2.3 Run veritas-plan story dump -- find all undone stories
 
 ```powershell
-$vp = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
+$vp = Get-Content C:\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
 foreach ($feat in $vp.features) {
     $undone = $feat.stories | Where-Object { -not $_.done }
     if ($undone) {
@@ -169,8 +169,8 @@ Add "Status: DONE" on the line after the story title block header.
 Then reseed:
 
 ```powershell
-C:\AICOE\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
-C:\AICOE\.venv\Scripts\python.exe scripts/reflect-ids.py
+C:\eva-foundry\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
+C:\eva-foundry\.venv\Scripts\python.exe scripts/reflect-ids.py
 ```
 
 Verify the count increased:
@@ -250,13 +250,13 @@ Never use gpt-4o-mini for: saga merge, cascade engine, graph traversal, Cosmos w
 ### 4.4 Run the manifest generator
 
 ```powershell
-Set-Location C:\AICOE\eva-foundry\37-data-model
+Set-Location C:\eva-foundry\37-data-model
 
 # List undone stories to confirm final selection
-C:\AICOE\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py --list-undone
+C:\eva-foundry\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py --list-undone
 
 # Generate the manifest (replace with actual story IDs for next FK sprint)
-C:\AICOE\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py `
+C:\eva-foundry\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py `
     --sprint 01 `
     --name "fk-phase1a-store" `
     --stories F37-FK-101,F37-FK-102,F37-FK-103,F37-FK-104 `
@@ -342,7 +342,7 @@ foreach ($id in @("F37-FK-001","F37-FK-002","F37-FK-003")) {
 ### 5.4 Create the GitHub issue
 
 ```powershell
-Set-Location C:\AICOE\eva-foundry\37-data-model
+Set-Location C:\eva-foundry\37-data-model
 gh issue create `
     --repo eva-foundry/37-data-model `
     --title "[SPRINT-NN] fk-phaseXX-name" `
@@ -365,7 +365,7 @@ gh label create "sprint-task" --repo eva-foundry/37-data-model --color "0075ca" 
 ### After issue is created, before any other work:
 
 ```powershell
-Set-Location C:\AICOE\eva-foundry\37-data-model
+Set-Location C:\eva-foundry\37-data-model
 
 # 1. Commit the manifest file
 git add .github/sprints/sprint-NN-<name>.md
@@ -421,26 +421,26 @@ See [FK-ENHANCEMENT-EXECUTION-PLAN-2026-03-01.md](../docs/FK-ENHANCEMENT-EXECUTI
 
 ```powershell
 # Run full audit
-node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\AICOE\eva-foundry\37-data-model --warn-only
+node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo C:\eva-foundry\37-data-model --warn-only
 
 # Check MTI
-(Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json).mti
+(Get-Content C:\eva-foundry\37-data-model\.eva\trust.json | ConvertFrom-Json).mti
 
 # List undone stories grouped by epic
-$vp = Get-Content C:\AICOE\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
+$vp = Get-Content C:\eva-foundry\37-data-model\.eva\veritas-plan.json | ConvertFrom-Json
 foreach ($f in $vp.features) {
     $u = $f.stories | Where-Object { -not $_.done }
     if ($u) { Write-Host "$($f.id): $($u.Count) undone" }
 }
 
 # Reseed after PLAN.md change
-C:\AICOE\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
+C:\eva-foundry\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
 
 # Reflect IDs into PLAN.md
-C:\AICOE\.venv\Scripts\python.exe scripts/reflect-ids.py
+C:\eva-foundry\.venv\Scripts\python.exe scripts/reflect-ids.py
 
 # Generate sprint manifest
-C:\AICOE\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py --sprint NN --name "name" `
+C:\eva-foundry\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py --sprint NN --name "name" `
     --stories F37-FK-NNN,F37-FK-NNN
 
 # Create GitHub issue

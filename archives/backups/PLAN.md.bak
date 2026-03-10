@@ -186,7 +186,7 @@ At the close of every sprint, run `sync-from-source.ps1`. This script compares
 the model to live source files and reports drift.
 
 ```powershell
-Set-Location C:\AICOE\eva-foundation\37-data-model
+Set-Location C:\eva-foundry\eva-foundation\37-data-model
 .\scripts\sync-from-source.ps1
 ```
 

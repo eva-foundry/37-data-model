@@ -77,6 +77,35 @@ jobs:
           CURRENT_SUB=$(az account show --query name -o tsv)
           echo "✓ Current subscription: ${CURRENT_SUB}"
 
+      - name: Generate layer-metadata-index.json from Cosmos DB
+        run: |
+          echo "🔄 Generating layer-metadata-index.json from live Cosmos DB data..."
+          python3 scripts/generate-layer-metadata-index.py
+          
+          if [ $? -eq 0 ]; then
+            echo "✓ Metadata index generated successfully"
+            
+            # Show summary
+            TOTAL_LAYERS=$(jq '.total_layers' model/layer-metadata-index.json)
+            OPERATIONAL=$(jq '.operational_layers' model/layer-metadata-index.json)
+            GENERATED_AT=$(jq -r '.generated_at' model/layer-metadata-index.json)
+            
+            echo "  Total layers: ${TOTAL_LAYERS}"
+            echo "  Operational: ${OPERATIONAL}"
+            echo "  Generated at: ${GENERATED_AT}"
+            
+            # Commit changes if any
+            if git diff --quiet model/layer-metadata-index.json; then
+              echo "  No changes detected"
+            else
+              echo "⚠️  Metadata index changed - new layers detected in Cosmos DB!"
+              git diff --stat model/layer-metadata-index.json
+            fi
+          else
+            echo "❌ Failed to generate metadata index"
+            exit 1
+          fi
+
       - name: Build Docker image in ACR
         id: build
         run: |

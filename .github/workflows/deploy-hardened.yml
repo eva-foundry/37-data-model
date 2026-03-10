@@ -1,0 +1,549 @@
+name: Deploy Data Model (Evidence-Based)
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+        default: dev
+      skip_seed:
+        description: 'Skip seed operation (use existing data)'
+        type: boolean
+        default: false
+
+env:
+  REGISTRY: msubsandacr.azurecr.io
+  IMAGE_NAME: eva/eva-data-model
+  RESOURCE_GROUP: EVA-Sandbox-dev
+  CONTAINER_APP: msub-eva-data-model
+  API_URL: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
+  KEY_VAULT_NAME: msubsandkv202603031449
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  # ==========================================================================
+  # Stage 0: Pre-flight Checks
+  # ==========================================================================
+  preflight:
+    name: Pre-flight Checks
+    runs-on: ubuntu-latest
+    outputs:
+      api_healthy: ${{ steps.health.outputs.healthy }}
+      model_files_count: ${{ steps.files.outputs.count }}
+      admin_token: ${{ steps.secrets.outputs.admin_token }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check model directory
+        id: files
+        working-directory: 37-data-model
+        run: |
+          if [ ! -d "model" ]; then
+            echo "[FAIL] model/ directory not found"
+            exit 1
+          fi
+          
+          FILE_COUNT=$(ls model/*.json 2>/dev/null | wc -l)
+          
+          if [ "$FILE_COUNT" -eq 0 ]; then
+            echo "[FAIL] No JSON files found in model/"
+            exit 1
+          fi
+          
+          echo "count=${FILE_COUNT}" >> $GITHUB_OUTPUT
+          echo "[PASS] Found $FILE_COUNT JSON files"
+      
+      - name: Test Azure credentials
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Verify Azure resources exist
+        run: |
+          # Check ACR exists
+          az acr show --name msubsandacr --query "name" -o tsv > /dev/null
+          echo "[PASS] ACR accessible"
+          
+          # Check Container App exists
+          az containerapp show \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query "name" -o tsv > /dev/null
+          echo "[PASS] Container App exists"
+      
+      - name: Test API health
+        id: health
+        run: |
+          echo "Testing API health..."
+          
+          RESPONSE=$(curl -sf "${{ env.API_URL }}/health" --max-time 5)
+          
+          if [ $? -ne 0 ]; then
+            echo "[WARN] API currently unreachable (will be deployed)"
+            echo "healthy=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          STATUS=$(echo "$RESPONSE" | jq -r '.status')
+          STORE=$(echo "$RESPONSE" | jq -r '.store')
+          
+          echo "[PASS] API healthy"
+          echo "  Status: $STATUS"
+          echo "  Store: $STORE"
+          echo "healthy=true" >> $GITHUB_OUTPUT
+      
+      - name: Retrieve secrets from Key Vault
+        id: secrets
+        run: |
+          echo "Retrieving secrets from ${{ env.KEY_VAULT_NAME }}..."
+          
+          # Retrieve ADMIN_TOKEN
+          ADMIN_TOKEN=$(az keyvault secret show \
+            --vault-name ${{ env.KEY_VAULT_NAME }} \
+            --name admin-token \
+            --query value -o tsv)
+          
+          if [ -z "$ADMIN_TOKEN" ]; then
+            echo "[FAIL] admin-token not found in Key Vault"
+            exit 1
+          fi
+          
+          # Mask token in logs
+          echo "::add-mask::$ADMIN_TOKEN"
+          echo "admin_token=$ADMIN_TOKEN" >> $GITHUB_OUTPUT
+          
+          echo "[PASS] Secrets retrieved from Key Vault"
+      
+      - name: Summary
+        run: |
+          echo "Pre-flight checks complete:"
+          echo "  Model files: ${{ steps.files.outputs.count }}"
+          echo "  Azure access: OK"
+          echo "  API health: ${{ steps.health.outputs.healthy }}"
+          echo "  Key Vault: ${{ env.KEY_VAULT_NAME }}"
+
+  # ==========================================================================
+  # Stage 1: Count Source Records (Evidence 1)
+  # ==========================================================================
+  count-source:
+    needs: preflight
+    name: Count Source Records
+    runs-on: ubuntu-latest
+    outputs:
+      total_records: ${{ steps.count.outputs.total }}
+      total_layers: ${{ steps.count.outputs.layers }}
+      timestamp: ${{ steps.count.outputs.timestamp }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Count source records
+        id: count
+        working-directory: 37-data-model
+        run: |
+          python3 scripts/count-source-records.py
+          
+          # Extract values from evidence file
+          TOTAL=$(jq -r '.total_records' evidence/01-expected-records.json)
+          LAYERS=$(jq -r '.total_layers' evidence/01-expected-records.json)
+          TIMESTAMP=$(jq -r '.timestamp' evidence/01-expected-records.json)
+          
+          echo "total=${TOTAL}" >> $GITHUB_OUTPUT
+          echo "layers=${LAYERS}" >> $GITHUB_OUTPUT
+          echo "timestamp=${TIMESTAMP}" >> $GITHUB_OUTPUT
+          
+          echo "[INFO] Expected: $LAYERS layers, $TOTAL records"
+      
+      - name: Upload Evidence 1
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-expected
+          path: 37-data-model/evidence/01-expected-records.json
+          retention-days: 90
+
+  # ==========================================================================
+  # Stage 2: Build Container Image
+  # ==========================================================================
+  build:
+    name: Build Container Image
+    needs: [preflight, count-source]
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag: ${{ steps.tag.outputs.tag }}
+      correlation_id: ${{ steps.tag.outputs.correlation_id }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Generate image tag
+        id: tag
+        run: |
+          TAG=$(date +%Y%m%d-%H%M)
+          CORRELATION_ID="DATA-MODEL-${TAG}-${{ github.run_id }}"
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "correlation_id=${CORRELATION_ID}" >> $GITHUB_OUTPUT
+          echo "[INFO] Image: ${TAG}, Correlation: ${CORRELATION_ID}"
+      
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Generate layer-metadata-index.json from Cosmos DB
+        working-directory: 37-data-model
+        run: |
+          echo "[INFO] Generating layer-metadata-index.json from live Cosmos DB data..."
+          python3 scripts/generate-layer-metadata-index.py
+          
+          if [ $? -eq 0 ]; then
+            echo "[PASS] Metadata index generated successfully"
+            
+            # Show summary
+            TOTAL_LAYERS=$(jq '.total_layers' model/layer-metadata-index.json)
+            OPERATIONAL=$(jq '.operational_layers' model/layer-metadata-index.json)
+            GENERATED_AT=$(jq -r '.generated_at' model/layer-metadata-index.json)
+            
+            echo "[INFO] Total layers: ${TOTAL_LAYERS}"
+            echo "[INFO] Operational: ${OPERATIONAL}"
+            echo "[INFO] Generated at: ${GENERATED_AT}"
+          else
+            echo "[FAIL] Failed to generate metadata index"
+            exit 1
+          fi
+      
+      - name: Build and push to ACR
+        working-directory: 37-data-model
+        run: |
+          az acr login --name msubsandacr
+          
+          IMAGE=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}
+          
+          docker build -t $IMAGE .
+          docker push $IMAGE
+          
+          echo "[PASS] Image pushed: $IMAGE"
+
+  # ==========================================================================
+  # Stage 3: Deploy to Azure Container Apps
+  # ==========================================================================
+  deploy:
+    name: Deploy to ACA
+    needs: [preflight, count-source, build]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      
+      - name: Update Container App
+        run: |
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.build.outputs.image_tag }}
+          
+          echo "[PASS] Container updated"
+      
+      - name: Wait for healthy
+        timeout-minutes: 3
+        run: |
+          echo "Waiting for container to become healthy..."
+          
+          for i in {1..36}; do
+            if curl -sf "${{ env.API_URL }}/health" | jq -e '.status == "ok"' > /dev/null; then
+              echo "[PASS] Container healthy"
+              exit 0
+            fi
+            echo "Attempt $i/36..."
+            sleep 5
+          done
+          
+          echo "[FAIL] Health check timeout"
+          exit 1
+
+  # ==========================================================================
+  # Stage 4: Seed Cosmos DB
+  # ==========================================================================
+  seed:
+    name: Seed Cosmos DB
+    needs: [preflight, deploy]
+    runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_seed }}
+    
+    steps:
+      - name: Seed operation
+        id: seed
+        run: |
+          echo "Starting seed operation..."
+          
+          RESPONSE=$(curl -X POST "${{ env.API_URL }}/model/admin/seed" \
+            -H "Authorization: Bearer ${{ needs.preflight.outputs.admin_token }}" \
+            -H "Content-Type: application/json" \
+            --max-time 300 \
+            --fail \
+            --silent \
+            --show-error)
+          
+          echo "$RESPONSE" | jq .
+          
+          # Check for errors
+          ERRORS=$(echo "$RESPONSE" | jq '.errors | length')
+          TOTAL=$(echo "$RESPONSE" | jq -r '.total')
+          
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "[FAIL] Seed operation completed with $ERRORS errors"
+            echo "$RESPONSE" | jq '.errors'
+            exit 1
+          fi
+          
+          echo "[PASS] Seed completed: $TOTAL records"
+      
+      - name: Upload seed response
+        if: always()
+        run: |
+          echo "${{ steps.seed.outputs.response }}" > seed-response.json
+      
+      - name: Upload seed evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: seed-response
+          path: seed-response.json
+
+  # ==========================================================================
+  # Stage 5: Count Cosmos Records (Evidence 2)
+  # ==========================================================================
+  count-cosmos:
+    name: Count Cosmos Records
+    needs: seed
+    runs-on: ubuntu-latest
+    outputs:
+      total_records: ${{ steps.count.outputs.total }}
+      total_layers: ${{ steps.count.outputs.layers }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: pip install requests
+      
+      - name: Download Evidence 1
+        uses: actions/download-artifact@v4
+        with:
+          name: evidence-expected
+          path: 37-data-model/evidence
+      
+      - name: Count Cosmos records
+        id: count
+        working-directory: 37-data-model
+        run: |
+          python3 scripts/count-cosmos-records.py
+          
+          # Extract values
+          TOTAL=$(jq -r '.total_records' evidence/02-actual-records.json)
+          LAYERS=$(jq -r '.total_layers' evidence/02-actual-records.json)
+          
+          echo "total=${TOTAL}" >> $GITHUB_OUTPUT
+          echo "layers=${LAYERS}" >> $GITHUB_OUTPUT
+          
+          echo "[INFO] Actual: $LAYERS layers, $TOTAL records"
+      
+      - name: Upload Evidence 2
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-actual
+          path: 37-data-model/evidence/02-actual-records.json
+          retention-days: 90
+
+  # ==========================================================================
+  # Stage 6: Verify Deployment
+  # ==========================================================================
+  verify:
+    name: Verify Deployment
+    needs: [count-source, count-cosmos]
+    runs-on: ubuntu-latest
+    outputs:
+      verdict: ${{ steps.verify.outputs.verdict }}
+      pass_rate: ${{ steps.verify.outputs.pass_rate }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: Download all evidence
+        uses: actions/download-artifact@v4
+        with:
+          path: 37-data-model/evidence
+      
+      - name: Move evidence files
+        working-directory: 37-data-model/evidence
+        run: |
+          mv evidence-expected/01-expected-records.json .
+          mv evidence-actual/02-actual-records.json .
+      
+      - name: Run verification
+        id: verify
+        working-directory: 37-data-model
+        run: |
+          python3 scripts/verify-deployment.py
+          EXIT_CODE=$?
+          
+          # Extract verdict
+          VERDICT=$(jq -r '.verdict' evidence/03-verification-result.json)
+          PASS_RATE=$(jq -r '.pass_rate' evidence/03-verification-result.json)
+          
+          echo "verdict=${VERDICT}" >> $GITHUB_OUTPUT
+          echo "pass_rate=${PASS_RATE}" >> $GITHUB_OUTPUT
+          
+          if [ "$EXIT_CODE" -ne 0 ]; then
+            echo "[FAIL] Verification failed"
+            exit 1
+          fi
+          
+          echo "[PASS] Verification successful"
+      
+      - name: Upload verification result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verification-result
+          path: 37-data-model/evidence/03-verification-result.json
+          retention-days: 90
+
+  # ==========================================================================
+  # Stage 7: Record Evidence
+  # ==========================================================================
+  record-evidence:
+    name: Record Evidence
+    needs: [build, verify]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download verification result
+        uses: actions/download-artifact@v4
+        with:
+          name: verification-result
+          path: evidence
+      
+      - name: Create deployment evidence
+        run: |
+          TIMESTAMP=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          
+          mkdir -p .eva/evidence
+          
+          cat > .eva/evidence/deployment-${{ github.run_id }}.json <<EOF
+          {
+            "deployment_id": "${{ needs.build.outputs.correlation_id }}",
+            "timestamp": "$TIMESTAMP",
+            "github_run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "image_tag": "${{ needs.build.outputs.image_tag }}",
+            "environment": "${{ inputs.environment }}",
+            "stages": {
+              "build": "${{ needs.build.result }}",
+              "deploy": "${{ needs.deploy.result }}",
+              "seed": "${{ needs.seed.result }}",
+              "verify": "${{ needs.verify.result }}"
+            },
+            "verification": {
+              "verdict": "${{ needs.verify.outputs.verdict }}",
+              "pass_rate": ${{ needs.verify.outputs.pass_rate }}
+            },
+            "data": {
+              "expected_layers": ${{ needs.count-source.outputs.total_layers }},
+              "expected_records": ${{ needs.count-source.outputs.total_records }},
+              "actual_layers": ${{ needs.count-cosmos.outputs.total_layers }},
+              "actual_records": ${{ needs.count-cosmos.outputs.total_records }}
+            }
+          }
+          EOF
+          
+          echo "[PASS] Evidence recorded"
+      
+      - name: Commit evidence
+        continue-on-error: true
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+          git add .eva/evidence/
+          git commit -m "evidence: deployment ${{ needs.build.outputs.correlation_id }}" || echo "No changes"
+          git push || echo "Push failed"
+
+  # ==========================================================================
+  # Stage 8: Update Documentation (only if PASS)
+  # ==========================================================================
+  update-docs:
+    name: Update Documentation
+    needs: [count-cosmos, verify]
+    runs-on: ubuntu-latest
+    if: needs.verify.outputs.verdict == 'PASS'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Update docs with verified numbers
+        working-directory: 37-data-model
+        run: |
+          LAYERS=${{ needs.count-cosmos.outputs.total_layers }}
+          RECORDS=${{ needs.count-cosmos.outputs.total_records }}
+          
+          echo "[INFO] Updating documentation:"
+          echo "  Layers: $LAYERS"
+          echo "  Records: $RECORDS"
+          
+          # Update README.md
+          sed -i "s/XX operational layers/$LAYERS operational layers/g" README.md || true
+          sed -i "s/XXXX records/$RECORDS records/g" README.md || true
+          
+          # Update STATUS.md
+          sed -i "s/XX operational layers/$LAYERS operational layers/g" STATUS.md || true
+          
+          echo "[PASS] Documentation updated"
+      
+      - name: Commit documentation
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+          git add 37-data-model/README.md 37-data-model/STATUS.md
+          git commit -m "docs: update to ${{ needs.count-cosmos.outputs.total_layers }} layers (verified)" || echo "No changes"
+          git push || echo "Push failed"

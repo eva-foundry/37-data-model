@@ -50,7 +50,7 @@ Step D.3 -- Check data model health
   Invoke-RestMethod "$base/model/agent-summary" | Select-Object total
 
 Step D.4 -- Run Veritas audit to get the true progress baseline
-  node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo . --warn-only 2>&1 | Select-Object -Last 20
+  node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo . --warn-only 2>&1 | Select-Object -Last 20
 
 Step D.5 -- Write the Session Brief (one paragraph):
   Active phase, current MTI, last test count, next undone story, open blockers.
@@ -69,11 +69,11 @@ Step P.1 -- Add / update stories in PLAN.md if needed
   OLD format only -- IDs will be added by reflect-ids.py in step P.3.
 
 Step P.2 -- Reseed veritas
-  C:\AICOE\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
+  C:\eva-foundry\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
   Expected: "[PASS] N objects written | DB active total: M"
 
 Step P.3 -- Reflect IDs back into PLAN.md  (THE CRITICAL STEP)
-  C:\AICOE\.venv\Scripts\python.exe scripts/reflect-ids.py
+  C:\eva-foundry\.venv\Scripts\python.exe scripts/reflect-ids.py
   Expected: "[PASS] Annotated N story lines in PLAN.md"
   After this step every story line looks like:
     Story 2.5.4 [F37-02-017]  As the system, after mark_collection_complete...
@@ -81,11 +81,11 @@ Step P.3 -- Reflect IDs back into PLAN.md  (THE CRITICAL STEP)
   Commit PLAN.md + veritas-plan.json together.
 
 Step P.4 -- Browse undone stories
-  C:\AICOE\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py --list-undone
+  C:\eva-foundry\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py --list-undone
   Find the next unchecked story or group of stories for this sprint.
 
 Step P.5 -- Generate sprint manifest
-  C:\AICOE\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py `
+  C:\eva-foundry\.venv\Scripts\python.exe scripts/gen-sprint-manifest.py `
     --sprint 02 `
     --name "fk-phase0" `
     --stories F37-FK-001,F37-FK-002,F37-FK-003 `
@@ -146,11 +146,11 @@ C -- CHECK
 Purpose: verify the work before merging.
 
 Step C.1 -- Run tests
-  C:\AICOE\.venv\Scripts\python.exe -m pytest tests/ -x -q 2>&1
+  C:\eva-foundry\.venv\Scripts\python.exe -m pytest tests/ -x -q 2>&1
   Must exit 0.
 
 Step C.2 -- Run Veritas audit
-  node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo . 2>&1 | Select-Object -Last 20
+  node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo . 2>&1 | Select-Object -Last 20
   MTI must be >= 95 (production gate -- data model is foundational infrastructure).
   Check trust.json: "no-deploy" flag must not be present.
 
@@ -184,8 +184,8 @@ Step A.1 -- Mark done stories in PLAN.md
   OR add F37-NN-NNN to the "Story ID Roster" section.
 
 Step A.2 -- Reseed + reflect
-  C:\AICOE\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
-  C:\AICOE\.venv\Scripts\python.exe scripts/reflect-ids.py
+  C:\eva-foundry\.venv\Scripts\python.exe scripts/seed-from-plan.py --reseed-model
+  C:\eva-foundry\.venv\Scripts\python.exe scripts/reflect-ids.py
   Veritas will now show those stories as done=true.
 
 Step A.3 -- Update STATUS.md
@@ -374,8 +374,8 @@ Session 41 spanned 6 hours with 4 memory checkpoints:
 | Reflect IDs | python scripts/reflect-ids.py |
 | Browse undone | python scripts/gen-sprint-manifest.py --list-undone |
 | Generate manifest | python scripts/gen-sprint-manifest.py --sprint NN --name X --stories F37-NN-NNN,... |
-| Run tests | C:\AICOE\.venv\Scripts\python.exe -m pytest tests/ -x -q |
-| Veritas audit | node C:\AICOE\eva-foundry\48-eva-veritas\src\cli.js audit --repo . |
+| Run tests | C:\eva-foundry\.venv\Scripts\python.exe -m pytest tests/ -x -q |
+| Veritas audit | node C:\eva-foundry\48-eva-veritas\src\cli.js audit --repo . |
 | Validate model | Invoke-RestMethod "$base/model/admin/validate" -Headers @{"Authorization"="Bearer dev-admin"} |
 | Create issue | gh issue create --repo eva-foundry/37-data-model --title "[SPRINT-NN] ..." --body-file ... --label sprint-task |
 | Trigger review | gh issue edit <N> --add-label sonnet-review --repo eva-foundry/37-data-model |

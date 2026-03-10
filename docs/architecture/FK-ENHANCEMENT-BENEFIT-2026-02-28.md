@@ -264,7 +264,7 @@ az pipelines run --name "sprint-02-deploy"
 $scenario = Invoke-RestMethod "$base/model/scenarios/create" -Method POST -Body '{"name":"sprint-02","base_version":"main@v676"}'
 
 # 2. Auto-populate scenario from PLAN.md (new script)
-pwsh -File "C:\AICOE\eva-foundry\51-ACA\scripts\sync-sprint-to-scenario.ps1" -SprintId "51-ACA-sprint-02" -ScenarioId $scenario.id
+pwsh -File "C:\eva-foundry\51-ACA\scripts\sync-sprint-to-scenario.ps1" -SprintId "51-ACA-sprint-02" -ScenarioId $scenario.id
 
 # 3. Validate (impact analysis)
 $validation = Invoke-RestMethod "$base/model/scenarios/$($scenario.id)/validate" -Method POST

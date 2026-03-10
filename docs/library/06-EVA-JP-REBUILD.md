@@ -2,7 +2,7 @@
  EVA-JP-v1.2 FRONTEND REBUILD
  File: docs/library/06-EVA-JP-REBUILD.md
  Updated: 2026-02-24
- Source: C:\AICOE\EVA-JP-v1.2 (production app being migrated)
+ Source: C:\eva-foundry\EVA-JP-v1.2 (production app being migrated)
 ================================================================================
 
 THE CRITICAL CONTEXT
@@ -34,7 +34,7 @@ These two tracks run in PARALLEL:
   Backend:    FastAPI (app/backend/) + Azure Functions (functions/)
   RAG corpus: JP decisions indexed in Azure AI Search (vector + semantic)
   Auth:       Azure AD (Entra ID) -- group-based RBAC
-  Repo:       C:\AICOE\EVA-JP-v1.2
+  Repo:       C:\eva-foundry\EVA-JP-v1.2
   Base:       Forked from microsoft/PubSec-Info-Assistant (heavily customized)
 
   ROUTES (HashRouter)
@@ -58,8 +58,8 @@ These two tracks run in PARALLEL:
  REBUILD SPECIFICATION
 --------------------------------------------------------------------------------
 
-  PRD:          C:\AICOE\EVA-JP-v1.2\PRD-REBUILD-FLUENT-V9.md
-  Spec JSON:    C:\AICOE\EVA-JP-v1.2\eva-jp-rebuild-spec.json   (631 lines)
+  PRD:          C:\eva-foundry\EVA-JP-v1.2\PRD-REBUILD-FLUENT-V9.md
+  Spec JSON:    C:\eva-foundry\EVA-JP-v1.2\eva-jp-rebuild-spec.json   (631 lines)
   Version:      1.0 -- February 22, 2026
 
   TECHNOLOGY TARGETS
@@ -312,14 +312,14 @@ Blocking dependencies (must be v9 clean before Chat can be done):
   1. Read PRD-REBUILD-FLUENT-V9.md for ground rules (5 min)
   2. Read eva-jp-rebuild-spec.json for the component/screen you are working on
   3. Check the status table above to pick the right target
-  4. Run: cd C:\AICOE\EVA-JP-v1.2\app\frontend && npm run dev
+  4. Run: cd C:\eva-foundry\EVA-JP-v1.2\app\frontend && npm run dev
      (hot-reload server -- vite)
   5. Focus on ONE component or ONE screen per session
   6. After each file: grep for @fluentui/react[^-] -- must return 0 matches
   7. Update status table in this file when a component/screen reaches DONE
 
   Start API (backend):
-    cd C:\AICOE\EVA-JP-v1.2
-    C:\AICOE\.venv\Scripts\python -m uvicorn app.backend.main:app --port 5000
+    cd C:\eva-foundry\EVA-JP-v1.2
+    C:\eva-foundry\.venv\Scripts\python -m uvicorn app.backend.main:app --port 5000
 
 ================================================================================

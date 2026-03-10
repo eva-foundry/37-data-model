@@ -35,7 +35,7 @@ Three scripts have been created to fix this issue:
 
 ```powershell
 # Usage (recommended approach):
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\scripts\quick-fix-minreplicas.ps1
 ```
 
@@ -97,14 +97,14 @@ az deployment group create `
 ### Option A: Quick Fix (30 seconds)
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\scripts\quick-fix-minreplicas.ps1
 ```
 
 ### Option B: Full Optimization with Monitoring (2-3 minutes)
 
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 .\scripts\optimize-datamodel-infra.ps1 -ApplyOpt -AddAppInsights
 ```
 

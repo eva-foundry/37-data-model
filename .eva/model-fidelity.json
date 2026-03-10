@@ -1,7 +1,7 @@
 {
   "schema": "eva.model-fidelity.v1",
   "generated_at": "2026-02-25T05:28:52.039Z",
-  "repo": "C:\\AICOE\\eva-foundation\\37-data-model",
+  "repo": "C:\\eva-foundry\\eva-foundation\\37-data-model",
   "model_fidelity_score": 81,
   "declared_total": 279,
   "verified_total": 225,

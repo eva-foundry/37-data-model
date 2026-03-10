@@ -16,6 +16,9 @@ The output file is a markdown doc containing a SPRINT_MANIFEST JSON block that t
 sprint-agent.yml workflow parses.  Fill in the TODOs before creating the GitHub issue.
 
 Encoding: ascii-only output -- no emoji, no unicode.
+
+Revisions:
+    2026-03-10: Refactored to use eva_script_infra (Session 44 compliance)
 """
 
 import re
@@ -25,10 +28,21 @@ import argparse
 from pathlib import Path
 from datetime import datetime, timezone
 
+# Professional Coding Standards infrastructure
+from eva_script_infra import (
+    setup_logging, save_evidence, save_error_evidence, ensure_directories,
+    timestamped_filename, check_file_exists,
+    STATUS_PASS, STATUS_FAIL, STATUS_INFO, STATUS_ERROR,
+    format_status
+)
+
 REPO_ROOT    = Path(__file__).parent.parent
 PLAN_FILE    = REPO_ROOT / "PLAN.md"
 VERITAS_FILE = REPO_ROOT / ".eva" / "veritas-plan.json"
 SPRINTS_DIR  = REPO_ROOT / ".github" / "sprints"
+
+# Module-level logger
+logger = None
 
 # Default model per story size -- must be a model available via GITHUB_TOKEN
 # at https://models.inference.ai.azure.com (verified 2026-02-27):
@@ -51,9 +65,9 @@ EPIC_LABEL = {
 
 def load_veritas() -> dict:
     if not VERITAS_FILE.exists():
-        print(f"[FAIL] veritas-plan.json not found: {VERITAS_FILE}")
-        print("[INFO] Run: python scripts/seed-from-plan.py")
-        sys.exit(1)
+        logger.error(format_status(STATUS_FAIL, f"veritas-plan.json not found: {VERITAS_FILE}"))
+        logger.info(format_status(STATUS_INFO, "Run: python scripts/seed-from-plan.py"))
+        sys.exit(2)
     return json.loads(VERITAS_FILE.read_text(encoding="utf-8"))
 
 
@@ -71,13 +85,13 @@ def build_story_index(veritas: dict) -> dict[str, dict]:
 def list_stories(veritas: dict, show_done: bool = False) -> None:
     index = build_story_index(veritas)
     header = "DONE stories:" if show_done else "Undone stories (ready for sprint):"
-    print(header)
-    print("-" * 60)
+    logger.info(header)
+    logger.info("-" * 60)
     for sid, story in sorted(index.items()):
         if story.get("done", False) == show_done:
             wbs = story.get("wbs", "")
             wbs_str = f" [wbs:{wbs}]" if wbs else ""
-            print(f"  {sid}{wbs_str}  {story.get('title', '')[:70]}")
+            logger.info(f"  {sid}{wbs_str}  {story.get('title', '')[:70]}")
     print()
 
 
@@ -212,9 +226,9 @@ def main() -> None:
         return
 
     if not args.stories:
-        print("[FAIL] --stories is required (or use --list-undone to browse)")
-        print("Example: python scripts/gen-sprint-manifest.py --sprint 01 --name 'fk-phase1a-store' --stories F37-FK-101,F37-FK-102,F37-FK-103")
-        sys.exit(1)
+        logger.error(format_status(STATUS_FAIL, "--stories is required (or use --list-undone to browse)"))
+        logger.info("Example: python scripts/gen-sprint-manifest.py --sprint 01 --name 'fk-phase1a-store' --stories F37-FK-101,F37-FK-102,F37-FK-103")
+        sys.exit(2)
 
     story_ids = [s.strip() for s in args.stories.split(",") if s.strip()]
 
@@ -237,9 +251,41 @@ def main() -> None:
         out_path = SPRINTS_DIR / fname
 
     out_path.write_text(doc, encoding="utf-8", errors="replace")
-    print(f"[PASS] Sprint manifest written: {out_path}")
-    print("[INFO] Edit the TODO fields, then create the GitHub issue to trigger sprint-agent.yml")
+    logger.info(format_status(STATUS_PASS, f"Sprint manifest written: {out_path}"))
+    logger.info(format_status(STATUS_INFO, "Edit the TODO fields, then create the GitHub issue to trigger sprint-agent.yml"))
 
 
 if __name__ == "__main__":
-    main()
+    # Professional Coding Standards: Setup logging with dual handlers
+    logger = setup_logging('gen-sprint-manifest')
+    ensure_directories()
+    
+    try:
+        # Professional Coding Standards: Evidence at operation start
+        save_evidence(
+            operation="gen-sprint-manifest",
+            status="started",
+            metrics={"timestamp": datetime.utcnow().isoformat()}
+        )
+        
+        logger.info(format_status(STATUS_INFO, "Script: gen-sprint-manifest"))
+        
+        # Run main operation
+        main()
+        
+        # Professional Coding Standards: Evidence at completion
+        save_evidence(
+            operation="gen-sprint-manifest",
+            status="completed",
+            metrics={"timestamp": datetime.utcnow().isoformat()}
+        )
+    
+    except SystemExit as e:
+        # Allow normal exit codes from main()
+        raise
+    except Exception as e:
+        # Professional Coding Standards: Structured error handling
+        error_msg = f"Fatal error: {str(e)}"
+        logger.error(format_status(STATUS_ERROR, error_msg))
+        save_error_evidence(e, "gen-sprint-manifest")
+        sys.exit(2)

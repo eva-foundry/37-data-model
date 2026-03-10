@@ -126,7 +126,7 @@ Once endpoints are verified (Step 4 passes), execute pilot seed data deployment:
 
 ```powershell
 $base = "https://marco-eva-data-model.livelyflower-7990bc7b.canadacentral.azurecontainerapps.io"
-$pilotData = Get-Content "C:\AICOE\eva-foundry\37-data-model\docs\governance-seed-pilot.json" -Raw | ConvertFrom-Json
+$pilotData = Get-Content "C:\eva-foundry\37-data-model\docs\governance-seed-pilot.json" -Raw | ConvertFrom-Json
 
 # Step 1: PUT workspace_config
 $workspaceConfig = $pilotData.workspace_config[0] | ConvertTo-Json -Depth 10
@@ -230,7 +230,7 @@ az containerapp revision activate `
 
 **Option 2: Revert Git Commit (If PR merged - 5 min)**
 ```powershell
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 git checkout main
 git pull origin main
 git revert HEAD~2..HEAD  # Revert governance plane commits

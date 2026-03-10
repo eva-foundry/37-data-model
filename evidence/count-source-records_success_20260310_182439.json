@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-03-10T21:24:39.711364Z",
+  "operation": "count-source-records",
+  "status": "success",
+  "metrics": {
+    "total_layers": 113,
+    "total_records": 5644,
+    "parse_errors": 0,
+    "output_file": "evidence\\count-source-records_expected_20260310_182439.json"
+  }
+}

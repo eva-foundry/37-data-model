@@ -152,7 +152,7 @@ All three scripts support `--dry-run` or `-DryRun` flags:
 
 ```powershell
 # L42: Infrastructure sync (dry-run)
-cd C:\AICOE\eva-foundry\37-data-model\scripts
+cd C:\eva-foundry\37-data-model\scripts
 python sync-azure-infrastructure.py --dry-run
 
 # L49: Cost sync (dry-run)

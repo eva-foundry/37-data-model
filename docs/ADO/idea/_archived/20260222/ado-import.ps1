@@ -7,6 +7,6 @@
 #   .\docs\ADO\idea\ado-import.ps1
 #   .\docs\ADO\idea\ado-import.ps1 -DryRun    # preview without creating anything
 param([switch]$DryRun)
-$sharedScript = "C:\AICOE\eva-foundation\38-ado-poc\scripts\ado-import-project.ps1"
+$sharedScript = "C:\eva-foundry\eva-foundation\38-ado-poc\scripts\ado-import-project.ps1"
 if (-not (Test-Path $sharedScript)) { throw "Shared import script not found: $sharedScript" }
 & $sharedScript -ArtifactsFile (Join-Path $PSScriptRoot "ado-artifacts.json") -DryRun:$DryRun

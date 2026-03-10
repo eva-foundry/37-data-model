@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-03-10T21:51:28.201932Z",
+  "operation": "sync-evidence-from-51-aca",
+  "status": "fail",
+  "metrics": {
+    "extracted_count": 0,
+    "transformed_count": 0,
+    "merged_count": 0,
+    "validated_count": 0,
+    "skipped_count": 0,
+    "failure_count": 1,
+    "duration_ms": 46,
+    "report_path": "C:\\eva-foundry\\37-data-model\\evidence\\sync-evidence-report_51-aca_20260310_185128.json"
+  }
+}

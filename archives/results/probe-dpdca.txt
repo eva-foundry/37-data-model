@@ -12,7 +12,7 @@ G06   Containers stamped (data_function_type)             PASS  13/13 stamped
 G07   L27 sprints seeded (>=8 records)                    PASS  9 sprint records -- velocity calc enabled
 G08   L28-L30 layers reachable (milestones/risks/decisions)  PASS  All three DPDCA layers reachable
 G09   Veritas MTI >= 95                                   WARN  MTI=86 (below 95 target) formula=n/a
-      FIX: Run: eva audit --repo C:\AICOE\eva-foundation\37-data-model
+      FIX: Run: eva audit --repo C:\eva-foundry\eva-foundation\37-data-model
 G10   Graph endpoint accessible (ACA image)               PASS  20 edge types registered
 
 [PASS] All gates pass -- no blockers detected.

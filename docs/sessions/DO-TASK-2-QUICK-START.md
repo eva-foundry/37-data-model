@@ -446,7 +446,7 @@ COMPLETION TARGET: 19:27 ET
 
 ```powershell
 # Final check before starting
-cd c:\AICOE\eva-foundry\37-data-model
+cd c:\eva-foundry\37-data-model
 ls api/cache/
 echo "Cache layer present - proceed with DO Task 2"
 ```

@@ -467,7 +467,7 @@ Stage 4 (100%)  → ✅ All metrics validated
 
 **DevOps**:
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 ls scripts/deploy-redis-*
 # Verify: deploy-redis-infrastructure.ps1 exists
 # Next: Review PHASE-3-DO-INTEGRATION-GUIDE.md (Task 1)
@@ -475,14 +475,14 @@ ls scripts/deploy-redis-*
 
 **Backend**:
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 git status  # Ensure main branch clean
 # Next: Review PHASE-3-DO-INTEGRATION-GUIDE.md (Task 2-3)
 ```
 
 **QA**:
 ```bash
-cd C:\AICOE\eva-foundry\37-data-model
+cd C:\eva-foundry\37-data-model
 pytest tests/test_cache_integration.py --collect-only
 # Verify: 8+ tests collected
 # Next: Review PHASE-3-CHECK-VALIDATION-GUIDE.md

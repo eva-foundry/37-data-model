@@ -2,7 +2,7 @@
  EVA PROJECT LIFECYCLE
  File: docs/library/07-PROJECT-LIFECYCLE.md
  Updated: 2026-02-24 @ 15:45 ET -- Azure MAF orchestration layer added; sprint workplan defined
- Scope: Every numbered project under C:\AICOE\eva-foundation\
+ Scope: Every numbered project under C:\eva-foundry\eva-foundation\
 ================================================================================
 
 This document describes the complete lifecycle of any EVA project, from the
@@ -30,7 +30,7 @@ happen here?"
 --------------------------------------------------------------------------------
 
   Input:  An idea, a gap, a request, or an REQ-xxx backlog item in data model.
-  Output: Numbered project folder under C:\AICOE\eva-foundation\
+  Output: Numbered project folder under C:\eva-foundry\eva-foundation\
 
   DECISION
   --------
@@ -41,7 +41,7 @@ happen here?"
 
   FOLDER CONVENTION
   -----------------
-  C:\AICOE\eva-foundation\{NN}-{slug}\
+  C:\eva-foundry\eva-foundation\{NN}-{slug}\
     NNs are sequential integers, two-digit minimum (01, 02 ... 48, 49 ...)
     slug is kebab-case, concise (e.g. eva-veritas, cds-rag, jp-rebuild)
 
@@ -109,7 +109,7 @@ happen here?"
   STEP 1-C  COPILOT INSTRUCTIONS
   --------------------------------
   Copy from 07-foundation-layer template:
-    C:\AICOE\eva-foundation\07-foundation-layer\02-design\artifact-templates\
+    C:\eva-foundry\eva-foundation\07-foundation-layer\02-design\artifact-templates\
       copilot-instructions-template.md
 
   Place at: .github/copilot-instructions.md
@@ -228,10 +228,10 @@ happen here?"
   STEP 3-B  ADO IMPORT (38-ado-poc)
   -----------------------------------
   38-ado-poc reads ado-artifacts.json and imports to ADO.
-  Script: C:\AICOE\eva-foundation\38-ado-poc\ado-import.ps1
+  Script: C:\eva-foundry\eva-foundation\38-ado-poc\ado-import.ps1
 
-    cd C:\AICOE\eva-foundation\{NN}-{slug}
-    C:\AICOE\eva-foundation\38-ado-poc\ado-import.ps1 -ArtifactsFile .\ado-artifacts.json
+    cd C:\eva-foundry\eva-foundation\{NN}-{slug}
+    C:\eva-foundry\eva-foundation\38-ado-poc\ado-import.ps1 -ArtifactsFile .\ado-artifacts.json
 
   After import:
     - Note the ADO Epic ID returned

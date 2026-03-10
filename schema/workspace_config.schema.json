@@ -17,7 +17,7 @@
     },
     "workspace_root": {
       "type": "string",
-      "description": "Absolute path to workspace root directory (e.g., 'C:\\AICOE\\eva-foundry')"
+      "description": "Absolute path to workspace root directory (e.g., 'C:\\eva-foundry\\eva-foundry')"
     },
     "best_practices": {
       "type": "object",

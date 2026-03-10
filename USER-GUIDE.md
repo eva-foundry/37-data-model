@@ -451,7 +451,7 @@ This is a PowerShell display quirk, not an API issue. Count evolves as lessons a
 
 This guide is ONE of three instruction levels. Here's how they work together:
 
-1. **Workspace Level** → Read `C:\AICOE\.github\copilot-instructions.md`
+1. **Workspace Level** → Read `C:\eva-foundry\.github\copilot-instructions.md`
    - Workspace name, skills, architecture
    - Directs you: "See Project 37 User Guide for API guidance"
 
