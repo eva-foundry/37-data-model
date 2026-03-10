@@ -1,21 +1,8 @@
 # EVA Data Model -- Status
 
-**Last Updated:** March 9, 2026 7:40 PM ET -- Session 42: /model/user-guide Hardening ✅ (feat branch)  
-**Phase:** GA (PRODUCTION) -- **PAPERLESS GOVERNANCE MODEL ACTIVE** -- **12-DOMAIN ARCHITECTURE** (System Architecture, Identity & Access, AI Runtime, User Interface, Control Plane, Governance & Policy, Project & PM, DevOps & Delivery, Observability & Evidence, Infrastructure & FinOps, Execution Engine, Strategy & Portfolio) -- 91 operational layers across 12 domains -- CLOUD-ONLY ARCHITECTURE ✅  
-**Snapshot (2026-03-09 S42):** Hardened /model/user-guide endpoint with deterministic, category-by-category runbooks to prevent "data model becoming trash can". Added id_format patterns, query_sequence steps, anti_trash_rules, and common_mistakes for 6 categories (session_tracking, sprint_tracking, evidence_tracking, governance_events, infra_observability, ontology_domains). 566 lines added to api/server.py (lines 1100-1629). Commit 61738df on feat/execution-layers-phase2-6 branch. Pending deployment to production (revision 0000022).
-
----
-
-## 📋 STATUS.md Deprecation Notice
-
-**⚠️ This file is transitioning to paperless governance per Session 38 (March 7, 2026)**
-
-Starting Session 42, status tracking moves to:
-- **Timeline docs**: `docs/MARCH-*.md` for multi-session narratives
-- **Data model API**: `GET /model/project_work/37-data-model` for real-time status
-- **Session summaries**: `docs/SESSION-*-COMPLETE-SUMMARY.md` for detailed session reports
-
-**Current location for March 7-9, 2026 status**: See **[docs/MARCH-7-9-TIMELINE.md](docs/MARCH-7-9-TIMELINE.md)**
+**Last Updated:** March 10, 2026 @ 03:15 ET -- Session 43: API-Only Architecture Hardening ✅  
+**Phase:** GA (PRODUCTION) -- **API-ONLY ARCHITECTURE** -- **12-DOMAIN ARCHITECTURE** (System Architecture, Identity & Access, AI Runtime, User Interface, Control Plane, Governance & Policy, Project & PM, DevOps & Delivery, Observability & Evidence, Infrastructure & FinOps, Execution Engine, Strategy & Portfolio) -- 91 operational layers + 20 planned = 111 target layers -- NO DISK FALLBACK ✅  
+**Snapshot (2026-03-10 S43):** Cloud API mandatory for ALL operations (not just governance). Fatal error if msub API unavailable. No local port 8010 fallback. Agents must use `/model/agent-guide` and `/model/user-guide` for bootstrap. 6 category runbooks operational (session_tracking, sprint_tracking, evidence_tracking, governance_events, infra_observability, ontology_domains).
 
 ---
 
