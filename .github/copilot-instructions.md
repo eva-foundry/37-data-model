@@ -148,27 +148,27 @@ The `/model/user-guide` endpoint returns 6 category-specific runbooks to prevent
 - Anti-trash rules: No orphaned records (project_id must exist), no duplicate dates, phase required
 
 **2. sprint_tracking** (`sprints` layer):
-- ID format: `{project_id}-S{NN}` (e.g., `37-data-model-S11`)
+- ID format: `{project_id}-sprint-{N}` (e.g., `37-data-model-sprint-41`)
 - 6-step sequence: Get last sprint number -> Increment sequentially -> Check date ranges -> Write sprint metadata -> Link stories -> Close with burndown
 - Anti-trash rules: Sequential sprint numbers only, no overlapping date ranges, must have start/end dates
 
 **3. evidence_tracking** (`evidence` layer):
-- ID format: `{sprint_id}-{story_id}-{phase}` (e.g., `ACA-S11-ACA-14-001-D1`)
-- Immutable audit trail: correlation_id required for traceability
-- Anti-trash rules: phase must be valid DPDCA (D1/D2/P/D3/A), artifact_type specific not generic, test_results required
+- ID format: `{project_id}-{phase}-{artifact_type}-{YYYYMMDD-HHMMSS}` (e.g., `37-data-model-discover-baseline-20260309-143022`)
+- Immutable audit trail: correlation_id required for traceability, timestamp includes seconds
+- Anti-trash rules: phase must be valid DPDCA (discover/plan/do/check/act), artifact_type specific not generic, correlation_id required
 
 **4. governance_events** (4 sub-layers):
-- verification_records: `VR-{project}-{YYYYMMDD}-{seq}`
-- quality_gates: `QG-{layer}-{gate_type}-{YYYYMMDD}`
-- decisions: `DEC-{domain}-{YYYYMMDD}-{seq}`
-- risks: `RISK-{project}-{category}-{seq}`
-- Anti-trash rules: Each sub-layer has unique ID format, no generic "record" entries
+- verification_records: `{project_id}-verification-{gate_name}-{YYYYMMDD-HHMMSS}`
+- quality_gates: `{layer_name}-{gate_type}`
+- decisions: `{project_id}-decision-{sequence}` (zero-padded 3 digits)
+- risks: `{project_id}-risk-{sequence}`
+- Anti-trash rules: Each sub-layer has unique ID format, sequences must be sequential, gate_name must reference existing quality_gate
 
 **5. infra_observability** (3 sub-layers):
-- infrastructure_events: Fire-and-forget events with millisecond timestamps for uniqueness
-- agent_execution_history: correlation_id links to evidence
-- deployment_records: revision numbers sequential
-- Anti-trash rules: Timestamps must include milliseconds, no duplicate correlation_ids
+- infrastructure_events: `{resource_id}-{event_type}-{timestamp_ms}` (millisecond precision)
+- agent_execution_history: `{agent_id}-{session_id}-{timestamp}`
+- deployment_records: `{service_id}-deployment-{revision}`
+- Anti-trash rules: Timestamps must include milliseconds, correlation_id links to evidence or session, revision numbers sequential
 
 **6. ontology_domains** (12-domain navigation):
 - 12 domains: system_architecture, identity_access, ai_runtime, user_interface, control_plane, governance_policy, project_pm, devops_delivery, observability_evidence, infrastructure_finops, execution_engine, strategy_portfolio
