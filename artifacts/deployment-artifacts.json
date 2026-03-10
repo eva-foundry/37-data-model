@@ -1,0 +1,633 @@
+﻿{
+    "execution_schemas":  [
+                              {
+                                  "lines":  101,
+                                  "name":  "work_decision_records.schema.json"
+                              },
+                              {
+                                  "lines":  139,
+                                  "name":  "work_execution_units.schema.json"
+                              },
+                              {
+                                  "lines":  139,
+                                  "name":  "work_factory_capabilities.schema.json"
+                              },
+                              {
+                                  "lines":  328,
+                                  "name":  "work_factory_governance.schema.json"
+                              },
+                              {
+                                  "lines":  390,
+                                  "name":  "work_factory_investments.schema.json"
+                              },
+                              {
+                                  "lines":  275,
+                                  "name":  "work_factory_metrics.schema.json"
+                              },
+                              {
+                                  "lines":  223,
+                                  "name":  "work_factory_portfolio.schema.json"
+                              },
+                              {
+                                  "lines":  303,
+                                  "name":  "work_factory_roadmaps.schema.json"
+                              },
+                              {
+                                  "lines":  145,
+                                  "name":  "work_factory_services.schema.json"
+                              },
+                              {
+                                  "lines":  113,
+                                  "name":  "work_learning_feedback.schema.json"
+                              },
+                              {
+                                  "lines":  103,
+                                  "name":  "work_obligations.schema.json"
+                              },
+                              {
+                                  "lines":  98,
+                                  "name":  "work_outcomes.schema.json"
+                              },
+                              {
+                                  "lines":  102,
+                                  "name":  "work_pattern_applications.schema.json"
+                              },
+                              {
+                                  "lines":  137,
+                                  "name":  "work_pattern_performance_profiles.schema.json"
+                              },
+                              {
+                                  "lines":  151,
+                                  "name":  "work_reusable_patterns.schema.json"
+                              },
+                              {
+                                  "lines":  155,
+                                  "name":  "work_service_breaches.schema.json"
+                              },
+                              {
+                                  "lines":  189,
+                                  "name":  "work_service_level_objectives.schema.json"
+                              },
+                              {
+                                  "lines":  186,
+                                  "name":  "work_service_lifecycle.schema.json"
+                              },
+                              {
+                                  "lines":  158,
+                                  "name":  "work_service_perf_profiles.schema.json"
+                              },
+                              {
+                                  "lines":  215,
+                                  "name":  "work_service_remediation_plans.schema.json"
+                              },
+                              {
+                                  "lines":  105,
+                                  "name":  "work_service_requests.schema.json"
+                              },
+                              {
+                                  "lines":  158,
+                                  "name":  "work_service_revalidation_results.schema.json"
+                              },
+                              {
+                                  "lines":  113,
+                                  "name":  "work_service_runs.schema.json"
+                              },
+                              {
+                                  "lines":  95,
+                                  "name":  "work_step_events.schema.json"
+                              }
+                          ],
+    "timestamp":  "2026-03-09T21:56:39.4644038-03:00",
+    "schema_files":  [
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1566,
+                             "name":  "agent.schema.json",
+                             "lines":  42
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1540,
+                             "name":  "agent_execution_history.schema.json",
+                             "lines":  28
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1881,
+                             "name":  "agent_performance_metrics.schema.json",
+                             "lines":  23
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  4221,
+                             "name":  "auto_fix_execution_history.schema.json",
+                             "lines":  127
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1650,
+                             "name":  "azure_infrastructure.schema.json",
+                             "lines":  26
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1434,
+                             "name":  "compliance_audit.schema.json",
+                             "lines":  22
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1721,
+                             "name":  "component.schema.json",
+                             "lines":  46
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2249,
+                             "name":  "container.schema.json",
+                             "lines":  61
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1960,
+                             "name":  "decision.schema.json",
+                             "lines":  59
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1765,
+                             "name":  "deployment_quality_scores.schema.json",
+                             "lines":  28
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2123,
+                             "name":  "deployment_records.schema.json",
+                             "lines":  26
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  4158,
+                             "name":  "endpoint.schema.json",
+                             "lines":  104
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2374,
+                             "name":  "eva_model.schema.json",
+                             "lines":  57
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  21811,
+                             "name":  "evidence.schema.json",
+                             "lines":  572
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1436,
+                             "name":  "feature_flag.schema.json",
+                             "lines":  41
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1802,
+                             "name":  "hook.schema.json",
+                             "lines":  50
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2264,
+                             "name":  "infrastructure.schema.json",
+                             "lines":  53
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1987,
+                             "name":  "infrastructure_drift.schema.json",
+                             "lines":  34
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1075,
+                             "name":  "literal.schema.json",
+                             "lines":  31
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1484,
+                             "name":  "mcp_server.schema.json",
+                             "lines":  36
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1858,
+                             "name":  "milestone.schema.json",
+                             "lines":  48
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2167,
+                             "name":  "performance_trends.schema.json",
+                             "lines":  45
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1688,
+                             "name":  "persona.schema.json",
+                             "lines":  48
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  6167,
+                             "name":  "project.schema.json",
+                             "lines":  208
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  5245,
+                             "name":  "project_work.schema.json",
+                             "lines":  171
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1611,
+                             "name":  "prompt.schema.json",
+                             "lines":  44
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  6048,
+                             "name":  "remediation_effectiveness.schema.json",
+                             "lines":  179
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  4312,
+                             "name":  "remediation_outcomes.schema.json",
+                             "lines":  107
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  4141,
+                             "name":  "remediation_policies.schema.json",
+                             "lines":  103
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1739,
+                             "name":  "requirement.schema.json",
+                             "lines":  51
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2447,
+                             "name":  "resource_costs.schema.json",
+                             "lines":  55
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1955,
+                             "name":  "risk.schema.json",
+                             "lines":  51
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2403,
+                             "name":  "screen.schema.json",
+                             "lines":  66
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1815,
+                             "name":  "security_control.schema.json",
+                             "lines":  44
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2325,
+                             "name":  "service.schema.json",
+                             "lines":  60
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  3393,
+                             "name":  "sprint.schema.json",
+                             "lines":  85
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  2909,
+                             "name":  "trace.schema.json",
+                             "lines":  86
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  1853,
+                             "name":  "ts_type.schema.json",
+                             "lines":  54
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  3698,
+                             "name":  "wbs.schema.json",
+                             "lines":  112
+                         },
+                         {
+                             "is_execution":  false,
+                             "size_bytes":  4112,
+                             "name":  "workspace_config.schema.json",
+                             "lines":  117
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3405,
+                             "name":  "work_decision_records.schema.json",
+                             "lines":  101
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  4658,
+                             "name":  "work_execution_units.schema.json",
+                             "lines":  139
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  4890,
+                             "name":  "work_factory_capabilities.schema.json",
+                             "lines":  139
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  10625,
+                             "name":  "work_factory_governance.schema.json",
+                             "lines":  328
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  11925,
+                             "name":  "work_factory_investments.schema.json",
+                             "lines":  390
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  9185,
+                             "name":  "work_factory_metrics.schema.json",
+                             "lines":  275
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  7276,
+                             "name":  "work_factory_portfolio.schema.json",
+                             "lines":  223
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  10039,
+                             "name":  "work_factory_roadmaps.schema.json",
+                             "lines":  303
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  4996,
+                             "name":  "work_factory_services.schema.json",
+                             "lines":  145
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3481,
+                             "name":  "work_learning_feedback.schema.json",
+                             "lines":  113
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3360,
+                             "name":  "work_obligations.schema.json",
+                             "lines":  103
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3135,
+                             "name":  "work_outcomes.schema.json",
+                             "lines":  98
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3640,
+                             "name":  "work_pattern_applications.schema.json",
+                             "lines":  102
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  5013,
+                             "name":  "work_pattern_performance_profiles.schema.json",
+                             "lines":  137
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  4435,
+                             "name":  "work_reusable_patterns.schema.json",
+                             "lines":  151
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  5507,
+                             "name":  "work_service_breaches.schema.json",
+                             "lines":  155
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  6289,
+                             "name":  "work_service_level_objectives.schema.json",
+                             "lines":  189
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  6455,
+                             "name":  "work_service_lifecycle.schema.json",
+                             "lines":  186
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  5054,
+                             "name":  "work_service_perf_profiles.schema.json",
+                             "lines":  158
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  7311,
+                             "name":  "work_service_remediation_plans.schema.json",
+                             "lines":  215
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3533,
+                             "name":  "work_service_requests.schema.json",
+                             "lines":  105
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  5818,
+                             "name":  "work_service_revalidation_results.schema.json",
+                             "lines":  158
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  4089,
+                             "name":  "work_service_runs.schema.json",
+                             "lines":  113
+                         },
+                         {
+                             "is_execution":  true,
+                             "size_bytes":  3202,
+                             "name":  "work_step_events.schema.json",
+                             "lines":  95
+                         }
+                     ],
+    "summary":  {
+                    "layer_count":  64,
+                    "total_files":  98,
+                    "total_lines":  15316
+                },
+    "api_files":  [
+                      {
+                          "lines":  57,
+                          "name":  "config.py"
+                      },
+                      {
+                          "lines":  36,
+                          "name":  "dependencies.py"
+                      },
+                      {
+                          "lines":  1011,
+                          "name":  "server.py"
+                      },
+                      {
+                          "lines":  318,
+                          "name":  "simple_cache.py"
+                      },
+                      {
+                          "lines":  439,
+                          "name":  "validation.py"
+                      },
+                      {
+                          "lines":  1,
+                          "name":  "__init__.py"
+                      },
+                      {
+                          "lines":  350,
+                          "name":  "adapter.py"
+                      },
+                      {
+                          "lines":  34,
+                          "name":  "base.py"
+                      },
+                      {
+                          "lines":  251,
+                          "name":  "config.py"
+                      },
+                      {
+                          "lines":  330,
+                          "name":  "invalidation.py"
+                      },
+                      {
+                          "lines":  325,
+                          "name":  "layer.py"
+                      },
+                      {
+                          "lines":  60,
+                          "name":  "memory.py"
+                      },
+                      {
+                          "lines":  76,
+                          "name":  "redis_cache.py"
+                      },
+                      {
+                          "lines":  335,
+                          "name":  "redis_client.py"
+                      },
+                      {
+                          "lines":  89,
+                          "name":  "__init__.py"
+                      },
+                      {
+                          "lines":  77,
+                          "name":  "base.py"
+                      },
+                      {
+                          "lines":  43,
+                          "name":  "graph.py"
+                      },
+                      {
+                          "lines":  0,
+                          "name":  "__init__.py"
+                      },
+                      {
+                          "lines":  1111,
+                          "name":  "admin.py"
+                      },
+                      {
+                          "lines":  376,
+                          "name":  "aggregation.py"
+                      },
+                      {
+                          "lines":  277,
+                          "name":  "base_layer.py"
+                      },
+                      {
+                          "lines":  72,
+                          "name":  "debug.py"
+                      },
+                      {
+                          "lines":  60,
+                          "name":  "filter_endpoints.py"
+                      },
+                      {
+                          "lines":  177,
+                          "name":  "fp.py"
+                      },
+                      {
+                          "lines":  960,
+                          "name":  "graph.py"
+                      },
+                      {
+                          "lines":  101,
+                          "name":  "impact.py"
+                      },
+                      {
+                          "lines":  257,
+                          "name":  "introspection.py"
+                      },
+                      {
+                          "lines":  149,
+                          "name":  "layers.py"
+                      },
+                      {
+                          "lines":  229,
+                          "name":  "metadata.py"
+                      },
+                      {
+                          "lines":  0,
+                          "name":  "__init__.py"
+                      },
+                      {
+                          "lines":  38,
+                          "name":  "base.py"
+                      },
+                      {
+                          "lines":  205,
+                          "name":  "cosmos.py"
+                      },
+                      {
+                          "lines":  151,
+                          "name":  "memory.py"
+                      },
+                      {
+                          "lines":  0,
+                          "name":  "__init__.py"
+                      }
+                  ],
+    "model_files":  [
+
+                    ]
+}

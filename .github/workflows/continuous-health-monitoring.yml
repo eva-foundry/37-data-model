@@ -1,0 +1,205 @@
+name: Continuous Health Monitoring (msub API)
+
+# Session 41 Part 12: Vital Service Operations
+# Monitors msub API health continuously and records metrics to Layer 46
+
+on:
+  schedule:
+    # Run every 5 minutes
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      alert_on_failure:
+        description: 'Send alert if health check fails'
+        type: boolean
+        default: true
+
+env:
+  CLOUD_URL: 'https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io'
+  HEALTH_CHECK_TIMEOUT: 15
+  ALERT_THRESHOLD: 3  # Alert after 3 consecutive failures
+
+jobs:
+  health-check:
+    name: msub API Health Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write  # For creating alert issues
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check /health endpoint
+        id: health
+        continue-on-error: true
+        run: |
+          echo "🔍 Checking /health endpoint..."
+          
+          RESPONSE=$(curl -f -s -w "\n%{http_code}" "${{ env.CLOUD_URL }}/health" --max-time ${{ env.HEALTH_CHECK_TIMEOUT }} || echo "FAILED")
+          
+          if [ "$RESPONSE" = "FAILED" ]; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "❌ Health check FAILED (timeout or connection error)"
+            exit 1
+          fi
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "❌ Health check returned HTTP $HTTP_CODE"
+            exit 1
+          fi
+          
+          STATUS=$(echo "$BODY" | jq -r '.status')
+          UPTIME=$(echo "$BODY" | jq -r '.uptime_seconds')
+          STORE=$(echo "$BODY" | jq -r '.store')
+          REQUESTS=$(echo "$BODY" | jq -r '.request_count')
+          
+          echo "✅ Health check PASSED"
+          echo "   Status: $STATUS"
+          echo "   Store: $STORE"
+          echo "   Uptime: ${UPTIME}s"
+          echo "   Requests: $REQUESTS"
+          
+          echo "status=ok" >> $GITHUB_OUTPUT
+          echo "uptime=$UPTIME" >> $GITHUB_OUTPUT
+          echo "store=$STORE" >> $GITHUB_OUTPUT
+          echo "requests=$REQUESTS" >> $GITHUB_OUTPUT
+      
+      - name: Check /ready endpoint
+        id: ready
+        continue-on-error: true
+        run: |
+          echo "🔍 Checking /ready endpoint..."
+          
+          RESPONSE=$(curl -f -s -w "\n%{http_code}" "${{ env.CLOUD_URL }}/ready" --max-time ${{ env.HEALTH_CHECK_TIMEOUT }} || echo "FAILED")
+          
+          if [ "$RESPONSE" = "FAILED" ]; then
+            echo "status=not_ready" >> $GITHUB_OUTPUT
+            echo "❌ Readiness check FAILED"
+            exit 1
+          fi
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          STATUS=$(echo "$BODY" | jq -r '.status')
+          REACHABLE=$(echo "$BODY" | jq -r '.store_reachable')
+          LATENCY=$(echo "$BODY" | jq -r '.store_latency_ms')
+          
+          echo "   Status: $STATUS"
+          echo "   Store reachable: $REACHABLE"
+          echo "   Latency: ${LATENCY}ms"
+          
+          if [ "$STATUS" = "ready" ] && [ "$REACHABLE" = "true" ]; then
+            echo "✅ Readiness check PASSED"
+            echo "status=ready" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Readiness check NOT READY"
+            echo "status=not_ready" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          
+          echo "latency=$LATENCY" >> $GITHUB_OUTPUT
+      
+      - name: Record health metrics to Layer 46
+        if: always()
+        shell: pwsh
+        run: |
+          $timestamp = Get-Date -Format "o"
+          $healthStatus = "${{ steps.health.outputs.status }}"
+          $readyStatus = "${{ steps.ready.outputs.status }}"
+          
+          $overallStatus = if ($healthStatus -eq "ok" -and $readyStatus -eq "ready") { "healthy" } else { "degraded" }
+          
+          $record = @{
+            id = "health-check-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+            timestamp = $timestamp
+            service_name = "msub-eva-data-model"
+            check_type = "continuous_health_monitoring"
+            overall_status = $overallStatus
+            health_endpoint = @{
+              status = $healthStatus
+              uptime_seconds = [int]"${{ steps.health.outputs.uptime }}"
+              store = "${{ steps.health.outputs.store }}"
+              request_count = [int]"${{ steps.health.outputs.requests }}"
+            }
+            ready_endpoint = @{
+              status = $readyStatus
+              store_latency_ms = [int]"${{ steps.ready.outputs.latency }}"
+            }
+            workflow_run_id = "${{ github.run_id }}"
+          }
+          
+          try {
+            $response = Invoke-RestMethod `
+              -Uri "${{ env.CLOUD_URL }}/model/deployment_quality_scores/" `
+              -Method POST `
+              -Body ($record | ConvertTo-Json -Depth 10) `
+              -ContentType "application/json" `
+              -TimeoutSec 10
+            
+            Write-Host "✅ Health metrics recorded to Layer 46"
+          } catch {
+            Write-Warning "Could not record to data model (API may be down): $_"
+          }
+      
+      - name: Alert on consecutive failures
+        if: failure() && github.event.inputs.alert_on_failure != 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Check recent workflow runs for consecutive failures
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'continuous-health-monitoring.yml',
+              per_page: 5
+            });
+            
+            const recentRuns = runs.data.workflow_runs.slice(0, 5);
+            const failureCount = recentRuns.filter(r => r.conclusion === 'failure').length;
+            
+            if (failureCount >= ${{ env.ALERT_THRESHOLD }}) {
+              // Create alert issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `🚨 msub API Health Alert: ${failureCount} consecutive failures`,
+                body: `## msub API Health Alert
+            
+            **Service**: msub-eva-data-model
+            **Status**: ❌ DEGRADED
+            **Consecutive Failures**: ${failureCount}
+            **Time**: ${new Date().toISOString()}
+            
+            ### Recent Health Check Results:
+            ${recentRuns.map(r => `- Run #${r.run_number}: ${r.conclusion}`).join('\n')}
+            
+            ### Recommended Actions:
+            1. Check Azure Container Apps logs: \`az containerapp logs show --name msub-eva-data-model --resource-group EVA-Sandbox-dev\`
+            2. Verify Cosmos DB connectivity
+            3. Check recent deployments in Layer 36: \`GET /model/deployment_records/\`
+            4. Review deployment quality scores: \`GET /model/deployment_quality_scores/\`
+            
+            ### Endpoints:
+            - Health: ${{ env.CLOUD_URL }}/health
+            - Ready: ${{ env.CLOUD_URL }}/ready
+            - Workflow: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            `,
+                labels: ['incident', 'production', 'msub-api']
+              });
+            }
+      
+      - name: Summary
+        if: always()
+        run: |
+          echo "━━━ Health Check Summary ━━━"
+          echo "Service: msub-eva-data-model"
+          echo "Health: ${{ steps.health.outputs.status }}"
+          echo "Ready: ${{ steps.ready.outputs.status }}"
+          echo "Timestamp: $(date -u +"%Y-%m-%d %H:%M:%S UTC")"

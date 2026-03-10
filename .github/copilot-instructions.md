@@ -1,11 +1,11 @@
 # GitHub Copilot Instructions -- EVA Data Model
 
-**Template Version**: 3.4.0
-**Last Updated**: March 9, 2026
-**Project**: EVA Data Model -- Single source of truth API (port 8010)
+**Template Version**: 3.5.0
+**Last Updated**: March 10, 2026 @ 03:15 ET
+**Project**: EVA Data Model -- Single source of truth API
 **Path**: `C:\AICOE\eva-foundry\37-data-model\`
 **Stack**: Python, FastAPI, Cosmos DB
-**New in v3.4.0**: Evidence Layer (L31) -- immutable audit trail for all DPDCA phases
+**New in v3.5.0**: API-Only Architecture (no disk fallback), Session 42 user-guide categories, 91 operational layers
 
 > This file is the Copilot operating manual for this repository.
 > PART 1 is universal -- identical across all EVA Foundation projects.
@@ -22,10 +22,10 @@
 
 Before answering any question or writing any code:
 
-1. **Establish $base** (ACA primary -- run the bootstrap block in Section 3.1 first):
-   - ACA (24x7, Cosmos-backed, no auth): `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io`
-   - Local dev fallback only: `http://localhost:8010`
-   - `$base` must be set before any model query in this session.
+1. **Establish $base** (ACA API-Only -- NO LOCAL FALLBACK):
+   - ACA (24x7, Cosmos-backed, mandatory): `https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io`
+   - **CRITICAL**: Fatal error if API unavailable. No disk fallback. See Section 3.1 for bootstrap code.
+   - `$session` object must be established before any model query in this session.
 
 2. **Read this project's governance docs** (in order):
    - `README.md` -- identity, stack, quick start
@@ -48,7 +48,7 @@ Before answering any question or writing any code:
    Do not skip this. Do not start implementing before the brief is written.
 
 6. **Check the Tool Index** (before creating any new tool):
-   - Read `docs/TOOL-INDEX.md` -- comprehensive catalog of all scripts/ tools
+   - Read `docs/TOOL-INDEX.md` (80+ tools cataloged) -- comprehensive catalog of all scripts/ tools
    - DO NOT recreate existing tools -- use what's already built
    - If tool doesn't exist, add it to index after creation
 
@@ -82,40 +82,108 @@ Loop      --> return to Discover if tasks remain
 > The model is the single source of truth. One HTTP call beats 10 file reads.
 > Never grep source files for something the model already knows.
 
-#### 3.1  Bootstrap
+#### 3.1  Bootstrap (API-Only -- Fatal Error If Unavailable)
+
+**CRITICAL**: Cloud API is MANDATORY for ALL operations. No local fallback. Fatal error if unavailable.
 
 ```powershell
-# Primary -- ACA (24x7 Cosmos-backed, no auth required, always up)
+# API-Only Bootstrap (Session 43 - no disk fallback)
 $base = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
-$h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
-# Local fallback -- only if ACA is in a rare maintenance window
-if (-not $h) {
-    $base = "http://localhost:8010"
-    $h = Invoke-RestMethod "$base/health" -ErrorAction SilentlyContinue
-    if (-not $h) {
-        $env:PYTHONPATH = "C:\AICOE\eva-foundry\37-data-model"
-        Start-Process "C:\AICOE\.venv\Scripts\python.exe" `
-            "-m uvicorn api.server:app --port 8010 --reload" -WindowStyle Hidden
-        Start-Sleep 4
-    }
-}
-# Readiness check
-$r = Invoke-RestMethod "$base/ready" -ErrorAction SilentlyContinue
-if (-not $r.store_reachable) { Write-Warning "Cosmos unreachable -- check COSMOS_URL/KEY" }
-# The API self-documents -- read the agent guide before doing anything
-Invoke-RestMethod "$base/model/agent-guide"
-# One-call state check -- all 32 layer counts + total objects
-Invoke-RestMethod "$base/model/agent-summary"
 
-# Evidence Layer check -- NEW in v3.4.0 (immutable audit trail for all DPDCA phases)
-Invoke-RestMethod "$base/model/evidence/" | Select-Object -First 3
+# Establish session state
+$session = @{
+    base = $base
+    initialized_at = Get-Date
+    guide = $null
+    userGuide = $null
+}
+
+# Fetch authoritative guidance from Cosmos DB (FATAL if fails)
+try {
+    $session.guide = Invoke-RestMethod "$base/model/agent-guide" -TimeoutSec 10 -ErrorAction Stop
+    $session.userGuide = Invoke-RestMethod "$base/model/user-guide" -TimeoutSec 10 -ErrorAction Stop
+    Write-Host "[INFO] Bootstrap complete. $($session.guide.layers_available.Count) layers online."
+} catch {
+    Write-Error "[FATAL] API bootstrap failed. Cloud API must be available. Error: $_"
+    exit 1
+}
+
+# Verify Cosmos store reachable
+$health = Invoke-RestMethod "$base/health" -ErrorAction Stop
+if ($health.store -ne "cosmos") {
+    Write-Error "[FATAL] Cosmos DB not reachable. API degraded."
+    exit 1
+}
+
+# One-call state check -- all 91 layer counts + total objects
+$summary = Invoke-RestMethod "$base/model/agent-summary"
+Write-Host "[INFO] Model ready: $($summary.total) objects across $($summary.layers.Count) layers"
+
+# Access category runbooks (Session 42 enhancement)
+$categories = $session.userGuide.category_instructions
+Write-Host "[INFO] 6 category runbooks loaded: $($categories.Keys -join ', ')"
 ```
+
+**Session State Management**:
+- Store `$session` object for entire agent session
+- Use `$session.base` for all API calls
+- Use `$session.guide` for query patterns, write rules, common mistakes
+- Use `$session.userGuide.category_instructions` for deterministic runbooks
+- Refresh if session > 4 hours: `$session.guide = Invoke-RestMethod "$base/model/agent-guide"`
 
 **Azure APIM (CI / cloud agents):**
 ```powershell
 $base = "https://marco-sandbox-apim.azure-api.net/data-model"
 $hdrs = @{"Ocp-Apim-Subscription-Key" = $env:EVA_APIM_KEY}
 Invoke-RestMethod "$base/model/agent-summary" -Headers $hdrs
+```
+
+#### 3.1.1  Category Runbooks (Session 42 - Deterministic Data Quality)
+
+The `/model/user-guide` endpoint returns 6 category-specific runbooks to prevent "data model trash can":
+
+**1. session_tracking** (`project_work` layer):
+- ID format: `{project_id}-{YYYY-MM-DD}` (e.g., `37-data-model-2026-03-10`)
+- 5-step query sequence: Check existing session -> Validate project_id FK -> Write with correlation_id -> Verify no duplicates -> Update with metrics
+- Anti-trash rules: No orphaned records (project_id must exist), no duplicate dates, phase required
+
+**2. sprint_tracking** (`sprints` layer):
+- ID format: `{project_id}-sprint-{N}` (e.g., `37-data-model-sprint-41`)
+- 6-step sequence: Get last sprint number -> Increment sequentially -> Check date ranges -> Write sprint metadata -> Link stories -> Close with burndown
+- Anti-trash rules: Sequential sprint numbers only, no overlapping date ranges, must have start/end dates
+
+**3. evidence_tracking** (`evidence` layer):
+- ID format: `{project_id}-{phase}-{artifact_type}-{YYYYMMDD-HHMMSS}` (e.g., `37-data-model-discover-baseline-20260309-143022`)
+- Immutable audit trail: correlation_id required for traceability, timestamp includes seconds
+- Anti-trash rules: phase must be valid DPDCA (discover/plan/do/check/act), artifact_type specific not generic, correlation_id required
+
+**4. governance_events** (4 sub-layers):
+- verification_records: `{project_id}-verification-{gate_name}-{YYYYMMDD-HHMMSS}`
+- quality_gates: `{layer_name}-{gate_type}`
+- decisions: `{project_id}-decision-{sequence}` (zero-padded 3 digits)
+- risks: `{project_id}-risk-{sequence}`
+- Anti-trash rules: Each sub-layer has unique ID format, sequences must be sequential, gate_name must reference existing quality_gate
+
+**5. infra_observability** (3 sub-layers):
+- infrastructure_events: `{resource_id}-{event_type}-{timestamp_ms}` (millisecond precision)
+- agent_execution_history: `{agent_id}-{session_id}-{timestamp}`
+- deployment_records: `{service_id}-deployment-{revision}`
+- Anti-trash rules: Timestamps must include milliseconds, correlation_id links to evidence or session, revision numbers sequential
+
+**6. ontology_domains** (12-domain navigation):
+- 12 domains: system_architecture, identity_access, ai_runtime, user_interface, control_plane, governance_policy, project_pm, devops_delivery, observability_evidence, infrastructure_finops, execution_engine, strategy_portfolio
+- Each domain has `start_here` layers for agent orientation
+- Query pattern: GET /model/{start_here_layer}/ -> follow FKs to related layers
+- Anti-trash rules: Always query by domain first, then navigate relationships
+
+**Access patterns**:
+```powershell
+# Get full category runbook
+$sessionTracking = $session.userGuide.category_instructions.session_tracking
+$sessionTracking.id_format.pattern       # "{project_id}-{YYYY-MM-DD}"
+$sessionTracking.query_sequence          # Array of 5 steps
+$sessionTracking.anti_trash_rules        # Array of 7 rules
+$sessionTracking.common_mistakes         # Array of 5 pitfalls
 ```
 
 #### 3.2  Query Decision Table
@@ -282,6 +350,198 @@ Invoke-RestMethod "$base/model/endpoints/" |
 
 > **Same-PR rule**: every source change that affects a model object must update the model
 > in the same commit. Never defer. A stale model is worse than no model.
+
+---
+
+### 3.7  Fractal DPDCA for Project 37 API Operations
+
+**CRITICAL**: Apply DPDCA at EVERY granularity level for data model operations.
+
+#### Pattern: Nested DPDCA Cycles
+
+```
+Session (DPDCA)
+└── Feature/Story (DPDCA)
+    └── Layer Operation (DPDCA)
+        └── Record Write (DPDCA)
+```
+
+**Anti-Pattern**: Bulk operations without per-component visibility.
+
+#### Implementation Rules for API Operations
+
+**DISCOVER First** (Before ANY write):
+1. Query API for current state baseline: `GET /model/{layer}/count` or `GET /model/{layer}/{id}`
+2. Validate foreign key references exist: Check project_id, sprint_id, story_id before writing
+3. Check for duplicates: Query by unique fields to prevent collisions
+4. Validate schema: Confirm required fields present, types correct
+
+**PLAN Per-Layer**:
+1. Break work into smallest atomic units (single layer, single record)
+2. Define success criteria for EACH write (expected row_version, field values)
+3. Identify checkpoints (count before, count after, row_version increment)
+4. Document expected deltas (N records before -> N+1 after)
+
+**DO Iteratively** (With Visibility):
+1. Execute ONE layer/record at a time
+2. Capture output immediately: Store row_version, obj_id, modified_at
+3. STOP on first failure (422, 404, 409) - debug before continuing
+4. Never wait blindly - always GET after PUT to confirm
+
+**CHECK After Each**:
+1. Verify expected outcome: `row_version == previous + 1`
+2. Compare actual vs expected: Field values match, no extra fields
+3. Validate no side effects: Related records unchanged unless intended
+4. Validate referential integrity: `POST /model/admin/validate` shows 0 violations
+
+**ACT Back to Model**:
+1. Commit changes: `POST /model/admin/commit` (export + assemble + validate)
+2. Record evidence: PUT to evidence layer with correlation_id, test results
+3. Update session tracking: PUT to project_work with metrics, deliverables
+4. Document lessons: Add to common_mistakes if new pattern discovered
+
+#### Examples
+
+**✅ CORRECT (Fractal DPDCA) - Seed Multiple Layers**:
+```powershell
+# Seed 6 infrastructure layers with per-layer DPDCA
+$layers = @('azure_infrastructure', 'resource_costs', 'deployment_records', 
+            'compliance_audit', 'performance_trends', 'infrastructure_drift')
+
+$results = @()
+foreach ($layer in $layers) {
+    # DISCOVER
+    $before = (Invoke-RestMethod "$base/model/$layer/count").count
+    Write-Host "[DISCOVER] Layer $layer: $before records"
+    
+    # PLAN
+    $seedFile = "model/$layer.json"
+    $expected = (Get-Content $seedFile | ConvertFrom-Json).Count
+    Write-Host "[PLAN] Expect to seed $expected records"
+    
+    # DO (one layer)
+    try {
+        $result = Invoke-RestMethod "$base/model/admin/seed-layer" -Method POST `
+            -Body (@{layer=$layer} | ConvertTo-Json) -ContentType "application/json" `
+            -Headers @{"Authorization"="Bearer dev-admin"}
+        Write-Host "[DO] Seeded $($result.records_loaded) records"
+    } catch {
+        Write-Error "[FAIL] Layer $layer seed failed: $_"
+        break  # STOP on first failure
+    }
+    
+    # CHECK (immediate)
+    $after = (Invoke-RestMethod "$base/model/$layer/count").count
+    if ($after -ne ($before + $expected)) {
+        Write-Error "[CHECK FAIL] Expected $($before + $expected), got $after"
+        break
+    }
+    Write-Host "[CHECK PASS] $before -> $after records (+$expected)"
+    
+    # ACT (document)
+    $results += "Layer $layer: $before -> $after records"
+}
+
+# Final ACT - commit all changes
+$commit = Invoke-RestMethod "$base/model/admin/commit" -Method POST `
+    -Headers @{"Authorization"="Bearer dev-admin"}
+if ($commit.status -eq "PASS" -and $commit.violation_count -eq 0) {
+    Write-Host "[ACT PASS] All layers seeded, 0 violations"
+    $results | Out-File "evidence/seed-infrastructure-layers.txt"
+}
+```
+
+**❌ WRONG (Black Box) - Bulk Seed**:
+```powershell
+# Bulk operation - no visibility, no checkpoints
+Invoke-RestMethod "$base/model/admin/seed" -Method POST  # All 91 layers at once
+Start-Sleep -Seconds 60  # Blind waiting - did it work? Unknown.
+# No per-layer counts, no failure detection, no evidence
+```
+
+**✅ CORRECT - Write Session Tracking Record**:
+```powershell
+# DISCOVER
+$projectId = "37-data-model"
+$date = Get-Date -Format "yyyy-MM-dd"
+$sessionId = "$projectId-$date"
+
+# Check if session already exists
+try {
+    $existing = Invoke-RestMethod "$base/model/project_work/$sessionId"
+    Write-Host "[DISCOVER] Session exists: $sessionId (row_version $($existing.row_version))"
+    $prev_rv = $existing.row_version
+    $isUpdate = $true
+} catch {
+    Write-Host "[DISCOVER] New session: $sessionId"
+    $prev_rv = 0
+    $isUpdate = $false
+}
+
+# PLAN - Validate foreign key
+$project = Invoke-RestMethod "$base/model/projects/$projectId"
+if (-not $project) {
+    Write-Error "[PLAN FAIL] project_id '$projectId' does not exist"
+    exit 1
+}
+
+# DO - Write session record
+$body = @{
+    id = $sessionId
+    project_id = $projectId
+    current_phase = "DO"
+    session_summary = @{
+        goals = "Seed 6 infrastructure layers"
+        deliverables = @("azure_infrastructure", "resource_costs")
+    }
+    tasks = @(
+        @{task="Seed azure_infrastructure"; status="complete"},
+        @{task="Seed resource_costs"; status="in_progress"}
+    )
+    metrics = @{
+        layers_modified = 2
+        records_added = 58
+    }
+} | ConvertTo-Json -Depth 10
+
+$updated = Invoke-RestMethod "$base/model/project_work/$sessionId" -Method PUT `
+    -Body $body -ContentType "application/json" `
+    -Headers @{"X-Actor"="agent:copilot"}
+
+# CHECK
+if ($updated.row_version -ne ($prev_rv + 1)) {
+    Write-Error "[CHECK FAIL] Expected row_version $($prev_rv + 1), got $($updated.row_version)"
+    exit 1
+}
+Write-Host "[CHECK PASS] Session tracking updated: row_version $($prev_rv) -> $($updated.row_version)"
+
+# ACT - Record evidence
+$evidenceId = "S43-F37-11-012-D3"
+$evidence = @{
+    id = $evidenceId
+    sprint_id = "37-data-model-S43"
+    story_id = "F37-11-012"
+    phase = "D3"
+    correlation_id = $sessionId
+    artifact_type = "session_tracking_update"
+    test_results = @{session_updated=$true; row_version_verified=$true}
+} | ConvertTo-Json -Depth 10
+
+Invoke-RestMethod "$base/model/evidence/$evidenceId" -Method PUT `
+    -Body $evidence -ContentType "application/json" `
+    -Headers @{"X-Actor"="agent:copilot"}
+```
+
+#### Where This Applies
+
+- **Seed operations**: Seed per-layer with counts, not bulk seed
+- **Multi-record writes**: Write one, verify, then next
+- **Schema changes**: Update schema, validate layer, then seed
+- **Cross-layer updates**: Update layer A, validate, update layer B
+- **Evidence collection**: One evidence record per story per phase
+- **Session tracking**: Update project_work after each deliverable
+
+**Remember**: If you can break it into smaller units with checkpoints, you MUST apply DPDCA to each unit.
 
 ---
 
