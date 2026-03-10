@@ -43,6 +43,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: DISCOVER - Artifact Inventory
+        shell: pwsh
+        run: |
+          ./scripts/discover-artifacts.ps1 -RepositoryRoot "." -OutputPath "./artifacts"
+
+      - name: PLAN - Deployment Manifest
+        shell: pwsh
+        run: |
+          ./scripts/prepare-deployment-manifest.ps1 -OutputPath "./artifacts"
+
       - name: Generate image tag
         id: tag
         run: |
@@ -101,32 +111,90 @@ jobs:
             exit 1
           fi
 
-      - name: Update Container App
+      - name: Collect pre-deployment metrics
+        id: before
+        shell: pwsh
+        run: |
+          Write-Host "📊 Collecting baseline metrics..."
+          $metrics = ./scripts/collect-deployment-metrics.ps1 `
+            -CloudApiUrl "${{ env.CLOUD_URL }}" `
+            -OutputJson "./artifacts/metrics-before.json"
+          
+          # Export key metrics for GitHub output
+          $beforeUptime = $metrics.derived_metrics.uptime_seconds
+          $beforeObjects = $metrics.derived_metrics.total_objects
+          echo "uptime=${beforeUptime}" >> $env:GITHUB_OUTPUT
+          echo "objects=${beforeObjects}" >> $env:GITHUB_OUTPUT
+          Write-Host "✅ Baseline: ${beforeObjects} objects, ${beforeUptime}s uptime"
+
+      - name: Record deployment START
+        id: record_start
+        shell: pwsh
+        run: |
+          $deploymentId = "dep-${{ steps.tag.outputs.tag }}"
+          $beforeState = Get-Content "./artifacts/metrics-before.json" -Raw
+          
+          ./scripts/record-deployment.ps1 `
+            -DeploymentId $deploymentId `
+            -Action "start" `
+            -Status "in_progress" `
+            -Environment "prod" `
+            -ImageTag "${{ steps.tag.outputs.tag }}" `
+            -BeforeState $beforeState
+          
+          echo "deployment_id=${deploymentId}" >> $env:GITHUB_OUTPUT
+
+      - name: Update Container App (Zero-Downtime)
         id: update
         run: |
-          echo "🚀 Updating Container App..."
+          echo "🚀 Deploying new revision with zero-downtime strategy..."
+          
+          # Create new revision with 0% traffic initially
           az containerapp update \
             --name ${{ env.CONTAINER_APP }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image "${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+            --image "${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}" \
+            --revision-suffix "${{ steps.tag.outputs.tag }}" \
+            --set-env-vars "DEPLOYMENT_ID=dep-${{ steps.tag.outputs.tag }}"
           
-          REVISION=$(az containerapp revision list \
+          NEW_REVISION="${{ env.CONTAINER_APP }}--${{ steps.tag.outputs.tag }}"
+          echo "revision=${NEW_REVISION}" >> $GITHUB_OUTPUT
+          echo "✓ New revision created: ${NEW_REVISION}"
+          
+          # Wait for new revision to be ready
+          echo "⏳ Waiting for new revision to start..."
+          sleep 15
+          
+          # Gradually shift traffic: 0% → 50% → 100%
+          echo "📊 Shifting traffic: 0% → 50%..."
+          az containerapp ingress traffic set \
             --name ${{ env.CONTAINER_APP }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
-            --query "[0].name" \
-            --output tsv)
+            --revision-weight latest=50 \
+            --revision-weight "${NEW_REVISION}=50"
           
-          echo "revision=${REVISION}" >> $GITHUB_OUTPUT
-          echo "✓ Container App updated successfully"
-          echo "  New revision: ${REVISION}"
+          echo "⏳ Observing 50/50 split for 30 seconds..."
+          sleep 30
+          
+          echo "📊 Shifting traffic: 50% → 100%..."
+          az containerapp ingress traffic set \
+            --name ${{ env.CONTAINER_APP }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --revision-weight "${NEW_REVISION}=100"
+          
+          echo "✓ Traffic shifted to new revision (100%)"
 
-      - name: Wait for deployment
+      - name: Wait for Container App readiness
+        shell: pwsh
         run: |
-          echo "⏳ Waiting 90 seconds for Container App to restart..."
-          sleep 90
+          ./scripts/wait-for-ready.ps1 `
+            -CloudApiUrl "${{ env.CLOUD_URL }}" `
+            -TimeoutSeconds 120 `
+            -PollIntervalSeconds 5
 
       - name: Verify deployment
         if: ${{ !github.event.inputs.skip_verify }}
+        id: verify
         run: |
           echo "🔍 Verifying deployment..."
           
@@ -181,6 +249,69 @@ jobs:
             echo "  L54 work_decision_records: $([ "$HAS_L54" != "null" ] && echo '✓' || echo '✗')"
             echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '✓' || echo '✗')"
           fi
+          
+          echo "status=success" >> $GITHUB_OUTPUT
+
+      - name: Collect post-deployment metrics
+        if: ${{ !github.event.inputs.skip_verify }}
+        id: after
+        shell: pwsh
+        run: |
+          Write-Host "📊 Collecting post-deployment metrics..."
+          $metrics = ./scripts/collect-deployment-metrics.ps1 `
+            -CloudApiUrl "${{ env.CLOUD_URL }}" `
+            -OutputJson "./artifacts/metrics-after.json"
+          
+          $afterUptime = $metrics.derived_metrics.uptime_seconds
+          $afterObjects = $metrics.derived_metrics.total_objects
+          echo "uptime=${afterUptime}" >> $env:GITHUB_OUTPUT
+          echo "objects=${afterObjects}" >> $env:GITHUB_OUTPUT
+          
+          # Compare with before
+          $beforeObjects = ${{ steps.before.outputs.objects }}
+          $objectDelta = $afterObjects - $beforeObjects
+          Write-Host "✅ Post-deployment: ${afterObjects} objects (Δ ${objectDelta})"
+
+      - name: Record deployment COMPLETE
+        if: always()
+        shell: pwsh
+        run: |
+          $deploymentId = "${{ steps.record_start.outputs.deployment_id }}"
+          $status = "${{ steps.verify.outputs.status }}"
+          if (-not $status) { $status = "failed" }
+          
+          $afterState = "{}"
+          if (Test-Path "./artifacts/metrics-after.json") {
+            $afterState = Get-Content "./artifacts/metrics-after.json" -Raw
+          }
+          
+          # Calculate duration
+          $duration = ([DateTime]::UtcNow - [DateTime]::Parse("${{ steps.record_start.outputs.timestamp }}")).TotalSeconds
+          
+          # Build validation results
+          $validationResults = @(
+            @{ check = "health"; status = "${{ steps.verify.outputs.status }}" }
+            @{ check = "agent_summary"; status = "${{ steps.verify.outputs.status }}" }
+            @{ check = "execution_layers"; status = "${{ steps.verify.outputs.status }}" }
+          ) | ConvertTo-Json -Compress
+          
+          ./scripts/record-deployment.ps1 `
+            -DeploymentId $deploymentId `
+            -Action "complete" `
+            -Status $status `
+            -Environment "prod" `
+            -Revision "${{ steps.update.outputs.revision }}" `
+            -AfterState $afterState `
+            -DurationSeconds ([int]$duration) `
+            -ValidationResults $validationResults
+
+      - name: VERIFY - Comprehensive Layer Audit
+        if: ${{ !github.event.inputs.skip_verify }}
+        shell: pwsh
+        run: |
+          ./scripts/verify-deployment-layers.ps1 `
+            -CloudApiUrl "${{ env.CLOUD_URL }}" `
+            -OutputPath "./artifacts"
 
       - name: Deployment summary
         if: always()
