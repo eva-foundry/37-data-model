@@ -1,0 +1,70 @@
+{
+  "layer": {
+    "title_fr": "Agents",
+    "id": "L58",
+    "name": "agents",
+    "title": "Agents"
+  },
+  "timestamp": "2026-03-11T18:59:06Z",
+  "components_generated": [
+    {
+      "lines_of_code": 165,
+      "type": "ListView",
+      "path": "ui/src/pages/agents/AgentsListView.tsx",
+      "file": "AgentsListView.tsx"
+    },
+    {
+      "lines_of_code": 274,
+      "type": "DetailView",
+      "path": "ui/src/components/agents/AgentsDetailDrawer.tsx",
+      "file": "AgentsDetailDrawer.tsx"
+    },
+    {
+      "lines_of_code": 478,
+      "type": "CreateForm",
+      "path": "ui/src/components/agents/AgentsCreateForm.tsx",
+      "file": "AgentsCreateForm.tsx"
+    },
+    {
+      "lines_of_code": 506,
+      "type": "EditForm",
+      "path": "ui/src/components/agents/AgentsEditForm.tsx",
+      "file": "AgentsEditForm.tsx"
+    },
+    {
+      "lines_of_code": 213,
+      "type": "GraphView",
+      "path": "ui/src/components/agents/AgentsGraphView.tsx",
+      "file": "AgentsGraphView.tsx"
+    },
+    {
+      "lines_of_code": 254,
+      "type": "test.spec",
+      "path": "ui/src/pages/agents/__tests__/AgentsListView.test.tsx",
+      "file": "AgentsListView.test.tsx"
+    }
+  ],
+  "generator": "screens-machine-v1.0.0",
+  "session": "45-part5-factory-poc",
+  "operation": "screen_generation",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Agents screens (auto-generated)'"
+  ],
+  "metrics": {
+    "total_loc": 1890,
+    "avg_loc_per_file": 315.0,
+    "files_count": 6,
+    "duration_seconds": 0.33
+  },
+  "quality_gates": {
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "accessibility": "PENDING",
+    "i18n": "PENDING",
+    "eslint": "PENDING"
+  }
+}

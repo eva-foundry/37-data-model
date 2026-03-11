@@ -1,0 +1,70 @@
+{
+  "layer": {
+    "title_fr": "Sprints",
+    "id": "L2",
+    "name": "sprints",
+    "title": "Sprints"
+  },
+  "timestamp": "2026-03-11T18:59:03Z",
+  "components_generated": [
+    {
+      "lines_of_code": 165,
+      "type": "ListView",
+      "path": "ui/src/pages/sprints/SprintsListView.tsx",
+      "file": "SprintsListView.tsx"
+    },
+    {
+      "lines_of_code": 330,
+      "type": "DetailView",
+      "path": "ui/src/components/sprints/SprintsDetailDrawer.tsx",
+      "file": "SprintsDetailDrawer.tsx"
+    },
+    {
+      "lines_of_code": 806,
+      "type": "CreateForm",
+      "path": "ui/src/components/sprints/SprintsCreateForm.tsx",
+      "file": "SprintsCreateForm.tsx"
+    },
+    {
+      "lines_of_code": 834,
+      "type": "EditForm",
+      "path": "ui/src/components/sprints/SprintsEditForm.tsx",
+      "file": "SprintsEditForm.tsx"
+    },
+    {
+      "lines_of_code": 213,
+      "type": "GraphView",
+      "path": "ui/src/components/sprints/SprintsGraphView.tsx",
+      "file": "SprintsGraphView.tsx"
+    },
+    {
+      "lines_of_code": 254,
+      "type": "test.spec",
+      "path": "ui/src/pages/sprints/__tests__/SprintsListView.test.tsx",
+      "file": "SprintsListView.test.tsx"
+    }
+  ],
+  "generator": "screens-machine-v1.0.0",
+  "session": "45-part5-factory-poc",
+  "operation": "screen_generation",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Sprints screens (auto-generated)'"
+  ],
+  "metrics": {
+    "total_loc": 2602,
+    "avg_loc_per_file": 434.0,
+    "files_count": 6,
+    "duration_seconds": 0.42
+  },
+  "quality_gates": {
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "accessibility": "PENDING",
+    "i18n": "PENDING",
+    "eslint": "PENDING"
+  }
+}

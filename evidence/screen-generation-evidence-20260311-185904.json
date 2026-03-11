@@ -1,0 +1,70 @@
+{
+  "layer": {
+    "title_fr": "Evidence",
+    "id": "L5",
+    "name": "evidence",
+    "title": "Evidence"
+  },
+  "timestamp": "2026-03-11T18:59:04Z",
+  "components_generated": [
+    {
+      "lines_of_code": 165,
+      "type": "ListView",
+      "path": "ui/src/pages/evidence/EvidenceListView.tsx",
+      "file": "EvidenceListView.tsx"
+    },
+    {
+      "lines_of_code": 290,
+      "type": "DetailView",
+      "path": "ui/src/components/evidence/EvidenceDetailDrawer.tsx",
+      "file": "EvidenceDetailDrawer.tsx"
+    },
+    {
+      "lines_of_code": 593,
+      "type": "CreateForm",
+      "path": "ui/src/components/evidence/EvidenceCreateForm.tsx",
+      "file": "EvidenceCreateForm.tsx"
+    },
+    {
+      "lines_of_code": 621,
+      "type": "EditForm",
+      "path": "ui/src/components/evidence/EvidenceEditForm.tsx",
+      "file": "EvidenceEditForm.tsx"
+    },
+    {
+      "lines_of_code": 213,
+      "type": "GraphView",
+      "path": "ui/src/components/evidence/EvidenceGraphView.tsx",
+      "file": "EvidenceGraphView.tsx"
+    },
+    {
+      "lines_of_code": 254,
+      "type": "test.spec",
+      "path": "ui/src/pages/evidence/__tests__/EvidenceListView.test.tsx",
+      "file": "EvidenceListView.test.tsx"
+    }
+  ],
+  "generator": "screens-machine-v1.0.0",
+  "session": "45-part5-factory-poc",
+  "operation": "screen_generation",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Evidence screens (auto-generated)'"
+  ],
+  "metrics": {
+    "total_loc": 2136,
+    "avg_loc_per_file": 356.0,
+    "files_count": 6,
+    "duration_seconds": 0.35
+  },
+  "quality_gates": {
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "accessibility": "PENDING",
+    "i18n": "PENDING",
+    "eslint": "PENDING"
+  }
+}
