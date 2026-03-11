@@ -1,0 +1,216 @@
+{
+  "generator": "screens-machine-v2.0.0",
+  "layer": {
+    "id": "L25",
+    "name": "projects",
+    "title": "Projects",
+    "title_fr": "Projets"
+  },
+  "components_generated": [
+    {
+      "lines_of_code": 176,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\projects\\ProjectsListView.tsx",
+      "type": "ListView",
+      "file": "ProjectsListView.tsx"
+    },
+    {
+      "lines_of_code": 177,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsDetailDrawer.tsx",
+      "type": "DetailView",
+      "file": "ProjectsDetailDrawer.tsx"
+    },
+    {
+      "lines_of_code": 1111,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsCreateForm.tsx",
+      "type": "CreateForm",
+      "file": "ProjectsCreateForm.tsx"
+    },
+    {
+      "lines_of_code": 1174,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsEditForm.tsx",
+      "type": "EditForm",
+      "file": "ProjectsEditForm.tsx"
+    },
+    {
+      "lines_of_code": 212,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsGraphView.tsx",
+      "type": "GraphView",
+      "file": "ProjectsGraphView.tsx"
+    },
+    {
+      "lines_of_code": 254,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\projects\\__tests__\\ProjectsListView.test.tsx",
+      "type": "test.spec",
+      "file": "ProjectsListView.test.tsx"
+    }
+  ],
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Projects screens v2 (schema-generated)'"
+  ],
+  "operation": "screen_generation_v2",
+  "session": "45-part6-schema-generation",
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "no_placeholders": "PENDING"
+  },
+  "schema": {
+    "fields_count": 20,
+    "fields": [
+      {
+        "name": "id",
+        "label": "Id",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "phase",
+        "label": "Phase",
+        "type": "string",
+        "input_type": "textarea",
+        "required": false
+      },
+      {
+        "name": "goal",
+        "label": "Goal",
+        "type": "string",
+        "input_type": "textarea",
+        "required": true
+      },
+      {
+        "name": "pbi_total",
+        "label": "Pbi Total",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "maturity",
+        "label": "Maturity",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "sprint_context",
+        "label": "Sprint Context",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "label_fr",
+        "label": "Label Fr",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "ado_epic_id",
+        "label": "Ado Epic Id",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "ado_project",
+        "label": "Ado Project",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "folder",
+        "label": "Folder",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "notes",
+        "label": "Notes",
+        "type": "string",
+        "input_type": "textarea",
+        "required": false
+      },
+      {
+        "name": "depends_on",
+        "label": "Depends On",
+        "type": "array",
+        "input_type": "textarea",
+        "required": false
+      },
+      {
+        "name": "status",
+        "label": "Status",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "github_repo",
+        "label": "Github Repo",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "category",
+        "label": "Category",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "pbi_done",
+        "label": "Pbi Done",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "label",
+        "label": "Label",
+        "type": "string",
+        "input_type": "text",
+        "required": true
+      },
+      {
+        "name": "wbs_id",
+        "label": "Wbs Id",
+        "type": "string",
+        "input_type": "text",
+        "required": false
+      },
+      {
+        "name": "blocked_by",
+        "label": "Blocked By",
+        "type": "array",
+        "input_type": "textarea",
+        "required": false
+      },
+      {
+        "name": "services",
+        "label": "Services",
+        "type": "array",
+        "input_type": "textarea",
+        "required": false
+      }
+    ]
+  },
+  "timestamp": "2026-03-11T00:47:54Z",
+  "metrics": {
+    "files_count": 6,
+    "duration_seconds": 0.42,
+    "avg_loc_per_file": 517.0,
+    "total_loc": 3104
+  }
+}
