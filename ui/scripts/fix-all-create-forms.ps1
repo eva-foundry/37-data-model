@@ -9,14 +9,14 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$base = "C:\eva-foundry\37-data-model\ui"
+$base = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 
 Write-Host "`n=== BATCH FIX: CreateForm Components ===" -ForegroundColor Cyan
 Write-Host "Working directory: $base" -ForegroundColor Gray
 Write-Host "Mode: $(if ($DryRun) { 'DRY RUN' } else { 'LIVE' })" -ForegroundColor $(if ($DryRun) { 'Yellow' } else { 'Green' })
 
 # Find all CreateForm files
-$createForms = Get-ChildItem -Path "$base\src\components" -Recurse -Filter "*CreateForm.tsx"
+$createForms = Get-ChildItem -Path "$base/src\components" -Recurse -Filter "*CreateForm.tsx"
 Write-Host "`nFound $($createForms.Count) CreateForm files" -ForegroundColor White
 
 $fixed = 0

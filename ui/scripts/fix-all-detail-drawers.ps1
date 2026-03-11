@@ -9,7 +9,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$base = "C:\eva-foundry\37-data-model\ui"
+$base = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 
 # Define the template placeholder to find
 $oldPattern = @"
@@ -60,7 +60,7 @@ Write-Host "Working directory: $base" -ForegroundColor Gray
 Write-Host "Mode: $(if ($DryRun) { 'DRY RUN' } else { 'LIVE' })" -ForegroundColor $(if ($DryRun) { 'Yellow' } else { 'Green' })
 
 # Find all DetailDrawer files
-$detailDrawers = Get-ChildItem -Path "$base\src\components" -Recurse -Filter "*DetailDrawer.tsx"
+$detailDrawers = Get-ChildItem -Path "$base/src\components" -Recurse -Filter "*DetailDrawer.tsx"
 Write-Host "`nFound $($detailDrawers.Count) DetailDrawer files" -ForegroundColor White
 
 $fixed = 0
