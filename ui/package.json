@@ -1,0 +1,25 @@
+{
+  "name": "@eva/data-model-ui",
+  "version": "1.0.0",
+  "description": "Views library for EVA Data Model API - intelligent query wrappers with context-aware filtering",
+  "type": "module",
+  "main": "./src/lib/views/index.ts",
+  "types": "./src/types/index.ts",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": ["eva", "data-model", "views", "api-client"],
+  "author": "EVA Foundation",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  }
+}
