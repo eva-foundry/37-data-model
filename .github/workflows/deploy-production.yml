@@ -65,7 +65,7 @@ jobs:
         run: |
           az account set --subscription ${{ env.TARGET_SUBSCRIPTION }}
           CURRENT_SUB=$(az account show --query name -o tsv)
-          echo "✓ Current subscription: ${CURRENT_SUB}"
+          echo "[PASS] Current subscription: ${CURRENT_SUB}"
 
       - name: Generate layer-metadata-index.json from Cosmos DB
         run: |
@@ -73,7 +73,7 @@ jobs:
           python3 scripts/generate-layer-metadata-index.py
           
           if [ $? -eq 0 ]; then
-            echo "✓ Metadata index generated successfully"
+            echo "[PASS] Metadata index generated successfully"
             
             # Show summary
             TOTAL_LAYERS=$(jq '.total_layers' model/layer-metadata-index.json)
@@ -88,11 +88,11 @@ jobs:
             if git diff --quiet model/layer-metadata-index.json; then
               echo "  No changes detected"
             else
-              echo "⚠️  Metadata index changed - new layers detected in Cosmos DB!"
+              echo "[WARN] Metadata index changed - new layers detected in Cosmos DB!"
               git diff --stat model/layer-metadata-index.json
             fi
           else
-            echo "❌ Failed to generate metadata index"
+            echo "[ERROR] Failed to generate metadata index"
             exit 1
           fi
 
@@ -112,21 +112,21 @@ jobs:
           BUILD_END=$(date +%s)
           BUILD_DURATION=$((BUILD_END - BUILD_START))
           
-          echo "✓ Image built successfully in ${BUILD_DURATION}s"
+          echo "[PASS] Image built successfully in ${BUILD_DURATION}s"
           echo "  Image: ${{ env.TARGET_ACR }}.azurecr.io/${FULL_IMAGE}"
 
       - name: Verify image in ACR
         run: |
-          echo "🔍 Verifying image in ACR..."
+          echo "[INFO] Verifying image in ACR..."
           TAGS=$(az acr repository show-tags \
             --name ${{ env.TARGET_ACR }} \
             --repository ${{ env.IMAGE_NAME }} \
             --output json)
           
           if echo "$TAGS" | grep -q "${{ steps.tag.outputs.tag }}"; then
-            echo "✓ Image verified in ACR: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+            echo "[PASS] Image verified in ACR: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
           else
-            echo "✗ Image not found in ACR after build"
+            echo "[FAIL] Image not found in ACR after build"
             exit 1
           fi
 
@@ -134,7 +134,7 @@ jobs:
         id: before
         shell: pwsh
         run: |
-          Write-Host "📊 Collecting baseline metrics..."
+          Write-Host "[INFO] Collecting baseline metrics..."
           $metrics = ./scripts/collect-deployment-metrics.ps1 `
             -CloudApiUrl "${{ env.CLOUD_URL }}" `
             -OutputJson "./artifacts/metrics-before.json"
@@ -144,12 +144,12 @@ jobs:
           $beforeObjects = $metrics.derived_metrics.total_objects
           echo "uptime=${beforeUptime}" >> $env:GITHUB_OUTPUT
           echo "objects=${beforeObjects}" >> $env:GITHUB_OUTPUT
-          Write-Host "✅ Baseline: ${beforeObjects} objects, ${beforeUptime}s uptime"
+          Write-Host "[PASS] Baseline: ${beforeObjects} objects, ${beforeUptime}s uptime"
 
       - name: Discover endpoints (BEFORE deployment)
         id: endpoints_before
         run: |
-          echo "🔍 Discovering and testing all API endpoints (BEFORE deployment)..."
+          echo "[INFO] Discovering and testing all API endpoints (BEFORE deployment)..."
           python3 -m pip install requests --quiet
           python3 scripts/discover-endpoints.py --stage before
           
@@ -158,12 +158,12 @@ jobs:
           ENDPOINTS_SUCCESS=$(jq '.success_count' evidence/endpoint-discovery_before_*.json | tail -1)
           echo "endpoints_found=${ENDPOINTS_FOUND}" >> $GITHUB_OUTPUT
           echo "endpoints_success=${ENDPOINTS_SUCCESS}" >> $GITHUB_OUTPUT
-          echo "✅ Discovered ${ENDPOINTS_FOUND} endpoints, ${ENDPOINTS_SUCCESS} tested successfully"
+          echo "[PASS] Discovered ${ENDPOINTS_FOUND} endpoints, ${ENDPOINTS_SUCCESS} tested successfully"
 
       - name: Update Container App (Zero-Downtime)
         id: update
         run: |
-          echo "🚀 Deploying new revision with zero-downtime strategy..."
+          echo "[INFO] Deploying new revision with zero-downtime strategy..."
           
           # Create new revision with 0% traffic initially
           az containerapp update \
@@ -175,14 +175,14 @@ jobs:
           
           NEW_REVISION="${{ env.CONTAINER_APP }}--${{ steps.tag.outputs.tag }}"
           echo "revision=${NEW_REVISION}" >> $GITHUB_OUTPUT
-          echo "✓ New revision created: ${NEW_REVISION}"
+          echo "[PASS] New revision created: ${NEW_REVISION}"
           
           # Wait for new revision to be ready
-          echo "⏳ Waiting for new revision to start..."
+          echo "[INFO] Waiting for new revision to start..."
           sleep 15
           
-          # Gradually shift traffic: 0% → 50% → 100%
-          echo "📊 Shifting traffic: 0% → 50%..."
+          # Gradually shift traffic: 0% -> 50% -> 100%
+          echo "[INFO] Shifting traffic: 0% -> 50%..."
           az containerapp ingress traffic set \
             --name ${{ env.CONTAINER_APP }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
@@ -192,13 +192,13 @@ jobs:
           echo "⏳ Observing 50/50 split for 30 seconds..."
           sleep 30
           
-          echo "📊 Shifting traffic: 50% → 100%..."
+          echo "[INFO] Shifting traffic: 50% -> 100%..."
           az containerapp ingress traffic set \
             --name ${{ env.CONTAINER_APP }} \
             --resource-group ${{ env.RESOURCE_GROUP }} \
             --revision-weight "${NEW_REVISION}=100"
           
-          echo "✓ Traffic shifted to new revision (100%)"
+          echo "[PASS] Traffic shifted to new revision (100%)"
 
       - name: Wait for Container App readiness
         shell: pwsh
@@ -212,22 +212,22 @@ jobs:
         if: ${{ !github.event.inputs.skip_verify }}
         id: verify
         run: |
-          echo "🔍 Verifying deployment..."
+          echo "[INFO] Verifying deployment..."
           
           # Health check
           echo "Testing health endpoint..."
           HEALTH=$(curl -f -s "${{ env.CLOUD_URL }}/health" || echo "FAILED")
           
           if [ "$HEALTH" = "FAILED" ]; then
-            echo "✗ Health check FAILED"
+            echo "[FAIL] Health check FAILED"
             exit 1
           fi
           
           UPTIME=$(echo "$HEALTH" | jq -r '.uptime_seconds')
           if [ "$UPTIME" -lt 120 ]; then
-            echo "✓ Health check PASS (uptime: ${UPTIME}s - recently restarted)"
+            echo "[PASS] Health check PASS (uptime: ${UPTIME}s - recently restarted)"
           else
-            echo "⚠ Health check PASS but uptime unexpected (${UPTIME}s - may not have restarted)"
+            echo "[WARN] Health check PASS but uptime unexpected (${UPTIME}s - may not have restarted)"
           fi
           
           # Agent summary check
@@ -235,14 +235,14 @@ jobs:
           SUMMARY=$(curl -f -s "${{ env.CLOUD_URL }}/model/agent-summary" || echo "FAILED")
           
           if [ "$SUMMARY" = "FAILED" ]; then
-            echo "✗ Agent summary check FAILED"
+            echo "[FAIL] Agent summary check FAILED"
             exit 1
           fi
           
           LAYER_COUNT=$(echo "$SUMMARY" | jq '.layers | length')
           EVIDENCE_COUNT=$(echo "$SUMMARY" | jq -r '.layers.evidence // 0')
           
-          echo "✓ Agent summary PASS"
+          echo "[PASS] Agent summary PASS"
           echo "  Layers: ${LAYER_COUNT}"
           echo "  Evidence: ${EVIDENCE_COUNT}"
           
@@ -253,17 +253,17 @@ jobs:
           HAS_L56=$(echo "$SUMMARY" | jq -r '.layers.work_outcomes // "null"')
           
           if [ "$HAS_L52" != "null" ] && [ "$HAS_L53" != "null" ] && [ "$HAS_L54" != "null" ] && [ "$HAS_L56" != "null" ]; then
-            echo "✓ Phase 1 Execution layers detected (L52-L56)"
+            echo "[PASS] Phase 1 Execution layers detected (L52-L56)"
             echo "  L52 work_execution_units: ${HAS_L52} objects"
             echo "  L53 work_step_events: ${HAS_L53} objects"
             echo "  L54 work_decision_records: ${HAS_L54} objects"
             echo "  L56 work_outcomes: ${HAS_L56} objects"
           else
-            echo "⚠ Phase 1 Execution layers NOT fully detected"
-            echo "  L52 work_execution_units: $([ "$HAS_L52" != "null" ] && echo '✓' || echo '✗')"
-            echo "  L53 work_step_events: $([ "$HAS_L53" != "null" ] && echo '✓' || echo '✗')"
-            echo "  L54 work_decision_records: $([ "$HAS_L54" != "null" ] && echo '✓' || echo '✗')"
-            echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '✓' || echo '✗')"
+            echo "[WARN] Phase 1 Execution layers NOT fully detected"
+            echo "  L52 work_execution_units: $([ "$HAS_L52" != "null" ] && echo '[PASS]' || echo '[FAIL]')"
+            echo "  L53 work_step_events: $([ "$HAS_L53" != "null" ] && echo '[PASS]' || echo '[FAIL]')"
+            echo "  L54 work_decision_records: $([ "$HAS_L54" != "null" ] && echo '[PASS]' || echo '[FAIL]')"
+            echo "  L56 work_outcomes: $([ "$HAS_L56" != "null" ] && echo '[PASS]' || echo '[FAIL]')"
           fi
           
           echo "status=success" >> $GITHUB_OUTPUT
@@ -273,7 +273,7 @@ jobs:
         id: after
         shell: pwsh
         run: |
-          Write-Host "📊 Collecting post-deployment metrics..."
+          Write-Host "[INFO] Collecting post-deployment metrics..."
           $metrics = ./scripts/collect-deployment-metrics.ps1 `
             -CloudApiUrl "${{ env.CLOUD_URL }}" `
             -OutputJson "./artifacts/metrics-after.json"
@@ -286,7 +286,31 @@ jobs:
           # Compare with before
           $beforeObjects = ${{ steps.before.outputs.objects }}
           $objectDelta = $afterObjects - $beforeObjects
-          Write-Host "✅ Post-deployment: ${afterObjects} objects (Δ ${objectDelta})"
+          Write-Host "[PASS] Post-deployment: ${afterObjects} objects (Delta ${objectDelta})"
+
+      - name: Compare endpoint snapshots
+        if: ${{ !github.event.inputs.skip_verify }}
+        id: endpoints_compare
+        run: |
+          echo "[INFO] Comparing endpoint snapshots (before vs after)..."
+          python3 scripts/compare-endpoint-snapshots.py --latest
+          
+          # Extract comparison results
+          ADDED=$(jq '.endpoints_added' evidence/endpoint-comparison_*.json | tail -1)
+          REMOVED=$(jq '.endpoints_removed' evidence/endpoint-comparison_*.json | tail -1)
+          CHANGED=$(jq '.endpoints_changed' evidence/endpoint-comparison_*.json | tail -1)
+          UNCHANGED=$(jq '.endpoints_unchanged' evidence/endpoint-comparison_*.json | tail -1)
+          
+          echo "endpoints_added=${ADDED}" >> $GITHUB_OUTPUT
+          echo "endpoints_removed=${REMOVED}" >> $GITHUB_OUTPUT
+          echo "endpoints_changed=${CHANGED}" >> $GITHUB_OUTPUT
+          echo "endpoints_unchanged=${UNCHANGED}" >> $GITHUB_OUTPUT
+          
+          echo "=== Endpoint Changes ==="
+          echo "  Added:     ${ADDED}"
+          echo "  Removed:   ${REMOVED}"
+          echo "  Changed:   ${CHANGED}"
+          echo "  Unchanged: ${UNCHANGED}"
 
       - name: Upload endpoint evidence
         if: always()
@@ -303,51 +327,22 @@ jobs:
       - name: Deployment summary
         if: always()
         run: |
-          echo "━━━ Deployment Complete ━━━"
-          echo "✓ Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
-          echo "✓ Container App: ${{ env.CONTAINER_APP }}"
-          echo "✓ Revision: ${{ steps.update.outputs.revision }}"
-          echo "✓ Cloud URL: ${{ env.CLOUD_URL }}"
+          echo "=== Deployment Complete ==="
+          echo "[PASS] Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          echo "[PASS] Container App: ${{ env.CONTAINER_APP }}"
+          echo "[PASS] Revision: ${{ steps.update.outputs.revision }}"
+          echo "[PASS] Cloud URL: ${{ env.CLOUD_URL }}"
           echo ""
-          echo "━━━ Endpoint Analysis ━━━"
-          echo "✓ Before: ${{ steps.endpoints_before.outputs.endpoints_found }} endpoints"
-          echo "✓ After:  ${{ steps.endpoints_after.outputs.endpoints_found }} endpoints"
-          echo "✓ Changes: +${{ steps.endpoints_compare.outputs.endpoints_added }} added, -${{ steps.endpoints_compare.outputs.endpoints_removed }} removed, ~${{ steps.endpoints_compare.outputs.endpoints_changed }} changed
-          ENDPOINTS_FOUND=$(jq '.endpoints_discovered' evidence/endpoint-discovery_after_*.json | tail -1)
-          ENDPOINTS_SUCCESS=$(jq '.success_count' evidence/endpoint-discovery_after_*.json | tail -1)
-          echo "endpoints_found=${ENDPOINTS_FOUND}" >> $GITHUB_OUTPUT
-          echo "endpoints_success=${ENDPOINTS_SUCCESS}" >> $GITHUB_OUTPUT
-          echo "✅ Discovered ${ENDPOINTS_FOUND} endpoints, ${ENDPOINTS_SUCCESS} tested successfully"
-
-      - name: Compare endpoint snapshots
-        if: ${{ !github.event.inputs.skip_verify }}
-        id: endpoints_compare
-        run: |
-          echo "📊 Comparing endpoint snapshots (before vs after)..."
-          python3 scripts/compare-endpoint-snapshots.py --latest || echo "⚠️ Comparison detected changes"
-          
-          # Extract comparison results
-          ADDED=$(jq '.endpoints_added' evidence/endpoint-comparison_*.json | tail -1)
-          REMOVED=$(jq '.endpoints_removed' evidence/endpoint-comparison_*.json | tail -1)
-          CHANGED=$(jq '.endpoints_changed' evidence/endpoint-comparison_*.json | tail -1)
-          UNCHANGED=$(jq '.endpoints_unchanged' evidence/endpoint-comparison_*.json | tail -1)
-          
-          echo "endpoints_added=${ADDED}" >> $GITHUB_OUTPUT
-          echo "endpoints_removed=${REMOVED}" >> $GITHUB_OUTPUT
-          echo "endpoints_changed=${CHANGED}" >> $GITHUB_OUTPUT
-          echo "endpoints_unchanged=${UNCHANGED}" >> $GITHUB_OUTPUT
-          
-          echo "━━━ Endpoint Changes ━━━"
-          echo "  Added:     ${ADDED}"
-          echo "  Removed:   ${REMOVED}"
-          echo "  Changed:   ${CHANGED}"
-          echo "  Unchanged: ${UNCHANGED}"
+          echo "=== Endpoint Analysis ==="
+          echo "[PASS] Before: ${{ steps.endpoints_before.outputs.endpoints_found }} endpoints"
+          echo "[PASS] After:  ${{ steps.endpoints_after.outputs.endpoints_found }} endpoints"
+          echo "[PASS] Changes: +${{ steps.endpoints_compare.outputs.endpoints_added }} added, -${{ steps.endpoints_compare.outputs.endpoints_removed }} removed, ~${{ steps.endpoints_compare.outputs.endpoints_changed }} changed"
 
       - name: Deployment summary
         if: always()
         run: |
-          echo "━━━ Deployment Complete ━━━"
-          echo "✓ Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
-          echo "✓ Container App: ${{ env.CONTAINER_APP }}"
-          echo "✓ Revision: ${{ steps.update.outputs.revision }}"
-          echo "✓ Cloud URL: ${{ env.CLOUD_URL }}"
+          echo "=== Deployment Complete ==="
+          echo "[PASS] Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          echo "[PASS] Container App: ${{ env.CONTAINER_APP }}"
+          echo "[PASS] Revision: ${{ steps.update.outputs.revision }}"
+          echo "[PASS] Cloud URL: ${{ env.CLOUD_URL }}"

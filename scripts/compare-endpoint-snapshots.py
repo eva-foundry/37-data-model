@@ -63,24 +63,53 @@ def load_snapshot(file_path: Path, logger: logging.Logger) -> Dict[str, Any]:
 
 
 def find_latest_snapshots(logger: logging.Logger) -> Tuple[Path, Path]:
-    """Find latest before/after snapshot files."""
+    """Find latest matching before/after snapshot files for the same run."""
     evidence_dir = Path("evidence")
-    
-    # Find latest before
-    before_files = sorted(evidence_dir.glob("endpoint-discovery_before_*.json"), reverse=True)
-    if not before_files:
+
+    before_prefix = "endpoint-discovery_before_"
+    after_prefix = "endpoint-discovery_after_"
+    suffix = ".json"
+
+    before_by_run: Dict[str, Path] = {}
+    after_by_run: Dict[str, Path] = {}
+
+    # Index all "before" snapshots by run identifier
+    for path in evidence_dir.glob(f"{before_prefix}*{suffix}"):
+        name = path.name
+        if not name.startswith(before_prefix) or not name.endswith(suffix):
+            continue
+        run_id = name[len(before_prefix):-len(suffix)]
+        before_by_run[run_id] = path
+
+    # Index all "after" snapshots by run identifier
+    for path in evidence_dir.glob(f"{after_prefix}*{suffix}"):
+        name = path.name
+        if not name.startswith(after_prefix) or not name.endswith(suffix):
+            continue
+        run_id = name[len(after_prefix):-len(suffix)]
+        after_by_run[run_id] = path
+
+    if not before_by_run:
         raise FileNotFoundError("No 'before' snapshot found in evidence/")
-    before_file = before_files[0]
-    
-    # Find latest after
-    after_files = sorted(evidence_dir.glob("endpoint-discovery_after_*.json"), reverse=True)
-    if not after_files:
+    if not after_by_run:
         raise FileNotFoundError("No 'after' snapshot found in evidence/")
-    after_file = after_files[0]
-    
-    logger.info(f"Auto-detected snapshots:")
-    logger.info(f"  Before: {before_file.name}")
-    logger.info(f"  After:  {after_file.name}")
+
+    # Find run identifiers that have both before and after snapshots
+    common_run_ids = sorted(set(before_by_run.keys()) & set(after_by_run.keys()))
+    if not common_run_ids:
+        raise FileNotFoundError(
+            "No matching before/after snapshot pair found in evidence/. "
+            "Ensure both stages produced snapshots for the same run."
+        )
+
+    # Choose the latest common run identifier (lexicographically, e.g., timestamp)
+    latest_run_id = common_run_ids[-1]
+    before_file = before_by_run[latest_run_id]
+    after_file = after_by_run[latest_run_id]
+
+    logger.info("Auto-detected snapshots for run id '%s':", latest_run_id)
+    logger.info("  Before: %s", before_file.name)
+    logger.info("  After:  %s", after_file.name)
     
     return before_file, after_file
 
@@ -119,10 +148,10 @@ def compare_endpoint_lists(before: List[Dict], after: List[Dict], logger: loggin
         changes = []
         
         if before_ep.get("status") != after_ep.get("status"):
-            changes.append(f"status: {before_ep.get('status')} → {after_ep.get('status')}")
+            changes.append(f"status: {before_ep.get('status')} -> {after_ep.get('status')}")
         
         if before_ep.get("response_code") != after_ep.get("response_code"):
-            changes.append(f"response_code: {before_ep.get('response_code')} → {after_ep.get('response_code')}")
+            changes.append(f"response_code: {before_ep.get('response_code')} -> {after_ep.get('response_code')}")
         
         # Response size change > 10%
         before_size = before_ep.get("response_size_bytes", 0)
@@ -130,7 +159,7 @@ def compare_endpoint_lists(before: List[Dict], after: List[Dict], logger: loggin
         if before_size and after_size:
             size_change_pct = abs(after_size - before_size) / before_size * 100
             if size_change_pct > 10:
-                changes.append(f"response_size: {before_size}b → {after_size}b ({size_change_pct:.1f}% change)")
+                changes.append(f"response_size: {before_size}b -> {after_size}b ({size_change_pct:.1f}% change)")
         
         if changes:
             changed.append({
@@ -238,7 +267,7 @@ def main():
         # Save to evidence file
         evidence_file = Path("evidence") / f"endpoint-comparison_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(evidence_file, 'w', encoding='utf-8') as f:
-            json.dump(evidence, f, indent=2, ensure_ascii=False)
+            json.dump(evidence, f, indent=2, ensure_ascii=True)
         
         # Print summary
         logger.info("=" * 70)

@@ -347,7 +347,7 @@ def main():
         # Save to evidence file
         evidence_file = Path("evidence") / f"endpoint-discovery_{args.stage}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(evidence_file, 'w', encoding='utf-8') as f:
-            json.dump(evidence, f, indent=2, ensure_ascii=False)
+            json.dump(evidence, f, indent=2, ensure_ascii=True)
         
         logger.info("=" * 70)
         logger.info(" SUMMARY")

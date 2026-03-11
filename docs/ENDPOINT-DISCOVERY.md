@@ -7,12 +7,12 @@ Comprehensive endpoint inventory system for tracking API surface area across dep
 **Purpose**: Capture complete API endpoint inventory with response examples as deployment evidence. Detect endpoint additions, removals, and behavioral changes.
 
 **Key Features**:
-- ✅ Auto-discover all endpoints from OpenAPI spec
-- ✅ Test GET endpoints with response sampling
-- ✅ Before/after deployment snapshots
-- ✅ Automatic change detection and reporting
-- ✅ Evidence files committed to git
-- ✅ Integrated into CI/CD pipeline
+- [PASS] Auto-discover all endpoints from OpenAPI spec
+- [PASS] Test GET endpoints with response sampling
+- [PASS] Before/after deployment snapshots
+- [PASS] Automatic change detection and reporting
+- [PASS] Evidence files uploaded as artifacts
+- [PASS] Integrated into CI/CD pipeline
 
 ---
 
@@ -128,7 +128,7 @@ python scripts/compare-endpoint-snapshots.py \
         "path": "/model/projects",
         "method": "GET",
         "changes": [
-          "response_size: 4567b → 5123b (12.2% change)"
+          "response_size: 4567b -> 5123b (12.2% change)"
         ]
       }
     ]
@@ -260,7 +260,7 @@ All scripts follow **EVA Script Infrastructure** standards:
 ```bash
 # 1. Start local API (if testing locally)
 cd 37-data-model
-uvicorn api.main:app --reload --port 8010
+uvicorn api.server:app --reload --port 8010
 
 # 2. Discover endpoints (before)
 python scripts/discover-endpoints.py --local --stage before
@@ -280,11 +280,11 @@ cat evidence/endpoint-comparison_*.json | jq
 ### Production API
 
 ```bash
-# Discover production endpoints
-python scripts/discover-endpoints.py --stage production
+# Discover production endpoints (after deployment snapshot)
+python scripts/discover-endpoints.py --stage after
 
 # Review evidence
-cat evidence/endpoint-discovery_production_*.json | jq '.endpoints[] | select(.status == "success") | .path'
+cat evidence/endpoint-discovery_after_*.json | jq '.endpoints[] | select(.status == "success") | .path'
 ```
 
 ---
