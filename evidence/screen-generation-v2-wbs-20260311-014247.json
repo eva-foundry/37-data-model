@@ -1,0 +1,454 @@
+{
+  "components_generated": [
+    {
+      "file": "WBSListView.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\wbs\\WBSListView.tsx",
+      "lines_of_code": 176,
+      "type": "ListView"
+    },
+    {
+      "file": "WBSDetailDrawer.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\wbs\\WBSDetailDrawer.tsx",
+      "lines_of_code": 704,
+      "type": "DetailView"
+    },
+    {
+      "file": "WBSCreateForm.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\wbs\\WBSCreateForm.tsx",
+      "lines_of_code": 2651,
+      "type": "CreateForm"
+    },
+    {
+      "file": "WBSEditForm.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\wbs\\WBSEditForm.tsx",
+      "lines_of_code": 2782,
+      "type": "EditForm"
+    },
+    {
+      "file": "WBSGraphView.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\wbs\\WBSGraphView.tsx",
+      "lines_of_code": 212,
+      "type": "GraphView"
+    },
+    {
+      "file": "WBSListView.test.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\wbs\\__tests__\\WBSListView.test.tsx",
+      "lines_of_code": 254,
+      "type": "test.spec"
+    }
+  ],
+  "operation": "screen_generation_v2",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add WBS screens v2 (schema-generated)'"
+  ],
+  "layer": {
+    "name": "wbs",
+    "title": "WBS",
+    "id": "L26",
+    "title_fr": "STP"
+  },
+  "quality_gates": {
+    "typescript_compilation": "PENDING",
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "i18n": "PENDING",
+    "jest_coverage": "PENDING",
+    "no_placeholders": "PENDING"
+  },
+  "metrics": {
+    "avg_loc_per_file": 1130.0,
+    "duration_seconds": 0.52,
+    "total_loc": 6779,
+    "files_count": 6
+  },
+  "timestamp": "2026-03-11T01:42:47Z",
+  "session": "45-part6-schema-generation",
+  "generator": "screens-machine-v2.0.0",
+  "schema": {
+    "fields_count": 54,
+    "fields": [
+      {
+        "name": "evidence_id_pattern",
+        "required": false,
+        "input_type": "text",
+        "label": "Evidence Id Pattern",
+        "type": "string"
+      },
+      {
+        "name": "baseline_start",
+        "required": false,
+        "input_type": "text",
+        "label": "Baseline Start",
+        "type": "string"
+      },
+      {
+        "name": "done_criteria",
+        "required": false,
+        "input_type": "text",
+        "label": "Done Criteria",
+        "type": "string"
+      },
+      {
+        "name": "baseline_end",
+        "required": false,
+        "input_type": "text",
+        "label": "Baseline End",
+        "type": "string"
+      },
+      {
+        "name": "stories_done",
+        "required": false,
+        "input_type": "text",
+        "label": "Stories Done",
+        "type": "string"
+      },
+      {
+        "name": "points_total",
+        "required": false,
+        "input_type": "text",
+        "label": "Points Total",
+        "type": "string"
+      },
+      {
+        "name": "estimate_at_completion",
+        "required": false,
+        "input_type": "text",
+        "label": "Estimate At Completion",
+        "type": "string"
+      },
+      {
+        "name": "planned_end",
+        "required": false,
+        "input_type": "text",
+        "label": "Planned End",
+        "type": "string"
+      },
+      {
+        "name": "team",
+        "required": false,
+        "input_type": "text",
+        "label": "Team",
+        "type": "string"
+      },
+      {
+        "name": "deliverable",
+        "required": false,
+        "input_type": "text",
+        "label": "Deliverable",
+        "type": "string"
+      },
+      {
+        "name": "earned_value",
+        "required": false,
+        "input_type": "text",
+        "label": "Earned Value",
+        "type": "string"
+      },
+      {
+        "name": "actual_start",
+        "required": false,
+        "input_type": "text",
+        "label": "Actual Start",
+        "type": "string"
+      },
+      {
+        "name": "ado_epic_id",
+        "required": false,
+        "input_type": "text",
+        "label": "Ado Epic Id",
+        "type": "string"
+      },
+      {
+        "name": "variance_at_completion",
+        "required": false,
+        "input_type": "text",
+        "label": "Variance At Completion",
+        "type": "string"
+      },
+      {
+        "name": "sprints_planned",
+        "required": false,
+        "input_type": "text",
+        "label": "Sprints Planned",
+        "type": "string"
+      },
+      {
+        "name": "depends_on_infra",
+        "required": false,
+        "input_type": "textarea",
+        "label": "Depends On Infra",
+        "type": "array"
+      },
+      {
+        "name": "sprint_count",
+        "required": false,
+        "input_type": "text",
+        "label": "Sprint Count",
+        "type": "string"
+      },
+      {
+        "name": "notes",
+        "required": false,
+        "input_type": "textarea",
+        "label": "Notes",
+        "type": "string"
+      },
+      {
+        "name": "ado_feature_id",
+        "required": false,
+        "input_type": "text",
+        "label": "Ado Feature Id",
+        "type": "string"
+      },
+      {
+        "name": "ci_runbook",
+        "required": false,
+        "input_type": "text",
+        "label": "Ci Runbook",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "required": true,
+        "input_type": "text",
+        "label": "Status",
+        "type": "string"
+      },
+      {
+        "name": "points_done",
+        "required": false,
+        "input_type": "text",
+        "label": "Points Done",
+        "type": "string"
+      },
+      {
+        "name": "planned_value",
+        "required": false,
+        "input_type": "text",
+        "label": "Planned Value",
+        "type": "string"
+      },
+      {
+        "name": "risk_notes",
+        "required": false,
+        "input_type": "text",
+        "label": "Risk Notes",
+        "type": "string"
+      },
+      {
+        "name": "sprint",
+        "required": false,
+        "input_type": "text",
+        "label": "Sprint",
+        "type": "string"
+      },
+      {
+        "name": "owner",
+        "required": false,
+        "input_type": "text",
+        "label": "Owner",
+        "type": "string"
+      },
+      {
+        "name": "label_fr",
+        "required": true,
+        "input_type": "text",
+        "label": "Label Fr",
+        "type": "string"
+      },
+      {
+        "name": "project_id",
+        "required": false,
+        "input_type": "text",
+        "label": "Project Id",
+        "type": "string"
+      },
+      {
+        "name": "level",
+        "required": false,
+        "input_type": "text",
+        "label": "Level",
+        "type": "string"
+      },
+      {
+        "name": "stream",
+        "required": false,
+        "input_type": "text",
+        "label": "Stream",
+        "type": "string"
+      },
+      {
+        "name": "milestone",
+        "required": false,
+        "input_type": "checkbox",
+        "label": "Milestone",
+        "type": "boolean"
+      },
+      {
+        "name": "work_items",
+        "required": false,
+        "input_type": "textarea",
+        "label": "Work Items",
+        "type": "array"
+      },
+      {
+        "name": "planned_start",
+        "required": false,
+        "input_type": "text",
+        "label": "Planned Start",
+        "type": "string"
+      },
+      {
+        "name": "spi",
+        "required": false,
+        "input_type": "text",
+        "label": "Spi",
+        "type": "string"
+      },
+      {
+        "name": "label",
+        "required": true,
+        "input_type": "text",
+        "label": "Label",
+        "type": "string"
+      },
+      {
+        "name": "defect_rate",
+        "required": false,
+        "input_type": "text",
+        "label": "Defect Rate",
+        "type": "string"
+      },
+      {
+        "name": "cycle_time_days",
+        "required": false,
+        "input_type": "text",
+        "label": "Cycle Time Days",
+        "type": "string"
+      },
+      {
+        "name": "sprints_done",
+        "required": false,
+        "input_type": "text",
+        "label": "Sprints Done",
+        "type": "string"
+      },
+      {
+        "name": "sprint_start",
+        "required": false,
+        "input_type": "text",
+        "label": "Sprint Start",
+        "type": "string"
+      },
+      {
+        "name": "actual_end",
+        "required": false,
+        "input_type": "text",
+        "label": "Actual End",
+        "type": "string"
+      },
+      {
+        "name": "stories_total",
+        "required": false,
+        "input_type": "text",
+        "label": "Stories Total",
+        "type": "string"
+      },
+      {
+        "name": "depends_on_wbs",
+        "required": false,
+        "input_type": "textarea",
+        "label": "Depends On Wbs",
+        "type": "array"
+      },
+      {
+        "name": "actual_cost",
+        "required": false,
+        "input_type": "text",
+        "label": "Actual Cost",
+        "type": "string"
+      },
+      {
+        "name": "percent_complete",
+        "required": false,
+        "input_type": "text",
+        "label": "Percent Complete",
+        "type": "string"
+      },
+      {
+        "name": "cpi",
+        "required": false,
+        "input_type": "text",
+        "label": "Cpi",
+        "type": "string"
+      },
+      {
+        "name": "methodology",
+        "required": false,
+        "input_type": "text",
+        "label": "Methodology",
+        "type": "string"
+      },
+      {
+        "name": "phase_gate",
+        "required": false,
+        "input_type": "text",
+        "label": "Phase Gate",
+        "type": "string"
+      },
+      {
+        "name": "parent_wbs_id",
+        "required": false,
+        "input_type": "text",
+        "label": "Parent Wbs Id",
+        "type": "string"
+      },
+      {
+        "name": "sprint_end",
+        "required": false,
+        "input_type": "text",
+        "label": "Sprint End",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "required": true,
+        "input_type": "text",
+        "label": "Id",
+        "type": "string"
+      },
+      {
+        "name": "_cached",
+        "required": false,
+        "input_type": "checkbox",
+        "label": "Cached",
+        "type": "boolean"
+      },
+      {
+        "name": "budget_at_completion",
+        "required": false,
+        "input_type": "text",
+        "label": "Budget At Completion",
+        "type": "string"
+      },
+      {
+        "name": "risk_level",
+        "required": false,
+        "input_type": "text",
+        "label": "Risk Level",
+        "type": "string"
+      },
+      {
+        "name": "velocity",
+        "required": false,
+        "input_type": "text",
+        "label": "Velocity",
+        "type": "string"
+      }
+    ]
+  }
+}
