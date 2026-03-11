@@ -70,3 +70,5 @@ scripts/tmp-*.ps1
 # Tracked files: services.json, evidence.json, etc. (38 layers + eva-model.json)
 model/*.json
 !model/.gitkeep
+ui/node_modules/
+ui/dist/
