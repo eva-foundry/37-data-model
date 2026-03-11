@@ -151,7 +151,7 @@ def test_endpoint(api_url: str, endpoint: Dict[str, Any], logger: logging.Logger
     # Test GET endpoints
     try:
         url = f"{api_url}{path}"
-        logger.info(f"Testing: {method} {path}")
+        logger.debug(f"Testing: {method} {path}")
         
         start_time = time.time()
         response = requests.get(url, timeout=30)
@@ -193,15 +193,21 @@ def test_endpoint(api_url: str, endpoint: Dict[str, Any], logger: logging.Logger
             "error": None if is_success else f"HTTP {response.status_code}"
         }
         
+        # Log to file (verbose)
         logger.info(format_status(
             STATUS_PASS if is_success else STATUS_FAIL,
             f"{method} {path} -> {response.status_code} ({elapsed_ms}ms, {response_size}b)"
         ))
         
+        # Console output only for failures
+        if not is_success:
+            print(f"  [FAIL] {method} {path} -> {response.status_code}")
+        
         return result
         
     except Exception as e:
-        logger.error(format_status(STATUS_ERROR, f"{method} {path} → {e}"))
+        logger.error(format_status(STATUS_ERROR, f"{method} {path} -> {e}"))
+        print(f"  [ERROR] {method} {path} -> {e}")
         return {
             "path": path,
             "method": method,
@@ -289,6 +295,7 @@ def main():
         
         # Step 2: Test each endpoint
         logger.info(f"\n[2/3] Testing {len(endpoints)} endpoints...")
+        print(f"[INFO] Testing {len(endpoints)} endpoints", end="", flush=True)
         results = []
         success_count = 0
         failed_count = 0
@@ -296,7 +303,13 @@ def main():
         error_count = 0
         
         for i, endpoint in enumerate(endpoints, 1):
-            logger.info(f"[{i}/{len(endpoints)}] {endpoint['method']} {endpoint['path']}")
+            # Log to file only (verbose)
+            logger.debug(f"[{i}/{len(endpoints)}] {endpoint['method']} {endpoint['path']}")
+            
+            # Console: print dot every 10 endpoints
+            if i % 10 == 0:
+                print(".", end="", flush=True)
+            
             result = test_endpoint(api_url, endpoint, logger)
             results.append(result)
             
@@ -311,6 +324,9 @@ def main():
             
             # Small delay to avoid overwhelming the API
             time.sleep(0.1)
+        
+        # Console: complete the dots line
+        print(" done")
         
         # Step 3: Save evidence
         logger.info(f"\n[3/3] Saving evidence...")
