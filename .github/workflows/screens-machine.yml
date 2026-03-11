@@ -23,11 +23,18 @@ on:
         default: true
   schedule:
     - cron: '0 5 * * 0'  # 00:00 ET every Sunday (UTC-5)
+  push:
+    branches:
+      - feat/screens-machine-10layer-test-20260311
+    paths:
+      - '.github/workflows/screens-machine.yml'
+      - 'scripts/**'
+      - 'ui/**'
 
 env:
   DATA_MODEL_API: 'https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io'
-  UI_DIR: '37-data-model/ui'
-  SCRIPTS_DIR: '37-data-model/scripts'
+  UI_DIR: 'ui'
+  SCRIPTS_DIR: 'scripts'
 
 jobs:
   generate:
@@ -71,7 +78,7 @@ jobs:
           cache-dependency-path: 37-data-model/ui/package-lock.json
 
       - name: Install UI dependencies
-        working-directory: 37-data-model/ui
+        working-directory: ui
         run: npm ci
 
       # ------------------------------------------------------------------ #
@@ -90,7 +97,7 @@ jobs:
       # ------------------------------------------------------------------ #
       - name: Run generate-all-screens.ps1
         shell: pwsh
-        working-directory: 37-data-model
+        working-directory: .
         env:
           LAYER_FILTER: ${{ github.event.inputs.layer_filter || '' }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
@@ -104,6 +111,12 @@ jobs:
           Write-Host "[INFO]   Output  : $outputDir"
           Write-Host "[INFO]   Endpoint: $endpoint"
           Write-Host "[INFO]   DryRun  : $isDryRun"
+
+          if (-not $hasFilter -and "${{ github.event_name }}" -eq "push") {
+            $env:LAYER_FILTER = "projects,sprints,stories,tasks,evidence,wbs,quality_gates,decisions,risks,agents"
+            $hasFilter = $true
+            Write-Host "[INFO] Using default 10-layer filter for push test run"
+          }
 
           if ($hasFilter) {
             $layers = $env:LAYER_FILTER.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' }
@@ -169,7 +182,7 @@ jobs:
       - name: Run post-generation fix scripts
         if: ${{ github.event.inputs.dry_run != 'true' }}
         shell: pwsh
-        working-directory: 37-data-model/ui/scripts
+        working-directory: ui/scripts
         run: |
           ./fix-all-create-forms.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -182,7 +195,7 @@ jobs:
       # 7. Build gate (blocks PR on compile errors)
       # ------------------------------------------------------------------ #
       - name: Build UI
-        working-directory: 37-data-model/ui
+        working-directory: ui
         run: npm run build
 
       # ------------------------------------------------------------------ #
@@ -191,8 +204,8 @@ jobs:
       - name: Count generated files
         id: count
         run: |
-          CHANGED=$(git diff --name-only HEAD | grep -E "37-data-model/ui/src/(pages|components)" | wc -l || echo 0)
-          NEW=$(git ls-files --others --exclude-standard | grep -E "37-data-model/ui/src/(pages|components)" | wc -l || echo 0)
+          CHANGED=$(git diff --name-only HEAD | grep -E "ui/src/(pages|components)" | wc -l || echo 0)
+          NEW=$(git ls-files --others --exclude-standard | grep -E "ui/src/(pages|components)" | wc -l || echo 0)
           TOTAL=$((CHANGED + NEW))
           echo "changed_files=${TOTAL}" >> "$GITHUB_OUTPUT"
           echo "[INFO] ${TOTAL} files changed/added under ui/src/pages + ui/src/components"
@@ -208,10 +221,10 @@ jobs:
 
           git checkout -b "${{ steps.meta.outputs.branch }}"
 
-          git add 37-data-model/ui/src/pages/
-          git add 37-data-model/ui/src/components/
-          git add 37-data-model/ui/src/layerRoutes.tsx || true
-          git add 37-data-model/evidence/ || true
+          git add ui/src/pages/
+          git add ui/src/components/
+          git add ui/src/layerRoutes.tsx || true
+          git add evidence/ || true
 
           if git diff --cached --quiet; then
             echo "[INFO] No changes to commit -- all screens already up to date"
