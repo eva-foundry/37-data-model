@@ -1,0 +1,1128 @@
+{
+  "$schema": "./schema.json",
+  "version": "1.0.0",
+  "generatedAt": "2026-02-15T20:00:00Z",
+  
+  "components": [
+    {
+      "id": "EvaButton",
+      "status": "complete",
+      "exampleCount": 9,
+      "metadataPath": "metadata/components/EvaButton.json"
+    },
+    {
+      "id": "EvaDataGrid",
+      "status": "complete",
+      "exampleCount": 6,
+      "metadataPath": "metadata/components/EvaDataGrid.json"
+    },
+    {
+      "id": "EvaInput",
+      "status": "complete",
+      "exampleCount": 6,
+      "metadataPath": "metadata/components/EvaInput.json"
+    },
+    {
+      "id": "EvaTextArea",
+      "status": "complete",
+      "exampleCount": 4,
+      "metadataPath": "metadata/components/EvaTextArea.json"
+    },
+    {
+      "id": "EvaSelect",
+      "status": "complete",
+      "exampleCount": 5,
+      "metadataPath": "metadata/components/EvaSelect.json"
+    },
+    {
+      "id": "EvaDialog",
+      "status": "complete",
+      "exampleCount": 6,
+      "metadataPath": "metadata/components/EvaDialog.json"
+    },
+    {
+      "id": "EvaDrawer",
+      "status": "complete",
+      "exampleCount": 3,
+      "metadataPath": "metadata/components/EvaDrawer.json"
+    },
+    {
+      "id": "EvaTabs",
+      "status": "complete",
+      "exampleCount": 3,
+      "metadataPath": "metadata/components/EvaTabs.json"
+    },
+    {
+      "id": "EvaToast",
+      "status": "complete",
+      "exampleCount": 1,
+      "metadataPath": "metadata/components/EvaToast.json"
+    },
+    {
+      "id": "EvaSpinner",
+      "status": "complete",
+      "exampleCount": 1,
+      "metadataPath": "metadata/components/EvaSpinner.json"
+    },
+    {
+      "id": "EvaBadge",
+      "status": "complete",
+      "exampleCount": 4,
+      "metadataPath": "metadata/components/EvaBadge.json"
+    },
+    {
+      "id": "EvaIcon",
+      "status": "complete",
+      "exampleCount": 4,
+      "metadataPath": "metadata/components/EvaIcon.json"
+    },
+    {
+      "id": "EvaDateRangePicker",
+      "status": "complete",
+      "exampleCount": 3,
+      "metadataPath": "metadata/components/EvaDateRangePicker.json"
+    },
+    {
+      "id": "EvaJsonViewer",
+      "status": "complete",
+      "exampleCount": 4,
+      "metadataPath": "metadata/components/EvaJsonViewer.json"
+    }
+  ],
+  
+  "domains": [
+    {
+      "id": "admin-crud",
+      "name": "Admin CRUD Operations",
+      "description": "User management, translations, settings, and general administrative screens",
+      "screenCount": 9,
+      "screens": [
+        {
+          "id": "crud-list",
+          "name": "CRUD List Pattern",
+          "file": "patterns/AdminCRUD/ListPattern.complete.tsx",
+          "screenType": "list",
+          "description": "Production-ready CRUD list with search, filter, sort, paginate, create, edit, delete, bulk operations, export",
+          "components": [
+            "EvaButton",
+            "EvaInput",
+            "EvaSelect",
+            "EvaDataGrid",
+            "EvaDialog",
+            "EvaToast",
+            "EvaSpinner"
+          ],
+          "patterns": [
+            "search-filter",
+            "pagination",
+            "bulk-actions",
+            "row-actions",
+            "delete-confirmation",
+            "csv-export"
+          ],
+          "dataSources": ["cosmos_db", "mock"],
+          "complexity": "complex",
+          "features": [
+            "search",
+            "filter",
+            "sort",
+            "paginate",
+            "create",
+            "edit",
+            "delete",
+            "bulk-delete",
+            "export-csv"
+          ],
+          "lineCount": 670,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "translations-list",
+          "name": "Translations List Screen",
+          "file": "by-domain/admin-crud/translations-list.complete.tsx",
+          "screenType": "list",
+          "description": "Admin translations screen with filters, pagination, and delete confirmation",
+          "components": [
+            "EvaDataGrid",
+            "EvaInput",
+            "EvaSelect",
+            "EvaButton",
+            "EvaDialog",
+            "EvaSpinner",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "search-filter",
+            "pagination",
+            "delete-confirmation",
+            "loading-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "search",
+            "filter",
+            "paginate",
+            "delete-confirmation",
+            "loading-state",
+            "empty-state"
+          ],
+          "lineCount": 160,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "settings-manage",
+          "name": "Settings Manage Screen",
+          "file": "by-domain/admin-crud/settings-manage.complete.tsx",
+          "screenType": "settings",
+          "description": "Admin settings editor with grouped table and edit dialog",
+          "components": [
+            "EvaDataGrid",
+            "EvaDialog",
+            "EvaInput",
+            "EvaSelect",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "loading-states",
+            "error-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "settings-list",
+            "edit-dialog",
+            "visibility-toggle",
+            "refresh"
+          ],
+          "lineCount": 115,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "rbac-users-roles",
+          "name": "RBAC Users and Roles Screen",
+          "file": "by-domain/admin-crud/rbac-users-roles.complete.tsx",
+          "screenType": "list",
+          "description": "Role assignment table with detail drawer for role and access updates",
+          "components": [
+            "EvaDataGrid",
+            "EvaDrawer",
+            "EvaSelect",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "loading-states",
+            "error-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "assignment-list",
+            "detail-drawer",
+            "role-reassign",
+            "enable-disable"
+          ],
+          "lineCount": 108,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "apps-registry",
+          "name": "Apps Registry Screen",
+          "file": "by-domain/admin-crud/apps-registry.complete.tsx",
+          "screenType": "list",
+          "description": "Application registry with environment filter and edit dialog",
+          "components": [
+            "EvaDataGrid",
+            "EvaInput",
+            "EvaSelect",
+            "EvaDialog",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "search-filter",
+            "pagination",
+            "loading-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "search",
+            "filter",
+            "pagination",
+            "edit-dialog"
+          ],
+          "lineCount": 193,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "ingestion-runs",
+          "name": "Ingestion Runs Screen",
+          "file": "by-domain/admin-crud/ingestion-runs.complete.tsx",
+          "screenType": "list",
+          "description": "Ingestion run history with detail drawer and retry action",
+          "components": [
+            "EvaDataGrid",
+            "EvaDrawer",
+            "EvaJsonViewer",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "error-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "run-list",
+            "status-badge",
+            "retry-action",
+            "detail-drawer"
+          ],
+          "lineCount": 158,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "support-tickets",
+          "name": "Support Tickets Screen",
+          "file": "by-domain/admin-crud/support-tickets.complete.tsx",
+          "screenType": "list",
+          "description": "Ticket queue with detail drawer and status updates",
+          "components": [
+            "EvaDataGrid",
+            "EvaDrawer",
+            "EvaSelect",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "error-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "ticket-list",
+            "priority-badge",
+            "status-update",
+            "detail-drawer"
+          ],
+          "lineCount": 147,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "feature-flags",
+          "name": "Feature Flags Screen",
+          "file": "by-domain/admin-crud/feature-flags.complete.tsx",
+          "screenType": "settings",
+          "description": "Feature flag management with rollout controls",
+          "components": [
+            "EvaDataGrid",
+            "EvaDialog",
+            "EvaInput",
+            "EvaSelect",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "search-filter",
+            "loading-states",
+            "error-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "flag-list",
+            "category-filter",
+            "enable-disable",
+            "rollout-dialog"
+          ],
+          "lineCount": 177,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        },
+        {
+          "id": "audit-logs",
+          "name": "Audit Logs Screen",
+          "file": "by-domain/admin-crud/audit-logs.complete.tsx",
+          "screenType": "audit-log",
+          "description": "Audit events table with filters and detail payload drawer",
+          "components": [
+            "EvaDataGrid",
+            "EvaDrawer",
+            "EvaJsonViewer",
+            "EvaInput",
+            "EvaSelect",
+            "EvaButton",
+            "EvaBadge"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "error-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "complex",
+          "features": [
+            "actor-filter",
+            "entity-filter",
+            "outcome-filter",
+            "detail-drawer",
+            "json-payload"
+          ],
+          "lineCount": 193,
+          "lastUpdated": "2026-02-15",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["cosmos_db"],
+      "commonComponents": [
+        "EvaDataGrid",
+        "EvaButton",
+        "EvaInput",
+        "EvaDialog"
+      ]
+    },
+    {
+      "id": "finops",
+      "name": "FinOps & Cost Management",
+      "description": "Azure cost analysis, budget monitoring, cost attribution, and financial operations",
+      "screenCount": 4,
+      "screens": [
+        {
+          "id": "cost-dashboard",
+          "name": "Cost Dashboard",
+          "file": "by-domain/finops/cost-dashboard.complete.tsx",
+          "screenType": "dashboard",
+          "description": "FinOps cost overview with date, department, and resource filters",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaSelect",
+            "EvaDateRangePicker",
+            "EvaSpinner"
+          ],
+          "patterns": [
+            "loading-states"
+          ],
+          "dataSources": ["cosmos_db", "azure_finops_api"],
+          "complexity": "complex",
+          "features": [
+            "date-range-filter",
+            "department-filter",
+            "cost-breakdown",
+            "export-csv"
+          ],
+          "lineCount": 450,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "budget-alerts",
+          "name": "Budget Alerts",
+          "file": "by-domain/finops/budget-alerts.complete.tsx",
+          "screenType": "list",
+          "description": "Budget threshold alerts with threshold editing and acknowledgement",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDialog",
+            "EvaInput"
+          ],
+          "patterns": [
+            "loading-states",
+            "pagination",
+            "empty-states"
+          ],
+          "dataSources": ["azure_finops_api"],
+          "complexity": "medium",
+          "features": [
+            "threshold-editing",
+            "alert-acknowledgement",
+            "pagination"
+          ],
+          "lineCount": 126,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "resource-optimization",
+          "name": "Resource Optimization",
+          "file": "by-domain/finops/resource-optimization.complete.tsx",
+          "screenType": "list",
+          "description": "Cost optimization recommendations with impact assessment and status tracking",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer",
+            "EvaSelect"
+          ],
+          "patterns": [
+            "loading-states",
+            "pagination",
+            "empty-states"
+          ],
+          "dataSources": ["azure_finops_api"],
+          "complexity": "medium",
+          "features": [
+            "recommendation-review",
+            "status-management",
+            "pagination"
+          ],
+          "lineCount": 138,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "cost-allocation",
+          "name": "Cost Allocation",
+          "file": "by-domain/finops/cost-allocation.complete.tsx",
+          "screenType": "list",
+          "description": "Department/project cost allocation with trend analysis and cost center tracking",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "loading-states",
+            "pagination",
+            "empty-states"
+          ],
+          "dataSources": ["azure_finops_api"],
+          "complexity": "medium",
+          "features": [
+            "cost-center-tracking",
+            "trend-analysis",
+            "pagination"
+          ],
+          "lineCount": 116,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["cosmos_db", "azure_finops_api", "azure_monitor"],
+      "commonComponents": [
+        "EvaCard",
+        "EvaDataGrid",
+        "EvaBadge",
+        "EvaChart"
+      ]
+    },
+    {
+      "id": "devops",
+      "name": "DevOps & Pipeline Monitoring",
+      "description": "Ingestion runs, pipeline status, deployment tracking, and DevOps operations",
+      "screenCount": 3,
+      "screens": [
+        {
+          "id": "pipeline-runs",
+          "name": "Pipeline Runs Screen",
+          "file": "by-domain/devops/pipeline-runs.complete.tsx",
+          "screenType": "list",
+          "description": "Pipeline run monitoring with retry action and detail drawer",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "run-list",
+            "status-badge",
+            "retry-action",
+            "detail-drawer"
+          ],
+          "lineCount": 119,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "deployment-history",
+          "name": "Deployment History",
+          "file": "by-domain/devops/deployment-history.complete.tsx",
+          "screenType": "list",
+          "description": "Deployment tracking with environment filters and status monitoring",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["azure_devops"],
+          "complexity": "medium",
+          "features": [
+            "deployment-list",
+            "status-badge",
+            "detail-drawer"
+          ],
+          "lineCount": 108,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "build-metrics",
+          "name": "Build Metrics",
+          "file": "by-domain/devops/build-metrics.complete.tsx",
+          "screenType": "list",
+          "description": "Build pipeline success rates, duration trends, and failure analysis",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["azure_devops"],
+          "complexity": "medium",
+          "features": [
+            "metrics-dashboard",
+            "trend-analysis",
+            "detail-drawer"
+          ],
+          "lineCount": 110,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["cosmos_db", "azure_monitor"],
+      "commonComponents": [
+        "EvaDataGrid",
+        "EvaBadge",
+        "EvaTimeline",
+        "EvaSpinner"
+      ]
+    },
+    {
+      "id": "observability",
+      "name": "Observability & Logging",
+      "description": "Audit logs, health checks, telemetry dashboards, and system monitoring",
+      "screenCount": 3,
+      "screens": [
+        {
+          "id": "system-health",
+          "name": "System Health Screen",
+          "file": "by-domain/observability/system-health.complete.tsx",
+          "screenType": "list",
+          "description": "Service health table with incident acknowledgement from detail drawer",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "service-health-list",
+            "latency-display",
+            "incident-acknowledgement",
+            "detail-drawer"
+          ],
+          "lineCount": 111,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "alert-rules",
+          "name": "Alert Rules",
+          "file": "by-domain/observability/alert-rules.complete.tsx",
+          "screenType": "list",
+          "description": "Alert rule management with enable/disable toggle and detail drawer",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["azure_monitor"],
+          "complexity": "medium",
+          "features": [
+            "alert-list",
+            "enable-toggle",
+            "detail-drawer"
+          ],
+          "lineCount": 118,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "telemetry-dashboard",
+          "name": "Telemetry Dashboard",
+          "file": "by-domain/observability/telemetry-dashboard.complete.tsx",
+          "screenType": "dashboard",
+          "description": "Real-time telemetry metrics with threshold monitoring and trend analysis",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["azure_monitor"],
+          "complexity": "medium",
+          "features": [
+            "metric-dashboard",
+            "trend-analysis",
+            "detail-drawer"
+          ],
+          "lineCount": 120,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["cosmos_db", "azure_monitor"],
+      "commonComponents": [
+        "EvaDataGrid",
+        "EvaDrawer",
+        "EvaJsonViewer",
+        "EvaBadge"
+      ]
+    },
+    {
+      "id": "search",
+      "name": "Search & RAG",
+      "description": "Document search, RAG query interfaces, and search result displays",
+      "screenCount": 2,
+      "screens": [
+        {
+          "id": "rag-results",
+          "name": "RAG Results Screen",
+          "file": "by-domain/search/rag-results.complete.tsx",
+          "screenType": "list",
+          "description": "RAG result grid with query input and result detail drawer",
+          "components": [
+            "EvaInput",
+            "EvaDataGrid",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "query-input",
+            "search-trigger",
+            "relevance-score",
+            "detail-drawer"
+          ],
+          "lineCount": 93,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "index-management",
+          "name": "Index Management",
+          "file": "by-domain/search/index-management.complete.tsx",
+          "screenType": "list",
+          "description": "Search index management with rebuild capability and status monitoring",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["azure_search"],
+          "complexity": "medium",
+          "features": [
+            "index-list",
+            "rebuild-action",
+            "detail-drawer"
+          ],
+          "lineCount": 112,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["rag_search", "cosmos_db"],
+      "commonComponents": [
+        "EvaInput",
+        "EvaDataGrid",
+        "EvaCard",
+        "EvaTabs"
+      ]
+    },
+    {
+      "id": "apim",
+      "name": "API Management",
+      "description": "API key management, throttling configuration, and APIM operations",
+      "screenCount": 1,
+      "screens": [
+        {
+          "id": "api-keys",
+          "name": "API Keys Screen",
+          "file": "by-domain/apim/api-keys.complete.tsx",
+          "screenType": "list",
+          "description": "API key inventory with status management in detail drawer",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer",
+            "EvaSelect"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "key-inventory",
+            "status-badge",
+            "status-update",
+            "detail-drawer"
+          ],
+          "lineCount": 117,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["azure_apim", "cosmos_db"],
+      "commonComponents": [
+        "EvaDataGrid",
+        "EvaDialog",
+        "EvaInput",
+        "EvaSelect"
+      ]
+    },
+    {
+      "id": "chat",
+      "name": "Chat & Conversational UI",
+      "description": "Chat interfaces, conversation history, and RAG-powered responses",
+      "screenCount": 2,
+      "screens": [
+        {
+          "id": "conversation-history",
+          "name": "Conversation History Screen",
+          "file": "by-domain/chat/conversation-history.complete.tsx",
+          "screenType": "list",
+          "description": "Conversation history table with detail drawer and close action",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer",
+            "EvaInput",
+            "EvaTextArea"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["mock"],
+          "complexity": "medium",
+          "features": [
+            "conversation-list",
+            "persona-badge",
+            "close-conversation",
+            "detail-drawer"
+          ],
+          "lineCount": 126,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        },
+        {
+          "id": "prompt-templates",
+          "name": "Prompt Templates",
+          "file": "by-domain/chat/prompt-templates.complete.tsx",
+          "screenType": "list",
+          "description": "Prompt template library with status management and variable tracking",
+          "components": [
+            "EvaDataGrid",
+            "EvaBadge",
+            "EvaButton",
+            "EvaDrawer",
+            "EvaSelect"
+          ],
+          "patterns": [
+            "pagination",
+            "loading-states",
+            "empty-states"
+          ],
+          "dataSources": ["cosmos_db"],
+          "complexity": "medium",
+          "features": [
+            "template-list",
+            "status-management",
+            "detail-drawer"
+          ],
+          "lineCount": 132,
+          "lastUpdated": "2026-02-16",
+          "status": "complete"
+        }
+      ],
+      "dataSources": ["rag_search"],
+      "commonComponents": [
+        "EvaInput",
+        "EvaCard",
+        "EvaSpinner",
+        "EvaDrawer"
+      ]
+    }
+  ],
+  
+  "patterns": [
+    {
+      "id": "search-filter",
+      "name": "Search & Filter Bar",
+      "category": "forms",
+      "file": "by-pattern/forms/search-filter.pattern.tsx",
+      "description": "Search input with dropdown filters and apply/reset actions",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaInput", "EvaSelect", "EvaButton"],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "pagination",
+      "name": "Pagination Controls",
+      "category": "navigation",
+      "file": "by-pattern/navigation/pagination.pattern.tsx",
+      "description": "Previous/Next buttons with page indicator",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaButton"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "bulk-actions",
+      "name": "Bulk Action Toolbar",
+      "category": "forms",
+      "file": "by-pattern/forms/bulk-actions.pattern.tsx",
+      "description": "Selection count + bulk operation buttons",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaButton"],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    },
+    {
+      "id": "row-actions",
+      "name": "DataGrid Row Actions",
+      "category": "data-visualization",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "description": "Edit/Delete buttons in DataGrid rows",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaButton", "EvaIcon", "EvaDataGrid"],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "delete-confirmation",
+      "name": "Delete Confirmation Dialog",
+      "category": "forms",
+      "file": "by-pattern/forms/delete-confirmation.pattern.tsx",
+      "description": "Modal dialog for confirming destructive actions",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaDialog", "EvaButton"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "csv-export",
+      "name": "CSV Export",
+      "category": "data-export",
+      "file": "by-pattern/data-export/csv-export.pattern.tsx",
+      "description": "Export data grid to CSV file",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaButton"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    },
+    {
+      "id": "loading-states",
+      "name": "Loading States",
+      "category": "feedback",
+      "file": "by-pattern/feedback/loading-states.pattern.tsx",
+      "description": "Spinner, skeleton loaders, and loading messages",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaSpinner"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "error-states",
+      "name": "Error States",
+      "category": "error-handling",
+      "file": "by-pattern/error-handling/error-states.pattern.tsx",
+      "description": "Error messages with retry actions",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaButton", "EvaIcon"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "empty-states",
+      "name": "Empty States",
+      "category": "feedback",
+      "file": "by-pattern/feedback/empty-states.pattern.tsx",
+      "description": "No data messages with create actions",
+      "usedByScreens": ["crud-list"],
+      "components": ["EvaButton"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-15",
+      "status": "complete"
+    },
+    {
+      "id": "cosmos-db-query",
+      "name": "Cosmos DB Query",
+      "category": "api-integration",
+      "file": "by-pattern/api-integration/cosmos-db-query.pattern.tsx",
+      "description": "Fetch data from Cosmos DB with error handling",
+      "usedByScreens": ["crud-list"],
+      "components": [],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    },
+    {
+      "id": "azure-api-call",
+      "name": "Azure API Call",
+      "category": "api-integration",
+      "file": "by-pattern/api-integration/azure-api-call.pattern.tsx",
+      "description": "Call Azure APIs with correlation IDs and retry",
+      "usedByScreens": [],
+      "components": [],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    },
+    {
+      "id": "form-validation",
+      "name": "Form Validation",
+      "category": "validation",
+      "file": "by-pattern/validation/form-validation.pattern.tsx",
+      "description": "Field-level validation with error messages",
+      "usedByScreens": [],
+      "components": ["EvaInput", "EvaTextArea", "EvaSelect"],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    },
+    {
+      "id": "azure-monitor-telemetry",
+      "name": "Azure Monitor Telemetry",
+      "category": "telemetry",
+      "file": "by-pattern/telemetry/azure-monitor.pattern.tsx",
+      "description": "Track events/metrics to Azure Monitor",
+      "usedByScreens": ["crud-list"],
+      "components": [],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    },
+    {
+      "id": "vitest-component-test",
+      "name": "Vitest Component Test",
+      "category": "testing",
+      "file": "by-pattern/testing/vitest-component.pattern.tsx",
+      "description": "Unit tests with a11y checks using Vitest",
+      "usedByScreens": [],
+      "components": [],
+      "complexity": "medium",
+      "lastUpdated": "2026-02-15",
+      "status": "planned"
+    },
+    {
+      "id": "metrics-cards",
+      "name": "Metrics Cards",
+      "category": "data-visualization",
+      "file": "by-pattern/data-visualization/metrics-cards.pattern.tsx",
+      "description": "Summary metrics in card layout (KPIs, counts, totals)",
+      "usedByScreens": [],
+      "components": ["EvaCard", "EvaBadge"],
+      "complexity": "simple",
+      "lastUpdated": "2026-02-15",
+      "status": "planned"
+    },
+    {
+      "id": "dashboard-charts",
+      "name": "Dashboard Charts",
+      "category": "data-visualization",
+      "file": "by-pattern/data-visualization/charts.pattern.tsx",
+      "description": "Line/bar charts for trends (placeholder - library TBD)",
+      "usedByScreens": [],
+      "components": [],
+      "complexity": "complex",
+      "lastUpdated": "2026-02-16",
+      "status": "complete"
+    }
+  ],
+  
+  "statistics": {
+    "totalComponents": 14,
+    "completeComponents": 14,
+    "componentsInProgress": 0,
+    "totalExamples": 63,
+    "totalScreens": 24,
+    "totalPatterns": 16,
+    "overallCompleteness": "100%",
+    "lastUpdated": "2026-02-16T01:30:00Z",
+    "phaseStatus": "Phase 1 - Library Adaptation Complete"
+  }
+}

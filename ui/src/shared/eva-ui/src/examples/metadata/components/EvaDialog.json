@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaDialog",
+  "componentName": "EvaDialog",
+  "category": "overlay",
+  "complexity": "medium",
+  "usageFrequency": "medium",
+  "tags": ["dialog","modal","overlay"],
+  "domains": ["universal","admin-crud","apim"],
+  "examples": [
+    {
+      "exampleId": "delete-confirmation",
+      "file": "components/EvaDialog/Complete.example.tsx",
+      "lineRange": [18, 33],
+      "description": "Delete confirmation dialog pattern",
+      "tags": ["delete", "confirmation", "modal"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["primaryAction", "secondaryAction", "trigger"]
+    },
+    {
+      "exampleId": "alert-dialog",
+      "file": "components/EvaDialog/Complete.example.tsx",
+      "lineRange": [39, 52],
+      "description": "Single action alert dialog",
+      "tags": ["alert", "single-action"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["hideCancelButton", "primaryAction"]
+    },
+    {
+      "exampleId": "form-dialog",
+      "file": "components/EvaDialog/Complete.example.tsx",
+      "lineRange": [58, 94],
+      "description": "Form in dialog with field validation",
+      "tags": ["form", "create", "validation"],
+      "complexity": "complex",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["embedded-form", "disabled-save"]
+    },
+    {
+      "exampleId": "review-dialog",
+      "file": "components/EvaDialog/Complete.example.tsx",
+      "lineRange": [100, 121],
+      "description": "Review and publish dialog",
+      "tags": ["review", "publish", "modal"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["modalType", "content-list"]
+    },
+    {
+      "exampleId": "toolbar-action-dialog",
+      "file": "components/EvaDialog/Complete.example.tsx",
+      "lineRange": [127, 147],
+      "description": "Dialog action in toolbar context",
+      "tags": ["toolbar", "bulk-action"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["role-toolbar", "bulk-delete"]
+    },
+    {
+      "exampleId": "progressive-disclosure-dialog",
+      "file": "components/EvaDialog/Complete.example.tsx",
+      "lineRange": [153, 193],
+      "description": "Dialog with progressive disclosure content",
+      "tags": ["advanced", "progressive-disclosure"],
+      "complexity": "complex",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["stateful-content", "toggle-details"]
+    }
+  ],
+  "propsRequired": ["children"],
+  "propsOptional": ["title","trigger","primaryAction","secondaryAction","cancelLabel","hideCancelButton"],
+  "relatedComponents": ["EvaButton"],
+  "relatedPatterns": ["delete-confirmation"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evadialog--default",
+  "testsPresent": false,
+  "a11yScore": "95",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

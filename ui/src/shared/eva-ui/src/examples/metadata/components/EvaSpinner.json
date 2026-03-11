@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaSpinner",
+  "componentName": "EvaSpinner",
+  "category": "feedback",
+  "complexity": "simple",
+  "usageFrequency": "high",
+  "tags": ["spinner","loading","feedback"],
+  "domains": ["universal","admin-crud","devops"],
+  "examples": [
+    {
+      "exampleId": "spinner-showcase",
+      "file": "components/EvaSpinner/Complete.example.tsx",
+      "lineRange": [10, 46],
+      "description": "Centered, inline, and async-loading spinner usage",
+      "tags": ["loading", "centered", "inline", "async"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["centered", "message", "conditional-render"]
+    }
+  ],
+  "propsRequired": [],
+  "propsOptional": ["message","centered","size"],
+  "relatedComponents": [],
+  "relatedPatterns": ["loading-states"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evaspinner--default",
+  "testsPresent": false,
+  "a11yScore": "95",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

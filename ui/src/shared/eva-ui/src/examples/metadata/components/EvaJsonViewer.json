@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaJsonViewer",
+  "componentName": "EvaJsonViewer",
+  "category": "utility",
+  "complexity": "simple",
+  "usageFrequency": "low",
+  "tags": ["json","viewer","debug"],
+  "domains": ["observability","devops"],
+  "examples": [],
+  "propsRequired": ["data"],
+  "propsOptional": [],
+  "relatedComponents": [],
+  "relatedPatterns": [],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evajsonviewer--default",
+  "testsPresent": false,
+  "a11yScore": "0",
+  "lastUpdated": "2026-02-15",
+  "status": "planned"
+}

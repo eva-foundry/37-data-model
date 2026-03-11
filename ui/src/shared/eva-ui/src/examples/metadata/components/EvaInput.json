@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaInput",
+  "componentName": "EvaInput",
+  "category": "input",
+  "complexity": "simple",
+  "usageFrequency": "high",
+  "tags": ["input","form","text"],
+  "domains": ["universal","admin-crud","search","apim"],
+  "examples": [
+    {
+      "exampleId": "basic-input",
+      "file": "components/EvaInput/Complete.example.tsx",
+      "lineRange": [17, 34],
+      "description": "Basic labeled input with helper text",
+      "tags": ["basic", "label", "helper"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["label", "helperText", "controlled"]
+    },
+    {
+      "exampleId": "required-validation",
+      "file": "components/EvaInput/Complete.example.tsx",
+      "lineRange": [40, 72],
+      "description": "Required field validation with inline error",
+      "tags": ["required", "validation", "error"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["required", "errorMessage", "aria-required"]
+    },
+    {
+      "exampleId": "search-input",
+      "file": "components/EvaInput/Complete.example.tsx",
+      "lineRange": [78, 95],
+      "description": "Controlled search query input",
+      "tags": ["search", "filter"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["controlled-input", "search"]
+    },
+    {
+      "exampleId": "disabled-readonly",
+      "file": "components/EvaInput/Complete.example.tsx",
+      "lineRange": [101, 121],
+      "description": "Disabled and readonly states",
+      "tags": ["disabled", "readonly", "state"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["disabled", "readOnly"]
+    },
+    {
+      "exampleId": "password-input",
+      "file": "components/EvaInput/Complete.example.tsx",
+      "lineRange": [127, 145],
+      "description": "Password field pattern",
+      "tags": ["password", "auth"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["type-password", "required"]
+    },
+    {
+      "exampleId": "inline-filter",
+      "file": "components/EvaInput/Complete.example.tsx",
+      "lineRange": [151, 180],
+      "description": "Inline search filter bar usage",
+      "tags": ["filter", "toolbar", "search"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["role-search", "clear-action"]
+    }
+  ],
+  "propsRequired": [],
+  "propsOptional": ["label","helperText","errorMessage","required"],
+  "relatedComponents": ["EvaButton","EvaSelect"],
+  "relatedPatterns": ["form-validation"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evainput--default",
+  "testsPresent": false,
+  "a11yScore": "95",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

@@ -64,6 +64,19 @@ scripts/fix-*.ps1
 scripts/test-*.ps1
 scripts/tmp-*.ps1
 
+# UI build artifacts
+ui/node_modules/
+ui/dist/
+ui/dist.zip
+ui/_exports.txt
+ui/_imports.txt
+
+# Test and batch script outputs
+test-output/
+scripts/test-output-*/
+scripts/batch-output/
+scripts/evidence/
+
 # Cosmos DB exports (transient sync data)
 # Note: Base model/*.json files ARE tracked for CI/CD seed data (force-added)
 # This pattern only prevents NEW files from being accidentally committed

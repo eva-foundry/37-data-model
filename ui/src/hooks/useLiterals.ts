@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useLang } from '../lib/context/LangContext';
+import { useLang } from '@context/LangContext';
 
 /**
  * Literal record from L17 literals layer

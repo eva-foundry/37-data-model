@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaTextArea",
+  "componentName": "EvaTextArea",
+  "category": "input",
+  "complexity": "simple",
+  "usageFrequency": "medium",
+  "tags": ["textarea","form","text"],
+  "domains": ["universal","admin-crud","search"],
+  "examples": [],
+  "propsRequired": [],
+  "propsOptional": ["label","helperText","errorMessage","required","maxLength"],
+  "relatedComponents": ["EvaInput"],
+  "relatedPatterns": ["form-validation"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evatextarea--default",
+  "testsPresent": false,
+  "a11yScore": "0",
+  "lastUpdated": "2026-02-15",
+  "status": "planned"
+}

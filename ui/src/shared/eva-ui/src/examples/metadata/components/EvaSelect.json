@@ -1,0 +1,76 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaSelect",
+  "componentName": "EvaSelect",
+  "category": "input",
+  "complexity": "medium",
+  "usageFrequency": "high",
+  "tags": ["select","dropdown","form"],
+  "domains": ["universal","admin-crud","search","apim"],
+  "examples": [
+    {
+      "exampleId": "basic-select",
+      "file": "components/EvaSelect/Complete.example.tsx",
+      "lineRange": [22, 42],
+      "description": "Basic dropdown selection",
+      "tags": ["basic", "dropdown"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["onOptionSelect", "controlled"]
+    },
+    {
+      "exampleId": "required-select",
+      "file": "components/EvaSelect/Complete.example.tsx",
+      "lineRange": [48, 79],
+      "description": "Required select with validation",
+      "tags": ["required", "validation", "error"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["required", "errorMessage"]
+    },
+    {
+      "exampleId": "disabled-options",
+      "file": "components/EvaSelect/Complete.example.tsx",
+      "lineRange": [85, 108],
+      "description": "Dropdown with disabled options",
+      "tags": ["disabled", "options"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["option-disabled", "helperText"]
+    },
+    {
+      "exampleId": "toolbar-filters",
+      "file": "components/EvaSelect/Complete.example.tsx",
+      "lineRange": [114, 164],
+      "description": "Toolbar filter selects with reset",
+      "tags": ["filters", "toolbar", "reset"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["role-toolbar", "multi-filter"]
+    },
+    {
+      "exampleId": "async-options",
+      "file": "components/EvaSelect/Complete.example.tsx",
+      "lineRange": [170, 217],
+      "description": "Async-like options loading pattern",
+      "tags": ["async", "loading", "options"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock", "azure_api"],
+      "features": ["useEffect-load", "dynamic-options"]
+    }
+  ],
+  "propsRequired": ["options"],
+  "propsOptional": ["label","helperText","errorMessage","required","multiselect"],
+  "relatedComponents": ["EvaInput","EvaButton"],
+  "relatedPatterns": ["search-filter"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evaselect--default",
+  "testsPresent": false,
+  "a11yScore": "95",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

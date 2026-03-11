@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaDrawer",
+  "componentName": "EvaDrawer",
+  "category": "overlay",
+  "complexity": "medium",
+  "usageFrequency": "medium",
+  "tags": ["drawer","panel","overlay"],
+  "domains": ["universal","admin-crud","observability"],
+  "examples": [],
+  "propsRequired": ["children"],
+  "propsOptional": ["title","onClose","open","position","size"],
+  "relatedComponents": ["EvaButton","EvaIcon"],
+  "relatedPatterns": ["detail-drawer"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evadrawer--default",
+  "testsPresent": false,
+  "a11yScore": "0",
+  "lastUpdated": "2026-02-15",
+  "status": "planned"
+}

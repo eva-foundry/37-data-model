@@ -25,7 +25,8 @@
       "@hooks/*": ["./src/hooks/*"],
       "@lib/*": ["./src/lib/*"],
       "@components/*": ["./src/components/*"],
-      "@context/*": ["./src/lib/context/*"]
+      "@context/*": ["./src/context/*"],
+      "@api/*": ["./src/api/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

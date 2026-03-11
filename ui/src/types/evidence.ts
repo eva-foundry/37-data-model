@@ -1,45 +1,19 @@
-// Evidence types (L31 - evidence)
+/**
+ * Evidence Types - Generated from Data Model Layer: evidence
+ */
 
-import type { ModelObject } from './api';
-
-export interface EvidenceRecord extends ModelObject {
-  // Identity
+export interface EvidenceRecord {
   id: string;
-  
-  // Classification
-  operation: string;
-  category: string;
-  source: string;
-  
-  // Context
-  project_id?: string;
-  sprint_id?: string;
-  story_id?: string;
-  
-  // Content
-  description: string;
-  outcome: 'success' | 'failure' | 'partial' | 'skipped';
-  evidence_type: 'test' | 'deployment' | 'review' | 'audit' | 'other';
-  
-  // Metadata
-  timestamp: string;
-  duration_ms?: number;
-  
-  // Artifacts
-  artifact_path?: string;
-  artifact_size?: number;
-  
-  // Tags
-  tags: string[];
+  layer: string;
+  partition_key: string;
+  [key: string]: any;
 }
 
-export type EvidenceOutcome = EvidenceRecord['outcome'];
-export type EvidenceType = EvidenceRecord['evidence_type'];
+export interface CreateEvidenceInput {
+  id: string;
+  [key: string]: any;
+}
 
-export interface EvidenceFilters {
-  operation?: string;
-  project_id?: string;
-  outcome?: EvidenceOutcome;
-  evidence_type?: EvidenceType;
-  recent_hours?: number;
+export interface UpdateEvidenceInput extends Partial<CreateEvidenceInput> {
+  id: string;
 }

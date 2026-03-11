@@ -1,0 +1,422 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-faces.canada.ca/schemas/example-metadata.schema.json",
+  "title": "EVA UI Example Metadata",
+  "description": "Metadata schema for EVA UI component examples, patterns, and screens to enable agent-driven code generation",
+  "version": "1.0.0",
+  
+  "definitions": {
+    "ComponentMetadata": {
+      "type": "object",
+      "required": ["componentId", "componentName", "category", "complexity", "tags", "domains", "examples"],
+      "properties": {
+        "componentId": {
+          "type": "string",
+          "description": "Unique identifier (e.g., 'EvaButton', 'EvaDataGrid')",
+          "pattern": "^Eva[A-Z][a-zA-Z]+$"
+        },
+        "componentName": {
+          "type": "string",
+          "description": "Display name for humans"
+        },
+        "category": {
+          "type": "string",
+          "description": "Component category",
+          "enum": [
+            "action",
+            "input",
+            "data-display",
+            "feedback",
+            "navigation",
+            "overlay",
+            "layout",
+            "utility"
+          ]
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "medium", "complex"],
+          "description": "Component usage complexity"
+        },
+        "usageFrequency": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "very-high"],
+          "description": "How often this component is used across screens"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Searchable keywords",
+          "minItems": 1
+        },
+        "domains": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "admin-crud",
+              "finops",
+              "devops",
+              "observability",
+              "search",
+              "apim",
+              "chat",
+              "universal"
+            ]
+          },
+          "description": "Which domains use this component"
+        },
+        "examples": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Example" }
+        },
+        "propsRequired": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Required component props"
+        },
+        "propsOptional": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Optional component props"
+        },
+        "relatedComponents": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Components often used together"
+        },
+        "relatedPatterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Patterns that use this component"
+        },
+        "storybookUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Storybook documentation URL"
+        },
+        "testsPresent": {
+          "type": "boolean",
+          "description": "Whether unit tests exist"
+        },
+        "a11yScore": {
+          "type": "string",
+          "pattern": "^(100|[1-9]?[0-9])$",
+          "description": "Accessibility score (0-100)"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date",
+          "description": "Last modification date (YYYY-MM-DD)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["complete", "partial", "planned", "deprecated"],
+          "description": "Example completeness status"
+        }
+      }
+    },
+    
+    "Example": {
+      "type": "object",
+      "required": ["exampleId", "file", "description", "tags", "complexity"],
+      "properties": {
+        "exampleId": {
+          "type": "string",
+          "description": "Unique identifier for this example",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative path to example file"
+        },
+        "lineRange": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1 },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Start and end line numbers [start, end]"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of what this example demonstrates"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Searchable tags for this specific example"
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "medium", "complex"]
+        },
+        "localeSupport": {
+          "type": "boolean",
+          "description": "Whether example includes EN/FR translations"
+        },
+        "dataSource": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["mock", "cosmos_db", "azure_api", "rag", "static"]
+          },
+          "description": "Where example data comes from"
+        },
+        "features": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Features demonstrated (e.g., 'sorting', 'filtering', 'pagination')"
+        }
+      }
+    },
+    
+    "DomainMetadata": {
+      "type": "object",
+      "required": ["id", "name", "description", "screens"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z-]+$",
+          "description": "Domain identifier"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable domain name"
+        },
+        "description": {
+          "type": "string",
+          "description": "What this domain covers"
+        },
+        "screenCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of complete screen examples"
+        },
+        "screens": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Screen" }
+        },
+        "dataSources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "cosmos_db",
+              "azure_monitor",
+              "azure_finops_api",
+              "azure_apim",
+              "rag_search",
+              "static"
+            ]
+          },
+          "description": "Data sources used in this domain"
+        },
+        "commonComponents": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Components frequently used in this domain"
+        }
+      }
+    },
+    
+    "Screen": {
+      "type": "object",
+      "required": ["id", "name", "file", "screenType", "components", "complexity"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable screen name"
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative path to complete screen example"
+        },
+        "screenType": {
+          "type": "string",
+          "enum": [
+            "list",
+            "edit",
+            "create",
+            "detail",
+            "dashboard",
+            "settings",
+            "search",
+            "wizard",
+            "audit-log"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "What this screen does"
+        },
+        "components": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "EVA components used in this screen"
+        },
+        "patterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Patterns used in this screen"
+        },
+        "dataSources": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Data sources this screen integrates with"
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "medium", "complex"]
+        },
+        "features": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Features implemented (e.g., 'CRUD', 'filtering', 'export')"
+        },
+        "lineCount": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Approximate line count"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["complete", "partial", "planned"]
+        }
+      }
+    },
+    
+    "PatternMetadata": {
+      "type": "object",
+      "required": ["id", "name", "category", "file", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "forms",
+            "navigation",
+            "data-visualization",
+            "api-integration",
+            "validation",
+            "error-handling",
+            "telemetry",
+            "testing",
+            "data-export",
+            "authentication",
+            "performance"
+          ]
+        },
+        "file": {
+          "type": "string",
+          "description": "Relative path to pattern file"
+        },
+        "description": {
+          "type": "string"
+        },
+        "usedByScreens": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Screen IDs that use this pattern"
+        },
+        "components": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Components used in this pattern"
+        },
+        "complexity": {
+          "type": "string",
+          "enum": ["simple", "medium", "complex"]
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["complete", "partial", "planned"]
+        }
+      }
+    },
+    
+    "MasterIndex": {
+      "type": "object",
+      "required": ["version", "generatedAt", "components", "domains", "patterns"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "status", "exampleCount", "metadataPath"],
+            "properties": {
+              "id": { "type": "string" },
+              "status": {
+                "type": "string",
+                "enum": ["complete", "partial", "planned"]
+              },
+              "exampleCount": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "metadataPath": {
+                "type": "string",
+                "description": "Path to detailed component metadata"
+              }
+            }
+          }
+        },
+        "domains": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DomainMetadata" }
+        },
+        "patterns": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/PatternMetadata" }
+        },
+        "statistics": {
+          "type": "object",
+          "properties": {
+            "totalComponents": { "type": "integer" },
+            "completeComponents": { "type": "integer" },
+            "totalExamples": { "type": "integer" },
+            "totalScreens": { "type": "integer" },
+            "totalPatterns": { "type": "integer" },
+            "overallCompleteness": {
+              "type": "string",
+              "pattern": "^\\d+%$"
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "oneOf": [
+    { "$ref": "#/definitions/ComponentMetadata" },
+    { "$ref": "#/definitions/DomainMetadata" },
+    { "$ref": "#/definitions/PatternMetadata" },
+    { "$ref": "#/definitions/MasterIndex" }
+  ]
+}

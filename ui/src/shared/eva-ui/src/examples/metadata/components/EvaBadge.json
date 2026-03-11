@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaBadge",
+  "componentName": "EvaBadge",
+  "category": "feedback",
+  "complexity": "simple",
+  "usageFrequency": "high",
+  "tags": ["badge","status","indicator"],
+  "domains": ["universal","admin-crud","observability"],
+  "examples": [],
+  "propsRequired": [],
+  "propsOptional": ["variant"],
+  "relatedComponents": [],
+  "relatedPatterns": ["status-badges"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evabadge--default",
+  "testsPresent": false,
+  "a11yScore": "0",
+  "lastUpdated": "2026-02-15",
+  "status": "planned"
+}

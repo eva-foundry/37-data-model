@@ -28,6 +28,16 @@ param(
 $ErrorActionPreference = "Stop"
 $startTime = Get-Date
 
+# Import template expansion functions
+$expandModulePath = Join-Path $PSScriptRoot "Expand-TemplateFields.ps1"
+if (Test-Path $expandModulePath) {
+    . $expandModulePath 2>$null  # Suppress Export-ModuleMember warning
+    Write-Host "[INFO] Template expansion module loaded" -ForegroundColor Green
+} else {
+    Write-Host "[WARN] Template expansion module not found: $expandModulePath" -ForegroundColor Yellow
+    Write-Host "[WARN] Will generate templates with placeholders (Sprint 2 mode)" -ForegroundColor Yellow
+}
+
 Write-Host "[INFO] Screens Machine - Generate UI for $LayerId ($LayerName)" -ForegroundColor Cyan
 Write-Host "[INFO] Start: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') ET"
 Write-Host ""
@@ -125,9 +135,25 @@ foreach ($tmpl in $templates) {
     # Read template
     $content = Get-Content $templatePath -Raw -Encoding UTF8
     
-    # Apply substitutions
+    # Apply basic substitutions (layer name, ID, timestamps)
     foreach ($key in $vars.Keys) {
         $content = $content -replace [regex]::Escape($key), $vars[$key]
+    }
+    
+    # Expand field loops if schema available and expansion module loaded
+    if ($layerSchema.fields.Count -gt 0 -and (Get-Command -Name Expand-AllTemplateFields -ErrorAction SilentlyContinue)) {
+        try {
+            Write-Host "    [INFO] Expanding field loops ($($layerSchema.fields.Count) fields)..." -ForegroundColor Cyan
+            $content = Expand-AllTemplateFields -TemplateContent $content -Fields $layerSchema.fields -ComponentName $LayerName
+            Write-Host "    [PASS] Field loops expanded" -ForegroundColor Green
+        } catch {
+            Write-Host "    [WARN] Field expansion failed: $_" -ForegroundColor Yellow
+            Write-Host "    [WARN] Continuing with template placeholders" -ForegroundColor Yellow
+        }
+    } else {
+        if ($layerSchema.fields.Count -eq 0) {
+            Write-Host "    [WARN] No schema fields available - template placeholders will remain" -ForegroundColor Yellow
+        }
     }
     
     # Write output
