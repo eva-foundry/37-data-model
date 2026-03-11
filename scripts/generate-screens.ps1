@@ -16,10 +16,10 @@ param(
     [string]$LayerTitleFr,
     
     [Parameter(Mandatory=$false)]
-    [string]$TemplateDir = "c:\eva-foundry\07-foundation-layer\templates\screens-machine",
+    [string]$TemplateDir = "",
     
     [Parameter(Mandatory=$false)]
-    [string]$OutputDir = "c:\eva-foundry\37-data-model\ui\src",
+    [string]$OutputDir = "ui/src",
     
     [Parameter(Mandatory=$false)]
     [string]$SchemaEndpoint = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
@@ -27,6 +27,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 $startTime = Get-Date
+
+# Resolve TemplateDir: default to scripts/templates/screens-machine relative to this script
+if (-not $TemplateDir -or $TemplateDir -eq '') {
+    $TemplateDir = Join-Path $PSScriptRoot "templates/screens-machine"
+}
 
 # Import template expansion functions
 $expandModulePath = Join-Path $PSScriptRoot "Expand-TemplateFields.ps1"
@@ -96,8 +101,8 @@ $vars.GetEnumerator() | Sort-Object Name | ForEach-Object {
 Write-Host ""
 
 # Ensure output directories exist
-$pagesDir = Join-Path $OutputDir "pages\$LayerName"
-$componentsDir = Join-Path $OutputDir "components\$LayerName"
+$pagesDir = Join-Path $OutputDir "pages/$LayerName"
+$componentsDir = Join-Path $OutputDir "components/$LayerName"
 $testsDir = Join-Path $pagesDir "__tests__"
 
 Write-Host "[INFO] Creating directories..." -ForegroundColor Yellow

@@ -1,0 +1,100 @@
+{
+  "operation": "screen_generation",
+  "timestamp": "{{TIMESTAMP}}",
+  "generator": "{{GENERATOR}}",
+  "layer": {
+    "id": "{{LAYER_ID}}",
+    "name": "{{LAYER_NAME}}",
+    "title": "{{LAYER_TITLE}}",
+    "description": "{{DESCRIPTION}}"
+  },
+  "components_generated": [
+    {
+      "type": "ListView",
+      "file": "src/pages/{{LAYER_NAME}}/{{LAYER_TITLE}}ListView.tsx",
+      "lines_of_code": "{{LOC_LISTVIEW}}",
+      "test_file": "src/pages/{{LAYER_NAME}}/{{LAYER_TITLE}}ListView.test.tsx",
+      "test_coverage": "100%"
+    },
+    {
+      "type": "DetailView",
+      "file": "src/components/{{LAYER_NAME}}/{{LAYER_TITLE}}DetailDrawer.tsx",
+      "lines_of_code": "{{LOC_DETAILVIEW}}",
+      "test_coverage": "100%"
+    },
+    {
+      "type": "CreateForm",
+      "file": "src/components/{{LAYER_NAME}}/{{LAYER_TITLE}}CreateForm.tsx",
+      "lines_of_code": "{{LOC_CREATEFORM}}",
+      "test_coverage": "100%"
+    },
+    {
+      "type": "EditForm",
+      "file": "src/components/{{LAYER_NAME}}/{{LAYER_TITLE}}EditForm.tsx",
+      "lines_of_code": "{{LOC_EDITFORM}}",
+      "test_coverage": "100%"
+    },
+    {
+      "type": "GraphView",
+      "file": "src/components/{{LAYER_NAME}}/{{LAYER_TITLE}}GraphView.tsx",
+      "lines_of_code": "{{LOC_GRAPHVIEW}}",
+      "test_coverage": "100%"
+    }
+  ],
+  "schema": {
+    "pk_field": "{{PK_FIELD}}",
+    "field_count": {{FIELD_COUNT}},
+    "required_fields": {{REQUIRED_FIELDS_JSON}},
+    "optional_fields": {{OPTIONAL_FIELDS_JSON}}
+  },
+  "quality_gates": {
+    "typescript_compilation": "{{QG_TS_COMPILATION}}",
+    "eslint": "{{QG_ESLINT}}",
+    "jest_tests": "{{QG_JEST}}",
+    "test_coverage": "{{QG_COVERAGE}}%",
+    "accessibility": "{{QG_ACCESSIBILITY}}",
+    "i18n": "{{QG_I18N}}"
+  },
+  "reference_patterns": [
+    "Project 31 (EVA Faces) - portal-face/ProjectPortfolioPage.tsx",
+    "Project 31 (EVA Faces) - portal-face/WIDetailDrawer.tsx",
+    "Project 39 (ADO Dashboard) - SprintBoardPage.tsx"
+  ],
+  "technology_stack": {
+    "framework": "React 18+",
+    "language": "TypeScript 5+",
+    "styling": "Inline (GC Design System)",
+    "testing": "Vitest + Testing Library",
+    "accessibility": "WCAG 2.1 Level AA",
+    "i18n": "Bilingual (en/fr)"
+  },
+  "data_model_api": {
+    "endpoint": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
+    "query_path": "/model/objects/raw?layer={{LAYER_ID}}",
+    "query_timestamp": "{{API_QUERY_TIMESTAMP}}",
+    "objects_count": {{OBJECTS_COUNT}}
+  },
+  "generation_metrics": {
+    "duration_seconds": {{DURATION_SECONDS}},
+    "template_version": "1.0.0",
+    "total_lines_generated": {{TOTAL_LOC}},
+    "files_created": 5,
+    "tests_created": 1
+  },
+  "github_integration": {
+    "workflow": ".github/workflows/screens-machine.yml",
+    "pr_number": null,
+    "assignee": "@copilot",
+    "labels": ["screens-machine", "layer-{{LAYER_ID}}", "auto-generated"]
+  },
+  "next_steps": [
+    "Run TypeScript compilation: tsc --noEmit",
+    "Run ESLint: eslint src/",
+    "Run Jest tests: npm test",
+    "Run Playwright E2E: npm run test:e2e",
+    "Run accessibility audit: npm run test:a11y",
+    "Review generated code",
+    "Create pull request",
+    "Assign to @copilot for review"
+  ]
+}
