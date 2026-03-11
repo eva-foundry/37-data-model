@@ -1,0 +1,181 @@
+# Generate Screens from Templates - Factory POC
+# Session 45 Part 5 - Screens Machine POC
+# Date: 2026-03-11 00:28 ET
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$LayerId,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$LayerName,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$LayerTitle,
+    
+    [Parameter(Mandatory=$true)]
+    [string]$LayerTitleFr,
+    
+    [Parameter(Mandatory=$false)]
+    [string]$TemplateDir = "c:\eva-foundry\07-foundation-layer\templates\screens-machine",
+    
+    [Parameter(Mandatory=$false)]
+    [string]$OutputDir = "c:\eva-foundry\37-data-model\ui\src"
+)
+
+$ErrorActionPreference = "Stop"
+$startTime = Get-Date
+
+Write-Host "[INFO] Screens Machine - Generate UI for $LayerId ($LayerName)" -ForegroundColor Cyan
+Write-Host "[INFO] Start: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') ET"
+Write-Host ""
+
+# Template variables
+$vars = @{
+    "{{LAYER_ID}}" = $LayerId
+    "{{LAYER_NAME}}" = $LayerName
+    "{{LAYER_TITLE}}" = $LayerTitle
+    "{{LAYER_TITLE_FR}}" = $LayerTitleFr
+    "{{ENTITY_TYPE}}" = "${LayerTitle}Record"
+    "{{PK_FIELD}}" = "id"
+    "{{TIMESTAMP}}" = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+    "{{GENERATOR}}" = "screens-machine-v1.0.0"
+    "{{TEST_COVERAGE}}" = "100"
+}
+
+Write-Host "[INFO] Template variables:" -ForegroundColor Yellow
+$vars.GetEnumerator() | Sort-Object Name | ForEach-Object {
+    Write-Host "  $($_.Key) = $($_.Value)"
+}
+Write-Host ""
+
+# Ensure output directories exist
+$pagesDir = Join-Path $OutputDir "pages\$LayerName"
+$componentsDir = Join-Path $OutputDir "components\$LayerName"
+$testsDir = Join-Path $pagesDir "__tests__"
+
+Write-Host "[INFO] Creating directories..." -ForegroundColor Yellow
+New-Item -ItemType Directory -Path $pagesDir -Force | Out-Null
+New-Item -ItemType Directory -Path $componentsDir -Force | Out-Null
+New-Item -ItemType Directory -Path $testsDir -Force | Out-Null
+Write-Host "[PASS] Directories created" -ForegroundColor Green
+Write-Host ""
+
+# Template files to process
+$templates = @(
+    @{ Template = "ListView.template.tsx"; Output = "${LayerTitle}ListView.tsx"; Dir = $pagesDir }
+    @{ Template = "DetailView.template.tsx"; Output = "${LayerTitle}DetailDrawer.tsx"; Dir = $componentsDir }
+    @{ Template = "CreateForm.template.tsx"; Output = "${LayerTitle}CreateForm.tsx"; Dir = $componentsDir }
+    @{ Template = "EditForm.template.tsx"; Output = "${LayerTitle}EditForm.tsx"; Dir = $componentsDir }
+    @{ Template = "GraphView.template.tsx"; Output = "${LayerTitle}GraphView.tsx"; Dir = $componentsDir }
+    @{ Template = "test.spec.tsx.template"; Output = "${LayerTitle}ListView.test.tsx"; Dir = $testsDir }
+)
+
+$filesGenerated = @()
+$totalLOC = 0
+
+Write-Host "[INFO] Processing templates..." -ForegroundColor Yellow
+foreach ($tmpl in $templates) {
+    $templatePath = Join-Path $TemplateDir $tmpl.Template
+    $outputPath = Join-Path $tmpl.Dir $tmpl.Output
+    
+    Write-Host "  [*] $($tmpl.Template) -> $($tmpl.Output)"
+    
+    if (-not (Test-Path $templatePath)) {
+        Write-Host "    [ERROR] Template not found: $templatePath" -ForegroundColor Red
+        continue
+    }
+    
+    # Read template
+    $content = Get-Content $templatePath -Raw -Encoding UTF8
+    
+    # Apply substitutions
+    foreach ($key in $vars.Keys) {
+        $content = $content -replace [regex]::Escape($key), $vars[$key]
+    }
+    
+    # Write output
+    Set-Content -Path $outputPath -Value $content -Encoding UTF8
+    
+    # Count LOC
+    $loc = (Get-Content $outputPath | Measure-Object -Line).Lines
+    $totalLOC += $loc
+    
+    $filesGenerated += @{
+        Template = $tmpl.Template
+        Output = $tmpl.Output
+        Path = $outputPath
+        LOC = $loc
+    }
+    
+    Write-Host "    [PASS] $loc lines" -ForegroundColor Green
+}
+
+Write-Host ""
+Write-Host "[INFO] Generation complete!" -ForegroundColor Cyan
+Write-Host ""
+
+# Summary
+$duration = (Get-Date) - $startTime
+Write-Host "[SUMMARY]" -ForegroundColor Cyan
+Write-Host "  Layer: $LayerId ($LayerName)"
+Write-Host "  Files generated: $($filesGenerated.Count)"
+Write-Host "  Total LOC: $totalLOC"
+Write-Host "  Duration: $($duration.TotalSeconds) seconds"
+Write-Host ""
+
+# Generate evidence
+$evidence = @{
+    operation = "screen_generation"
+    timestamp = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
+    generator = "screens-machine-v1.0.0"
+    layer = @{
+        id = $LayerId
+        name = $LayerName
+        title = $LayerTitle
+        title_fr = $LayerTitleFr
+    }
+    components_generated = $filesGenerated | ForEach-Object {
+        @{
+            type = $_.Template -replace "\.template\.tsx", "" -replace "\.tsx\.template", ""
+            file = $_.Output
+            path = $_.Path
+            lines_of_code = $_.LOC
+        }
+    }
+    metrics = @{
+        files_count = $filesGenerated.Count
+        total_loc = $totalLOC
+        duration_seconds = [math]::Round($duration.TotalSeconds, 2)
+        avg_loc_per_file = [math]::Round($totalLOC / $filesGenerated.Count, 0)
+    }
+    quality_gates = @{
+        typescript_compilation = "PENDING"
+        eslint = "PENDING"
+        jest_coverage = "PENDING"
+        accessibility = "PENDING"
+        i18n = "PENDING"
+    }
+    session = "45-part5-factory-poc"
+    next_steps = @(
+        "npm run type-check"
+        "npm run lint"
+        "npm test -- --coverage"
+        "git add ui/src/"
+        "git commit -m 'feat(ui): Add $LayerTitle screens (auto-generated)'"
+    )
+}
+
+$evidencePath = "evidence/screen-generation-$LayerName-$(Get-Date -Format 'yyyyMMdd-HHmmss').json"
+$evidence | ConvertTo-Json -Depth 10 | Set-Content $evidencePath -Encoding UTF8
+
+Write-Host "[PASS] Evidence saved: $evidencePath" -ForegroundColor Green
+Write-Host ""
+
+# Output for next steps
+Write-Host "[NEXT STEPS]" -ForegroundColor Yellow
+Write-Host "  1. Review generated files in: $pagesDir"
+Write-Host "  2. Run quality gates: npm run type-check && npm run lint && npm test"
+Write-Host "  3. Commit generated code"
+Write-Host ""
+
+exit 0

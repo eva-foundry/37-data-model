@@ -1,0 +1,70 @@
+{
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Projects screens (auto-generated)'"
+  ],
+  "components_generated": [
+    {
+      "lines_of_code": 176,
+      "type": "ListView",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\projects\\ProjectsListView.tsx",
+      "file": "ProjectsListView.tsx"
+    },
+    {
+      "lines_of_code": 177,
+      "type": "DetailView",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsDetailDrawer.tsx",
+      "file": "ProjectsDetailDrawer.tsx"
+    },
+    {
+      "lines_of_code": 255,
+      "type": "CreateForm",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsCreateForm.tsx",
+      "file": "ProjectsCreateForm.tsx"
+    },
+    {
+      "lines_of_code": 287,
+      "type": "EditForm",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsEditForm.tsx",
+      "file": "ProjectsEditForm.tsx"
+    },
+    {
+      "lines_of_code": 212,
+      "type": "GraphView",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsGraphView.tsx",
+      "file": "ProjectsGraphView.tsx"
+    },
+    {
+      "lines_of_code": 254,
+      "type": "test.spec",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\projects\\__tests__\\ProjectsListView.test.tsx",
+      "file": "ProjectsListView.test.tsx"
+    }
+  ],
+  "operation": "screen_generation",
+  "generator": "screens-machine-v1.0.0",
+  "quality_gates": {
+    "eslint": "PENDING",
+    "i18n": "PENDING",
+    "accessibility": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING"
+  },
+  "session": "45-part5-factory-poc",
+  "layer": {
+    "name": "projects",
+    "title_fr": "Projets",
+    "id": "L25",
+    "title": "Projects"
+  },
+  "metrics": {
+    "avg_loc_per_file": 227.0,
+    "files_count": 6,
+    "duration_seconds": 0.19,
+    "total_loc": 1361
+  },
+  "timestamp": "2026-03-11T00:28:43Z"
+}
