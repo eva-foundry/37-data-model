@@ -2,8 +2,8 @@
 // Export all views for consumption by UI components
 
 // Core API client
-export { DataModelClient, apiClient, OPERATIONAL_LAYERS } from './api/client';
-export type { QueryOptions, OperationalLayer } from './api/client';
+export { DataModelClient, apiClient, OPERATIONAL_LAYERS } from '../api/client';
+export type { QueryOptions, OperationalLayer } from '../api/client';
 
 // Types
 export type { 

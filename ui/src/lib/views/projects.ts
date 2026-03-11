@@ -2,8 +2,7 @@
 // Fire-hose protection: Returns filtered views, not all 56 projects
 
 import { apiClient } from '../api/client';
-import type { ProjectRecord, ProjectFilters, ProjectMaturityLevel, ProjectStatus } from '@/types/project';
-import type { ApiResponse } from '@/types/api';
+import type { ProjectRecord, ProjectFilters, ProjectMaturityLevel } from '@/types/project';
 
 /** Get all projects (fire-hose warning: returns all 56 objects) */
 export async function getAllProjects(): Promise<ProjectRecord[]> {
