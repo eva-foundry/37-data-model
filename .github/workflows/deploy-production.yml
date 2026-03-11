@@ -146,6 +146,20 @@ jobs:
           echo "objects=${beforeObjects}" >> $env:GITHUB_OUTPUT
           Write-Host "✅ Baseline: ${beforeObjects} objects, ${beforeUptime}s uptime"
 
+      - name: Discover endpoints (BEFORE deployment)
+        id: endpoints_before
+        run: |
+          echo "🔍 Discovering and testing all API endpoints (BEFORE deployment)..."
+          python3 -m pip install requests --quiet
+          python3 scripts/discover-endpoints.py --stage before
+          
+          # Count endpoints
+          ENDPOINTS_FOUND=$(jq '.endpoints_discovered' evidence/endpoint-discovery_before_*.json | tail -1)
+          ENDPOINTS_SUCCESS=$(jq '.success_count' evidence/endpoint-discovery_before_*.json | tail -1)
+          echo "endpoints_found=${ENDPOINTS_FOUND}" >> $GITHUB_OUTPUT
+          echo "endpoints_success=${ENDPOINTS_SUCCESS}" >> $GITHUB_OUTPUT
+          echo "✅ Discovered ${ENDPOINTS_FOUND} endpoints, ${ENDPOINTS_SUCCESS} tested successfully"
+
       - name: Update Container App (Zero-Downtime)
         id: update
         run: |
@@ -273,6 +287,61 @@ jobs:
           $beforeObjects = ${{ steps.before.outputs.objects }}
           $objectDelta = $afterObjects - $beforeObjects
           Write-Host "✅ Post-deployment: ${afterObjects} objects (Δ ${objectDelta})"
+
+      - name: Upload endpoint evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: endpoint-evidence
+          path: |
+            evidence/endpoint-discovery_*.json
+            evidence/endpoint-comparison_*.json
+            logs/discover-endpoints_*.log
+            logs/compare-endpoint-snapshots_*.log
+          retention-days: 30
+
+      - name: Deployment summary
+        if: always()
+        run: |
+          echo "━━━ Deployment Complete ━━━"
+          echo "✓ Image: ${{ env.TARGET_ACR }}.azurecr.io/${{ steps.build.outputs.full_image }}"
+          echo "✓ Container App: ${{ env.CONTAINER_APP }}"
+          echo "✓ Revision: ${{ steps.update.outputs.revision }}"
+          echo "✓ Cloud URL: ${{ env.CLOUD_URL }}"
+          echo ""
+          echo "━━━ Endpoint Analysis ━━━"
+          echo "✓ Before: ${{ steps.endpoints_before.outputs.endpoints_found }} endpoints"
+          echo "✓ After:  ${{ steps.endpoints_after.outputs.endpoints_found }} endpoints"
+          echo "✓ Changes: +${{ steps.endpoints_compare.outputs.endpoints_added }} added, -${{ steps.endpoints_compare.outputs.endpoints_removed }} removed, ~${{ steps.endpoints_compare.outputs.endpoints_changed }} changed
+          ENDPOINTS_FOUND=$(jq '.endpoints_discovered' evidence/endpoint-discovery_after_*.json | tail -1)
+          ENDPOINTS_SUCCESS=$(jq '.success_count' evidence/endpoint-discovery_after_*.json | tail -1)
+          echo "endpoints_found=${ENDPOINTS_FOUND}" >> $GITHUB_OUTPUT
+          echo "endpoints_success=${ENDPOINTS_SUCCESS}" >> $GITHUB_OUTPUT
+          echo "✅ Discovered ${ENDPOINTS_FOUND} endpoints, ${ENDPOINTS_SUCCESS} tested successfully"
+
+      - name: Compare endpoint snapshots
+        if: ${{ !github.event.inputs.skip_verify }}
+        id: endpoints_compare
+        run: |
+          echo "📊 Comparing endpoint snapshots (before vs after)..."
+          python3 scripts/compare-endpoint-snapshots.py --latest || echo "⚠️ Comparison detected changes"
+          
+          # Extract comparison results
+          ADDED=$(jq '.endpoints_added' evidence/endpoint-comparison_*.json | tail -1)
+          REMOVED=$(jq '.endpoints_removed' evidence/endpoint-comparison_*.json | tail -1)
+          CHANGED=$(jq '.endpoints_changed' evidence/endpoint-comparison_*.json | tail -1)
+          UNCHANGED=$(jq '.endpoints_unchanged' evidence/endpoint-comparison_*.json | tail -1)
+          
+          echo "endpoints_added=${ADDED}" >> $GITHUB_OUTPUT
+          echo "endpoints_removed=${REMOVED}" >> $GITHUB_OUTPUT
+          echo "endpoints_changed=${CHANGED}" >> $GITHUB_OUTPUT
+          echo "endpoints_unchanged=${UNCHANGED}" >> $GITHUB_OUTPUT
+          
+          echo "━━━ Endpoint Changes ━━━"
+          echo "  Added:     ${ADDED}"
+          echo "  Removed:   ${REMOVED}"
+          echo "  Changed:   ${CHANGED}"
+          echo "  Unchanged: ${UNCHANGED}"
 
       - name: Deployment summary
         if: always()
