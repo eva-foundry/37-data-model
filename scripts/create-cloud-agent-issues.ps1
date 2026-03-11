@@ -39,8 +39,8 @@ $ErrorActionPreference = "Stop"
 
 # Configuration
 $baseUrl = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
-$repoOwner = "MarcoPresta"  # Update with actual GitHub org/user
-$repoName = "eva-foundry"   # Update with actual repo name
+$repoOwner = "eva-foundry"  # GitHub organization
+$repoName = "37-data-model"  # GitHub repository name
 
 # Completed layers (skip these)
 $completedLayers = @("projects", "wbs", "sprints")  # L25, L26, L27
