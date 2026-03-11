@@ -19,7 +19,10 @@ param(
     [string]$TemplateDir = "c:\eva-foundry\07-foundation-layer\templates\screens-machine",
     
     [Parameter(Mandatory=$false)]
-    [string]$OutputDir = "c:\eva-foundry\37-data-model\ui\src"
+    [string]$OutputDir = "c:\eva-foundry\37-data-model\ui\src",
+    
+    [Parameter(Mandatory=$false)]
+    [string]$SchemaEndpoint = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
 )
 
 $ErrorActionPreference = "Stop"
@@ -27,6 +30,37 @@ $startTime = Get-Date
 
 Write-Host "[INFO] Screens Machine - Generate UI for $LayerId ($LayerName)" -ForegroundColor Cyan
 Write-Host "[INFO] Start: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') ET"
+Write-Host ""
+
+# Fetch schema from API with retry logic
+Write-Host "[INFO] Fetching schema from $SchemaEndpoint/model/$LayerName/fields" -ForegroundColor Cyan
+$layerSchema = $null
+$maxRetries = 3
+$retryDelay = 1
+
+for ($attempt = 1; $attempt -le $maxRetries; $attempt++) {
+    try {
+        $schemaUrl = "$SchemaEndpoint/model/$LayerName/fields"
+        $layerSchema = Invoke-RestMethod -Uri $schemaUrl -Method GET -TimeoutSec 10 -ErrorAction Stop
+        Write-Host "[PASS] Schema fetched: $($layerSchema.fields.Count) fields from $($layerSchema.sample_count) objects" -ForegroundColor Green
+        break
+    } catch {
+        Write-Host "[WARN] Schema fetch attempt $attempt/$maxRetries failed: $_" -ForegroundColor Yellow
+        if ($attempt -lt $maxRetries) {
+            Write-Host "[INFO] Retrying in $retryDelay seconds..." -ForegroundColor Cyan
+            Start-Sleep -Seconds $retryDelay
+            $retryDelay *= 2  # Exponential backoff
+        } else {
+            Write-Host "[WARN] All schema fetch attempts failed. Continuing with empty schema (graceful degradation)" -ForegroundColor Yellow
+            $layerSchema = @{
+                layer = $LayerName
+                fields = @()
+                sample_count = 0
+                generated_at = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+            }
+        }
+    }
+}
 Write-Host ""
 
 # Template variables
@@ -40,6 +74,9 @@ $vars = @{
     "{{TIMESTAMP}}" = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
     "{{GENERATOR}}" = "screens-machine-v1.0.0"
     "{{TEST_COVERAGE}}" = "100"
+    "{{SCHEMA_ENDPOINT}}" = $SchemaEndpoint
+    "{{LAYER_FIELDS_JSON}}" = ($layerSchema | ConvertTo-Json -Depth 10 -Compress)
+    "{{FIELD_COUNT}}" = $layerSchema.fields.Count
 }
 
 Write-Host "[INFO] Template variables:" -ForegroundColor Yellow
@@ -124,6 +161,56 @@ Write-Host "  Duration: $($duration.TotalSeconds) seconds"
 Write-Host ""
 
 # Generate evidence
+$evidence = @{
+    operation = "screen_generation"
+    timestamp = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
+    generator = "screens-machine-v1.0.0"
+    layer = @{
+        id = $LayerId
+        name = $LayerName
+        title = $LayerTitle
+        title_fr = $LayerTitleFr
+    }
+    schema_metadata = @{
+        endpoint = $SchemaEndpoint
+        fetched = ($layerSchema.fields.Count -gt 0)
+        field_count = $layerSchema.fields.Count
+        sample_count = $layerSchema.sample_count
+        generated_at = $layerSchema.generated_at
+    }
+    components_generated = $filesGenerated | ForEach-Object {
+        @{
+            type = $_.Template -replace "\.template\.tsx", "" -replace "\.tsx\.template", ""
+            file = $_.Output
+            path = $_.Path
+            lines_of_code = $_.LOC
+        }
+    }
+    metrics = @{
+        files_count = $filesGenerated.Count
+        total_loc = $totalLOC
+        duration_seconds = [math]::Round($duration.TotalSeconds, 2)
+        avg_loc_per_file = [math]::Round($totalLOC / $filesGenerated.Count, 0)
+    }
+    quality_gates = @{
+        typescript_compilation = "PENDING"
+        eslint = "PENDING"
+        jest_coverage = "PENDING"
+        accessibility = "PENDING"
+        i18n = "PENDING"
+    }
+    session = "45-fkte-sprint1"
+    next_steps = @(
+        "npm run type-check"
+        "npm run lint"
+        "npm test -- --coverage"
+        "git add ui/src/"
+        "git commit -m 'feat(ui): Add $LayerTitle screens (auto-generated)'"
+    )
+}
+
+$evidencePath = "evidence/screen-generation-$LayerName-$(Get-Date -Format 'yyyyMMdd-HHmmss').json"
+$evidence | ConvertTo-Json -Depth 10 | Set-Content $evidencePath -Encoding UTF8
 $evidence = @{
     operation = "screen_generation"
     timestamp = Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ"
