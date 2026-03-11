@@ -1,0 +1,133 @@
+{
+  "schema_version": "2.0.0",
+  "session": "45-part-8",
+  "timestamp": "2026-03-11T02:20:00Z",
+  "description": "5-language literal schema design for centralized i18n",
+  
+  "languages_supported": {
+    "en": "English (default)",
+    "fr": "Français",
+    "pt": "Português",
+    "cn": "中文 (Simplified Chinese)",
+    "es": "Español"
+  },
+  
+  "literal_structure": {
+    "key": "Hierarchical key: {layer}.{component}.{context}.{field}",
+    "default_en": "English translation (required, fallback)",
+    "default_fr": "French translation",
+    "default_pt": "Portuguese translation",
+    "default_cn": "Chinese translation (Simplified)",
+    "default_es": "Spanish translation",
+    "screens": "Array of screens/components using this literal",
+    "category": "button|label|field|error|message|title|description",
+    "status": "active|deprecated",
+    "notes": "Translation context for translators"
+  },
+  
+  "example_literals": [
+    {
+      "key": "common.actions.create",
+      "default_en": "Create",
+      "default_fr": "Créer",
+      "default_pt": "Criar",
+      "default_cn": "创建",
+      "default_es": "Crear",
+      "screens": ["*"],
+      "category": "button",
+      "status": "active"
+    },
+    {
+      "key": "projects.create_form.title",
+      "default_en": "Create New Project",
+      "default_fr": "Créer un nouveau projet",
+      "default_pt": "Criar novo projeto",
+      "default_cn": "创建新项目",
+      "default_es": "Crear nuevo proyecto",
+      "screens": ["ProjectsCreateForm"],
+      "category": "title",
+      "status": "active"
+    },
+    {
+      "key": "projects.create_form.fields.id_label",
+      "default_en": "Project ID",
+      "default_fr": "ID du projet",
+      "default_pt": "ID do projeto", 
+      "default_cn": "项目编号",
+      "default_es": "ID del proyecto",
+      "screens": ["ProjectsCreateForm", "ProjectsEditForm"],
+      "category": "field",
+      "status": "active",
+      "notes": "Primary key field label"
+    }
+  ],
+  
+  "useLiterals_hook_api": {
+    "import": "import { useLiterals } from '@hooks/useLiterals';",
+    "usage": "const t = useLiterals('projects.create_form');",
+    "returns": {
+      "description": "Object with all literals for given namespace, in current language",
+      "example": {
+        "title": "Create New Project",
+        "submit": "Create",
+        "cancel": "Cancel",
+        "errors": {
+          "required": "This field is required"
+        },
+        "fields": {
+          "id_label": "Project ID",
+          "goal_label": "Goal"
+        }
+      }
+    },
+    "features": [
+      "Auto-detects current language from LangContext",
+      "Falls back to English if translation missing",
+      "Caches literals to avoid repeated API calls",
+      "Supports nested object structure"
+    ]
+  },
+  
+  "key_categories_planned": {
+    "common": {
+      "actions": ["create", "edit", "delete", "save", "cancel", "close", "submit", "reset"],
+      "errors": ["required", "invalid", "network_error", "not_found", "unauthorized"],
+      "messages": ["loading", "success", "no_data", "confirm_delete"],
+      "navigation": ["back", "next", "home", "settings"]
+    },
+    "projects": {
+      "create_form": ["title", "submit", "cancel", "errors.*", "fields.*"],
+      "edit_form": ["title", "submit", "cancel", "no_changes", "errors.*", "fields.*"],
+      "detail_drawer": ["title", "close", "edit_button", "delete_button"],
+      "list_view": ["title", "create_button", "filters.*", "columns.*"],
+      "graph_view": ["title", "no_data", "stats.*"]
+    },
+    "wbs": "Same structure as projects",
+    "sprints": "Same structure as projects"
+  },
+  
+  "anti_hardcoding_test": {
+    "purpose": "Prevent hardcoded strings in generated components",
+    "test_file": "ui/src/__tests__/anti-hardcoding.test.ts",
+    "strategy": "Regex search for quoted strings not in allowed patterns",
+    "allowed_patterns": [
+      "import statements",
+      "CSS class names",
+      "data-testid attributes",
+      "API endpoints",
+      "Type names",
+      "Variable names in object keys"
+    ],
+    "forbidden_patterns": [
+      "UI text in quotes: 'Create', \"Submit\", etc.",
+      "Error messages: 'This field is required'",
+      "Labels: 'Project ID'",
+      "Titles: 'Edit Record'"
+    ],
+    "test_example": {
+      "input": "const button = <button>Create</button>",
+      "result": "FAIL - Hardcoded string 'Create' found",
+      "fix": "const button = <button>{t.create}</button>"
+    }
+  }
+}

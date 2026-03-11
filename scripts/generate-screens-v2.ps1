@@ -365,7 +365,7 @@ function Expand-RequiredFields {
             $fieldName = $_.Name
             @"
     if (!formData.${fieldName}) {
-      newErrors.${fieldName} = t.required;
+      newErrors.${fieldName} = t('errors.required');
     }
 "@
         }
