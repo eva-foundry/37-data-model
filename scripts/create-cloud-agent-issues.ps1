@@ -21,6 +21,9 @@
 .PARAMETER BatchSize
     Create issues in batches (default: 10 at a time)
 
+.PARAMETER TestLayer
+    Create issue for single layer only (e.g., "L01" or "agents_ontology")
+
 .EXAMPLE
     .\create-cloud-agent-issues.ps1 -DryRun
     # Preview first 10 issues
@@ -28,11 +31,16 @@
 .EXAMPLE
     .\create-cloud-agent-issues.ps1 -BatchSize 20
     # Create 20 issues at a time
+
+.EXAMPLE
+    .\create-cloud-agent-issues.ps1 -TestLayer L01
+    # Test with one layer only
 #>
 
 param(
     [switch]$DryRun,
-    [int]$BatchSize = 10
+    [int]$BatchSize = 10,
+    [string]$TestLayer = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -240,6 +248,17 @@ $allLayers = @(
 
 # Filter out completed layers
 $layersToGenerate = $allLayers | Where-Object { $completedLayers -notcontains $_.Name }
+
+# Filter to single layer if TestLayer specified
+if ($TestLayer) {
+    $layersToGenerate = $layersToGenerate | Where-Object { $_.Id -eq $TestLayer -or $_.Name -eq $TestLayer }
+    if ($layersToGenerate.Count -eq 0) {
+        Write-Log "TestLayer '$TestLayer' not found" -Level "FAIL"
+        Write-Host "Available layers: L01-L111 (excluding L25, L26, L27)" -ForegroundColor Yellow
+        exit 1
+    }
+    Write-Log "Test mode: Single layer $($layersToGenerate.Id) ($($layersToGenerate.Name))"
+}
 
 Write-Log "Total layers: $($allLayers.Count)"
 Write-Log "Completed layers: $($completedLayers.Count) (L25, L26, L27)"
