@@ -26,6 +26,43 @@ type TranslationFunction = (key: string, vars?: Record<string, any>) => string;
  */
 type LiteralsCache = Record<string, Literal>;
 
+const GENERIC_SUFFIXES = new Set([
+  'title',
+  'subtitle',
+  'label',
+  'description',
+  'placeholder',
+  'hint',
+  'text',
+  'message',
+]);
+
+function toTitleCase(text: string): string {
+  return text
+    .split(' ')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+function humanizeLiteralKey(fullKey: string): string {
+  const parts = fullKey.split('.').filter(Boolean);
+  if (parts.length === 0) return fullKey;
+
+  const meaningful = [...parts];
+  const last = meaningful[meaningful.length - 1]?.toLowerCase();
+  if (last && GENERIC_SUFFIXES.has(last)) {
+    meaningful.pop();
+  }
+
+  const selected = meaningful.slice(-2);
+  if (selected.length === 0) {
+    return toTitleCase(parts[parts.length - 1].replace(/[_-]/g, ' '));
+  }
+
+  return toTitleCase(selected.join(' ').replace(/[_-]/g, ' '));
+}
+
 /**
  * Fetch literals from Data Model API
  */
@@ -156,9 +193,11 @@ export function useLiterals(scope?: string): TranslationFunction {
     const literal = literals[fullKey];
     
     if (!literal) {
-      // Not found - return key in brackets for debugging
-      console.warn(`[useLiterals] Literal not found: ${fullKey}`);
-      return `[${fullKey}]`;
+      // Preserve a readable UI while still keeping missing keys discoverable in dev logs.
+      if (import.meta.env.DEV) {
+        console.warn(`[useLiterals] Literal not found: ${fullKey}`);
+      }
+      return humanizeLiteralKey(fullKey);
     }
     
     // Get translation for current language, fallback to English
