@@ -37,46 +37,80 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+# Setup logging (professional standard: dual logging)
+$timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
+$logsDir = Join-Path $PSScriptRoot ".." "logs"
+if (-not (Test-Path $logsDir)) { New-Item -ItemType Directory -Path $logsDir | Out-Null }
+$logFile = Join-Path $logsDir "cloud-agent-issues_$timestamp.log"
+
+function Write-Log {
+    param(
+        [string]$Message,
+        [string]$Level = "INFO",  # INFO, PASS, FAIL, ERROR
+        [switch]$ConsoleOnly
+    )
+    
+    $logEntry = "[$(Get-Date -Format 'HH:mm:ss')] [$Level] $Message"
+    
+    # Always write to file (verbose)
+    if (-not $ConsoleOnly) {
+        $logEntry | Out-File $logFile -Append -Encoding UTF8
+    }
+    
+    # Console output (minimal)
+    switch ($Level) {
+        "PASS" { Write-Host "[PASS] $Message" -ForegroundColor Green }
+        "FAIL" { Write-Host "[FAIL] $Message" -ForegroundColor Red }
+        "ERROR" { Write-Host "[ERROR] $Message" -ForegroundColor Red }
+        default { } # INFO/DEBUG: file only, no console spam
+    }
+}
+
+Write-Log "Script started: cloud-agent-issues.ps1" -ConsoleOnly
+Write-Log "Parameters: DryRun=$DryRun, BatchSize=$BatchSize"
+
 # Configuration
 $baseUrl = "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
 $repoOwner = "eva-foundry"  # GitHub organization
 $repoName = "37-data-model"  # GitHub repository name
 
+Write-Log "Configuration: baseUrl=$baseUrl, repo=$repoOwner/$repoName"
+
 # Completed layers (skip these)
 $completedLayers = @("projects", "wbs", "sprints")  # L25, L26, L27
 
-Write-Host "`n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
-Write-Host "Cloud Agent Issue Creator - Session 45 Part 9" -ForegroundColor Cyan
-Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
+Write-Host "`nCloud Agent Issue Creator - Session 45 Part 9" -ForegroundColor Cyan
 
 # Check GitHub CLI
-Write-Host "`n[CHECK] Verifying GitHub CLI..." -ForegroundColor Yellow
 try {
     $ghVersion = gh --version 2>&1 | Select-Object -First 1
-    Write-Host "[PASS] $ghVersion" -ForegroundColor Green
+    Write-Log "GitHub CLI version: $ghVersion"
+    Write-Log "GitHub CLI check" -Level "PASS"
 } catch {
-    Write-Host "[FAIL] GitHub CLI not installed. Install from: https://cli.github.com/" -ForegroundColor Red
+    Write-Log "GitHub CLI not installed" -Level "FAIL"
+    Write-Host "Install from: https://cli.github.com/" -ForegroundColor Yellow
     exit 2
 }
 
 # Check authentication
-Write-Host "[CHECK] Verifying GitHub authentication..." -ForegroundColor Yellow
 try {
     $ghUser = gh api user --jq .login 2>&1
-    Write-Host "[PASS] Authenticated as: $ghUser" -ForegroundColor Green
+    Write-Log "Authenticated as: $ghUser"
+    Write-Log "GitHub authentication" -Level "PASS"
 } catch {
-    Write-Host "[FAIL] Not authenticated. Run: gh auth login" -ForegroundColor Red
+    Write-Log "Not authenticated" -Level "FAIL"
+    Write-Host "Run: gh auth login" -ForegroundColor Yellow
     exit 2
 }
 
 # Query Data Model API for layer list
-Write-Host "`n[DISCOVER] Querying Data Model API for all layers..." -ForegroundColor Cyan
+Write-Log "Querying Data Model API: $baseUrl/model/agent-guide"
 try {
     $guide = Invoke-RestMethod "$baseUrl/model/agent-guide" -TimeoutSec 10
     $layerCountTarget = 111  # From workspace docs
-    Write-Host "[INFO] Target layers: $layerCountTarget" -ForegroundColor White
+    Write-Log "API query successful, target layers: $layerCountTarget"
 } catch {
-    Write-Host "[WARN] API unreachable, using hardcoded layer list" -ForegroundColor Yellow
+    Write-Log "API unreachable, using hardcoded layer list" -Level "FAIL"
 }
 
 # Hardcoded layer list (111 layers from Data Model docs)
@@ -207,13 +241,15 @@ $allLayers = @(
 # Filter out completed layers
 $layersToGenerate = $allLayers | Where-Object { $completedLayers -notcontains $_.Name }
 
-Write-Host "[INFO] Total layers: $($allLayers.Count)" -ForegroundColor White
-Write-Host "[INFO] Completed: $($completedLayers.Count) (L25, L26, L27)" -ForegroundColor Green
-Write-Host "[INFO] Remaining: $($layersToGenerate.Count)" -ForegroundColor Yellow
+Write-Log "Total layers: $($allLayers.Count)"
+Write-Log "Completed layers: $($completedLayers.Count) (L25, L26, L27)"
+Write-Log "Remaining layers: $($layersToGenerate.Count)"
+
+Write-Host "Layers: $($allLayers.Count) total, $($layersToGenerate.Count) remaining" -ForegroundColor Gray
 
 if ($DryRun) {
-    Write-Host "`n[DRY RUN] Preview of first $BatchSize issues:" -ForegroundColor Magenta
-    Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Gray
+    Write-Host "`n[DRY RUN] Preview mode - no issues will be created" -ForegroundColor Magenta
+    Write-Log "Dry run mode enabled, BatchSize=$BatchSize"
 }
 
 # Create issues in batches
@@ -223,7 +259,8 @@ $batchNumber = 1
 foreach ($layer in $layersToGenerate) {
     if ($issuesCreated % $BatchSize -eq 0 -and $issuesCreated -gt 0) {
         if (-not $DryRun) {
-            Write-Host "`n[BATCH $batchNumber COMPLETE] Created $BatchSize issues, pausing 5 seconds..." -ForegroundColor Cyan
+            Write-Host "[Batch $batchNumber] $issuesCreated/$($layersToGenerate.Count)" -ForegroundColor Gray
+            Write-Log "Batch $batchNumber complete: $issuesCreated issues processed"
             Start-Sleep -Seconds 5
         }
         $batchNumber++
@@ -318,27 +355,68 @@ Create PR with title: ``feat(ui): $($layer.Id) ($($layer.Name)) UI components``
 /cc @$ghUser
 "@
 
+    Write-Log "Processing $($layer.Id): $($layer.Name) (Domain: $($layer.Domain), Phase: $($layer.Phase))"
+    
     if ($DryRun) {
         if ($issuesCreated -lt $BatchSize) {
-            Write-Host "`n$($issuesCreated + 1). $issueTitle" -ForegroundColor Cyan
-            Write-Host "   Domain: $($layer.Domain) | Phase: $($layer.Phase)" -ForegroundColor Gray
+            Write-Host "$($issuesCreated + 1). $($layer.Id) ($($layer.Name))" -ForegroundColor Cyan
         }
     } else {
-        Write-Host "`n[CREATE] Issue $($issuesCreated + 1)/$($layersToGenerate.Count): $issueTitle" -ForegroundColor Yellow
+        Write-Log "Creating issue $($issuesCreated + 1)/$($layersToGenerate.Count): $issueTitle"
         
-        try {
-            # Create issue using GitHub CLI
-            $issueUrl = gh issue create `
-                --repo "$repoOwner/$repoName" `
-                --title $issueTitle `
-                --body $issueBody `
-                --label "enhancement,screens-machine,cloud-agent,automation" `
-                --assignee "@copilot" 2>&1
+        # Create issue using GitHub CLI
+        # NOTE: Labels commented out temporarily (labels must exist in repo first)
+        # TODO: Create labels via: gh label create "screens-machine" --repo eva-foundry/37-data-model
+        $issueUrl = gh issue create `
+            --repo "$repoOwner/$repoName" `
+            --title $issueTitle `
+            --body $issueBody `
+            --assignee "@copilot" 2>$null
+        
+        # Check exit code (professional standard)
+        if ($LASTEXITCODE -eq 0 -and $issueUrl) {
+            Write-Host "." -NoNewline -ForegroundColor Green
+            Write-Log "Issue created successfully: $issueUrl" -Level "PASS"
             
-            Write-Host "[SUCCESS] Created: $issueUrl" -ForegroundColor Green
-        } catch {
-            Write-Host "[ERROR] Failed to create issue: $_" -ForegroundColor Red
-            # Continue with next issue
+            # Save success evidence (professional standard)
+            $evidenceDir = Join-Path $PSScriptRoot ".." "evidence"
+            if (-not (Test-Path $evidenceDir)) { New-Item -ItemType Directory -Path $evidenceDir | Out-Null }
+            
+            $evidence = @{
+                timestamp = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss")
+                layer_id = $layer.Id
+                layer_name = $layer.Name
+                issue_url = $issueUrl
+                issue_number = ($issueUrl -split '/')[-1]
+                status = "success"
+                exit_code = $LASTEXITCODE
+            } | ConvertTo-Json
+            
+            $evidencePath = Join-Path $evidenceDir "issue-created-$($layer.Id)-$(Get-Date -Format 'yyyyMMdd_HHmmss').json"
+            $evidence | Out-File $evidencePath -Encoding UTF8
+        } else {
+            Write-Host "X" -NoNewline -ForegroundColor Red
+            Write-Log "Issue creation failed: Exit code $LASTEXITCODE, Output: $issueUrl" -Level "FAIL"
+            
+            # Save failure evidence (professional standard)
+            $evidenceDir = Join-Path $PSScriptRoot ".." "evidence"
+            if (-not (Test-Path $evidenceDir)) { New-Item -ItemType Directory -Path $evidenceDir | Out-Null }
+            
+            $evidence = @{
+                timestamp = (Get-Date -Format "yyyy-MM-ddTHH:mm:ss")
+                layer_id = $layer.Id
+                layer_name = $layer.Name
+                issue_title = $issueTitle
+                status = "failed"
+                exit_code = $LASTEXITCODE
+                error_output = $issueUrl
+                reason = "gh issue create returned non-zero exit code"
+            } | ConvertTo-Json
+            
+            $evidencePath = Join-Path $evidenceDir "issue-failed-$($layer.Id)-$(Get-Date -Format 'yyyyMMdd_HHmmss').json"
+            $evidence | Out-File $evidencePath -Encoding UTF8
+            
+            # Continue with next issue (fail-safe)
         }
     }
     
@@ -350,19 +428,16 @@ Create PR with title: ``feat(ui): $($layer.Id) ($($layer.Name)) UI components``
     }
 }
 
-Write-Host "`n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
+Write-Host ""  # Newline after progress dots
+
+Write-Log "Script complete: $issuesCreated issues processed"
+Write-Log "Evidence files saved to: $evidenceDir"
+Write-Log "Full log: $logFile"
 
 if ($DryRun) {
-    Write-Host "[DRY RUN COMPLETE] Previewed $issuesCreated of $($layersToGenerate.Count) issues" -ForegroundColor Magenta
-    Write-Host "`n[NEXT STEP] Run without -DryRun to create actual issues:" -ForegroundColor Yellow
-    Write-Host "  .\create-cloud-agent-issues.ps1 -BatchSize 10" -ForegroundColor White
+    Write-Host "[DRY RUN] Previewed $issuesCreated of $($layersToGenerate.Count) issues" -ForegroundColor Magenta
+    Write-Host "Next: Run without -DryRun to create actual issues" -ForegroundColor Yellow
 } else {
-    Write-Host "[SESSION 45 PART 9 COMPLETE] Created $issuesCreated GitHub issues" -ForegroundColor Green
-    Write-Host "`n[NEXT STEPS]" -ForegroundColor Yellow
-    Write-Host "  1. Monitor cloud agent progress: gh issue list --label screens-machine" -ForegroundColor White
-    Write-Host "  2. Review PRs as they arrive: gh pr list" -ForegroundColor White
-    Write-Host "  3. Merge in batches: gh pr merge <number> --auto" -ForegroundColor White
-    Write-Host "`n[ESTIMATED COMPLETION] ~7 days (108 layers × 30 min / 24 parallel workers)" -ForegroundColor Cyan
+    Write-Log "Session 45 Part 9 complete" -Level "PASS"
+    Write-Host "Created $issuesCreated issues - See log: $logFile" -ForegroundColor Gray
 }
-
-Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor Cyan
