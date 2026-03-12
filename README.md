@@ -289,6 +289,46 @@ Default for all portal-face API calls and veritas `model_audit` tool.
 
 ---
 
+## UI Development Strategy
+
+### Shared Package Strategy: @eva/templates
+
+**Decision (Session 46, March 12, 2026)**: Use Vite alias pointing to built `dist/` in 31-eva-faces workspace instead of private npm registry.
+
+**Rationale:**
+- **Scale**: Only 2 consumer repositories (31-eva-faces/admin-face, 37-data-model/ui)
+- **Simplicity**: Vite alias works in both development and production builds
+- **Docker-compatible**: `dist/` committed to Git, no npm auth required in containers
+- **No overhead**: No registry setup, versioning complexity, or CI/CD publishing pipeline
+- **Reconsider threshold**: 5+ consumer repositories (portfolio decision, not premature optimization)
+
+**Configuration Pattern:**
+```typescript
+// vite.config.ts
+export default defineConfig({
+  resolve: {
+    alias: {
+      '@eva/templates': path.resolve(__dirname, '../../31-eva-faces/shared/eva-templates/dist/index.mjs')
+    }
+  }
+});
+```
+
+**Benefits:**
+- Zero authentication (KeyVault, PAT, .npmrc not needed)
+- Fast local development (instant changes without `npm link`)
+- CI/CD simplicity (workspace-relative paths, no publish step)
+- Version control via Git (no semantic versioning needed yet)
+
+**Trade-offs:**
+- Consumers must clone full workspace (not individual repos)
+- Monorepo-style coupling (acceptable for 2 consumers)
+- No independent versioning (future: migrate to Azure Artifacts at 5+ consumers)
+
+**Evidence**: 111 layers × 6 components/layer = 666 generated files using @eva/templates via Vite alias (Session 45-46, March 11-12, 2026)
+
+---
+
 ## How Agents Use This
 
 > **Rule: query the HTTP API first. Never read source files when the model has the answer.**
