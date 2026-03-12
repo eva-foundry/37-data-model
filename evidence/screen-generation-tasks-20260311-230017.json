@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:17Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Task screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L4",
+    "title_fr": "Tâche",
+    "name": "tasks",
+    "title": "Task"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2263,
+    "avg_loc_per_file": 377.0,
+    "duration_seconds": 0.65,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\tasks\\TaskListView.tsx",
+      "lines_of_code": 192,
+      "file": "TaskListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\tasks\\TaskDetailDrawer.tsx",
+      "lines_of_code": 298,
+      "file": "TaskDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\tasks\\TaskCreateForm.tsx",
+      "lines_of_code": 639,
+      "file": "TaskCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\tasks\\TaskEditForm.tsx",
+      "lines_of_code": 667,
+      "file": "TaskEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\tasks\\TaskGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "TaskGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\tasks\\__tests__\\TaskListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "TaskListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

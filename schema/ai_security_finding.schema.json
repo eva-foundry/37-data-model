@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/ai_security_finding.schema.json",
+  "title": "AI Security Finding (L78)",
+  "description": "Red-team vulnerability record from Promptfoo tests. Maps to attack tactics, frameworks, and remediation guidance.",
+  "type": "object",
+  "required": ["id", "test_id", "attack_tactic", "severity"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^finding_[a-z_]+_[0-9]{6}$"},
+    "test_id": {"type": "string", "description": "Reference to red_team_test_suite or specific test case"},
+    "run_id": {"type": "string", "description": "Reference to test execution run"},
+    "prompt_id": {"type": "string", "description": "Reference to the prompt from L20 prompts layer"},
+    "attack_tactic": {"type": "string", "enum": ["injection", "jailbreak", "privacy", "hallucination", "harmful_content", "compliance", "model_poisoning", "supply_chain"]},
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "CVSS-equivalent severity for this vulnerability"
+    },
+    "vulnerability_type": {"type": "string", "maxLength": 200},
+    "description": {"type": "string", "maxLength": 3000},
+    "observed_output": {"type": "string", "maxLength": 5000, "description": "Actual model output demonstrating the vulnerability"},
+    "remediation": {
+      "type": "object",
+      "properties": {
+        "recommendation": {"type": "string", "maxLength": 2000},
+        "priority": {"type": "string", "enum": ["immediate", "high", "medium", "low"]},
+        "effort_hours": {"type": "integer", "minimum": 1}
+      }
+    },
+    "framework_mapping": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "framework": {"type": "string", "enum": ["ATLAS", "OWASP-LLM", "NIST-AI-RMF", "ITSG-33", "EU-AI-Act"]},
+          "control_id": {"type": "string"},
+          "compliance_status": {"type": "string", "enum": ["violates", "warning", "compliant"]}
+        }
+      }
+    },
+    "source": {
+      "type": "string",
+      "enum": ["promptfoo", "manual", "agent_detection"],
+      "description": "How this vulnerability was discovered"
+    },
+    "timestamp": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

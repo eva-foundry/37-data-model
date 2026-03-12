@@ -187,6 +187,22 @@ _LAYER_FILES: dict[str, str] = {
     "work_factory_investments": "work_factory_investments.json",   # L73
     "work_factory_metrics": "work_factory_metrics.json",           # L74
     "work_factory_governance": "work_factory_governance.json",     # L75
+    
+    # ── L76-L86: Security Schemas (Session 46 P36 Red-Teaming + P58 Security Factory) ──
+    # P36 Red-Teaming: LLM vulnerability testing (L76-L80)
+    "attack_tactic_catalog": "attack_tactic_catalog.json",                 # L76
+    "red_team_test_suite": "red_team_test_suite.json",                     # L77
+    "ai_security_finding": "ai_security_finding.json",                     # L78
+    "framework_evidence_mapping": "framework_evidence_mapping.json",       # L79
+    "ai_security_metrics": "ai_security_metrics.json",                     # L80
+    
+    # P58 Security Factory: Infrastructure vulnerability scanning (L81-L86)
+    "vulnerability_scan_result": "vulnerability_scan_result.json",         # L81
+    "cve_finding": "cve_finding.json",                                     # L82
+    "risk_ranking": "risk_ranking.json",                                   # L83
+    "remediation_task": "remediation_task.json",                           # L84
+    "compliance_gap_mapping": "compliance_gap_mapping.json",               # L85
+    "threat_intelligence_context": "threat_intelligence_context.json",     # L86
 }
 
 _MODEL_DIR = _ROOT / "model"

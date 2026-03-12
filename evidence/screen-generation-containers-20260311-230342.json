@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:03:42Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Containers screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L54",
+    "title_fr": "Containers",
+    "name": "containers",
+    "title": "Containers"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2053,
+    "avg_loc_per_file": 342.0,
+    "duration_seconds": 0.79,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\containers\\ContainersListView.tsx",
+      "lines_of_code": 192,
+      "file": "ContainersListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\containers\\ContainersDetailDrawer.tsx",
+      "lines_of_code": 282,
+      "file": "ContainersDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\containers\\ContainersCreateForm.tsx",
+      "lines_of_code": 542,
+      "file": "ContainersCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\containers\\ContainersEditForm.tsx",
+      "lines_of_code": 570,
+      "file": "ContainersEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\containers\\ContainersGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "ContainersGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\containers\\__tests__\\ContainersListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "ContainersListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:07:18Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add AgentPolicies screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L32",
+    "title_fr": "AgentPolicies",
+    "name": "agent_policies",
+    "title": "AgentPolicies"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1430,
+    "avg_loc_per_file": 238.0,
+    "duration_seconds": 0.66,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\agent_policies\\AgentPoliciesListView.tsx",
+      "lines_of_code": 192,
+      "file": "AgentPoliciesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\agent_policies\\AgentPoliciesDetailDrawer.tsx",
+      "lines_of_code": 163,
+      "file": "AgentPoliciesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\agent_policies\\AgentPoliciesCreateForm.tsx",
+      "lines_of_code": 428,
+      "file": "AgentPoliciesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\agent_policies\\AgentPoliciesEditForm.tsx",
+      "lines_of_code": 180,
+      "file": "AgentPoliciesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\agent_policies\\AgentPoliciesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "AgentPoliciesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\agent_policies\\__tests__\\AgentPoliciesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "AgentPoliciesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

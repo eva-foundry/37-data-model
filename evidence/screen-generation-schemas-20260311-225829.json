@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T22:58:29Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Schemas screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L55",
+    "title_fr": "Schemas",
+    "name": "schemas",
+    "title": "Schemas"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1841,
+    "avg_loc_per_file": 307.0,
+    "duration_seconds": 0.64,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\schemas\\SchemasListView.tsx",
+      "lines_of_code": 192,
+      "file": "SchemasListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\schemas\\SchemasDetailDrawer.tsx",
+      "lines_of_code": 266,
+      "file": "SchemasDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\schemas\\SchemasCreateForm.tsx",
+      "lines_of_code": 444,
+      "file": "SchemasCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\schemas\\SchemasEditForm.tsx",
+      "lines_of_code": 472,
+      "file": "SchemasEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\schemas\\SchemasGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "SchemasGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\schemas\\__tests__\\SchemasListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "SchemasListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

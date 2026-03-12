@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:04:13Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add WorkObligations screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L99",
+    "title_fr": "WorkObligations",
+    "name": "work_obligations",
+    "title": "WorkObligations"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1348,
+    "avg_loc_per_file": 225.0,
+    "duration_seconds": 0.63,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\work_obligations\\WorkObligationsListView.tsx",
+      "lines_of_code": 192,
+      "file": "WorkObligationsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\work_obligations\\WorkObligationsDetailDrawer.tsx",
+      "lines_of_code": 164,
+      "file": "WorkObligationsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\work_obligations\\WorkObligationsCreateForm.tsx",
+      "lines_of_code": 247,
+      "file": "WorkObligationsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\work_obligations\\WorkObligationsEditForm.tsx",
+      "lines_of_code": 278,
+      "file": "WorkObligationsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\work_obligations\\WorkObligationsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "WorkObligationsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\work_obligations\\__tests__\\WorkObligationsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "WorkObligationsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

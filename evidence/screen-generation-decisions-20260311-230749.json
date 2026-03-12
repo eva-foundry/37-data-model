@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:07:49Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Decisions screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L75",
+    "title_fr": "Decisions",
+    "name": "decisions",
+    "title": "Decisions"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1846,
+    "avg_loc_per_file": 308.0,
+    "duration_seconds": 0.7,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\decisions\\DecisionsListView.tsx",
+      "lines_of_code": 192,
+      "file": "DecisionsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\decisions\\DecisionsDetailDrawer.tsx",
+      "lines_of_code": 163,
+      "file": "DecisionsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\decisions\\DecisionsCreateForm.tsx",
+      "lines_of_code": 844,
+      "file": "DecisionsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\decisions\\DecisionsEditForm.tsx",
+      "lines_of_code": 180,
+      "file": "DecisionsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\decisions\\DecisionsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "DecisionsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\decisions\\__tests__\\DecisionsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "DecisionsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -1,11 +1,12 @@
 ================================================================================
- EVA DATA MODEL -- 111-LAYER REFERENCE
+ EVA DATA MODEL -- 111-LAYER REFERENCE (87 Operational + 24 Pending + 12 Planned)
  File: docs/library/03-DATA-MODEL-REFERENCE.md
- Updated: 2026-03-09 -- 111 operational layers; 12 ontology domains; Session 41 Part 11
+ Version: v1.1 | Updated: 2026-03-12 19:46 ET | Status: operative (87 layers live; 24 pending ACA; 12 planned security)
+ Session: 46A (Execution Layers), 46B+ (Security Schemas) | Domain: Foundation/Governance
  Source: https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io
  Design: docs/library/98-model-ontology-for-agents.md (12-domain cognitive architecture)
          docs/COMPLETE-LAYER-CATALOG.md (definitive catalog)
-         docs/library/13-EXECUTION-LAYERS.md (Phases 1-6 COMPLETE: All 24 execution layers deployed)
+         docs/library/13-EXECUTION-LAYERS.md (Phases 1-6: 24 layers in Session 46A, pending ACA deployment)
 ================================================================================
 
   PAPERLESS GOVERNANCE (Session 38, March 7, 2026 6:03 PM ET)
@@ -1495,5 +1496,33 @@
 
   Cross-reference violations are [FAIL] -- block the model.
   Coverage warnings (60 pre-existing) are [WARN] -- non-blocking.
+
+================================================================================
+ PLANNED EXPANSION: SECURITY SCHEMAS (L76-L87, Session 46B+C)
+================================================================================
+
+  Target: Q1 2026 (March 2026)
+  Domains: 
+    - P36 (AI Security Observatory): Red-teaming + LLM vulnerability testing
+    - P58 (Security Factory): Infrastructure vulnerability scanning + remediation
+  
+  **P36 Red-Teaming Schemas (L76-L80):**
+    L76: attack_tactic_catalog         - OWASP/ATLAS/NIST attack taxonomy
+    L77: red_team_test_suite           - Promptfoo test pack definitions
+    L78: ai_security_finding           - Dedicated red-team vulnerability records
+    L79: framework_evidence_mapping    - Test → control → finding crosswalk
+    L80: ai_security_metrics           - Test suite performance + coverage metrics
+  
+  **P58 Infrastructure Scanning Schemas (L81-L87):**
+    L81: vulnerability_scan_result     - Network scan execution records
+    L82: cve_finding                   - Individual CVE + CVSS + exploitability
+    L83: risk_ranking                  - Pareto-ranked vulnerabilities (80/20 principle)
+    L84: remediation_task              - Prioritized fix actions with SLA tracking
+    L85: compliance_gap_mapping        - Framework control → CVE → remediation linker
+    L86: threat_intelligence_context   - CVE enrichment + exploit trending
+    L87: (reserved for Phase 2 extension)
+  
+  Status: Schema definitions in progress (Session 46B). Deployment planned post-execution-layers.
+  See docs/SCHEMA-REQUIREMENTS-P36-P58.md for detailed specifications.
 
 ================================================================================

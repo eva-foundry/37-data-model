@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:37Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add QualityGates screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L33",
+    "title_fr": "QualityGates",
+    "name": "quality_gates",
+    "title": "QualityGates"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1947,
+    "avg_loc_per_file": 324.0,
+    "duration_seconds": 0.68,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\quality_gates\\QualityGatesListView.tsx",
+      "lines_of_code": 192,
+      "file": "QualityGatesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\quality_gates\\QualityGatesDetailDrawer.tsx",
+      "lines_of_code": 274,
+      "file": "QualityGatesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\quality_gates\\QualityGatesCreateForm.tsx",
+      "lines_of_code": 493,
+      "file": "QualityGatesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\quality_gates\\QualityGatesEditForm.tsx",
+      "lines_of_code": 521,
+      "file": "QualityGatesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\quality_gates\\QualityGatesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "QualityGatesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\quality_gates\\__tests__\\QualityGatesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "QualityGatesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

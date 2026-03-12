@@ -123,7 +123,7 @@ export const WorkServiceRunsCreateForm: React.FC<WorkServiceRunsCreateFormProps>
         {{#FORM_FIELDS}}
         <div>
           <label
-            htmlFor="{{FIELD_NAME}}"
+            htmlFor="fieldName"
             style={{
               display: 'block',
               marginBottom: 4,
@@ -132,22 +132,22 @@ export const WorkServiceRunsCreateForm: React.FC<WorkServiceRunsCreateFormProps>
               color: GC_TEXT,
             }}
           >
-            {{FIELD_LABEL}}{{#REQUIRED}} *{{/REQUIRED}}
+            Field{{#REQUIRED}} *{{/REQUIRED}}
           </label>
           {{#FIELD_TYPE_TEXT}}
           <input
             type="text"
-            id="{{FIELD_NAME}}"
-            data-testid="work_service_runs-field-{{FIELD_NAME}}"
-            value={(formData.{{FIELD_NAME}} as string) || ''}
-            onChange={(e) => handleChange('{{FIELD_NAME}}', e.target.value)}
-            aria-invalid={!!errors.{{FIELD_NAME}}}
-            aria-describedby={errors.{{FIELD_NAME}} ? '{{FIELD_NAME}}-error' : undefined}
+            id="fieldName"
+            data-testid="work_service_runs-field-fieldName"
+            value={(formData.fieldName as string) || ''}
+            onChange={(e) => handleChange('fieldName', e.target.value)}
+            aria-invalid={!!errors.fieldName}
+            aria-describedby={errors.fieldName ? 'fieldName-error' : undefined}
             disabled={submitting}
             style={{
               width: '100%',
               padding: '8px 12px',
-              border: `1px solid ${errors.{{FIELD_NAME}} ? GC_ERROR : GC_BORDER}`,
+              border: `1px solid ${errors.fieldName ? GC_ERROR : GC_BORDER}`,
               borderRadius: 4,
               fontSize: '0.875rem',
               fontFamily: 'inherit',
@@ -157,17 +157,17 @@ export const WorkServiceRunsCreateForm: React.FC<WorkServiceRunsCreateFormProps>
           {{#FIELD_TYPE_NUMBER}}
           <input
             type="number"
-            id="{{FIELD_NAME}}"
-            data-testid="work_service_runs-field-{{FIELD_NAME}}"
-            value={(formData.{{FIELD_NAME}} as number) || ''}
-            onChange={(e) => handleChange('{{FIELD_NAME}}', Number(e.target.value))}
-            aria-invalid={!!errors.{{FIELD_NAME}}}
-            aria-describedby={errors.{{FIELD_NAME}} ? '{{FIELD_NAME}}-error' : undefined}
+            id="fieldName"
+            data-testid="work_service_runs-field-fieldName"
+            value={(formData.fieldName as number) || ''}
+            onChange={(e) => handleChange('fieldName', Number(e.target.value))}
+            aria-invalid={!!errors.fieldName}
+            aria-describedby={errors.fieldName ? 'fieldName-error' : undefined}
             disabled={submitting}
             style={{
               width: '100%',
               padding: '8px 12px',
-              border: `1px solid ${errors.{{FIELD_NAME}} ? GC_ERROR : GC_BORDER}`,
+              border: `1px solid ${errors.fieldName ? GC_ERROR : GC_BORDER}`,
               borderRadius: 4,
               fontSize: '0.875rem',
               fontFamily: 'inherit',
@@ -176,18 +176,18 @@ export const WorkServiceRunsCreateForm: React.FC<WorkServiceRunsCreateFormProps>
           {{/FIELD_TYPE_NUMBER}}
           {{#FIELD_TYPE_TEXTAREA}}
           <textarea
-            id="{{FIELD_NAME}}"
-            data-testid="work_service_runs-field-{{FIELD_NAME}}"
-            value={(formData.{{FIELD_NAME}} as string) || ''}
-            onChange={(e) => handleChange('{{FIELD_NAME}}', e.target.value)}
-            aria-invalid={!!errors.{{FIELD_NAME}}}
-            aria-describedby={errors.{{FIELD_NAME}} ? '{{FIELD_NAME}}-error' : undefined}
+            id="fieldName"
+            data-testid="work_service_runs-field-fieldName"
+            value={(formData.fieldName as string) || ''}
+            onChange={(e) => handleChange('fieldName', e.target.value)}
+            aria-invalid={!!errors.fieldName}
+            aria-describedby={errors.fieldName ? 'fieldName-error' : undefined}
             disabled={submitting}
             rows={4}
             style={{
               width: '100%',
               padding: '8px 12px',
-              border: `1px solid ${errors.{{FIELD_NAME}} ? GC_ERROR : GC_BORDER}`,
+              border: `1px solid ${errors.fieldName ? GC_ERROR : GC_BORDER}`,
               borderRadius: 4,
               fontSize: '0.875rem',
               fontFamily: 'inherit',
@@ -195,10 +195,10 @@ export const WorkServiceRunsCreateForm: React.FC<WorkServiceRunsCreateFormProps>
             }}
           />
           {{/FIELD_TYPE_TEXTAREA}}
-          {errors.{{FIELD_NAME}} && (
+          {errors.fieldName && (
             <p
-              id="{{FIELD_NAME}}-error"
-              data-testid="work_service_runs-error-{{FIELD_NAME}}"
+              id="fieldName-error"
+              data-testid="work_service_runs-error-fieldName"
               role="alert"
               style={{
                 margin: '4px 0 0',
@@ -206,7 +206,7 @@ export const WorkServiceRunsCreateForm: React.FC<WorkServiceRunsCreateFormProps>
                 color: GC_ERROR,
               }}
             >
-              {errors.{{FIELD_NAME}}}
+              {errors.fieldName}
             </p>
           )}
         </div>

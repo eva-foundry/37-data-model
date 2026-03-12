@@ -1,0 +1,29 @@
+{
+  "layer": "work_service_runs",
+  "batch": 1,
+  "timestamp": "2026-03-12T19:32:43.573885",
+  "phases": {
+    "validate": {
+      "timestamp": "2026-03-12T19:32:43.573885",
+      "typescript": {
+        "status": "fail",
+        "errors": [
+          {
+            "error": "[WinError 2] The system cannot find the file specified"
+          }
+        ]
+      },
+      "eslint": {
+        "status": "pass",
+        "errors": []
+      },
+      "prettier": {
+        "status": "pass",
+        "errors": []
+      },
+      "fixable_count": 0,
+      "critical_count": 1
+    }
+  },
+  "status": "FAIL_CRITICAL"
+}

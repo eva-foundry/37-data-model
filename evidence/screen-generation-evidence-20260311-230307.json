@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:03:07Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Evidence screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L5",
+    "title_fr": "Preuve",
+    "name": "evidence",
+    "title": "Evidence"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2163,
+    "avg_loc_per_file": 360.0,
+    "duration_seconds": 0.64,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\evidence\\EvidenceListView.tsx",
+      "lines_of_code": 192,
+      "file": "EvidenceListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\evidence\\EvidenceDetailDrawer.tsx",
+      "lines_of_code": 290,
+      "file": "EvidenceDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\evidence\\EvidenceCreateForm.tsx",
+      "lines_of_code": 593,
+      "file": "EvidenceCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\evidence\\EvidenceEditForm.tsx",
+      "lines_of_code": 621,
+      "file": "EvidenceEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\evidence\\EvidenceGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "EvidenceGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\evidence\\__tests__\\EvidenceListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "EvidenceListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

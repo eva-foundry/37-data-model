@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:07:43Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add CpPolicies screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L67",
+    "title_fr": "CpPolicies",
+    "name": "cp_policies",
+    "title": "CpPolicies"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1567,
+    "avg_loc_per_file": 261.0,
+    "duration_seconds": 0.65,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\cp_policies\\CpPoliciesListView.tsx",
+      "lines_of_code": 192,
+      "file": "CpPoliciesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\cp_policies\\CpPoliciesDetailDrawer.tsx",
+      "lines_of_code": 163,
+      "file": "CpPoliciesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\cp_policies\\CpPoliciesCreateForm.tsx",
+      "lines_of_code": 565,
+      "file": "CpPoliciesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\cp_policies\\CpPoliciesEditForm.tsx",
+      "lines_of_code": 180,
+      "file": "CpPoliciesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\cp_policies\\CpPoliciesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "CpPoliciesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\cp_policies\\__tests__\\CpPoliciesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "CpPoliciesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -1,0 +1,8 @@
+{
+  "error_type": "System.Management.Automation.RuntimeException",
+  "stack": "at <ScriptBlock>, C:\\eva-foundry\\37-data-model\\scripts\\translate-literals-ai.ps1: line 144\r\nat <ScriptBlock>, <No file>: line 1",
+  "message": "OpenAI key missing. Set OPENAI_API_KEY or pass -OpenAIKey.",
+  "status": "error",
+  "timestamp": "2026-03-11T16:59:00.0737759-03:00",
+  "operation": "translate-literals-ai"
+}

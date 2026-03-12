@@ -1,0 +1,35 @@
+{
+  "failures": [],
+  "model": "gpt-4o-mini",
+  "metrics": {
+    "translated_results": 18,
+    "upsert_failed": 0,
+    "total_keys": 18,
+    "upsert_success": 18
+  },
+  "status": "success",
+  "dry_run": false,
+  "timestamp": "2026-03-11T18:26:29.0159387-03:00",
+  "base_url": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
+  "sample_keys": [
+    "containers.create_form.messages.creating",
+    "containers.create_form.messages.error",
+    "containers.create_form.title",
+    "cost_allocation.create_form.actions.cancel",
+    "cost_allocation.create_form.actions.submit",
+    "cost_allocation.create_form.messages.creating",
+    "cost_allocation.create_form.messages.error",
+    "cost_allocation.create_form.title",
+    "cost_tracking.create_form.actions.cancel",
+    "cost_tracking.create_form.actions.submit",
+    "cost_tracking.create_form.messages.creating",
+    "cost_tracking.create_form.messages.error",
+    "cost_tracking.create_form.title",
+    "coverage_summary.create_form.actions.cancel",
+    "coverage_summary.create_form.actions.submit",
+    "coverage_summary.create_form.messages.creating",
+    "validation_rules.create_form.title",
+    "verification_records.create_form.title"
+  ],
+  "operation": "translate-literals-ai"
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/threat_intelligence_context.schema.json",
+  "title": "Threat Intelligence Context (L86)",
+  "description": "CVE enrichment with exploit availability, active exploitation, trending data. Links threat intel to vulnerabilities.",
+  "type": "object",
+  "required": ["id", "cve_id"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^threat_intel_[0-9]{4}_[0-9]{4,}_[0-9]{3}$"},
+    "cve_id": {"type": "string", "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"},
+    "threat_intel_source": {
+      "type": "array",
+      "description": "Sources that provided this intelligence",
+      "items": {"type": "string", "enum": ["NVD", "CISA", "Shodan", "GreyNoise", "ZDI", "proprietary", "dark_web"]}
+    },
+    "exploit_availability": {
+      "type": "string",
+      "enum": ["none", "proof_of_concept", "functional", "active_in_wild"],
+      "description": "Public exploit status"
+    },
+    "active_exploitation": {"type": "boolean", "description": "Is this CVE being actively exploited?"},
+    "exploit_popularity": {"type": "integer", "minimum": 0, "description": "Number of known public exploits"},
+    "exploit_details": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "exploit_source": {"type": "string"},
+          "exploit_url": {"type": "string", "format": "uri"},
+          "first_published": {"type": "string", "format": "date"},
+          "reliability_score": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "trending": {"type": "string", "enum": ["no", "emerging", "hot", "declining"], "description": "Recent trend in exploitation"},
+    "trend_indicator_change": {"type": "number", "description": "% change in mentions/exploits (7-day)"},
+    "asset_exposure_count": {"type": "integer", "minimum": 0, "description": "Customers/assets potentially affected"},
+    "incident_count": {"type": "integer", "minimum": 0, "description": "Known security incidents in the wild"},
+    "incident_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "incident_name": {"type": "string"},
+          "date": {"type": "string", "format": "date"},
+          "source": {"type": "string"},
+          "severity": {"type": "string", "enum": ["critical", "high", "medium", "low"]}
+        }
+      }
+    },
+    "threat_actors": {
+      "type": "array",
+      "description": "Known threat actors exploiting this CVE",
+      "items": {
+        "type": "object",
+        "properties": {
+          "actor_name": {"type": "string"},
+          "actor_type": {"type": "string", "enum": ["nation_state", "criminal", "hacktivist", "unknown"]},
+          "first_observed": {"type": "string", "format": "date"},
+          "targets": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "mitigation_techniques": {
+      "type": "array",
+      "description": "Suggested mitigations from threat intel",
+      "items": {"type": "string"}
+    },
+    "recommendation": {"type": "string", "maxLength": 2000},
+    "last_updated": {"type": "string", "format": "date-time"},
+    "next_update_expected": {"type": "string", "format": "date"}
+  },
+  "additionalProperties": false
+}

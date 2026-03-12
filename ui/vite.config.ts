@@ -11,6 +11,7 @@ export default defineConfig({
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@context': path.resolve(__dirname, './src/context'),
       '@api': path.resolve(__dirname, './src/api'),
+      '@services': path.resolve(__dirname, './src/services'),
       '@eva/data-model-ui': path.resolve(__dirname, './src/lib/views'),
       // @eva/templates resolves to built package in 31-eva-faces workspace
       '@eva/templates': path.resolve(__dirname, '../../31-eva-faces/shared/eva-templates/dist/index.mjs'),
@@ -23,5 +24,10 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
+  },
+  test: {
+    environment: 'happy-dom',
+    globals: true,
+    setupFiles: './src/__tests__/setup.ts',
   },
 });

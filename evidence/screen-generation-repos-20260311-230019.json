@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:19Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Repos screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L8",
+    "title_fr": "Repos",
+    "name": "repos",
+    "title": "Repos"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2573,
+    "avg_loc_per_file": 429.0,
+    "duration_seconds": 0.69,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\repos\\ReposListView.tsx",
+      "lines_of_code": 192,
+      "file": "ReposListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\repos\\ReposDetailDrawer.tsx",
+      "lines_of_code": 322,
+      "file": "ReposDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\repos\\ReposCreateForm.tsx",
+      "lines_of_code": 782,
+      "file": "ReposCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\repos\\ReposEditForm.tsx",
+      "lines_of_code": 810,
+      "file": "ReposEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\repos\\ReposGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "ReposGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\repos\\__tests__\\ReposListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "ReposListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

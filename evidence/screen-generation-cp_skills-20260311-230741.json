@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:07:41Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add CpSkills screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L64",
+    "title_fr": "CpSkills",
+    "name": "cp_skills",
+    "title": "CpSkills"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1569,
+    "avg_loc_per_file": 262.0,
+    "duration_seconds": 0.68,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\cp_skills\\CpSkillsListView.tsx",
+      "lines_of_code": 192,
+      "file": "CpSkillsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\cp_skills\\CpSkillsDetailDrawer.tsx",
+      "lines_of_code": 163,
+      "file": "CpSkillsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\cp_skills\\CpSkillsCreateForm.tsx",
+      "lines_of_code": 567,
+      "file": "CpSkillsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\cp_skills\\CpSkillsEditForm.tsx",
+      "lines_of_code": 180,
+      "file": "CpSkillsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\cp_skills\\CpSkillsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "CpSkillsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\cp_skills\\__tests__\\CpSkillsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "CpSkillsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

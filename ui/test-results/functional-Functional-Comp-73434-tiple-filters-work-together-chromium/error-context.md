@@ -1,0 +1,305 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]:
+        - heading "EVA Data Model UI Demo" [level=1] [ref=e7]
+        - paragraph [ref=e8]: Screens Machine - 128 Routes Generated
+      - generic [ref=e9]:
+        - button "Menu" [ref=e10] [cursor=pointer]
+        - generic [ref=e11]:
+          - text: "Language:"
+          - 'combobox "Language: selector" [ref=e12] [cursor=pointer]':
+            - option "EN - English" [selected]
+            - option "FR - Français"
+            - option "ES - Español"
+            - option "DE - Deutsch"
+            - option "PT - Português"
+            - option "CN - 中文"
+  - generic [ref=e13]:
+    - complementary [ref=e14]:
+      - generic [ref=e15]: Search routes
+      - textbox "Filter by path..." [ref=e16]
+      - generic [ref=e17]:
+        - heading "Portal Pages (7)" [level=2] [ref=e18]
+        - generic [ref=e19]:
+          - button "eva home" [ref=e20] [cursor=pointer]
+          - button "model browser" [ref=e21] [cursor=pointer]
+          - button "model graph" [ref=e22] [cursor=pointer]
+          - button "model report" [ref=e23] [cursor=pointer]
+          - button "project portfolio" [ref=e24] [cursor=pointer]
+          - button "sprint board" [ref=e25] [cursor=pointer]
+          - button "wbs tree" [ref=e26] [cursor=pointer]
+      - generic [ref=e27]:
+        - heading "Data Layers (111)" [level=2] [ref=e28]
+        - generic [ref=e29]:
+          - button "agent execution history" [ref=e30] [cursor=pointer]
+          - button "agent performance metrics" [ref=e31] [cursor=pointer]
+          - button "agent policies" [ref=e32] [cursor=pointer]
+          - button "agentic workflows" [ref=e33] [cursor=pointer]
+          - button "agents" [ref=e34] [cursor=pointer]
+          - button "api contracts" [ref=e35] [cursor=pointer]
+          - button "architecture decisions" [ref=e36] [cursor=pointer]
+          - button "auto fix execution history" [ref=e37] [cursor=pointer]
+          - button "azure infrastructure" [ref=e38] [cursor=pointer]
+          - button "ci cd pipelines" [ref=e39] [cursor=pointer]
+          - button "compliance audit" [ref=e40] [cursor=pointer]
+          - button "components" [ref=e41] [cursor=pointer]
+          - button "config defs" [ref=e42] [cursor=pointer]
+          - button "connections" [ref=e43] [cursor=pointer]
+          - button "containers" [ref=e44] [cursor=pointer]
+          - button "cost allocation" [ref=e45] [cursor=pointer]
+          - button "cost tracking" [ref=e46] [cursor=pointer]
+          - button "coverage summary" [ref=e47] [cursor=pointer]
+          - button "cp agents" [ref=e48] [cursor=pointer]
+          - button "cp policies" [ref=e49] [cursor=pointer]
+          - button "cp skills" [ref=e50] [cursor=pointer]
+          - button "cp workflows" [ref=e51] [cursor=pointer]
+          - button "decision provenance" [ref=e52] [cursor=pointer]
+          - button "decisions" [ref=e53] [cursor=pointer]
+          - button "deployment history" [ref=e54] [cursor=pointer]
+          - button "deployment policies" [ref=e55] [cursor=pointer]
+          - button "deployment quality scores" [ref=e56] [cursor=pointer]
+          - button "deployment records" [ref=e57] [cursor=pointer]
+          - button "deployment targets" [ref=e58] [cursor=pointer]
+          - button "endpoints" [ref=e59] [cursor=pointer]
+          - button "env vars" [ref=e60] [cursor=pointer]
+          - button "environments" [ref=e61] [cursor=pointer]
+          - button "error catalog" [ref=e62] [cursor=pointer]
+          - button "eva model" [ref=e63] [cursor=pointer]
+          - button "evidence" [ref=e64] [cursor=pointer]
+          - button "evidence correlation" [ref=e65] [cursor=pointer]
+          - button "feature flags" [ref=e66] [cursor=pointer]
+          - button "github rules" [ref=e67] [cursor=pointer]
+          - button "hooks" [ref=e68] [cursor=pointer]
+          - button "infrastructure" [ref=e69] [cursor=pointer]
+          - button "infrastructure drift" [ref=e70] [cursor=pointer]
+          - button "infrastructure events" [ref=e71] [cursor=pointer]
+          - button "instructions" [ref=e72] [cursor=pointer]
+          - button "literals" [ref=e73] [cursor=pointer]
+          - button "mcp servers" [ref=e74] [cursor=pointer]
+          - button "milestones" [ref=e75] [cursor=pointer]
+          - button "model telemetry" [ref=e76] [cursor=pointer]
+          - button "performance trends" [ref=e77] [cursor=pointer]
+          - button "personas" [ref=e78] [cursor=pointer]
+          - button "planes" [ref=e79] [cursor=pointer]
+          - button "project work" [ref=e80] [cursor=pointer]
+          - button "projects" [ref=e81] [cursor=pointer]
+          - button "prompts" [ref=e82] [cursor=pointer]
+          - button "quality gates" [ref=e83] [cursor=pointer]
+          - button "remediation effectiveness" [ref=e84] [cursor=pointer]
+          - button "remediation outcomes" [ref=e85] [cursor=pointer]
+          - button "remediation policies" [ref=e86] [cursor=pointer]
+          - button "repos" [ref=e87] [cursor=pointer]
+          - button "request response samples" [ref=e88] [cursor=pointer]
+          - button "requirements" [ref=e89] [cursor=pointer]
+          - button "resource costs" [ref=e90] [cursor=pointer]
+          - button "resource inventory" [ref=e91] [cursor=pointer]
+          - button "risks" [ref=e92] [cursor=pointer]
+          - button "runbooks" [ref=e93] [cursor=pointer]
+          - button "runtime config" [ref=e94] [cursor=pointer]
+          - button "schemas" [ref=e95] [cursor=pointer]
+          - button "screens" [ref=e96] [cursor=pointer]
+          - button "secrets catalog" [ref=e97] [cursor=pointer]
+          - button "security controls" [ref=e98] [cursor=pointer]
+          - button "service health metrics" [ref=e99] [cursor=pointer]
+          - button "services" [ref=e100] [cursor=pointer]
+          - button "session transcripts" [ref=e101] [cursor=pointer]
+          - button "sprints" [ref=e102] [cursor=pointer]
+          - button "stories" [ref=e103] [cursor=pointer]
+          - button "synthetic tests" [ref=e104] [cursor=pointer]
+          - button "tasks" [ref=e105] [cursor=pointer]
+          - button "tech stack" [ref=e106] [cursor=pointer]
+          - button "test cases" [ref=e107] [cursor=pointer]
+          - button "testing policies" [ref=e108] [cursor=pointer]
+          - button "traces" [ref=e109] [cursor=pointer]
+          - button "ts types" [ref=e110] [cursor=pointer]
+          - button "usage metrics" [ref=e111] [cursor=pointer]
+          - button "validation rules" [ref=e112] [cursor=pointer]
+          - button "verification records" [ref=e113] [cursor=pointer]
+          - button "wbs" [ref=e114] [cursor=pointer]
+          - button "work decision records" [ref=e115] [cursor=pointer]
+          - button "work execution units" [ref=e116] [cursor=pointer]
+          - button "work factory capabilities" [ref=e117] [cursor=pointer]
+          - button "work factory governance" [ref=e118] [cursor=pointer]
+          - button "work factory investments" [ref=e119] [cursor=pointer]
+          - button "work factory metrics" [ref=e120] [cursor=pointer]
+          - button "work factory portfolio" [ref=e121] [cursor=pointer]
+          - button "work factory roadmaps" [ref=e122] [cursor=pointer]
+          - button "work factory services" [ref=e123] [cursor=pointer]
+          - button "work learning feedback" [ref=e124] [cursor=pointer]
+          - button "work obligations" [ref=e125] [cursor=pointer]
+          - button "work outcomes" [ref=e126] [cursor=pointer]
+          - button "work pattern applications" [ref=e127] [cursor=pointer]
+          - button "work pattern performance profiles" [ref=e128] [cursor=pointer]
+          - button "work reusable patterns" [ref=e129] [cursor=pointer]
+          - button "work service breaches" [ref=e130] [cursor=pointer]
+          - button "work service level objectives" [ref=e131] [cursor=pointer]
+          - button "work service lifecycle" [ref=e132] [cursor=pointer]
+          - button "work service perf profiles" [ref=e133] [cursor=pointer]
+          - button "work service remediation plans" [ref=e134] [cursor=pointer]
+          - button "work service requests" [ref=e135] [cursor=pointer]
+          - button "work service revalidation results" [ref=e136] [cursor=pointer]
+          - button "work service runs" [ref=e137] [cursor=pointer]
+          - button "work step events" [ref=e138] [cursor=pointer]
+          - button "workflow metrics" [ref=e139] [cursor=pointer]
+          - button "workspace config" [ref=e140] [cursor=pointer]
+      - generic [ref=e141]:
+        - heading "Admin Tools (10)" [level=2] [ref=e142]
+        - generic [ref=e143]:
+          - button "admin apps" [ref=e144] [cursor=pointer]
+          - button "admin audit logs" [ref=e145] [cursor=pointer]
+          - button "admin feature flags" [ref=e146] [cursor=pointer]
+          - button "admin ingestion runs" [ref=e147] [cursor=pointer]
+          - button "admin rbac" [ref=e148] [cursor=pointer]
+          - button "admin rbac roles" [ref=e149] [cursor=pointer]
+          - button "admin search health" [ref=e150] [cursor=pointer]
+          - button "admin settings" [ref=e151] [cursor=pointer]
+          - button "admin support tickets" [ref=e152] [cursor=pointer]
+          - button "admin translations" [ref=e153] [cursor=pointer]
+    - main [ref=e154]:
+      - generic [ref=e155]:
+        - paragraph [ref=e156]:
+          - text: "Selected Route:"
+          - strong [ref=e157]: /eva-home
+        - paragraph [ref=e158]: "Total Routes: 128"
+      - generic [ref=e160]:
+        - link "Skip to main content" [ref=e161] [cursor=pointer]:
+          - /url: "#main-content"
+        - banner [ref=e162]:
+          - generic [ref=e163]:
+            - generic [ref=e164]: 🍁
+            - generic [ref=e165]: Government of Canada
+            - generic [ref=e167]: EVA Portal
+          - button "Switch language to Français" [ref=e169] [cursor=pointer]: Français
+        - navigation "Primary navigation" [ref=e170]:
+          - link "Home" [ref=e171] [cursor=pointer]:
+            - /url: /
+        - main [ref=e172]:
+          - generic [ref=e173]: Government of Canada / Gouvernement du Canada
+          - heading "EVA Portal" [level=1] [ref=e174]
+          - paragraph [ref=e175]: Government of Canada AI Platform
+          - generic [ref=e176]:
+            - generic [ref=e177]:
+              - heading "User Products" [level=2] [ref=e178]
+              - generic [ref=e179]:
+                - button "EVA Chat" [ref=e180] [cursor=pointer]:
+                  - generic [ref=e181]: 💬
+                  - strong [ref=e182]: EVA Chat
+                  - 'generic "Sprint status: Active (8)" [ref=e183]': Active (8)
+                  - emphasis [ref=e184]: User Products
+                - button "EVA Document Analyst" [ref=e185] [cursor=pointer]:
+                  - generic [ref=e186]: 📄
+                  - strong [ref=e187]: EVA Document Analyst
+                  - emphasis [ref=e188]: User Products
+                - button "EVA Portal" [ref=e189] [cursor=pointer]:
+                  - generic [ref=e190]: 🏠
+                  - strong [ref=e191]: EVA Portal
+                  - 'generic "Sprint status: Done" [ref=e192]': Done
+                  - emphasis [ref=e193]: User Products
+                - button "EVA Jurisprudence" [ref=e194] [cursor=pointer]:
+                  - generic [ref=e195]: ⚖️
+                  - strong [ref=e196]: EVA Jurisprudence
+                  - emphasis [ref=e197]: User Products
+                - button "EVA Translate" [ref=e198] [cursor=pointer]:
+                  - generic [ref=e199]: 🌐
+                  - strong [ref=e200]: EVA Translate
+                  - emphasis [ref=e201]: User Products
+            - generic [ref=e202]:
+              - heading "AI Intelligence" [level=2] [ref=e203]
+              - generic [ref=e204]:
+                - button "EVA Brain" [ref=e205] [cursor=pointer]:
+                  - generic [ref=e206]: 🧠
+                  - strong [ref=e207]: EVA Brain
+                  - 'generic "Sprint status: Active (3)" [ref=e208]': Active (3)
+                  - emphasis [ref=e209]: AI Intelligence
+                - button "EVA Embedder" [ref=e210] [cursor=pointer]:
+                  - generic [ref=e211]: 🔢
+                  - strong [ref=e212]: EVA Embedder
+                  - emphasis [ref=e213]: AI Intelligence
+                - button "EVA RAG" [ref=e214] [cursor=pointer]:
+                  - generic [ref=e215]: 🔍
+                  - strong [ref=e216]: EVA RAG
+                  - emphasis [ref=e217]: AI Intelligence
+                - button "EVA Eval" [ref=e218] [cursor=pointer]:
+                  - generic [ref=e219]: 📊
+                  - strong [ref=e220]: EVA Eval
+                  - emphasis [ref=e221]: AI Intelligence
+                - button "EVA FinOps" [ref=e222] [cursor=pointer]:
+                  - generic [ref=e223]: 💰
+                  - strong [ref=e224]: EVA FinOps
+                  - emphasis [ref=e225]: AI Intelligence
+            - generic [ref=e226]:
+              - heading "Platform" [level=2] [ref=e227]
+              - generic [ref=e228]:
+                - button "EVA Faces" [ref=e229] [cursor=pointer]:
+                  - generic [ref=e230]: 🖥️
+                  - strong [ref=e231]: EVA Faces
+                  - 'generic "Sprint status: Active (8)" [ref=e232]': Active (8)
+                  - emphasis [ref=e233]: Platform
+                - button "EVA APIM" [ref=e234] [cursor=pointer]:
+                  - generic [ref=e235]: 🔀
+                  - strong [ref=e236]: EVA APIM
+                  - emphasis [ref=e237]: Platform
+                - button "EVA Auth" [ref=e238] [cursor=pointer]:
+                  - generic [ref=e239]: 🔐
+                  - strong [ref=e240]: EVA Auth
+                  - emphasis [ref=e241]: Platform
+                - button "EVA Infrastructure" [ref=e242] [cursor=pointer]:
+                  - generic [ref=e243]: ☁️
+                  - strong [ref=e244]: EVA Infrastructure
+                  - emphasis [ref=e245]: Platform
+                - button "EVA Cosmos" [ref=e246] [cursor=pointer]:
+                  - generic [ref=e247]: 🗄️
+                  - strong [ref=e248]: EVA Cosmos
+                  - emphasis [ref=e249]: Platform
+            - generic [ref=e250]:
+              - heading "Developer" [level=2] [ref=e251]
+              - generic [ref=e252]:
+                - button "EVA Data Model" [ref=e253] [cursor=pointer]:
+                  - generic [ref=e254]: 📐
+                  - strong [ref=e255]: EVA Data Model
+                  - 'generic "Sprint status: Active (5)" [ref=e256]': Active (5)
+                  - emphasis [ref=e257]: Developer
+                - button "EVA ADO PoC" [ref=e258] [cursor=pointer]:
+                  - generic [ref=e259]: 📋
+                  - strong [ref=e260]: EVA ADO PoC
+                  - emphasis [ref=e261]: Developer
+                - button "EVA SDK" [ref=e262] [cursor=pointer]:
+                  - generic [ref=e263]: 🛠️
+                  - strong [ref=e264]: EVA SDK
+                  - emphasis [ref=e265]: Developer
+                - button "EVA CLI" [ref=e266] [cursor=pointer]:
+                  - generic [ref=e267]: ⌨️
+                  - strong [ref=e268]: EVA CLI
+                  - emphasis [ref=e269]: Developer
+                - button "EVA DevContainer" [ref=e270] [cursor=pointer]:
+                  - generic [ref=e271]: 📦
+                  - strong [ref=e272]: EVA DevContainer
+                  - emphasis [ref=e273]: Developer
+            - generic [ref=e274]:
+              - heading "Moonshot" [level=2] [ref=e275]
+              - generic [ref=e276]:
+                - button "EVA Agents" [ref=e277] [cursor=pointer]:
+                  - generic [ref=e278]: 🤖
+                  - strong [ref=e279]: EVA Agents
+                  - emphasis [ref=e280]: Moonshot
+                - button "EVA Foundry" [ref=e281] [cursor=pointer]:
+                  - generic [ref=e282]: 🏭
+                  - strong [ref=e283]: EVA Foundry
+                  - 'generic "Sprint status: Done" [ref=e284]': Done
+                  - emphasis [ref=e285]: Moonshot
+                - button "EVA Copilot" [ref=e286] [cursor=pointer]:
+                  - generic [ref=e287]: 🚀
+                  - strong [ref=e288]: EVA Copilot
+                  - emphasis [ref=e289]: Moonshot
+        - generic [ref=e290]: EVA Platform -- Government of Canada / Gouvernement du Canada -- February 2026
+  - contentinfo [ref=e291]:
+    - generic [ref=e292]:
+      - strong [ref=e293]: EVA Data Model UI
+      - text: "v1.0.0•Build:"
+      - code [ref=e294]: 20260312T2236
+      - text: •Mar 12, 2026, 18:36
+```

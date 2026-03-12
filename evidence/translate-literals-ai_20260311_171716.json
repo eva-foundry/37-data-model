@@ -1,0 +1,110 @@
+{
+  "metrics": {
+    "upsert_failed": 18,
+    "total_keys": 973,
+    "translated_results": 971,
+    "upsert_success": 955
+  },
+  "status": "partial",
+  "dry_run": false,
+  "sample_keys": [
+    "admin.rbacRoles.dialog.delete.title",
+    "admin.rbacRoles.dialog.deleteBlocked.body",
+    "admin.rbacRoles.dialog.deleteBlocked.ok",
+    "admin.rbacRoles.dialog.deleteBlocked.title",
+    "admin.rbacRoles.dialog.deleteGuard.description",
+    "admin.rbacRoles.dialog.deleteGuard.title",
+    "admin.rbacRoles.drawer.create.title",
+    "admin.rbacRoles.drawer.edit.title",
+    "admin.rbacRoles.error.fetch",
+    "admin.rbacRoles.field.description",
+    "admin.rbacRoles.field.id",
+    "admin.rbacRoles.field.name",
+    "admin.rbacRoles.state.empty",
+    "admin.rbacRoles.title",
+    "admin.searchHealth.action.reindex",
+    "admin.searchHealth.badge.degraded",
+    "admin.searchHealth.badge.healthy",
+    "admin.searchHealth.badge.unavailable",
+    "admin.searchHealth.column.actions",
+    "admin.searchHealth.column.docCount"
+  ],
+  "timestamp": "2026-03-11T17:39:48.8528698-03:00",
+  "failures": [
+    {
+      "key": "containers.create_form.messages.creating",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "containers.create_form.messages.error",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "containers.create_form.title",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_allocation.create_form.actions.cancel",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_allocation.create_form.actions.submit",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_allocation.create_form.messages.creating",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_allocation.create_form.messages.error",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_allocation.create_form.title",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_tracking.create_form.actions.cancel",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_tracking.create_form.actions.submit",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_tracking.create_form.messages.creating",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_tracking.create_form.messages.error",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "cost_tracking.create_form.title",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "coverage_summary.create_form.actions.cancel",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "coverage_summary.create_form.actions.submit",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "coverage_summary.create_form.messages.creating",
+      "error": "Response status code does not indicate success: 503 (Service Unavailable)."
+    },
+    {
+      "key": "validation_rules.create_form.title",
+      "error": "missing translation result"
+    },
+    {
+      "key": "verification_records.create_form.title",
+      "error": "missing translation result"
+    }
+  ],
+  "operation": "translate-literals-ai",
+  "base_url": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io",
+  "model": "gpt-4o-mini"
+}

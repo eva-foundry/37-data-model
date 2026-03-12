@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:47Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add ResourceCosts screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L47",
+    "title_fr": "ResourceCosts",
+    "name": "resource_costs",
+    "title": "ResourceCosts"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2209,
+    "avg_loc_per_file": 368.0,
+    "duration_seconds": 0.7,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\resource_costs\\ResourceCostsListView.tsx",
+      "lines_of_code": 192,
+      "file": "ResourceCostsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\resource_costs\\ResourceCostsDetailDrawer.tsx",
+      "lines_of_code": 290,
+      "file": "ResourceCostsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\resource_costs\\ResourceCostsCreateForm.tsx",
+      "lines_of_code": 616,
+      "file": "ResourceCostsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\resource_costs\\ResourceCostsEditForm.tsx",
+      "lines_of_code": 644,
+      "file": "ResourceCostsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\resource_costs\\ResourceCostsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "ResourceCostsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\resource_costs\\__tests__\\ResourceCostsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "ResourceCostsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

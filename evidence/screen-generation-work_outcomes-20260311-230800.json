@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:08:00Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add WorkOutcomes screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L91",
+    "title_fr": "WorkOutcomes",
+    "name": "work_outcomes",
+    "title": "WorkOutcomes"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1245,
+    "avg_loc_per_file": 208.0,
+    "duration_seconds": 0.68,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\work_outcomes\\WorkOutcomesListView.tsx",
+      "lines_of_code": 192,
+      "file": "WorkOutcomesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\work_outcomes\\WorkOutcomesDetailDrawer.tsx",
+      "lines_of_code": 163,
+      "file": "WorkOutcomesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\work_outcomes\\WorkOutcomesCreateForm.tsx",
+      "lines_of_code": 243,
+      "file": "WorkOutcomesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\work_outcomes\\WorkOutcomesEditForm.tsx",
+      "lines_of_code": 180,
+      "file": "WorkOutcomesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\work_outcomes\\WorkOutcomesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "WorkOutcomesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\work_outcomes\\__tests__\\WorkOutcomesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "WorkOutcomesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}
