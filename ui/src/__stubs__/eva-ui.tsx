@@ -182,6 +182,26 @@ export const EvaSelect: FC<EvaSelectProps> = ({
 );
 
 // ---------------------------------------------------------------------------
+// EvaInput
+// ---------------------------------------------------------------------------
+interface EvaInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
+}
+export const EvaInput: FC<EvaInputProps> = ({
+  label,
+  error,
+  id,
+  ...rest
+}) => (
+  <div>
+    {label && <label htmlFor={id}>{label}</label>}
+    <input id={id} {...rest} />
+    {error && <span role="alert">{error}</span>}
+  </div>
+);
+
+// ---------------------------------------------------------------------------
 // EvaIcon
 // ---------------------------------------------------------------------------
 interface EvaIconProps {
@@ -228,7 +248,7 @@ export const EvaDateRangePicker: FC<EvaDateRangePickerProps> = ({ label }) => (
 // ---------------------------------------------------------------------------
 // EvaTabs
 // ---------------------------------------------------------------------------
-interface EvaTab {
+export interface EvaTab {
   id: string;
   label: string;
   content: ReactNode;
@@ -251,3 +271,62 @@ export const EvaTabs: FC<EvaTabsProps> = ({ tabs = [], children }) => (
     {children}
   </div>
 );
+
+// ---------------------------------------------------------------------------
+// EvaDataGrid
+// ---------------------------------------------------------------------------
+interface EvaDataGridColumn {
+  key: string;
+  label: string;
+  minWidth?: number;
+  sortable?: boolean;
+}
+interface EvaDataGridProps {
+  columns?: EvaDataGridColumn[];
+  rows?: any[];
+  onRowClick?: (row: any) => void;
+  loading?: boolean;
+  emptyMessage?: string;
+  keyField?: string;
+}
+export const EvaDataGrid: FC<EvaDataGridProps> = ({
+  columns = [],
+  rows = [],
+  onRowClick,
+  loading,
+  emptyMessage = 'No data',
+  keyField = 'id',
+}) => {
+  if (loading) return <div role="status">Loading...</div>;
+  if (rows.length === 0) return <div>{emptyMessage}</div>;
+  
+  return (
+    <table role="table">
+      <thead>
+        <tr role="row">
+          {columns.map((col) => (
+            <th key={col.key} role="columnheader">
+              {col.label}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row, idx) => (
+          <tr
+            key={row[keyField] ?? idx}
+            role="row"
+            onClick={() => onRowClick?.(row)}
+            style={{ cursor: onRowClick ? 'pointer' : 'default' }}
+          >
+            {columns.map((col) => (
+              <td key={col.key} role="cell">
+                {row[col.key]}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+};
