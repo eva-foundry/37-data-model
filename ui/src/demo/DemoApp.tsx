@@ -1,6 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { useLiterals } from '@hooks/useLiterals';
+import { useApiHealth } from '@hooks/useApiHealth';
 import { useLang, type Lang } from '@context/LangContext';
+import { ApiHealthBanner } from '@components/ApiHealthBanner';
 import { acceleratorRoutes, adminRoutes, layerRoutes, portalRoutes } from '../layerRoutes';
 import { GC_BLUE, GC_BORDER, GC_MUTED, GC_SURFACE, GC_TEXT } from '../styles/tokens';
 
@@ -69,9 +71,11 @@ function findRouteByKey(selectionKey: string): RouteItem | null {
 export const DemoApp: React.FC = () => {
   const { lang, setLang } = useLang();
   const t = useLiterals('demo.portal');
+  const apiHealth = useApiHealth();
   const [query, setQuery] = useState('');
   const [selectedKey, setSelectedKey] = useState(ALL_KEYS[0]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [bannerDismissed, setBannerDismissed] = useState(false);
 
   const selectedRoute = findRouteByKey(selectedKey);
 
@@ -89,6 +93,12 @@ export const DemoApp: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: '#fff', color: GC_TEXT }}>
+      {!bannerDismissed && (
+        <ApiHealthBanner 
+          health={apiHealth} 
+          onDismiss={() => setBannerDismissed(true)} 
+        />
+      )}
       <header
         style={{
           borderBottom: `1px solid ${GC_BORDER}`,
