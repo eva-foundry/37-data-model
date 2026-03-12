@@ -1,22 +1,36 @@
 # Screens Machine Templates
 
-**Version**: 1.0.0  
-**Date**: March 10, 2026  
-**Session**: 45 (Part 4 - Factory Implementation)
+**Version**: 2.0.0  
+**Date**: March 12, 2026  
+**Session**: 46 (6-Language I18N & GC Design Upgrade)
 
 ## Overview
 
 Templates for autonomous UI generation across all 111 Data Model layers. Based on proven patterns from Project 31 (EVA Faces) and workspace-wide React standards.
+
+**Session 46 Enhancements**:
+- ✅ 6-language i18n support (EN/FR/ES/DE/PT/CN) - upgraded from bilingual
+- ✅ GC Design System tokens centralized (@styles/tokens) - no more inline constants
+- ✅ API Health Monitoring (SM-PATTERN-001) - all pages include ApiHealthBanner
+- ✅ Version Footer - cache debugging support on all pages
+- ✅ EVA Fluent UI components - from @eva/ui stubs
+- ✅ WCAG 2.1 AA compliant - verified accessibility patterns
 
 ## Template Structure
 
 ### 5 Core Component Types
 
 1. **ListView** - Grid/list display with filters (e.g., ProjectPortfolioPage)
+   - **NEW**: ApiHealthBanner at top, VersionFooter at bottom
+   - **NEW**: Imports tokens from @styles/tokens
 2. **DetailView** - Slide-in drawer with full record details (e.g., WIDetailDrawer)
+   - **NEW**: Uses centralized GC Design tokens
 3. **CreateForm** - Form for creating new records
+   - **NEW**: EVA Fluent UI form components
 4. **EditForm** - Form for editing existing records
+   - **NEW**: EVA Fluent UI form components
 5. **GraphView** - Data visualization (charts, graphs, network diagrams)
+   - **NEW**: Uses GC Design tokens for chart colors
 
 ### Supporting Files
 
@@ -56,21 +70,26 @@ All templates use Mustache-style placeholders:
 
 - **Framework**: React 18+ (functional components)
 - **Language**: TypeScript 5+
-- **Styling**: Inline styles (GC Design System colors)
+- **Styling**: GC Design System tokens (@styles/tokens)
 - **Testing**: Jest + Testing Library
-- **Accessibility**: WCAG 2.1 Level AA
-- **i18n**: Bilingual (en/fr)
+- **Accessibility**: WCAG 2.1 Level AA (SM-PATTERN-001 compliant)
+- **i18n**: 6-language support (EN/FR/ES/DE/PT/CN)
+- **Components**: EVA Fluent UI (@eva/ui stubs)
+- **Monitoring**: API Health Banner (SM-PATTERN-001)
 
-## Design System Colors
+## Design System Tokens (Centralized)
 
 ```typescript
-const GC_TEXT    = '#0b0c0e';  // Primary text
-const GC_MUTED   = '#505a5f';  // Secondary text
-const GC_BORDER  = '#b1b4b6';  // Borders
-const GC_SURFACE = '#f8f8f8';  // Background
-const GC_BLUE    = '#1d70b8';  // Primary action
-const GC_ERROR   = '#d4351c';  // Error state
-const GC_SUCCESS = '#00703c';  // Success state
+// Imported from @styles/tokens - no more inline constants!
+import { 
+  GC_TEXT,    // '#0b0c0e' - Primary text
+  GC_MUTED,   // '#505a5f' - Secondary text
+  GC_BORDER,  // '#b1b4b6' - Borders
+  GC_SURFACE, // '#f8f8f8' - Background
+  GC_BLUE,    // '#1d70b8' - Primary action
+  GC_ERROR,   // '#d4351c' - Error state
+  GC_SUCCESS, // '#00703c' - Success state
+} from '@styles/tokens';
 ```
 
 ## Usage Pattern
