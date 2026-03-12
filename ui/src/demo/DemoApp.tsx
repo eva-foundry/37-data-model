@@ -3,6 +3,7 @@ import { useLiterals } from '@hooks/useLiterals';
 import { useApiHealth } from '@hooks/useApiHealth';
 import { useLang, type Lang } from '@context/LangContext';
 import { ApiHealthBanner } from '@components/ApiHealthBanner';
+import { VersionFooter } from '@components/VersionFooter';
 import { acceleratorRoutes, adminRoutes, layerRoutes, portalRoutes } from '../layerRoutes';
 import { GC_BLUE, GC_BORDER, GC_MUTED, GC_SURFACE, GC_TEXT } from '../styles/tokens';
 
@@ -232,6 +233,7 @@ export const DemoApp: React.FC = () => {
           </div>
         </main>
       </div>
+      <VersionFooter buildTimestamp={new Date().toISOString()} />
     </div>
   );
 };
