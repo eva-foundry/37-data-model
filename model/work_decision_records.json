@@ -1,6 +1,7 @@
 {
   "work_decision_records": [
     {
+      "id": "37-data-model-wu-20260309-001-dec-001",
       "decision_id": "37-data-model-wu-20260309-001-dec-001",
       "work_unit_id": "37-data-model-wu-20260309-001",
       "decision_question": "Should we implement all 24 execution layers at once or phase them?",
