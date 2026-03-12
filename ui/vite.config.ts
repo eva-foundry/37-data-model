@@ -12,6 +12,7 @@ export default defineConfig({
       '@context': path.resolve(__dirname, './src/context'),
       '@api': path.resolve(__dirname, './src/api'),
       '@eva/data-model-ui': path.resolve(__dirname, './src/lib/views'),
+      '@eva/templates': path.resolve(__dirname, './src/lib/templates-stub'),
     },
   },
   server: {
