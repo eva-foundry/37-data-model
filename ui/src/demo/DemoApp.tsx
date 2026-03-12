@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useLiterals } from '@hooks/useLiterals';
 import { useLang, type Lang } from '@context/LangContext';
 import { acceleratorRoutes, adminRoutes, layerRoutes, portalRoutes } from '../layerRoutes';
 import { GC_BLUE, GC_BORDER, GC_MUTED, GC_SURFACE, GC_TEXT } from '../styles/tokens';
@@ -10,79 +11,29 @@ type RouteItem = {
 
 type RouteGroup = {
   key: string;
-  title: Record<Lang, string>;
+  titleKey: string;
   routes: RouteItem[];
-};
-
-const UI_TEXT: Record<Lang, {
-  appTitle: string;
-  appSubtitle: string;
-  searchLabel: string;
-  searchPlaceholder: string;
-  selectedLabel: string;
-  totalLabel: string;
-}> = {
-  en: {
-    appTitle: 'EVA Screens Machine Portal',
-    appSubtitle: 'Full navigation for generated routes and modules',
-    searchLabel: 'Search',
-    searchPlaceholder: 'Find a screen',
-    selectedLabel: 'Selected route',
-    totalLabel: 'Total routes',
-  },
-  fr: {
-    appTitle: 'Portail EVA Screens Machine',
-    appSubtitle: 'Navigation complete pour les routes et modules generes',
-    searchLabel: 'Recherche',
-    searchPlaceholder: 'Trouver un ecran',
-    selectedLabel: 'Route selectionnee',
-    totalLabel: 'Routes totales',
-  },
-  es: {
-    appTitle: 'Portal EVA Screens Machine',
-    appSubtitle: 'Navegacion completa para rutas y modulos generados',
-    searchLabel: 'Buscar',
-    searchPlaceholder: 'Buscar pantalla',
-    selectedLabel: 'Ruta seleccionada',
-    totalLabel: 'Rutas totales',
-  },
-  de: {
-    appTitle: 'EVA Screens Machine Portal',
-    appSubtitle: 'Vollstandige Navigation fur generierte Routen und Module',
-    searchLabel: 'Suche',
-    searchPlaceholder: 'Ansicht finden',
-    selectedLabel: 'Ausgewahlte Route',
-    totalLabel: 'Gesamtrouten',
-  },
-  pt: {
-    appTitle: 'Portal EVA Screens Machine',
-    appSubtitle: 'Navegacao completa para rotas e modulos gerados',
-    searchLabel: 'Buscar',
-    searchPlaceholder: 'Encontrar tela',
-    selectedLabel: 'Rota selecionada',
-    totalLabel: 'Rotas totais',
-  },
 };
 
 const GROUPS: RouteGroup[] = [
   {
     key: 'portal',
-    title: { en: 'Portal', fr: 'Portail', es: 'Portal', de: 'Portal', pt: 'Portal' },
+    titleKey: 'groups.portal',
     routes: portalRoutes,
   },
   {
     key: 'layers',
-    title: { en: 'Data Model Layers', fr: 'Couches modele', es: 'Capas del modelo', de: 'Modellschichten', pt: 'Camadas do modelo' },
+    titleKey: 'groups.layers',
     routes: layerRoutes,
   },
   {
     key: 'admin',
-    title: { en: 'Admin', fr: 'Admin', es: 'Admin', de: 'Admin', pt: 'Admin' },
+    titleKey: 'groups.admin',
     routes: adminRoutes,
   },
   {
     key: 'accelerator',
-    title: { en: 'Accelerator', fr: 'Accelerateur', es: 'Acelerador', de: 'Beschleuniger', pt: 'Acelerador' },
+    titleKey: 'groups.accelerator',
     routes: acceleratorRoutes,
   },
 ];
@@ -117,7 +68,7 @@ function findRouteByKey(selectionKey: string): RouteItem | null {
 
 export const DemoApp: React.FC = () => {
   const { lang, setLang } = useLang();
-  const text = UI_TEXT[lang];
+  const t = useLiterals('demo.portal');
   const [query, setQuery] = useState('');
   const [selectedKey, setSelectedKey] = useState(ALL_KEYS[0]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -150,8 +101,8 @@ export const DemoApp: React.FC = () => {
       >
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '12px' }}>
           <div>
-            <h1 style={{ margin: 0, color: GC_BLUE, fontSize: '1.3rem' }}>{text.appTitle}</h1>
-            <p style={{ margin: '6px 0 0', fontSize: '0.84rem', color: GC_MUTED }}>{text.appSubtitle}</p>
+            <h1 style={{ margin: 0, color: GC_BLUE, fontSize: '1.3rem' }}>{t('app.title')}</h1>
+            <p style={{ margin: '6px 0 0', fontSize: '0.84rem', color: GC_MUTED }}>{t('app.subtitle')}</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
@@ -167,10 +118,10 @@ export const DemoApp: React.FC = () => {
                 cursor: 'pointer',
               }}
             >
-              Menu
+              {t('actions.menu')}
             </button>
             <label style={{ fontSize: '0.8rem', color: GC_MUTED }}>
-              Lang
+              {t('labels.language')}
               <select
                 value={lang}
                 onChange={(event) => setLang(event.target.value as Lang)}
@@ -198,12 +149,12 @@ export const DemoApp: React.FC = () => {
           }}
         >
           <label style={{ display: 'block', fontSize: '0.78rem', color: GC_MUTED, marginBottom: '8px' }}>
-            {text.searchLabel}
+            {t('search.label')}
           </label>
           <input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder={text.searchPlaceholder}
+            placeholder={t('search.placeholder')}
             style={{
               width: '100%',
               boxSizing: 'border-box',
@@ -217,7 +168,7 @@ export const DemoApp: React.FC = () => {
           {groupedRoutes.map((group) => (
             <section key={group.key} style={{ marginBottom: '18px' }}>
               <h2 style={{ fontSize: '0.84rem', margin: '0 0 8px', color: GC_BLUE }}>
-                {group.title[lang]} ({group.routes.length})
+                {t(group.titleKey)} ({group.routes.length})
               </h2>
               <div style={{ display: 'grid', gap: '6px' }}>
                 {group.routes.map((route) => {
@@ -259,15 +210,15 @@ export const DemoApp: React.FC = () => {
             }}
           >
             <p style={{ margin: 0, color: GC_MUTED, fontSize: '0.82rem' }}>
-              {text.selectedLabel}: <strong>{selectedRoute?.path ?? '-'}</strong>
+              {t('summary.selectedRoute')}: <strong>{selectedRoute?.path ?? '-'}</strong>
             </p>
             <p style={{ margin: '6px 0 0', color: GC_MUTED, fontSize: '0.8rem' }}>
-              {text.totalLabel}: {totalRoutes}
+              {t('summary.totalRoutes')}: {totalRoutes}
             </p>
           </div>
 
           <div style={{ border: `1px solid ${GC_BORDER}`, borderRadius: '8px', padding: '16px', minHeight: '560px' }}>
-            {selectedRoute ? selectedRoute.element : <p style={{ color: GC_MUTED }}>No route selected.</p>}
+            {selectedRoute ? selectedRoute.element : <p style={{ color: GC_MUTED }}>{t('summary.noRouteSelected')}</p>}
           </div>
         </main>
       </div>
