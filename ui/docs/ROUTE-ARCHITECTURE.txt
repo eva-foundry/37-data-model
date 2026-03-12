@@ -1,0 +1,296 @@
+================================================================================
+EVA DATA MODEL UI - ROUTE ARCHITECTURE
+================================================================================
+Generated: 2026-03-12
+Total Routes: 128 (7 portal + 10 admin + 111 layers + 0 accelerator)
+
+================================================================================
+CURRENT STRUCTURE (Flat Hierarchy)
+================================================================================
+
+ROOT (/)
+│
+├── PORTAL ROUTES (7)
+│   ├── /eva-home                 [EVA Portal Home]
+│   ├── /model-browser            [Browse Data Model Layers]
+│   ├── /model-graph              [Visualize Model Graph]
+│   ├── /model-report             [Data Model Reports]
+│   ├── /project-portfolio        [Project Portfolio View]
+│   ├── /sprint-board             [Sprint Board/Kanban]
+│   └── /wbs-tree                 [Work Breakdown Structure Tree]
+│
+├── ADMIN ROUTES (10)
+│   ├── /admin/apps               [App Registry]
+│   ├── /admin/audit-logs         [System Audit Logs]
+│   ├── /admin/feature-flags      [Feature Flag Management]
+│   ├── /admin/ingestion-runs     [Data Ingestion Jobs]
+│   ├── /admin/rbac               [Role-Based Access Control]
+│   ├── /admin/rbac-roles         [RBAC Role Definitions]
+│   ├── /admin/search-health      [Search Index Health]
+│   ├── /admin/settings           [System Settings]
+│   ├── /admin/support-tickets    [Support Ticket System]
+│   └── /admin/translations       [i18n Translation Management]
+│
+└── LAYER ROUTES (111 Data Model Layers - Sample shown)
+    │
+    ├── DOMAIN 1: AGENTIC (Agents, Policies, Workflows)
+    │   ├── /agents                       [L01 - AI Agents]
+    │   ├── /agent_policies               [Lxx - Agent Governance]
+    │   ├── /agent_performance_metrics    [Lxx - Agent Metrics]
+    │   ├── /agent_execution_history      [Lxx - Agent Execution Log]
+    │   ├── /agentic_workflows            [Lxx - Agent Workflows]
+    │   ├── /cp_agents                    [Control Plane Agents]
+    │   ├── /cp_policies                  [Control Plane Policies]
+    │   ├── /cp_skills                    [Control Plane Skills]
+    │   └── /cp_workflows                 [Control Plane Workflows]
+    │
+    ├── DOMAIN 2: ARCHITECTURE (Components, Services, APIs)
+    │   ├── /components                   [L02 - Components]
+    │   ├── /services                     [L03 - Services]
+    │   ├── /endpoints                    [L04 - API Endpoints]
+    │   ├── /connections                  [L05 - Connections]
+    │   ├── /schemas                      [L11 - Data Schemas]
+    │   ├── /ts_types                     [L12 - TypeScript Types]
+    │   ├── /api_contracts                [API Contracts]
+    │   └── /architecture_decisions       [Architecture Decision Records]
+    │
+    ├── DOMAIN 3: CONFIGURATION (Settings, Feature Flags, Secrets)
+    │   ├── /config_defs                  [L06 - Config Definitions]
+    │   ├── /env_vars                     [L07 - Environment Variables]
+    │   ├── /feature_flags                [L08 - Feature Flags]
+    │   ├── /runtime_config               [Runtime Configuration]
+    │   └── /secrets_catalog              [Secrets Management]
+    │
+    ├── DOMAIN 4: CONTENT (UI, Prompts, Instructions, Literals)
+    │   ├── /screens                      [L13 - UI Screens]
+    │   ├── /personas                     [L14 - User Personas]
+    │   ├── /instructions                 [L15 - Agent Instructions]
+    │   ├── /prompts                      [L16 - LLM Prompts]
+    │   ├── /literals                     [L17 - i18n Literals]
+    │   ├── /mcp_servers                  [L18 - MCP Servers]
+    │   └── /hooks                        [L19 - UI Hooks]
+    │
+    ├── DOMAIN 5: DEPLOYMENT (Infrastructure, Deployments, CI/CD)
+    │   ├── /infrastructure               [L20 - Infrastructure]
+    │   ├── /containers                   [L21 - Container Definitions]
+    │   ├── /azure_infrastructure         [Azure Resources]
+    │   ├── /deployment_targets           [Deployment Targets]
+    │   ├── /deployment_records           [Lxx - Deployment History]
+    │   ├── /deployment_history           [Deployment Timeline]
+    │   ├── /deployment_policies          [Deployment Rules]
+    │   ├── /deployment_quality_scores    [Deployment Quality]
+    │   ├── /ci_cd_pipelines              [CI/CD Pipelines]
+    │   └── /github_rules                 [GitHub Actions/Rules]
+    │
+    ├── DOMAIN 6: GOVERNANCE (Decisions, Risks, Quality Gates)
+    │   ├── /decisions                    [L29 - Decisions]
+    │   ├── /risks                        [L30 - Risks]
+    │   ├── /quality_gates                [L34 - Quality Gates]
+    │   ├── /compliance_audit             [Compliance Tracking]
+    │   ├── /decision_provenance          [Decision Lineage]
+    │   └── /work_decision_records        [Work Decision Log]
+    │
+    ├── DOMAIN 7: PROJECT MGMT (Projects, WBS, Sprints, Stories, Tasks)
+    │   ├── /projects                     [L25 - Projects]
+    │   ├── /wbs                          [L26 - Work Breakdown Structure]
+    │   ├── /sprints                      [L27 - Sprints]
+    │   ├── /stories                      [L28 - User Stories]
+    │   ├── /tasks                        [L28 - Tasks]
+    │   ├── /milestones                   [L32 - Milestones]
+    │   ├── /project_work                 [L46 - Session Tracking]
+    │   └── /requirements                 [Requirements Management]
+    │
+    ├── DOMAIN 8: OPERATIONS (Observability, Monitoring, Logs)
+    │   ├── /evidence                     [L31 - Evidence/Audit Trail]
+    │   ├── /verification_records         [L45 - Verification Results]
+    │   ├── /infrastructure_events        [Infrastructure Events]
+    │   ├── /service_health_metrics       [Service Health]
+    │   ├── /usage_metrics                [Usage Tracking]
+    │   ├── /model_telemetry              [AI Model Telemetry]
+    │   ├── /performance_trends           [Performance Analytics]
+    │   ├── /traces                       [Distributed Tracing]
+    │   ├── /session_transcripts          [Session Logs]
+    │   ├── /infrastructure_drift         [Infrastructure Drift Detection]
+    │   ├── /error_catalog                [Error Taxonomy]
+    │   └── /evidence_correlation         [Evidence Linking]
+    │
+    ├── DOMAIN 9: QUALITY (Testing, Validation, Remediation)
+    │   ├── /test_cases                   [L35 - Test Cases]
+    │   ├── /testing_policies             [Testing Standards]
+    │   ├── /validation_rules             [Validation Rules]
+    │   ├── /coverage_summary             [Test Coverage]
+    │   ├── /synthetic_tests              [Synthetic Monitoring]
+    │   ├── /remediation_policies         [Auto-Fix Policies]
+    │   ├── /remediation_outcomes         [Remediation Results]
+    │   ├── /remediation_effectiveness    [Remediation Analytics]
+    │   ├── /auto_fix_execution_history   [Auto-Fix History]
+    │   └── /request_response_samples     [API Test Data]
+    │
+    ├── DOMAIN 10: REPOSITORY (Repos, Tech Stack, Environments)
+    │   ├── /repos                        [L22 - Git Repositories]
+    │   ├── /tech_stack                   [L23 - Tech Stack Components]
+    │   └── /environments                 [L24 - Environments]
+    │
+    ├── DOMAIN 11: SECURITY (Controls, Secrets, RBAC)
+    │   ├── /security_controls            [Security Policies]
+    │   └── /secrets_catalog              [Secrets Vault]
+    │
+    ├── DOMAIN 12: RESOURCE MGMT (Cost, Inventory, Allocation)
+    │   ├── /resource_inventory           [Resource Catalog]
+    │   ├── /resource_costs               [Cost Tracking]
+    │   └── /cost_allocation              [Cost Attribution]
+    │
+    └── DOMAIN 13: WORK FACTORY (Execution, Capabilities, Governance)
+        ├── /work_execution_units         [Work Unit Tracking]
+        ├── /work_factory_capabilities    [Factory Capabilities]
+        ├── /work_factory_governance      [Factory Governance]
+        ├── /planes                       [Control/Data/Execution Planes]
+        ├── /runbooks                     [Operational Runbooks]
+        └── /eva_model                    [EVA Model Metadata]
+
+
+================================================================================
+PROPOSED RESTRUCTURE: EVA PORTAL AS PARENT
+================================================================================
+
+(Option A: Portal-Centric with Data Model as Sub-App)
+
+ROOT (/)
+│
+├── EVA PORTAL (Parent Application)
+│   │
+│   ├── /portal/home                      [EVA Home Dashboard]
+│   ├── /portal/projects                  [Project Portfolio]
+│   ├── /portal/sprints                   [Sprint Board]
+│   ├── /portal/wbs                       [WBS Tree View]
+│   │
+│   └── /portal/data-model/*              [Data Model Browser (Child App)]
+│       ├── /portal/data-model/home       [Model Home/Overview]
+│       ├── /portal/data-model/browser    [Layer Browser]
+│       ├── /portal/data-model/graph      [Visual Graph]
+│       ├── /portal/data-model/report     [Reports]
+│       │
+│       └── /portal/data-model/layers/*   [All 111 Layers]
+│           ├── /portal/data-model/layers/agents
+│           ├── /portal/data-model/layers/projects
+│           ├── /portal/data-model/layers/evidence
+│           └── ... (108 more)
+│
+└── /admin/*                              [Admin Section (unchanged)]
+    ├── /admin/apps
+    ├── /admin/rbac
+    └── ... (8 more)
+
+
+(Option B: Portal with Model as First-Class Section)
+
+ROOT (/)
+│
+├── EVA PORTAL
+│   ├── /                                 [Portal Home]
+│   ├── /projects                         [Project Portfolio]
+│   ├── /sprints                          [Sprint Board]
+│   ├── /wbs                              [WBS Tree]
+│   └── /model                            [Data Model Section]
+│       ├── /model                        [Model Overview]
+│       ├── /model/browser                [Browse All Layers]
+│       ├── /model/graph                  [Visualize Graph]
+│       ├── /model/report                 [Reports]
+│       │
+│       └── /model/layer/*                [Individual Layers]
+│           ├── /model/layer/agents
+│           ├── /model/layer/projects
+│           ├── /model/layer/evidence
+│           └── ... (108 more)
+│
+└── /admin/*                              [Admin (unchanged)]
+
+
+(Option C: Portal as Container, Model Namespaced)
+
+ROOT (/)
+│
+├── /                                     [Portal Home/Landing]
+│
+├── PORTAL FEATURES
+│   ├── /portfolio                        [Project Portfolio]
+│   ├── /sprint-board                     [Sprint Kanban]
+│   └── /wbs-tree                         [WBS Hierarchy]
+│
+├── DATA MODEL (Namespaced)
+│   ├── /dm                               [Data Model Home]
+│   ├── /dm/browse                        [Browse Layers]
+│   ├── /dm/graph                         [Visualize]
+│   ├── /dm/report                        [Reports]
+│   │
+│   └── /dm/{layer_name}                  [111 Layer Routes]
+│       ├── /dm/agents
+│       ├── /dm/projects
+│       ├── /dm/evidence
+│       └── ... (108 more)
+│
+└── ADMIN (Namespaced)
+    └── /admin/*                          [10 admin routes]
+
+
+================================================================================
+RECOMMENDED STRUCTURE
+================================================================================
+
+Based on EVA architecture principles (12 domains, ontology-driven):
+
+/                                         [EVA Portal Home - Central Hub]
+│
+├── /pm                                   [Project Management Suite]
+│   ├── /pm/portfolio                     [All Projects]
+│   ├── /pm/sprints                       [Sprint Board]
+│   ├── /pm/wbs                           [WBS Tree]
+│   └── /pm/{project_id}/*                [Project Detail Pages]
+│
+├── /model                                [Data Model Explorer (Child of Portal)]
+│   ├── /model                            [Model Dashboard]
+│   ├── /model/browse                     [Layer Browser with 12 Domains]
+│   ├── /model/graph                      [Interactive Graph Viz]
+│   ├── /model/report                     [Analytics & Reports]
+│   ├── /model/query                      [Query Builder/Explorer]
+│   │
+│   └── /model/{layer_name}               [111 Layer Detail Pages]
+│       ├── /model/agents                 [L01 - Agents Layer]
+│       ├── /model/projects               [L25 - Projects Layer]
+│       ├── /model/evidence               [L31 - Evidence Layer]
+│       ├── /model/quality_gates          [L34 - Quality Gates]
+│       └── ... (107 more layers)
+│
+└── /admin                                [Admin Section (unchanged)]
+    ├── /admin/apps
+    ├── /admin/rbac
+    ├── /admin/translations
+    └── ... (7 more)
+
+
+================================================================================
+IMPLEMENTATION NOTES
+================================================================================
+
+Current Code Location:
+- Route Definitions: ui/src/layerRoutes.tsx
+- Route Rendering: ui/src/demo/DemoApp.tsx
+- Generation Script: ui/scripts/generate-layer-routes.ps1
+
+To Reorganize:
+1. Update generate-layer-routes.ps1 with new path prefixes
+2. Update DemoApp.tsx navigation sidebar grouping
+3. Update NavHeader breadcrumbs to reflect hierarchy
+4. Consider:
+   - Add /model landing page component
+   - Add /pm landing page component
+   - Update literals for new route names
+   - Test all 128 routes still work after reorg
+
+Key Principle:
+"EVA Portal is the parent, Data Model is a child"
+→ Portal = /, Model = /model/*, Admin = /admin/*
+→ Clear separation: PM features vs Model exploration vs System admin
+→ URL structure reflects conceptual hierarchy
+
+================================================================================

@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useLiterals } from '@hooks/useLiterals';
 import { useApiHealth } from '@hooks/useApiHealth';
-import { useLang, type Lang } from '@context/LangContext';
+import { useLang } from '@context/LangContext';
 import { ApiHealthBanner } from '@components/ApiHealthBanner';
 import { VersionFooter } from '@components/VersionFooter';
+import { LanguageSelector } from '@components/LanguageSelector';
 import { acceleratorRoutes, adminRoutes, layerRoutes, portalRoutes } from '../layerRoutes';
 import { GC_BLUE, GC_BORDER, GC_MUTED, GC_SURFACE, GC_TEXT } from '../styles/tokens';
 
@@ -45,14 +46,6 @@ const ALL_KEYS = GROUPS.flatMap((group) =>
   group.routes.map((route) => `${group.key}:${route.path}`)
 );
 
-const LANGUAGE_OPTIONS: Array<{ code: Lang; label: string; abbr: string }> = [
-  { code: 'en', label: 'English', abbr: 'EN' },
-  { code: 'fr', label: 'Francais', abbr: 'FR' },
-  { code: 'es', label: 'Espanol', abbr: 'ES' },
-  { code: 'de', label: 'Deutsch', abbr: 'DE' },
-  { code: 'pt', label: 'Portugues', abbr: 'PT' },
-];
-
 function toDisplayName(path: string): string {
   const trimmed = path.replace(/^\//, '');
   if (!trimmed) return 'home';
@@ -70,7 +63,7 @@ function findRouteByKey(selectionKey: string): RouteItem | null {
 }
 
 export const DemoApp: React.FC = () => {
-  const { lang, setLang } = useLang();
+  const { lang } = useLang();
   const t = useLiterals('demo.portal');
   const apiHealth = useApiHealth();
   const [query, setQuery] = useState('');
@@ -131,20 +124,7 @@ export const DemoApp: React.FC = () => {
             >
               {t('actions.menu')}
             </button>
-            <label style={{ fontSize: '0.8rem', color: GC_MUTED }}>
-              {t('labels.language')}
-              <select
-                value={lang}
-                onChange={(event) => setLang(event.target.value as Lang)}
-                style={{ marginLeft: '8px', padding: '7px 10px', border: `1px solid ${GC_BORDER}`, borderRadius: '6px' }}
-              >
-                {LANGUAGE_OPTIONS.map((option) => (
-                  <option key={option.code} value={option.code}>
-                    {option.abbr} - {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <LanguageSelector label={t('labels.language')} />
           </div>
         </div>
       </header>
