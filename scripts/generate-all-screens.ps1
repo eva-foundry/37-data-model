@@ -50,14 +50,15 @@ try {
 Write-Host ""
 
 # Layer metadata lookup (common titles/translations)
+# FIXED: Use plural forms to match layer names (Session 45 - March 12, 2026)
 $layerMetadata = @{
-    "projects" = @{title="Project"; title_fr="Projet"}
-    "sprints" = @{title="Sprint"; title_fr="Sprint"}
-    "stories" = @{title="Story"; title_fr="Histoire"}
-    "tasks" = @{title="Task"; title_fr="Tâche"}
-    "evidence" = @{title="Evidence"; title_fr="Preuve"}
-    "endpoints" = @{title="Endpoint"; title_fr="Point de terminaison"}
-    "wbs" = @{title="WbsItem"; title_fr="ÉlémentWBS"}
+    "projects" = @{title="Projects"; title_fr="Projets"}
+    "sprints" = @{title="Sprints"; title_fr="Sprints"}
+    "stories" = @{title="Stories"; title_fr="Histoires"}
+    "tasks" = @{title="Tasks"; title_fr="Tâches"}
+    "evidence" = @{title="Evidence"; title_fr="Preuves"}
+    "endpoints" = @{title="Endpoints"; title_fr="PointsDeTerminaison"}
+    "wbs" = @{title="Wbs"; title_fr="WBS"}  # Preserve as-is, WBS is acronym
 }
 
 # Batch processing

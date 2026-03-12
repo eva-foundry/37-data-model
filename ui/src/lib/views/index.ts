@@ -130,3 +130,7 @@ export {
   getStoryCount,
   getDefaultStories,
 } from './stories';
+
+// Layer stubs - auto-generated defaults for all operational layers
+export * from './layer-stubs';
+// Additional stubs for planned layers
