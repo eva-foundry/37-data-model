@@ -8,6 +8,7 @@ GET  /model/admin/audit          Last N writes across all layers (audit trail)
 GET  /model/admin/validate       In-process cross-reference integrity check
 POST /model/admin/commit         export + assemble + validate in one API call (agent shortcut)
 POST /model/admin/audit-repo     Proxy to eva-veritas MCP: verify declared progress matches artifacts
+POST /model/admin/layers         Register new layer definition (Layer Registration API — Session 45 Phase A)
 
 Write cycle (correct protocol — never edit JSON files directly):
   1. PUT /model/{layer}/{id}       stamps modified_at / modified_by / row_version
@@ -26,6 +27,13 @@ eva-veritas integration (EO-08):
   Proxies to eva-veritas MCP server (default http://localhost:8031/tools/audit_repo).
   Returns: { trust_score, coverage, gaps[], actions[] }
   Override MCP server URL: env var EVA_VERITAS_MCP_URL
+
+Layer Registration API (Session 45 Phase A: D³PDCA Discovery Layers):
+  POST /model/admin/layers { layer_id, layer_name, schema, relationships, ... }
+  Registers new layer definition (L122-L129 Discovery & Sense-Making domain).
+  Idempotent: safe to re-run.
+  Returns: 201 Created with registration metadata.
+  Protocol: Validate → Create JSON → Seed to Cosmos → Verify → Return 201.
 """
 from __future__ import annotations
 
@@ -39,7 +47,9 @@ import urllib.request
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Body
+
+from pydantic import BaseModel, Field
 
 from api.store.base import AbstractStore
 from api.cache.base import AbstractCache
@@ -1279,3 +1289,299 @@ async def audit_repo(
         "mcp_url": mcp_base,
         "actor": actor,
     }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Layer Registration (Session 45: Phase A — D³PDCA Discovery Layers L122-L129)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class LayerRegistrationRequest(BaseModel):
+    """Request model for POST /model/admin/layers — register new layer to data model."""
+    
+    layer_id: str = Field(
+        ...,
+        description="Layer ID (e.g., 'L122', 'L123')",
+        examples=["L122", "L127"],
+    )
+    layer_name: str = Field(
+        ...,
+        description="Layer name in snake_case (e.g., 'discovery_contexts')",
+        examples=["discovery_contexts", "missions", "discovery_sensors"],
+    )
+    domain_id: str = Field(
+        default="D13",
+        description="Domain ID (e.g., 'D13' for Discovery & Sense-Making)",
+        examples=["D13", "D06"],
+    )
+    domain_name: str = Field(
+        default="Discovery & Sense-Making",
+        description="Human-readable domain name",
+        examples=["Discovery & Sense-Making", "Observability & Monitoring"],
+    )
+    schema: dict[str, Any] = Field(
+        ...,
+        description="Layer schema definition (fields, types, relationships)",
+    )
+    relationships: dict[str, Any] = Field(
+        default_factory=dict,
+        description="FK relationships: parent layers, child layers, edge types",
+    )
+    description: str = Field(
+        default="",
+        description="Layer purpose and usage",
+    )
+    purpose: str = Field(
+        default="",
+        description="Strategic purpose in the EVA data model",
+    )
+    notes: str = Field(
+        default="",
+        description="Implementation notes, constraints, or antitransactions",
+    )
+    immutable: bool = Field(
+        default=False,
+        description="True for append-only layers (like evidence L31, assumption_validations L126)",
+    )
+
+
+class LayerRegistrationResponse(BaseModel):
+    """Response model for POST /model/admin/layers — confirmation of registration."""
+    
+    status: str = Field(default="created", description="Registration status")
+    layer_id: str = Field(description="Layer ID registered")
+    layer_name: str = Field(description="Layer name registered")
+    file_path: str = Field(description="Path to JSON file created: model/{layer_name}.json")
+    objects_seeded: int = Field(description="Number of objects seeded from JSON")
+    timestamp: str = Field(description="ISO 8601 timestamp of registration")
+    actor: str = Field(description="User/agent who performed registration")
+    details: dict[str, Any] = Field(
+        default_factory=dict,
+        description="Additional metadata (schema_valid, fk_valid, etc.)"
+    )
+
+
+@router.post(
+    "/layers",
+    summary="Register new layer definition to data model (Layer Registration API)",
+    response_model=LayerRegistrationResponse,
+    status_code=201,
+)
+async def register_layer(
+    layer_req: LayerRegistrationRequest = Body(..., description="Layer registration request"),
+    store: AbstractStore = Depends(get_store),
+    cache: AbstractCache = Depends(get_cache),
+    actor: str = Depends(require_admin),
+) -> LayerRegistrationResponse:
+    """
+    POST /model/admin/layers
+    
+    Register a new layer definition to the data model (REST-compliant layer registration).
+    
+    Idempotent: safe to re-run (overwrites existing layer file + re-seeds).
+    
+    Protocol:
+    1. Validate: layer_id unique or update, schema well-formed
+    2. Create: {layer_name}.json in /model/ directory with schema
+    3. Format: Layer schema as JSON with objects array (may be empty or populated)
+    4. Seed: Call internal seed logic to load to Cosmos DB
+    5. Verify: Query back via GET /model/{layer} to confirm registration
+    6. Return: 201 Created with metadata
+    
+    Example:
+    ```json
+    {
+      "layer_id": "L122",
+      "layer_name": "discovery_contexts",
+      "domain_id": "D13",
+      "domain_name": "Discovery & Sense-Making",
+      "schema": {
+        "id": {"type": "string"},
+        "mission_id": {"type": "string"},
+        "stakeholders": {"type": "array"},
+        ...
+      },
+      "relationships": {
+        "parent": "L127",
+        "child": ["L123", "L124"],
+        "edges": ["discover_assumption", "discover_risk"]
+      },
+      "description": "Stakeholder maps, system boundaries, constraints for discovery",
+      "purpose": "Foundation for assumption tracking and mission grounding",
+      "immutable": false
+    }
+    ```
+    
+    Returns: 201 Created
+    ```json
+    {
+      "status": "created",
+      "layer_id": "L122",
+      "layer_name": "discovery_contexts",
+      "file_path": "model/discovery_contexts.json",
+      "objects_seeded": 0,
+      "timestamp": "2026-03-13T16:45:32.123Z",
+      "actor": "admin@eva-foundry",
+      "details": {
+        "schema_valid": true,
+        "fk_valid": true,
+        "file_created": true,
+        "seeded_to_cosmos": true
+      }
+    }
+    ```
+    """
+    import datetime
+    
+    start_time = time.time()
+    details: dict[str, Any] = {}
+    
+    try:
+        # ── Step 1: Validate request ──
+        if not layer_req.layer_id or not layer_req.layer_name:
+            raise HTTPException(
+                status_code=400,
+                detail="layer_id and layer_name are required",
+            )
+        
+        # Normalize layer_id format (L### or L##)
+        if not layer_req.layer_id.startswith("L"):
+            raise HTTPException(
+                status_code=400,
+                detail=f"layer_id must start with 'L' (e.g., L122, not {layer_req.layer_id})",
+            )
+        
+        # Normalize layer_name (snake_case)
+        if not layer_req.layer_name.islower() or not all(
+            c.isalnum() or c == "_" for c in layer_req.layer_name
+        ):
+            raise HTTPException(
+                status_code=400,
+                detail=f"layer_name must be lowercase with underscores (e.g., discovery_contexts, not {layer_req.layer_name})",
+            )
+        
+        # Validate schema is dict
+        if not isinstance(layer_req.schema, dict):
+            raise HTTPException(
+                status_code=400,
+                detail="schema must be a dict",
+            )
+        
+        details["schema_valid"] = True
+        
+        # ── Step 2: Create JSON file in /model/ directory ──
+        model_dir = _get_model_dir()
+        file_path = model_dir / f"{layer_req.layer_name}.json"
+        
+        # Prepare layer definition (empty objects array, schema-only)
+        layer_def = {
+            "layer_id": layer_req.layer_id,
+            "layer_name": layer_req.layer_name,
+            "domain_id": layer_req.domain_id,
+            "domain_name": layer_req.domain_name,
+            "description": layer_req.description,
+            "purpose": layer_req.purpose,
+            "immutable": layer_req.immutable,
+            "created_at": datetime.datetime.utcnow().isoformat() + "Z",
+            "created_by": actor,
+            "schema": layer_req.schema,
+            "relationships": layer_req.relationships,
+            "notes": layer_req.notes,
+            "objects": [],  # Empty — objects added via PUT /model/{layer}/{id}
+        }
+        
+        # Write JSON file (idempotent)
+        file_path.write_text(
+            json.dumps(layer_def, indent=2),
+            encoding="utf-8"
+        )
+        details["file_created"] = True
+        details["file_path"] = str(file_path)
+        
+        # ── Step 3: Seed to Cosmos DB ──
+        try:
+            # Re-read to get proper structure for extraction
+            raw = json.loads(file_path.read_text(encoding="utf-8"))
+            objects = _extract_objects_from_json(raw, layer_req.layer_name, f"{layer_req.layer_name}.json")
+            
+            if not isinstance(objects, list):
+                objects = []
+            objects = [o for o in objects if isinstance(o, dict)]
+            objects = _normalize_object_ids(objects, layer_req.layer_name)
+            objects = [o for o in objects if o.get("id")]
+            
+            # Stamp source_file
+            for obj in objects:
+                obj.setdefault("source_file", f"model/{layer_req.layer_name}.json")
+            
+            # Bulk load to store
+            seeded_count = await store.bulk_load(
+                layer_req.layer_name,
+                objects,
+                actor,
+            )
+            details["seeded_to_cosmos"] = True
+            details["objects_seeded"] = seeded_count
+            
+            # Invalidate cache for this layer
+            await cache.invalidate_layer(layer_req.layer_name)
+            
+        except Exception as exc:
+            details["seeded_to_cosmos"] = False
+            details["seed_error"] = str(exc)
+            log.error(
+                "Layer registration seed failed for %s: %s",
+                layer_req.layer_name,
+                exc,
+                exc_info=True,
+            )
+            raise HTTPException(
+                status_code=500,
+                detail=f"Seed to Cosmos failed: {exc}",
+            ) from exc
+        
+        # ── Step 4: Verify queryable ──
+        try:
+            # Simple query to verify layer exists
+            summary = await store.query({
+                "layer": layer_req.layer_name,
+                "limit": 1,
+            })
+            details["queryable"] = True
+            details["query_summary"] = summary
+        except Exception as exc:
+            details["queryable"] = False
+            details["query_error"] = str(exc)
+            log.warning(
+                "Could not verify queryable layer %s: %s",
+                layer_req.layer_name,
+                exc,
+            )
+        
+        # ── Step 5: Return success ──
+        elapsed = time.time() - start_time
+        details["elapsed_seconds"] = round(elapsed, 2)
+        
+        return LayerRegistrationResponse(
+            status="created",
+            layer_id=layer_req.layer_id,
+            layer_name=layer_req.layer_name,
+            file_path=str(file_path),
+            objects_seeded=details.get("objects_seeded", 0),
+            timestamp=datetime.datetime.utcnow().isoformat() + "Z",
+            actor=actor,
+            details=details,
+        )
+    
+    except HTTPException:
+        raise
+    except Exception as exc:
+        log.error(
+            "Layer registration failed for %s: %s",
+            layer_req.layer_name,
+            exc,
+            exc_info=True,
+        )
+        raise HTTPException(
+            status_code=500,
+            detail=f"Layer registration failed: {exc}",
+        ) from exc
