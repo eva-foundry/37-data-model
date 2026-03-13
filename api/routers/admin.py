@@ -194,6 +194,16 @@ _LAYER_FILES: dict[str, str] = {
     "work_service_requests": "work_service_requests.json",
     "work_service_revalidation_results": "work_service_revalidation_results.json",
     "work_service_runs": "work_service_runs.json",
+
+    # -- Domain 13: Discovery & Sense-Making (L122-L129) --
+    "discovery_contexts":       "discovery_contexts.json",        # L122
+    "discovery_signals":        "discovery_signals.json",         # L123
+    "discovery_patterns":       "discovery_patterns.json",        # L124
+    "discovery_insights":       "discovery_insights.json",        # L125
+    "sense_making_models":      "sense_making_models.json",       # L126
+    "discovery_outcomes":       "discovery_outcomes.json",        # L127
+    "discovery_actions":        "discovery_actions.json",         # L128
+    "discovery_knowledge_base": "discovery_knowledge_base.json",  # L129
 }
 
 

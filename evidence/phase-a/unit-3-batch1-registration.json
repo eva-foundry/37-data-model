@@ -1,0 +1,33 @@
+{
+  "unit": 3,
+  "description": "Register L122-L125",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "registrations": [
+    {
+      "layer": "discovery_contexts",
+      "layer_id": "L122",
+      "status": "registered",
+      "http_status": 200
+    },
+    {
+      "layer": "discovery_signals",
+      "layer_id": "L123",
+      "status": "registered",
+      "http_status": 200
+    },
+    {
+      "layer": "discovery_patterns",
+      "layer_id": "L124",
+      "status": "registered",
+      "http_status": 200
+    },
+    {
+      "layer": "discovery_insights",
+      "layer_id": "L125",
+      "status": "registered",
+      "http_status": 200
+    }
+  ],
+  "result": "PASS",
+  "all_registered": true
+}

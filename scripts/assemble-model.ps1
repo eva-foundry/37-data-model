@@ -81,6 +81,15 @@ $layers = @{
   deployment_policies = (Get-Content "$modelDir/deployment_policies.json" | ConvertFrom-Json).deployment_policies
   testing_policies    = (Get-Content "$modelDir/testing_policies.json"    | ConvertFrom-Json).testing_policies
   validation_rules    = (Get-Content "$modelDir/validation_rules.json"    | ConvertFrom-Json).validation_rules
+  # Domain 13: Discovery & Sense-Making (L122-L129)
+  discovery_contexts       = (Get-Content "$modelDir/discovery_contexts.json"       | ConvertFrom-Json).discovery_contexts
+  discovery_signals        = (Get-Content "$modelDir/discovery_signals.json"        | ConvertFrom-Json).discovery_signals
+  discovery_patterns       = (Get-Content "$modelDir/discovery_patterns.json"       | ConvertFrom-Json).discovery_patterns
+  discovery_insights       = (Get-Content "$modelDir/discovery_insights.json"       | ConvertFrom-Json).discovery_insights
+  sense_making_models      = (Get-Content "$modelDir/sense_making_models.json"      | ConvertFrom-Json).sense_making_models
+  discovery_outcomes       = (Get-Content "$modelDir/discovery_outcomes.json"       | ConvertFrom-Json).discovery_outcomes
+  discovery_actions        = (Get-Content "$modelDir/discovery_actions.json"        | ConvertFrom-Json).discovery_actions
+  discovery_knowledge_base = (Get-Content "$modelDir/discovery_knowledge_base.json" | ConvertFrom-Json).discovery_knowledge_base
 }
 
 # Count populated layers
@@ -91,7 +100,7 @@ $assembled = [ordered]@{
     schema_version  = "1.0.0"
     last_updated    = (Get-Date -Format "yyyy-MM-dd")
     layers_complete = $layersComplete
-    total_layers    = 41
+    total_layers    = 49
     generated_by    = "scripts/assemble-model.ps1"
     note            = "DO NOT hand-edit this file. Edit layer files then run assemble-model.ps1."
   }
@@ -139,6 +148,15 @@ $assembled = [ordered]@{
   agent_policies    = $layers.agent_policies
   quality_gates     = $layers.quality_gates
   github_rules      = $layers.github_rules
+  # Domain 13: Discovery & Sense-Making (L122-L129)
+  discovery_contexts       = $layers.discovery_contexts
+  discovery_signals        = $layers.discovery_signals
+  discovery_patterns       = $layers.discovery_patterns
+  discovery_insights       = $layers.discovery_insights
+  sense_making_models      = $layers.sense_making_models
+  discovery_outcomes       = $layers.discovery_outcomes
+  discovery_actions        = $layers.discovery_actions
+  discovery_knowledge_base = $layers.discovery_knowledge_base
 }
 
 $outputPath = "$modelDir/eva-model.json"

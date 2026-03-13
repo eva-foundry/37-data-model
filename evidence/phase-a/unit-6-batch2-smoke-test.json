@@ -1,0 +1,33 @@
+{
+  "unit": 6,
+  "description": "Smoke test L126-L129",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "smoke_tests": [
+    {
+      "layer": "sense_making_models",
+      "endpoint": "/model/sense_making_models",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "discovery_outcomes",
+      "endpoint": "/model/discovery_outcomes",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "discovery_actions",
+      "endpoint": "/model/discovery_actions",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "discovery_knowledge_base",
+      "endpoint": "/model/discovery_knowledge_base",
+      "http_status": 200,
+      "result": "PASS"
+    }
+  ],
+  "result": "PASS",
+  "tests_passed": 4
+}

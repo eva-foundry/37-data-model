@@ -1,0 +1,28 @@
+{
+  "unit": 8,
+  "description": "Bootstrap update - server.py domain and layer count",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "changes": [
+    {
+      "file": "api/server.py",
+      "change": "Updated domain count reference from 12 to 13 domains"
+    },
+    {
+      "file": "api/server.py",
+      "change": "Updated layer count reference from 111 to 119 layers"
+    },
+    {
+      "file": "api/server.py",
+      "change": "Added Domain 13 discovery_sense_making with start_here=discovery_contexts"
+    },
+    {
+      "file": "model/layer-metadata-index.json",
+      "change": "Updated total_layers 111->119, added 8 new layer entries"
+    },
+    {
+      "file": "api/routers/admin.py",
+      "change": "Added 8 new layers to _LAYER_FILES dict"
+    }
+  ],
+  "result": "PASS"
+}

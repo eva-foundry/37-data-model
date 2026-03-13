@@ -1,0 +1,28 @@
+{
+  "layer_id": "L127",
+  "layer": "discovery_outcomes",
+  "filename": "discovery_outcomes.json",
+  "domain": "discovery_sense_making",
+  "domain_id": 13,
+  "fields": {
+    "id": "string (required)",
+    "project_id": "string (FK -> projects)",
+    "status": "string",
+    "created_by": "string",
+    "created_at": "ISO-8601",
+    "modified_by": "string",
+    "modified_at": "ISO-8601",
+    "row_version": "integer",
+    "is_active": "boolean"
+  },
+  "required_fields": [
+    "id",
+    "project_id",
+    "status"
+  ],
+  "fk_references": [
+    "projects.id"
+  ],
+  "priority": "P1",
+  "category": "Discovery"
+}

@@ -1,0 +1,12 @@
+{
+  "unit": 9,
+  "description": "Bootstrap validation - agent-guide endpoint",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "endpoint": "/model/agent-guide",
+  "http_status": 200,
+  "layers_available": 119,
+  "domains_available": 13,
+  "domain_13_present": true,
+  "start_here_discovery_contexts": true,
+  "result": "PASS"
+}

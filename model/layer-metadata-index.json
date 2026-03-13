@@ -3,8 +3,8 @@
   "generated_at": "2026-03-10T23:34:07Z",
   "generated_by": "generate-layer-metadata-index.ps1",
   "source": "Cosmos DB (via API /model/agent-summary)",
-  "total_layers": 111,
-  "operational_layers": 87,
+  "total_layers": 119,
+  "operational_layers": 95,
   "layers": [
     {
       "layer_name": "projects",
@@ -782,6 +782,62 @@
       "object_count": 0,
       "priority": "P3",
       "category": "General"
+    },
+    {
+      "layer_name": "discovery_contexts",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "discovery_signals",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "discovery_patterns",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "discovery_insights",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "sense_making_models",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "discovery_outcomes",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "discovery_actions",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
+    },
+    {
+      "layer_name": "discovery_knowledge_base",
+      "operational": true,
+      "object_count": 1,
+      "priority": "P1",
+      "category": "Discovery"
     }
   ]
 }
