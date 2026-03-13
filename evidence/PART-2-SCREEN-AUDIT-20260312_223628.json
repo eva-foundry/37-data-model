@@ -1,0 +1,1059 @@
+{
+  "screens": [
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L1",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L10",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L100",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L101",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L102",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L103",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L104",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L105",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L106",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L107",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L108",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L109",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L11",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L110",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L111",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L12",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L13",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L14",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L15",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L16",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L17",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L18",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L19",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L2",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L20",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L21",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L22",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L23",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L24",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L25",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L26",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L27",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L28",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L29",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L3",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L30",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L31",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L32",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L33",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L34",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L35",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L36",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L37",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L38",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L39",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L4",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L40",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L41",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L42",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L43",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L44",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L45",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L46",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L47",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L48",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L49",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L5",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L50",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L51",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L52",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L53",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L54",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L55",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L56",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L57",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L58",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L59",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L6",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L60",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L61",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L62",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L63",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L64",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L65",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L66",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L67",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L68",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L69",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L7",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L70",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L71",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L72",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L73",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L74",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L75",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L76",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L77",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L78",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L79",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L8",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L80",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L81",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L82",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L83",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L84",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L85",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L86",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L87",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L88",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L89",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L9",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L90",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L91",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L92",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L93",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L94",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L95",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L96",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L97",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L98",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "category": "data-model",
+      "status": "operational",
+      "id": "L99",
+      "source": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "red_team_test_suites",
+      "id": "L112",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "attack_tactic_catalog",
+      "id": "L113",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "ai_security_findings",
+      "id": "L114",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "assertions_catalog",
+      "id": "L115",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "ai_security_metrics",
+      "id": "L116",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "vulnerability_scan_results",
+      "id": "L117",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "infrastructure_cve_findings",
+      "id": "L118",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "risk_ranking_analysis",
+      "id": "L119",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "remediation_tasks",
+      "id": "L120",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "type": "layer",
+      "name": "remediation_effectiveness_metrics",
+      "id": "L121",
+      "status": "pending",
+      "source": "data-model",
+      "category": "data-model"
+    },
+    {
+      "source": "data-model",
+      "name": "Alerts Management",
+      "id": "ops-alerts",
+      "type": "screen",
+      "status": "planned",
+      "project": 40,
+      "category": "monitoring"
+    },
+    {
+      "source": "data-model",
+      "name": "Audit Logs",
+      "id": "ops-audit",
+      "type": "screen",
+      "status": "planned",
+      "project": 50,
+      "category": "audit"
+    },
+    {
+      "source": "data-model",
+      "name": "Backup & Recovery",
+      "id": "ops-backup",
+      "type": "screen",
+      "status": "planned",
+      "project": 50,
+      "category": "backup"
+    },
+    {
+      "source": "data-model",
+      "name": "Configuration Mgmt",
+      "id": "ops-configuration",
+      "type": "screen",
+      "status": "planned",
+      "project": 50,
+      "category": "config"
+    },
+    {
+      "source": "data-model",
+      "name": "Ops Main Dashboard",
+      "id": "ops-dashboard-main",
+      "type": "screen",
+      "status": "planned",
+      "project": 40,
+      "category": "dashboard"
+    },
+    {
+      "source": "data-model",
+      "name": "Deployment Pipeline",
+      "id": "ops-deployment",
+      "type": "screen",
+      "status": "planned",
+      "project": 50,
+      "category": "deployment"
+    },
+    {
+      "source": "data-model",
+      "name": "Incident Tracker",
+      "id": "ops-incidents",
+      "type": "screen",
+      "status": "planned",
+      "project": 40,
+      "category": "incident-mgmt"
+    },
+    {
+      "source": "data-model",
+      "name": "Infrastructure Status",
+      "id": "ops-infrastructure",
+      "type": "screen",
+      "status": "planned",
+      "project": 40,
+      "category": "infrastructure"
+    },
+    {
+      "source": "data-model",
+      "name": "Log Viewer",
+      "id": "ops-logs",
+      "type": "screen",
+      "status": "planned",
+      "project": 40,
+      "category": "diagnostics"
+    },
+    {
+      "source": "data-model",
+      "name": "Auto-Scaling Control",
+      "id": "ops-scaling",
+      "type": "screen",
+      "status": "planned",
+      "project": 50,
+      "category": "scaling"
+    },
+    {
+      "path": "39-ado-dashboard\\src\\pages\\EVAHomePage.tsx",
+      "name": "EVAHomePage",
+      "source": "project",
+      "status": "discovered",
+      "id": "project-39-EVAHomePage",
+      "category": "project",
+      "type": "component",
+      "project": 39
+    },
+    {
+      "path": "39-ado-dashboard\\src\\pages\\EVAHomePage.test.tsx",
+      "name": "EVAHomePage.test",
+      "source": "project",
+      "status": "discovered",
+      "id": "project-39-EVAHomePage.test",
+      "category": "project",
+      "type": "component",
+      "project": 39
+    },
+    {
+      "path": "39-ado-dashboard\\src\\pages\\SprintBoardPage.tsx",
+      "name": "SprintBoardPage",
+      "source": "project",
+      "status": "discovered",
+      "id": "project-39-SprintBoardPage",
+      "category": "project",
+      "type": "component",
+      "project": 39
+    },
+    {
+      "path": "39-ado-dashboard\\src\\pages\\SprintBoardPage.test.tsx",
+      "name": "SprintBoardPage.test",
+      "source": "project",
+      "status": "discovered",
+      "id": "project-39-SprintBoardPage.test",
+      "category": "project",
+      "type": "component",
+      "project": 39
+    }
+  ],
+  "phase": "PART 2.DISCOVER",
+  "recommendations": [
+    "All 135 screens have been discovered and categorized",
+    "Eva-Faces components and project screens ready for integration",
+    "Ops screens marked as planned - will be created during PART 2.DO",
+    "Next: PART 2.PLAN - Design unified screen registry structure"
+  ],
+  "status": "success",
+  "inventory": {
+    "coverage_percent": 78.03,
+    "total_screens": 135,
+    "breakdown": {
+      "data_model_layers": 121,
+      "ops_screens_planned": 10,
+      "project_screens": 4,
+      "eva_faces_pages": 0
+    },
+    "expected_total": 173
+  },
+  "process": "Screen Source Audit",
+  "timestamp": "2026-03-12T22:36:29.2651835-03:00",
+  "execution_start": "2026-03-12T22:36:29.2652025-03:00",
+  "execution_end": "2026-03-12T22:36:29.2652129-03:00",
+  "audit_log": [
+    {
+      "count": 121,
+      "details": "Identified all 121 layers (111 existing + 10 P36-P58 new)",
+      "component": "data-model-layers",
+      "pending": 10,
+      "operational": 111,
+      "phase": "DISCOVER",
+      "timestamp": "2026-03-12T22:36:29.1103830-03:00",
+      "status": "success"
+    },
+    {
+      "count": 0,
+      "phase": "DISCOVER",
+      "timestamp": "2026-03-12T22:36:29.1136873-03:00",
+      "details": "Scanned React component directories",
+      "status": "success",
+      "component": "eva-faces-pages"
+    },
+    {
+      "count": 4,
+      "phase": "DISCOVER",
+      "projects": [
+        39,
+        45,
+        46
+      ],
+      "timestamp": "2026-03-12T22:36:29.2101644-03:00",
+      "details": "Scanned projects 39, 45, 46 for screen files",
+      "status": "success",
+      "component": "project-screens"
+    },
+    {
+      "count": 10,
+      "phase": "DISCOVER",
+      "projects": [
+        40,
+        50
+      ],
+      "timestamp": "2026-03-12T22:36:29.2153771-03:00",
+      "details": "Identified 10 planned ops screens in projects 40 and 50",
+      "status": "success",
+      "component": "ops-screens-planned"
+    }
+  ]
+}

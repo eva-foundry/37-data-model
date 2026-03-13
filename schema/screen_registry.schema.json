@@ -1,0 +1,196 @@
+{
+  "description": "Global registry for all 163 screens across data-model layers, eva-faces, projects, and ops",
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/screen_registry.schema.json",
+  "properties": {
+    "status": {
+      "description": "Screen lifecycle status",
+      "type": "string",
+      "enum": [
+        "operational",
+        "pending",
+        "planned",
+        "deprecated",
+        "archived"
+      ]
+    },
+    "source": {
+      "description": "Screen origin/source",
+      "type": "string",
+      "enum": [
+        "data-model",
+        "eva-faces",
+        "project",
+        "ops"
+      ]
+    },
+    "name": {
+      "minLength": 3,
+      "description": "Human-readable screen name",
+      "type": "string",
+      "maxLength": 200,
+      "examples": [
+        "Main Dashboard",
+        "Eva Faces Home Page",
+        "Alert Management"
+      ]
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Creator or system that created this screen"
+    },
+    "metadata": {
+      "examples": [
+        {
+          "last_review": "2026-03-12",
+          "owner": "Platform Team",
+          "dependencies": "L45,L46"
+        }
+      ],
+      "description": "Additional metadata (flexible key-value pairs)",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "category": {
+      "description": "Functional category",
+      "type": "string",
+      "enum": [
+        "data-model",
+        "ui",
+        "project",
+        "dashboard",
+        "monitoring",
+        "incident-mgmt",
+        "infrastructure",
+        "diagnostics",
+        "deployment",
+        "config",
+        "scaling",
+        "backup",
+        "audit"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional detailed description"
+    },
+    "created_at": {
+      "description": "UTC timestamp of creation (ISO 8601)",
+      "type": "string",
+      "format": "date-time"
+    },
+    "id": {
+      "examples": [
+        "L1",
+        "eva-faces-dashboard",
+        "project-39-alerts",
+        "ops-dashboard-main"
+      ],
+      "description": "Unique screen identifier (format: source-id or layer-number)",
+      "type": "string",
+      "pattern": "^[a-z0-9\\-]+$"
+    },
+    "accessibility": {
+      "description": "Accessibility compliance info",
+      "type": "object",
+      "properties": {
+        "wcag_level": {
+          "type": "string",
+          "enum": [
+            "A",
+            "AA",
+            "AAA"
+          ]
+        },
+        "keyboard_navigable": {
+          "type": "boolean"
+        },
+        "screen_reader_compatible": {
+          "type": "boolean"
+        }
+      }
+    },
+    "path": {
+      "examples": [
+        "src/pages/Dashboard.tsx",
+        "/pages/alerts",
+        "docs/screens/incident-tracker.md"
+      ],
+      "description": "File path or URL (relative to source root)",
+      "type": "string"
+    },
+    "layer_id": {
+      "examples": [
+        "L1",
+        "L45",
+        "L112"
+      ],
+      "description": "Data-model layer reference (if applicable)",
+      "type": "string",
+      "pattern": "^L\\d{1,3}$"
+    },
+    "version": {
+      "description": "Semantic version (major.minor.patch)",
+      "default": "1.0.0",
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "tags": {
+      "examples": [
+        [
+          "dashboard",
+          "monitoring"
+        ],
+        [
+          "ai-safety",
+          "red-teaming"
+        ],
+        [
+          "operational-excellence"
+        ]
+      ],
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "description": "Searchable tags for cross-cutting concerns"
+    },
+    "project": {
+      "maximum": 99,
+      "description": "Project number (if source=project or ops)",
+      "type": "integer",
+      "minimum": 1
+    },
+    "updated_at": {
+      "description": "UTC timestamp of last update (ISO 8601)",
+      "type": "string",
+      "format": "date-time"
+    },
+    "type": {
+      "description": "Screen type classification",
+      "type": "string",
+      "enum": [
+        "layer",
+        "page",
+        "component",
+        "screen",
+        "definition"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "source",
+    "status",
+    "type",
+    "category",
+    "created_at",
+    "updated_at"
+  ],
+  "type": "object",
+  "title": "Unified Screen Registry"
+}

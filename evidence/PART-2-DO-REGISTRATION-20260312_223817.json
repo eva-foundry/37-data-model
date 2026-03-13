@@ -1,0 +1,204 @@
+{
+  "screens_sample": [
+    {
+      "name": null,
+      "created_at": "2026-03-12T22:38:17.6103308-03:00",
+      "tags": [
+        "data-model",
+        "governance",
+        "data-model"
+      ],
+      "created_by": "PART-2-DO-ScreenRegistration",
+      "status": "operational",
+      "category": "data-model",
+      "source": "data-model",
+      "updated_at": "2026-03-12T22:38:17.6103700-03:00",
+      "accessibility": {
+        "wcag_level": "AA",
+        "keyboard_navigable": true,
+        "screen_reader_compatible": true
+      },
+      "type": "layer",
+      "id": "L1",
+      "version": "1.0.0"
+    },
+    {
+      "name": null,
+      "created_at": "2026-03-12T22:38:17.6163225-03:00",
+      "tags": [
+        "data-model",
+        "governance",
+        "data-model"
+      ],
+      "created_by": "PART-2-DO-ScreenRegistration",
+      "status": "operational",
+      "category": "data-model",
+      "source": "data-model",
+      "updated_at": "2026-03-12T22:38:17.6163606-03:00",
+      "accessibility": {
+        "wcag_level": "AA",
+        "keyboard_navigable": true,
+        "screen_reader_compatible": true
+      },
+      "type": "layer",
+      "id": "L10",
+      "version": "1.0.0"
+    },
+    {
+      "name": null,
+      "created_at": "2026-03-12T22:38:17.6165688-03:00",
+      "tags": [
+        "data-model",
+        "governance",
+        "data-model"
+      ],
+      "created_by": "PART-2-DO-ScreenRegistration",
+      "status": "operational",
+      "category": "data-model",
+      "source": "data-model",
+      "updated_at": "2026-03-12T22:38:17.6166044-03:00",
+      "accessibility": {
+        "wcag_level": "AA",
+        "keyboard_navigable": true,
+        "screen_reader_compatible": true
+      },
+      "type": "layer",
+      "id": "L100",
+      "version": "1.0.0"
+    },
+    {
+      "name": null,
+      "created_at": "2026-03-12T22:38:17.6167758-03:00",
+      "tags": [
+        "data-model",
+        "governance",
+        "data-model"
+      ],
+      "created_by": "PART-2-DO-ScreenRegistration",
+      "status": "operational",
+      "category": "data-model",
+      "source": "data-model",
+      "updated_at": "2026-03-12T22:38:17.6168054-03:00",
+      "accessibility": {
+        "wcag_level": "AA",
+        "keyboard_navigable": true,
+        "screen_reader_compatible": true
+      },
+      "type": "layer",
+      "id": "L101",
+      "version": "1.0.0"
+    },
+    {
+      "name": null,
+      "created_at": "2026-03-12T22:38:17.6169591-03:00",
+      "tags": [
+        "data-model",
+        "governance",
+        "data-model"
+      ],
+      "created_by": "PART-2-DO-ScreenRegistration",
+      "status": "operational",
+      "category": "data-model",
+      "source": "data-model",
+      "updated_at": "2026-03-12T22:38:17.6169856-03:00",
+      "accessibility": {
+        "wcag_level": "AA",
+        "keyboard_navigable": true,
+        "screen_reader_compatible": true
+      },
+      "type": "layer",
+      "id": "L102",
+      "version": "1.0.0"
+    }
+  ],
+  "phase": "PART 2.DO",
+  "recommendations": [
+    "Use bulk upload API for Cosmos DB ingestion",
+    "Verify partition key distribution across sources",
+    "Test sample queries before production deployment",
+    "Update placeholders during manual audit"
+  ],
+  "status": "success",
+  "artifacts": {
+    "payload_json": "docs/examples\\screen-registry-payload.json",
+    "bulk_upload": "docs/examples\\screen-registry-bulk-upload.jsonl",
+    "sample_queries": "docs/examples\\screen-registry-sample-queries.json"
+  },
+  "process": "Screen Registry Registration",
+  "timestamp": "2026-03-12T22:38:18.0940032-03:00",
+  "next_phase": "PART 2.CHECK (Verify registrations)",
+  "registration_summary": {
+    "total_screens_registered": 173,
+    "discovered": 135,
+    "breakdown": {
+      "data-model": 131,
+      "ops": 0,
+      "project": 19,
+      "eva-faces": 23
+    },
+    "placeholders": 38
+  },
+  "registration_log": [
+    {
+      "step": 1,
+      "screens_loaded": 135,
+      "status": "success",
+      "timestamp": "2026-03-12T22:38:17.6062769-03:00",
+      "component": "load-audit"
+    },
+    {
+      "step": 2,
+      "fields_added": [
+        "created_at",
+        "updated_at",
+        "created_by",
+        "version",
+        "accessibility",
+        "tags"
+      ],
+      "screens_normalized": 135,
+      "timestamp": "2026-03-12T22:38:17.6398046-03:00",
+      "status": "success",
+      "component": "normalize-screens"
+    },
+    {
+      "step": 3,
+      "project_placeholders": 15,
+      "placeholders_created": 38,
+      "timestamp": "2026-03-12T22:38:17.6439819-03:00",
+      "eva_faces_placeholders": 23,
+      "status": "success",
+      "component": "create-placeholders"
+    },
+    {
+      "step": 4,
+      "breakdown": {
+        "data-model": 131,
+        "ops": 0,
+        "project": 19,
+        "eva-faces": 23
+      },
+      "timestamp": "2026-03-12T22:38:17.8391294-03:00",
+      "status": "success",
+      "total_screens": 173,
+      "component": "consolidate"
+    },
+    {
+      "step": 5,
+      "bulk_upload_file": "docs/examples\\screen-registry-bulk-upload.jsonl",
+      "timestamp": "2026-03-12T22:38:17.8576905-03:00",
+      "payload_file": "docs/examples\\screen-registry-payload.json",
+      "status": "success",
+      "documents_ready": 173,
+      "component": "generate-payload"
+    },
+    {
+      "step": 6,
+      "queries_defined": 5,
+      "timestamp": "2026-03-12T22:38:18.0908739-03:00",
+      "status": "success",
+      "query_file": "docs/examples\\screen-registry-sample-queries.json",
+      "component": "sample-queries"
+    }
+  ]
+}
