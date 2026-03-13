@@ -1,0 +1,61 @@
+{
+  "gap_analysis": {
+    "missing_api_endpoints": [
+      "/model/layers",
+      "/model/layers/{id}",
+      "/model/ontology",
+      "/model/relationships",
+      "/model/user-guide"
+    ],
+    "missing_documentation": [],
+    "outdated_descriptions": [],
+    "inconsistent_layer_counts": [
+      {
+        "difference": -121,
+        "actual": 0,
+        "expected": 121,
+        "severity": "HIGH"
+      }
+    ]
+  },
+  "evidence_summary": {
+    "layers_without_description": 0,
+    "missing_endpoints_in_docs": 5,
+    "critical_gaps": 1.0,
+    "documentation_files_missing": 0,
+    "documented_files_found": 4,
+    "total_api_layers": 0,
+    "layers_without_docs": 0
+  },
+  "api_layers": null,
+  "documentation_files": [
+    {
+      "exists": true,
+      "size_bytes": 20917,
+      "last_modified": "2026-03-09 13:36:20",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\COMPLETE-LAYER-CATALOG.md"
+    },
+    {
+      "exists": true,
+      "size_bytes": 83689,
+      "last_modified": "2026-03-12 20:24:22",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\03-DATA-MODEL-REFERENCE.md"
+    },
+    {
+      "exists": true,
+      "size_bytes": 4621,
+      "last_modified": "2026-03-09 11:28:53",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\98-model-ontology-for-agents.md"
+    },
+    {
+      "exists": true,
+      "size_bytes": 9352,
+      "last_modified": "2026-03-12 20:24:22",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\99-layers-design-20260309-0935.md"
+    }
+  ],
+  "status": "COMPLETE",
+  "phase": "DISCOVER",
+  "timestamp": "20260312_230102",
+  "api_base": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+}

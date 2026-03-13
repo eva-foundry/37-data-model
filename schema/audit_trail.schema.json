@@ -1,0 +1,67 @@
+{
+  "properties": {
+    "retention_period_days": {
+      "type": "string",
+      "description": "data lifecycle policy"
+    },
+    "action": {
+      "type": "string",
+      "description": "Type of change (CREATE, UPDATE, DELETE, etc.)"
+    },
+    "resource_type": {
+      "type": "string",
+      "description": "Type of resource affected"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Unique immutable identifier"
+    },
+    "digital_signature": {
+      "type": "string",
+      "description": "HMAC-SHA256 of immutable record"
+    },
+    "change_reason": {
+      "type": "string",
+      "description": "Business reason for change"
+    },
+    "actor": {
+      "type": "string",
+      "description": "User or system executing action"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO 8601 timestamp"
+    },
+    "resource_id": {
+      "type": "string",
+      "description": "Identifier of affected resource"
+    },
+    "old_value": {
+      "type": "string",
+      "description": "Previous value (for UPDATE)"
+    },
+    "new_value": {
+      "type": "string",
+      "description": "New value (for UPDATE)"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schema/audit_trail.schema.json",
+  "required": [
+    "retention_period_days",
+    "action",
+    "resource_type",
+    "event_id",
+    "digital_signature",
+    "change_reason",
+    "actor",
+    "timestamp",
+    "new_value",
+    "old_value",
+    "resource_id"
+  ],
+  "description": "Immutable records of all system changes for compliance audits and forensics",
+  "type": "object",
+  "title": "audit_trail"
+}

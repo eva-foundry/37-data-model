@@ -1,0 +1,278 @@
+{
+  "documentation_artifacts": [
+    {
+      "format": "OpenAPI 3.0 spec + examples",
+      "type": "API Reference",
+      "name": "docs/API-ENDPOINTS.md",
+      "includes": [
+        "GET /model/user-guide",
+        "GET /model/ontology",
+        "GET /ready"
+      ],
+      "action": "CREATE or UPDATE with 3 missing endpoints",
+      "links_to": [
+        "docs/library/98-model-ontology-for-agents.md"
+      ]
+    },
+    {
+      "format": "Markdown with layer specifications",
+      "type": "Layer Definitions",
+      "name": "docs/library/LAYER-DEFINITIONS-L112-L121.md",
+      "includes": [
+        "L112 audit_trail",
+        "L113 compliance_mapping",
+        "L114 risk_register",
+        "L115 security_controls",
+        "L116 vulnerability_assessment",
+        "L117 access_control_matrix",
+        "L118 incident_response",
+        "L119 attestation_records"
+      ],
+      "action": "CREATE with 8 missing security schemas",
+      "links_to": [
+        "docs/COMPLETE-LAYER-CATALOG.md"
+      ]
+    },
+    {
+      "format": "Markdown table format",
+      "type": "Layer Inventory",
+      "sections_affected": [
+        "DOMAIN 2 -- IDENTITY & ACCESS"
+      ],
+      "name": "docs/COMPLETE-LAYER-CATALOG.md",
+      "new_entries": 8,
+      "action": "UPDATE to include 8 new layers in DOMAIN 2 section"
+    }
+  ],
+  "timestamp": "20260312_230438",
+  "metrics": {
+    "total_gaps": 9,
+    "risk_level": "LOW",
+    "estimated_effort_hours": 3.0,
+    "documentation_artifacts": 3,
+    "blocking_issues": 0,
+    "validation_checks": 8,
+    "dependencies": [
+      "assertions_catalog.schema.json (L110) - already exists",
+      "remediation_effectiveness.schema.json (L111) - already exists"
+    ],
+    "gap_by_type": {
+      "missing_endpoints": 3,
+      "missing_schemas": 8,
+      "total": 9
+    },
+    "estimated_effort_minutes": 180.0,
+    "remediation_items": 11
+  },
+  "validation_checklist": [
+    {
+      "step_number": 1,
+      "category": "Schemas",
+      "pass_criteria": "8 files found",
+      "check": "All 8 missing schema JSON files exist in schema/ directory",
+      "validation_command": "Get-ChildItem ./schema/*.schema.json | Where {(L112|L113|L114|L115|L116|L117|L118|L119)}"
+    },
+    {
+      "step_number": 2,
+      "category": "Schemas",
+      "pass_criteria": "0 validation errors",
+      "check": "All 8 schemas validate against JSON Schema Draft-7",
+      "validation_command": "npm run validate-schemas -- L112 L113 L114 L115 L116 L117 L118 L119"
+    },
+    {
+      "step_number": 3,
+      "category": "Schemas",
+      "pass_criteria": "8 schemas with ",
+      "check": "All 8 schemas have  field in correct format",
+      "validation_command": "Get-Content schema/*.schema.json | ConvertFrom-Json | Where {.'' -match 'L11[2-9]'}"
+    },
+    {
+      "step_number": 4,
+      "category": "Documentation",
+      "pass_criteria": "true",
+      "check": "API endpoint documentation file exists",
+      "validation_command": "Test-Path docs/API-ENDPOINTS.md"
+    },
+    {
+      "step_number": 5,
+      "category": "Documentation",
+      "pass_criteria": "3 endpoints found",
+      "check": "All 3 missing endpoints documented in API-ENDPOINTS.md",
+      "validation_command": "Select-String '/model/user-guide','  /model/ontology', '/ready' docs/API-ENDPOINTS.md"
+    },
+    {
+      "step_number": 6,
+      "category": "Documentation",
+      "pass_criteria": "8 layers referenced",
+      "check": "COMPLETE-LAYER-CATALOG.md includes all 8 new layers",
+      "validation_command": "Select-String 'L112|L113|L114|L115|L116|L117|L118|L119' docs/COMPLETE-LAYER-CATALOG.md"
+    },
+    {
+      "step_number": 7,
+      "category": "Integration",
+      "pass_criteria": "Link exists",
+      "check": "Layer definitions linked from catalog",
+      "validation_command": "Select-String 'LAYER-DEFINITIONS-L112-L121' docs/COMPLETE-LAYER-CATALOG.md"
+    },
+    {
+      "step_number": 8,
+      "category": "Integration",
+      "pass_criteria": "No conflicts found",
+      "check": "All documentation is internally consistent",
+      "validation_command": "Cross-reference layer names, IDs, and descriptions"
+    }
+  ],
+  "readiness": {
+    "resources_available": true,
+    "recommended_action": "Proceed to PART 4.DO - Schema Creation and Documentation Update",
+    "remediation_strategy_defined": true,
+    "blocking_dependencies": [],
+    "ready_for_do_phase": true,
+    "all_gaps_understood": true
+  },
+  "status": "COMPLETE",
+  "phase": "PLAN",
+  "remediation_items": [
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "audit_trail.schema.json",
+      "depends_on": "assertions_catalog (L110)",
+      "gap_type": "missing_schema",
+      "gap_name": "audit_trail",
+      "priority": "HIGH",
+      "gap_id": "L112",
+      "estimated_effort_minutes": 15,
+      "description": "Immutable records of all system changes for compliance"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "compliance_mapping.schema.json",
+      "depends_on": "assertions_catalog (L110)",
+      "gap_type": "missing_schema",
+      "gap_name": "compliance_mapping",
+      "priority": "HIGH",
+      "gap_id": "L113",
+      "estimated_effort_minutes": 15,
+      "description": "Maps layers to compliance frameworks (HIPAA, SOC2, ISO27001)"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "risk_register.schema.json",
+      "depends_on": "remediation_effectiveness (L111)",
+      "gap_type": "missing_schema",
+      "gap_name": "risk_register",
+      "priority": "MEDIUM",
+      "gap_id": "L114",
+      "estimated_effort_minutes": 15,
+      "description": "Risk identification, assessment, and mitigation tracking"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "security_controls.schema.json",
+      "depends_on": "assertions_catalog (L110)",
+      "gap_type": "missing_schema",
+      "gap_name": "security_controls",
+      "priority": "HIGH",
+      "gap_id": "L115",
+      "estimated_effort_minutes": 15,
+      "description": "Control implementations per NIST/CIS framework"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "vulnerability_assessment.schema.json",
+      "depends_on": "risk_register (L114)",
+      "gap_type": "missing_schema",
+      "gap_name": "vulnerability_assessment",
+      "priority": "HIGH",
+      "gap_id": "L116",
+      "estimated_effort_minutes": 15,
+      "description": "Vulnerability discovery and remediation workflow"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "access_control_matrix.schema.json",
+      "depends_on": "personas (L2)",
+      "gap_type": "missing_schema",
+      "gap_name": "access_control_matrix",
+      "priority": "HIGH",
+      "gap_id": "L117",
+      "estimated_effort_minutes": 15,
+      "description": "RBAC configuration per resource and actor"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "incident_response.schema.json",
+      "depends_on": "audit_trail (L112)",
+      "gap_type": "missing_schema",
+      "gap_name": "incident_response",
+      "priority": "MEDIUM",
+      "gap_id": "L118",
+      "estimated_effort_minutes": 15,
+      "description": "Incident detection, response, and post-mortem tracking"
+    },
+    {
+      "action": "Create JSON Schema Draft-7 file in schema/ directory",
+      "validation": "Schema passes JSON Schema validation + has  field",
+      "action_owner": "PART 4.DO - Schema Creation Phase",
+      "file": "attestation_records.schema.json",
+      "depends_on": "audit_trail (L112)",
+      "gap_type": "missing_schema",
+      "gap_name": "attestation_records",
+      "priority": "MEDIUM",
+      "gap_id": "L119",
+      "estimated_effort_minutes": 15,
+      "description": "Compliance attestations and signed audit records"
+    },
+    {
+      "method": "GET",
+      "action": "Add endpoint documentation to docs/API-ENDPOINTS.md",
+      "path": "/model/user-guide",
+      "validation": "Endpoint documented with method, response schema, example",
+      "action_owner": "PART 4.DO - Endpoint Documentation Phase",
+      "related_layer": "ontology_domains (L12)",
+      "gap_type": "missing_endpoint_doc",
+      "estimated_effort_minutes": 10,
+      "gap_id": "ENDPOINT__model_user-guide",
+      "description": "Retrieves 6 DPDCA category runbooks with layer definitions, query sequences, and anti-trash rules"
+    },
+    {
+      "method": "GET",
+      "action": "Add endpoint documentation to docs/API-ENDPOINTS.md",
+      "path": "/model/ontology",
+      "validation": "Endpoint documented with method, response schema, example",
+      "action_owner": "PART 4.DO - Endpoint Documentation Phase",
+      "related_layer": "ontology_domains (L12)",
+      "gap_type": "missing_endpoint_doc",
+      "estimated_effort_minutes": 10,
+      "gap_id": "ENDPOINT__model_ontology",
+      "description": "Returns 12-domain cognitive architecture for agent reasoning"
+    },
+    {
+      "method": "GET",
+      "action": "Add endpoint documentation to docs/API-ENDPOINTS.md",
+      "path": "/ready",
+      "validation": "Endpoint documented with method, response schema, example",
+      "action_owner": "PART 4.DO - Endpoint Documentation Phase",
+      "related_layer": "infrastructure (L10)",
+      "gap_type": "missing_endpoint_doc",
+      "estimated_effort_minutes": 10,
+      "gap_id": "ENDPOINT__ready",
+      "description": "Kubernetes readiness probe: returns true if API can serve requests"
+    }
+  ],
+  "gap_count": 9
+}
