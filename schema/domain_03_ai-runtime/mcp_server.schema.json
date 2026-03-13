@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mcp_server.schema.json",
+  "title": "EVA MCP Server",
+  "description": "A Model Context Protocol server that exposes tools to Copilot agents",
+  "type": "object",
+  "required": ["id", "label", "service", "transport", "tools", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier, kebab-case",
+      "examples": ["mcp-azure-search", "mcp-cosmos", "mcp-blob"]
+    },
+    "label": { "type": "string", "description": "Human-readable name" },
+    "service": { "type": "string", "description": "Service id that hosts this MCP server" },
+    "transport": {
+      "type": "string",
+      "enum": ["stdio", "sse", "websocket"],
+      "description": "MCP transport protocol"
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tool names exposed by this server"
+    },
+    "repo_path": { "type": ["string", "null"], "description": "Relative path from eva-foundation root" },
+    "config_file": { "type": ["string", "null"], "description": "MCP server config file path" },
+    "azure_resource": { "type": ["string", "null"], "description": "Infrastructure id for the backing Azure resource" },
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "planned", "deprecated", "stub"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

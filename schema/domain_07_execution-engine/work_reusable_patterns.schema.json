@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.foundation/schema/work_reusable_patterns.schema.json",
+  "title": "Work Reusable Patterns (L58)",
+  "description": "Approved execution pattern templates derived from learning feedback (L57). Each pattern defines a reusable workflow with steps, conditions, and expected outcomes. Forms the foundation for factory capabilities (L61).",
+  "type": "object",
+  "required": [
+    "id",
+    "pattern_name",
+    "pattern_type",
+    "description",
+    "steps",
+    "approval_status",
+    "created_by",
+    "created_at",
+    "modified_by",
+    "modified_at",
+    "row_version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^pattern-[a-z0-9-]+$",
+      "description": "Pattern ID. Format: pattern-{kebab-case-name}. Example: 'pattern-dpdca-feature-cycle'"
+    },
+    "pattern_name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable pattern name."
+    },
+    "pattern_type": {
+      "type": "string",
+      "enum": ["workflow", "quality_gate", "deployment", "testing", "refactoring", "analysis", "remediation"],
+      "description": "Primary pattern category."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000,
+      "description": "Detailed pattern description with applicability guidance."
+    },
+    "applicability_conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["condition_type", "condition_text"],
+        "properties": {
+          "condition_type": {
+            "type": "string",
+            "enum": ["project_type", "tech_stack", "complexity", "risk_level", "team_size", "custom"]
+          },
+          "condition_text": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "When this pattern applies. Empty array = universally applicable."
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_number", "step_name", "step_description"],
+        "properties": {
+          "step_number": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "step_name": {
+            "type": "string"
+          },
+          "step_description": {
+            "type": "string"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "validation_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "minItems": 1,
+      "description": "Ordered list of pattern steps."
+    },
+    "expected_outcomes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "What should be achieved by following this pattern."
+    },
+    "derived_from_learning_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "FK array to L57 work_learning_feedback. Source learnings."
+    },
+    "example_work_units": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "FK array to L52 work_execution_units. Example applications."
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": ["draft", "under_review", "approved", "deprecated"],
+      "description": "Pattern lifecycle status."
+    },
+    "approval_date": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When pattern was approved (ISO 8601)."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version. Format: major.minor.patch"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Actor who created this record."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO 8601)."
+    },
+    "modified_by": {
+      "type": "string",
+      "description": "Actor who last modified this record."
+    },
+    "modified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last modification timestamp (ISO 8601)."
+    },
+    "row_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Optimistic concurrency control. Increments on each update."
+    }
+  },
+  "additionalProperties": false
+}

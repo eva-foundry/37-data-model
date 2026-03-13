@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.foundation/schema/work_obligations.schema.json",
+  "title": "Work Obligations (L55)",
+  "description": "Follow-up obligations created from work decisions (L54) and policy enforcement (L16). Tracks remediation tasks, policy-mandated actions, and decision follow-ups with assignees and due dates.",
+  "type": "object",
+  "required": [
+    "id",
+    "decision_id",
+    "obligation_text",
+    "status",
+    "priority",
+    "assigned_to_type",
+    "assigned_to_id",
+    "created_by",
+    "created_at",
+    "modified_by",
+    "modified_at",
+    "row_version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-obl-[0-9]{8}-[0-9]{3,}$",
+      "description": "Obligation ID. Format: {project-id}-obl-{YYYYMMDD}-{seq}. Example: '51-ACA-obl-20260309-001'"
+    },
+    "decision_id": {
+      "type": "string",
+      "description": "FK to L54 work_decision_records. Decision that created this obligation."
+    },
+    "policy_id": {
+      "type": ["string", "null"],
+      "description": "FK to L16 cp_policies. Optional policy that mandated this obligation."
+    },
+    "work_unit_id": {
+      "type": ["string", "null"],
+      "description": "FK to L52 work_execution_units. Context work unit (optional)."
+    },
+    "obligation_text": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "Clear description of what must be done. Should be actionable and measurable."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "in_progress", "blocked", "completed", "cancelled"],
+      "description": "Current obligation status."
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Obligation urgency level."
+    },
+    "assigned_to_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "human"],
+      "description": "Type of actor assigned. Determines which layer assigned_to_id references."
+    },
+    "assigned_to_id": {
+      "type": "string",
+      "description": "Polymorphic FK. Resolves to: agent→L9, cp_agent→L15, human→L2."
+    },
+    "due_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "description": "Optional deadline for completion (ISO 8601 date)."
+    },
+    "completion_evidence_id": {
+      "type": ["string", "null"],
+      "description": "FK to L31 evidence. Proof of completion (nullable until completed)."
+    },
+    "blocked_reason": {
+      "type": ["string", "null"],
+      "maxLength": 500,
+      "description": "If status=blocked, explain why."
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Actor who created this record."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO 8601)."
+    },
+    "modified_by": {
+      "type": "string",
+      "description": "Actor who last modified this record."
+    },
+    "modified_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last modification timestamp (ISO 8601)."
+    },
+    "row_version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Optimistic concurrency control. Increments on each update."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "layer": "assumption_validations",
+  "layer_id": "L126",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Immutable audit trail of assumption validation events — tracks confidence changes over time",
+  "purpose": "Create append-only history of assumption validation to show when assumptions were proven wrong or strengthened",
+  "schema": {
+    "id": "string - aval-{assumption_id}-{YYYYMMDD-HHMMSS}",
+    "layer": "string - assumption_validations",
+    "assumption_id": "string - FK → L123/discovery_assumptions",
+    "project_id": "string - FK → L26/projects",
+    "validation_type": "enum - CONFIRMED | WEAKENED | VIOLATED | RETIRED",
+    "previous_confidence": "number - 0.0-1.0",
+    "new_confidence": "number - 0.0-1.0",
+    "evidence_id": "string - FK → L33/evidence",
+    "validation_method": "string",
+    "validator": "string - agent or human",
+    "notes": "string",
+    "trigger": "enum - scheduled | sensor_alert | manual_review | mission_complete",
+    "created_at": "ISO 8601"
+  },
+  "relationships": {
+    "parent": ["L123/discovery_assumptions"],
+    "edge_types": ["validates", "invalidates"]
+  },
+  "immutable": true,
+  "immutability": "APPEND-ONLY - Once written, records are never updated. Only new records are added. This creates a confidence history for every assumption.",
+  "notes": "This layer creates an immutable record of assumption lifecycle: when validated, when violated, how confidence changed."
+}

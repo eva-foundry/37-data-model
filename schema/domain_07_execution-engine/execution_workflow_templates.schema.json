@@ -1,0 +1,117 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/execution_workflow_templates.schema.json",
+  "title": "Execution Workflow Templates",
+  "type": "object",
+  "description": "Reusable workflow patterns and templates (L64 - Execution Engine Phase 3)",
+  "required": [
+    "template_id",
+    "template_name",
+    "workflow_type",
+    "steps"
+  ],
+  "properties": {
+    "template_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-template-[0-9]{8}-[0-9]{3,}$"
+    },
+    "template_name": {
+      "type": "string",
+      "description": "Name of this reusable workflow",
+      "minLength": 5,
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "description": "What this workflow accomplishes"
+    },
+    "workflow_type": {
+      "type": "string",
+      "enum": [
+        "deployment",
+        "testing",
+        "data_migration",
+        "security_check",
+        "compliance_audit",
+        "incident_response"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "description": "Business or technical category"
+    },
+    "version": {
+      "type": "string",
+      "description": "Template version (e.g., 1.0, 1.1)"
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Input parameters that can be customized",
+      "items": {
+        "type": "object",
+        "properties": {
+          "param_name": { "type": "string" },
+          "param_type": { "type": "string", "enum": ["string", "integer", "boolean", "array", "object"] },
+          "required": { "type": "boolean" },
+          "description": { "type": "string" },
+          "default_value": {}
+        },
+        "required": ["param_name", "param_type"]
+      }
+    },
+    "steps": {
+      "type": "array",
+      "description": "Ordered sequence of workflow steps",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": { "type": "string" },
+          "step_name": { "type": "string" },
+          "action_type": { "type": "string" },
+          "description": { "type": "string" },
+          "agent_capability": { "type": "string" },
+          "timeout_minutes": { "type": "number" },
+          "retry_policy": {
+            "type": "object",
+            "properties": {
+              "max_retries": { "type": "integer" },
+              "backoff_seconds": { "type": "number" }
+            }
+          },
+          "error_handling": { "type": "string" },
+          "dependencies": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Step IDs that must complete before this one"
+          }
+        },
+        "required": ["step_id", "step_name"]
+      }
+    },
+    "expected_duration_minutes": {
+      "type": "number",
+      "description": "Typical execution time"
+    },
+    "success_criteria": {
+      "type": "array",
+      "description": "Conditions that indicate successful workflow completion",
+      "items": { "type": "string" }
+    },
+    "rollback_template_id": {
+      "type": "string",
+      "description": "Reference to rollback workflow if this fails"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "usage_count": {
+      "type": "integer",
+      "description": "How many times this template has been instantiated"
+    },
+    "last_used_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

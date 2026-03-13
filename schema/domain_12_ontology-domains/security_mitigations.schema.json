@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/security_mitigations.schema.json",
+  "title": "Security Mitigations",
+  "type": "object",
+  "description": "Security control implementations and mitigation actions (L79 - Security Phase 1)",
+  "required": [
+    "mitigation_id",
+    "vulnerability_id_or_threat_id",
+    "mitigation_approach"
+  ],
+  "properties": {
+    "mitigation_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-mitigation-[0-9]{8}-[0-9]{3,}$"
+    },
+    "vulnerability_id_or_threat_id": {
+      "type": "string",
+      "description": "Reference to vulnerability_findings or threat_models"
+    },
+    "mitigation_approach": {
+      "type": "string",
+      "enum": [
+        "patching",
+        "configuration_hardening",
+        "compensating_control",
+        "detection_and_response",
+        "network_isolation",
+        "encryption",
+        "access_control",
+        "code_fix"
+      ]
+    },
+    "mitigation_description": {
+      "type": "string",
+      "minLength": 20
+    },
+    "control_type": {
+      "type": "string",
+      "enum": ["preventive", "detective", "corrective", "compensating"],
+      "description": "Type of security control"
+    },
+    "responsible_team": {
+      "type": "string",
+      "description": "Team implementing this mitigation"
+    },
+    "implementation_plan": {
+      "type": "string",
+      "description": "Step-by-step implementation steps"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "target_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "actual_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "blocked", "deferred"],
+      "description": "Current status"
+    },
+    "estimated_cost_usd": {
+      "type": "number"
+    },
+    "actual_cost_usd": {
+      "type": "number"
+    },
+    "effectiveness_rating": {
+      "type": "string",
+      "enum": ["not_tested", "low", "medium", "high"],
+      "description": "How effective is this mitigation?"
+    },
+    "testing_performed": {
+      "type": "string",
+      "description": "How was effectiveness validated?"
+    },
+    "residual_risk_reduction_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other mitigations or work that must complete first",
+      "items": { "type": "string" }
+    },
+    "requires_approval": {
+      "type": "boolean"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

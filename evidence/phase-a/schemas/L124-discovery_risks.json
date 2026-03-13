@@ -1,0 +1,38 @@
+{
+  "layer": "discovery_risks",
+  "layer_id": "L124",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Discovery-phase risks — threats identified BEFORE execution, distinct from project risks (L30)",
+  "purpose": "Capture pre-execution threats and blind spots identified during discovery to inform mitigation planning",
+  "schema": {
+    "id": "string - drisk-{project_id}-{seq}",
+    "layer": "string - discovery_risks",
+    "project_id": "string - FK → L26/projects",
+    "context_id": "string - FK → L122/discovery_contexts",
+    "mission_id": "string - FK → L127/missions (optional)",
+    "risk_title": "string",
+    "risk_description": "string",
+    "risk_type": "enum - threat | blind_spot | dependency | assumption_failure | environmental",
+    "probability": "enum - HIGH | MEDIUM | LOW",
+    "probability_score": "number - 0.0-1.0",
+    "impact": "enum - CRITICAL | HIGH | MEDIUM | LOW",
+    "impact_score": "number - 0.0-1.0",
+    "risk_score": "number - probability_score * impact_score",
+    "affected_assumptions": ["string - FK → L123/discovery_assumptions"],
+    "mitigation_strategy": "string",
+    "mitigation_owner": "string",
+    "mitigation_status": "enum - PLANNED | IN_PROGRESS | COMPLETED | ACCEPTED",
+    "detection_method": "enum - sensor | manual_analysis | expert_judgment | historical_pattern",
+    "source_sensor_id": "string - FK → L128/discovery_sensors (optional)",
+    "created_by": "string",
+    "created_at": "ISO 8601",
+    "is_active": true
+  },
+  "relationships": {
+    "parent": ["L122/discovery_contexts"],
+    "sibling": ["L30/risks - project-level risks migrate here when discovered pre-execution"],
+    "edge_types": ["threatens", "mitigates", "detects"]
+  },
+  "notes": "L30 (risks) stays for project-level operational risks. L124 captures discovery-phase pre-execution risks. A risk can migrate from L124 → L30 when a mission proceeds to execution."
+}

@@ -1,0 +1,53 @@
+{
+  "layer": "discovery_contexts",
+  "layer_id": "L122",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Context maps — stakeholders, systems, boundaries, constraints, unknowns",
+  "purpose": "Context maps for grounding discovery phase work, identifying key stakeholders, system boundaries, and constraints",
+  "schema": {
+    "id": "string - ctx-{project_id}-{YYYYMMDD}",
+    "layer": "string - discovery_contexts",
+    "project_id": "string - FK → L26/projects",
+    "mission_id": "string - FK → L127/missions (optional)",
+    "context_type": "enum - stakeholder_map | system_boundary | constraint_map | environment_scan",
+    "title": "string",
+    "description": "string",
+    "stakeholders": [
+      {
+        "name": "string",
+        "role": "string",
+        "influence": "enum - HIGH | MEDIUM | LOW",
+        "interest": "enum - HIGH | MEDIUM | LOW",
+        "engagement_strategy": "string"
+      }
+    ],
+    "systems_in_scope": ["string - FK → L1/services or L26/projects"],
+    "boundaries": {
+      "in_scope": ["string"],
+      "out_of_scope": ["string"],
+      "grey_zone": ["string - needs clarification"]
+    },
+    "constraints": [
+      {
+        "type": "enum - time | resource | technical | policy | organizational",
+        "description": "string",
+        "severity": "enum - HARD | SOFT | FLEXIBLE"
+      }
+    ],
+    "unknowns": ["string"],
+    "confidence_level": "number - 0.0-1.0",
+    "evidence_sources": ["string - FK → L33/evidence"],
+    "created_by": "string",
+    "created_at": "ISO 8601",
+    "validated_by": "string - stakeholder who signed off (null if not validated)",
+    "validated_at": "ISO 8601 - null if not validated",
+    "is_active": true
+  },
+  "relationships": {
+    "parent": ["L26/projects", "L127/missions"],
+    "child": ["L123/discovery_assumptions", "L125/discovery_opportunities"],
+    "edge_types": ["grounds", "identifies", "constrains"]
+  },
+  "notes": "Grounding evidence for every discovery-phase work: what are the key stakeholders, system boundaries, and constraints we're operating under?"
+}

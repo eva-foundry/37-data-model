@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/dependency_management.schema.json",
+  "title": "Dependency Management",
+  "type": "object",
+  "description": "Cross-project and cross-team dependencies (L75 - Strategy Phase)",
+  "required": [
+    "dependency_id",
+    "from_project_id",
+    "to_project_id",
+    "dependency_type"
+  ],
+  "properties": {
+    "dependency_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-dep-[0-9]{8}-[0-9]{3,}$"
+    },
+    "from_project_id": {
+      "type": "string",
+      "description": "Project that depends on something"
+    },
+    "from_project_name": {
+      "type": "string"
+    },
+    "to_project_id": {
+      "type": "string",
+      "description": "Project being depended on"
+    },
+    "to_project_name": {
+      "type": "string"
+    },
+    "dependency_type": {
+      "type": "string",
+      "enum": [
+        "blocking",
+        "finish_to_start",
+        "scheduling",
+        "resource_contention",
+        "data_dependency",
+        "technical_dependency",
+        "organizational_dependency"
+      ],
+      "description": "Nature of the dependency"
+    },
+    "dependency_description": {
+      "type": "string",
+      "description": "Detailed description of what's being depended on",
+      "minLength": 10
+    },
+    "criticality": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "How critical is this dependency to the dependent project?"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["healthy", "at_risk", "blocked", "resolved"],
+      "description": "Current status of this dependency"
+    },
+    "target_ready_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When does the depended-on project/item need to be ready?"
+    },
+    "actual_ready_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When was it actually ready (or expected to be)?"
+    },
+    "risk_if_delayed": {
+      "type": "string",
+      "description": "What happens if the dependency is delayed?",
+      "minLength": 10
+    },
+    "risk_severity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "mitigation_plan": {
+      "type": "string",
+      "description": "Plan to mitigate risk of delay"
+    },
+    "owner_from_project": {
+      "type": "string",
+      "description": "Contact person in dependent project"
+    },
+    "owner_to_project": {
+      "type": "string",
+      "description": "Contact person in depended-on project"
+    },
+    "escalation_needed": {
+      "type": "boolean",
+      "description": "Does this need executive escalation?"
+    },
+    "escalated_to": {
+      "type": "string",
+      "description": "Executive who escalated"
+    },
+    "last_status_update": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

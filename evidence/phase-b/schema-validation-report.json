@@ -1,0 +1,249 @@
+﻿{
+    "timestamp":  "2026-03-13T16:46:02.930Z",
+    "schemas":  [
+                    {
+                        "valid_json":  true,
+                        "file":  "L122-discovery_contexts.json",
+                        "layer_name":  "discovery_contexts",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L26/projects",
+                                                              "L127/missions"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "grounds",
+                                                           "identifies",
+                                                           "constrains"
+                                                       ],
+                                        "child_layers":  [
+                                                             "L123/discovery_assumptions",
+                                                             "L125/discovery_opportunities"
+                                                         ]
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L122",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L123-discovery_assumptions.json",
+                        "layer_name":  "discovery_assumptions",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L122/discovery_contexts"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "assumes",
+                                                           "risks",
+                                                           "validates"
+                                                       ],
+                                        "child_layers":  [
+                                                             "L126/assumption_validations"
+                                                         ]
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L123",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L124-discovery_risks.json",
+                        "layer_name":  "discovery_risks",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L122/discovery_contexts"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "threatens",
+                                                           "mitigates",
+                                                           "detects"
+                                                       ],
+                                        "child_layers":  null
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L124",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L125-discovery_opportunities.json",
+                        "layer_name":  "discovery_opportunities",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L122/discovery_contexts"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "enables",
+                                                           "improves",
+                                                           "requires"
+                                                       ],
+                                        "child_layers":  null
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L125",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L126-assumption_validations.json",
+                        "layer_name":  "assumption_validations",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L123/discovery_assumptions"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "validates",
+                                                           "invalidates"
+                                                       ],
+                                        "child_layers":  null
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L126",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L127-missions.json",
+                        "layer_name":  "missions",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L26/projects",
+                                                              "L122/discovery_contexts"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "executes",
+                                                           "grounds",
+                                                           "produces",
+                                                           "validates"
+                                                       ],
+                                        "child_layers":  [
+                                                             "L33/evidence (mission evidence)",
+                                                             "L52/work_execution_units"
+                                                         ]
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L127",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L128-discovery_sensors.json",
+                        "layer_name":  "discovery_sensors",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "None (top-level registry)"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "monitors",
+                                                           "produces",
+                                                           "detects"
+                                                       ],
+                                        "child_layers":  [
+                                                             "L129/discovery_signals"
+                                                         ]
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L128",
+                        "fk_errors":  [
+
+                                      ]
+                    },
+                    {
+                        "valid_json":  true,
+                        "file":  "L129-discovery_signals.json",
+                        "layer_name":  "discovery_signals",
+                        "issues":  [
+
+                                   ],
+                        "details":  {
+                                        "immutable":  null,
+                                        "parent_layers":  [
+                                                              "L128/discovery_sensors"
+                                                          ],
+                                        "ttl_days":  null,
+                                        "id_format":  null,
+                                        "edge_types":  [
+                                                           "detects",
+                                                           "triggers",
+                                                           "informs"
+                                                       ],
+                                        "child_layers":  [
+                                                             "L122/discovery_contexts (signals feed context creation)"
+                                                         ]
+                                    },
+                        "valid_structure":  true,
+                        "layer_id":  "L129",
+                        "fk_errors":  [
+
+                                      ]
+                    }
+                ],
+    "schemas_invalid":  0,
+    "summary":  {
+                    "passed":  8,
+                    "pass_rate":  "100%",
+                    "failed":  0,
+                    "fk_errors_total":  0,
+                    "total":  8,
+                    "circular_deps":  0,
+                    "status":  "PASS"
+                },
+    "schemas_valid":  8,
+    "total_schemas":  8,
+    "fk_errors":  0,
+    "circular_deps_detected":  0
+}

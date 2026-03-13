@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/threat_models.schema.json",
+  "title": "Threat Models",
+  "type": "object",
+  "description": "STRIDE threat models and attack surface analysis (L77 - Security Phase 1)",
+  "required": [
+    "model_id",
+    "system_name",
+    "model_creation_date"
+  ],
+  "properties": {
+    "model_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-threat-model-[0-9]{8}-[0-9]{3,}$"
+    },
+    "system_name": {
+      "type": "string",
+      "description": "System being modeled"
+    },
+    "system_description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "model_creation_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_updated_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "reviewed_by": {
+      "type": "string"
+    },
+    "threat_model_version": {
+      "type": "string",
+      "enum": ["stride", "pasta", "cvd", "dread"]
+    },
+    "trust_boundaries": {
+      "type": "array",
+      "description": "Architectural trust boundaries",
+      "items": {
+        "type": "object",
+        "properties": {
+          "boundary_id": { "type": "string" },
+          "boundary_name": { "type": "string" },
+          "components_inside": { "type": "array", "items": { "type": "string" } },
+          "risk_level": { "type": "string", "enum": ["low", "medium", "high"] }
+        }
+      }
+    },
+    "threat_categories": {
+      "type": "array",
+      "description": "STRIDE categories or equivalent",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["spoofing", "tampering", "repudiation", "info_disclosure", "denial_of_service", "elevation_of_privilege"]
+          },
+          "threats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "threat_statement": { "type": "string" },
+                "likelihood": { "type": "string", "enum": ["low", "medium", "high"] },
+                "impact": { "type": "string", "enum": ["low", "medium", "high"] },
+                "risk_rating": { "type": "string" },
+                "mitigations": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "attack_trees": {
+      "type": "array",
+      "description": "Attack tree representations",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tree_id": { "type": "string" },
+          "root_goal": { "type": "string" },
+          "attack_paths": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "data_flow_diagram": {
+      "type": "object",
+      "description": "DFD reference or link"
+    },
+    "critical_assets": {
+      "type": "array",
+      "description": "High-value assets to protect",
+      "items": { "type": "string" }
+    },
+    "assumptions": {
+      "type": "array",
+      "description": "Assumptions made in this model",
+      "items": { "type": "string" }
+    },
+    "total_threats_identified": {
+      "type": "integer"
+    },
+    "threats_with_mitigations": {
+      "type": "integer"
+    },
+    "unmitigated_threats": {
+      "type": "integer"
+    },
+    "residual_risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    }
+  }
+}

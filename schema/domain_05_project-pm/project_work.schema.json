@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/project_work.schema.json",
+  "title": "Project Work Session",
+  "description": "Active work tracking for projects. Replaces STATUS.md with queryable, versioned work sessions. Layer 34 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["id", "project_id", "current_phase", "session_summary"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique work session identifier (project_id + date)",
+      "pattern": "^[0-9]{2}-[a-z0-9-]+-\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Reference to project (Layer 25)",
+      "pattern": "^[0-9]{2}-[a-z0-9-]+$"
+    },
+    "current_phase": {
+      "type": "string",
+      "description": "Current project phase (e.g., 'Phase 4', 'Sprint 7')"
+    },
+    "session_summary": {
+      "type": "object",
+      "description": "Summary of the most recent work session",
+      "required": ["session_number", "date", "objective", "status"],
+      "properties": {
+        "session_number": {
+          "type": "integer",
+          "description": "Sequential session number",
+          "minimum": 1
+        },
+        "date": {
+          "type": "string",
+          "description": "Session date (YYYY-MM-DD)",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "objective": {
+          "type": "string",
+          "description": "Session objective or focus"
+        },
+        "deliverables": {
+          "type": "integer",
+          "description": "Number of deliverables completed",
+          "minimum": 0
+        },
+        "status": {
+          "type": "string",
+          "description": "Session completion status",
+          "enum": ["Complete", "In Progress", "Blocked", "Deferred"]
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional session notes"
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "description": "Current task list from STATUS.md or PLAN.md",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Task identifier (e.g., 'T1', 'F07-03-001')"
+          },
+          "title": {
+            "type": "string",
+            "description": "Task title"
+          },
+          "status": {
+            "type": "string",
+            "description": "Task status",
+            "enum": ["not_started", "in_progress", "complete", "blocked", "deferred"]
+          },
+          "story_points": {
+            "type": "integer",
+            "description": "Estimated story points",
+            "minimum": 0,
+            "maximum": 21
+          },
+          "assigned_to": {
+            "type": "string",
+            "description": "Assignee (person or agent)"
+          },
+          "blockers": {
+            "type": "array",
+            "description": "List of blocking issues",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "description": "Current project blockers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Blocker identifier"
+          },
+          "description": {
+            "type": "string",
+            "description": "Blocker description"
+          },
+          "severity": {
+            "type": "string",
+            "description": "Blocker severity",
+            "enum": ["critical", "high", "medium", "low"]
+          },
+          "blocked_since": {
+            "type": "string",
+            "description": "Date blocker was identified (YYYY-MM-DD)",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          }
+        },
+        "required": ["id", "description", "severity"]
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Current project metrics",
+      "properties": {
+        "mti_score": {
+          "type": "number",
+          "description": "Veritas MTI score (0-100)",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "test_count": {
+          "type": "integer",
+          "description": "Total test count",
+          "minimum": 0
+        },
+        "coverage_percent": {
+          "type": "number",
+          "description": "Test coverage percentage",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "open_issues": {
+          "type": "integer",
+          "description": "Number of open issues",
+          "minimum": 0
+        },
+        "open_prs": {
+          "type": "integer",
+          "description": "Number of open pull requests",
+          "minimum": 0
+        }
+      }
+    },
+    "next_steps": {
+      "type": "array",
+      "description": "Recommended next steps",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional work session notes"
+    }
+  }
+}

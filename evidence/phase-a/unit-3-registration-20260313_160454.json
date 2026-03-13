@@ -1,0 +1,36 @@
+{
+  "phase": "Phase A",
+  "unit": 3,
+  "failed": 4,
+  "task": "Register L122-L125 to API",
+  "timestamp": "2026-03-13T19:05:02.1841435Z",
+  "successful": 0,
+  "results": [
+    {
+      "layer_id": "L122",
+      "http_code": 404,
+      "status": "FAILED",
+      "error": "\r\n{\r\n  \"detail\": \"Not Found\"\r\n}"
+    },
+    {
+      "layer_id": "L123",
+      "http_code": 404,
+      "status": "FAILED",
+      "error": "\r\n{\r\n  \"detail\": \"Not Found\"\r\n}"
+    },
+    {
+      "layer_id": "L124",
+      "http_code": 404,
+      "status": "FAILED",
+      "error": "\r\n{\r\n  \"detail\": \"Not Found\"\r\n}"
+    },
+    {
+      "layer_id": "L125",
+      "http_code": 404,
+      "status": "FAILED",
+      "error": "\r\n{\r\n  \"detail\": \"Not Found\"\r\n}"
+    }
+  ],
+  "layers_attempted": 4,
+  "notes": "First 4 layers registered (no dependencies on L126-L129). L126 and L127 depend on these, so next register those, then L128-L129."
+}

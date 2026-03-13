@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/portfolio_optimization.schema.json",
+  "title": "Portfolio Optimization",
+  "type": "object",
+  "description": "Strategic portfolio prioritization and optimization (L71 - Strategy Phase)",
+  "required": [
+    "optimization_id",
+    "organization_id",
+    "optimization_date"
+  ],
+  "properties": {
+    "optimization_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-portfolio-opt-[0-9]{8}-[0-9]{3,}$"
+    },
+    "organization_id": {
+      "type": "string",
+      "description": "Organization or business unit"
+    },
+    "optimization_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "optimization_period": {
+      "type": "string",
+      "description": "Period being optimized for (e.g., 'Q3 2026', 'FY2026')"
+    },
+    "total_projects_evaluated": {
+      "type": "integer"
+    },
+    "projects": {
+      "type": "array",
+      "description": "Prioritized list of projects",
+      "items": {
+        "type": "object",
+        "properties": {
+          "project_id": { "type": "string" },
+          "project_name": { "type": "string" },
+          "priority_rank": { "type": "integer" },
+          "priority_score": { "type": "number", "minimum": 0, "maximum": 100 },
+          "expected_business_value_usd": { "type": "number" },
+          "estimated_cost_usd": { "type": "number" },
+          "roi_percent": { "type": "number" },
+          "risk_level": { "type": "string", "enum": ["low", "medium", "high"] },
+          "strategic_alignment": { "type": "number", "minimum": 0, "maximum": 1 },
+          "start_date": { "type": "string", "format": "date" },
+          "end_date": { "type": "string", "format": "date" },
+          "recommended_decision": { "type": "string", "enum": ["proceed", "defer", "reject", "fast_track"] }
+        }
+      }
+    },
+    "optimization_criteria": {
+      "type": "object",
+      "description": "Weights used in scoring",
+      "properties": {
+        "business_value_weight": { "type": "number" },
+        "alignment_weight": { "type": "number" },
+        "risk_weight": { "type": "number" },
+        "urgency_weight": { "type": "number" },
+        "cost_weight": { "type": "number" }
+      }
+    },
+    "total_budget_recommended_usd": {
+      "type": "number"
+    },
+    "total_budget_available_usd": {
+      "type": "number"
+    },
+    "recommended_allocation": {
+      "type": "array",
+      "description": "How to allocate budget across top-priority projects",
+      "items": {
+        "type": "object",
+        "properties": {
+          "project_id": { "type": "string" },
+          "allocated_budget_usd": { "type": "number" },
+          "percent_of_total": { "type": "number" }
+        }
+      }
+    },
+    "strategic_themes": {
+      "type": "array",
+      "description": "Strategic themes (e.g., 'AI/ML Excellence', 'Cloud First')",
+      "items": { "type": "string" }
+    },
+    "optimization_assumptions": {
+      "type": "array",
+      "description": "Key assumptions underlying this optimization",
+      "items": { "type": "string" }
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "Executive who approved this optimization"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "security_control.schema.json",
+  "title": "EVA Security Control",
+  "description": "A security control mapped from a governance framework (ITSG-33, OWASP LLM, MITRE ATLAS, NIST AI RMF)",
+  "type": "object",
+  "required": ["id", "label", "framework", "category", "satisfied_by", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier matching the framework control ID",
+      "examples": ["ITSG-33-AC-2", "OWASP-LLM-01", "ATLAS-AML.T0051"]
+    },
+    "label": { "type": "string", "description": "Control name" },
+    "framework": {
+      "type": "string",
+      "enum": ["ITSG-33", "OWASP-LLM", "MITRE-ATLAS", "NIST-AI-RMF", "ISO-42001", "internal"],
+      "description": "Source governance framework"
+    },
+    "category": {
+      "type": "string",
+      "description": "Control category or family",
+      "examples": ["Access Control", "Prompt Injection", "Data Poisoning", "Audit & Accountability"]
+    },
+    "description": { "type": ["string", "null"], "description": "Control description or rationale" },
+    "satisfied_by": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Service, endpoint, or screen ids that satisfy this control"
+    },
+    "eval_suite": { "type": ["string", "null"], "description": "Promptfoo eval pack id that tests this control" },
+    "personas": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Persona ids this control applies to"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "planned", "partial", "deferred", "not-applicable"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_performance_profiling.schema.json",
+  "title": "Work Performance Profiling",
+  "type": "object",
+  "description": "Performance metrics and profiling data (L68 - Execution Engine Phase 4)",
+  "required": [
+    "profile_id",
+    "work_unit_id",
+    "metric_type"
+  ],
+  "properties": {
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-profile-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "metric_type": {
+      "type": "string",
+      "enum": [
+        "response_time",
+        "throughput",
+        "cpu_usage",
+        "memory_usage",
+        "latency",
+        "error_rate",
+        "custom"
+      ]
+    },
+    "measurement_unit": {
+      "type": "string",
+      "enum": ["ms", "sec", "percent", "requests_per_sec", "ops_per_sec", "bytes", "custom"],
+      "description": "Unit of measurement"
+    },
+    "sample_count": {
+      "type": "integer",
+      "description": "Number of measurements taken"
+    },
+    "min_value": { "type": "number" },
+    "max_value": { "type": "number" },
+    "mean_value": { "type": "number" },
+    "median_value": { "type": "number" },
+    "stddev_value": { "type": "number" },
+    "p95_percentile": {
+      "type": "number",
+      "description": "95th percentile value"
+    },
+    "p99_percentile": {
+      "type": "number",
+      "description": "99th percentile value"
+    },
+    "histogram": {
+      "type": "array",
+      "description": "Distribution buckets",
+      "items": {
+        "type": "object",
+        "properties": {
+          "bucket_name": { "type": "string" },
+          "range_min": { "type": "number" },
+          "range_max": { "type": "number" },
+          "count": { "type": "integer" }
+        }
+      }
+    },
+    "measured_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When measurement occurred"
+    },
+    "measurement_duration_minutes": {
+      "type": "number",
+      "description": "How long the measurement window was"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["local", "staging", "production"],
+      "description": "Where measurement was taken"
+    },
+    "load_profile": {
+      "type": "object",
+      "description": "Test load conditions",
+      "properties": {
+        "concurrent_users": { "type": "integer" },
+        "requests_per_second": { "type": "number" },
+        "average_payload_bytes": { "type": "integer" }
+      }
+    },
+    "threshold_target": {
+      "type": "number",
+      "description": "Target SLO value"
+    },
+    "meets_slo": {
+      "type": "boolean",
+      "description": "Does this meet performance SLO?"
+    },
+    "anomalies_detected": {
+      "type": "array",
+      "description": "Unusual patterns found",
+      "items": { "type": "string" }
+    },
+    "profile_url": {
+      "type": "string",
+      "description": "URL to detailed profiling data/dashboard"
+    }
+  }
+}

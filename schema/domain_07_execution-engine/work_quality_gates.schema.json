@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_quality_gates.schema.json",
+  "title": "Work Quality Gates",
+  "type": "object",
+  "description": "DPDCA CHECK phase gates for work execution (L57 - Execution Engine Phase 2)",
+  "required": [
+    "gate_id",
+    "work_unit_id",
+    "gate_name",
+    "gate_type",
+    "required_metrics"
+  ],
+  "properties": {
+    "gate_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-gate-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "gate_name": {
+      "type": "string",
+      "description": "Human-readable gate name (e.g., 'Code Quality Gate', 'Security Scan Gate')"
+    },
+    "gate_type": {
+      "type": "string",
+      "enum": ["code_quality", "security", "performance", "compliance", "coverage"],
+      "description": "Category of quality gate"
+    },
+    "required_metrics": {
+      "type": "object",
+      "description": "Thresholds that must be met",
+      "properties": {
+        "min_test_coverage": { "type": "number", "minimum": 0, "maximum": 100 },
+        "max_critical_issues": { "type": "integer" },
+        "max_security_findings": { "type": "integer" },
+        "performance_threshold_ms": { "type": "number" }
+      }
+    },
+    "actual_metrics": {
+      "type": "object",
+      "description": "Actual measured values during CHECK phase"
+    },
+    "gate_status": {
+      "type": "string",
+      "enum": ["pending", "passed", "failed", "passed_with_waiver"],
+      "description": "Current gate evaluation result"
+    },
+    "documented_waivers": {
+      "type": "array",
+      "description": "Exceptions approved by governance",
+      "items": {
+        "type": "object",
+        "properties": {
+          "waiver_id": { "type": "string" },
+          "metric_name": { "type": "string" },
+          "approved_by": { "type": "string" },
+          "reason": { "type": "string" },
+          "expiry_date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

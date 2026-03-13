@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_rollback_procedures.schema.json",
+  "title": "Work Rollback Procedures",
+  "type": "object",
+  "description": "Procedures for undoing failed deployments or work units (L59 - Execution Engine Phase 2)",
+  "required": [
+    "rollback_id",
+    "work_unit_id",
+    "rollback_type",
+    "trigger_condition"
+  ],
+  "properties": {
+    "rollback_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-rollback-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "rollback_type": {
+      "type": "string",
+      "enum": [
+        "database_restore",
+        "code_revert",
+        "infrastructure_rollback",
+        "configuration_reset",
+        "full_system_restore"
+      ]
+    },
+    "trigger_condition": {
+      "type": "string",
+      "description": "What circumstances would trigger this rollback",
+      "minLength": 10
+    },
+    "automated": {
+      "type": "boolean",
+      "description": "Can this rollback execute automatically?"
+    },
+    "manual_approval_required": {
+      "type": "boolean",
+      "default": true
+    },
+    "approval_threshold_minutes": {
+      "type": "integer",
+      "description": "Max time allowed before auto-rollback if no approval",
+      "minimum": 1
+    },
+    "rollback_steps": {
+      "type": "array",
+      "description": "Ordered sequence of rollback actions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_number": { "type": "integer" },
+          "description": { "type": "string" },
+          "command": { "type": "string" },
+          "validation_check": { "type": "string" }
+        }
+      }
+    },
+    "estimated_duration_minutes": {
+      "type": "number",
+      "description": "How long rollback typically takes"
+    },
+    "data_loss_risk": {
+      "type": "string",
+      "enum": ["none", "low", "medium", "high"],
+      "description": "Risk of data loss during rollback"
+    },
+    "backup_required": {
+      "type": "boolean",
+      "description": "Must backup current state before rollback?"
+    },
+    "tested": {
+      "type": "boolean",
+      "description": "Has this rollback procedure been tested?"
+    },
+    "last_tested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["draft", "tested", "approved", "archived"],
+      "description": "Validation status of this procedure"
+    }
+  }
+}

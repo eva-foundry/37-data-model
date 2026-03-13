@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L59 - work_pattern_applications",
+  "description": "Pattern usage tracking — records each instance of a reusable pattern (L58) being applied to a work unit (L52). Tracks adaptations made, success score, and feedback for continuous improvement. Parent: work_execution_units (CASCADE on delete).",
+  "required": [
+    "id",
+    "work_unit_id",
+    "pattern_id",
+    "applied_at",
+    "success_score",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: application-{work_unit_id}-{seq}",
+      "pattern": "^application-[a-z0-9-]+-[0-9]{3,}$",
+      "examples": ["application-51-ACA-wu-20260309-001-001", "application-37-data-model-wu-20260309-002-001"]
+    },
+    "work_unit_id": {
+      "type": "string",
+      "description": "FK to L52 work_execution_units (CASCADE on delete). Which work unit applied this pattern.",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "pattern_id": {
+      "type": "string",
+      "description": "FK to L58 work_reusable_patterns (RESTRICT on delete). Which pattern was applied.",
+      "pattern": "^pattern-[a-z0-9-]+$"
+    },
+    "applied_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp when pattern was applied to the work unit."
+    },
+    "adaptations_made": {
+      "type": "array",
+      "description": "List of adaptations or deviations from the pattern template. Empty array if applied as-is.",
+      "items": {
+        "type": "object",
+        "required": ["step_number", "adaptation_description"],
+        "properties": {
+          "step_number": {
+            "type": "integer",
+            "description": "Which step number was adapted (references L58 pattern.steps[].step_number)"
+          },
+          "adaptation_description": {
+            "type": "string",
+            "minLength": 10,
+            "maxLength": 500,
+            "description": "What was changed and why (e.g., 'Skipped validation step due to low-risk context')"
+          },
+          "adaptation_type": {
+            "type": "string",
+            "enum": ["skip", "modify", "add_step", "reorder"],
+            "description": "Type of adaptation made to the pattern step"
+          }
+        }
+      }
+    },
+    "success_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Success rating for this application (0.0 = failed, 1.0 = perfect execution). Calculated or manually assigned."
+    },
+    "feedback": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "Freeform feedback about pattern applicability, effectiveness, and any issues encountered."
+    },
+    "outcome_id": {
+      "type": ["string", "null"],
+      "description": "FK to L56 work_outcomes (optional). Link to the outcome produced by applying this pattern."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or observations"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (agent, cp_agent, or persona)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,71 @@
+{
+    "act_phase":  {
+                      "registry_updated":  false,
+                      "dry_run":  {
+                                      "IsPresent":  true
+                                  },
+                      "backup_path":  "N/A"
+                  },
+    "sample_repairs":  [
+                           {
+                               "old_entity_type":  null,
+                               "name_display":  null,
+                               "category":  "data-model",
+                               "id":  "L1",
+                               "new_entity_type":  "L1Record"
+                           },
+                           {
+                               "old_entity_type":  null,
+                               "name_display":  null,
+                               "category":  "data-model",
+                               "id":  "L10",
+                               "new_entity_type":  "L10Record"
+                           },
+                           {
+                               "old_entity_type":  null,
+                               "name_display":  null,
+                               "category":  "data-model",
+                               "id":  "L100",
+                               "new_entity_type":  "L100Record"
+                           },
+                           {
+                               "old_entity_type":  null,
+                               "name_display":  null,
+                               "category":  "data-model",
+                               "id":  "L101",
+                               "new_entity_type":  "L101Record"
+                           },
+                           {
+                               "old_entity_type":  null,
+                               "name_display":  null,
+                               "category":  "data-model",
+                               "id":  "L102",
+                               "new_entity_type":  "L102Record"
+                           }
+                       ],
+    "check_phase":  {
+                        "issues_found":  0,
+                        "issues":  [
+
+                                   ],
+                        "validation_result":  "PASS"
+                    },
+    "dpdca_level":  "nested - registry audit",
+    "discovery":  {
+                      "invalid_entity_types":  0,
+                      "total_records":  173,
+                      "empty_entity_types":  173
+                  },
+    "phase":  "CHECK",
+    "timestamp":  "2026-03-13T06:45:10.2100863-03:00",
+    "plan":  {
+                 "records_to_repair":  173,
+                 "validation_method":  "IsValidTypeIdentifier (regex: ^[a-zA-Z_][a-zA-Z0-9_]*$)",
+                 "repair_strategy":  "Generate entity_type from LayerId using ToPascalCase"
+             },
+    "do_phase":  {
+                     "repairs_applied":  173,
+                     "repairs_total_planned":  173
+                 },
+    "operation":  "Registry entity_type repair"
+}

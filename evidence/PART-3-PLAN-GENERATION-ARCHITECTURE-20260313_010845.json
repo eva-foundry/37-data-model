@@ -1,0 +1,351 @@
+{
+  "phase": "PART 3.PLAN",
+  "title": "Screen Factory Generation Architecture Design",
+  "session": "Session 45 - Part 11 (Extended)",
+  "timestamp": "2026-03-13T01:08:45.2951830-03:00",
+  "framework": "DPDCA v2.0 Enhanced",
+  
+  "plan_objectives": [
+    "Design scalable generation architecture for 173 screens × 5 components = 865 artifacts",
+    "Create PowerShell generation scripts (single + batch)",
+    "Define template deployment strategy",
+    "Plan evidence collection at each checkpoint",
+    "Prepare for parallel execution with error resilience"
+  ],
+  
+  "architecture_design": {
+    "generation_scope": {
+      "total_screens": 173,
+      "components_per_screen": 5,
+      "total_artifacts": 865,
+      "estimated_disk_usage": "50-60 MB TypeScript source",
+      "execution_strategy": "Batch with optional parallelization"
+    },
+    
+    "generation_modes": {
+      "mode_1_single_layer": {
+        "script": "generate-screens-v2.ps1",
+        "input": "LayerId (e.g., L25), LayerName, LayerTitle",
+        "output": "5 TSX files + 1 test file + evidence JSON",
+        "use_case": "Single layer development/debugging",
+        "execution_time": "5 seconds"
+      },
+      "mode_2_source_batch": {
+        "script": "generate-screens-from-source.ps1",
+        "input": "SourceProject (data-model|eva-faces|project)",
+        "output": "All screens for that source",
+        "use_case": "Generate 20-130 screens per source",
+        "execution_time": "1-11 minutes depending on source"
+      },
+      "mode_3_full_batch": {
+        "script": "generate-all-screens.ps1",
+        "input": "None (queries Cosmos DB registry)",
+        "output": "All 173 screens × 5 components",
+        "use_case": "Complete factory execution",
+        "execution_time": "~14 minutes (173 × 5 sec)"
+      },
+      "mode_4_parallel": {
+        "script": "generate-all-screens-parallel.ps1",
+        "input": "TargetConcurrency (2-8 parallel jobs)",
+        "output": "All 173 screens optimized for speed",
+        "use_case": "CI/CD automated builds",
+        "execution_time": "~4 minutes (14 min ÷ 4 workers)",
+        "note": "Requires PS job management + error coordination"
+      }
+    },
+    
+    "template_deployment_strategy": {
+      "phase_1_discovery": {
+        "action": "Locate templates in 07-foundation-layer/templates/screens-machine/",
+        "files_to_copy": [
+          "ListView.template.tsx",
+          "DetailDrawer.template.tsx",
+          "CreateForm.template.tsx",
+          "EditForm.template.tsx",
+          "GraphView.template.tsx",
+          "test.spec.tsx.template",
+          "evidence.json.template",
+          "README.md"
+        ],
+        "destination": "30-ui-bench/templates/",
+        "status": "READY (templates exist)"
+      },
+      "phase_2_deployment": {
+        "action": "Copy templates to Screen Factory",
+        "operation": "Copy-Item -Path ... -Destination ... -Force",
+        "validation": "Verify all files exist in 30-ui-bench/templates/",
+        "estimated_time": "<5 minutes"
+      },
+      "phase_3_indexing": {
+        "action": "Create template registry JSON",
+        "output_file": "30-ui-bench/templates/template-index.json",
+        "content": {
+          "templates": [
+            {"type": "ListViewTemplate", "file": "ListView.template.tsx", "language": "TypeScript"},
+            {"type": "DetailDrawerTemplate", "file": "DetailDrawer.template.tsx", "language": "TypeScript"}
+          ],
+          "variables": ["LAYER_ID", "LAYER_NAME", "LAYER_TITLE", "ENTITY_TYPE", "FIELDS"]
+        }
+      }
+    },
+    
+    "data_source_strategy": {
+      "primary_source": "Cosmos DB screen_registry collection",
+      "query_method": "REST API to 37-data-model /model/screen_registry?source={source}",
+      "fallback_source": "docs/examples/screen-registry-payload.json (JSONL format)",
+      "data_extraction": {
+        "step_1": "Query or load registry",
+        "step_2": "Map registry records to (LayerId, LayerName, LayerTitle, EntityType, Fields)",
+        "step_3": "Group by source (data-model, eva-faces, project)",
+        "step_4": "Validate all required fields present"
+      },
+      "registry_schema_mapping": {
+        "layer_id": "registry.layer_id → {{LAYER_ID}}",
+        "layer_name": "registry.layer_name → {{LAYER_NAME}}",
+        "layer_title": "registry.layer_title → {{LAYER_TITLE}}",
+        "entity_type": "registry.entity_type → {{ENTITY_TYPE}}",
+        "fields": "registry.field_schema → {{FIELDS}}",
+        "primary_key": "registry.pk_field → {{PK_FIELD}}"
+      }
+    },
+    
+    "execution_flow": {
+      "step_1_initialization": {
+        "action": "Initialize generation environment",
+        "tasks": [
+          "Verify template files exist in 30-ui-bench/templates/",
+          "Load all templates into memory",
+          "Verify output directory structure (37-data-model/ui/src/pages/)",
+          "Initialize logging + evidence collection"
+        ],
+        "evidence": "Logged to PART-3-PLAN-INIT-{timestamp}.json"
+      },
+      "step_2_query_registry": {
+        "action": "Fetch screen definitions from registry",
+        "tasks": [
+          "Query Cosmos DB OR load JSON fallback",
+          "Validate 173 records match registry stats",
+          "Map registry fields to template variables",
+          "Sort by source + layer_id for organized output"
+        ],
+        "evidence": "Logged to PART-3-PLAN-REGISTRY-QUERY-{timestamp}.json"
+      },
+      "step_3_template_substitution": {
+        "action": "For each screen, do template substitution (5 components)",
+        "pseudocode": [
+          "ForEach screen in registry.screens {",
+          "  ForEach componentType in [ListView, DetailDrawer, CreateForm, EditForm, GraphView] {",
+          "    load template = 30-ui-bench/templates/{ComponentType}.template.tsx",
+          "    substitute variables (LAYER_ID, LAYER_NAME, etc.)",
+          "    write output to 37-data-model/ui/src/pages/{LayerName}/{Component}.tsx",
+          "    log evidence.component_generated"
+          "  }",
+          "  if (all 5 components successful) { evidence.screen_complete = true }",
+          "}"
+        ],
+        "error_handling": "On any component failure: log error, add to failed_screens array, continue with next screen",
+        "parallelization": "Option: Run substitutions in parallel jobs (2-8 workers)"
+      },
+      "step_4_evidence_collection": {
+        "action": "Collect generation metrics at each checkpoint",
+        "checkpoints": [
+          {
+            "name": "per_screen",
+            "metrics": ["layer_id", "component_count", "bytes_written", "substitution_errors"]
+          },
+          {
+            "name": "per_source",
+            "metrics": ["source_total", "screens_generated", "components_generated", "failures"]
+          },
+          {
+            "name": "overall",
+            "metrics": ["total_screens", "total_components", "success_rate", "duration_ms"]
+          }
+        ]
+      },
+      "step_5_build_verification": {
+        "action": "Verify generated TypeScript compiles",
+        "tasks": [
+          "Run npm run type-check (TypeScript validation)",
+          "Run npm run lint (ESLint validation)",
+          "Collect compilation errors/warnings"
+        ],
+        "output": "Build validation report (TBD: PART 3.CHECK)"
+      }
+    },
+    
+    "error_handling_strategy": {
+      "template_not_found": {
+        "severity": "CRITICAL",
+        "action": "FAIL entire generation for that component",
+        "recovery": "Copy template from 07-foundation-layer, retry"
+      },
+      "registry_read_error": {
+        "severity": "CRITICAL",
+        "action": "FAIL generation",
+        "recovery": "Fall back to JSON file, verify record count"
+      },
+      "substitution_error": {
+        "severity": "HIGH",
+        "action": "Log error, add to failed_screens, continue with next",
+        "recovery": "Review substitution rule for that variable, fix template or data"
+      },
+      "file_write_error": {
+        "severity": "HIGH",
+        "action": "Log error, continue with next",
+        "recovery": "Check disk space, verify permissions, retry after manual verification"
+      },
+      "typescript_compilation_error": {
+        "severity": "MEDIUM",
+        "action": "Collect all errors, generate report",
+        "recovery": "Fix template or generated output, regenerate affected components"
+      }
+    },
+    
+    "evidence_collection_checkpoints": {
+      "checkpoint_1_pre_generation": {
+        "file": "PART-3-PLAN-PRE-GENERATION-{timestamp}.json",
+        "content": {
+          "template_files_verified": true,
+          "registry_records": 173,
+          "output_directories_created": true,
+          "environment_ready": true
+        }
+      },
+      "checkpoint_2_per_screen": {
+        "file": "PART-3-DO-GENERATION-{timestamp}.json (streaming)",
+        "rows": "One entry per screen generation"
+      },
+      "checkpoint_3_post_generation": {
+        "file": "PART-3-DO-SUMMARY-{timestamp}.json",
+        "content": {
+          "total_screens_generated": 173,
+          "total_components_generated": 865,
+          "success_rate": "99.4% (exc. typescript errors)",
+          "failed_screens": [
+            {"layer_id": "L###", "reason": "substitution error", "recovery": "..."}
+          ],
+          "bytes_written": "52-60 MB",
+          "duration_seconds": 840
+        }
+      },
+      "checkpoint_4_build_validation": {
+        "file": "PART-3-CHECK-BUILD-{timestamp}.json",
+        "content": {
+          "typescript_errors": 0,
+          "eslint_warnings": 15,
+          "compilation_successful": true
+        }
+      }
+    },
+    
+    "parallelization_plan": {
+      "simple_sequential": {
+        "pros": ["Easy to implement", "Simple error handling", "Clear logging"],
+        "cons": ["Slower (~14 minutes for 173 screens)"],
+        "recommended_for": "First iteration, debugging"
+      },
+      "advanced_parallel": {
+        "strategy": "PS Start-Job with 4 workers, each handles ~43 screens",
+        "pros": ["4x faster (~4 minutes)", "Better resource utilization"],
+        "cons": ["Complex error coordination", "Requires job management"],
+        "recommended_for": "Production CI/CD after v1 validation"
+      },
+      "hybrid_approach": {
+        "recommendation": "Start with sequential (PART 3.DO v1), then add parallel (PART 3.DO v2 after validation)"
+      }
+    }
+  },
+  
+  "implementation_plan": [
+    {
+      "task": "PLAN-1: Create generate-screens-v2.ps1 (single layer)",
+      "deliverable": "PowerShell script with DPDCA logging",
+      "estimated_lines": "150-200",
+      "complexity": "LOW",
+      "dependencies": "None (but enables other scripts)"
+    },
+    {
+      "task": "PLAN-2: Deploy templates to 30-ui-bench/templates/",
+      "deliverable": "5 template files copied, verified",
+      "estimated_time": "<5 minutes",
+      "complexity": "TRIVIAL",
+      "dependencies": "None"
+    },
+    {
+      "task": "PLAN-3: Create registry query logic",
+      "deliverable": "PowerShell function to extract screens from Cosmos or JSON",
+      "estimated_lines": "100-150",
+      "complexity": "MEDIUM",
+      "dependencies": "Access to registry data (JSON available)"
+    },
+    {
+      "task": "PLAN-4: Create generate-all-screens.ps1 (batch sequential)",
+      "deliverable": "PowerShell script that orchestrates 173 screengeneration",
+      "estimated_lines": "300-400",
+      "complexity": "MEDIUM",
+      "dependencies": "generate-screens-v2.ps1, registry query logic"
+    },
+    {
+      "task": "PLAN-5: Implement evidence collection framework",
+      "deliverable": "PowerShell functions for checkpoint logging",
+      "estimated_lines": "80-100",
+      "complexity": "LOW",
+      "dependencies": "Logging patterns from PART 5b"
+    },
+    {
+      "task": "PLAN-6: Document generation API",
+      "deliverable": "README with all script parameters + examples",
+      "estimated_lines": "100-150",
+      "complexity": "LOW",
+      "dependencies": "Scripts + templates complete"
+    }
+  ],
+  
+  "success_criteria": {
+    "architecture_complete": "All design decisions documented + 3 design patterns created",
+    "scripts_created": "2 working scripts (single + batch) with error handling + logging",
+    "templates_deployed": "All 5+ template files copied to 30-ui-bench/templates/ with verification",
+    "registry_integration": "Query logic working for both Cosmos DB and JSON fallback",
+    "evidence_framework": "Checkpoint logging at 4+ stages with structured JSON output"
+  },
+  
+  "promises_qa": {
+    "promise_p1": {
+      "text": "Design scalable architecture for 173 screens × 5 = 865 components",
+      "commitment": "Complete with modes for single/batch/parallel execution"
+    },
+    "promise_p2": {
+      "text": "Create generation scripts (single + batch)",
+      "commitment": "Deliverable in PART 3.DO (PowerShell, DPDCA logging)"
+    },
+    "promise_p3": {
+      "text": "Deploy templates to Screen Factory",
+      "commitment": "Copy from 07-foundation-layer to 30-ui-bench/templates/"
+    },
+    "promise_p4": {
+      "text": "Plan evidence collection with 4+ checkpoints",
+      "commitment": "Documented in this PLAN with JSON schemas"
+    },
+    "promise_p5": {
+      "text": "Define error handling + recovery strategies",
+      "commitment": "3 error severity levels with recovery actions"
+    }
+  },
+  
+  "next_phase": "PART 3.DO",
+  "do_objectives": [
+    "Deploy templates to 30-ui-bench/templates/",
+    "Implement generation scripts (generate-screens-v2.ps1 + generate-all-screens.ps1)",
+    "Execute generation for all 173 screens",
+    "Collect evidence at all checkpoints",
+    "Verify TypeScript compilation"
+  ],
+  
+  "timeline": {
+    "phase_3_plan": "Complete (this document)",
+    "phase_3_do": "Estimated 2-3 hours (template deployment, script implementation, generation execution)",
+    "phase_3_check": "Estimated 1-2 hours (build validation, test execution, error diagnosis)",
+    "phase_3_act": "Estimated 30 mins (commit generation artifacts, publish results)"
+  }
+}

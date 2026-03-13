@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/risk_ranking.schema.json",
+  "title": "Risk Ranking (L83)",
+  "description": "Pareto-ranked vulnerabilities using 80/20 principle. Top 20% of CVEs account for ~80% of exploitability risk.",
+  "type": "object",
+  "required": ["id", "ranking_run_timestamp", "total_risk_units"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^ranking_[0-9]{8}_[0-9]{6}$"},
+    "ranking_run_timestamp": {"type": "string", "format": "date-time"},
+    "risk_scores": {
+      "type": "array",
+      "description": "Ranked list of CVEs by risk",
+      "items": {
+        "type": "object",
+        "required": ["cve_id", "risk_score", "rank"],
+        "properties": {
+          "cve_id": {"type": "string", "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"},
+          "risk_score": {"type": "number", "minimum": 0, "maximum": 100},
+          "rank": {"type": "integer", "minimum": 1},
+          "percentile": {"type": "number", "minimum": 0, "maximum": 100},
+          "pareto_group": {"type": "string", "enum": ["top_20_percent", "next_30_percent", "long_tail"]},
+          "exploitability_factor": {"type": "number", "minimum": 0, "maximum": 1},
+          "asset_impact": {"type": "number", "minimum": 0, "maximum": 1},
+          "threat_intel_factor": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "total_risk_units": {"type": "number", "minimum": 0, "description": "Total risk score across all CVEs"},
+    "top_20_count": {"type": "integer", "minimum": 1, "description": "How many CVEs in top 20%"},
+    "risk_reduction_if_remediate_top_20_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "% risk reduction from fixing top 20%"},
+    "pareto_distribution_fit": {
+      "type": "object",
+      "description": "Statistical fit to Pareto distribution",
+      "properties": {
+        "gini_coefficient": {"type": "number", "minimum": 0, "maximum": 1},
+        "lorenz_curve_fit": {"type": "number", "minimum": 0, "maximum": 1},
+        "alpha_parameter": {"type": "number", "description": "Pareto shape parameter"}
+      }
+    },
+    "recommendation": {"type": "string", "maxLength": 2000, "description": "Prioritization strategy"},
+    "source_scan_id": {"type": "string", "description": "Reference to scan if derived from single scan"},
+    "methodology": {"type": "string", "enum": ["cvss_only", "pareto_80_20", "asset_weighted", "threat_intel_weighted"]},
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

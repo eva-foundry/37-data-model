@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_dependency_graph.schema.json",
+  "title": "Work Dependency Graph",
+  "type": "object",
+  "description": "Task dependencies and critical path (L69 - Execution Engine Phase 4)",
+  "required": [
+    "graph_id",
+    "work_unit_id",
+    "nodes"
+  ],
+  "properties": {
+    "graph_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-dag-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "nodes": {
+      "type": "array",
+      "description": "Task nodes in the dependency graph",
+      "items": {
+        "type": "object",
+        "properties": {
+          "node_id": { "type": "string" },
+          "node_name": { "type": "string" },
+          "duration_days": { "type": "number" },
+          "start_date": { "type": "string", "format": "date" },
+          "end_date": { "type": "string", "format": "date" },
+          "status": { "type": "string", "enum": ["pending", "in_progress", "completed"] },
+          "assigned_to": { "type": "string" },
+          "critical_path": { "type": "boolean" }
+        },
+        "required": ["node_id", "node_name"]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "description": "Dependencies between nodes",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_node_id": { "type": "string" },
+          "to_node_id": { "type": "string" },
+          "dependency_type": { "type": "string", "enum": ["finish_to_start", "start_to_start", "finish_to_finish"] },
+          "lag_days": { "type": "number", "description": "Days between predecessor finish and successor start" }
+        },
+        "required": ["from_node_id", "to_node_id"]
+      }
+    },
+    "critical_path": {
+      "type": "array",
+      "description": "Order of nodes that determine overall duration",
+      "items": { "type": "string" }
+    },
+    "estimated_total_duration_days": {
+      "type": "number"
+    },
+    "earliest_start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "latest_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "slack_by_node": {
+      "type": "object",
+      "description": "Float/slack available for each node (flexibility without delaying overall completion)",
+      "additionalProperties": { "type": "number" }
+    },
+    "bottlenecks": {
+      "type": "array",
+      "description": "Nodes with zero slack that could delay the project",
+      "items": { "type": "string" }
+    },
+    "parallel_tracks": {
+      "type": "array",
+      "description": "Groups of nodes that can execute simultaneously",
+      "items": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "computed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_feasible": {
+      "type": "boolean",
+      "description": "Can this schedule be achieved with available resources?"
+    }
+  }
+}

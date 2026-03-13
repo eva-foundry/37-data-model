@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent Performance Metrics",
+  "description": "Real-time agent performance indicators and reliability metrics",
+  "type": "object",
+  "properties": {
+    "agent_id": {"type": "string", "description": "Agent identifier"},
+    "agent_name": {"type": "string", "description": "Human-readable agent name"},
+    "agent_type": {"type": "string", "enum": ["executor", "orchestrator", "validator", "monitor"], "description": "Type of agent"},
+    "successful_deployments": {"type": "integer", "minimum": 0, "description": "Number of successful deployments"},
+    "failed_deployments": {"type": "integer", "minimum": 0, "description": "Number of failed deployments"},
+    "avf_deployment_time_seconds": {"type": "number", "minimum": 0, "description": "Average deployment time in seconds"},
+    "avg_cost_per_deployment": {"type": "number", "minimum": 0, "description": "Average cost per deployment in USD"},
+    "reliability_score": {"type": "number", "minimum": 0, "maximum": 100, "description": "Reliability score 0-100"},
+    "speed_percentile": {"type": "number", "minimum": 0, "maximum": 100, "description": "Speed percentile 0-100"},
+    "cost_efficiency_percentile": {"type": "number", "minimum": 0, "maximum": 100, "description": "Cost efficiency percentile 0-100"},
+    "safety_incidents": {"type": "integer", "minimum": 0, "description": "Number of safety incidents"},
+    "rollback_rate": {"type": "number", "minimum": 0, "maximum": 100, "description": "Percentage of deployments rolled back"},
+    "compliance_score": {"type": "number", "minimum": 0, "maximum": 100, "description": "Compliance adherence score"},
+    "all_time_metrics": {"type": "object", "description": "Historical cumulative metrics"}
+  },
+  "required": ["agent_id", "reliability_score", "speed_percentile", "cost_efficiency_percentile"]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/cve_finding.schema.json",
+  "title": "CVE Finding (L82)",
+  "description": "Individual CVE with CVSS score, affected assets, exploitability, and threat intel. Links to vulnerability scans.",
+  "type": "object",
+  "required": ["id", "cve_id", "cvss_score", "affected_asset"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^cve_[0-9]{4}_[0-9]+_[0-9]{3}$"},
+    "cve_id": {"type": "string", "description": "CVE identifier (e.g., 'CVE-2024-1234')", "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"},
+    "cvss_score": {"type": "number", "minimum": 0, "maximum": 10, "description": "CVSS v3.1 score"},
+    "cvss_vector": {"type": "string", "description": "CVSS v3.1 vector string", "pattern": "^CVSS:3\\.1/.*$"},
+    "exploitability_score": {"type": "number", "minimum": 0, "maximum": 10, "description": "Threat intelligence adjusted exploitability"},
+    "asset_criticality": {"type": "integer", "minimum": 1, "maximum": 5, "description": "1=low, 5=critical"},
+    "affected_host": {"type": "string", "description": "IP or hostname"},
+    "affected_port": {"type": "integer", "minimum": 1, "maximum": 65535},
+    "affected_service": {"type": "string", "description": "Service name (e.g., 'OpenSSL', 'Apache')"},
+    "service_version": {"type": "string"},
+    "cpe_match": {"type": "array", "items": {"type": "string"}, "description": "CPE identifiers"},
+    "patch_available": {"type": "boolean"},
+    "patch_version": {"type": "string", "description": "Version that fixes this CVE"},
+    "nist_cwe_category": {"type": "string", "description": "CWE classification (e.g., 'CWE-22')"},
+    "first_detected": {"type": "string", "format": "date-time"},
+    "last_detected": {"type": "string", "format": "date-time"},
+    "discovery_method": {"type": "string", "enum": ["nmap", "nessus", "azure", "qualys", "rapid7", "threat_intel", "manual"]},
+    "threat_intelligence": {
+      "type": "object",
+      "description": "Enrichment data from threat intel sources",
+      "properties": {
+        "is_exploited_in_wild": {"type": "boolean"},
+        "public_exploit_available": {"type": "boolean"},
+        "active_campaigns": {"type": "array", "items": {"type": "string"}},
+        "first_exploit_date": {"type": "string", "format": "date"}
+      }
+    },
+    "remediation_priority": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+    "notes": {"type": "string", "maxLength": 2000},
+    "scan_id": {"type": "string", "description": "Reference to vulnerability_scan_result (L81)"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}

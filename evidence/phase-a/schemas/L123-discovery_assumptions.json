@@ -1,0 +1,38 @@
+{
+  "layer": "discovery_assumptions",
+  "layer_id": "L123",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Assumption registry — every assumption documented with confidence level, risk exposure, and validation status",
+  "purpose": "Track every assumption made during discovery with confidence scores and validation history to reduce false premises",
+  "schema": {
+    "id": "string - asm-{project_id}-{seq}",
+    "layer": "string - discovery_assumptions",
+    "project_id": "string - FK → L26/projects",
+    "context_id": "string - FK → L122/discovery_contexts",
+    "mission_id": "string - FK → L127/missions (optional)",
+    "assumption": "string - the assumption statement",
+    "category": "enum - technical | organizational | market | resource | timeline | stakeholder",
+    "confidence": "enum - HIGH | MEDIUM | LOW",
+    "confidence_score": "number - 0.0-1.0",
+    "risk_if_wrong": "string - what happens if this assumption is violated",
+    "risk_exposure": "enum - CRITICAL | HIGH | MEDIUM | LOW",
+    "validation_method": "string - how to verify this assumption",
+    "validation_status": "enum - UNVALIDATED | VALIDATING | VALIDATED | VIOLATED | RETIRED",
+    "validated_at": "ISO 8601 - null if unvalidated",
+    "validated_by": "string",
+    "violation_detected_at": "ISO 8601 - null if not violated",
+    "violation_evidence": "string - FK → L33/evidence (null if not violated)",
+    "mitigation_strategy": "string - what to do if violated",
+    "source": "enum - discovery | interview | data_analysis | expert_judgment | historical",
+    "created_by": "string",
+    "created_at": "ISO 8601",
+    "is_active": true
+  },
+  "relationships": {
+    "parent": ["L122/discovery_contexts"],
+    "child": ["L126/assumption_validations"],
+    "edge_types": ["assumes", "risks", "validates"]
+  },
+  "notes": "Every assumption has a confidence score and validation status. L126 tracks immutable history of confidence changes."
+}

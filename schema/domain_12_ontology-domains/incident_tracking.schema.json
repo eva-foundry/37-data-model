@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/incident_tracking.schema.json",
+  "title": "Incident Tracking",
+  "type": "object",
+  "description": "Security incident tickets and tracking (L85 - Security Phase 2)",
+  "required": [
+    "incident_id",
+    "incident_type",
+    "severity",
+    "detection_date"
+  ],
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-incident-[0-9]{8}-[0-9]{3,}$"
+    },
+    "incident_type": {
+      "type": "string",
+      "enum": [
+        "malware",
+        "data_breach",
+        "ddos",
+        "unauthorized_access",
+        "policy_violation",
+        "system_compromise",
+        "supply_chain_attack",
+        "other"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Business impact severity"
+    },
+    "detection_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "detected_by": {
+      "type": "string",
+      "description": "detection method or persona_id"
+    },
+    "detection_method": {
+      "type": "string",
+      "enum": ["alert", "manual_detection", "external_report", "customer_report", "audit"],
+      "description": "How was this found?"
+    },
+    "incident_description": {
+      "type": "string",
+      "minLength": 20
+    },
+    "affected_systems": {
+      "type": "array",
+      "description": "Systems involved",
+      "items": { "type": "string" }
+    },
+    "affected_data": {
+      "type": "array",
+      "description": "Types/quantity of data affected",
+      "items": {
+        "type": "object",
+        "properties": {
+          "data_type": { "type": "string" },
+          "record_count": { "type": "integer" },
+          "sensitivity": { "type": "string", "enum": ["public", "internal", "confidential", "restricted"] }
+        }
+      }
+    },
+    "root_cause": {
+      "type": "string",
+      "description": "Root cause (if determined)"
+    },
+    "attack_vector": {
+      "type": "string",
+      "description": "How the attacker got in (if applicable)"
+    },
+    "actor_type": {
+      "type": "string",
+      "enum": ["external_attacker", "insider", "automated_malware", "accident", "unknown"],
+      "description": "Who/what caused this?"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["detected", "under_investigation", "contained", "eradicated", "resolved", "closed"],
+      "description": "Current incident status"
+    },
+    "incident_commander": {
+      "type": "string",
+      "description": "persona_id of IC"
+    },
+    "investigation_completed": {
+      "type": "boolean"
+    },
+    "investigation_end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "containment_completed": {
+      "type": "boolean"
+    },
+    "containment_end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "eradication_completed": {
+      "type": "boolean"
+    },
+    "eradication_end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "total_duration_hours": {
+      "type": "number"
+    },
+    "financial_impact_usd": {
+      "type": "number",
+      "description": "Estimated cost of incident"
+    },
+    "regulatory_reporting_required": {
+      "type": "boolean"
+    },
+    "regulatory_reports_filed": {
+      "type": "array",
+      "description": "Which regulations required notification?",
+      "items": { "type": "string" }
+    },
+    "notification_sent_to_affected_parties": {
+      "type": "boolean"
+    },
+    "notification_sent_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "post_incident_review_completed": {
+      "type": "boolean"
+    },
+    "lessons_learned": {
+      "type": "string",
+      "description": "Key takeaways from this incident"
+    },
+    "recommendations": {
+      "type": "array",
+      "description": "Preventive measures to avoid recurrence",
+      "items": {
+        "type": "object",
+        "properties": {
+          "recommendation": { "type": "string" },
+          "priority": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+          "responsible_team": { "type": "string" },
+          "target_implementation_date": { "type": "string", "format": "date" }
+        }
+      }
+    }
+  }
+}

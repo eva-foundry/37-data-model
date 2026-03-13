@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/supply_chain_inventory.schema.json",
+  "title": "Supply Chain Inventory",
+  "type": "object",
+  "description": "Third-party dependency and supply chain tracking (L83 - Security Phase 2)",
+  "required": [
+    "inventory_id",
+    "dependency_type",
+    "component_name",
+    "current_version"
+  ],
+  "properties": {
+    "inventory_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-scm-[0-9]{8}-[0-9]{3,}$"
+    },
+    "dependency_type": {
+      "type": "string",
+      "enum": [
+        "open_source_library",
+        "third_party_service",
+        "vendor_product",
+        "container_image",
+        "framework",
+        "tool"
+      ]
+    },
+    "component_name": {
+      "type": "string",
+      "description": "Name of the dependency"
+    },
+    "component_url": {
+      "type": "string",
+      "description": "URL to component homepage"
+    },
+    "license_name": {
+      "type": "string",
+      "enum": ["MIT", "Apache-2.0", "GPL", "BSD", "ISC", "proprietary", "other"],
+      "description": "License type"
+    },
+    "license_approved": {
+      "type": "boolean",
+      "description": "Is this license approved by legal?"
+    },
+    "current_version": {
+      "type": "string"
+    },
+    "version_release_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "latest_available_version": {
+      "type": "string",
+      "description": "Latest upstream version"
+    },
+    "version_outdated_days": {
+      "type": "integer",
+      "description": "How many days behind latest?"
+    },
+    "update_available": {
+      "type": "boolean"
+    },
+    "security_update_available": {
+      "type": "boolean"
+    },
+    "maintenance_status": {
+      "type": "string",
+      "enum": ["actively_maintained", "stable", "deprecated", "abandoned"],
+      "description": "Is this being maintained?"
+    },
+    "known_vulnerabilities": {
+      "type": "array",
+      "description": "CVEs in current version",
+      "items": {
+        "type": "object",
+        "properties": {
+          "cve_id": { "type": "string" },
+          "severity": { "type": "string" },
+          "fixed_in_version": { "type": "string" }
+        }
+      }
+    },
+    "sbom_entry": {
+      "type": "string",
+      "description": "Reference to SBOM (CycloneDX/SPDX)"
+    },
+    "where_used": {
+      "type": "array",
+      "description": "Projects/systems that use this",
+      "items": { "type": "string" }
+    },
+    "criticality": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "How critical is this to our systems?"
+    },
+    "update_strategy": {
+      "type": "string",
+      "enum": ["follow_latest", "follow_lts", "manual_review", "frozen"],
+      "description": "How often should this be updated?"
+    },
+    "next_update_planned_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_updated_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "supply_chain_risk_assessment": {
+      "type": "object",
+      "description": "SLSA or equivalent supply chain risk",
+      "properties": {
+        "build_level": { "type": "integer" },
+        "provenance_available": { "type": "boolean" },
+        "source_code_available": { "type": "boolean" },
+        "vendor_reputation": { "type": "string", "enum": ["trusted", "moderate", "unknown", "untrusted"] }
+      }
+    },
+    "custom_patches_applied": {
+      "type": "array",
+      "description": "If we've patched this locally",
+      "items": {
+        "type": "object",
+        "properties": {
+          "patch_id": { "type": "string" },
+          "reason": { "type": "string" },
+          "complexity": { "type": "string" }
+        }
+      }
+    }
+  }
+}

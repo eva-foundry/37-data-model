@@ -1,0 +1,36 @@
+{
+  "layer": "discovery_opportunities",
+  "layer_id": "L125",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Opportunities identified during discovery — ranked by impact and effort",
+  "purpose": "Capture value-add opportunities surfaced during discovery to inform mission prioritization and execution strategy",
+  "schema": {
+    "id": "string - opp-{project_id}-{seq}",
+    "layer": "string - discovery_opportunities",
+    "project_id": "string - FK → L26/projects",
+    "context_id": "string - FK → L122/discovery_contexts",
+    "mission_id": "string - FK → L127/missions (optional)",
+    "opportunity_title": "string",
+    "opportunity_description": "string",
+    "category": "enum - quick_win | strategic | optimization | innovation | compliance | debt_reduction",
+    "impact": "enum - HIGH | MEDIUM | LOW",
+    "impact_score": "number - 0.0-1.0",
+    "effort": "enum - HIGH | MEDIUM | LOW",
+    "effort_hours": "number - estimated hours",
+    "roi_estimate": "string - e.g. '10x', '$50K/year savings', '87% time reduction'",
+    "priority_rank": "number - 1 = highest",
+    "status": "enum - IDENTIFIED | EVALUATED | APPROVED | IN_PROGRESS | REALIZED | DEFERRED",
+    "related_risks": ["string - FK → L124/discovery_risks"],
+    "related_assumptions": ["string - FK → L123/discovery_assumptions"],
+    "evidence_supporting": ["string - FK → L33/evidence"],
+    "created_by": "string",
+    "created_at": "ISO 8601",
+    "is_active": true
+  },
+  "relationships": {
+    "parent": ["L122/discovery_contexts"],
+    "edge_types": ["enables", "improves", "requires"]
+  },
+  "notes": "Opportunities ranked by (impact + ROI) / effort to guide mission prioritization."
+}

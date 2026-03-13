@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/remediation_effectiveness.schema.json",
+  "title": "Remediation Effectiveness",
+  "description": "Aggregate system-wide effectiveness metrics and continuous improvement insights",
+  "type": "object",
+  "properties": {
+    "effectiveness_id": {
+      "type": "string",
+      "pattern": "^eff:[a-z0-9-]+$",
+      "description": "Unique effectiveness record identifier (e.g., eff:weekly-2026-03-08)"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of measurement period"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End of measurement period"
+    },
+    "period_type": {
+      "type": "string",
+      "enum": ["hourly", "daily", "weekly", "monthly", "all_time"],
+      "description": "Aggregation period"
+    },
+    "total_remediations": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total remediation attempts in period"
+    },
+    "auto_resolved_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number resolved automatically without escalation"
+    },
+    "manual_resolved_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number requiring manual intervention"
+    },
+    "auto_resolution_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage resolved automatically (auto_resolved / total)"
+    },
+    "false_positive_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of unnecessary remediations (false alarms)"
+    },
+    "false_positive_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage of false positives"
+    },
+    "avg_mttr_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Average mean time to remediation"
+    },
+    "median_mttr_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Median time to remediation (P50)"
+    },
+    "p95_mttr_minutes": {
+      "type": "number",
+      "minimum": 0,
+      "description": "P95 time to remediation"
+    },
+    "avg_cost_per_remediation_usd": {
+      "type": "number",
+      "description": "Average cost per remediation"
+    },
+    "total_cost_savings_usd": {
+      "type": "number",
+      "description": "Total cost saved vs. manual remediation"
+    },
+    "safety_incident_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of safety violations during remediation"
+    },
+    "safety_record_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Percentage of remediations with no safety issues"
+    },
+    "trend": {
+      "type": "string",
+      "enum": ["improving", "stable", "declining"],
+      "description": "Overall effectiveness trend vs. previous period"
+    },
+    "by_policy": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "policy_id": {"type": "string", "pattern": "^policy:[a-z0-9-]+$", "description": "FK to L48 remediation_policies"},
+          "policy_name": {"type": "string", "description": "Policy name"},
+          "executions": {"type": "integer", "minimum": 0, "description": "Times executed"},
+          "success_rate": {"type": "number", "minimum": 0, "maximum": 100, "description": "Success percentage"},
+          "avg_mttr": {"type": "number", "minimum": 0, "description": "Average MTTR for this policy"}
+        }
+      },
+      "description": "Effectiveness breakdown by policy"
+    },
+    "by_agent": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "agent_id": {"type": "string", "description": "FK to L41 agent_performance_metrics"},
+          "agent_name": {"type": "string", "description": "Agent name"},
+          "executions": {"type": "integer", "minimum": 0, "description": "Remediations executed"},
+          "success_rate": {"type": "number", "minimum": 0, "maximum": 100, "description": "Success percentage"},
+          "avg_mttr": {"type": "number", "minimum": 0, "description": "Average MTTR for this agent"}
+        }
+      },
+      "description": "Effectiveness breakdown by agent"
+    },
+    "by_scope": {
+      "type": "object",
+      "properties": {
+        "agent_self_healing": {
+          "type": "object",
+          "properties": {
+            "count": {"type": "integer"},
+            "success_rate": {"type": "number"}
+          }
+        },
+        "infrastructure_remediation": {
+          "type": "object",
+          "properties": {
+            "count": {"type": "integer"},
+            "success_rate": {"type": "number"}
+          }
+        },
+        "policy_enforcement": {
+          "type": "object",
+          "properties": {
+            "count": {"type": "integer"},
+            "success_rate": {"type": "number"}
+          }
+        },
+        "cost_optimization": {
+          "type": "object",
+          "properties": {
+            "count": {"type": "integer"},
+            "success_rate": {"type": "number"}
+          }
+        }
+      },
+      "description": "Effectiveness breakdown by remediation scope"
+    },
+    "improvement_recommendations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "recommendation": {"type": "string", "description": "What to improve"},
+          "priority": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+          "expected_impact": {"type": "string", "description": "Expected improvement if implemented"}
+        }
+      },
+      "description": "AI-generated recommendations for improving remediation effectiveness"
+    },
+    "computed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When these metrics were computed"
+    }
+  },
+  "required": ["effectiveness_id", "period_start", "period_end", "period_type", "total_remediations", "auto_resolution_rate", "avg_mttr_minutes", "trend"]
+}

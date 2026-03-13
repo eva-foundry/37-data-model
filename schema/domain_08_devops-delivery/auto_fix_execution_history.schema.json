@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Auto-Fix Execution History",
+  "description": "Audit trail of all automated remediation executions with outcomes and evidence",
+  "type": "object",
+  "properties": {
+    "execution_id": {
+      "type": "string",
+      "pattern": "^exec:[a-z0-9-]+$",
+      "description": "Unique execution identifier (e.g., exec:restart-agent-20260308-1430)"
+    },
+    "policy_id": {
+      "type": "string",
+      "pattern": "^policy:[a-z0-9-]+$",
+      "description": "FK to L48 remediation_policies - which policy triggered this"
+    },
+    "action_id": {
+      "type": "string",
+      "pattern": "^action:[a-z0-9-]+$",
+      "description": "Which specific action was executed from the policy"
+    },
+    "triggered_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the remediation was triggered"
+    },
+    "executed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When execution started (null if pending approval)"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When execution completed (null if in progress)"
+    },
+    "trigger_metric": {
+      "type": "string",
+      "description": "Which metric triggered this (e.g., reliability, latency_p95)"
+    },
+    "trigger_value": {
+      "type": "number",
+      "description": "Actual metric value that triggered policy"
+    },
+    "trigger_threshold": {
+      "type": "number",
+      "description": "Configured threshold that was exceeded"
+    },
+    "executed": {
+      "type": "boolean",
+      "description": "Whether execution actually occurred (false if pending/denied)"
+    },
+    "executor": {
+      "type": "string",
+      "enum": ["system", "manual", "scheduled"],
+      "description": "Who/what executed the remediation"
+    },
+    "executor_agent_id": {
+      "type": "string",
+      "description": "FK to L41 agent_performance_metrics - which agent executed this (if executor=system)"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["success", "failure", "partial", "pending_approval", "denied", "timeout"],
+      "description": "Execution outcome"
+    },
+    "duration_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Actual execution duration"
+    },
+    "cost_usd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Cost incurred by this remediation"
+    },
+    "safety_violations": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Any safety issues encountered during execution"
+    },
+    "error_message": {
+      "type": "string",
+      "description": "Error details if outcome=failure"
+    },
+    "evidence_correlation_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "FK to L31 evidence - correlation IDs for related evidence records"
+    },
+    "execution_history_refs": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "FK to L46 agent_execution_history - related execution logs"
+    },
+    "rollback_attempted": {
+      "type": "boolean",
+      "description": "Whether rollback was attempted"
+    },
+    "rollback_successful": {
+      "type": "boolean",
+      "description": "Whether rollback succeeded (null if not attempted)"
+    },
+    "rollback_reason": {
+      "type": "string",
+      "description": "Why rollback was triggered"
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "type": {"type": "string", "enum": ["agent", "container_app", "deployment", "infrastructure"], "description": "What was remediated"},
+        "id": {"type": "string", "description": "Identifier of the target"},
+        "name": {"type": "string", "description": "Human-readable target name"}
+      },
+      "description": "What entity was remediated"
+    },
+    "before_state": {
+      "type": "object",
+      "description": "State snapshot before remediation"
+    },
+    "after_state": {
+      "type": "object",
+      "description": "State snapshot after remediation"
+    }
+  },
+  "required": ["execution_id", "policy_id", "action_id", "triggered_at", "executed", "executor", "outcome"]
+}

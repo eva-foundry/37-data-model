@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/execution_workflow_instances.schema.json",
+  "title": "Execution Workflow Instances",
+  "type": "object",
+  "description": "Runtime instances of workflow execution (L65 - Execution Engine Phase 3)",
+  "required": [
+    "instance_id",
+    "template_id",
+    "work_unit_id",
+    "current_step"
+  ],
+  "properties": {
+    "instance_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-instance-[0-9]{8}-[0-9]{3,}$"
+    },
+    "template_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-template-[0-9]{8}-[0-9]{3,}$",
+      "description": "Reference to execution_workflow_templates (L64)"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "workflow_name": {
+      "type": "string",
+      "description": "Descriptive name for this workflow run"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "paused",
+        "completed",
+        "failed",
+        "cancelled",
+        "rolled_back"
+      ]
+    },
+    "current_step": {
+      "type": "string",
+      "description": "Step ID currently executing"
+    },
+    "completed_steps": {
+      "type": "array",
+      "description": "List of step IDs that have completed",
+      "items": { "type": "string" }
+    },
+    "failed_steps": {
+      "type": "array",
+      "description": "List of step IDs that failed",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": { "type": "string" },
+          "error_message": { "type": "string" },
+          "retry_count": { "type": "integer" }
+        }
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "description": "Actual parameter values used for this run"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "started_by": {
+      "type": "string",
+      "description": "Agent ID or persona ID that initiated this"
+    },
+    "estimated_completion_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Predicted completion based on template timing"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actual_duration_minutes": {
+      "type": "number"
+    },
+    "step_execution_log": {
+      "type": "array",
+      "description": "Detailed log of each step execution",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": { "type": "string" },
+          "step_name": { "type": "string" },
+          "started_at": { "type": "string", "format": "date-time" },
+          "completed_at": { "type": "string", "format": "date-time" },
+          "status": { "type": "string" },
+          "output": { "type": "object" }
+        }
+      }
+    },
+    "can_be_paused": {
+      "type": "boolean",
+      "description": "Is pause allowed at current step?"
+    },
+    "can_be_resumed": {
+      "type": "boolean",
+      "description": "If paused, can it resume?"
+    },
+    "can_be_cancelled": {
+      "type": "boolean",
+      "description": "Can this be cancelled now?"
+    },
+    "can_be_retried": {
+      "type": "boolean",
+      "description": "Can failed steps be retried?"
+    },
+    "rollback_triggered": {
+      "type": "boolean",
+      "default": false
+    },
+    "rollback_reason": {
+      "type": "string"
+    }
+  }
+}

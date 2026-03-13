@@ -1,0 +1,171 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/security_evidence_audit_log.schema.json",
+  "title": "Security Evidence Audit Log",
+  "type": "object",
+  "description": "FDA 21 CFR Part 11 compliant evidence and audit trail (L87 - Security Phase 2)",
+  "required": [
+    "evidence_id",
+    "evidence_type",
+    "collection_timestamp",
+    "data_classification"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-evidence-cfr11-[0-9]{8}-[0-9]{3,}$",
+      "description": "Immutable evidence identifier"
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "system_log",
+        "application_event",
+        "security_configuration",
+        "audit_finding",
+        "vulnerability_scan_result",
+        "test_result",
+        "compliance_attestation",
+        "digital_signature"
+      ],
+      "description": "Category of evidence"
+    },
+    "related_to": {
+      "type": "string",
+      "description": "What incident/audit/test is this evidence for?"
+    },
+    "collection_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Server timestamp when collected (not client)"
+    },
+    "collection_method": {
+      "type": "string",
+      "description": "How was this evidence collected? (automated/manual)"
+    },
+    "data_classification": {
+      "type": "string",
+      "enum": ["public", "internal", "confidential", "restricted"],
+      "description": "Sensitivity level per CFR Part 11"
+    },
+    "chain_of_custody": {
+      "type": "object",
+      "description": "CFR 11.10(b) - Track of evidence handling",
+      "properties": {
+        "collected_by": { "type": "string" },
+        "initial_receiver": { "type": "string" },
+        "current_custodian": { "type": "string" },
+        "custody_transfers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": { "type": "string" },
+              "to": { "type": "string" },
+              "transfer_timestamp": { "type": "string", "format": "date-time" },
+              "reason": { "type": "string" },
+              "notes": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "SHA-256 hash for integrity verification"
+    },
+    "digital_signature": {
+      "type": "object",
+      "description": "PKI signature per CFR 11.70",
+      "properties": {
+        "signature_algorithm": { "type": "string" },
+        "signing_certificate_thumbprint": { "type": "string" },
+        "signature_timestamp": { "type": "string", "format": "date-time" },
+        "signed_by_persona_id": { "type": "string" },
+        "signature_valid": { "type": "boolean" }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "description": "Formal attestation per CFR 11.100",
+      "properties": {
+        "attesting_persona_id": { "type": "string" },
+        "attestation_statement": { "type": "string" },
+        "attestation_timestamp": { "type": "string", "format": "date-time" },
+        "attestation_meaning": { "type": "string", "enum": ["original", "copy", "unaltered", "responsible"] }
+      }
+    },
+    "retention_requirement": {
+      "type": "object",
+      "description": "CFR 11.10(a) - retention obligations",
+      "properties": {
+        "retention_period_years": { "type": "number" },
+        "minimum_retention_end_date": { "type": "string", "format": "date" },
+        "regulatory_source": { "type": "string" }
+      }
+    },
+    "immutability": {
+      "type": "object",
+      "description": "CFR 11.10(a) - evidence cannot be altered",
+      "properties": {
+        "immutable": { "type": "boolean", "default": true },
+        "storage_method": { "type": "string", "enum": ["immutable_storage", "worm", "append_only"] },
+        "access_controls": {
+          "type": "array",
+          "description": "Who can read vs. modify?",
+          "items": {
+            "type": "object",
+            "properties": {
+              "principal": { "type": "string" },
+              "permission": { "type": "string", "enum": ["read", "audit_trail_only", "none"] }
+            }
+          }
+        }
+      }
+    },
+    "system_information": {
+      "type": "object",
+      "description": "CFR 11.10(g) - System used to generate/store evidence",
+      "properties": {
+        "system_name": { "type": "string" },
+        "system_version": { "type": "string" },
+        "validation_status": { "type": "string", "enum": ["validated", "operational", "legacy"] },
+        "last_validation_date": { "type": "string", "format": "date" }
+      }
+    },
+    "data_filename_and_path": {
+      "type": "string",
+      "description": "Original filename/path"
+    },
+    "file_size_bytes": {
+      "type": "integer"
+    },
+    "mime_type": {
+      "type": "string"
+    },
+    "evidence_content_summary": {
+      "type": "string",
+      "description": "Plain-language summary (does not include sensitive details)"
+    },
+    "legal_hold_flag": {
+      "type": "boolean",
+      "description": "Is this under legal hold?"
+    },
+    "legal_hold_reason": {
+      "type": "string"
+    },
+    "audit_reviewed": {
+      "type": "boolean"
+    },
+    "audit_reviewer": {
+      "type": "string"
+    },
+    "audit_review_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "audit_comments": {
+      "type": "string"
+    }
+  }
+}

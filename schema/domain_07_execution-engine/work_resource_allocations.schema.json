@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_resource_allocations.schema.json",
+  "title": "Work Resource Allocations",
+  "type": "object",
+  "description": "Resource allocation decisions for work units (L66 - Execution Engine Phase 4)",
+  "required": [
+    "allocation_id",
+    "work_unit_id",
+    "resource_type",
+    "quantity_allocated"
+  ],
+  "properties": {
+    "allocation_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-alloc-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "resource_type": {
+      "type": "string",
+      "enum": ["compute", "storage", "memory", "network", "gpu", "license", "personnel"],
+      "description": "Type of resource being allocated"
+    },
+    "resource_identifier": {
+      "type": "string",
+      "description": "Specific resource (e.g., 'GPU:A100', 'Storage:Premium-SSD', 'Team:DataEng')"
+    },
+    "quantity_allocated": {
+      "type": "number",
+      "description": "Amount allocated (count, GB, hours, etc.)"
+    },
+    "quantity_unit": {
+      "type": "string",
+      "enum": ["count", "gb", "hours", "vcpu", "percent", "licenses"],
+      "description": "Unit of measurement"
+    },
+    "allocation_start_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "allocation_end_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "priority_level": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "1=critical, 10=optional"
+    },
+    "cost_center": {
+      "type": "string",
+      "description": "Billing/cost center code"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "persona_id of approver"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "justification": {
+      "type": "string",
+      "description": "Why this resource is needed",
+      "minLength": 10
+    },
+    "estimated_cost_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "can_be_reduced": {
+      "type": "boolean",
+      "description": "Can this allocation be reduced if needed?"
+    },
+    "can_be_reassigned": {
+      "type": "boolean",
+      "description": "Can this resource be reassigned to other work?"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "active", "released", "reallocated"],
+      "description": "Current allocation status"
+    }
+  }
+}

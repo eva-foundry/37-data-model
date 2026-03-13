@@ -1,0 +1,930 @@
+{
+  "summary": {
+    "resourcesByLocation": [
+      {
+        "count": 20,
+        "location": "canadacentral"
+      },
+      {
+        "count": 4,
+        "location": "canadaeast"
+      }
+    ],
+    "totalSubscriptionResources": 1210,
+    "resourcesByGroup": [
+      {
+        "count": 24,
+        "resourceGroup": "EsDAICoE-Sandbox"
+      }
+    ],
+    "estimatedMonthlyCost": 0.0,
+    "percentageOfTotal": 1.98,
+    "resourcesByType": [
+      {
+        "count": 1,
+        "type": "Microsoft.ApiManagement/service"
+      },
+      {
+        "count": 5,
+        "type": "Microsoft.CognitiveServices/accounts"
+      },
+      {
+        "count": 1,
+        "type": "Microsoft.CognitiveServices/accounts/projects"
+      },
+      {
+        "count": 1,
+        "type": "Microsoft.ContainerRegistry/registries"
+      },
+      {
+        "count": 1,
+        "type": "Microsoft.DataFactory/factories"
+      },
+      {
+        "count": 1,
+        "type": "Microsoft.DocumentDB/databaseAccounts"
+      },
+      {
+        "count": 2,
+        "type": "Microsoft.EventGrid/systemTopics"
+      },
+      {
+        "count": 2,
+        "type": "Microsoft.Insights/components"
+      },
+      {
+        "count": 1,
+        "type": "Microsoft.KeyVault/vaults"
+      },
+      {
+        "count": 1,
+        "type": "Microsoft.Search/searchServices"
+      },
+      {
+        "count": 2,
+        "type": "Microsoft.Storage/storageAccounts"
+      },
+      {
+        "count": 3,
+        "type": "Microsoft.Web/serverFarms"
+      },
+      {
+        "count": 3,
+        "type": "Microsoft.Web/sites"
+      }
+    ],
+    "totalMarcoResources": 24
+  },
+  "metadata": {
+    "focusPattern": "marco*",
+    "subscriptionId": null,
+    "extractedDate": "2026-02-13 15:50:27",
+    "includesModelSpecs": true,
+    "subscriptionName": null,
+    "includesDetailedNetworking": true,
+    "extractedFrom": "azure-inventory-EsDAICoESub-20260211-092125.json"
+  },
+  "resources": [
+    {
+      "changedTime": "2026-02-03T12:23:52.738447-05:00",
+      "createdTime": "2026-02-03T12:13:51.908208-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Search/searchServices/marco-sandbox-search",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-search",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "basic",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-03T17:13:54.918Z"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Search/searchServices"
+    },
+    {
+      "changedTime": "2026-02-03T14:31:51.842193-05:00",
+      "createdTime": "2026-02-03T12:13:57.886408-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.DocumentDB/databaseAccounts/marco-sandbox-cosmos",
+      "identity": {
+        "principalId": null,
+        "tenantId": null,
+        "type": "None",
+        "userAssignedIdentities": null
+      },
+      "kind": "GlobalDocumentDB",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-cosmos",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "systemData": {
+        "createdAt": "2026-02-03T17:15:00.4429307Z"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.DocumentDB/databaseAccounts"
+    },
+    {
+      "changedTime": "2026-02-03T14:32:31.750094-05:00",
+      "createdTime": "2026-02-03T12:14:16.099946-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/serverFarms/marco-sandbox-asp-backend",
+      "identity": null,
+      "kind": "linux",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-asp-backend",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": 1,
+        "family": "B",
+        "model": null,
+        "name": "B1",
+        "size": "B1",
+        "tier": "Basic"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Web/serverFarms"
+    },
+    {
+      "changedTime": "2026-02-03T14:32:35.638229-05:00",
+      "createdTime": "2026-02-03T12:14:21.407716-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/serverFarms/marco-sandbox-asp-enrichment",
+      "identity": null,
+      "kind": "linux",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-asp-enrichment",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": 1,
+        "family": "B",
+        "model": null,
+        "name": "B1",
+        "size": "B1",
+        "tier": "Basic"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Web/serverFarms"
+    },
+    {
+      "changedTime": "2026-02-09T10:38:10.02053-05:00",
+      "createdTime": "2026-02-03T12:14:33.190301-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/esdaicoe-sandbox/providers/Microsoft.Web/sites/marco-sandbox-backend",
+      "identity": {
+        "principalId": "cbc5cb81-2196-4d0d-8bb4-2db320cf82e1",
+        "tenantId": "9ed55846-8a81-4246-acd8-b1a01abfc0d1",
+        "type": "SystemAssigned",
+        "userAssignedIdentities": null
+      },
+      "kind": "app,linux,container",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-backend",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "esdaicoe-sandbox",
+      "sku": null,
+      "tags": {
+        "component": "backend",
+        "environment": "dev",
+        "hidden-link: /app-insights-resource-id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/microsoft.insights/components/marco-sandbox-appinsights",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Web/sites"
+    },
+    {
+      "changedTime": "2026-02-07T11:58:21.124502-05:00",
+      "createdTime": "2026-02-03T12:15:01.687222-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/sites/marco-sandbox-enrichment",
+      "identity": {
+        "principalId": "b9393bcc-37c8-434c-aaf3-ae83ce36d161",
+        "tenantId": "9ed55846-8a81-4246-acd8-b1a01abfc0d1",
+        "type": "SystemAssigned",
+        "userAssignedIdentities": null
+      },
+      "kind": "app,linux",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-enrichment",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "tags": {
+        "component": "enrichment",
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Web/sites"
+    },
+    {
+      "changedTime": "2026-02-03T12:26:47.975845-05:00",
+      "createdTime": "2026-02-03T12:16:46.721865-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.KeyVault/vaults/marcosandkv20260203",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marcosandkv20260203",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.KeyVault/vaults"
+    },
+    {
+      "changedTime": "2026-02-10T13:39:11.037377-05:00",
+      "createdTime": "2026-02-03T12:18:53.320997-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Storage/storageAccounts/marcosand20260203",
+      "identity": null,
+      "kind": "StorageV2",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marcosand20260203",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "Standard_LRS",
+        "size": null,
+        "tier": "Standard"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Storage/storageAccounts"
+    },
+    {
+      "changedTime": "2026-02-03T14:31:37.26359-05:00",
+      "createdTime": "2026-02-03T12:19:21.152695-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.ContainerRegistry/registries/marcosandacr20260203",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marcosandacr20260203",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "Basic",
+        "size": null,
+        "tier": "Basic"
+      },
+      "systemData": {
+        "createdAt": "2026-02-03T17:19:21.1848362Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-03T19:21:25.7476942Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.ContainerRegistry/registries"
+    },
+    {
+      "changedTime": "2026-02-03T14:32:40.114175-05:00",
+      "createdTime": "2026-02-03T12:52:02.537774-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/serverFarms/marco-sandbox-asp-func",
+      "identity": null,
+      "kind": "linux",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-asp-func",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": 1,
+        "family": "B",
+        "model": null,
+        "name": "B1",
+        "size": "B1",
+        "tier": "Basic"
+      },
+      "tags": {
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Web/serverFarms"
+    },
+    {
+      "changedTime": "2026-02-07T11:58:27.364968-05:00",
+      "createdTime": "2026-02-03T12:52:33.755152-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/sites/marco-sandbox-func",
+      "identity": {
+        "principalId": "60dbc0ee-0a96-4c58-93d2-10e935d92e6f",
+        "tenantId": "9ed55846-8a81-4246-acd8-b1a01abfc0d1",
+        "type": "SystemAssigned",
+        "userAssignedIdentities": null
+      },
+      "kind": "functionapp,linux",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-func",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "tags": {
+        "component": "functions",
+        "environment": "dev",
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "eva-sandbox"
+      },
+      "type": "Microsoft.Web/sites"
+    },
+    {
+      "changedTime": "2026-02-03T13:02:59.506089-05:00",
+      "createdTime": "2026-02-03T12:52:59.035101-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Insights/components/marco-sandbox-func",
+      "identity": null,
+      "kind": "web",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-func",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "tags": {},
+      "type": "Microsoft.Insights/components"
+    },
+    {
+      "changedTime": "2026-02-03T15:18:27.285289-05:00",
+      "createdTime": "2026-02-03T14:41:00.383974-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.ApiManagement/service/marco-sandbox-apim",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-apim",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": 1,
+        "family": null,
+        "model": null,
+        "name": "Developer",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-03T19:41:00.4006954Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-03T19:41:00.4006954Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": {},
+      "type": "Microsoft.ApiManagement/service"
+    },
+    {
+      "changedTime": "2026-02-10T19:25:59.184526-05:00",
+      "createdTime": "2026-02-03T17:33:30.257262-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Storage/storageAccounts/marcosandboxfinopshub",
+      "identity": null,
+      "kind": "StorageV2",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marcosandboxfinopshub",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "Standard_LRS",
+        "size": null,
+        "tier": "Standard"
+      },
+      "tags": {
+        "owner": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "project": "sandbox-cost-tracking",
+        "purpose": "finops-hub"
+      },
+      "type": "Microsoft.Storage/storageAccounts"
+    },
+    {
+      "changedTime": "2026-02-03T20:40:51.846376-05:00",
+      "createdTime": "2026-02-03T20:30:51.404417-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/esdaicoe-sandbox/providers/Microsoft.EventGrid/systemTopics/marcosand20260203-eb072872-8e2e-42e3-9617-f4a1247bbb63",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marcosand20260203-eb072872-8e2e-42e3-9617-f4a1247bbb63",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "esdaicoe-sandbox",
+      "sku": null,
+      "tags": null,
+      "type": "Microsoft.EventGrid/systemTopics"
+    },
+    {
+      "changedTime": "2026-02-03T20:40:52.296529-05:00",
+      "createdTime": "2026-02-03T20:30:52.083238-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/esdaicoe-sandbox/providers/Microsoft.EventGrid/systemTopics/marcosandboxfinopshub-52dd1c15-63a9-48a2-842e-97bda61d811f",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marcosandboxfinopshub-52dd1c15-63a9-48a2-842e-97bda61d811f",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "esdaicoe-sandbox",
+      "sku": null,
+      "tags": null,
+      "type": "Microsoft.EventGrid/systemTopics"
+    },
+    {
+      "changedTime": "2026-02-04T12:06:27.243113-05:00",
+      "createdTime": "2026-02-04T11:56:11.100109-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-openai",
+      "identity": null,
+      "kind": "OpenAI",
+      "location": "canadaeast",
+      "managedBy": null,
+      "name": "marco-sandbox-openai",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "S0",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-04T16:56:11.1313984Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-04T16:56:11.1313984Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": null,
+      "type": "Microsoft.CognitiveServices/accounts"
+    },
+    {
+      "changedTime": "2026-02-04T14:17:45.307989-05:00",
+      "createdTime": "2026-02-04T14:07:45.208216-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.DataFactory/factories/marco-sandbox-finops-adf",
+      "identity": null,
+      "kind": null,
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-finops-adf",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "tags": {},
+      "type": "Microsoft.DataFactory/factories"
+    },
+    {
+      "changedTime": "2026-02-04T20:32:56.330492-05:00",
+      "createdTime": "2026-02-04T20:22:56.081731-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-aisvc",
+      "identity": null,
+      "kind": "CognitiveServices",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-aisvc",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "S0",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-05T01:22:56.1029559Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-05T01:22:56.1029559Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": null,
+      "type": "Microsoft.CognitiveServices/accounts"
+    },
+    {
+      "changedTime": "2026-02-04T20:33:54.269855-05:00",
+      "createdTime": "2026-02-04T20:23:05.243141-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-docint",
+      "identity": null,
+      "kind": "FormRecognizer",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-docint",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "S0",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-05T01:23:05.2635156Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-05T01:23:05.2635156Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": null,
+      "type": "Microsoft.CognitiveServices/accounts"
+    },
+    {
+      "changedTime": "2026-02-06T16:39:58.949476-05:00",
+      "createdTime": "2026-02-06T16:29:58.075664-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Insights/components/marco-sandbox-appinsights",
+      "identity": null,
+      "kind": "web",
+      "location": "canadacentral",
+      "managedBy": null,
+      "name": "marco-sandbox-appinsights",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "tags": {
+        "Component": "Monitoring",
+        "Environment": "marco-sandbox",
+        "Project": "EVA-JP"
+      },
+      "type": "Microsoft.Insights/components"
+    },
+    {
+      "changedTime": "2026-02-09T17:20:02.560658-05:00",
+      "createdTime": "2026-02-07T20:51:39.853097-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-foundry",
+      "identity": {
+        "principalId": "8304eab5-3030-4cf7-ba00-9cd651e5aec7",
+        "tenantId": "9ed55846-8a81-4246-acd8-b1a01abfc0d1",
+        "type": "SystemAssigned",
+        "userAssignedIdentities": null
+      },
+      "kind": "AIServices",
+      "location": "canadaeast",
+      "managedBy": null,
+      "name": "marco-sandbox-foundry",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "S0",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-08T01:51:39.8640324Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-09T21:57:59.5468919Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": null,
+      "type": "Microsoft.CognitiveServices/accounts"
+    },
+    {
+      "changedTime": "2026-02-07T21:02:00.639628-05:00",
+      "createdTime": "2026-02-07T20:52:00.238066-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-foundry/projects/marco-sandbox-fdry-project",
+      "identity": {
+        "principalId": "df38771c-cba2-44ed-b7be-f41446b30331",
+        "tenantId": "9ed55846-8a81-4246-acd8-b1a01abfc0d1",
+        "type": "SystemAssigned",
+        "userAssignedIdentities": null
+      },
+      "kind": "AIServices",
+      "location": "canadaeast",
+      "managedBy": null,
+      "name": "marco-sandbox-foundry/marco-sandbox-fdry-project",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": null,
+      "systemData": {
+        "createdAt": "2026-02-08T01:52:00.258233Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-08T01:52:00.258233Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": null,
+      "type": "Microsoft.CognitiveServices/accounts/projects"
+    },
+    {
+      "changedTime": "2026-02-09T17:40:57.525458-05:00",
+      "createdTime": "2026-02-09T17:30:39.998842-05:00",
+      "extendedLocation": null,
+      "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-openai-v2",
+      "identity": null,
+      "kind": "OpenAI",
+      "location": "canadaeast",
+      "managedBy": null,
+      "name": "marco-sandbox-openai-v2",
+      "plan": null,
+      "properties": null,
+      "provisioningState": "Succeeded",
+      "resourceGroup": "EsDAICoE-Sandbox",
+      "sku": {
+        "capacity": null,
+        "family": null,
+        "model": null,
+        "name": "S0",
+        "size": null,
+        "tier": null
+      },
+      "systemData": {
+        "createdAt": "2026-02-09T22:30:40.0118271Z",
+        "createdBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "createdByType": "User",
+        "lastModifiedAt": "2026-02-09T22:30:40.0118271Z",
+        "lastModifiedBy": "marco.presta@hrsdc-rhdcc.gc.ca",
+        "lastModifiedByType": "User"
+      },
+      "tags": null,
+      "type": "Microsoft.CognitiveServices/accounts"
+    }
+  ],
+  "aiml": {
+    "mlWorkspaces": [],
+    "deployments": [],
+    "cognitiveServices": [
+      {
+        "customSubDomain": null,
+        "location": "canadacentral",
+        "publicNetworkAccess": null,
+        "privateEndpointConnections": 0,
+        "endpoint": null,
+        "kind": "CognitiveServices",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-aisvc",
+        "name": "marco-sandbox-aisvc",
+        "sku": "S0"
+      },
+      {
+        "customSubDomain": null,
+        "location": "canadacentral",
+        "publicNetworkAccess": null,
+        "privateEndpointConnections": 0,
+        "endpoint": null,
+        "kind": "FormRecognizer",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-docint",
+        "name": "marco-sandbox-docint",
+        "sku": "S0"
+      },
+      {
+        "customSubDomain": null,
+        "location": "canadaeast",
+        "publicNetworkAccess": null,
+        "privateEndpointConnections": 0,
+        "endpoint": null,
+        "kind": "AIServices",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-foundry",
+        "name": "marco-sandbox-foundry",
+        "sku": "S0"
+      }
+    ],
+    "openAI": [
+      {
+        "customSubDomain": null,
+        "location": "canadaeast",
+        "publicNetworkAccess": null,
+        "privateEndpointConnections": 0,
+        "endpoint": null,
+        "kind": "OpenAI",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-openai",
+        "name": "marco-sandbox-openai",
+        "sku": "S0"
+      },
+      {
+        "customSubDomain": null,
+        "location": "canadaeast",
+        "publicNetworkAccess": null,
+        "privateEndpointConnections": 0,
+        "endpoint": null,
+        "kind": "OpenAI",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.CognitiveServices/accounts/marco-sandbox-openai-v2",
+        "name": "marco-sandbox-openai-v2",
+        "sku": "S0"
+      }
+    ]
+  },
+  "storageAndCompute": {
+    "storageAccounts": [
+      {
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Storage/storageAccounts/marcosand20260203",
+        "location": "canadacentral",
+        "networkAcls": null,
+        "allowBlobPublicAccess": null,
+        "primaryEndpoints": null,
+        "kind": "StorageV2",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "name": "marcosand20260203",
+        "sku": "Standard_LRS"
+      },
+      {
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Storage/storageAccounts/marcosandboxfinopshub",
+        "location": "canadacentral",
+        "networkAcls": null,
+        "allowBlobPublicAccess": null,
+        "primaryEndpoints": null,
+        "kind": "StorageV2",
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "name": "marcosandboxfinopshub",
+        "sku": "Standard_LRS"
+      }
+    ],
+    "appServices": [
+      {
+        "resourceGroup": "esdaicoe-sandbox",
+        "state": null,
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/esdaicoe-sandbox/providers/Microsoft.Web/sites/marco-sandbox-backend",
+        "name": "marco-sandbox-backend",
+        "httpsOnly": null,
+        "location": "canadacentral",
+        "kind": "app,linux,container",
+        "defaultHostName": null
+      },
+      {
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "state": null,
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/sites/marco-sandbox-enrichment",
+        "name": "marco-sandbox-enrichment",
+        "httpsOnly": null,
+        "location": "canadacentral",
+        "kind": "app,linux",
+        "defaultHostName": null
+      }
+    ],
+    "containerRegistries": [
+      {
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "sku": "Basic",
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.ContainerRegistry/registries/marcosandacr20260203",
+        "name": "marcosandacr20260203",
+        "publicNetworkAccess": null,
+        "adminUserEnabled": null,
+        "location": "canadacentral",
+        "loginServer": null
+      }
+    ],
+    "keyVaults": [
+      {
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "enableRbacAuthorization": null,
+        "sku": null,
+        "vaultUri": null,
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.KeyVault/vaults/marcosandkv20260203",
+        "name": "marcosandkv20260203",
+        "location": "canadacentral",
+        "publicNetworkAccess": null
+      }
+    ],
+    "functionApps": [
+      {
+        "resourceGroup": "EsDAICoE-Sandbox",
+        "state": null,
+        "id": "/subscriptions/d2d4e571-e0f2-4f6c-901a-f88f7669bcba/resourceGroups/EsDAICoE-Sandbox/providers/Microsoft.Web/sites/marco-sandbox-func",
+        "name": "marco-sandbox-func",
+        "httpsOnly": null,
+        "location": "canadacentral",
+        "kind": "functionapp,linux",
+        "defaultHostName": null
+      }
+    ],
+    "virtualMachines": []
+  },
+  "networking": {
+    "networkSecurityGroups": [],
+    "virtualNetworks": [],
+    "firewalls": [],
+    "subnets": [],
+    "privateEndpoints": [],
+    "loadBalancers": [],
+    "publicIPs": []
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/red_team_test_suite.schema.json",
+  "title": "Red Team Test Suite (L77)",
+  "description": "Promptfoo test pack definition with template metadata, assertion rules, and framework coverage settings.",
+  "type": "object",
+  "required": ["id", "name", "test_cases", "template_type"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^suite_[a-z_]+_[0-9]{3}$"},
+    "name": {"type": "string", "minLength": 10, "maxLength": 200},
+    "description": {"type": "string", "maxLength": 2000},
+    "test_cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["case_id", "prompt_template"],
+        "properties": {
+          "case_id": {"type": "string"},
+          "prompt_template": {"type": "string"},
+          "attack_vector": {"type": "string", "enum": ["injection", "jailbreak", "privacy", "hallucination", "harmful_content"]},
+          "expected_failure": {"type": "boolean"}
+        }
+      }
+    },
+    "provider_config": {
+      "type": "object",
+      "properties": {
+        "provider": {"type": "string", "enum": ["azure_openai", "openai", "anthropic"]},
+        "model": {"type": "string"},
+        "temperature": {"type": "number", "minimum": 0, "maximum": 2},
+        "max_tokens": {"type": "integer", "minimum": 1}
+      }
+    },
+    "assertion_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assertion_type": {"type": "string", "enum": ["contains", "regex", "contains_not", "length", "similarity"]},
+          "assertion_value": {"type": "string"}
+        }
+      }
+    },
+    "coverage_frameworks": {
+      "type": "array",
+      "items": {"type": "string", "enum": ["ATLAS", "OWASP-LLM", "NIST-AI-RMF", "ITSG-33", "EU-AI-Act"]}
+    },
+    "test_count": {"type": "integer", "minimum": 1},
+    "estimated_duration_minutes": {"type": "integer", "minimum": 1},
+    "template_type": {
+      "type": "string",
+      "enum": ["smoke", "golden", "framework_pack"],
+      "description": "Type of test suite (smoke=basic, golden=comprehensive, framework_pack=standards-driven)"
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

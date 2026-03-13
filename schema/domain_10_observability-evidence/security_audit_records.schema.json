@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/security_audit_records.schema.json",
+  "title": "Security Audit Records",
+  "type": "object",
+  "description": "Immutable audit trail of security events and assessments (L81 - Security Phase 1, FDA CFR 21 compliant)",
+  "required": [
+    "audit_record_id",
+    "audit_timestamp",
+    "audit_event_type",
+    "system_or_subject"
+  ],
+  "properties": {
+    "audit_record_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-audit-[0-9]{8}-[0-9]{3,}$",
+      "description": "Immutable unique identifier"
+    },
+    "audit_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this event occurred (server time, not client)"
+    },
+    "audit_event_type": {
+      "type": "string",
+      "enum": [
+        "authentication",
+        "authorization",
+        "access_attempt",
+        "data_access",
+        "data_modification",
+        "data_deletion",
+        "configuration_change",
+        "admin_action",
+        "security_assessment",
+        "compliance_check",
+        "vulnerability_scan",
+        "policy_violation",
+        "system_error"
+      ]
+    },
+    "system_or_subject": {
+      "type": "string",
+      "description": "What system or entity is this audit record about?"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "persona_id of account used"
+    },
+    "user_display_name": {
+      "type": "string",
+      "description": "Snapshot of user name at time of event (for traceability if account deleted)"
+    },
+    "action_performed": {
+      "type": "string",
+      "description": "What action was taken",
+      "minLength": 5
+    },
+    "resource_affected": {
+      "type": "string",
+      "description": "What resource was affected"
+    },
+    "result": {
+      "type": "string",
+      "enum": ["success", "failure", "denied", "error"],
+      "description": "Outcome of the action"
+    },
+    "result_code": {
+      "type": "string",
+      "description": "Error code if applicable"
+    },
+    "result_description": {
+      "type": "string",
+      "description": "Detailed outcome message"
+    },
+    "source_ip_address": {
+      "type": "string",
+      "description": "IP address of the requester"
+    },
+    "source_application": {
+      "type": "string",
+      "description": "Client application or service making the request"
+    },
+    "request_id": {
+      "type": "string",
+      "description": "Correlation ID for tracing"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Session identifier"
+    },
+    "data_before": {
+      "type": "object",
+      "description": "State before modification (if applicable)"
+    },
+    "data_after": {
+      "type": "object",
+      "description": "State after modification (if applicable)"
+    },
+    "reason_for_action": {
+      "type": "string",
+      "description": "Why was this action performed?"
+    },
+    "severity_if_violation": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "description": "If a violation, how severe?"
+    },
+    "immutable": {
+      "type": "boolean",
+      "default": true,
+      "description": "This record cannot be modified or deleted"
+    },
+    "signed": {
+      "type": "boolean",
+      "description": "Is this record digitally signed?"
+    },
+    "digital_signature": {
+      "type": "string",
+      "description": "PKI signature for integrity verification"
+    },
+    "retention_period_days": {
+      "type": "integer",
+      "description": "How long to retain this record"
+    },
+    "deletion_scheduled_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When this record will be deleted per retention policy"
+    }
+  }
+}
