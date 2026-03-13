@@ -52,14 +52,14 @@ def test_T02_response_has_required_keys(client: TestClient):
 
 # ── T03 — layer count ─────────────────────────────────────────────────────────
 
-def test_T03_layers_count_is_51(client: TestClient):
-    """Verify 51 layers (50 base + 1 metadata) are loaded from layer-metadata-index."""
+def test_T03_layers_count_is_119(client: TestClient):
+    """Verify 119 layers (111 base + 8 discovery) are loaded from layer-metadata-index."""
     r = client.get("/model/agent-guide")
     response = r.json()
     
     layers = response.get("layers_available", [])
     assert isinstance(layers, list), f"layers_available should be list, got {type(layers)}"
-    assert len(layers) == 51, f"Expected 51 layers, got {len(layers)}"
+    assert len(layers) == 119, f"Expected 119 layers, got {len(layers)}"
 
 
 # ── T04 — remediation framework ──────────────────────────────────────────────

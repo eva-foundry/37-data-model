@@ -1,0 +1,22 @@
+{
+  "discovery_knowledge_base": [
+    {
+      "id": "37-data-model-kb-001",
+      "context_id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "knowledge_type": "operational",
+      "title": "EVA Data Model Layer Registration Protocol",
+      "description": "When adding new layers to the EVA Data Model, three files must be updated in sync: (1) model/{layer_name}.json data file with layer_name as root key, (2) api/routers/admin.py _LAYER_FILES dict mapping layer_name to filename, (3) model/layer-metadata-index.json layers array. Additionally, server.py ontology_domains should include the new domain, and test_agent_guide.py layer count assertion must be updated.",
+      "version": "1.0",
+      "tags": ["layer-registration", "D3PDCA", "model-protocol"],
+      "status": "active",
+      "actions": ["37-data-model-disc-action-001"],
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}

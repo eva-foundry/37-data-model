@@ -1,0 +1,33 @@
+{
+  "unit": 4,
+  "description": "Smoke test L122-L125",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "smoke_tests": [
+    {
+      "layer": "discovery_contexts",
+      "endpoint": "/model/discovery_contexts",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "discovery_signals",
+      "endpoint": "/model/discovery_signals",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "discovery_patterns",
+      "endpoint": "/model/discovery_patterns",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "discovery_insights",
+      "endpoint": "/model/discovery_insights",
+      "http_status": 200,
+      "result": "PASS"
+    }
+  ],
+  "result": "PASS",
+  "tests_passed": 4
+}

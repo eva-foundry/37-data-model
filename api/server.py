@@ -1452,7 +1452,7 @@ def create_app() -> FastAPI:
                     "performance_note": "infrastructure_events are fire-and-forget (high volume). Skip CHECK step for performance. agent_execution_history and deployment_records require verification."
                 },
                 "ontology_domains": {
-                    "objective": "Reason by domain, then query layers within that domain. Agents think in 12 domains, not 111 layers.",
+                    "objective": "Reason by domain, then query layers within that domain. Agents think in 13 domains, not 119 layers.",
                     "reasoning_pattern": [
                         "Step 1: Identify which domain(s) your task belongs to",
                         "Step 2: Query the 'start_here' layer for that domain to orient",
@@ -1612,14 +1612,44 @@ def create_app() -> FastAPI:
                                 "GET /model/work_factory_okrs/?quarter={q} -> objectives and key results"
                             ],
                             "cross_layer_queries": [
-                                "Portfolio → Roadmaps → Projects (strategic alignment)",
-                                "Portfolio → Investments → Resource Costs (ROI tracking)"
+                                "Portfolio -> Roadmaps -> Projects (strategic alignment)",
+                                "Portfolio -> Investments -> Resource Costs (ROI tracking)"
                             ],
                             "note": "5 strategy layers (L71-L75) part of execution engine Phase 6. See docs/architecture/EXECUTION-LAYERS-ASSESSMENT.md"
+                        },
+                        "discovery_sense_making": {
+                            "layers": [
+                                "discovery_contexts",
+                                "discovery_signals",
+                                "discovery_patterns",
+                                "discovery_insights",
+                                "sense_making_models",
+                                "discovery_outcomes",
+                                "discovery_actions",
+                                "discovery_knowledge_base"
+                            ],
+                            "start_here": "discovery_contexts",
+                            "common_queries": [
+                                "GET /model/discovery_contexts/?project_id={id} -> active discovery contexts",
+                                "GET /model/discovery_signals/?context_id={id} -> signals for a context",
+                                "GET /model/discovery_patterns/?context_id={id} -> recognized patterns",
+                                "GET /model/discovery_insights/?context_id={id} -> synthesized insights",
+                                "GET /model/sense_making_models/ -> conceptual frameworks",
+                                "GET /model/discovery_outcomes/?project_id={id} -> discovery results",
+                                "GET /model/discovery_actions/?context_id={id} -> triggered actions",
+                                "GET /model/discovery_knowledge_base/?project_id={id} -> accumulated knowledge"
+                            ],
+                            "cross_layer_queries": [
+                                "Discovery Contexts -> Signals -> Patterns (sense-making pipeline)",
+                                "Patterns -> Insights -> Sense-Making Models (knowledge synthesis)",
+                                "Insights -> Actions -> Outcomes (discovery-to-action loop)",
+                                "Outcomes -> Knowledge Base (knowledge accumulation)"
+                            ],
+                            "note": "8 discovery layers (L122-L129) for Domain 13. Implements D3PDCA discovery phase."
                         }
                     },
                     "anti_trash_thinking": [
-                        "DO NOT query all 111 layers individually (use domain-first approach)",
+                        "DO NOT query all 119 layers individually (use domain-first approach)",
                         "DO NOT skip 'start_here' layer (provides context for domain)",
                         "DO follow cross_layer_queries patterns (domain-specific best practices)",
                         "DO use common_queries as templates (proven query patterns)",

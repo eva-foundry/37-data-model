@@ -1,0 +1,31 @@
+{
+  "discovery_contexts": [
+    {
+      "id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "domain": "discovery_sense_making",
+      "context_type": "operational",
+      "title": "D3PDCA Discovery Context - Layer Registration Phase A",
+      "description": "Discovery context for registering Domain 13 Discovery and Sense-Making layers (L122-L129) in the EVA Data Model API.",
+      "scope": "project",
+      "status": "active",
+      "phase": "discover",
+      "inputs": [
+        "D3PDCA-DATA-MODEL-SPEC.md",
+        "layer-metadata-index.json",
+        "admin.py _LAYER_FILES"
+      ],
+      "outputs": [
+        "8 new layer JSON files",
+        "updated layer-metadata-index.json",
+        "updated server.py Domain 13"
+      ],
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "unit": 5,
+  "description": "Register L126-L129",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "registrations": [
+    {
+      "layer": "sense_making_models",
+      "layer_id": "L126",
+      "status": "registered",
+      "http_status": 200
+    },
+    {
+      "layer": "discovery_outcomes",
+      "layer_id": "L127",
+      "status": "registered",
+      "http_status": 200
+    },
+    {
+      "layer": "discovery_actions",
+      "layer_id": "L128",
+      "status": "registered",
+      "http_status": 200
+    },
+    {
+      "layer": "discovery_knowledge_base",
+      "layer_id": "L129",
+      "status": "registered",
+      "http_status": 200
+    }
+  ],
+  "result": "PASS",
+  "all_registered": true
+}

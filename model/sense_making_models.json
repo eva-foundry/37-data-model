@@ -1,0 +1,22 @@
+{
+  "sense_making_models": [
+    {
+      "id": "37-data-model-sm-model-001",
+      "context_id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "model_type": "conceptual",
+      "title": "D3PDCA Layer Lifecycle Model",
+      "description": "A layer transitions through: stub -> registered -> operational -> deprecated. Registration requires JSON file, admin.py entry, and metadata-index entry. Operational status requires at least one data record.",
+      "framework": "D3PDCA",
+      "version": "1.0",
+      "status": "active",
+      "insights": ["37-data-model-insight-001"],
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}

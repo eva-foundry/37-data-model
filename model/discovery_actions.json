@@ -1,0 +1,29 @@
+{
+  "discovery_actions": [
+    {
+      "id": "37-data-model-disc-action-001",
+      "context_id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "action_type": "model_update",
+      "title": "Register 8 Discovery Layers in EVA Data Model",
+      "description": "Create JSON data files, update admin.py _LAYER_FILES, update layer-metadata-index.json, add Domain 13 to server.py ontology_domains, and update test layer count expectation.",
+      "triggered_by": "37-data-model-insight-001",
+      "priority": "high",
+      "status": "completed",
+      "steps": [
+        "Create 8 JSON model files",
+        "Update _LAYER_FILES in admin.py",
+        "Update layer-metadata-index.json",
+        "Add Domain 13 to server.py",
+        "Update test assertion"
+      ],
+      "outcome_id": "37-data-model-disc-outcome-001",
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}

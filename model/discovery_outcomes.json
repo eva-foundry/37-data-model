@@ -1,0 +1,30 @@
+{
+  "discovery_outcomes": [
+    {
+      "id": "37-data-model-disc-outcome-001",
+      "context_id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "outcome_type": "structural_change",
+      "title": "Domain 13 Discovery Layers Registered",
+      "description": "Successfully registered 8 new layers (L122-L129) for Domain 13: Discovery and Sense-Making. Layer count updated from 111 to 119 in metadata index.",
+      "status": "achieved",
+      "models": ["37-data-model-sm-model-001"],
+      "deliverables": [
+        "discovery_contexts.json",
+        "discovery_signals.json",
+        "discovery_patterns.json",
+        "discovery_insights.json",
+        "sense_making_models.json",
+        "discovery_outcomes.json",
+        "discovery_actions.json",
+        "discovery_knowledge_base.json"
+      ],
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}

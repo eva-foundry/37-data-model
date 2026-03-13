@@ -1,0 +1,69 @@
+{
+  "unit": 7,
+  "description": "Regression smoke test - 10 existing layers",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "smoke_tests": [
+    {
+      "layer": "projects",
+      "endpoint": "/model/projects",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "wbs",
+      "endpoint": "/model/wbs",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "sprints",
+      "endpoint": "/model/sprints",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "stories",
+      "endpoint": "/model/stories",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "tasks",
+      "endpoint": "/model/tasks",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "decisions",
+      "endpoint": "/model/decisions",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "evidence",
+      "endpoint": "/model/evidence",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "quality_gates",
+      "endpoint": "/model/quality_gates",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "verification_records",
+      "endpoint": "/model/verification_records",
+      "http_status": 200,
+      "result": "PASS"
+    },
+    {
+      "layer": "project_work",
+      "endpoint": "/model/project_work",
+      "http_status": 200,
+      "result": "PASS"
+    }
+  ],
+  "result": "PASS",
+  "tests_passed": 10
+}
