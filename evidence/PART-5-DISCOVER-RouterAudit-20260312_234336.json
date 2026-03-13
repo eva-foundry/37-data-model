@@ -1,0 +1,388 @@
+{
+  "organization_gaps": [
+    {
+      "items": [
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        },
+        {
+          "schema": "",
+          "domain_count": 4
+        }
+      ],
+      "count": 30,
+      "gap_type": "duplicate_mappings"
+    }
+  ],
+  "schemas_inventoried": 85,
+  "status": "COMPLETE",
+  "phase": "DISCOVER",
+  "router_mapping": [
+    {
+      "domain_name": "System Architecture",
+      "domain_id": 1,
+      "description": "How the system is built",
+      "schemas": [
+        {
+          "description": "Service packaging of capabilities (L61). Each service is a concrete, invocable implementation that delivers one or more capabilities. Services are registered by agents/cp_agents and can be invoked via service requests (L63). Services have defined SLAs (L66) and performance tracking (L65).",
+          "schema_id": "",
+          "title": "L62 - work_factory_services",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_services.schema.json",
+          "file_name": "work_factory_services.schema.json",
+          "properties_count": 25
+        }
+      ],
+      "coverage_pct": 50.0,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Identity & Access",
+      "domain_id": 2,
+      "description": "Who can do what",
+      "schemas": [
+        {
+          "description": "Control implementations per NIST Cybersecurity Framework and CIS Critical Controls",
+          "schema_id": "security_controls",
+          "title": "security_controls",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\security_controls.schema.json",
+          "file_name": "security_controls.schema.json",
+          "properties_count": 10
+        }
+      ],
+      "coverage_pct": 60.0,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "AI Runtime",
+      "domain_id": 3,
+      "description": "Who performs intelligent work",
+      "schemas": [],
+      "coverage_pct": 0,
+      "schema_count": 0
+    },
+    {
+      "domain_name": "User Interface",
+      "domain_id": 4,
+      "description": "How users interact",
+      "schemas": [
+        {
+          "description": "Global registry for all 163 screens across data-model layers, eva-faces, projects, and ops",
+          "schema_id": "screen_registry",
+          "title": "Unified Screen Registry",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\screen_registry.schema.json",
+          "file_name": "screen_registry.schema.json",
+          "properties_count": 17
+        }
+      ],
+      "coverage_pct": 20.0,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Project & PM",
+      "domain_id": 5,
+      "description": "Planning and tracking",
+      "schemas": [
+        {
+          "description": "Programme decomposition hierarchy: Program → Stream → Project → Epic → Feature → Story. Session 27: Layer 26 (L26) created.",
+          "schema_id": "wbs",
+          "title": "Work Breakdown Structure",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\wbs.schema.json",
+          "file_name": "wbs.schema.json",
+          "properties_count": 21
+        }
+      ],
+      "coverage_pct": 16.7,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Strategy & Portfolio",
+      "domain_id": 6,
+      "description": "Portfolio planning and roadmap",
+      "schemas": [
+        {
+          "description": "Strategic roadmaps for capability and service evolution. Defines forward-looking initiatives, milestones, dependencies, and timelines for developing new capabilities or enhancing existing services. Enables strategic planning and capability gap analysis.",
+          "schema_id": "",
+          "title": "L72 - work_factory_roadmaps",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_roadmaps.schema.json",
+          "file_name": "work_factory_roadmaps.schema.json",
+          "properties_count": 23
+        }
+      ],
+      "coverage_pct": 33.3,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Execution Engine",
+      "domain_id": 7,
+      "description": "DPDCA execution and orchestration",
+      "schemas": [],
+      "coverage_pct": 0,
+      "schema_count": 0
+    },
+    {
+      "domain_name": "DevOps & Delivery",
+      "domain_id": 8,
+      "description": "Build, test, and deployment",
+      "schemas": [],
+      "coverage_pct": 0,
+      "schema_count": 0
+    },
+    {
+      "domain_name": "Governance & Policy",
+      "domain_id": 9,
+      "description": "Rules, compliance, and standards",
+      "schemas": [
+        {
+          "description": "Automated remediation policies defining triggers, actions, and approval workflows",
+          "schema_id": "",
+          "title": "Remediation Policies",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\remediation_policies.schema.json",
+          "file_name": "remediation_policies.schema.json",
+          "properties_count": 15
+        }
+      ],
+      "coverage_pct": 50.0,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Observability & Evidence",
+      "domain_id": 10,
+      "description": "Monitoring and audit trails",
+      "schemas": [
+        {
+          "description": "Proof-of-completion for a DPDCA phase of a story. Universal schema works for any story type (feature, bug, infrastructure, etc) and any project. Session 27: Added tech_stack polymorphism for tech-specific context validation.",
+          "schema_id": "evidence",
+          "title": "EVA Evidence Receipt",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\evidence.schema.json",
+          "file_name": "evidence.schema.json",
+          "properties_count": 15
+        }
+      ],
+      "coverage_pct": 77.8,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Infrastructure & FinOps",
+      "domain_id": 11,
+      "description": "Cloud resources and cost",
+      "schemas": [
+        {
+          "description": "Azure resource inventory, configuration, and state tracking",
+          "schema_id": "",
+          "title": "Azure Infrastructure",
+          "path": "C:\\eva-foundry\\37-data-model\\schema\\azure_infrastructure.schema.json",
+          "file_name": "azure_infrastructure.schema.json",
+          "properties_count": 13
+        }
+      ],
+      "coverage_pct": 57.1,
+      "schema_count": 1
+    },
+    {
+      "domain_name": "Ontology Domains",
+      "domain_id": 12,
+      "description": "Knowledge and reasoning",
+      "schemas": [],
+      "coverage_pct": 0,
+      "schema_count": 0
+    }
+  ],
+  "timestamp": "20260312_234336",
+  "domains_identified": {
+    "DevOps & Delivery": {
+      "matched": 0,
+      "coverage": 0,
+      "missing": 5,
+      "domain_id": 8
+    },
+    "Observability & Evidence": {
+      "matched": 7,
+      "coverage": 77.8,
+      "missing": 2,
+      "domain_id": 10
+    },
+    "AI Runtime": {
+      "matched": 0,
+      "coverage": 0,
+      "missing": 6,
+      "domain_id": 3
+    },
+    "Project & PM": {
+      "matched": 1,
+      "coverage": 16.7,
+      "missing": 5,
+      "domain_id": 5
+    },
+    "Identity & Access": {
+      "matched": 3,
+      "coverage": 60.0,
+      "missing": 2,
+      "domain_id": 2
+    },
+    "Execution Engine": {
+      "matched": 0,
+      "coverage": 0,
+      "missing": 4,
+      "domain_id": 7
+    },
+    "Strategy & Portfolio": {
+      "matched": 2,
+      "coverage": 33.3,
+      "missing": 4,
+      "domain_id": 6
+    },
+    "User Interface": {
+      "matched": 1,
+      "coverage": 20.0,
+      "missing": 4,
+      "domain_id": 4
+    },
+    "Infrastructure & FinOps": {
+      "matched": 4,
+      "coverage": 57.1,
+      "missing": 3,
+      "domain_id": 11
+    },
+    "Governance & Policy": {
+      "matched": 3,
+      "coverage": 50.0,
+      "missing": 3,
+      "domain_id": 9
+    },
+    "Ontology Domains": {
+      "matched": 0,
+      "coverage": 0,
+      "missing": 5,
+      "domain_id": 12
+    },
+    "System Architecture": {
+      "matched": 5,
+      "coverage": 50.0,
+      "missing": 5,
+      "domain_id": 1
+    }
+  },
+  "evidence_summary": {
+    "unmapped_schemas": 0,
+    "duplicate_mappings": 30,
+    "average_domain_coverage": 30.4,
+    "schemas_in_mapping": 8.0,
+    "domains_with_full_coverage": 0,
+    "organization_gaps": 1,
+    "total_schemas": 85,
+    "readiness_for_reorganization": "NEEDS_NORMALIZATION"
+  }
+}

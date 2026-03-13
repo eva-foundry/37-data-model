@@ -1,0 +1,572 @@
+{
+  "metrics": {
+    "schemas_per_domain_avg": 5.5,
+    "risk_level": "LOW",
+    "migration_strategy": "Create domain directories, move schemas by category, update import paths, validate references",
+    "estimated_effort_hours": 2,
+    "secondary_assignments": 25,
+    "total_domains": 12,
+    "estimated_effort_minutes": 120,
+    "primary_assignments": 41,
+    "overlap_conflicts": 3
+  },
+  "reorganization_strategy": [],
+  "schema_assignments": [
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "services",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "containers",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "endpoints",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "infrastructure",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "api_contracts",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "schemas",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "error_catalog",
+      "domain_name": "System Architecture",
+      "rationale": "Belongs to System Architecture per 12-domain ontology",
+      "domain_id": 1
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "personas",
+      "domain_name": "Identity & Access",
+      "rationale": "Belongs to Identity & Access per 12-domain ontology",
+      "domain_id": 2
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "access_control_matrix",
+      "domain_name": "Identity & Access",
+      "rationale": "Belongs to Identity & Access per 12-domain ontology",
+      "domain_id": 2
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "security_controls",
+      "domain_name": "Identity & Access",
+      "rationale": "Belongs to Identity & Access per 12-domain ontology",
+      "domain_id": 2
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "audit_trail",
+      "domain_name": "Identity & Access",
+      "rationale": "Belongs to Identity & Access per 12-domain ontology",
+      "domain_id": 2
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "secrets_catalog",
+      "domain_name": "Identity & Access",
+      "rationale": "Belongs to Identity & Access per 12-domain ontology",
+      "domain_id": 2
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "agents",
+      "domain_name": "AI Runtime",
+      "rationale": "Belongs to AI Runtime per 12-domain ontology",
+      "domain_id": 3
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "prompts",
+      "domain_name": "AI Runtime",
+      "rationale": "Belongs to AI Runtime per 12-domain ontology",
+      "domain_id": 3
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "mcp_servers",
+      "domain_name": "AI Runtime",
+      "rationale": "Belongs to AI Runtime per 12-domain ontology",
+      "domain_id": 3
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "agent_policies",
+      "domain_name": "AI Runtime",
+      "rationale": "Belongs to AI Runtime per 12-domain ontology",
+      "domain_id": 3
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "agentic_workflows",
+      "domain_name": "AI Runtime",
+      "rationale": "Belongs to AI Runtime per 12-domain ontology",
+      "domain_id": 3
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "instructions",
+      "domain_name": "AI Runtime",
+      "rationale": "Belongs to AI Runtime per 12-domain ontology",
+      "domain_id": 3
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "screen_registry",
+      "domain_name": "User Interface",
+      "rationale": "Belongs to User Interface per 12-domain ontology",
+      "domain_id": 4
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "user_flows",
+      "domain_name": "User Interface",
+      "rationale": "Belongs to User Interface per 12-domain ontology",
+      "domain_id": 4
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "navigation",
+      "domain_name": "User Interface",
+      "rationale": "Belongs to User Interface per 12-domain ontology",
+      "domain_id": 4
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "accessibility_standards",
+      "domain_name": "User Interface",
+      "rationale": "Belongs to User Interface per 12-domain ontology",
+      "domain_id": 4
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "theme_definitions",
+      "domain_name": "User Interface",
+      "rationale": "Belongs to User Interface per 12-domain ontology",
+      "domain_id": 4
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "wbs",
+      "domain_name": "Project & PM",
+      "rationale": "Belongs to Project & PM per 12-domain ontology",
+      "domain_id": 5
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "sprints",
+      "domain_name": "Project & PM",
+      "rationale": "Belongs to Project & PM per 12-domain ontology",
+      "domain_id": 5
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "stories",
+      "domain_name": "Project & PM",
+      "rationale": "Belongs to Project & PM per 12-domain ontology",
+      "domain_id": 5
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "tasks",
+      "domain_name": "Project & PM",
+      "rationale": "Belongs to Project & PM per 12-domain ontology",
+      "domain_id": 5
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "projects",
+      "domain_name": "Project & PM",
+      "rationale": "Belongs to Project & PM per 12-domain ontology",
+      "domain_id": 5
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "backlog",
+      "domain_name": "Project & PM",
+      "rationale": "Belongs to Project & PM per 12-domain ontology",
+      "domain_id": 5
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "portfolio",
+      "domain_name": "Strategy & Portfolio",
+      "rationale": "Belongs to Strategy & Portfolio per 12-domain ontology",
+      "domain_id": 6
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "roadmap",
+      "domain_name": "Strategy & Portfolio",
+      "rationale": "Belongs to Strategy & Portfolio per 12-domain ontology",
+      "domain_id": 6
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "initiatives",
+      "domain_name": "Strategy & Portfolio",
+      "rationale": "Belongs to Strategy & Portfolio per 12-domain ontology",
+      "domain_id": 6
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "strategies",
+      "domain_name": "Strategy & Portfolio",
+      "rationale": "Belongs to Strategy & Portfolio per 12-domain ontology",
+      "domain_id": 6
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "epics",
+      "domain_name": "Strategy & Portfolio",
+      "rationale": "Belongs to Strategy & Portfolio per 12-domain ontology",
+      "domain_id": 6
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "themes",
+      "domain_name": "Strategy & Portfolio",
+      "rationale": "Belongs to Strategy & Portfolio per 12-domain ontology",
+      "domain_id": 6
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "execution_workflows",
+      "domain_name": "Execution Engine",
+      "rationale": "Belongs to Execution Engine per 12-domain ontology",
+      "domain_id": 7
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "dpdca_templates",
+      "domain_name": "Execution Engine",
+      "rationale": "Belongs to Execution Engine per 12-domain ontology",
+      "domain_id": 7
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "process_definitions",
+      "domain_name": "Execution Engine",
+      "rationale": "Belongs to Execution Engine per 12-domain ontology",
+      "domain_id": 7
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "work_units",
+      "domain_name": "Execution Engine",
+      "rationale": "Belongs to Execution Engine per 12-domain ontology",
+      "domain_id": 7
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "ci_cd_pipelines",
+      "domain_name": "DevOps & Delivery",
+      "rationale": "Belongs to DevOps & Delivery per 12-domain ontology",
+      "domain_id": 8
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "build_configs",
+      "domain_name": "DevOps & Delivery",
+      "rationale": "Belongs to DevOps & Delivery per 12-domain ontology",
+      "domain_id": 8
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "deployment_targets",
+      "domain_name": "DevOps & Delivery",
+      "rationale": "Belongs to DevOps & Delivery per 12-domain ontology",
+      "domain_id": 8
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "test_suites",
+      "domain_name": "DevOps & Delivery",
+      "rationale": "Belongs to DevOps & Delivery per 12-domain ontology",
+      "domain_id": 8
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "release_notes",
+      "domain_name": "DevOps & Delivery",
+      "rationale": "Belongs to DevOps & Delivery per 12-domain ontology",
+      "domain_id": 8
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "policies",
+      "domain_name": "Governance & Policy",
+      "rationale": "Belongs to Governance & Policy per 12-domain ontology",
+      "domain_id": 9
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "compliance_mapping",
+      "domain_name": "Governance & Policy",
+      "rationale": "Belongs to Governance & Policy per 12-domain ontology",
+      "domain_id": 9
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "risk_register",
+      "domain_name": "Governance & Policy",
+      "rationale": "Belongs to Governance & Policy per 12-domain ontology",
+      "domain_id": 9
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "quality_gates",
+      "domain_name": "Governance & Policy",
+      "rationale": "Belongs to Governance & Policy per 12-domain ontology",
+      "domain_id": 9
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "standards",
+      "domain_name": "Governance & Policy",
+      "rationale": "Belongs to Governance & Policy per 12-domain ontology",
+      "domain_id": 9
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "decisions",
+      "domain_name": "Governance & Policy",
+      "rationale": "Belongs to Governance & Policy per 12-domain ontology",
+      "domain_id": 9
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "evidence",
+      "domain_name": "Observability & Evidence",
+      "rationale": "Belongs to Observability & Evidence per 12-domain ontology",
+      "domain_id": 10
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "metrics",
+      "domain_name": "Observability & Evidence",
+      "rationale": "Belongs to Observability & Evidence per 12-domain ontology",
+      "domain_id": 10
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "verification_records",
+      "domain_name": "Observability & Evidence",
+      "rationale": "Belongs to Observability & Evidence per 12-domain ontology",
+      "domain_id": 10
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "attestation_records",
+      "domain_name": "Observability & Evidence",
+      "rationale": "Belongs to Observability & Evidence per 12-domain ontology",
+      "domain_id": 10
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "logs",
+      "domain_name": "Observability & Evidence",
+      "rationale": "Belongs to Observability & Evidence per 12-domain ontology",
+      "domain_id": 10
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "audit_trail",
+      "domain_name": "Observability & Evidence",
+      "rationale": "Belongs to Observability & Evidence per 12-domain ontology",
+      "domain_id": 10
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "infrastructure",
+      "domain_name": "Infrastructure & FinOps",
+      "rationale": "Belongs to Infrastructure & FinOps per 12-domain ontology",
+      "domain_id": 11
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "deployment_records",
+      "domain_name": "Infrastructure & FinOps",
+      "rationale": "Belongs to Infrastructure & FinOps per 12-domain ontology",
+      "domain_id": 11
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "cost_allocation",
+      "domain_name": "Infrastructure & FinOps",
+      "rationale": "Belongs to Infrastructure & FinOps per 12-domain ontology",
+      "domain_id": 11
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "cloud_resources",
+      "domain_name": "Infrastructure & FinOps",
+      "rationale": "Belongs to Infrastructure & FinOps per 12-domain ontology",
+      "domain_id": 11
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "monitoring",
+      "domain_name": "Infrastructure & FinOps",
+      "rationale": "Belongs to Infrastructure & FinOps per 12-domain ontology",
+      "domain_id": 11
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "ontology",
+      "domain_name": "Ontology Domains",
+      "rationale": "Belongs to Ontology Domains per 12-domain ontology",
+      "domain_id": 12
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "relationships",
+      "domain_name": "Ontology Domains",
+      "rationale": "Belongs to Ontology Domains per 12-domain ontology",
+      "domain_id": 12
+    },
+    {
+      "assignment_type": "PRIMARY",
+      "schema_name": "vocabularies",
+      "domain_name": "Ontology Domains",
+      "rationale": "Belongs to Ontology Domains per 12-domain ontology",
+      "domain_id": 12
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "concepts",
+      "domain_name": "Ontology Domains",
+      "rationale": "Belongs to Ontology Domains per 12-domain ontology",
+      "domain_id": 12
+    },
+    {
+      "assignment_type": "SECONDARY",
+      "schema_name": "taxonomies",
+      "domain_name": "Ontology Domains",
+      "rationale": "Belongs to Ontology Domains per 12-domain ontology",
+      "domain_id": 12
+    }
+  ],
+  "overlap_resolutions": [
+    {
+      "schema_name": "audit_trail",
+      "rationale": "Primary purpose is evidence trail, secondary is identity logging",
+      "recommended_domain": "Observability & Evidence",
+      "current_domains": [
+        "Identity & Access",
+        "Observability & Evidence"
+      ]
+    },
+    {
+      "schema_name": "infrastructure",
+      "rationale": "Cloud infra resource definition belongs in FinOps, system services in Architecture",
+      "recommended_domain": "Infrastructure & FinOps",
+      "current_domains": [
+        "System Architecture",
+        "Infrastructure & FinOps"
+      ]
+    },
+    {
+      "schema_name": "security_controls",
+      "rationale": "Control implementations are governance artifacts",
+      "recommended_domain": "Governance & Policy",
+      "current_domains": [
+        "Identity & Access",
+        "Governance & Policy"
+      ]
+    }
+  ],
+  "status": "COMPLETE",
+  "directory_structure": [
+    {
+      "contains": "services, containers, endpoints, infrastructure, API contracts",
+      "domain_id": 1,
+      "path": "schema/domain_01_system-architecture/"
+    },
+    {
+      "contains": "personas, RBAC matrix, security controls, audit trails",
+      "domain_id": 2,
+      "path": "schema/domain_02_identity-access/"
+    },
+    {
+      "contains": "agents, prompts, MCP servers, agent policies",
+      "domain_id": 3,
+      "path": "schema/domain_03_ai-runtime/"
+    },
+    {
+      "contains": "screen registry, user flows, navigation",
+      "domain_id": 4,
+      "path": "schema/domain_04_user-interface/"
+    },
+    {
+      "contains": "WBS, sprints, stories, tasks",
+      "domain_id": 5,
+      "path": "schema/domain_05_project-pm/"
+    },
+    {
+      "contains": "portfolio, roadmap, initiatives",
+      "domain_id": 6,
+      "path": "schema/domain_06_strategy-portfolio/"
+    },
+    {
+      "contains": "execution workflows, DPDCA templates",
+      "domain_id": 7,
+      "path": "schema/domain_07_execution-engine/"
+    },
+    {
+      "contains": "CI/CD, build configs, deployment",
+      "domain_id": 8,
+      "path": "schema/domain_08_devops-delivery/"
+    },
+    {
+      "contains": "policies, compliance mapping, risk register, quality gates",
+      "domain_id": 9,
+      "path": "schema/domain_09_governance-policy/"
+    },
+    {
+      "contains": "metrics, evidence, verification records, attestation",
+      "domain_id": 10,
+      "path": "schema/domain_10_observability-evidence/"
+    },
+    {
+      "contains": "infrastructure, deployment records, cost allocation",
+      "domain_id": 11,
+      "path": "schema/domain_11_infrastructure-finops/"
+    },
+    {
+      "contains": "ontology, relationships, vocabularies",
+      "domain_id": 12,
+      "path": "schema/domain_12_ontology-domains/"
+    }
+  ],
+  "timestamp": "20260312_234408",
+  "phase": "PLAN"
+}
