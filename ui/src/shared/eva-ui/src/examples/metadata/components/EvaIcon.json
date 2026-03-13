@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaIcon",
+  "componentName": "EvaIcon",
+  "category": "utility",
+  "complexity": "medium",
+  "usageFrequency": "high",
+  "tags": ["icon","visual","semantic"],
+  "domains": ["universal"],
+  "examples": [],
+  "propsRequired": ["name"],
+  "propsOptional": ["size","aria-label","title"],
+  "relatedComponents": [],
+  "relatedPatterns": [],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evaicon--default",
+  "testsPresent": false,
+  "a11yScore": "0",
+  "lastUpdated": "2026-02-15",
+  "status": "planned"
+}

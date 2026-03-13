@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/capacity_planning.schema.json",
+  "title": "Capacity Planning",
+  "type": "object",
+  "description": "Resource capacity planning and forecasting (L72 - Strategy Phase)",
+  "required": [
+    "plan_id",
+    "organization_id",
+    "planning_horizon_months",
+    "resource_categories"
+  ],
+  "properties": {
+    "plan_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-capacity-plan-[0-9]{8}-[0-9]{3,}$"
+    },
+    "organization_id": {
+      "type": "string"
+    },
+    "planning_horizon_months": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 60,
+      "description": "How many months ahead is this plan?"
+    },
+    "plan_start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "plan_end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "resource_categories": {
+      "type": "array",
+      "description": "Resource categories being planned",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category_name": { "type": "string" },
+          "current_capacity": { "type": "number" },
+          "current_utilization_percent": { "type": "number" },
+          "forecasted_demand": {
+            "type": "array",
+            "description": "Demand forecast by month",
+            "items": {
+              "type": "object",
+              "properties": {
+                "month": { "type": "integer" },
+                "demand": { "type": "number" },
+                "confidence_percent": { "type": "number" }
+              }
+            }
+          },
+          "bottleneck_months": {
+            "type": "array",
+            "description": "Months where demand exceeds capacity",
+            "items": { "type": "integer" }
+          },
+          "capacity_expansion_recommendations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "recommended_month": { "type": "integer" },
+                "expansion_amount": { "type": "number" },
+                "estimated_cost_usd": { "type": "number" },
+                "lead_time_weeks": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "risk_factors": {
+      "type": "array",
+      "description": "External factors that could impact capacity needs",
+      "items": { "type": "string" }
+    },
+    "mitigation_strategies": {
+      "type": "array",
+      "description": "Strategies to address capacity risks",
+      "items": {
+        "type": "object",
+        "properties": {
+          "strategy": { "type": "string" },
+          "implementation_month": { "type": "integer" },
+          "estimated_cost_usd": { "type": "number" }
+        }
+      }
+    },
+    "total_investment_required_usd": {
+      "type": "number",
+      "description": "Total capex needed for planned expansions"
+    },
+    "payback_period_months": {
+      "type": "number"
+    },
+    "alternative_scenarios": {
+      "type": "array",
+      "description": "Best-case, base-case, worst-case scenarios",
+      "items": {
+        "type": "object",
+        "properties": {
+          "scenario_name": { "type": "string" },
+          "demand_multiplier": { "type": "number" },
+          "investment_required_usd": { "type": "number" }
+        }
+      }
+    },
+    "created_by": {
+      "type": "string"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "approval_date": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

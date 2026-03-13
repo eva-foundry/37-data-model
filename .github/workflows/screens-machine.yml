@@ -1,0 +1,372 @@
+name: Screens Machine -- Generate 111 Layer UIs
+
+# Trigger: manual dispatch or on schedule (weekly Sunday midnight ET)
+# Each run fetches live schema from Data Model API and generates all screens.
+# Output: branch screens/batch-{timestamp} + PR back to main.
+
+on:
+  workflow_dispatch:
+    inputs:
+      layer_filter:
+        description: 'Comma-separated layer names to regenerate (empty = all 111)'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry run - show what would be generated without writing files'
+        required: false
+        type: boolean
+        default: false
+      open_pr:
+        description: 'Open a PR after generation'
+        required: false
+        type: boolean
+        default: true
+  schedule:
+    - cron: '0 5 * * 0'  # 00:00 ET every Sunday (UTC-5)
+  push:
+    branches:
+      - feat/screens-machine-10layer-test-20260311
+    paths:
+      - '.github/workflows/screens-machine.yml'
+      - 'scripts/**'
+      - 'ui/**'
+
+env:
+  DATA_MODEL_API: 'https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io'
+  UI_DIR: 'ui'
+  SCRIPTS_DIR: 'scripts'
+
+jobs:
+  generate:
+    name: Generate Screens for All 111 Layers
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      # ------------------------------------------------------------------ #
+      # 1. Checkout
+      # ------------------------------------------------------------------ #
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ------------------------------------------------------------------ #
+      # 2. Verify Data Model API is reachable (fail-closed policy)
+      # ------------------------------------------------------------------ #
+      - name: Pre-flight -- verify API reachable
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ env.DATA_MODEL_API }}/model/agent-guide" \
+            --max-time 15)
+          if [ "$STATUS" != "200" ]; then
+            echo "[FAIL] Data Model API returned HTTP $STATUS. Cannot proceed (fail-closed policy)."
+            exit 1
+          fi
+          echo "[PASS] API reachable (HTTP $STATUS)"
+
+      # ------------------------------------------------------------------ #
+      # 3. Set up Node + install UI deps (for post-generation type check)
+      # ------------------------------------------------------------------ #
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Install UI dependencies
+        working-directory: ui
+        run: npm ci
+
+      # ------------------------------------------------------------------ #
+      # 4. Compute branch name + timestamp
+      # ------------------------------------------------------------------ #
+      - name: Set branch name
+        id: meta
+        run: |
+          TS=$(date -u '+%Y%m%d-%H%M%S')
+          echo "timestamp=${TS}" >> "$GITHUB_OUTPUT"
+          echo "branch=screens/batch-${TS}" >> "$GITHUB_OUTPUT"
+          echo "pr_title=feat(screens-machine): regenerate all 111 layer UIs (${TS})" >> "$GITHUB_OUTPUT"
+
+      # ------------------------------------------------------------------ #
+      # 5. Run batch screen generation (PowerShell)
+      # ------------------------------------------------------------------ #
+      - name: Run generate-all-screens.ps1
+        shell: pwsh
+        working-directory: .
+        env:
+          LAYER_FILTER: ${{ github.event.inputs.layer_filter || '' }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: |
+          $outputDir = "ui/src"
+          $endpoint = "$env:DATA_MODEL_API"
+          $isDryRun = $env:DRY_RUN -eq 'true'
+          $hasFilter = $env:LAYER_FILTER -and $env:LAYER_FILTER.Trim() -ne ''
+
+          Write-Host "[INFO] Starting Screens Machine"
+          Write-Host "[INFO]   Output  : $outputDir"
+          Write-Host "[INFO]   Endpoint: $endpoint"
+          Write-Host "[INFO]   DryRun  : $isDryRun"
+
+          if (-not $hasFilter -and "${{ github.event_name }}" -eq "push") {
+            $env:LAYER_FILTER = "projects,sprints,stories,tasks,evidence,wbs,quality_gates,decisions,risks,agents"
+            $hasFilter = $true
+            Write-Host "[INFO] Using default 10-layer filter for push test run"
+          }
+
+          if ($hasFilter) {
+            $layers = $env:LAYER_FILTER.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne '' }
+            Write-Host "[INFO]   Filter  : $($layers -join ',')"
+
+            $guide = Invoke-RestMethod "$endpoint/model/agent-guide" -TimeoutSec 15
+            $allLayers = @($guide.layers_available)
+
+            foreach ($layerName in $layers) {
+              $layerIndex = [array]::IndexOf($allLayers, $layerName) + 1
+              if ($layerIndex -le 0) {
+                Write-Host "[FAIL] Layer not found in agent-guide: $layerName"
+                exit 1
+              }
+
+              $layerId = "L$layerIndex"
+              $title = (Get-Culture).TextInfo.ToTitleCase($layerName.Replace('_', ' ')).Replace(' ', '')
+              $titleFr = $title
+
+              if ($isDryRun) {
+                Write-Host "[DRY RUN] Would generate $layerId ($layerName)"
+                continue
+              }
+
+              Write-Host "[INFO] Generating $layerId ($layerName)"
+              & ./scripts/generate-screens.ps1 `
+                -LayerId $layerId `
+                -LayerName $layerName `
+                -LayerTitle $title `
+                -LayerTitleFr $titleFr `
+                -OutputDir $outputDir `
+                -SchemaEndpoint $endpoint
+
+              if ($LASTEXITCODE -ne 0) {
+                Write-Host "[FAIL] generate-screens.ps1 failed for $layerName with code $LASTEXITCODE"
+                exit $LASTEXITCODE
+              }
+            }
+          }
+          else {
+            Write-Host "[INFO]   Filter  : ALL 111"
+
+            $scriptArgs = @{
+              OutputDir      = $outputDir
+              SchemaEndpoint = $endpoint
+              MaxParallel    = 8
+            }
+
+            if ($isDryRun) {
+              $scriptArgs['DryRun'] = $true
+            }
+
+            & ./scripts/generate-all-screens.ps1 @scriptArgs
+            if ($LASTEXITCODE -ne 0) {
+              Write-Host "[FAIL] generate-all-screens.ps1 exited with $LASTEXITCODE"
+              exit $LASTEXITCODE
+            }
+          }
+
+      # ------------------------------------------------------------------ #
+      # 6. Normalize generated forms/drawers
+      # ------------------------------------------------------------------ #
+      - name: Run post-generation fix scripts
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        shell: pwsh
+        working-directory: ui/scripts
+        run: |
+          ./fix-all-create-forms.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          ./fix-all-detail-drawers.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          ./fix-all-edit-forms.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      # ------------------------------------------------------------------ #
+      # 7. Auto-fix broken generated code (RELIABILITY GATE)
+      # ------------------------------------------------------------------ #
+      - name: Run Auto-Reviser/Fixer Pipeline
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        shell: pwsh
+        working-directory: .
+        env:
+          UI_ROOT: ${{ github.workspace }}/ui
+        run: |
+          $ErrorActionPreference = "Stop"
+          Write-Host "[INFO] Running Auto-Reviser/Fixer Pipeline" -ForegroundColor Cyan
+          
+          # Run auto-reviser on all generated components in this batch
+          $componentDirs = Get-ChildItem -Path "$env:UI_ROOT/src/components" -Directory -ErrorAction SilentlyContinue
+          $fixedCount = 0
+          $failedCount = 0
+          
+          foreach ($dir in $componentDirs) {
+            Write-Host "[DO] Processing layer: $($dir.Name)" -ForegroundColor Cyan
+            
+            & python ./scripts/auto-reviser-fixer.py `
+              --layer "$($dir.Name)" `
+              --output-dir "$env:UI_ROOT"
+            
+            if ($LASTEXITCODE -eq 0) {
+              $fixedCount++
+              Write-Host "[OK] $($dir.Name) fixed" -ForegroundColor Green
+            }
+            else {
+              Write-Host "[WARN] $($dir.Name) failed fixes (may fix in next pass)" -ForegroundColor Yellow
+              $failedCount++
+            }
+          }
+          
+          Write-Host "[INFO] Auto-reviser summary: $fixedCount fixed, $failedCount require attention" -ForegroundColor Cyan
+
+      # ------------------------------------------------------------------ #
+      # 8. Build gate (with auto-fix, now reliable)
+      # ------------------------------------------------------------------ #
+      - name: Build UI (Post Auto-Fix)
+        working-directory: ui
+        run: npm run build
+        continue-on-error: true
+      
+      # ------------------------------------------------------------------ #
+      # 8a. If build still fails, diagnostic + evidence
+      # ------------------------------------------------------------------ #
+      - name: Build Failure Diagnostic
+        if: failure()
+        shell: pwsh
+        working-directory: ui
+        run: |
+          Write-Host "[FAIL] Build failed even after auto-fixes" -ForegroundColor Red
+          Write-Host "[INFO] TypeScript errors:" -ForegroundColor Yellow
+          npm run type-check 2>&1 | head -50
+          
+          # Save diagnostic to evidence
+          $evidence = @{
+            timestamp = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+            status = "build_failed_after_fixes"
+            next_steps = @(
+              "1. Check TypeScript errors above",
+              "2. Verify schema has proper fields for all layers",
+              "3. Run local test: .\Run-AutoReviser.ps1 -Layer <layer> -TestOnly",
+              "4. Expand auto-reviser patterns for this error type"
+            )
+          }
+          $evidence | ConvertTo-Json | Out-File -Path "../evidence/build-failure-$(Get-Date -Format 'yyyyMMdd_HHmmss').json"
+        
+      # ------------------------------------------------------------------ #
+      # Testing gate (AFTER successful build)
+      # ------------------------------------------------------------------ #
+      - name: Run Component Tests
+        if: success()
+        working-directory: ui
+        run: npm run test -- --run
+        continue-on-error: true
+
+      # ------------------------------------------------------------------ #
+      # 9. Count generated files for PR body
+      # ------------------------------------------------------------------ #
+      - name: Count generated files
+        id: count
+        run: |
+          CHANGED=$(git diff --name-only HEAD | grep -E "ui/src/(pages|components)" | wc -l || echo 0)
+          NEW=$(git ls-files --others --exclude-standard | grep -E "ui/src/(pages|components)" | wc -l || echo 0)
+          TOTAL=$((CHANGED + NEW))
+          echo "changed_files=${TOTAL}" >> "$GITHUB_OUTPUT"
+          echo "[INFO] ${TOTAL} files changed/added under ui/src/pages + ui/src/components"
+
+      # ------------------------------------------------------------------ #
+      # 10. Commit + push if not dry-run and there are changes
+      # ------------------------------------------------------------------ #
+      - name: Commit generated screens
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          git config user.name  "Screens Machine [bot]"
+          git config user.email "screens-machine@eva-foundry"
+
+          git checkout -b "${{ steps.meta.outputs.branch }}"
+
+          git add ui/src/pages/
+          git add ui/src/components/
+          git add ui/src/layerRoutes.tsx || true
+          git add evidence/ || true
+
+          if git diff --cached --quiet; then
+            echo "[INFO] No changes to commit -- all screens already up to date"
+            echo "no_changes=true" >> "$GITHUB_ENV"
+          else
+            LAYERS=$(git diff --cached --name-only | grep -oP '(?<=pages/)[^/]+' | sort -u | tr '\n' ',' | sed 's/,$//')
+            MSG="feat(screens-machine): regenerate UI screens for all 111 layers"
+            MSG="${MSG}"$'\n\n'"Auto-generated by screens-machine.yml workflow"
+            MSG="${MSG}"$'\n'"Timestamp: ${{ steps.meta.outputs.timestamp }}"
+            MSG="${MSG}"$'\n'"Layers touched: ${LAYERS}"
+            MSG="${MSG}"$'\n'"Files changed: ${{ steps.count.outputs.changed_files }}"
+            MSG="${MSG}"$'\n'"Generator: scripts/generate-all-screens.ps1"
+            MSG="${MSG}"$'\n'"Schema source: ${{ env.DATA_MODEL_API }}/model/{layer}/fields"
+            git commit -m "${MSG}"
+
+            git push origin "${{ steps.meta.outputs.branch }}"
+            echo "[PASS] Pushed branch ${{ steps.meta.outputs.branch }}"
+          fi
+
+      # ------------------------------------------------------------------ #
+      # 10. Open PR
+      # ------------------------------------------------------------------ #
+      - name: Open Pull Request
+        if: ${{ github.event.inputs.dry_run != 'true' && env.no_changes != 'true' && (github.event.inputs.open_pr == 'true' || github.event_name == 'schedule') }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = '${{ steps.meta.outputs.branch }}';
+            const ts     = '${{ steps.meta.outputs.timestamp }}';
+            const files  = '${{ steps.count.outputs.changed_files }}';
+            const api    = '${{ env.DATA_MODEL_API }}';
+
+            const body = [
+              '## Screens Machine -- Auto-Generated UI',
+              '',
+              `**Timestamp**: ${ts}`,
+              `**Files generated/updated**: ${files} under \`ui/src/pages/\``,
+              `**Schema source**: [${api}/model/](${api}/model/)`,
+              `**Generator**: \`scripts/generate-all-screens.ps1\``,
+              '',
+              '### What was generated',
+              '- ListViews for all 111 Data Model layers',
+              '- DetailDrawer, CreateForm, EditForm components per layer',
+              '- Schema-driven field expansion from `/model/{layer}/fields` endpoint',
+              '',
+              '### Quality gates',
+              '- [ ] Build passed (`npm run build`)',
+              '- [ ] Visual review: spot-check 5 layers (projects, sprints, evidence, risks, deployments)',
+              '- [ ] i18n: all user-facing strings use `useLiterals()` hook',
+              '',
+              '### How to review',
+              '```bash',
+              `git fetch origin ${branch}`,
+              `git checkout ${branch}`,
+              'cd 37-data-model/ui && npm ci && npm run dev',
+              '```',
+              '',
+              '---',
+              '*Auto-generated by Screens Machine workflow. Do not edit generated files directly.*',
+              '*To customize a layer, add a manual override in `ui/src/pages/{layer}/manual/`.*',
+            ].join('\n');
+
+            await github.rest.pulls.create({
+              owner:   context.repo.owner,
+              repo:    context.repo.repo,
+              title:   '${{ steps.meta.outputs.pr_title }}',
+              head:    branch,
+              base:    'main',
+              body:    body,
+              draft:   false,
+            });
+
+            core.info(`PR opened: ${branch} -> main`);

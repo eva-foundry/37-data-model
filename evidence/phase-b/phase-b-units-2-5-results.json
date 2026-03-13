@@ -1,0 +1,174 @@
+{
+  "timestamp": "2026-03-13T20:04:19.516195Z",
+  "unit_2": {
+    "name": "Relationship Testing",
+    "status": "PASS",
+    "tests": [
+      {
+        "source": "L122",
+        "target": "L26",
+        "desc": "projects parent link",
+        "pass": true
+      },
+      {
+        "source": "L122",
+        "target": "L127",
+        "desc": "mission link",
+        "pass": true
+      },
+      {
+        "source": "L123",
+        "target": "L122",
+        "desc": "assumptions to context",
+        "pass": true
+      },
+      {
+        "source": "L124",
+        "target": "L122",
+        "desc": "risks to context",
+        "pass": true
+      },
+      {
+        "source": "L125",
+        "target": "L122",
+        "desc": "opportunities to context",
+        "pass": true
+      },
+      {
+        "source": "L126",
+        "target": "L123",
+        "desc": "validations to assumptions",
+        "pass": true
+      },
+      {
+        "source": "L127",
+        "target": "L26",
+        "desc": "missions to projects",
+        "pass": true
+      },
+      {
+        "source": "L128",
+        "target": "L127",
+        "desc": "sensors to missions",
+        "pass": true
+      },
+      {
+        "source": "L129",
+        "target": "L128",
+        "desc": "signals to sensors",
+        "pass": true
+      },
+      {
+        "source": "L129",
+        "target": "L122",
+        "desc": "signals to contexts",
+        "pass": true
+      }
+    ],
+    "passed": 10,
+    "failed": 0,
+    "pass_rate": "100%"
+  },
+  "unit_3": {
+    "name": "Lifecycle Testing",
+    "status": "PASS",
+    "tests": [
+      {
+        "field": "phase",
+        "layer": "L127",
+        "pass": true,
+        "desc": "Mission has phase tracking"
+      },
+      {
+        "field": "started_at",
+        "layer": "L127",
+        "pass": true,
+        "desc": "Mission has started_at tracking"
+      },
+      {
+        "field": "completed_at",
+        "layer": "L127",
+        "pass": true,
+        "desc": "Mission has completed_at tracking"
+      },
+      {
+        "field": "status",
+        "layer": "L127",
+        "pass": true,
+        "desc": "Mission has status tracking"
+      },
+      {
+        "field": "d3pdca_phase",
+        "layer": "L127",
+        "pass": true,
+        "desc": "Mission has d3pdca_phase tracking"
+      },
+      {
+        "layer": "L126",
+        "pass": true,
+        "desc": "Validation records are immutable (append-only)"
+      },
+      {
+        "layer": "L129",
+        "pass": true,
+        "ttl_days": 90,
+        "desc": "Signals have TTL (90 days)"
+      }
+    ],
+    "passed": 7,
+    "failed": 0
+  },
+  "unit_4": {
+    "name": "Performance Testing",
+    "status": "PASS",
+    "metrics": {
+      "schema_parse_ms": 0.15,
+      "total_layers": 8,
+      "avg_schema_size_bytes": 1958.0,
+      "total_references": 17,
+      "avg_refs_per_layer": 2.1
+    },
+    "performance_targets": {
+      "schema_parse_ms_max": 100,
+      "avg_schema_size_bytes_max": 5000,
+      "avg_refs_per_layer_max": 10
+    },
+    "sla_compliance": true
+  },
+  "unit_5": {
+    "name": "Integration Testing",
+    "status": "PASS",
+    "tests": [
+      {
+        "relationship": "context\u2192assumptions",
+        "pass": true
+      },
+      {
+        "relationship": "mission grounded in context",
+        "pass": true
+      },
+      {
+        "relationship": "signals from sensors",
+        "pass": true
+      },
+      {
+        "relationship": "signals feed contexts",
+        "pass": true
+      },
+      {
+        "relationship": "validations track assumptions",
+        "pass": true
+      }
+    ],
+    "passed": 5,
+    "failed": 0,
+    "integration_status": "Ready for cloud testing"
+  },
+  "summary": {
+    "total_pass": 23,
+    "total_fail": 0,
+    "overall_status": "PASS",
+    "total_tests": 23,
+    "pass_rate": "100%"
+  }
+}

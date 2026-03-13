@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/incident_management_procedures.schema.json",
+  "title": "Incident Management Procedures",
+  "type": "object",
+  "description": "IR playbooks and incident response procedures (L84 - Security Phase 2)",
+  "required": [
+    "procedure_id",
+    "incident_type",
+    "procedure_name"
+  ],
+  "properties": {
+    "procedure_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-irp-[0-9]{8}-[0-9]{3,}$"
+    },
+    "incident_type": {
+      "type": "string",
+      "enum": [
+        "malware_infection",
+        "data_breach",
+        "ransomware",
+        "ddos",
+        "system_compromise",
+        "insider_threat",
+        "supply_chain_attack",
+        "compliance_violation"
+      ]
+    },
+    "procedure_name": {
+      "type": "string",
+      "description": "Friendly name of this IR playbook"
+    },
+    "procedure_version": {
+      "type": "string"
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_updated_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "procedure_owner": {
+      "type": "string",
+      "description": "Team responsible"
+    },
+    "description": {
+      "type": "string",
+      "description": "Overview of this incident type and procedure",
+      "minLength": 50
+    },
+    "detection_indicators": {
+      "type": "array",
+      "description": "How to recognize this incident",
+      "items": {
+        "type": "object",
+        "properties": {
+          "indicator": { "type": "string" },
+          "confidence": { "type": "string", "enum": ["low", "medium", "high"] }
+        }
+      }
+    },
+    "initial_response_steps": {
+      "type": "array",
+      "description": "First actions (0-1 hour)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_number": { "type": "integer" },
+          "action": { "type": "string" },
+          "responsible_role": { "type": "string" },
+          "automation_available": { "type": "boolean" }
+        }
+      }
+    },
+    "investigation_steps": {
+      "type": "array",
+      "description": "How to investigate (1-8 hours)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_number": { "type": "integer" },
+          "investigation_action": { "type": "string" },
+          "tools_required": { "type": "array", "items": { "type": "string" } },
+          "evidence_preserved": { "type": "boolean" }
+        }
+      }
+    },
+    "containment_steps": {
+      "type": "array",
+      "description": "How to stop the incident from spreading",
+      "items": { "type": "string" }
+    },
+    "eradication_steps": {
+      "type": "array",
+      "description": "How to remove the threat",
+      "items": { "type": "string" }
+    },
+    "recovery_steps": {
+      "type": "array",
+      "description": "How to restore normal operations",
+      "items": { "type": "string" }
+    },
+    "communication_protocol": {
+      "type": "object",
+      "description": "Who to notify and when",
+      "properties": {
+        "incident_commander": { "type": "string" },
+        "stakeholders_to_notify": { "type": "array", "items": { "type": "string" } },
+        "external_authorities": { "type": "array", "items": { "type": "string" } },
+        "customer_notification_within_hours": { "type": "integer" },
+        "regulatory_notification_within_hours": { "type": "integer" }
+      }
+    },
+    "escalation_criteria": {
+      "type": "array",
+      "description": "When to escalate to executive team",
+      "items": { "type": "string" }
+    },
+    "post_incident_review": {
+      "type": "object",
+      "description": "Post-mortem process",
+      "properties": {
+        "review_format": { "type": "string" },
+        "required_participants": { "type": "array", "items": { "type": "string" } },
+        "lessons_learned_required": { "type": "boolean" }
+      }
+    },
+    "estimated_resolution_time_hours": {
+      "type": "number"
+    },
+    "referenced_compliance_obligations": {
+      "type": "array",
+      "description": "GDPR/HIPAA/etc requirements this triggers",
+      "items": { "type": "string" }
+    },
+    "tested": {
+      "type": "boolean",
+      "description": "Has this procedure been tested/tabletop?"
+    },
+    "last_tested_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

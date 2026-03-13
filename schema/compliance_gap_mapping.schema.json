@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/compliance_gap_mapping.schema.json",
+  "title": "Compliance Gap Mapping (L85)",
+  "description": "Framework control → CVE → remediation linker. Maps findings to compliance requirements and tracks gap resolution.",
+  "type": "object",
+  "required": ["id", "framework", "control_id", "gap_status"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^compliance_gap_[a-z_]+_[0-9]{8}$"},
+    "framework": {
+      "type": "string",
+      "enum": ["PCI-DSS", "SOC2", "HIPAA", "ISO27001", "CIS", "NIST-CSF", "custom"],
+      "description": "Compliance framework"
+    },
+    "framework_version": {"type": "string"},
+    "control_id": {"type": "string", "description": "Control identifier (e.g., 'PCI-DSS-1.1')"},
+    "control_name": {"type": "string", "maxLength": 300},
+    "control_description": {"type": "string", "maxLength": 2000},
+    "findings_violating": {
+      "type": "array",
+      "description": "CVE IDs that violate this control",
+      "items": {"type": "string", "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"}
+    },
+    "remediation_tasks_required": {
+      "type": "array",
+      "description": "Remediation tasks (L84) needed to achieve compliance",
+      "items": {"type": "string"}
+    },
+    "gap_status": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "resolved"],
+      "description": "Severity of compliance gap"
+    },
+    "evidence_artifacts": {
+      "type": "array",
+      "description": "Proof of compliance",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artifact_type": {"type": "string", "enum": ["test_report", "audit_log", "certificate", "scanning_result"]},
+          "artifact_ref": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "certification_date": {"type": "string", "format": "date", "description": "When this gap was marked as resolved"},
+    "certification_auditor": {"type": "string"},
+    "target_remediation_date": {"type": "string", "format": "date"},
+    "notes": {"type": "string", "maxLength": 2000},
+    "owner": {"type": "string"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

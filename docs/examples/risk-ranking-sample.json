@@ -1,0 +1,15 @@
+{
+  "risk_reduction_potential_pct": 0.78,
+  "period_start": "2026-03-06T01:28:19.7128254Z",
+  "top_findings": [
+    "CVE-2024-1234",
+    "CVE-2024-0001",
+    "CVE-2024-5678"
+  ],
+  "top_20_percent_count": 31,
+  "total_findings": 156,
+  "period_end": "2026-03-13T01:28:19.7139301Z",
+  "pareto_constant": 1.58,
+  "id": "pareto_analysis_2026_03_12",
+  "top_20_percent_risk_pct": 0.8
+}

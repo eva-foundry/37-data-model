@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "prompt.schema.json",
+  "title": "EVA Prompt Template",
+  "description": "A Prompty or system-prompt template used by agents and copilot skills",
+  "type": "object",
+  "required": ["id", "label", "service", "format", "model", "inputs", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier, kebab-case",
+      "examples": ["prompt-policy-analysis", "prompt-claim-evaluation"]
+    },
+    "label": { "type": "string", "description": "Human-readable name" },
+    "service": { "type": "string", "description": "Service id that owns this prompt" },
+    "format": {
+      "type": "string",
+      "enum": ["prompty", "jinja2", "plain", "system_user"],
+      "description": "Prompt template format"
+    },
+    "model": {
+      "type": "string",
+      "description": "Model deployment id this prompt targets",
+      "examples": ["gpt-5.1-chat", "gpt-4o"]
+    },
+    "inputs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Named input variables required by the template"
+    },
+    "repo_path": { "type": ["string", "null"], "description": "Relative path to the prompt file" },
+    "used_by": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "cp_skill or agent ids that use this prompt"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["implemented", "planned", "deprecated", "stub"]
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:35Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add EvidenceCorrelation screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L30",
+    "title_fr": "EvidenceCorrelation",
+    "name": "evidence_correlation",
+    "title": "EvidenceCorrelation"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1839,
+    "avg_loc_per_file": 306.0,
+    "duration_seconds": 0.65,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\evidence_correlation\\EvidenceCorrelationListView.tsx",
+      "lines_of_code": 192,
+      "file": "EvidenceCorrelationListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\evidence_correlation\\EvidenceCorrelationDetailDrawer.tsx",
+      "lines_of_code": 266,
+      "file": "EvidenceCorrelationDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\evidence_correlation\\EvidenceCorrelationCreateForm.tsx",
+      "lines_of_code": 443,
+      "file": "EvidenceCorrelationCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\evidence_correlation\\EvidenceCorrelationEditForm.tsx",
+      "lines_of_code": 471,
+      "file": "EvidenceCorrelationEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\evidence_correlation\\EvidenceCorrelationGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "EvidenceCorrelationGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\evidence_correlation\\__tests__\\EvidenceCorrelationListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "EvidenceCorrelationListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

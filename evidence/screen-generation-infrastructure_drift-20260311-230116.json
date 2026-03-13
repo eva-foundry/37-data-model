@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:01:16Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add InfrastructureDrift screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L86",
+    "title_fr": "InfrastructureDrift",
+    "name": "infrastructure_drift",
+    "title": "InfrastructureDrift"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2779,
+    "avg_loc_per_file": 463.0,
+    "duration_seconds": 0.75,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\infrastructure_drift\\InfrastructureDriftListView.tsx",
+      "lines_of_code": 192,
+      "file": "InfrastructureDriftListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\infrastructure_drift\\InfrastructureDriftDetailDrawer.tsx",
+      "lines_of_code": 338,
+      "file": "InfrastructureDriftDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\infrastructure_drift\\InfrastructureDriftCreateForm.tsx",
+      "lines_of_code": 877,
+      "file": "InfrastructureDriftCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\infrastructure_drift\\InfrastructureDriftEditForm.tsx",
+      "lines_of_code": 905,
+      "file": "InfrastructureDriftEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\infrastructure_drift\\InfrastructureDriftGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "InfrastructureDriftGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\infrastructure_drift\\__tests__\\InfrastructureDriftListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "InfrastructureDriftListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

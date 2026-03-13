@@ -1,0 +1,46 @@
+{
+  "layer": "discovery_sensors",
+  "layer_id": "L128",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Sensor registry — defines automated sensing capabilities, schedules, and targets",
+  "purpose": "Register all automated discovery sensors (APIs, dashboards, agents) to enable continuous Re-Discovery phase",
+  "schema": {
+    "id": "string - sensor-{domain}-{name}",
+    "layer": "string - discovery_sensors",
+    "sensor_name": "string",
+    "sensor_type": "enum - governance | infrastructure | security | data_quality | stakeholder | cost | performance",
+    "domain": "enum - Domain1..Domain13",
+    "description": "string - what this sensor detects",
+    "target": "string - what it monitors: API endpoint, resource group, project set, etc.",
+    "schedule": {
+      "frequency": "enum - continuous | hourly | every_6h | daily | weekly | on_demand",
+      "cron_expression": "string - optional",
+      "last_run": "ISO 8601",
+      "next_run": "ISO 8601"
+    },
+    "output_format": "enum - json | jsonl | markdown",
+    "output_layer": "string - where results are written (typically discovery_signals)",
+    "thresholds": {
+      "anomaly_threshold": "number - 0.0-1.0 (triggers alert if exceeded)",
+      "warning_threshold": "number - 0.0-1.0",
+      "critical_threshold": "number - 0.0-1.0"
+    },
+    "dependencies": ["string - APIs, tools, MCP servers needed"],
+    "status": "enum - ACTIVE | PAUSED | DISABLED | ERROR",
+    "implementation": {
+      "script_path": "string - path to sensor script",
+      "runtime": "enum - powershell | python | node | github_action",
+      "mcp_tool": "string - optional MCP tool name"
+    },
+    "created_by": "string",
+    "created_at": "ISO 8601",
+    "is_active": true
+  },
+  "relationships": {
+    "parent": ["L127/missions"],
+    "child": ["L129/discovery_signals"],
+    "edge_types": ["monitors", "produces", "detects"]
+  },
+  "notes": "Sensors run autonomously on schedule (or on-demand) to feed L129. Examples: MTI audit sensor, cost anomaly sensor, project health sensor."
+}

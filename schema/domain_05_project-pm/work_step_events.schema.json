@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva.ai/schemas/work_step_events.schema.json",
+  "title": "Work Step Event",
+  "description": "Execution event stream. Each record is one step in the timeline of a work unit (state transition, action taken, gate checked). Layer 53 in the EVA data model architecture.",
+  "type": "object",
+  "required": ["event_id", "work_unit_id", "sequence_no", "event_type", "timestamp", "actor_type", "actor_id"],
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Primary key. Format: {work_unit_id}-evt-{sequence}",
+      "pattern": "^.+-wu-.+-evt-[0-9]{3,}$",
+      "examples": ["51-ACA-wu-20260309-001-evt-001"]
+    },
+    "work_unit_id": {
+      "type": "string",
+      "description": "Foreign key to L52 work_execution_units (CASCADE on delete)"
+    },
+    "sequence_no": {
+      "type": "integer",
+      "description": "Event order within this work unit",
+      "minimum": 1
+    },
+    "event_type": {
+      "type": "string",
+      "enum": ["state_change", "gate_check", "action_execution", "error_occurred", "retry_attempt"],
+      "description": "Type of event that occurred"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 timestamp when this event occurred"
+    },
+    "actor_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "human", "system"],
+      "description": "Type of actor that triggered this event"
+    },
+    "actor_id": {
+      "type": "string",
+      "description": "Identifier of the actor (agent_id, cp_agent_id, persona_id, or 'system')"
+    },
+    "state_before": {
+      "type": ["string", "null"],
+      "description": "Status before this event (for state_change events)"
+    },
+    "state_after": {
+      "type": ["string", "null"],
+      "description": "Status after this event (for state_change events)"
+    },
+    "action_taken": {
+      "type": ["string", "null"],
+      "description": "Description of the action performed"
+    },
+    "gate_name": {
+      "type": ["string", "null"],
+      "description": "Quality gate identifier (for gate_check events)"
+    },
+    "gate_result": {
+      "type": ["string", "null"],
+      "enum": ["PASS", "FAIL", "WARN", "SKIP", null],
+      "description": "Result of gate check"
+    },
+    "evidence_ids": {
+      "type": ["array", "null"],
+      "description": "Array of evidence_ids from L31 evidence layer",
+      "items": {
+        "type": "string"
+      }
+    },
+    "trace_ids": {
+      "type": ["array", "null"],
+      "description": "Array of trace_ids from L32 traces layer (LLM call traces)",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decision_ids": {
+      "type": ["array", "null"],
+      "description": "Array of decision_ids from L54 work_decision_records",
+      "items": {
+        "type": "string"
+      }
+    },
+    "error_details": {
+      "type": ["string", "null"],
+      "description": "Error details (for error_occurred events)"
+    },
+    "metadata": {
+      "type": ["object", "null"],
+      "description": "Freeform event context (phase, step details, metrics, etc.)"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_failure_analysis.schema.json",
+  "title": "Work Failure Analysis",
+  "type": "object",
+  "description": "Root cause analysis (RCA) of work unit failures (L60 - Execution Engine Phase 2)",
+  "required": [
+    "analysis_id",
+    "work_unit_id",
+    "failure_type",
+    "root_cause_statement"
+  ],
+  "properties": {
+    "analysis_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-rca-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "failure_type": {
+      "type": "string",
+      "enum": [
+        "test_failure",
+        "deployment_failure",
+        "runtime_crash",
+        "data_corruption",
+        "security_breach",
+        "performance_regression"
+      ]
+    },
+    "symptom_description": {
+      "type": "string",
+      "description": "What went wrong from user perspective",
+      "minLength": 20
+    },
+    "root_cause_statement": {
+      "type": "string",
+      "description": "The fundamental reason the failure occurred",
+      "minLength": 20
+    },
+    "contributing_factors": {
+      "type": "array",
+      "description": "Secondary factors that contributed",
+      "items": { "type": "string" }
+    },
+    "evidence_sources": {
+      "type": "array",
+      "description": "Evidence IDs (L31) supporting this analysis",
+      "items": { "type": "string" }
+    },
+    "corrective_actions": {
+      "type": "array",
+      "description": "Changes made to prevent recurrence",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action_id": { "type": "string" },
+          "description": { "type": "string" },
+          "responsible_party": { "type": "string" },
+          "deadline": { "type": "string", "format": "date" },
+          "status": { "type": "string", "enum": ["open", "in_progress", "completed"] }
+        }
+      }
+    },
+    "severity_level": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Business impact of this failure"
+    },
+    "analyzed_by": {
+      "type": "string",
+      "description": "Agent ID or persona ID conducting RCA"
+    },
+    "analyzed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "similar_past_incidents": {
+      "type": "array",
+      "description": "References to similar failures",
+      "items": { "type": "string" }
+    }
+  }
+}

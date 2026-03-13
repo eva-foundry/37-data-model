@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "decision.schema.json",
+  "title": "EVA Architecture Decision Record",
+  "description": "An ADR (Architecture Decision Record) for any significant technical or governance decision.",
+  "type": "object",
+  "required": ["id", "project_id", "title", "status", "decision"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "ADR id, e.g. 33-eva-brain-v2-ADR-001",
+      "examples": ["33-eva-brain-v2-ADR-001", "37-data-model-ADR-001"]
+    },
+    "project_id": { "type": "string" },
+    "title": { "type": "string", "description": "Short decision title" },
+    "date": { "type": ["string", "null"], "format": "date" },
+    "status": {
+      "type": "string",
+      "enum": ["proposed", "accepted", "deprecated", "superseded"]
+    },
+    "context": {
+      "type": ["string", "null"],
+      "description": "What is the issue? What forces are at play?"
+    },
+    "decision": {
+      "type": "string",
+      "description": "What was decided?"
+    },
+    "consequences": {
+      "type": ["string", "null"],
+      "description": "What are the resulting context and trade-offs?"
+    },
+    "alternatives_considered": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "superseded_by": {
+      "type": ["string", "null"],
+      "description": "ADR id that supersedes this one"
+    },
+    "deciders": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Names or roles that made the decision"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "e.g. ['cosmos', 'auth', 'deployment']"
+    },
+    "related_wbs_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_path": { "type": ["string", "null"] },
+    "notes": { "type": ["string", "null"] }
+  }
+}

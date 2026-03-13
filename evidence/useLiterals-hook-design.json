@@ -1,0 +1,136 @@
+{
+  "hook_name": "useLiterals",
+  "design_version": "1.0.0",
+  "session": "45-part-8",
+  "timestamp": "2026-03-11T02:22:00Z",
+  
+  "api_design": {
+    "signature": "useLiterals(scope?: string): TranslationFunction",
+    "parameters": {
+      "scope": {
+        "type": "string | undefined",
+        "description": "Namespace prefix for relative keys (e.g., 'projects.create_form')",
+        "optional": true,
+        "default": "No scope - requires full key paths"
+      }
+    },
+    "returns": {
+      "type": "TranslationFunction",
+      "signature": "(key: string, vars?: Record<string, any>) => string",
+      "description": "Function that resolves literal keys to translated strings"
+    }
+  },
+  
+  "usage_examples": {
+    "scoped_translation": {
+      "code": "const t = useLiterals('projects.create_form');\n<button>{t('actions.submit')}</button>",
+      "resolves_to": "projects.create_form.actions.submit",
+      "output": "Create (EN) / Créer (FR) / Criar (PT) / 创建 (CN) / Crear (ES)"
+    },
+    "unscoped_translation": {
+      "code": "const t = useLiterals();\n<button>{t('common.actions.create')}</button>",
+      "resolves_to": "common.actions.create",
+      "output": "Create (EN) / Créer (FR) / etc."
+    },
+    "interpolation": {
+      "code": "const t = useLiterals('projects.detail');\n<p>{t('welcome', { name: userName })}</p>",
+      "literal_template": "Welcome, {name}!",
+      "output": "Welcome, John! (EN) / Bienvenue, John! (FR) / etc."
+    },
+    "nested_keys": {
+      "code": "const t = useLiterals('projects.create_form');\n<span>{t('errors.required')}</span>",
+      "resolves_to": "projects.create_form.errors.required",
+      "output": "This field is required (EN) / Champ obligatoire (FR) / etc."
+    }
+  },
+  
+  "implementation_strategy": {
+    "data_source": "L17 literals layer via Data Model API",
+    "endpoint": "GET /model/literals/?key={scope}*",
+    "caching": {
+      "level_1_memory": "React state within hook (instant access)",
+      "level_2_browser": "localStorage (survives page refresh)",
+      "level_3_api": "Fetch from API if not cached (network call)",
+      "ttl": "24 hours (refreshes daily)"
+    },
+    "fallback_strategy": {
+      "step_1": "Try current language (e.g., FR)",
+      "step_2": "Fall back to English (default_en)",
+      "step_3": "Return key itself if not found (e.g., '[projects.unknown]')",
+      "reason": "Prevents blank UI, aids debugging"
+    },
+    "language_detection": {
+      "source": "LangContext (existing useLang hook)",
+      "integration": "const { lang } = useLang(); // Returns 'en' | 'fr' | 'pt' | 'cn' | 'es'"
+    }
+  },
+  
+  "typescript_interface": {
+    "TranslationFunction": "type TranslationFunction = (key: string, vars?: Record<string, any>) => string;",
+    "Literal": "interface Literal { key: string; default_en: string; default_fr: string; default_pt: string; default_cn: string; default_es: string; }",
+    "LiteralsCache": "type LiteralsCache = Record<string, Literal>;",
+    "hook_return": "TranslationFunction"
+  },
+  
+  "hook_implementation_pseudo": {
+    "step_1_get_language": "const { lang } = useLang(); // 'en' | 'fr' | 'pt' | 'cn' | 'es'",
+    "step_2_load_literals": "const [literals, setLiterals] = useState<LiteralsCache>({}); // Cache",
+    "step_3_fetch_on_mount": "useEffect(() => { fetchLiteralsFromAPI(scope).then(setLiterals); }, [scope]);",
+    "step_4_resolve_key": "function t(key: string, vars?: any): string { const fullKey = scope ? `${scope}.${key}` : key; const literal = literals[fullKey]; if (!literal) return `[${fullKey}]`; const text = literal[`default_${lang}`] || literal.default_en; return interpolate(text, vars); }",
+    "step_5_return": "return t;"
+  },
+  
+  "template_integration": {
+    "before_inline_ternaries": {
+      "import": "import { useLang } from '@context/LangContext';",
+      "code": "const { lang } = useLang();\nconst t = {\n  title: lang === 'fr' ? 'Créer un nouvel enregistrement' : 'Create new record',\n  submit: lang === 'fr' ? 'Créer' : 'Create',\n  cancel: lang === 'fr' ? 'Annuler' : 'Cancel'\n};\n<h2>{t.title}</h2>\n<button>{t.submit}</button>"
+    },
+    "after_useLiterals": {
+      "import": "import { useLiterals } from '@hooks/useLiterals';",
+      "code": "const t = useLiterals('{{LAYER_NAME}}.create_form');\n<h2>{t('title')}</h2>\n<button>{t('actions.submit')}</button>\n<button>{t('actions.cancel')}</button>"
+    },
+    "benefits": [
+      "Centralized translations (no hardcoded strings)",
+      "Supports 5 languages automatically",
+      "Cleaner component code (no ternaries)",
+      "Easy to add new languages (just add columns to L17)",
+      "Testable (can verify no hardcoded strings)"
+    ]
+  },
+  
+  "anti_hardcoding_test_integration": {
+    "test_checks": [
+      "All components import useLiterals",
+      "All components call useLiterals() to get translation function",
+      "No bare strings (e.g., 'Create') in JSX",
+      "All UI text uses t() function"
+    ],
+    "whitelist_patterns": [
+      "data-testid='...'",
+      "className='...'",
+      "aria-label='...'",
+      "import ... from '...'",
+      "const apiUrl = '...'",
+      "type Status = 'active' | 'inactive'"
+    ],
+    "test_regex": "/['\"](?![a-z-]+='|import |from |type |const [a-z]+ = ')[A-Z][^'\"]*['\"]/g",
+    "test_explanation": "Matches quoted strings starting with uppercase (UI text) excluding technical patterns"
+  },
+  
+  "performance_considerations": {
+    "initial_load": "Fetch all literals for scope on component mount (~1-5 KB JSON)",
+    "subsequent_renders": "Zero API calls (uses memory cache)",
+    "language_switching": "No refetch needed (all 5 languages in cache)",
+    "bundle_size_impact": "Hook code: ~3 KB minified + gzipped",
+    "network_impact": "1 API call per scope per session (cached in localStorage)"
+  },
+  
+  "next_steps": {
+    "1": "Create hook file: ui/src/hooks/useLiterals.ts",
+    "2": "Implement fetchLiteralsFromAPI() helper",
+    "3": "Create tests: ui/src/hooks/useLiterals.test.ts",
+    "4": "Update templates to replace inline ternaries with useLiterals calls",
+    "5": "Create anti-hardcoding test",
+    "6": "Regenerate L25 (projects) to validate pattern"
+  }
+}

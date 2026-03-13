@@ -150,10 +150,112 @@ _LAYER_FILES: dict[str, str] = {
     "eva_model": "eva-model.json",
     "infrastructure_drift": "infrastructure_drift.json",
     "performance_trends": "performance_trends.json",
+    
+    # ── L52-L75: Execution Engine (Phases 1-6, Session 41 Part 11) ──
+    # Phase 1: Core Execution (L52-L56)
+    "work_execution_units": "work_execution_units.json",           # L52
+    "work_step_events": "work_step_events.json",                   # L53
+    "work_decision_records": "work_decision_records.json",         # L54
+    "work_outcomes": "work_outcomes.json",                         # L56
+    
+    # Phase 2: Obligations & Learning (L55, L57-L58)
+    "work_obligations": "work_obligations.json",                   # L55
+    "work_learning_feedback": "work_learning_feedback.json",       # L57
+    "work_reusable_patterns": "work_reusable_patterns.json",       # L58
+    
+    # Phase 3: Pattern Performance (L59-L60)
+    "work_pattern_applications": "work_pattern_applications.json", # L59
+    "work_pattern_performance_profiles": "work_pattern_performance_profiles.json", # L60
+    
+    # Phase 4: Factory Capabilities & Services (L61-L66)
+    "work_factory_capabilities": "work_factory_capabilities.json", # L61
+    "work_factory_services": "work_factory_services.json",         # L62
+    "work_service_requests": "work_service_requests.json",         # L63
+    "work_service_runs": "work_service_runs.json",                 # L64
+    "work_service_perf_profiles": "work_service_perf_profiles.json", # L65
+    "work_service_level_objectives": "work_service_level_objectives.json", # L66
+    
+    # Phase 5: Self-Healing (L67-L70)
+    "work_service_breaches": "work_service_breaches.json",         # L67
+    "work_service_remediation_plans": "work_service_remediation_plans.json", # L68
+    "work_service_revalidation_results": "work_service_revalidation_results.json", # L69
+    "work_service_lifecycle": "work_service_lifecycle.json",       # L70
+    
+    # Phase 6: Strategy & Portfolio (L71-L75)
+    "work_factory_portfolio": "work_factory_portfolio.json",       # L71
+    "work_factory_roadmaps": "work_factory_roadmaps.json",         # L72
+    "work_factory_investments": "work_factory_investments.json",   # L73
+    "work_factory_metrics": "work_factory_metrics.json",           # L74
+    "work_factory_governance": "work_factory_governance.json",     # L75
+    
+    # ── L76-L86: Security Schemas (Session 46 P36 Red-Teaming + P58 Security Factory) ──
+    # P36 Red-Teaming: LLM vulnerability testing (L76-L80)
+    "attack_tactic_catalog": "attack_tactic_catalog.json",                 # L76
+    "red_team_test_suite": "red_team_test_suite.json",                     # L77
+    "ai_security_finding": "ai_security_finding.json",                     # L78
+    "framework_evidence_mapping": "framework_evidence_mapping.json",       # L79
+    "ai_security_metrics": "ai_security_metrics.json",                     # L80
+    
+    # P58 Security Factory: Infrastructure vulnerability scanning (L81-L86)
+    "vulnerability_scan_result": "vulnerability_scan_result.json",         # L81
+    "cve_finding": "cve_finding.json",                                     # L82
+    "risk_ranking": "risk_ranking.json",                                   # L83
+    "remediation_task": "remediation_task.json",                           # L84
+    "compliance_gap_mapping": "compliance_gap_mapping.json",               # L85
+    "threat_intelligence_context": "threat_intelligence_context.json",     # L86
 }
 
 _MODEL_DIR = _ROOT / "model"
 _ACTOR = "system:seed-cosmos"
+
+# Common ID field patterns: map alternate ID fields to 'id'
+_COMMON_ID_FIELDS = [
+    "work_unit_id",
+    "decision_id",
+    "execution_id",
+    "metric_id",
+    "effectiveness_id",
+    "score_id",
+    "trend_id",
+    "record_id",
+    "event_id",
+    "policy_id",
+    "resource_id",
+]
+
+
+def _normalize_object_ids(objects: list[dict], layer: str) -> list[dict]:
+    """
+    Ensure all objects have an 'id' field by checking common patterns.
+    
+    Args:
+        objects: List of dict objects extracted from JSON
+        layer: Layer name for logging
+        
+    Returns:
+        List of objects with 'id' field set
+    """
+    for obj in objects:
+        if "id" in obj:
+            continue  # Already has id
+        
+        # Check for 'key' field (legacy pattern)
+        if "key" in obj:
+            obj["id"] = obj["key"]
+            continue
+        
+        # Check common ID field patterns
+        for id_field in _COMMON_ID_FIELDS:
+            if id_field in obj:
+                obj["id"] = obj[id_field]
+                break
+        
+        # Last resort: for single-object layers, try layer_id pattern
+        layer_id_field = f"{layer}_id"
+        if layer_id_field in obj and "id" not in obj:
+            obj["id"] = obj[layer_id_field]
+    
+    return objects
 
 
 async def seed(
@@ -179,11 +281,12 @@ async def seed(
                     objects = v
                     break
 
-        # Normalise id field
+        # Normalize id fields and add metadata
+        objects = _normalize_object_ids(objects, layer)
         for obj in objects:
-            if "id" not in obj and "key" in obj:
-                obj["id"] = obj["key"]
             obj.setdefault("source_file", f"model/{filename}")
+        
+        # Filter to only objects with valid IDs
         objects = [o for o in objects if o.get("id")]
 
         if dry_run:

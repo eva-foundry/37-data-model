@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:03:35Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add InfrastructureEvents screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L45",
+    "title_fr": "InfrastructureEvents",
+    "name": "infrastructure_events",
+    "title": "InfrastructureEvents"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2475,
+    "avg_loc_per_file": 412.0,
+    "duration_seconds": 0.82,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\infrastructure_events\\InfrastructureEventsListView.tsx",
+      "lines_of_code": 192,
+      "file": "InfrastructureEventsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\infrastructure_events\\InfrastructureEventsDetailDrawer.tsx",
+      "lines_of_code": 314,
+      "file": "InfrastructureEventsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\infrastructure_events\\InfrastructureEventsCreateForm.tsx",
+      "lines_of_code": 737,
+      "file": "InfrastructureEventsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\infrastructure_events\\InfrastructureEventsEditForm.tsx",
+      "lines_of_code": 765,
+      "file": "InfrastructureEventsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\infrastructure_events\\InfrastructureEventsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "InfrastructureEventsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\infrastructure_events\\__tests__\\InfrastructureEventsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "InfrastructureEventsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

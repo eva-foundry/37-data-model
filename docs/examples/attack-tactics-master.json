@@ -1,0 +1,25 @@
+[
+  {
+    "description": "Direct manipulation of LLM inputs to cause unintended behavior",
+    "owasp_id": "LLM01",
+    "name": "Prompt Injection",
+    "id": "tactic_prompt_injection",
+    "severity": "critical",
+    "framework": "OWASP-LLM"
+  },
+  {
+    "description": "Application or model disclosing sensitive information in responses",
+    "owasp_id": "LLM06",
+    "name": "Sensitive Information Disclosure",
+    "id": "tactic_pii_leakage",
+    "severity": "high",
+    "framework": "OWASP-LLM"
+  },
+  {
+    "severity": "high",
+    "name": "Model Jailbreaking",
+    "framework": "MITRE-ATLAS",
+    "id": "tactic_jailbreak",
+    "description": "Bypassing safety guidelines through prompt crafting or context manipulation"
+  }
+]

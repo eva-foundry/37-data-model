@@ -3,7 +3,7 @@
   "generated_at": "2026-03-10T23:34:07Z",
   "generated_by": "generate-layer-metadata-index.ps1",
   "source": "Cosmos DB (via API /model/agent-summary)",
-  "total_layers": 111,
+  "total_layers": 123,
   "operational_layers": 87,
   "layers": [
     {
@@ -782,6 +782,83 @@
       "object_count": 0,
       "priority": "P3",
       "category": "General"
+    },
+    {
+      "layer_name": "attack_tactic_catalog",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "red_team_test_suite",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "ai_security_finding",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "framework_evidence_mapping",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P2",
+      "category": "Security"
+    },
+    {
+      "layer_name": "ai_security_metrics",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P2",
+      "category": "Security"
+    },
+    {
+      "layer_name": "vulnerability_scan_result",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "cve_finding",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "risk_ranking",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "remediation_task",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P1",
+      "category": "Security"
+    },
+    {
+      "layer_name": "compliance_gap_mapping",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P2",
+      "category": "Security"
+    },
+    {
+      "layer_name": "threat_intelligence_context",
+      "operational": false,
+      "object_count": 0,
+      "priority": "P2",
+      "category": "Security"
     }
   ]
 }

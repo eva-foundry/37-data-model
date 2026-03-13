@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaDateRangePicker",
+  "componentName": "EvaDateRangePicker",
+  "category": "input",
+  "complexity": "medium",
+  "usageFrequency": "medium",
+  "tags": ["date","picker","filter"],
+  "domains": ["universal","finops","devops"],
+  "examples": [],
+  "propsRequired": ["onChange"],
+  "propsOptional": ["label","start","end","disabled"],
+  "relatedComponents": ["EvaInput"],
+  "relatedPatterns": ["date-range-validation"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evadaterangepicker--default",
+  "testsPresent": false,
+  "a11yScore": "0",
+  "lastUpdated": "2026-02-15",
+  "status": "planned"
+}

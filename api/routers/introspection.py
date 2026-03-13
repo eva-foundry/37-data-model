@@ -152,56 +152,104 @@ async def get_example(layer: str, request: Request):
         )
 
 
-# ── GET /model/{layer}/fields — Return field name array ────────────────────
+# ── GET /model/{layer}/fields — Return rich field metadata from live data ─
 @router.get(
     "/{layer}/fields",
-    summary="Get field names for layer",
-    description="Returns list of field names from the layer's JSON schema"
+    summary="Get rich field metadata for layer",
+    description="Queries live Cosmos DB objects to extract field metadata with types and examples"
 )
-async def get_fields(layer: str):
+async def get_fields(layer: str, request: Request):
     """
-    Return array of field names defined in the layer's schema.
-    Useful for discovering what query parameters are valid.
+    Return rich field metadata from live objects in the layer.
+    Extracts field_name, field_type, required status, and example_value.
 
     Example:
-        GET /model/projects/fields → ["id", "label", "maturity", ...]
-        GET /model/evidence/fields → ["id", "sprint_id", "phase", ...]
+        GET /model/projects/fields → rich metadata with types and examples
+        GET /model/evidence/fields → immutable audit field details
+    
+    FKTE Sprint 1 - Critical path for autonomous screen generation
     """
-    schema_path = _get_schema_path(layer)
-
-    if not schema_path:
-        raise HTTPException(
-            status_code=404,
-            detail={
-                "error": "Schema not found",
-                "layer": layer,
-                "hint": "Try /model/layers to see available layers"
-            }
-        )
+    from datetime import datetime
+    
+    store = request.app.state.store
 
     try:
-        with open(schema_path, "r", encoding="utf-8") as f:
-            schema_data = json.load(f)
-
-        # Extract field names from properties
-        properties = schema_data.get("properties", {})
-        fields = list(properties.keys())
-
-        # Get required fields
-        required = schema_data.get("required", [])
-
+        # Get all objects from layer
+        objects = await store.get_all(layer)
+        
+        if not objects:
+            # Layer exists but has no objects
+            return JSONResponse(content={
+                "layer": layer,
+                "sample_count": 0,
+                "fields": [],
+                "generated_at": datetime.utcnow().isoformat() + "Z"
+            })
+        
+        # Find first non-placeholder object for example values
+        sample_obj = None
+        for obj in objects:
+            if not obj.get("id", "").endswith("..."):
+                sample_obj = obj
+                break
+        
+        if not sample_obj:
+            sample_obj = objects[0]  # Use placeholder if that's all we have
+        
+        # Extract field metadata
+        fields = []
+        for field_name, field_value in sample_obj.items():
+            # Determine field type
+            field_type = "string"  # default
+            if isinstance(field_value, bool):
+                field_type = "boolean"
+            elif isinstance(field_value, int) or isinstance(field_value, float):
+                field_type = "number"
+            elif isinstance(field_value, str):
+                # Check if it's a date
+                if "T" in field_value and (field_value.endswith("Z") or "+" in field_value or field_value.count(":") >= 2):
+                    try:
+                        datetime.fromisoformat(field_value.replace("Z", "+00:00"))
+                        field_type = "date"
+                    except:
+                        pass
+                # Check if it's a reference (FK pattern: ends with _id)
+                if field_name.endswith("_id") and field_name != "id":
+                    field_type = "reference"
+            elif isinstance(field_value, list):
+                field_type = "array"
+            elif isinstance(field_value, dict):
+                field_type = "object"
+            
+            # Check if required (simplified - field present in all objects)
+            required = all(field_name in obj for obj in objects[:min(10, len(objects))])
+            
+            fields.append({
+                "field_name": field_name,
+                "field_type": field_type,
+                "required": required,
+                "example_value": field_value
+            })
+        
         return JSONResponse(content={
             "layer": layer,
+            "sample_count": len(objects),
             "fields": fields,
-            "required": required,
-            "total": len(fields),
-            "schema_file": schema_path.name
+            "generated_at": datetime.utcnow().isoformat() + "Z"
         })
-
+    
+    except HTTPException:
+        raise
     except Exception as e:
+        # Cosmos timeout or other errors
         raise HTTPException(
-            status_code=500,
-            detail={"error": "Failed to read schema", "reason": str(e)}
+            status_code=503,
+            detail={
+                "error": "Failed to fetch schema from live data",
+                "reason": str(e),
+                "hint": "Service may be temporarily unavailable"
+            },
+            headers={"Retry-After": "30"}
         )
 
 

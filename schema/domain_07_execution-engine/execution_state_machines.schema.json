@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/execution_state_machines.schema.json",
+  "title": "Execution State Machines",
+  "type": "object",
+  "description": "Finite State Machine (FSM) definitions for work execution (L63 - Execution Engine Phase 3)",
+  "required": [
+    "fsm_id",
+    "fsm_name",
+    "initial_state",
+    "states"
+  ],
+  "properties": {
+    "fsm_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-fsm-[0-9]{8}-[0-9]{3,}$"
+    },
+    "fsm_name": {
+      "type": "string",
+      "description": "Human-readable FSM identifier",
+      "minLength": 5,
+      "maxLength": 100
+    },
+    "description": {
+      "type": "string",
+      "description": "What this FSM governs",
+      "minLength": 10
+    },
+    "initial_state": {
+      "type": "string",
+      "description": "Starting state when FSM is created"
+    },
+    "final_states": {
+      "type": "array",
+      "description": "States that indicate completion",
+      "items": { "type": "string" }
+    },
+    "error_states": {
+      "type": "array",
+      "description": "States that indicate an error condition",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "states": {
+      "type": "object",
+      "description": "Definition of each state",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "state_name": { "type": "string" },
+          "description": { "type": "string" },
+          "entry_actions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Actions to execute on entering this state"
+          },
+          "exit_actions": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Actions to execute on leaving this state"
+          },
+          "timeout_minutes": {
+            "type": "number",
+            "description": "Max time allowed in this state"
+          }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "description": "Valid state transitions",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_state": { "type": "string" },
+          "to_state": { "type": "string" },
+          "trigger_event": { "type": "string" },
+          "guard_condition": { "type": "string" },
+          "action": { "type": "string" }
+        },
+        "required": ["from_state", "to_state", "trigger_event"]
+      }
+    },
+    "version": {
+      "type": "integer",
+      "description": "FSM version number"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_by": {
+      "type": "string"
+    }
+  }
+}

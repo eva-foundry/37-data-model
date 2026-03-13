@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T22:58:02Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add CiCdPipelines screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L15",
+    "title_fr": "CiCdPipelines",
+    "name": "ci_cd_pipelines",
+    "title": "CiCdPipelines"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2477,
+    "avg_loc_per_file": 413.0,
+    "duration_seconds": 0.65,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\ci_cd_pipelines\\CiCdPipelinesListView.tsx",
+      "lines_of_code": 192,
+      "file": "CiCdPipelinesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\ci_cd_pipelines\\CiCdPipelinesDetailDrawer.tsx",
+      "lines_of_code": 314,
+      "file": "CiCdPipelinesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\ci_cd_pipelines\\CiCdPipelinesCreateForm.tsx",
+      "lines_of_code": 738,
+      "file": "CiCdPipelinesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\ci_cd_pipelines\\CiCdPipelinesEditForm.tsx",
+      "lines_of_code": 766,
+      "file": "CiCdPipelinesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\ci_cd_pipelines\\CiCdPipelinesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "CiCdPipelinesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\ci_cd_pipelines\\__tests__\\CiCdPipelinesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "CiCdPipelinesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

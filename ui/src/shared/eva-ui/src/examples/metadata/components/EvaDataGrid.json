@@ -1,0 +1,175 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaDataGrid",
+  "componentName": "EvaDataGrid",
+  "category": "data-display",
+  "complexity": "complex",
+  "usageFrequency": "high",
+  "tags": [
+    "table",
+    "grid",
+    "list",
+    "sorting",
+    "filtering",
+    "pagination",
+    "bulk-actions",
+    "data-display"
+  ],
+  "domains": [
+    "admin-crud",
+    "finops",
+    "devops",
+    "observability",
+    "search",
+    "apim"
+  ],
+  "examples": [
+    {
+      "exampleId": "basic-sorting",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "lineRange": [20, 80],
+      "description": "Basic DataGrid with columns, sorting, and data rendering. Includes bilingual column headers.",
+      "tags": ["basic", "sorting", "columns", "i18n"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": [
+        "column-definition",
+        "render-cell",
+        "sorting",
+        "bilingual-headers",
+        "type-safe-columns"
+      ]
+    },
+    {
+      "exampleId": "row-actions",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "lineRange": [115, 150],
+      "description": "DataGrid with Edit/Delete action buttons in each row. Buttons use icons and ARIA labels.",
+      "tags": ["actions", "crud", "buttons", "icons"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": [
+        "row-actions",
+        "edit-action",
+        "delete-action",
+        "icon-buttons",
+        "aria-labels"
+      ]
+    },
+    {
+      "exampleId": "selection-bulk-actions",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "lineRange": [185, 250],
+      "description": "Row selection with checkboxes and bulk actions toolbar (Delete Selected, Export Selected). Includes selection count.",
+      "tags": ["selection", "bulk", "checkbox", "toolbar"],
+      "complexity": "complex",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": [
+        "row-selection",
+        "checkbox-column",
+        "selection-state",
+        "bulk-delete",
+        "bulk-export",
+        "selection-count",
+        "select-all"
+      ]
+    },
+    {
+      "exampleId": "filtering",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "lineRange": [285, 340],
+      "description": "DataGrid with filter bar above the grid. Includes search input and dropdown filters with Apply/Reset buttons.",
+      "tags": ["filters", "search", "dropdown", "query"],
+      "complexity": "complex",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": [
+        "filter-bar",
+        "search-filter",
+        "dropdown-filter",
+        "apply-filters",
+        "reset-filters",
+        "filter-state"
+      ]
+    },
+    {
+      "exampleId": "pagination",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "lineRange": [375, 420],
+      "description": "DataGrid with pagination controls below the grid. Shows page indicator, Previous/Next buttons, and page size selector.",
+      "tags": ["pagination", "paging", "navigation"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": [
+        "pagination-controls",
+        "previous-next",
+        "page-indicator",
+        "page-size-selector",
+        "total-items",
+        "pagination-state"
+      ]
+    },
+    {
+      "exampleId": "empty-state",
+      "file": "components/EvaDataGrid/Complete.example.tsx",
+      "lineRange": [455, 485],
+      "description": "DataGrid with empty state message when no data is available. Includes a Create action button.",
+      "tags": ["empty", "no-data", "placeholder"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": [
+        "empty-state",
+        "no-data-message",
+        "create-action",
+        "conditional-rendering"
+      ]
+    }
+  ],
+  "propsRequired": [
+    "items",
+    "columns",
+    "getRowId"
+  ],
+  "propsOptional": [
+    "selectionMode",
+    "selectedItems",
+    "onSelectionChange",
+    "sortable",
+    "sortColumn",
+    "sortDirection",
+    "onSort",
+    "loading",
+    "emptyMessage",
+    "className",
+    "style",
+    "aria-label",
+    "aria-describedby"
+  ],
+  "relatedComponents": [
+    "EvaButton",
+    "EvaIcon",
+    "EvaInput",
+    "EvaSelect",
+    "EvaSpinner",
+    "EvaBadge"
+  ],
+  "relatedPatterns": [
+    "search-filter",
+    "pagination",
+    "bulk-actions",
+    "row-actions",
+    "empty-states",
+    "loading-states",
+    "cosmos-db-query"
+  ],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evadatagrid--default",
+  "testsPresent": true,
+  "a11yScore": "100",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

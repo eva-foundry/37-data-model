@@ -1,0 +1,56 @@
+{
+  "name": "@eva/gc-design-system",
+  "version": "1.0.0",
+  "description": "Government of Canada Design System tokens and Fluent UI theme adapter",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./tokens": {
+      "types": "./dist/tokens/index.d.ts",
+      "import": "./dist/tokens/index.mjs",
+      "require": "./dist/tokens/index.js"
+    },
+    "./theme": {
+      "types": "./dist/theme/index.d.ts",
+      "import": "./dist/theme/index.mjs",
+      "require": "./dist/theme/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@fluentui/react-components": "^9.0.0",
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@fluentui/react-components": "^9.72.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "gc-design-system",
+    "government-of-canada",
+    "fluent-ui",
+    "design-tokens",
+    "theme"
+  ],
+  "author": "EVA Faces Team",
+  "license": "MIT"
+}

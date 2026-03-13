@@ -1,0 +1,35 @@
+{
+  "stages": [
+    {
+      "status": "SUCCESS",
+      "stage": "TokenRetrieval",
+      "data": null,
+      "timestamp": "2026-03-13T15:27:40.3850534-03:00"
+    },
+    {
+      "status": "SUCCESS",
+      "stage": "BootstrapAgentGuide",
+      "data": {
+        "layers": 111
+      },
+      "timestamp": "2026-03-13T15:27:41.3599475-03:00"
+    },
+    {
+      "status": "SUCCESS",
+      "stage": "BootstrapUserGuide",
+      "data": {
+        "categories": 0
+      },
+      "timestamp": "2026-03-13T15:27:42.065864-03:00"
+    },
+    {
+      "status": "FAILED",
+      "stage": "Error",
+      "data": {
+        "stack": "at <ScriptBlock>, C:\\eva-foundry\\scripts\\Phase-0-DryRun.ps1: line 132",
+        "error": "Response status code does not indicate success: 404 (Not Found)."
+      },
+      "timestamp": "2026-03-13T15:27:42.6668450-03:00"
+    }
+  ]
+}

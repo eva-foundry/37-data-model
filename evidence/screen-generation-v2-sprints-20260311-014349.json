@@ -1,0 +1,174 @@
+{
+  "components_generated": [
+    {
+      "file": "SprintsListView.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\sprints\\SprintsListView.tsx",
+      "lines_of_code": 176,
+      "type": "ListView"
+    },
+    {
+      "file": "SprintsDetailDrawer.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\sprints\\SprintsDetailDrawer.tsx",
+      "lines_of_code": 304,
+      "type": "DetailView"
+    },
+    {
+      "file": "SprintsCreateForm.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\sprints\\SprintsCreateForm.tsx",
+      "lines_of_code": 819,
+      "type": "CreateForm"
+    },
+    {
+      "file": "SprintsEditForm.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\sprints\\SprintsEditForm.tsx",
+      "lines_of_code": 870,
+      "type": "EditForm"
+    },
+    {
+      "file": "SprintsGraphView.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\sprints\\SprintsGraphView.tsx",
+      "lines_of_code": 212,
+      "type": "GraphView"
+    },
+    {
+      "file": "SprintsListView.test.tsx",
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\sprints\\__tests__\\SprintsListView.test.tsx",
+      "lines_of_code": 254,
+      "type": "test.spec"
+    }
+  ],
+  "operation": "screen_generation_v2",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Sprints screens v2 (schema-generated)'"
+  ],
+  "layer": {
+    "name": "sprints",
+    "title": "Sprints",
+    "id": "L27",
+    "title_fr": "Sprints"
+  },
+  "quality_gates": {
+    "typescript_compilation": "PENDING",
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "i18n": "PENDING",
+    "jest_coverage": "PENDING",
+    "no_placeholders": "PENDING"
+  },
+  "metrics": {
+    "avg_loc_per_file": 439.0,
+    "duration_seconds": 0.09,
+    "total_loc": 2635,
+    "files_count": 6
+  },
+  "timestamp": "2026-03-11T01:43:49Z",
+  "session": "45-part6-schema-generation",
+  "generator": "screens-machine-v2.0.0",
+  "schema": {
+    "fields_count": 14,
+    "fields": [
+      {
+        "name": "id",
+        "required": true,
+        "input_type": "text",
+        "label": "Id",
+        "type": "string"
+      },
+      {
+        "name": "label",
+        "required": true,
+        "input_type": "text",
+        "label": "Label",
+        "type": "string"
+      },
+      {
+        "name": "project_id",
+        "required": false,
+        "input_type": "text",
+        "label": "Project Id",
+        "type": "string"
+      },
+      {
+        "name": "start_date",
+        "required": false,
+        "input_type": "text",
+        "label": "Start Date",
+        "type": "string"
+      },
+      {
+        "name": "end_date",
+        "required": false,
+        "input_type": "text",
+        "label": "End Date",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "required": true,
+        "input_type": "text",
+        "label": "Status",
+        "type": "string"
+      },
+      {
+        "name": "goal",
+        "required": true,
+        "input_type": "textarea",
+        "label": "Goal",
+        "type": "string"
+      },
+      {
+        "name": "velocity_planned",
+        "required": false,
+        "input_type": "text",
+        "label": "Velocity Planned",
+        "type": "string"
+      },
+      {
+        "name": "velocity_actual",
+        "required": false,
+        "input_type": "text",
+        "label": "Velocity Actual",
+        "type": "string"
+      },
+      {
+        "name": "story_count",
+        "required": false,
+        "input_type": "text",
+        "label": "Story Count",
+        "type": "string"
+      },
+      {
+        "name": "stories_completed",
+        "required": false,
+        "input_type": "text",
+        "label": "Stories Completed",
+        "type": "string"
+      },
+      {
+        "name": "ado_iteration_path",
+        "required": false,
+        "input_type": "text",
+        "label": "Ado Iteration Path",
+        "type": "string"
+      },
+      {
+        "name": "mti_at_close",
+        "required": false,
+        "input_type": "text",
+        "label": "Mti At Close",
+        "type": "string"
+      },
+      {
+        "name": "notes",
+        "required": false,
+        "input_type": "textarea",
+        "label": "Notes",
+        "type": "string"
+      }
+    ]
+  }
+}

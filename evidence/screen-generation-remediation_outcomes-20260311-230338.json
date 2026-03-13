@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:03:38Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add RemediationOutcomes screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L50",
+    "title_fr": "RemediationOutcomes",
+    "name": "remediation_outcomes",
+    "title": "RemediationOutcomes"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2985,
+    "avg_loc_per_file": 498.0,
+    "duration_seconds": 0.66,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\remediation_outcomes\\RemediationOutcomesListView.tsx",
+      "lines_of_code": 192,
+      "file": "RemediationOutcomesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\remediation_outcomes\\RemediationOutcomesDetailDrawer.tsx",
+      "lines_of_code": 346,
+      "file": "RemediationOutcomesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\remediation_outcomes\\RemediationOutcomesCreateForm.tsx",
+      "lines_of_code": 976,
+      "file": "RemediationOutcomesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\remediation_outcomes\\RemediationOutcomesEditForm.tsx",
+      "lines_of_code": 1004,
+      "file": "RemediationOutcomesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\remediation_outcomes\\RemediationOutcomesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "RemediationOutcomesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\remediation_outcomes\\__tests__\\RemediationOutcomesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "RemediationOutcomesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

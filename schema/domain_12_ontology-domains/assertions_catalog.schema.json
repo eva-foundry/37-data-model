@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/assertions_catalog.schema.json",
+  "title": "Assertions Catalog (L115)",
+  "description": "Library of custom assertion definitions for red-team testing (Project 36). Assertions are reusable validation rules that can be applied to LLM outputs, API responses, and generated artifacts. Supports polymorphic assertion types (bilingual, pii-presence, latency-threshold, etc.).",
+  "type": "object",
+  "required": ["id", "assertion_type", "name", "implementation"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^assert_[a-z0-9_]{10,40}$",
+      "description": "Unique assertion identifier (e.g., assert_is_bilingual_zh_en)"
+    },
+    "assertion_type": {
+      "type": "string",
+      "enum": [
+        "content_validation",
+        "format_validation",
+        "performance_constraint",
+        "compliance_check",
+        "security_check",
+        "linguistic_analysis",
+        "custom"
+      ],
+      "description": "Category of assertion"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 100,
+      "description": "Human-readable assertion name (e.g., 'Is Bilingual (ZH-EN)')"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500,
+      "description": "Detailed description of what the assertion validates"
+    },
+    "implementation": {
+      "type": "object",
+      "required": ["language", "code"],
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": ["python", "javascript", "typescript", "java", "custom"],
+          "description": "Programming language of assertion implementation"
+        },
+        "code": {
+          "type": "string",
+          "minLength": 50,
+          "description": "Assertion implementation (function body or lambda)"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Required libraries/modules (e.g., ['langdetect', 're', 'pii-detector'])"
+        }
+      },
+      "description": "Implementation details"
+    },
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "array", "object", "number", "boolean", "any"],
+          "description": "Expected input type"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of input parameter"
+        }
+      },
+      "description": "Schema for assertion input"
+    },
+    "output_schema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["boolean", "score", "result_object"],
+          "description": "Output type (true/false, 0-1 score, or structured result)"
+        },
+        "examples": {
+          "type": "array",
+          "items": {"type": ["string", "number", "object", "boolean"]},
+          "description": "Example outputs"
+        }
+      },
+      "description": "Schema for assertion output"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Configuration parameters (e.g., {'threshold': 0.8, 'languages': ['zh', 'en']})"
+    },
+    "test_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["input", "expected_output"],
+        "properties": {
+          "input": {
+            "type": ["string", "object", "array"],
+            "description": "Test input"
+          },
+          "expected_output": {
+            "type": ["boolean", "number", "object"],
+            "description": "Expected output"
+          },
+          "description": {
+            "type": "string",
+            "description": "Test case description"
+          }
+        }
+      },
+      "description": "Unit tests for assertion"
+    },
+    "frameworks": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["OWASP-LLM", "MITRE-ATLAS", "NIST-AI-RMF", "ITSG-33", "ISO-42001", "custom"]
+      },
+      "description": "Security frameworks addressed by this assertion"
+    },
+    "supported_models": {
+      "type": "array",
+      "items": {"type": "string"},
+      "examples": ["gpt-4", "gpt-3.5-turbo", "claude-3", "gemini-pro"],
+      "description": "List of LLM models this assertion is optimized for"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "informational"],
+      "description": "Severity of assertion failure"
+    },
+    "false_positive_rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Estimated false positive rate (0.0-1.0)"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Implementation confidence (0.0-1.0)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {"type": "string"},
+      "examples": ["pii", "multilingual", "latency", "compliance", "security"],
+      "description": "Keywords for discovery"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Creation timestamp"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Creator or project (e.g., 'Project-36-SecObs')"
+    },
+    "usage_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Number of times this assertion has been used in tests"
+    },
+    "reference_docs": {
+      "type": "array",
+      "items": {"type": "string", "format": "uri"},
+      "description": "Links to documentation or research"
+    }
+  }
+}

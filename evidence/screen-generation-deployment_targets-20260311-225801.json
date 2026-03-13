@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T22:58:01Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add DeploymentTargets screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L14",
+    "title_fr": "DeploymentTargets",
+    "name": "deployment_targets",
+    "title": "DeploymentTargets"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2367,
+    "avg_loc_per_file": 394.0,
+    "duration_seconds": 0.64,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\deployment_targets\\DeploymentTargetsListView.tsx",
+      "lines_of_code": 192,
+      "file": "DeploymentTargetsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\deployment_targets\\DeploymentTargetsDetailDrawer.tsx",
+      "lines_of_code": 306,
+      "file": "DeploymentTargetsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\deployment_targets\\DeploymentTargetsCreateForm.tsx",
+      "lines_of_code": 687,
+      "file": "DeploymentTargetsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\deployment_targets\\DeploymentTargetsEditForm.tsx",
+      "lines_of_code": 715,
+      "file": "DeploymentTargetsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\deployment_targets\\DeploymentTargetsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "DeploymentTargetsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\deployment_targets\\__tests__\\DeploymentTargetsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "DeploymentTargetsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

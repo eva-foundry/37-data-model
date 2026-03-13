@@ -1,0 +1,57 @@
+{
+  "properties": {
+    "mapping_id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "layer_id": {
+      "type": "string",
+      "description": "Reference to data model layer"
+    },
+    "control_description": {
+      "type": "string",
+      "description": "What the control requires"
+    },
+    "implementation_layer": {
+      "type": "string",
+      "description": "Which layer implements this"
+    },
+    "framework": {
+      "type": "string",
+      "description": "HIPAA|SOC2|ISO27001|CIS"
+    },
+    "compliance_status": {
+      "type": "string",
+      "description": "COMPLIANT|PARTIAL|NON_COMPLIANT"
+    },
+    "evidence_sources": {
+      "type": "string",
+      "description": "audit_trail, attestation_records"
+    },
+    "control_id": {
+      "type": "string",
+      "description": "Framework control identifier"
+    },
+    "remediation_plan": {
+      "type": "string",
+      "description": "Steps to achieve compliance"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schema/compliance_mapping.schema.json",
+  "required": [
+    "mapping_id",
+    "layer_id",
+    "control_description",
+    "implementation_layer",
+    "framework",
+    "compliance_status",
+    "evidence_sources",
+    "control_id",
+    "remediation_plan"
+  ],
+  "description": "Maps data model layers to compliance frameworks (HIPAA, SOC2, ISO27001, CIS)",
+  "type": "object",
+  "title": "compliance_mapping"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "error",
+  "error_type": "System.Management.Automation.RuntimeException",
+  "stack": "at <ScriptBlock>, C:\\eva-foundry\\37-data-model\\scripts\\translate-literals-ai.ps1: line 150\r\nat <ScriptBlock>, <No file>: line 1",
+  "operation": "translate-literals-ai",
+  "timestamp": "2026-03-11T16:43:04.1182889-03:00",
+  "message": "Unexpected literals response shape; expected array"
+}

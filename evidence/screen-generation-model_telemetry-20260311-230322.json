@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:03:22Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add ModelTelemetry screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L28",
+    "title_fr": "ModelTelemetry",
+    "name": "model_telemetry",
+    "title": "ModelTelemetry"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2261,
+    "avg_loc_per_file": 377.0,
+    "duration_seconds": 0.64,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\model_telemetry\\ModelTelemetryListView.tsx",
+      "lines_of_code": 192,
+      "file": "ModelTelemetryListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\model_telemetry\\ModelTelemetryDetailDrawer.tsx",
+      "lines_of_code": 298,
+      "file": "ModelTelemetryDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\model_telemetry\\ModelTelemetryCreateForm.tsx",
+      "lines_of_code": 638,
+      "file": "ModelTelemetryCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\model_telemetry\\ModelTelemetryEditForm.tsx",
+      "lines_of_code": 666,
+      "file": "ModelTelemetryEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\model_telemetry\\ModelTelemetryGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "ModelTelemetryGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\model_telemetry\\__tests__\\ModelTelemetryListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "ModelTelemetryListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

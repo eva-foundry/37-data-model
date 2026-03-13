@@ -1,0 +1,161 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaButton",
+  "componentName": "EvaButton",
+  "category": "action",
+  "complexity": "simple",
+  "usageFrequency": "very-high",
+  "tags": [
+    "button",
+    "action",
+    "form",
+    "interactive",
+    "click"
+  ],
+  "domains": [
+    "universal",
+    "admin-crud",
+    "finops",
+    "devops",
+    "observability",
+    "search",
+    "apim",
+    "chat"
+  ],
+  "examples": [
+    {
+      "exampleId": "basic-usage",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [20, 35],
+      "description": "Simplest button with bilingual text using t() translation function",
+      "tags": ["basic", "i18n"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["bilingual", "onClick-handler"]
+    },
+    {
+      "exampleId": "primary-variant",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [40, 58],
+      "description": "Primary button variant for main actions (submit, save, create)",
+      "tags": ["variant", "primary", "emphasis"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["variant-primary", "bilingual"]
+    },
+    {
+      "exampleId": "secondary-outline-variants",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [60, 90],
+      "description": "Secondary, outline, subtle, and transparent variants for different hierarchy levels",
+      "tags": ["variant", "hierarchy", "visual-hierarchy"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["variant-secondary", "variant-outline", "variant-subtle", "variant-transparent"]
+    },
+    {
+      "exampleId": "icon-buttons",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [95, 125],
+      "description": "Icon-only buttons with ARIA labels for accessibility (Edit, Delete, Settings)",
+      "tags": ["icon", "aria", "a11y", "icon-only"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["icon-only", "aria-label", "accessibility"]
+    },
+    {
+      "exampleId": "loading-states",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [130, 165],
+      "description": "Loading spinner with disabled state during async operations (Save, Submit)",
+      "tags": ["loading", "async", "spinner", "state"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["loading-prop", "disabled-while-loading", "async-operation"]
+    },
+    {
+      "exampleId": "disabled-states",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [170, 195],
+      "description": "Disabled buttons with proper ARIA attributes for unavailable actions",
+      "tags": ["disabled", "aria", "state"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["disabled-prop", "aria-disabled"]
+    },
+    {
+      "exampleId": "full-width-layout",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [200, 220],
+      "description": "Full-width button for mobile layouts and forms (Sign In, Register)",
+      "tags": ["layout", "responsive", "mobile"],
+      "complexity": "simple",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["full-width", "block-display"]
+    },
+    {
+      "exampleId": "button-groups",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [225, 260],
+      "description": "Grouped buttons for related actions (Save/Cancel, Yes/No/Cancel)",
+      "tags": ["group", "layout", "multiple-actions"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["button-group", "action-group", "cancel-save-pattern"]
+    },
+    {
+      "exampleId": "keyboard-shortcuts",
+      "file": "components/EvaButton/Basic.example.tsx",
+      "lineRange": [265, 295],
+      "description": "Keyboard shortcuts with visual indicators and event handlers (Ctrl+S, Ctrl+K)",
+      "tags": ["keyboard", "shortcuts", "a11y", "ux"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["keyboard-event", "shortcut-display", "accessibility"]
+    }
+  ],
+  "propsRequired": [
+    "children"
+  ],
+  "propsOptional": [
+    "variant",
+    "size",
+    "icon",
+    "iconPosition",
+    "disabled",
+    "loading",
+    "fullWidth",
+    "onClick",
+    "type",
+    "form",
+    "aria-label",
+    "aria-describedby",
+    "className",
+    "style"
+  ],
+  "relatedComponents": [
+    "EvaIcon",
+    "EvaSpinner",
+    "EvaToast"
+  ],
+  "relatedPatterns": [
+    "form-submission",
+    "delete-confirmation",
+    "bulk-actions",
+    "loading-states"
+  ],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evabutton--default",
+  "testsPresent": true,
+  "a11yScore": "100",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

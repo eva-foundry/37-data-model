@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:03:47Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Connections screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L62",
+    "title_fr": "Connections",
+    "name": "connections",
+    "title": "Connections"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2261,
+    "avg_loc_per_file": 377.0,
+    "duration_seconds": 0.65,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\connections\\ConnectionsListView.tsx",
+      "lines_of_code": 192,
+      "file": "ConnectionsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\connections\\ConnectionsDetailDrawer.tsx",
+      "lines_of_code": 298,
+      "file": "ConnectionsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\connections\\ConnectionsCreateForm.tsx",
+      "lines_of_code": 638,
+      "file": "ConnectionsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\connections\\ConnectionsEditForm.tsx",
+      "lines_of_code": 666,
+      "file": "ConnectionsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\connections\\ConnectionsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "ConnectionsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\connections\\__tests__\\ConnectionsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "ConnectionsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

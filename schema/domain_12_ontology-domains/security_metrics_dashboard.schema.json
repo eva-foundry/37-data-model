@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/security_metrics_dashboard.schema.json",
+  "title": "Security Metrics Dashboard",
+  "type": "object",
+  "description": "KRI/KSI metrics and security KPIs (L86 - Security Phase 2)",
+  "required": [
+    "dashboard_id",
+    "metric_name",
+    "measurement_date"
+  ],
+  "properties": {
+    "dashboard_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-security-kpi-[0-9]{8}-[0-9]{3,}$"
+    },
+    "metric_name": {
+      "type": "string",
+      "description": "KRI or KSI name"
+    },
+    "metric_type": {
+      "type": "string",
+      "enum": ["key_risk_indicator", "key_success_indicator", "security_quality", "compliance_status"],
+      "description": "Type of metric"
+    },
+    "measurement_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "measurement_period": {
+      "type": "string",
+      "enum": ["daily", "weekly", "monthly", "quarterly", "annual"],
+      "description": "Frequency of measurement"
+    },
+    "metric_category": {
+      "type": "string",
+      "enum": [
+        "vulnerability_management",
+        "access_control",
+        "threat_intelligence",
+        "incident_response",
+        "compliance_posture",
+        "threat_landscape",
+        "security_staffing",
+        "training_effectiveness"
+      ]
+    },
+    "current_value": {
+      "type": "number",
+      "description": "Current metric reading"
+    },
+    "measurement_unit": {
+      "type": "string",
+      "description": "Unit of measurement"
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target threshold"
+    },
+    "threshold_status": {
+      "type": "string",
+      "enum": ["green_good", "yellow_caution", "red_alert"],
+      "description": "Status relative to target"
+    },
+    "historical_trend": {
+      "type": "array",
+      "description": "Last 12 months of data",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": { "type": "string", "format": "date" },
+          "value": { "type": "number" }
+        }
+      }
+    },
+    "improvement_rate_percent": {
+      "type": "number",
+      "description": "Trend over last 3 months"
+    },
+    "drivers_of_metric": {
+      "type": "array",
+      "description": "What factors influence this metric?",
+      "items": { "type": "string" }
+    },
+    "influencing_events": {
+      "type": "array",
+      "description": "Notable events that affected this metric",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_date": { "type": "string", "format": "date" },
+          "event_description": { "type": "string" },
+          "impact_on_metric": { "type": "string" }
+        }
+      }
+    },
+    "action_if_yellow": {
+      "type": "string",
+      "description": "What to do if caution level reached?"
+    },
+    "action_if_red": {
+      "type": "string",
+      "description": "What to do if alert level reached?"
+    },
+    "responsible_team": {
+      "type": "string",
+      "description": "Team accountable for this metric"
+    },
+    "collected_by": {
+      "type": "string",
+      "description": "Data collection method/tool"
+    },
+    "confidence_in_measurement": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "How reliable is this measurement?"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or caveats"
+    }
+  }
+}

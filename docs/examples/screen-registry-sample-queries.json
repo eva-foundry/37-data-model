@@ -1,0 +1,44 @@
+{
+  "query_data_model": {
+    "description": "Get all operational data-model layers",
+    "sql": "SELECT * FROM screens WHERE screens.source = 'data-model' AND screens.status = 'operational'",
+    "expected_result": 111
+  },
+  "query_by_tag": {
+    "description": "Get all screens tagged with monitoring",
+    "sql": "SELECT * FROM screens WHERE ARRAY_CONTAINS(screens.tags, 'monitoring')",
+    "expected_result": 1
+  },
+  "query_by_category": {
+    "description": "Get all dashboard screens",
+    "sql": "SELECT * FROM screens WHERE screens.category = 'dashboard'",
+    "expected_result": 1
+  },
+  "query_status_breakdown": {
+    "description": "Breakdown of screens by status",
+    "sql": "SELECT screens.status, COUNT(*) as count FROM screens GROUP BY screens.status",
+    "expected_result": [
+      {
+        "status": "discovered",
+        "count": 42
+      },
+      {
+        "status": "operational",
+        "count": 111
+      },
+      {
+        "status": "pending",
+        "count": 10
+      },
+      {
+        "status": "planned",
+        "count": 10
+      }
+    ]
+  },
+  "query_all_operational": {
+    "description": "Count all operational screens across all sources",
+    "sql": "SELECT COUNT(*) as count FROM screens WHERE screens.status = 'operational'",
+    "expected_result": 111
+  }
+}

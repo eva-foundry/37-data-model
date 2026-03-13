@@ -1,0 +1,41 @@
+{
+  "layer": "discovery_signals",
+  "layer_id": "L129",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Sensor outputs — continuous stream of environmental signals, anomalies, trends",
+  "purpose": "Append-only signal stream from automated sensors to enable continuous monitoring and Re-Discovery",
+  "schema": {
+    "id": "string - sig-{sensor_id}-{YYYYMMDD-HHMMSS}",
+    "layer": "string - discovery_signals",
+    "sensor_id": "string - FK → L128/discovery_sensors",
+    "project_id": "string - FK → L26/projects (optional, null for workspace-level signals)",
+    "signal_type": "enum - anomaly | trend | threshold_breach | opportunity | risk_indicator | status_change",
+    "severity": "enum - CRITICAL | HIGH | MEDIUM | LOW | INFO",
+    "title": "string",
+    "description": "string",
+    "data": {
+      "metric_name": "string",
+      "metric_value": "number",
+      "baseline_value": "number",
+      "deviation_pct": "number",
+      "trend_direction": "enum - UP | DOWN | STABLE | VOLATILE"
+    },
+    "affected_entities": ["string - layer/id references"],
+    "recommended_action": "string - what to do about this signal",
+    "auto_triaged": "boolean",
+    "triage_result": "enum - ACTIONABLE | NOISE | NEEDS_REVIEW | ESCALATE",
+    "acknowledged_by": "string - null if auto-processed",
+    "acknowledged_at": "ISO 8601",
+    "created_at": "ISO 8601",
+    "ttl": "number - 90 days in seconds (2592000)"
+  },
+  "relationships": {
+    "parent": ["L128/discovery_sensors"],
+    "child": ["L122/discovery_contexts (signals feed context creation)"],
+    "edge_types": ["detects", "triggers", "informs"]
+  },
+  "ttl_days": 90,
+  "immutability": "APPEND-ONLY, HIGH-VOLUME - Signals are never updated. Only new ones written. Retention policy: 90 days active, then archive. Primary candidate for infrastructure separation (separate signal_store container).",
+  "notes": "High-volume stream (can be thousands/day). Should be partitioned by sensor_id for performance. TTL enforcement optional."
+}

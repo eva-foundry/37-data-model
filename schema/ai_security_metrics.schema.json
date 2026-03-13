@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/ai_security_metrics.schema.json",
+  "title": "AI Security Metrics (L80)",
+  "description": "Test suite performance metrics: pass/fail rates, coverage by framework, API costs, execution time.",
+  "type": "object",
+  "required": ["id", "suite_id", "run_timestamp", "test_count"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^metrics_[a-z_]+_[0-9]{6}$"},
+    "suite_id": {"type": "string", "description": "Reference to red_team_test_suite (L77)"},
+    "run_timestamp": {"type": "string", "format": "date-time"},
+    "test_count": {"type": "integer", "minimum": 1},
+    "pass_count": {"type": "integer", "minimum": 0},
+    "fail_count": {"type": "integer", "minimum": 0},
+    "pass_rate_pct": {"type": "number", "minimum": 0, "maximum": 100},
+    "coverage_by_framework": {
+      "type": "object",
+      "description": "Test coverage percentage for each framework",
+      "additionalProperties": {"type": "number", "minimum": 0, "maximum": 100}
+    },
+    "api_cost_usd": {"type": "number", "minimum": 0},
+    "duration_minutes": {"type": "integer", "minimum": 1},
+    "tokens_used": {
+      "type": "object",
+      "properties": {
+        "total": {"type": "integer", "minimum": 0},
+        "completion": {"type": "integer", "minimum": 0},
+        "prompt": {"type": "integer", "minimum": 0}
+      }
+    },
+    "false_positive_count": {"type": "integer", "minimum": 0, "description": "Findings later determined to be false positives"},
+    "regression_introduced": {"type": "boolean", "description": "Did this test suite identify regressions?"},
+    "vulnerabilities_found": {
+      "type": "array",
+      "description": "Severity breakdown of findings",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+          "count": {"type": "integer", "minimum": 0}
+        }
+      }
+    },
+    "performance_notes": {"type": "string", "maxLength": 1000},
+    "environment": {
+      "type": "object",
+      "properties": {
+        "model": {"type": "string"},
+        "provider": {"type": "string"},
+        "temperature": {"type": "number"}
+      }
+    },
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

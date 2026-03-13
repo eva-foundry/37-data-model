@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L67 - work_service_breaches",
+  "description": "SLA breach records — incidents where service performance (L65) violates defined SLOs (L66). Triggers automated remediation planning (L68) and alerting. Complete self-healing loop: breach -> plan -> remediate -> revalidate.",
+  "required": [
+    "id",
+    "slo_id",
+    "service_id",
+    "breach_detected_at",
+    "severity",
+    "status",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: breach-{slo_id}-{YYYYMMDD}-{seq}",
+      "pattern": "^breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$",
+      "examples": ["breach-slo-service-schema-migrator-success_rate-20260309-01"]
+    },
+    "slo_id": {
+      "type": "string",
+      "description": "FK to L66 work_service_level_objectives (RESTRICT on delete). Which SLO was breached.",
+      "pattern": "^slo-service-[a-z0-9-]+-[a-z0-9_-]+$"
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services (RESTRICT on delete). Which service breached SLO.",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "breach_detected_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the breach was first detected (ISO8601 timestamp)"
+    },
+    "breach_resolved_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When the breach was resolved (ISO8601 timestamp, null if still active)"
+    },
+    "duration_minutes": {
+      "type": ["integer", "null"],
+      "minimum": 0,
+      "description": "Total breach duration in minutes (calculated when resolved)"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["warning", "critical"],
+      "description": "Breach severity based on SLO thresholds"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "remediating", "resolved", "acknowledged", "false_positive"],
+      "description": "Breach lifecycle status"
+    },
+    "metric_name": {
+      "type": "string",
+      "description": "Which metric breached (copied from SLO for convenience)"
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value for the metric (copied from SLO)"
+    },
+    "actual_value": {
+      "type": "number",
+      "description": "Actual measured value that triggered breach"
+    },
+    "threshold_breached": {
+      "type": "number",
+      "description": "Threshold value that was breached (warning or critical)"
+    },
+    "measurement_window_hours": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Measurement window during which breach was detected (copied from SLO)"
+    },
+    "impact_assessment": {
+      "type": "string",
+      "description": "Human-readable impact description (e.g., 'Service unavailable for 23 minutes', '150 requests failed')"
+    },
+    "root_cause_hypothesis": {
+      "type": ["string", "null"],
+      "description": "Initial hypothesis about root cause (updated during investigation)"
+    },
+    "affected_requests": {
+      "type": "array",
+      "description": "FK array to L63 work_service_requests. Requests affected by this breach.",
+      "items": {
+        "type": "string",
+        "pattern": "^request-[0-9]{8}-[0-9]{3,}$"
+      }
+    },
+    "failed_runs": {
+      "type": "array",
+      "description": "FK array to L64 work_service_runs. Failed runs contributing to breach.",
+      "items": {
+        "type": "string",
+        "pattern": "^run-request-[0-9]{8}-[0-9]{3,}-[0-9]{2}$"
+      }
+    },
+    "notification_sent": {
+      "type": "boolean",
+      "description": "Whether notifications were sent per SLO.notification_channels"
+    },
+    "notification_sent_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When notifications were sent (ISO8601 timestamp)"
+    },
+    "acknowledged_by": {
+      "type": ["string", "null"],
+      "description": "Who acknowledged this breach (agent/human identifier)"
+    },
+    "acknowledged_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When breach was acknowledged (ISO8601 timestamp)"
+    },
+    "remediation_plan_id": {
+      "type": ["string", "null"],
+      "description": "FK to L68 work_service_remediation_plans (SET_NULL). Remediation plan for this breach.",
+      "pattern": "^remediation-breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+    },
+    "revalidation_result_id": {
+      "type": ["string", "null"],
+      "description": "FK to L69 work_service_revalidation_results (SET_NULL). Post-remediation verification.",
+      "pattern": "^revalidation-breach-slo-service-[a-z0-9-]+-[a-z0-9_-]+-[0-9]{8}-[0-9]{2}$"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional investigation notes or resolution details"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator (typically automated breach detection system)"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

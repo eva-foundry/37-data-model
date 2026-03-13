@@ -1,0 +1,72 @@
+{
+  "properties": {
+    "attestation_id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "compliance_status": {
+      "type": "string",
+      "description": "COMPLIANT|COMPLIANT_WITH_EXCEPTIONS"
+    },
+    "certificate_thumbprint": {
+      "type": "string",
+      "description": "Certificate used for signature"
+    },
+    "valid_from": {
+      "type": "string",
+      "description": "When attestation becomes effective"
+    },
+    "valid_until": {
+      "type": "string",
+      "description": "ISO 8601 expiration date"
+    },
+    "attesting_party": {
+      "type": "string",
+      "description": "Who issued attestation"
+    },
+    "scope": {
+      "type": "string",
+      "description": "What the attestation covers"
+    },
+    "digital_signature": {
+      "type": "string",
+      "description": "Signed by attesting party"
+    },
+    "findings": {
+      "type": "string",
+      "description": "Any findings or exceptions"
+    },
+    "audit_trail_coverage": {
+      "type": "string",
+      "description": "Date range covered by audit"
+    },
+    "type": {
+      "type": "string",
+      "description": "SOC2_Type2|ISO27001|HIPAA|CIS|INTERNAL_AUDIT"
+    },
+    "attestation_date": {
+      "type": "string",
+      "description": "ISO 8601 date"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schema/attestation_records.schema.json",
+  "required": [
+    "attestation_id",
+    "findings",
+    "certificate_thumbprint",
+    "valid_from",
+    "valid_until",
+    "attesting_party",
+    "digital_signature",
+    "scope",
+    "audit_trail_coverage",
+    "type",
+    "compliance_status",
+    "attestation_date"
+  ],
+  "description": "Compliance attestations, audit certifications, and digitally signed audit evidence",
+  "type": "object",
+  "title": "attestation_records"
+}

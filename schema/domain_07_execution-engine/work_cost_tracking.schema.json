@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/work_cost_tracking.schema.json",
+  "title": "Work Cost Tracking",
+  "type": "object",
+  "description": "Detailed cost breakdown and tracking (L67 - Execution Engine Phase 4)",
+  "required": [
+    "cost_record_id",
+    "work_unit_id",
+    "cost_category",
+    "amount_usd"
+  ],
+  "properties": {
+    "cost_record_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-cost-[0-9]{8}-[0-9]{3,}$"
+    },
+    "work_unit_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-wu-[0-9]{8}-[0-9]{3,}$"
+    },
+    "cost_category": {
+      "type": "string",
+      "enum": [
+        "compute",
+        "storage",
+        "network",
+        "license",
+        "personnel",
+        "training",
+        "tooling",
+        "compliance"
+      ],
+      "description": "Cost category"
+    },
+    "cost_subcategory": {
+      "type": "string",
+      "description": "More granular category (e.g., 'Azure-Compute', 'GPU-A100-hour')"
+    },
+    "amount_usd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Cost in USD"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantity of items (for rate-based costs)"
+    },
+    "unit_cost_usd": {
+      "type": "number",
+      "description": "Price per unit"
+    },
+    "cost_driver": {
+      "type": "string",
+      "description": "What drove this cost (e.g., 'GPU compute hours', 'Storage GB-month')"
+    },
+    "cost_center": {
+      "type": "string",
+      "description": "Billing cost center"
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Associated project.schema.json project_id"
+    },
+    "incurred_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this cost was incurred"
+    },
+    "invoice_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Invoice date (if from vendor)"
+    },
+    "invoice_number": {
+      "type": "string",
+      "description": "Reference to vendor invoice"
+    },
+    "vendor": {
+      "type": "string",
+      "enum": ["Azure", "AWS", "GCP", "internal", "third-party"],
+      "description": "Cost source"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["estimated", "incurred", "billed", "paid"],
+      "description": "Cost status"
+    },
+    "budgeted_amount_usd": {
+      "type": "number",
+      "description": "Original budget for this cost"
+    },
+    "variance_usd": {
+      "type": "number",
+      "description": "Actual minus budgeted"
+    },
+    "variance_percent": {
+      "type": "number",
+      "description": "Variance as percentage"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or explanation"
+    }
+  }
+}

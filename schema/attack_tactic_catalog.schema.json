@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/attack_tactic_catalog.schema.json",
+  "title": "Attack Tactic Catalog (L76)",
+  "description": "OWASP + ATLAS + NIST attack taxonomy for red-teaming and LLM vulnerability testing. Maps attack tactics across security frameworks.",
+  "type": "object",
+  "required": ["id", "name", "category", "frameworks"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for this attack tactic (e.g., 'tactic_prompt_injection_001')",
+      "pattern": "^tactic_[a-z_]+_[0-9]{3}$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the attack tactic",
+      "minLength": 10,
+      "maxLength": 200
+    },
+    "category": {
+      "type": "string",
+      "description": "High-level attack category",
+      "enum": [
+        "injection",
+        "jailbreak",
+        "privacy",
+        "hallucination",
+        "harmful_content",
+        "compliance",
+        "model_poisoning",
+        "supply_chain"
+      ]
+    },
+    "frameworks": {
+      "type": "array",
+      "description": "Maps to multiple security frameworks",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["framework_name", "control_id"],
+        "properties": {
+          "framework_name": {
+            "type": "string",
+            "enum": ["ATLAS", "OWASP-LLM", "NIST-AI-RMF", "ITSG-33", "EU-AI-Act"],
+            "description": "Framework that this tactic maps to"
+          },
+          "control_id": {
+            "type": "string",
+            "description": "Control identifier in the framework (e.g., 'ATLAS.AML.T0350', 'OWASP-LLM-01')",
+            "minLength": 5,
+            "maxLength": 50
+          },
+          "severity_in_framework": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"],
+            "description": "Severity level assigned by this framework"
+          }
+        }
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the attack tactic",
+      "minLength": 50,
+      "maxLength": 2000
+    },
+    "references": {
+      "type": "array",
+      "description": "External references (CVE, papers, exploits)",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "severity_profile": {
+      "type": "object",
+      "description": "Severity assessment across different models and architectures",
+      "properties": {
+        "base_severity": {
+          "type": "string",
+          "enum": ["critical", "high", "medium", "low"],
+          "description": "Default severity for this tactic"
+        },
+        "model_variants": {
+          "type": "object",
+          "description": "Severity varies by model type",
+          "additionalProperties": {
+            "type": "string",
+            "enum": ["critical", "high", "medium", "low"]
+          }
+        }
+      }
+    },
+    "detection_difficulty": {
+      "type": "string",
+      "enum": ["trivial", "easy", "moderate", "hard", "very_hard"],
+      "description": "How difficult this tactic is to detect"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this tactic was cataloged"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last update timestamp"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Who created this record (e.g., 'agent:red_team', 'human:eva_admin')"
+    }
+  },
+  "additionalProperties": false
+}

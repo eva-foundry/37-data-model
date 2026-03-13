@@ -1,0 +1,74 @@
+{
+  "layer": "missions",
+  "layer_id": "L127",
+  "domain_id": "D13",
+  "domain_name": "Discovery & Sense-Making",
+  "description": "Mission lifecycle tracking — from discovery grounding through execution to completion",
+  "purpose": "Track each mission end-to-end through all D³PDCA phases with discovery grounding, success criteria, and execution status",
+  "schema": {
+    "id": "string - msn-{project_id}-{YYYYMMDD}",
+    "layer": "string - missions",
+    "project_id": "string - FK → L26/projects",
+    "mission_type": "enum - documentation | refactoring | feature | governance | multi_project",
+    "mission_title": "string",
+    "mission_statement": "string - one sentence, grounded in discovery",
+    "lifecycle_phase": "enum - DISCOVER | DEFINE | PLAN | DO | CHECK | ACT | RE_DISCOVER | COMPLETE | ABORTED",
+    "d3pdca_phase": "enum - DISCOVER | DEFINE | PLAN | DO | CHECK | ACT | RE-DISCOVER",
+    "status": "enum - PENDING | SCHEDULED | RUNNING | COMPLETED | PAUSED | FAILED",
+    "discovery_context_id": "string - FK → L122/discovery_contexts",
+    "discovery_grounding": {
+      "problem_statement": "string - from context map",
+      "assumptions_verified": ["string - FK → L123/discovery_assumptions (validated=true)"],
+      "risks_mitigated": ["string - FK → L124/discovery_risks (mitigation_status=COMPLETED)"],
+      "opportunities_targeted": ["string - FK → L125/discovery_opportunities"],
+      "stakeholder_signoffs": [
+        {
+          "stakeholder": "string",
+          "role": "string",
+          "signed_at": "ISO 8601",
+          "grounding_valid": true
+        }
+      ]
+    },
+    "success_criteria": [
+      {
+        "criterion": "string",
+        "measurable": true,
+        "tied_to_discovery": "string - reference to discovery finding",
+        "status": "enum - NOT_EVALUATED | PASS | FAIL"
+      }
+    ],
+    "scope": {
+      "in": ["string"],
+      "out": ["string"]
+    },
+    "quality_gates": {
+      "syntax": "enum - PASS | FAIL | NOT_EVALUATED",
+      "tests": "enum - PASS | FAIL | NOT_EVALUATED",
+      "documentation": "enum - PASS | FAIL | NOT_EVALUATED",
+      "audit_trail": "enum - PASS | FAIL | NOT_EVALUATED",
+      "security": "enum - PASS | FAIL | NOT_EVALUATED"
+    },
+    "execution": {
+      "agent_type": "enum - cloud_agent | local_agent | human | hybrid",
+      "started_at": "ISO 8601",
+      "completed_at": "ISO 8601",
+      "duration_hours": "number",
+      "phases_completed": "number",
+      "phases_total": "number",
+      "steering_count": "number - human corrections during execution",
+      "pr_url": "string - GitHub PR URL",
+      "branch": "string"
+    },
+    "evidence_ids": ["string - FK → L33/evidence"],
+    "created_by": "string",
+    "created_at": "ISO 8601",
+    "is_active": true
+  },
+  "relationships": {
+    "parent": ["L26/projects", "L122/discovery_contexts"],
+    "child": ["L33/evidence (mission evidence)", "L52/work_execution_units"],
+    "edge_types": ["executes", "grounds", "produces", "validates"]
+  },
+  "notes": "Mission is the unit of orchestration. Every mission executes through all 6 D³PDCA phases end-to-end with discovery grounding."
+}

@@ -1,0 +1,216 @@
+{
+  "schema": {
+    "fields": [
+      {
+        "label": "Id",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "id"
+      },
+      {
+        "label": "Phase",
+        "type": "string",
+        "required": false,
+        "input_type": "textarea",
+        "name": "phase"
+      },
+      {
+        "label": "Goal",
+        "type": "string",
+        "required": true,
+        "input_type": "textarea",
+        "name": "goal"
+      },
+      {
+        "label": "Pbi Total",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "pbi_total"
+      },
+      {
+        "label": "Maturity",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "maturity"
+      },
+      {
+        "label": "Sprint Context",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "sprint_context"
+      },
+      {
+        "label": "Label Fr",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "label_fr"
+      },
+      {
+        "label": "Ado Epic Id",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "ado_epic_id"
+      },
+      {
+        "label": "Ado Project",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "ado_project"
+      },
+      {
+        "label": "Folder",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "folder"
+      },
+      {
+        "label": "Notes",
+        "type": "string",
+        "required": false,
+        "input_type": "textarea",
+        "name": "notes"
+      },
+      {
+        "label": "Depends On",
+        "type": "array",
+        "required": false,
+        "input_type": "textarea",
+        "name": "depends_on"
+      },
+      {
+        "label": "Status",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "status"
+      },
+      {
+        "label": "Github Repo",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "github_repo"
+      },
+      {
+        "label": "Category",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "category"
+      },
+      {
+        "label": "Pbi Done",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "pbi_done"
+      },
+      {
+        "label": "Label",
+        "type": "string",
+        "required": true,
+        "input_type": "text",
+        "name": "label"
+      },
+      {
+        "label": "Wbs Id",
+        "type": "string",
+        "required": false,
+        "input_type": "text",
+        "name": "wbs_id"
+      },
+      {
+        "label": "Blocked By",
+        "type": "array",
+        "required": false,
+        "input_type": "textarea",
+        "name": "blocked_by"
+      },
+      {
+        "label": "Services",
+        "type": "array",
+        "required": false,
+        "input_type": "textarea",
+        "name": "services"
+      }
+    ],
+    "fields_count": 20
+  },
+  "operation": "screen_generation_v2",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "lines_of_code": 165,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\projects\\ProjectsListView.tsx",
+      "file": "ProjectsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "lines_of_code": 364,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsDetailDrawer.tsx",
+      "file": "ProjectsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "lines_of_code": 1103,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsCreateForm.tsx",
+      "file": "ProjectsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "lines_of_code": 1165,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsEditForm.tsx",
+      "file": "ProjectsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "lines_of_code": 213,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\components\\projects\\ProjectsGraphView.tsx",
+      "file": "ProjectsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "lines_of_code": 254,
+      "path": "c:\\eva-foundry\\37-data-model\\ui\\src\\pages\\projects\\__tests__\\ProjectsListView.test.tsx",
+      "file": "ProjectsListView.test.tsx"
+    }
+  ],
+  "session": "45-part6-schema-generation",
+  "timestamp": "2026-03-11T02:45:14Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Projects screens v2 (schema-generated)'"
+  ],
+  "quality_gates": {
+    "typescript_compilation": "PENDING",
+    "i18n": "PENDING",
+    "eslint": "PENDING",
+    "accessibility": "PENDING",
+    "jest_coverage": "PENDING",
+    "no_placeholders": "PENDING"
+  },
+  "metrics": {
+    "avg_loc_per_file": 544.0,
+    "total_loc": 3264,
+    "files_count": 6,
+    "duration_seconds": 0.52
+  },
+  "generator": "screens-machine-v2.0.0",
+  "layer": {
+    "title_fr": "Projets",
+    "id": "L25",
+    "title": "Projects",
+    "name": "projects"
+  }
+}

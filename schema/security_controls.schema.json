@@ -1,0 +1,62 @@
+{
+  "properties": {
+    "layer_implementing": {
+      "type": "string",
+      "description": "Reference to implementing layer"
+    },
+    "control_name": {
+      "type": "string",
+      "description": "Human-readable control name"
+    },
+    "last_test_date": {
+      "type": "string",
+      "description": "ISO 8601 date"
+    },
+    "implementation_status": {
+      "type": "string",
+      "description": "NOT_STARTED|IN_PROGRESS|IMPLEMENTED|VERIFIED"
+    },
+    "responsible_team": {
+      "type": "string",
+      "description": "Owner of this control"
+    },
+    "evidence_record_ids": {
+      "type": "string",
+      "description": "Links to audit_trail"
+    },
+    "test_results": {
+      "type": "string",
+      "description": "PASS|FAIL|FAIL_WITH_REMEDIATION"
+    },
+    "testing_frequency": {
+      "type": "string",
+      "description": "CONTINUOUS|QUARTERLY|ANNUALLY"
+    },
+    "compliance_frameworks": {
+      "type": "string",
+      "description": "HIPAA|SOC2|ISO27001"
+    },
+    "control_id": {
+      "type": "string",
+      "description": "NIST|CIS control identifier"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schema/security_controls.schema.json",
+  "required": [
+    "layer_implementing",
+    "control_name",
+    "last_test_date",
+    "implementation_status",
+    "responsible_team",
+    "evidence_record_ids",
+    "test_results",
+    "testing_frequency",
+    "compliance_frameworks",
+    "control_id"
+  ],
+  "description": "Control implementations per NIST Cybersecurity Framework and CIS Critical Controls",
+  "type": "object",
+  "title": "security_controls"
+}

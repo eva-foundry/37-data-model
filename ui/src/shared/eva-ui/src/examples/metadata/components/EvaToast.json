@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema.json",
+  "componentId": "EvaToast",
+  "componentName": "EvaToast",
+  "category": "feedback",
+  "complexity": "medium",
+  "usageFrequency": "medium",
+  "tags": ["toast","notification","feedback"],
+  "domains": ["universal","admin-crud","finops"],
+  "examples": [
+    {
+      "exampleId": "toast-showcase",
+      "file": "components/EvaToast/Complete.example.tsx",
+      "lineRange": [10, 61],
+      "description": "Showcases success, info, warning, and error toast notifications",
+      "tags": ["success", "error", "warning", "info"],
+      "complexity": "medium",
+      "localeSupport": true,
+      "dataSource": ["mock"],
+      "features": ["useEvaToast", "Toaster", "intent-styles"]
+    }
+  ],
+  "propsRequired": ["message"],
+  "propsOptional": ["title","intent"],
+  "relatedComponents": ["EvaIcon"],
+  "relatedPatterns": ["toast-pattern"],
+  "storybookUrl": "http://localhost:6007/?path=/story/eva-ui-evatoast--default",
+  "testsPresent": false,
+  "a11yScore": "95",
+  "lastUpdated": "2026-02-15",
+  "status": "complete"
+}

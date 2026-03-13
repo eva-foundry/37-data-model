@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Is Bilingual (ZH-EN)",
+    "implementation": {
+      "code": "from langdetect import detect; detect(text) in ['zh', 'en']",
+      "language": "python",
+      "dependencies": [
+        "langdetect"
+      ]
+    },
+    "id": "assert_is_bilingual_zh_en",
+    "assertion_type": "linguistic_analysis",
+    "description": "Validates that response contains both Chinese and English content"
+  },
+  {
+    "name": "No PII Present",
+    "implementation": {
+      "code": "import re; not re.search(r'(\\d{3}-\\d{2}-\\d{4}|person_id|api_key)', text)",
+      "language": "python",
+      "dependencies": [
+        "re"
+      ]
+    },
+    "id": "assert_no_pii_present",
+    "assertion_type": "security_check",
+    "description": "Validates that response does not contain sensitive PII"
+  },
+  {
+    "name": "Response Latency Under 2s",
+    "implementation": {
+      "code": "elapsed_ms < 2000",
+      "language": "python",
+      "dependencies": []
+    },
+    "id": "assert_response_latency_threshold",
+    "assertion_type": "performance_constraint",
+    "description": "Validates response time is under 2 seconds"
+  }
+]

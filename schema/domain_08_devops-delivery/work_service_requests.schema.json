@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L63 - work_service_requests",
+  "description": "Service invocation requests — demand intake for work factory services (L62). Each request represents a demand for a service to be executed, tracks requester, priority, input payload, and request lifecycle. Fulfilled via service runs (L64).",
+  "required": [
+    "id",
+    "service_id",
+    "requester_type",
+    "requester_id",
+    "requested_at",
+    "priority",
+    "status",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: request-{YYYYMMDD}-{seq}",
+      "pattern": "^request-[0-9]{8}-[0-9]{3,}$",
+      "examples": ["request-20260309-001", "request-20260309-042"]
+    },
+    "service_id": {
+      "type": "string",
+      "description": "FK to L62 work_factory_services (RESTRICT on delete). Which service is being requested.",
+      "pattern": "^service-[a-z0-9-]+$"
+    },
+    "requester_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "persona", "external_system"],
+      "description": "Type of requester (polymorphic)"
+    },
+    "requester_id": {
+      "type": "string",
+      "description": "Polymorphic FK to requester (agent/cp_agent/persona) or external system identifier"
+    },
+    "project_id": {
+      "type": ["string", "null"],
+      "description": "FK to L25 projects. Optional project context for this request (helps with cost allocation, access control)."
+    },
+    "work_unit_id": {
+      "type": ["string", "null"],
+      "description": "FK to L52 work_execution_units. Optional link to work unit that triggered this request."
+    },
+    "input_payload": {
+      "type": "object",
+      "description": "Request input data (must conform to service.input_schema from L62)"
+    },
+    "requested_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this request was created (ISO8601 timestamp)"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Request priority (influences scheduling)"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "assigned", "in_progress", "completed", "failed", "cancelled"],
+      "description": "Request lifecycle status"
+    },
+    "assigned_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When request was assigned to a service instance for execution"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When request completed (successfully or with failure)"
+    },
+    "cancellation_reason": {
+      "type": ["string", "null"],
+      "minLength": 10,
+      "maxLength": 1000,
+      "description": "Why this request was cancelled (if status=cancelled)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or metadata for this request"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}

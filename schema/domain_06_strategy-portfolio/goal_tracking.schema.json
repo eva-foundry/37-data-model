@@ -1,0 +1,124 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/goal_tracking.schema.json",
+  "title": "Goal Tracking",
+  "type": "object",
+  "description": "OKR (Objectives and Key Results) hierarchy tracking (L74 - Strategy Phase)",
+  "required": [
+    "goal_id",
+    "goal_type",
+    "goal_statement",
+    "owner"
+  ],
+  "properties": {
+    "goal_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-goal-[0-9]{8}-[0-9]{3,}$"
+    },
+    "hierarchy_level": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4],
+      "description": "1=Company, 2=Org/Team, 3=Individual, 4=Sub-goal"
+    },
+    "parent_goal_id": {
+      "type": "string",
+      "description": "Parent goal if this is a sub-goal"
+    },
+    "goal_type": {
+      "type": "string",
+      "enum": ["objective", "key_result", "sub_goal"],
+      "description": "OKR classification"
+    },
+    "goal_statement": {
+      "type": "string",
+      "description": "Clear statement of goal",
+      "minLength": 10
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Why this goal matters",
+      "minLength": 10
+    },
+    "owner": {
+      "type": "string",
+      "description": "persona_id of goal owner"
+    },
+    "contributors": {
+      "type": "array",
+      "description": "Other personas contributing",
+      "items": { "type": "string" }
+    },
+    "fiscal_year": {
+      "type": "integer"
+    },
+    "quarter": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4]
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "target_completion_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "key_results": {
+      "type": "array",
+      "description": "Measurable outcomes for this objective",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kr_id": { "type": "string" },
+          "kr_statement": { "type": "string" },
+          "metric_name": { "type": "string" },
+          "initial_value": { "type": "number" },
+          "target_value": { "type": "number" },
+          "current_value": { "type": "number" },
+          "unit": { "type": "string" },
+          "confidence_percent": { "type": "number" },
+          "status": { "type": "string", "enum": ["on_track", "at_risk", "off_track", "completed"] }
+        }
+      }
+    },
+    "progress_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "status": {
+      "type": "string",
+      "enum": ["not_started", "in_progress", "at_risk", "completed", "abandoned"],
+      "description": "Current goal status"
+    },
+    "progress_notes": {
+      "type": "array",
+      "description": "Status updates",
+      "items": {
+        "type": "object",
+        "properties": {
+          "update_date": { "type": "string", "format": "date" },
+          "status": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "description": "What's preventing progress?",
+      "items": {
+        "type": "object",
+        "properties": {
+          "blocker_description": { "type": "string" },
+          "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+          "mitigation_plan": { "type": "string" }
+        }
+      }
+    },
+    "alignment_to_strategy": {
+      "type": "array",
+      "description": "Which strategic initiatives does this support?",
+      "items": { "type": "string" }
+    }
+  }
+}

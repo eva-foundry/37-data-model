@@ -1,8 +1,10 @@
 ================================================================================
  EVA FOUNDATION -- MASTER OVERVIEW
  File: docs/library/00-EVA-OVERVIEW.md
- Updated: 2026-03-09 -- Evidence Layer LIVE; Agent Automation LIVE; 87 operational layers; 12 ontology domains
+ Version: v1.1 | Updated: 2026-03-12 19:46 ET | Status: operative (87 operational, 24 pending, 12 planned)
+ Session: 46A (Execution Layers) | Domain: Foundation/Strategy
  Source: 37-data-model (single source of truth, cloud-only, store=cosmos)
+ Current capacity: 87 layers live + 24 layers defined (pending ACA deployment) + 12 planned = 123 target
 --------------------------------------------------------------------------------
  COMPETITIVE ADVANTAGE: EVIDENCE LAYER (L31) + GOVERNANCE PLANE (L33-L34) = BILLION-DOLLAR MOAT
 --------------------------------------------------------------------------------

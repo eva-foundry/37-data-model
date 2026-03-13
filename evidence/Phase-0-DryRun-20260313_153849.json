@@ -1,0 +1,11 @@
+{
+  "test_project_id": "99-test-project-2026-03-13",
+  "timestamp": "2026-03-13T18:38:55.8931158Z",
+  "phase": "Phase 0",
+  "status": "SUCCESS",
+  "operations": [
+    "PUT /model/projects/{id} - Created",
+    "GET /model/projects/{id} - Verified",
+    "DELETE /model/projects/{id} - Soft-deleted"
+  ]
+}

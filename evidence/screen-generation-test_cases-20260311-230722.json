@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:07:22Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add TestCases screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L38",
+    "title_fr": "TestCases",
+    "name": "test_cases",
+    "title": "TestCases"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1658,
+    "avg_loc_per_file": 276.0,
+    "duration_seconds": 0.65,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\test_cases\\TestCasesListView.tsx",
+      "lines_of_code": 192,
+      "file": "TestCasesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\test_cases\\TestCasesDetailDrawer.tsx",
+      "lines_of_code": 163,
+      "file": "TestCasesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\test_cases\\TestCasesCreateForm.tsx",
+      "lines_of_code": 656,
+      "file": "TestCasesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\test_cases\\TestCasesEditForm.tsx",
+      "lines_of_code": 180,
+      "file": "TestCasesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\test_cases\\TestCasesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "TestCasesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\test_cases\\__tests__\\TestCasesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "TestCasesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

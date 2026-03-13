@@ -4,7 +4,7 @@ Agent Guide Endpoint Tests — prevent Session 41 regression
 Tests the /model/agent-guide endpoint for:
   T01  GET /model/agent-guide → 200 status
   T02  Response has required top-level keys
-  T03  Layers count is 51 (50 base + 1 metadata)
+  T03  Layers count is 111 (87 operational + 4 execution + 20 planned)
   T04  Remediation framework section exists
   T05  All boolean values are Python True/False (not lowercase)
   T06  Response is valid JSON (no undefined variables)
@@ -52,14 +52,14 @@ def test_T02_response_has_required_keys(client: TestClient):
 
 # ── T03 — layer count ─────────────────────────────────────────────────────────
 
-def test_T03_layers_count_is_51(client: TestClient):
-    """Verify 51 layers (50 base + 1 metadata) are loaded from layer-metadata-index."""
+def test_T03_layers_count_is_111(client: TestClient):
+    """Verify 111 layers (87 base + 4 execution Phase 1 + 20 planned) are loaded from layer-metadata-index."""
     r = client.get("/model/agent-guide")
     response = r.json()
     
     layers = response.get("layers_available", [])
     assert isinstance(layers, list), f"layers_available should be list, got {type(layers)}"
-    assert len(layers) == 51, f"Expected 51 layers, got {len(layers)}"
+    assert len(layers) == 111, f"Expected 111 layers (target state, including planned), got {len(layers)}"
 
 
 # ── T04 — remediation framework ──────────────────────────────────────────────

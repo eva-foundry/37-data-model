@@ -1,0 +1,572 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "evidence.schema.json",
+  "title": "EVA Evidence Receipt",
+  "description": "Proof-of-completion for a DPDCA phase of a story. Universal schema works for any story type (feature, bug, infrastructure, etc) and any project. Session 27: Added tech_stack polymorphism for tech-specific context validation.",
+  "type": "object",
+  "required": ["id", "sprint_id", "story_id", "phase", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Business key: {SPRINT_ID}-{STORY_ID}-{PHASE}. Example: 'ACA-S11-ACA-14-001-A'",
+      "examples": ["ACA-S11-ACA-14-001-A", "F37-S01-F37-01-001-P"]
+    },
+    "correlation_id": {
+      "type": ["string", "null"],
+      "description": "Correlation ID that ties together all operations in this sprint: format ACA-S{NN}-{YYYYMMDD}-{uuid[:8]}",
+      "examples": ["ACA-S11-20260301-285bd914"]
+    },
+    "sprint_id": {
+      "type": "string",
+      "description": "Reference to sprints.id (e.g. 'ACA-S11' or 'F37-S01')"
+    },
+    "story_id": {
+      "type": "string",
+      "description": "Story ID being completed (e.g. 'ACA-14-001', 'F37-01-001')"
+    },
+    "story_title": {
+      "type": ["string", "null"],
+      "description": "Story title for readability"
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["D1", "D2", "P", "D3", "A"],
+      "description": "DPDCA phase: D1=discover, D2=discover-audit, P=plan, D3=do-execute, A=act"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this evidence was recorded (RFC3339)"
+    },
+    "completed_at": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "When the phase actually completed (may differ from created_at if recorded later)"
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "Human-readable summary of what was accomplished"
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Artifacts produced or modified in this phase",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "File or resource path (e.g. 'services/analysis/app/main.py')"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["source", "test", "schema", "config", "doc", "report", "other"],
+            "description": "Artifact type"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["created", "modified", "deleted"],
+            "description": "What happened to this artifact"
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "description": "Validation gate results (merge blockers if failed)",
+      "additionalProperties": false,
+      "properties": {
+        "test_result": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "WARN", "SKIP"],
+          "description": "Test suite result (FAIL blocks merge)"
+        },
+        "lint_result": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "WARN", "SKIP"],
+          "description": "Lint/format check result (FAIL blocks merge)"
+        },
+        "coverage_percent": {
+          "type": ["integer", "null"],
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Code coverage % (warn if <80%)"
+        },
+        "audit_result": {
+          "type": "string",
+          "enum": ["PASS", "FAIL", "WARN", "SKIP"],
+          "description": "Security/compliance audit result"
+        },
+        "messages": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Detailed validation messages or errors"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "description": "Performance and cost metrics",
+      "additionalProperties": false,
+      "properties": {
+        "duration_ms": {
+          "type": ["integer", "null"],
+          "description": "How long the phase took (milliseconds)"
+        },
+        "files_changed": {
+          "type": ["integer", "null"],
+          "description": "Number of files added/modified/deleted"
+        },
+        "lines_added": {
+          "type": ["integer", "null"],
+          "description": "Lines of code added"
+        },
+        "lines_deleted": {
+          "type": ["integer", "null"],
+          "description": "Lines of code deleted"
+        },
+        "tokens_used": {
+          "type": ["integer", "null"],
+          "description": "LM tokens used in this phase (if any LM calls made)"
+        },
+        "cost_usd": {
+          "type": ["number", "null"],
+          "description": "Cost in USD if LM calls made (8 decimals)"
+        },
+        "test_count": {
+          "type": ["integer", "null"],
+          "description": "Total test count after phase"
+        }
+      }
+    },
+    "commits": {
+      "type": "array",
+      "description": "Git commits created in this phase",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sha": {
+            "type": "string",
+            "description": "Commit SHA (7+ hex chars)"
+          },
+          "message": {
+            "type": "string",
+            "description": "Commit message"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When committed"
+          }
+        }
+      }
+    },
+    "tech_stack": {
+      "type": "string",
+      "enum": ["python", "react", "terraform", "docker", "csharp", "generic", "agent-policies", "quality-gates", "github-rules", "deployment-policies", "testing-policies", "validation-rules"],
+      "description": "Technology stack discriminator for polymorphic context validation. Use 'generic' for stories without tech-specific artifacts. L33-L35: agent-policies, quality-gates, github-rules for agent automation governance. L36-L38: deployment-policies, testing-policies, validation-rules for deployment/testing automation.",
+      "default": "generic"
+    },
+    "context": {
+      "description": "Tech-stack-specific context. Schema validation depends on tech_stack field.",
+      "oneOf": [
+        {
+          "if": { "properties": { "tech_stack": { "const": "python" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "pytest": {
+                "type": "object",
+                "properties": {
+                  "total_tests": { "type": "integer" },
+                  "passed": { "type": "integer" },
+                  "failed": { "type": "integer" },
+                  "skipped": { "type": "integer" },
+                  "duration_sec": { "type": "number" },
+                  "junit_xml_path": { "type": "string" }
+                }
+              },
+              "coverage": {
+                "type": "object",
+                "properties": {
+                  "line_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "branch_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "html_report_path": { "type": "string" }
+                }
+              },
+              "ruff": {
+                "type": "object",
+                "properties": {
+                  "violations": { "type": "integer" },
+                  "auto_fixed": { "type": "integer" },
+                  "config_path": { "type": "string" }
+                }
+              },
+              "mypy": {
+                "type": "object",
+                "properties": {
+                  "errors": { "type": "integer" },
+                  "warnings": { "type": "integer" },
+                  "type_coverage_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "react" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "jest": {
+                "type": "object",
+                "properties": {
+                  "total_tests": { "type": "integer" },
+                  "passed": { "type": "integer" },
+                  "snapshots": { "type": "integer" },
+                  "duration_sec": { "type": "number" }
+                }
+              },
+              "bundle": {
+                "type": "object",
+                "properties": {
+                  "size_kb": { "type": "number" },
+                  "gzip_size_kb": { "type": "number" },
+                  "chunks": { "type": "integer" }
+                }
+              },
+              "lighthouse": {
+                "type": "object",
+                "properties": {
+                  "performance": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "accessibility": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "best_practices": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "seo": { "type": "integer", "minimum": 0, "maximum": 100 }
+                }
+              },
+              "eslint": {
+                "type": "object",
+                "properties": {
+                  "errors": { "type": "integer" },
+                  "warnings": { "type": "integer" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "terraform" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "plan": {
+                "type": "object",
+                "properties": {
+                  "resources_to_add": { "type": "integer" },
+                  "resources_to_change": { "type": "integer" },
+                  "resources_to_destroy": { "type": "integer" },
+                  "estimated_cost_delta_usd": { "type": "number" }
+                }
+              },
+              "apply": {
+                "type": "object",
+                "properties": {
+                  "resources_created": { "type": "integer" },
+                  "resources_updated": { "type": "integer" },
+                  "duration_sec": { "type": "number" },
+                  "state_lock_acquired": { "type": "boolean" }
+                }
+              },
+              "tfsec": {
+                "type": "object",
+                "properties": {
+                  "critical": { "type": "integer" },
+                  "high": { "type": "integer" },
+                  "medium": { "type": "integer" },
+                  "low": { "type": "integer" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "docker" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "image": {
+                "type": "object",
+                "properties": {
+                  "size_mb": { "type": "number" },
+                  "layers": { "type": "integer" },
+                  "tag": { "type": "string" },
+                  "digest": { "type": "string" }
+                }
+              },
+              "scan": {
+                "type": "object",
+                "properties": {
+                  "critical": { "type": "integer" },
+                  "high": { "type": "integer" },
+                  "medium": { "type": "integer" },
+                  "low": { "type": "integer" },
+                  "scanner": { "type": "string" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "csharp" } } },
+          "then": {
+            "type": "object",
+            "properties": {
+              "nunit": {
+                "type": "object",
+                "properties": {
+                  "total_tests": { "type": "integer" },
+                  "passed": { "type": "integer" },
+                  "failed": { "type": "integer" },
+                  "duration_sec": { "type": "number" }
+                }
+              },
+              "dotcover": {
+                "type": "object",
+                "properties": {
+                  "line_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+                  "branch_pct": { "type": "number", "minimum": 0, "maximum": 100 }
+                }
+              },
+              "sonar": {
+                "type": "object",
+                "properties": {
+                  "bugs": { "type": "integer" },
+                  "vulnerabilities": { "type": "integer" },
+                  "code_smells": { "type": "integer" },
+                  "debt_minutes": { "type": "integer" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "agent-policies" } } },
+          "then": {
+            "type": "object",
+            "description": "L33: Agent capabilities, safety constraints, and project access policies",
+            "properties": {
+              "capabilities": {
+                "type": "array",
+                "description": "Agent capabilities enabled",
+                "items": { "type": "string" }
+              },
+              "safety_constraints": {
+                "type": "object",
+                "description": "Safety constraints and limits",
+                "properties": {
+                  "max_concurrent_tasks": { "type": "integer" },
+                  "allowed_actions": { "type": "array", "items": { "type": "string" } },
+                  "forbidden_actions": { "type": "array", "items": { "type": "string" } },
+                  "requires_human_approval": { "type": "boolean" }
+                }
+              },
+              "project_access": {
+                "type": "object",
+                "description": "Projects the agent can access",
+                "properties": {
+                  "allowed_projects": { "type": "array", "items": { "type": "string" } },
+                  "access_level": { "type": "string", "enum": ["read", "write", "admin"] },
+                  "expires_at": { "type": "string", "format": "date-time" }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "quality-gates" } } },
+          "then": {
+            "type": "object",
+            "description": "L34: Quality gates with MTI thresholds, test coverage, and phase-specific gates",
+            "properties": {
+              "mti_threshold": {
+                "type": "number",
+                "description": "Minimum MTI score required (0-100)"
+              },
+              "test_coverage_percent": {
+                "type": "number",
+                "description": "Minimum test coverage percentage"
+              },
+              "gates_per_phase": {
+                "type": "object",
+                "description": "Gates for each DPDCA phase",
+                "properties": {
+                  "D": { "type": "object", "additionalProperties": true },
+                  "P": { "type": "object", "additionalProperties": true },
+                  "Do": { "type": "object", "additionalProperties": true },
+                  "C": { "type": "object", "additionalProperties": true },
+                  "A": { "type": "object", "additionalProperties": true }
+                }
+              },
+              "blockers": {
+                "type": "array",
+                "description": "Current blocking issues",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "github-rules" } } },
+          "then": {
+            "type": "object",
+            "description": "L35: GitHub branch protection, commit standards, and naming conventions",
+            "properties": {
+              "branch_protection": {
+                "type": "object",
+                "description": "Branch protection rules",
+                "properties": {
+                  "require_pull_request_reviews": { "type": "boolean" },
+                  "require_code_owner_reviews": { "type": "boolean" },
+                  "required_status_checks": { "type": "array", "items": { "type": "string" } },
+                  "enforced_for_admins": { "type": "boolean" }
+                }
+              },
+              "commit_standards": {
+                "type": "object",
+                "description": "Commit message and author standards",
+                "properties": {
+                  "require_signed_commits": { "type": "boolean" },
+                  "message_pattern": { "type": "string" },
+                  "require_issue_reference": { "type": "boolean" }
+                }
+              },
+              "naming_conventions": {
+                "type": "object",
+                "description": "Branch and tag naming conventions",
+                "properties": {
+                  "branch_pattern": { "type": "string" },
+                  "tag_pattern": { "type": "string" },
+                  "reserved_names": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "deployment-policies" } } },
+          "then": {
+            "type": "object",
+            "description": "L36: Container app deployment policies, resource limits, scaling, health probes",
+            "properties": {
+              "container_app": {
+                "type": "object",
+                "description": "Azure Container App configuration",
+                "properties": {
+                  "name": { "type": "string" },
+                  "cpu": { "type": "string" },
+                  "memory": { "type": "string" },
+                  "min_replicas": { "type": "integer" },
+                  "max_replicas": { "type": "integer" }
+                }
+              },
+              "health_probes": {
+                "type": "object",
+                "description": "Health probe endpoints and timeouts",
+                "properties": {
+                  "liveness_path": { "type": "string" },
+                  "readiness_path": { "type": "string" },
+                  "startup_timeout_seconds": { "type": "integer" }
+                }
+              },
+              "deployment_gates": {
+                "type": "array",
+                "description": "Required gates before deployment",
+                "items": { "type": "string" }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "testing-policies" } } },
+          "then": {
+            "type": "object",
+            "description": "L37: Testing automation policies, coverage thresholds, CI configuration",
+            "properties": {
+              "coverage": {
+                "type": "object",
+                "description": "Code coverage requirements",
+                "properties": {
+                  "unit_threshold": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "integration_threshold": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "e2e_required": { "type": "boolean" }
+                }
+              },
+              "ci_workflow": {
+                "type": "object",
+                "description": "CI/CD pipeline configuration",
+                "properties": {
+                  "workflow_file": { "type": "string" },
+                  "runner": { "type": "string" },
+                  "python_version": { "type": "string" },
+                  "test_command": { "type": "string" }
+                }
+              },
+              "test_data_strategy": {
+                "type": "string",
+                "description": "How test data is managed"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "if": { "properties": { "tech_stack": { "const": "validation-rules" } } },
+          "then": {
+            "type": "object",
+            "description": "L38: Schema validation, data integrity, compliance gates",
+            "properties": {
+              "schema_enforcement": {
+                "type": "object",
+                "description": "Schema validation policies",
+                "properties": {
+                  "mode": { "type": "string", "enum": ["strict", "permissive"] },
+                  "allow_additional_properties": { "type": "boolean" }
+                }
+              },
+              "cross_reference_checks": {
+                "type": "array",
+                "description": "Required cross-reference validations",
+                "items": { "type": "string" }
+              },
+              "compliance_gates": {
+                "type": "object",
+                "description": "Compliance requirements",
+                "properties": {
+                  "dpdca_phase_required": { "type": "boolean" },
+                  "mti_threshold": { "type": "integer", "minimum": 0, "maximum": 100 }
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        {
+          "type": "object",
+          "description": "Default: allow any context structure if tech_stack not specified",
+          "additionalProperties": true
+        }
+      ]
+    }
+  }
+}

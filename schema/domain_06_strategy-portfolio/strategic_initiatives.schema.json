@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/strategic_initiatives.schema.json",
+  "title": "Strategic Initiatives",
+  "type": "object",
+  "description": "Multi-year strategic initiative definitions (L73 - Strategy Phase)",
+  "required": [
+    "initiative_id",
+    "initiative_name",
+    "start_year",
+    "planned_outcomes"
+  ],
+  "properties": {
+    "initiative_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-initiative-[0-9]{8}-[0-9]{3,}$"
+    },
+    "initiative_name": {
+      "type": "string",
+      "description": "Strategic initiative name",
+      "minLength": 10
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what this initiative aims to achieve",
+      "minLength": 50
+    },
+    "strategic_pillar": {
+      "type": "string",
+      "description": "Which strategic pillar does this support?"
+    },
+    "start_year": {
+      "type": "integer",
+      "minimum": 2024
+    },
+    "planned_end_year": {
+      "type": "integer"
+    },
+    "executive_sponsor": {
+      "type": "string",
+      "description": "High-level executive responsible"
+    },
+    "program_manager": {
+      "type": "string"
+    },
+    "planned_outcomes": {
+      "type": "array",
+      "description": "Expected outcomes (can be qualitative or quantitative)",
+      "items": { "type": "string" }
+    },
+    "success_metrics": {
+      "type": "array",
+      "description": "OKRs or KPIs",
+      "items": {
+        "type": "object",
+        "properties": {
+          "metric_name": { "type": "string" },
+          "baseline": { "type": "number" },
+          "target": { "type": "number" },
+          "unit": { "type": "string" }
+        }
+      }
+    },
+    "workstreams": {
+      "type": "array",
+      "description": "Major components of this initiative",
+      "items": {
+        "type": "object",
+        "properties": {
+          "workstream_name": { "type": "string" },
+          "lead": { "type": "string" },
+          "projects_included": { "type": "array", "items": { "type": "string" } },
+          "estimated_effort_months": { "type": "number" }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Other initiatives or programs this depends on",
+      "items": { "type": "string" }
+    },
+    "risks": {
+      "type": "array",
+      "description": "Strategic risks",
+      "items": {
+        "type": "object",
+        "properties": {
+          "risk_description": { "type": "string" },
+          "probability": { "type": "string", "enum": ["low", "medium", "high"] },
+          "impact": { "type": "string", "enum": ["low", "medium", "high"] },
+          "mitigation": { "type": "string" }
+        }
+      }
+    },
+    "budget_allocated_usd": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "initiated", "in_progress", "at_risk", "completed", "cancelled"],
+      "description": "Current status"
+    },
+    "progress_percent": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

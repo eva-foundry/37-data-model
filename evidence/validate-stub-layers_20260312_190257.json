@@ -1,0 +1,229 @@
+{
+  "timestamp": "2026-03-12T19:02:57.397805",
+  "script": "validate-stub-layers.py",
+  "operation": "validate_24_stub_layers",
+  "total_layers": 24,
+  "files_with_data": 1,
+  "empty_files": 21,
+  "errors": 2,
+  "total_objects": 5,
+  "results": [
+    {
+      "layer": "traces",
+      "file": "traces.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 3,
+      "has_ids": true,
+      "error": null
+    },
+    {
+      "layer": "work_execution_units",
+      "file": "work_execution_units.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 1,
+      "has_ids": false,
+      "error": "Some objects missing 'id' field"
+    },
+    {
+      "layer": "work_decision_records",
+      "file": "work_decision_records.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 1,
+      "has_ids": false,
+      "error": "Some objects missing 'id' field"
+    },
+    {
+      "layer": "work_outcomes",
+      "file": "work_outcomes.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_capabilities",
+      "file": "work_factory_capabilities.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_governance",
+      "file": "work_factory_governance.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_investments",
+      "file": "work_factory_investments.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_metrics",
+      "file": "work_factory_metrics.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_portfolio",
+      "file": "work_factory_portfolio.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_roadmaps",
+      "file": "work_factory_roadmaps.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_factory_services",
+      "file": "work_factory_services.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_obligations",
+      "file": "work_obligations.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_learning_feedback",
+      "file": "work_learning_feedback.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_pattern_applications",
+      "file": "work_pattern_applications.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_pattern_performance_profiles",
+      "file": "work_pattern_performance_profiles.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_reusable_patterns",
+      "file": "work_reusable_patterns.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_breaches",
+      "file": "work_service_breaches.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_level_objectives",
+      "file": "work_service_level_objectives.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_lifecycle",
+      "file": "work_service_lifecycle.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_perf_profiles",
+      "file": "work_service_perf_profiles.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_remediation_plans",
+      "file": "work_service_remediation_plans.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_requests",
+      "file": "work_service_requests.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_revalidation_results",
+      "file": "work_service_revalidation_results.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    },
+    {
+      "layer": "work_service_runs",
+      "file": "work_service_runs.json",
+      "exists": true,
+      "valid_json": true,
+      "object_count": 0,
+      "has_ids": false,
+      "error": null
+    }
+  ],
+  "status": "FAIL"
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "description": "Comprehensive test suite for prompt injection vulnerabilities",
+    "test_count": 12,
+    "name": "OWASP LLM Top 10 - Prompt Injection Tests",
+    "id": "suite_prompt_injection_001",
+    "created_by": "Project-36",
+    "status": "active",
+    "framework": "OWASP-LLM"
+  },
+  {
+    "description": "Tests for personally identifiable information exposure",
+    "test_count": 8,
+    "name": "PII Leakage Detection Tests",
+    "id": "suite_pii_leakage_001",
+    "created_by": "Project-36",
+    "status": "active",
+    "framework": "MITRE-ATLAS"
+  }
+]

@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:40Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Runbooks screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L37",
+    "title_fr": "Runbooks",
+    "name": "runbooks",
+    "title": "Runbooks"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 3023,
+    "avg_loc_per_file": 504.0,
+    "duration_seconds": 0.68,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\runbooks\\RunbooksListView.tsx",
+      "lines_of_code": 192,
+      "file": "RunbooksListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\runbooks\\RunbooksDetailDrawer.tsx",
+      "lines_of_code": 354,
+      "file": "RunbooksDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\runbooks\\RunbooksCreateForm.tsx",
+      "lines_of_code": 991,
+      "file": "RunbooksCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\runbooks\\RunbooksEditForm.tsx",
+      "lines_of_code": 1019,
+      "file": "RunbooksEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\runbooks\\RunbooksGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "RunbooksGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\runbooks\\__tests__\\RunbooksListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "RunbooksListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Compliance Audit",
+  "description": "Compliance audit results, security findings, and remediation tracking",
+  "type": "object",
+  "properties": {
+    "id": {"type": "string", "description": "Audit identifier"},
+    "audit_timestamp": {"type": "string", "format": "date-time", "description": "When audit occurred"},
+    "audit_type": {"type": "string", "enum": ["security", "compliance", "policy", "vulnerability", "scheduled_scan", "manual_review"], "description": "Type of audit"},
+    "framework": {
+      "type": "string",
+      "enum": ["SOC2", "PCI-DSS", "HIPAA", "GDPR", "CSA", "ISO27001", "CIS", "NIST", "custom"],
+      "description": "Compliance framework"
+    },
+    "overall_status": {"type": "string", "enum": ["compliant", "non_compliant", "partial_compliance"], "description": "Overall compliance status"},
+    "compliance_score": {"type": "number", "minimum": 0, "maximum": 100, "description": "Compliance score 0-100"},
+    "findings": {"type": "array", "items": {"type": "object"}, "description": "Detailed findings and remediation steps"},
+    "remediations_tracking": {"type": "object", "description": "Remediation status and progress"},
+    "attestation": {"type": "object", "description": "Certification date and certifier info"}
+  },
+  "required": ["id", "audit_timestamp", "audit_type", "framework", "overall_status", "compliance_score"]
+}

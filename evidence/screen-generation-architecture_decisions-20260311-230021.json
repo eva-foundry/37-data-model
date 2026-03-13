@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:21Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add ArchitectureDecisions screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L10",
+    "title_fr": "ArchitectureDecisions",
+    "name": "architecture_decisions",
+    "title": "ArchitectureDecisions"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2369,
+    "avg_loc_per_file": 395.0,
+    "duration_seconds": 0.72,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\architecture_decisions\\ArchitectureDecisionsListView.tsx",
+      "lines_of_code": 192,
+      "file": "ArchitectureDecisionsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\architecture_decisions\\ArchitectureDecisionsDetailDrawer.tsx",
+      "lines_of_code": 306,
+      "file": "ArchitectureDecisionsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\architecture_decisions\\ArchitectureDecisionsCreateForm.tsx",
+      "lines_of_code": 688,
+      "file": "ArchitectureDecisionsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\architecture_decisions\\ArchitectureDecisionsEditForm.tsx",
+      "lines_of_code": 716,
+      "file": "ArchitectureDecisionsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\architecture_decisions\\ArchitectureDecisionsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "ArchitectureDecisionsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\architecture_decisions\\__tests__\\ArchitectureDecisionsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "ArchitectureDecisionsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

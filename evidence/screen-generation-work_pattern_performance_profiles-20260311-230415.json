@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:04:15Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add WorkPatternPerformanceProfiles screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L102",
+    "title_fr": "WorkPatternPerformanceProfiles",
+    "name": "work_pattern_performance_profiles",
+    "title": "WorkPatternPerformanceProfiles"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 1348,
+    "avg_loc_per_file": 225.0,
+    "duration_seconds": 0.62,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\work_pattern_performance_profiles\\WorkPatternPerformanceProfilesListView.tsx",
+      "lines_of_code": 192,
+      "file": "WorkPatternPerformanceProfilesListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\work_pattern_performance_profiles\\WorkPatternPerformanceProfilesDetailDrawer.tsx",
+      "lines_of_code": 164,
+      "file": "WorkPatternPerformanceProfilesDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\work_pattern_performance_profiles\\WorkPatternPerformanceProfilesCreateForm.tsx",
+      "lines_of_code": 247,
+      "file": "WorkPatternPerformanceProfilesCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\work_pattern_performance_profiles\\WorkPatternPerformanceProfilesEditForm.tsx",
+      "lines_of_code": 278,
+      "file": "WorkPatternPerformanceProfilesEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\work_pattern_performance_profiles\\WorkPatternPerformanceProfilesGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "WorkPatternPerformanceProfilesGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\work_pattern_performance_profiles\\__tests__\\WorkPatternPerformanceProfilesListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "WorkPatternPerformanceProfilesListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -343,6 +343,8 @@ def create_app() -> FastAPI:
     from api.routers.metadata import router as metadata_router
     # Session 41: debug agent-guide 500 error
     from api.routers.debug import router as debug_router
+    # Session 47: generic query endpoint (missing /model/query implementation)
+    from api.routers.query import router as query_router
 
     for r in [
         # introspection & aggregation (Session 26) — register FIRST for path
@@ -353,6 +355,8 @@ def create_app() -> FastAPI:
         metadata_router,
         # debug (Session 41) — debug agent-guide 500 error investigation
         debug_router,
+        # query (Session 47) — generic /model/query endpoint
+        query_router,
         # layer routers (generic /{obj_id} path)
         services_router, personas_router, feature_flags_router,
         containers_router, endpoints_router, schemas_router,

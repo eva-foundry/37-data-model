@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/framework_evidence_mapping.schema.json",
+  "title": "Framework Evidence Mapping (L79)",
+  "description": "Maps test executions to security control evidence. Links red-team findings to framework compliance status.",
+  "type": "object",
+  "required": ["id", "framework", "control_id"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^mapping_[a-z_]+_[0-9]{6}$"},
+    "framework": {
+      "type": "string",
+      "enum": ["ATLAS", "OWASP-LLM", "NIST-AI-RMF", "ITSG-33", "EU-AI-Act"],
+      "description": "Compliance framework"
+    },
+    "control_id": {"type": "string", "description": "Control identifier (e.g., 'ATLAS.AML.T0350', 'OWASP-LLM-01')"},
+    "control_name": {"type": "string", "maxLength": 300},
+    "description": {"type": "string", "maxLength": 2000},
+    "ai_security_finding_ids": {
+      "type": "array",
+      "description": "References to findings (L78) related to this control",
+      "items": {"type": "string"}
+    },
+    "test_coverage_count": {"type": "integer", "minimum": 0, "description": "Number of tests covering this control"},
+    "gap_status": {
+      "type": "string",
+      "enum": ["full", "partial", "none"],
+      "description": "Coverage gap assessment"
+    },
+    "certification_date": {"type": "string", "format": "date", "description": "When this control was last verified"},
+    "certification_expiry": {"type": "string", "format": "date"},
+    "owner": {"type": "string", "description": "Who owns compliance for this control"},
+    "evidence_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "artifact_type": {"type": "string", "enum": ["test_result", "audit_log", "certificate", "attestation"]},
+          "artifact_ref": {"type": "string", "description": "URL or ID reference"},
+          "timestamp": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "updated_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

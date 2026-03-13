@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:42Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add SyntheticTests screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L39",
+    "title_fr": "SyntheticTests",
+    "name": "synthetic_tests",
+    "title": "SyntheticTests"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2467,
+    "avg_loc_per_file": 411.0,
+    "duration_seconds": 0.69,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\synthetic_tests\\SyntheticTestsListView.tsx",
+      "lines_of_code": 192,
+      "file": "SyntheticTestsListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\synthetic_tests\\SyntheticTestsDetailDrawer.tsx",
+      "lines_of_code": 314,
+      "file": "SyntheticTestsDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\synthetic_tests\\SyntheticTestsCreateForm.tsx",
+      "lines_of_code": 733,
+      "file": "SyntheticTestsCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\synthetic_tests\\SyntheticTestsEditForm.tsx",
+      "lines_of_code": 761,
+      "file": "SyntheticTestsEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\synthetic_tests\\SyntheticTestsGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "SyntheticTestsGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\synthetic_tests\\__tests__\\SyntheticTestsListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "SyntheticTestsListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -1,0 +1,103 @@
+{
+  "schema_details": [
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\red_team_test_suite.schema.json",
+      "has_required": true,
+      "name": "red_team_test_suite.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\attack_tactic_catalog.schema.json",
+      "has_required": true,
+      "name": "attack_tactic_catalog.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\ai_security_finding.schema.json",
+      "has_required": true,
+      "name": "ai_security_finding.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\assertions_catalog.schema.json",
+      "has_required": true,
+      "name": "assertions_catalog.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\ai_security_metrics.schema.json",
+      "has_required": true,
+      "name": "ai_security_metrics.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\vulnerability_scan_result.schema.json",
+      "has_required": true,
+      "name": "vulnerability_scan_result.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\cve_finding.schema.json",
+      "has_required": true,
+      "name": "cve_finding.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\risk_ranking.schema.json",
+      "has_required": true,
+      "name": "risk_ranking.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\remediation_task.schema.json",
+      "has_required": true,
+      "name": "remediation_task.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    },
+    {
+      "path": "c:\\eva-foundry\\37-data-model\\schema\\remediation_effectiveness.schema.json",
+      "has_required": true,
+      "name": "remediation_effectiveness.schema.json",
+      "has_id": true,
+      "status": "VALID",
+      "has_title": true,
+      "has_properties": true
+    }
+  ],
+  "exit_code": 0,
+  "timestamp": "2026-03-13T01:27:08.1784687Z",
+  "schemas_target": 10,
+  "phase": "DO.1-SchemaValidation",
+  "part": 1,
+  "schemas_found": 10,
+  "schemas_valid": 10,
+  "status": "SUCCESS",
+  "errors": []
+}

@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-03-11T23:00:15Z",
+  "next_steps": [
+    "npm run type-check",
+    "npm run lint",
+    "npm test -- --coverage",
+    "git add ui/src/",
+    "git commit -m 'feat(ui): Add Sprint screens (auto-generated)'"
+  ],
+  "layer": {
+    "id": "L2",
+    "title_fr": "Sprint",
+    "name": "sprints",
+    "title": "Sprint"
+  },
+  "quality_gates": {
+    "accessibility": "PENDING",
+    "eslint": "PENDING",
+    "typescript_compilation": "PENDING",
+    "jest_coverage": "PENDING",
+    "i18n": "PENDING"
+  },
+  "metrics": {
+    "total_loc": 2629,
+    "avg_loc_per_file": 438.0,
+    "duration_seconds": 0.66,
+    "files_count": 6
+  },
+  "operation": "screen_generation",
+  "components_generated": [
+    {
+      "type": "ListView",
+      "path": "ui\\src\\pages\\sprints\\SprintListView.tsx",
+      "lines_of_code": 192,
+      "file": "SprintListView.tsx"
+    },
+    {
+      "type": "DetailView",
+      "path": "ui\\src\\components\\sprints\\SprintDetailDrawer.tsx",
+      "lines_of_code": 330,
+      "file": "SprintDetailDrawer.tsx"
+    },
+    {
+      "type": "CreateForm",
+      "path": "ui\\src\\components\\sprints\\SprintCreateForm.tsx",
+      "lines_of_code": 806,
+      "file": "SprintCreateForm.tsx"
+    },
+    {
+      "type": "EditForm",
+      "path": "ui\\src\\components\\sprints\\SprintEditForm.tsx",
+      "lines_of_code": 834,
+      "file": "SprintEditForm.tsx"
+    },
+    {
+      "type": "GraphView",
+      "path": "ui\\src\\components\\sprints\\SprintGraphView.tsx",
+      "lines_of_code": 213,
+      "file": "SprintGraphView.tsx"
+    },
+    {
+      "type": "test.spec",
+      "path": "ui\\src\\pages\\sprints\\__tests__\\SprintListView.test.tsx",
+      "lines_of_code": 254,
+      "file": "SprintListView.test.tsx"
+    }
+  ],
+  "session": "45-part5-factory-poc",
+  "generator": "screens-machine-v1.0.0"
+}

@@ -1,0 +1,62 @@
+{
+  "properties": {
+    "control_mapping": {
+      "type": "string",
+      "description": "Links to security_controls (L115)"
+    },
+    "risk_id": {
+      "type": "string",
+      "description": "Unique identifier"
+    },
+    "mitigation_strategy": {
+      "type": "string",
+      "description": "How to reduce likelihood or impact"
+    },
+    "likelihood": {
+      "type": "string",
+      "description": "LOW|MEDIUM|HIGH|CRITICAL"
+    },
+    "status": {
+      "type": "string",
+      "description": "OPEN|IN_PROGRESS|MITIGATED|ACCEPTED"
+    },
+    "category": {
+      "type": "string",
+      "description": "Security|Operational|Strategic"
+    },
+    "priority_score": {
+      "type": "string",
+      "description": "Calculated from likelihood x impact"
+    },
+    "impact": {
+      "type": "string",
+      "description": "LOW|MEDIUM|HIGH|CRITICAL"
+    },
+    "owner": {
+      "type": "string",
+      "description": "Risk owner responsibility"
+    },
+    "description": {
+      "type": "string",
+      "description": "Risk scenario description"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "schema/risk_register.schema.json",
+  "required": [
+    "status",
+    "likelihood",
+    "priority_score",
+    "risk_id",
+    "control_mapping",
+    "category",
+    "mitigation_strategy",
+    "impact",
+    "owner",
+    "description"
+  ],
+  "description": "Risk identification, assessment, and mitigation tracking",
+  "type": "object",
+  "title": "risk_register"
+}

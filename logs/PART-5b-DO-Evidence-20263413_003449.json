@@ -1,0 +1,68 @@
+{
+  "session": "45-part-11",
+  "do_delivery": [
+    {
+      "description": "Schemas copied to domain directories",
+      "deliverable_id": "D1",
+      "mapped_to_promise": "P1",
+      "count": 11
+    },
+    {
+      "description": "Root directory cleaned of migrated schemas",
+      "deliverable_id": "D2",
+      "mapped_to_promise": "P2",
+      "count": 85
+    }
+  ],
+  "check_results": {
+    "all_domains_created": true,
+    "verification_passed": false,
+    "domain_schema_count": 0,
+    "all_mappings_migrated": false,
+    "root_schema_count": 85
+  },
+  "dryrun": {
+    "IsPresent": true
+  },
+  "phase": "DO",
+  "quality_gates": {
+    "migration_coverage": 1,
+    "critical_failures": 0,
+    "can_proceed_to_act": false,
+    "verification_passed": false
+  },
+  "gap_analysis": {
+    "partial_delivery": [],
+    "decision": "FAIL",
+    "missed": 3,
+    "delivered": 0,
+    "total_promises": 3
+  },
+  "stats": {
+    "skipped": 53,
+    "errors": [],
+    "migrated": 11,
+    "total_schemas": 11,
+    "failed": 0
+  },
+  "timestamp": "2026-03-13T00:34:50.8289291-03:00",
+  "plan_promises": [
+    {
+      "description": "Move all 85 schemas from root to appropriate domain directories",
+      "delivered": false,
+      "promise_id": "P1"
+    },
+    {
+      "description": "Remove schemas from root directory after migration",
+      "delivered": false,
+      "promise_id": "P2"
+    },
+    {
+      "description": "Verify all domain directories have correct schemas",
+      "delivered": false,
+      "promise_id": "P3"
+    }
+  ],
+  "component": "PART 5b",
+  "framework_version": "2.0-enhanced"
+}

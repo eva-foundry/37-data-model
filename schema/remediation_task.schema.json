@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/remediation_task.schema.json",
+  "title": "Remediation Task (L84)",
+  "description": "Prioritized fix action with SLA tracking, status, and effort estimation. Links CVE findings to remediation work.",
+  "type": "object",
+  "required": ["id", "cve_id", "severity", "priority"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^remediation_[a-z_]+_[0-9]{8}$"},
+    "cve_id": {"type": "string", "description": "Reference to cve_finding (L82)", "pattern": "^CVE-[0-9]{4}-[0-9]{4,}$"},
+    "severity": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+    "priority": {"type": "integer", "minimum": 1, "maximum": 5, "description": "1=lowest, 5=highest"},
+    "fix_priority_derivation": {"type": "string", "description": "How priority was calculated (from risk_ranking L83)"},
+    "assigned_to": {"type": "string", "description": "Persona ID responsible for fix"},
+    "due_date": {"type": "string", "format": "date"},
+    "sla_status": {"type": "string", "enum": ["on_track", "at_risk", "overdue"]},
+    "remediation_type": {
+      "type": "string",
+      "enum": ["patch", "mitigate", "accept_risk", "decommission", "configuration_change"],
+      "description": "Type of fix"
+    },
+    "estimated_effort_hours": {"type": "integer", "minimum": 1},
+    "actual_effort_hours": {"type": "number", "minimum": 0},
+    "patches_available": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "vendor": {"type": "string"},
+          "patch_version": {"type": "string"},
+          "release_date": {"type": "string", "format": "date"},
+          "tested": {"type": "boolean"}
+        }
+      }
+    },
+    "runbooks": {
+      "type": "array",
+      "description": "Reference to remediation runbooks (L6 runbooks)",
+      "items": {"type": "string"}
+    },
+    "status": {
+      "type": "string",
+      "enum": ["not_started", "in_progress", "testing", "completed", "cancelled", "deferred"],
+      "description": "Current status"
+    },
+    "completion_date": {"type": "string", "format": "date-time"},
+    "verification_result": {"type": "string", "enum": ["verified_fixed", "not_verified", "new_vulnerability"]},
+    "parent_sprint": {"type": "string", "description": "Reference to sprint if part of sprint work"},
+    "parent_task": {"type": "string", "description": "Reference to wbs/tasks if part of project"},
+    "notes": {"type": "string", "maxLength": 2000},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "created_by": {"type": "string"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "lib": ["ES2020", "DOM"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "paths": {
+      "@eva/gc-design-system": ["../gc-design-system/dist/index"],
+      "@eva/gc-design-system/tokens": ["../gc-design-system/dist/tokens/index"],
+      "@eva/gc-design-system/theme": ["../gc-design-system/dist/theme/index"],
+      "@eva/gc-design-system/*": ["../gc-design-system/dist/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../gc-design-system" }
+  ]
+}

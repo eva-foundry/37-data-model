@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://eva-models.local/schema/compliance_requirements.schema.json",
+  "title": "Compliance Requirements",
+  "type": "object",
+  "description": "Regulatory and compliance framework mappings (L80 - Security Phase 1)",
+  "required": [
+    "requirement_id",
+    "requirement_name",
+    "framework",
+    "severity"
+  ],
+  "properties": {
+    "requirement_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+-compliance-[0-9]{8}-[0-9]{3,}$"
+    },
+    "requirement_name": {
+      "type": "string",
+      "description": "Specific requirement or control"
+    },
+    "requirement_statement": {
+      "type": "string",
+      "description": "Detailed description of what's required",
+      "minLength": 20
+    },
+    "framework": {
+      "type": "string",
+      "enum": [
+        "sox",
+        "hipaa",
+        "gdpr",
+        "ccpa",
+        "pci-dss",
+        "iso27001",
+        "nist",
+        "cis",
+        "hipaa-hitech",
+        "fda-21cfr11",
+        "other"
+      ],
+      "description": "Compliance framework"
+    },
+    "framework_section": {
+      "type": "string",
+      "description": "Section/control reference (e.g., 'GDPR Art 32', 'NIST SC-7')"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["mandatory", "recommended", "guidance"],
+      "description": "Compliance severity level"
+    },
+    "applicability": {
+      "type": "array",
+      "description": "What systems/projects must comply?",
+      "items": { "type": "string" }
+    },
+    "implementation_status": {
+      "type": "string",
+      "enum": ["not_started", "planned", "in_progress", "implemented", "compliant", "non_compliant"],
+      "description": "Compliance status"
+    },
+    "responsible_team": {
+      "type": "string"
+    },
+    "implementation_due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "implementation_evidence": {
+      "type": "array",
+      "description": "Documentation proving compliance",
+      "items": {
+        "type": "object",
+        "properties": {
+          "evidence_name": { "type": "string" },
+          "evidence_url": { "type": "string" },
+          "uploaded_date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "compliance_gaps": {
+      "type": "array",
+      "description": "What's needed to become compliant",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gap_description": { "type": "string" },
+          "closure_plan": { "type": "string" },
+          "target_closure_date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "audit_findings_related": {
+      "type": "array",
+      "description": "References to security_audit_records (L81)",
+      "items": { "type": "string" }
+    },
+    "remediation_in_progress": {
+      "type": "boolean"
+    },
+    "last_assessed_date": {
+      "type": "string",
+      "format": "date"
+    }
+  }
+}

@@ -1,0 +1,693 @@
+{
+  "gap_analysis": {
+    "missing_api_endpoints": [],
+    "missing_documentation": [
+      {
+        "missing_count": 8,
+        "type": "security_schemas",
+        "schemas": [
+          "audit_trail.schema.json",
+          "compliance_mapping.schema.json",
+          "risk_register.schema.json",
+          "security_controls.schema.json",
+          "vulnerability_assessment.schema.json",
+          "access_control_matrix.schema.json",
+          "incident_response.schema.json",
+          "attestation_records.schema.json"
+        ]
+      }
+    ],
+    "outdated_descriptions": [],
+    "inconsistent_layer_counts": [
+      {
+        "severity": "HIGH",
+        "actual": 0,
+        "expected": "111+ operational",
+        "recommendation": "Update COMPLETE-LAYER-CATALOG.md with latest layer inventory"
+      }
+    ]
+  },
+  "evidence_summary": {
+    "schema_files_found": 77,
+    "missing_endpoints_in_docs": 3,
+    "schemas_without_descriptions": 0,
+    "critical_gaps": 9.0,
+    "documentation_files_missing": 0,
+    "documented_files_found": 4,
+    "missing_security_schemas": 8
+  },
+  "api_layers": [
+    {
+      "file": "agent_execution_history.schema.json",
+      "description": "Complete audit trail of every agent action, decision, and outcome",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\agent_execution_history.schema.json"
+    },
+    {
+      "file": "work_service_revalidation_results.schema.json",
+      "description": "Post-remediation verification results — validates whether remediation (L68) successfully resolved breach (L67). Compares pre/post metrics, determines if SLO is now compliant, and feeds learning feedback (L57) for continuous improvement.",
+      "has_description": true,
+      "properties_count": 25,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_revalidation_results.schema.json"
+    },
+    {
+      "file": "work_service_requests.schema.json",
+      "description": "Service invocation requests — demand intake for work factory services (L62). Each request represents a demand for a service to be executed, tracks requester, priority, input payload, and request lifecycle. Fulfilled via service runs (L64).",
+      "has_description": true,
+      "properties_count": 18,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_requests.schema.json"
+    },
+    {
+      "file": "work_service_remediation_plans.schema.json",
+      "description": "Remediation plans for SLA breaches (L67) — step-by-step recovery procedures with resource estimates. Created automatically from runbooks or manually by operators. Feeds work execution units (L52) for automated remediation.",
+      "has_description": true,
+      "properties_count": 26,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_remediation_plans.schema.json"
+    },
+    {
+      "file": "work_factory_investments.schema.json",
+      "description": "Investment decisions and business justification for new capabilities or service enhancements. Tracks business cases, ROI calculations, approval workflows, funding allocation, and actual returns. Enables investment portfolio management and budget planning.",
+      "has_description": true,
+      "properties_count": 27,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_investments.schema.json"
+    },
+    {
+      "file": "work_service_perf_profiles.schema.json",
+      "description": "Aggregate service performance metrics — computed view tracking success rates, timing, and resource consumption per service (L62). Derived from service runs (L64). Used for performance monitoring, capacity planning, and SLO compliance checking (L66, L67).",
+      "has_description": true,
+      "properties_count": 23,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_perf_profiles.schema.json"
+    },
+    {
+      "file": "work_service_lifecycle.schema.json",
+      "description": "Service lifecycle events — tracks major transitions for work factory services (L62): deployment, upgrades, scaling, maintenance, deprecation, retirement. Provides audit trail for service evolution and operational history.",
+      "has_description": true,
+      "properties_count": 28,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_lifecycle.schema.json"
+    },
+    {
+      "file": "remediation_outcomes.schema.json",
+      "description": "Impact analysis and effectiveness metrics per remediation execution",
+      "has_description": true,
+      "properties_count": 16,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\remediation_outcomes.schema.json"
+    },
+    {
+      "file": "remediation_policies.schema.json",
+      "description": "Automated remediation policies defining triggers, actions, and approval workflows",
+      "has_description": true,
+      "properties_count": 15,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\remediation_policies.schema.json"
+    },
+    {
+      "file": "work_service_runs.schema.json",
+      "description": "Service runtime execution instances — child records of service requests (L63). Each run represents an actual execution attempt of a service, with timing, status, output, and error tracking. Feeds performance profiles (L65) and SLO breach detection (L67).",
+      "has_description": true,
+      "properties_count": 18,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_runs.schema.json"
+    },
+    {
+      "file": "resource_costs.schema.json",
+      "description": "Cloud cost tracking, budget alerts, and cost optimization",
+      "has_description": true,
+      "properties_count": 14,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\resource_costs.schema.json"
+    },
+    {
+      "file": "work_service_breaches.schema.json",
+      "description": "SLA breach records — incidents where service performance (L65) violates defined SLOs (L66). Triggers automated remediation planning (L68) and alerting. Complete self-healing loop: breach -> plan -> remediate -> revalidate.",
+      "has_description": true,
+      "properties_count": 28,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_breaches.schema.json"
+    },
+    {
+      "file": "work_pattern_performance_profiles.schema.json",
+      "description": "Aggregate pattern performance metrics — computed view layer tracking how well each reusable pattern (L58) performs across all applications (L59). Provides success rates, timing data, and common adaptations for pattern tuning and selection guidance. Parent: None (aggregate/view layer, RESTRICT on pattern delete).",
+      "has_description": true,
+      "properties_count": 18,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_pattern_performance_profiles.schema.json"
+    },
+    {
+      "file": "work_pattern_applications.schema.json",
+      "description": "Pattern usage tracking — records each instance of a reusable pattern (L58) being applied to a work unit (L52). Tracks adaptations made, success score, and feedback for continuous improvement. Parent: work_execution_units (CASCADE on delete).",
+      "has_description": true,
+      "properties_count": 13,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_pattern_applications.schema.json"
+    },
+    {
+      "file": "work_factory_services.schema.json",
+      "description": "Service packaging of capabilities (L61). Each service is a concrete, invocable implementation that delivers one or more capabilities. Services are registered by agents/cp_agents and can be invoked via service requests (L63). Services have defined SLAs (L66) and performance tracking (L65).",
+      "has_description": true,
+      "properties_count": 25,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_services.schema.json"
+    },
+    {
+      "file": "work_factory_roadmaps.schema.json",
+      "description": "Strategic roadmaps for capability and service evolution. Defines forward-looking initiatives, milestones, dependencies, and timelines for developing new capabilities or enhancing existing services. Enables strategic planning and capability gap analysis.",
+      "has_description": true,
+      "properties_count": 23,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_roadmaps.schema.json"
+    },
+    {
+      "file": "work_factory_portfolio.schema.json",
+      "description": "Portfolio management view of all work services. Provides executive-level oversight with service inventory, health rollups, capacity overview, and strategic prioritization. Enables portfolio-level reporting and resource allocation decisions.",
+      "has_description": true,
+      "properties_count": 21,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_portfolio.schema.json"
+    },
+    {
+      "file": "work_factory_capabilities.schema.json",
+      "description": "Capability catalog backed by patterns (L58). Each capability represents a cohesive automation capability (e.g., 'schema migration automation', 'API deployment', 'test generation') that can be packaged into services (L62). Capabilities are abstract/compositional, services are concrete implementations.",
+      "has_description": true,
+      "properties_count": 20,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_capabilities.schema.json"
+    },
+    {
+      "file": "work_factory_governance.schema.json",
+      "description": "Governance policies and compliance rules for the work factory. Defines policy rules, compliance requirements, approval thresholds, audit procedures, and enforcement mechanisms. Enables policy-driven governance, compliance auditing, and automated enforcement.",
+      "has_description": true,
+      "properties_count": 27,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_governance.schema.json"
+    },
+    {
+      "file": "work_service_level_objectives.schema.json",
+      "description": "Service Level Objective (SLO) definitions and thresholds per service (L62). Defines expected performance, availability, and quality metrics. Breaches feed L67 work_service_breaches for automated remediation.",
+      "has_description": true,
+      "properties_count": 24,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_service_level_objectives.schema.json"
+    },
+    {
+      "file": "infrastructure_drift.schema.json",
+      "description": "Infrastructure drift detection showing desired vs actual state",
+      "has_description": true,
+      "properties_count": 13,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\infrastructure_drift.schema.json"
+    },
+    {
+      "file": "performance_trends.schema.json",
+      "description": "Historical performance analysis and trend detection",
+      "has_description": true,
+      "properties_count": 8,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\performance_trends.schema.json"
+    },
+    {
+      "file": "work_factory_metrics.schema.json",
+      "description": "Factory-level KPIs and aggregate health metrics. Provides executive dashboard data with aggregate metrics across all portfolios and services, trend analyses, benchmarks, and target governance. Enables strategic decision-making and performance monitoring.",
+      "has_description": true,
+      "properties_count": 27,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_factory_metrics.schema.json"
+    },
+    {
+      "file": "eva_model.schema.json",
+      "description": "EVA data model meta-information describing all 51 layers and their relationships",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\eva_model.schema.json"
+    },
+    {
+      "file": "deployment_records.schema.json",
+      "description": "Complete deployment history, changelogs, and rollback tracking",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\deployment_records.schema.json"
+    },
+    {
+      "file": "deployment_quality_scores.schema.json",
+      "description": "Multi-dimensional quality assessment for deployments",
+      "has_description": true,
+      "properties_count": 9,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\deployment_quality_scores.schema.json"
+    },
+    {
+      "file": "agent_performance_metrics.schema.json",
+      "description": "Real-time agent performance indicators and reliability metrics",
+      "has_description": true,
+      "properties_count": 14,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\agent_performance_metrics.schema.json"
+    },
+    {
+      "file": "auto_fix_execution_history.schema.json",
+      "description": "Audit trail of all automated remediation executions with outcomes and evidence",
+      "has_description": true,
+      "properties_count": 25,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\auto_fix_execution_history.schema.json"
+    },
+    {
+      "file": "azure_infrastructure.schema.json",
+      "description": "Azure resource inventory, configuration, and state tracking",
+      "has_description": true,
+      "properties_count": 13,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\azure_infrastructure.schema.json"
+    },
+    {
+      "file": "compliance_audit.schema.json",
+      "description": "Compliance audit results, security findings, and remediation tracking",
+      "has_description": true,
+      "properties_count": 9,
+      "id": "",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\compliance_audit.schema.json"
+    },
+    {
+      "file": "agent.schema.json",
+      "description": "A FastAPI agent in the agent-fleet orchestrator",
+      "has_description": true,
+      "properties_count": 10,
+      "id": "agent",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\agent.schema.json"
+    },
+    {
+      "file": "component.schema.json",
+      "description": "A reusable React component in the EVA design system (@eva/ui or screen-local)",
+      "has_description": true,
+      "properties_count": 10,
+      "id": "component",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\component.schema.json"
+    },
+    {
+      "file": "container.schema.json",
+      "description": "A Cosmos DB container — fields, partition key, indexes",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "container",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\container.schema.json"
+    },
+    {
+      "file": "decision.schema.json",
+      "description": "An ADR (Architecture Decision Record) for any significant technical or governance decision.",
+      "has_description": true,
+      "properties_count": 15,
+      "id": "decision",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\decision.schema.json"
+    },
+    {
+      "file": "endpoint.schema.json",
+      "description": "A single HTTP operation in the EVA API surface",
+      "has_description": true,
+      "properties_count": 25,
+      "id": "endpoint",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\endpoint.schema.json"
+    },
+    {
+      "file": "evidence.schema.json",
+      "description": "Proof-of-completion for a DPDCA phase of a story. Universal schema works for any story type (feature, bug, infrastructure, etc) and any project. Session 27: Added tech_stack polymorphism for tech-specific context validation.",
+      "has_description": true,
+      "properties_count": 15,
+      "id": "evidence",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\evidence.schema.json"
+    },
+    {
+      "file": "feature_flag.schema.json",
+      "description": "A named capability gate, maps to FeatureID enum in eva-brain-api",
+      "has_description": true,
+      "properties_count": 8,
+      "id": "feature_flag",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\feature_flag.schema.json"
+    },
+    {
+      "file": "hook.schema.json",
+      "description": "A custom React hook in the EVA codebase",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "hook",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\hook.schema.json"
+    },
+    {
+      "file": "ai_security_finding.schema.json",
+      "description": "Red-team vulnerability record from Promptfoo tests. Maps to attack tactics, frameworks, and remediation guidance.",
+      "has_description": true,
+      "properties_count": 14,
+      "id": "https://eva-model.azure.com/schema/ai_security_finding",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\ai_security_finding.schema.json"
+    },
+    {
+      "file": "ai_security_metrics.schema.json",
+      "description": "Test suite performance metrics: pass/fail rates, coverage by framework, API costs, execution time.",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva-model.azure.com/schema/ai_security_metrics",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\ai_security_metrics.schema.json"
+    },
+    {
+      "file": "assertions_catalog.schema.json",
+      "description": "Library of custom assertion definitions for red-team testing (Project 36). Assertions are reusable validation rules that can be applied to LLM outputs, API responses, and generated artifacts. Supports polymorphic assertion types (bilingual, pii-presence, latency-threshold, etc.).",
+      "has_description": true,
+      "properties_count": 20,
+      "id": "https://eva-model.azure.com/schema/assertions_catalog",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\assertions_catalog.schema.json"
+    },
+    {
+      "file": "attack_tactic_catalog.schema.json",
+      "description": "OWASP + ATLAS + NIST attack taxonomy for red-teaming and LLM vulnerability testing. Maps attack tactics across security frameworks.",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "https://eva-model.azure.com/schema/attack_tactic_catalog",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\attack_tactic_catalog.schema.json"
+    },
+    {
+      "file": "compliance_gap_mapping.schema.json",
+      "description": "Framework control → CVE → remediation linker. Maps findings to compliance requirements and tracks gap resolution.",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva-model.azure.com/schema/compliance_gap_mapping",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\compliance_gap_mapping.schema.json"
+    },
+    {
+      "file": "cve_finding.schema.json",
+      "description": "Individual CVE with CVSS score, affected assets, exploitability, and threat intel. Links to vulnerability scans.",
+      "has_description": true,
+      "properties_count": 23,
+      "id": "https://eva-model.azure.com/schema/cve_finding",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\cve_finding.schema.json"
+    },
+    {
+      "file": "framework_evidence_mapping.schema.json",
+      "description": "Maps test executions to security control evidence. Links red-team findings to framework compliance status.",
+      "has_description": true,
+      "properties_count": 14,
+      "id": "https://eva-model.azure.com/schema/framework_evidence_mapping",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\framework_evidence_mapping.schema.json"
+    },
+    {
+      "file": "red_team_test_suite.schema.json",
+      "description": "Promptfoo test pack definition with template metadata, assertion rules, and framework coverage settings.",
+      "has_description": true,
+      "properties_count": 13,
+      "id": "https://eva-model.azure.com/schema/red_team_test_suite",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\red_team_test_suite.schema.json"
+    },
+    {
+      "file": "remediation_effectiveness.schema.json",
+      "description": "Aggregate system-wide effectiveness metrics and continuous improvement insights",
+      "has_description": true,
+      "properties_count": 23,
+      "id": "https://eva-model.azure.com/schema/remediation_effectiveness",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\remediation_effectiveness.schema.json"
+    },
+    {
+      "file": "remediation_task.schema.json",
+      "description": "Prioritized fix action with SLA tracking, status, and effort estimation. Links CVE findings to remediation work.",
+      "has_description": true,
+      "properties_count": 22,
+      "id": "https://eva-model.azure.com/schema/remediation_task",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\remediation_task.schema.json"
+    },
+    {
+      "file": "risk_ranking.schema.json",
+      "description": "Pareto-ranked vulnerabilities using 80/20 principle. Top 20% of CVEs account for ~80% of exploitability risk.",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "https://eva-model.azure.com/schema/risk_ranking",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\risk_ranking.schema.json"
+    },
+    {
+      "file": "screen_registry.schema.json",
+      "description": "Global registry for all 163 screens across data-model layers, eva-faces, projects, and ops",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva-model.azure.com/schema/screen_registry",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\screen_registry.schema.json"
+    },
+    {
+      "file": "threat_intelligence_context.schema.json",
+      "description": "CVE enrichment with exploit availability, active exploitation, trending data. Links threat intel to vulnerabilities.",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva-model.azure.com/schema/threat_intelligence_context",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\threat_intelligence_context.schema.json"
+    },
+    {
+      "file": "vulnerability_scan_result.schema.json",
+      "description": "Network/infrastructure scan execution record. Captures scan metadata, scope, timing, and result summary.",
+      "has_description": true,
+      "properties_count": 15,
+      "id": "https://eva-model.azure.com/schema/vulnerability_scan_result",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\vulnerability_scan_result.schema.json"
+    },
+    {
+      "file": "project.schema.json",
+      "description": "Enhanced project metadata with governance fields. Layer 25 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 22,
+      "id": "https://eva.ai/schemas/project",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\project.schema.json"
+    },
+    {
+      "file": "project_work.schema.json",
+      "description": "Active work tracking for projects. Replaces STATUS.md with queryable, versioned work sessions. Layer 34 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 9,
+      "id": "https://eva.ai/schemas/project_work",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\project_work.schema.json"
+    },
+    {
+      "file": "work_decision_records.schema.json",
+      "description": "Runtime decision ledger. Captures decisions made during work execution (not architectural ADRs which are in L30 decisions layer). Layer 54 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva.ai/schemas/work_decision_records",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_decision_records.schema.json"
+    },
+    {
+      "file": "work_execution_units.schema.json",
+      "description": "Operational work ledger. Each record represents a governed unit of work (e.g., implement feature, deploy service, fix bug, execute script). Layer 52 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 26,
+      "id": "https://eva.ai/schemas/work_execution_units",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_execution_units.schema.json"
+    },
+    {
+      "file": "work_outcomes.schema.json",
+      "description": "Result ledger. Records what was actually delivered vs what was expected. Layer 56 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 12,
+      "id": "https://eva.ai/schemas/work_outcomes",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_outcomes.schema.json"
+    },
+    {
+      "file": "work_step_events.schema.json",
+      "description": "Execution event stream. Each record is one step in the timeline of a work unit (state transition, action taken, gate checked). Layer 53 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva.ai/schemas/work_step_events",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_step_events.schema.json"
+    },
+    {
+      "file": "workspace_config.schema.json",
+      "description": "Workspace-level configuration including best practices, bootstrap rules, and global settings. Layer 33 in the EVA data model architecture.",
+      "has_description": true,
+      "properties_count": 9,
+      "id": "https://eva.ai/schemas/workspace_config",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\workspace_config.schema.json"
+    },
+    {
+      "file": "work_learning_feedback.schema.json",
+      "description": "Adaptive learning layer capturing lessons, tuning signals, and improvement insights from work execution. Feeds into pattern creation (L58) and continuous improvement cycles.",
+      "has_description": true,
+      "properties_count": 16,
+      "id": "https://eva.foundation/schema/work_learning_feedback",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_learning_feedback.schema.json"
+    },
+    {
+      "file": "work_obligations.schema.json",
+      "description": "Follow-up obligations created from work decisions (L54) and policy enforcement (L16). Tracks remediation tasks, policy-mandated actions, and decision follow-ups with assignees and due dates.",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva.foundation/schema/work_obligations",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_obligations.schema.json"
+    },
+    {
+      "file": "work_reusable_patterns.schema.json",
+      "description": "Approved execution pattern templates derived from learning feedback (L57). Each pattern defines a reusable workflow with steps, conditions, and expected outcomes. Forms the foundation for factory capabilities (L61).",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "https://eva.foundation/schema/work_reusable_patterns",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\work_reusable_patterns.schema.json"
+    },
+    {
+      "file": "infrastructure.schema.json",
+      "description": "An Azure resource or configuration object used by the EVA ecosystem",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "infrastructure",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\infrastructure.schema.json"
+    },
+    {
+      "file": "literal.schema.json",
+      "description": "A UI string key with translations — every displayed string in admin-face and chat-face",
+      "has_description": true,
+      "properties_count": 6,
+      "id": "literal",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\literal.schema.json"
+    },
+    {
+      "file": "mcp_server.schema.json",
+      "description": "A Model Context Protocol server that exposes tools to Copilot agents",
+      "has_description": true,
+      "properties_count": 10,
+      "id": "mcp_server",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\mcp_server.schema.json"
+    },
+    {
+      "file": "milestone.schema.json",
+      "description": "A waterfall phase gate or governance checkpoint. Links to deliverables and sign-off evidence.",
+      "has_description": true,
+      "properties_count": 12,
+      "id": "milestone",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\milestone.schema.json"
+    },
+    {
+      "file": "persona.schema.json",
+      "description": "An actor (human role or machine agent) that interacts with EVA",
+      "has_description": true,
+      "properties_count": 10,
+      "id": "persona",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\persona.schema.json"
+    },
+    {
+      "file": "prompt.schema.json",
+      "description": "A Prompty or system-prompt template used by agents and copilot skills",
+      "has_description": true,
+      "properties_count": 10,
+      "id": "prompt",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\prompt.schema.json"
+    },
+    {
+      "file": "requirement.schema.json",
+      "description": "An Epic or requirement — linked to endpoints, screens, and tests for traceability",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "requirement",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\requirement.schema.json"
+    },
+    {
+      "file": "risk.schema.json",
+      "description": "A project risk register entry. Supports both waterfall and agile risk tracking.",
+      "has_description": true,
+      "properties_count": 15,
+      "id": "risk",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\risk.schema.json"
+    },
+    {
+      "file": "screen.schema.json",
+      "description": "A React page/screen in admin-face or chat-face",
+      "has_description": true,
+      "properties_count": 17,
+      "id": "screen",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\screen.schema.json"
+    },
+    {
+      "file": "security_control.schema.json",
+      "description": "A security control mapped from a governance framework (ITSG-33, OWASP LLM, MITRE ATLAS, NIST AI RMF)",
+      "has_description": true,
+      "properties_count": 10,
+      "id": "security_control",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\security_control.schema.json"
+    },
+    {
+      "file": "service.schema.json",
+      "description": "A deployable service in the EVA ecosystem",
+      "has_description": true,
+      "properties_count": 14,
+      "id": "service",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\service.schema.json"
+    },
+    {
+      "file": "sprint.schema.json",
+      "description": "An agile sprint (timebox) for a project. Tracks planned vs actual velocity and story completion.",
+      "has_description": true,
+      "properties_count": 15,
+      "id": "sprint",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\sprint.schema.json"
+    },
+    {
+      "file": "trace.schema.json",
+      "description": "End-to-end trace of LM calls from a single correlation_id. Captures model, tokens, cost, and latency per call. Partition key for Cosmos: correlation_id.",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "trace",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\trace.schema.json"
+    },
+    {
+      "file": "ts_type.schema.json",
+      "description": "A TypeScript interface or type alias in the EVA codebase",
+      "has_description": true,
+      "properties_count": 11,
+      "id": "ts_type",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\ts_type.schema.json"
+    },
+    {
+      "file": "wbs.schema.json",
+      "description": "Programme decomposition hierarchy: Program → Stream → Project → Epic → Feature → Story. Session 27: Layer 26 (L26) created.",
+      "has_description": true,
+      "properties_count": 21,
+      "id": "wbs",
+      "path": "C:\\eva-foundry\\37-data-model\\schema\\wbs.schema.json"
+    },
+    {
+      "layers_count": 0,
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\LAYER-DEFINITIONS-L112-L121.md",
+      "status": "documented",
+      "source": "definitions"
+    }
+  ],
+  "documentation_files": [
+    {
+      "exists": true,
+      "size_bytes": 20917,
+      "last_modified": "2026-03-09 13:36:20",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\COMPLETE-LAYER-CATALOG.md"
+    },
+    {
+      "exists": true,
+      "size_bytes": 83689,
+      "last_modified": "2026-03-12 20:24:22",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\03-DATA-MODEL-REFERENCE.md"
+    },
+    {
+      "exists": true,
+      "size_bytes": 4621,
+      "last_modified": "2026-03-09 11:28:53",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\98-model-ontology-for-agents.md"
+    },
+    {
+      "exists": true,
+      "size_bytes": 9352,
+      "last_modified": "2026-03-12 20:24:22",
+      "path": "C:\\eva-foundry\\37-data-model\\docs\\library\\99-layers-design-20260309-0935.md"
+    }
+  ],
+  "status": "COMPLETE",
+  "phase": "DISCOVER",
+  "timestamp": "20260312_230333",
+  "api_base": "https://msub-eva-data-model.victoriousgrass-30debbd3.canadacentral.azurecontainerapps.io"
+}

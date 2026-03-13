@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "L62 - work_factory_services",
+  "description": "Service packaging of capabilities (L61). Each service is a concrete, invocable implementation that delivers one or more capabilities. Services are registered by agents/cp_agents and can be invoked via service requests (L63). Services have defined SLAs (L66) and performance tracking (L65).",
+  "required": [
+    "id",
+    "service_name",
+    "description",
+    "service_type",
+    "status",
+    "provider_type",
+    "provider_id",
+    "created_at",
+    "created_by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Primary key: service-{kebab-case-name}",
+      "pattern": "^service-[a-z0-9-]+$",
+      "examples": ["service-schema-migrator", "service-api-deployer", "service-test-generator"]
+    },
+    "service_name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable service name"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 2000,
+      "description": "Detailed description of service functionality, use cases, and value"
+    },
+    "service_type": {
+      "type": "string",
+      "enum": ["synchronous", "asynchronous", "streaming", "batch"],
+      "description": "Service invocation pattern"
+    },
+    "required_capability_ids": {
+      "type": "array",
+      "description": "FK array to L61 work_factory_capabilities (RESTRICT on delete). Capabilities this service MUST provide.",
+      "items": {
+        "type": "string",
+        "pattern": "^capability-[a-z0-9-]+$"
+      }
+    },
+    "optional_capability_ids": {
+      "type": "array",
+      "description": "FK array to L61 (RESTRICT on delete). Additional capabilities this service MAY provide (depends on configuration/context).",
+      "items": {
+        "type": "string",
+        "pattern": "^capability-[a-z0-9-]+$"
+      }
+    },
+    "input_schema": {
+      "type": "object",
+      "description": "JSON schema defining valid service inputs (embedded or FK to L21 schemas)"
+    },
+    "output_schema": {
+      "type": "object",
+      "description": "JSON schema defining service outputs"
+    },
+    "provider_type": {
+      "type": "string",
+      "enum": ["agent", "cp_agent", "external_api", "human"],
+      "description": "What type of provider implements this service (polymorphic)"
+    },
+    "provider_id": {
+      "type": "string",
+      "description": "Polymorphic FK to provider (agent/cp_agent/persona) or external system identifier"
+    },
+    "endpoint_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "HTTP endpoint for service invocation (nullable if not HTTP-based)"
+    },
+    "authentication_method": {
+      "type": "string",
+      "enum": ["none", "api_key", "oauth2", "managed_identity", "custom"],
+      "description": "How callers authenticate to this service"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "development", "testing", "production", "maintenance", "deprecated"],
+      "description": "Service lifecycle status"
+    },
+    "availability_sla_ref": {
+      "type": ["string", "null"],
+      "description": "FK to L66 work_service_level_objectives. Primary availability SLA for this service."
+    },
+    "performance_profile_ref": {
+      "type": ["string", "null"],
+      "description": "FK to L65 work_service_perf_profiles. Current performance profile for this service."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version (major.minor.patch)"
+    },
+    "deployment_target": {
+      "type": ["string", "null"],
+      "description": "Where this service is deployed (Azure Function, Container App, local process, etc.)"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Searchable categorization",
+      "items": {"type": "string"}
+    },
+    "deprecation_reason": {
+      "type": ["string", "null"],
+      "minLength": 10,
+      "maxLength": 1000,
+      "description": "Why this service was deprecated (if status=deprecated)"
+    },
+    "replacement_service_id": {
+      "type": ["string", "null"],
+      "description": "FK to L62 (self-reference). If deprecated, which service replaced this one."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional operational notes or configuration details"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record creation timestamp (ISO8601)"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Record last update timestamp (ISO8601)"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Identifier of creator"
+    },
+    "updated_by": {
+      "type": ["string", "null"],
+      "description": "Identifier of last updater"
+    }
+  },
+  "additionalProperties": false
+}
