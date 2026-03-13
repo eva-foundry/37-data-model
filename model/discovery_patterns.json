@@ -1,0 +1,22 @@
+{
+  "discovery_patterns": [
+    {
+      "id": "37-data-model-pattern-001",
+      "context_id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "pattern_type": "operational",
+      "title": "Incremental Layer Registration Pattern",
+      "description": "Layers are registered in batches of 4-8 per phase. Each batch requires JSON file creation, admin.py _LAYER_FILES update, metadata-index update, and test update.",
+      "frequency": "per-phase",
+      "confidence": "high",
+      "signals": ["37-data-model-signal-001"],
+      "status": "active",
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}

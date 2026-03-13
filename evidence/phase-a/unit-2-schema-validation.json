@@ -1,0 +1,74 @@
+{
+  "unit": 2,
+  "description": "Schema Validation - 8 Layer Schemas",
+  "timestamp": "2026-03-13T13:54:01Z",
+  "validations": [
+    {
+      "layer_id": "L122",
+      "layer": "discovery_contexts",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L123",
+      "layer": "discovery_signals",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L124",
+      "layer": "discovery_patterns",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L125",
+      "layer": "discovery_insights",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L126",
+      "layer": "sense_making_models",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L127",
+      "layer": "discovery_outcomes",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L128",
+      "layer": "discovery_actions",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    },
+    {
+      "layer_id": "L129",
+      "layer": "discovery_knowledge_base",
+      "json_valid": true,
+      "layer_key_present": true,
+      "record_count": 1,
+      "result": "PASS"
+    }
+  ],
+  "schemas_passed": 8,
+  "schemas_failed": 0,
+  "result": "PASS"
+}

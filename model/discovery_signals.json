@@ -1,0 +1,23 @@
+{
+  "discovery_signals": [
+    {
+      "id": "37-data-model-signal-001",
+      "context_id": "37-data-model-discovery-context-001",
+      "project_id": "37-data-model",
+      "signal_type": "metric",
+      "source": "layer-metadata-index",
+      "title": "Layer count drift detected",
+      "description": "Total layers in metadata index (111) differs from test expectation (51). Signals need for layer count reconciliation.",
+      "strength": "high",
+      "observed_at": "2026-03-13T13:54:01Z",
+      "status": "processed",
+      "tags": ["layer-count", "test-drift", "metadata"],
+      "created_by": "copilot-agent",
+      "created_at": "2026-03-13T13:54:01Z",
+      "modified_by": "copilot-agent",
+      "modified_at": "2026-03-13T13:54:01Z",
+      "row_version": 1,
+      "is_active": true
+    }
+  ]
+}
