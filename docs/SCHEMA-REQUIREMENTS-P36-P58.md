@@ -3,7 +3,7 @@
 **Analysis Date**: 2026-03-12  
 **Analyst**: AIAgentExpert  
 **Scope**: Complete schema mapping for red-teaming + security factory workloads against 111-layer Data Model  
-**Status**: Architectural Design (ready for Phase 1 implementation)
+**Status**: Architectural Design (ready for unified deployment)
 
 ---
 
@@ -14,11 +14,12 @@
 - **P58**: Infrastructure vulnerability scanning + Pareto risk ranking + remediation orchestration
 
 **Schema Analysis Result**: 
-- **Existing Good-Fit Schemas**: 8 (reusable with minimal adaptation)
-- **New Schemas Required**: 12 (dedicated domain support)
-- **Total Recommended**: 20 schemas for production-ready integration
+- **Approved Existing Schemas**: 2 (security_controls, agent_performance_metrics)
+- **Rejected Workarounds**: 8 schemas have compromises (loose typing, semantic mismatch)
+- **New Dedicated Layers Required**: 10 (5 for P36, 5 for P58)
+- **Total Production-Ready**: 12 schemas (2 approved + 10 new)
 
-**Recommendation**: Create new 12 schemas in Phase 2 (L50-L63) rather than forcing fit into existing schemas. Existing schemas become bridge layer for Phase 1 MVP (14 days), planned schemas unblock optimized Phase 2+ (90% efficiency gain).
+**Recommendation**: Create 10 new dedicated layers instead of forcing P36/P58 workloads into compromised existing schemas. Unified deployment (all 10 layers + 2 existing, no phase staging). Data Model team assigns L-numbers during integration.
 
 ---
 
@@ -132,106 +133,102 @@
 | Test suite definitions | Domain 3: AI Runtime | L9 (agents), L18 (cp_workflows) | ❌ | **GAP** (no "test_suite" layer) |
 | Custom assertions catalog | Domain 6: Governance | L41 (validation_rules) | ✅ validation_rules | Fair (generic, could add assertion-specific metadata) |
 
-**P36 Domain Fit**: 4 excellent + 3 good + 1 fair = **8 existing schemas can bridge Phase 1 MVP**
+**P36 Rejected Workarounds**: 
+1. prompts (L21) + free-form tactic field
+3. evidence (L33) + new tech_stack discriminator
+4. validation_rules (L41) + assertion field
 
-**P36 Gaps Identified**: 
-1. No dedicated "attack_tactic" catalog (50+ OWASP/ATLAS/NIST tactics)
-2. No "test_suite" layer (Promptfoo test pack definitions)
-3. No "ai_security_finding" layer (dedicated red-team result storage)
-4. No "test_coverage_matrix" layer (framework control → test mapping)
+All three rejected → **CREATE NEW LAYERS**: test_definitions_for_red_team, ai_security_results, assertions_catalog
 
 ---
 
 ### Mapping P58 Requirements → EVA Domains
 
-| P58 Requirement | EVA Domain | Layer(s) | Existing Schema? | Fit Quality |
+| P58 Requirement | EVA Domain | Layer(s) | Existing Schema? | Decision |
 |---|---|---|---|---|
-| Network scan results | Domain 8: DevOps | L47 (deployment_records) | ❌ | **GAP** (deployment_records is CD-focused, not scan-focused) |
-| Vulnerability findings (CVE+CVSS) | Domain 9: Observability | L45 (compliance_audit) + L49 (infrastructure_drift) | ✅ compliance_audit (partial) | Fair (compliance_audit is audit-focused, not asset + CVE + CVSS) |
-| Asset inventory | Domain 10: Infrastructure | L44 (azure_infrastructure) | ✅ azure_infrastructure | Good (36 objects tracked, includes resources + tags) |
-| Risk rankings (Pareto analysis) | Domain 9: Observability | L50 (performance_trends) | ❌ | **GAP** (no "risk_ranking" layer) |
-| Remediation tasks + tracking | Domain 7: Project & PM | L27 (wbs), L29 (tasks) | ✅ wbs + tasks | Good (task structure exists, can model remediation as task type) |
-| Compliance gap mappings | Domain 6: Governance | L22 (security_controls), L45 (compliance_audit) | ✅ security_controls + compliance_audit | Good (frameworks supported: SOC2, PCI-DSS, HIPAA, GDPR, CSA) |
-| Remediation progress tracking | Domain 7: Project & PM | L35 (project_work) | ✅ project_work | Good (supports status transitions, metrics) |
-| Remediation effectiveness metrics | Domain 9: Observability | L43 (agent_performance_metrics) | ❌ | **GAP** (no "remediation_effectiveness" layer) |
-| Threat intelligence context | Domain 6: Governance | L30 (risks), L31 (decisions) | ✅ risks | Fair (generic, no CVE/NVD metadata) |
+| Network scan results | Domain 8: DevOps | L47 (deployment_records) | ❌ | **CREATE**: vulnerability_scan_results |
+| Vulnerability findings (CVE+CVSS) | Domain 9: Observability | L45 (compliance_audit) | ✅ (partial) | **CREATE**: infrastructure_cve_findings (better fit) |
+| Asset inventory | Domain 10: Infrastructure | L44 (azure_infrastructure) | ✅ | ✅ APPROVED |
+| Risk rankings (Pareto analysis) | Domain 9: Observability | None | ❌ | **CREATE**: risk_ranking_analysis |
+| Remediation tasks + tracking | Domain 7: Project & PM | L27 (wbs), L29 (tasks) | ✅ | **CREATE**: remediation_tasks (security-specific) |
+| Compliance gap mappings | Domain 6: Governance | L22 (security_controls), L45 (compliance_audit) | ✅ (through security_controls) | ✅ APPROVED (security_controls) |
+| Remediation progress tracking | Domain 7: Project & PM | L35 (project_work) | ✅ (generic) | **CREATE**: remediation_effectiveness_metrics |
+| Threat intelligence context | Domain 6: Governance | L30 (risks), L31 (decisions) | ✅ (generic) | Covered by infrastructure_cve_findings enrichment |
 
-**P58 Domain Fit**: 5 good + 2 fair = **7 existing schemas can bridge Phase 1 MVP**
+**P58 Rejected Workarounds**:
+- Scan results squeezing into deployment_records (semantic mismatch)
+- Generic CVE storage in compliance_audit findings array (no type safety)
+- Pareto ranking as complex query logic on untyped findings (inefficient)
+- Remediation tracking via generic wbs.tasks (no SLA semantics)
+- Effectiveness metrics as generic project_work metrics (difficult to correlate)
 
-**P58 Gaps Identified**:
-1. No "scan_result" layer (network scan, service enumeration)
-2. No "risk_ranking" layer (Pareto analysis output)
-3. No "remediation_task" layer (dedicated remediation orchestration)
-4. No "remediation_effectiveness" layer (metrics: % closed, SLA compliance, risk reduction)
-5. No "compliance_gap" layer (framework control → vulnerability mapping)
-6. No "threat_intelligence" layer (CVE enrichment, exploit availability)
+All five rejected → **CREATE NEW LAYERS**: vulnerability_scan_results, infrastructure_cve_findings, risk_ranking_analysis, remediation_tasks, remediation_effectiveness_metrics
 
 ---
 
-## Part 4: Recommended Schema Architecture (20 Schemas Total)
+## Part 4: Recommended Schema Architecture (Unified Deployment)
 
-### Phase 1: Bridge Schemas (8 existing + 0 new = 8 total) ⏱️ _0 days_ 
+**Decision**: All layers deployed together. No phase staging. Data Model team handles layer numbering.
 
-**Use existing schemas with documented workarounds**:
+### Approved Existing Schemas (2) → Use As-Is
 
-| Existing Schema | Projects | Via Layer | Workaround Notes | Phase 1 Blocker? |
-|---|---|---|---|---|
-| **prompts** | P36 | L21 | Add `red_team_tactic` field as string (free-form for now) | ❌ No |
-| **security_controls** | P36, P58 | L22 | Framework enum already covers all 5 P36 frameworks; P58 adds "custom" for new controls | ❌ No |
-| **evidence** | P36, P58 | L33 | Polymorphic schema supports arbitrary artifacts; can store Promptfoo results JSON | ✅ **Minor** (need tech_stack discriminator for "ai_security", "vulnerability_scan") |
-| **compliance_audit** | P36, P58 | L45 | audit_type="vulnerability" exists; findings array accepts arbitrary objects | ⚠️ **YES** (array definition is too loose) |
-| **validation_rules** | P36 | L41 | Add `custom_assertion` field to allow naming Promptfoo assertions | ❌ No |
-| **agent_performance_metrics** | P36, P58 | L43 | Track: test_count, pass_rate, api_cost, duration; already structured | ❌ No |
-| **azure_infrastructure** | P58 | L44 | Already includes assets + tags; reuse for scan targets | ❌ No |
-| **deployment_records** | P58 | L47 | Can record scan execution as "deployment" (workaround); prefer new schema in P2 | ⚠️ **Minor** (semantic mismatch) |
+| Existing Schema | Projects | Purpose | Status |
+|---|---|---|---|
+| **security_controls** | P36, P58 | Framework mapping (ATLAS, OWASP-LLM, NIST-AI-RMF, ITSG-33, ISO-42001, PCI-DSS, SOC2, HIPAA, GDPR, CSA, ISO27001, CIS, custom) | ✅ APPROVED |
+| **agent_performance_metrics** | P36, P58 | Test suite + scan execution metrics (test_count, pass_rate, api_cost, duration, tokens_used) | ✅ APPROVED |
 
-**Phase 1 Acceptance**: Models boot-strap with existing schemas + documented workarounds. Full validation gates pass via existing quality_gates layer. Evidence complete.
+### Rejected Workarounds → New Dedicated Layers (10 total)
+
+**Workaround: `prompts (L21) + free-form red_team_tactic`**
+→ **DELETE workaround**. Create new layer: **test_definitions_for_red_team**
+
+**Workaround: `evidence (L33) + new tech_stack discriminator`**
+→ **DELETE workaround**. Create new layer: **ai_security_results**
+
+**Workaround: `validation_rules (L41) + custom_assertion field`**
+→ **DELETE workaround**. Create new layer: **assertions_catalog**
+
+**Workaround: `compliance_audit (L45) + untyped findings array`**
+→ **DELETE workaround**. Create new layers: **ai_security_findings** + **infrastructure_cve_findings**
 
 ---
 
-### Phase 2: New Production Schemas (12 new) ⏱️ _10 days_
+### New Production Schemas (10 new, no L-numbers assigned)
 
 **Create dedicated schemas for red-teaming + security factory core use cases**:
 
-#### **Schemas Tier 1: P36-Specific (Red-Teaming)** [5 new schemas]
+#### **Schemas for P36 (Red-Teaming)** [5 new]
 
-| Schema ID | Layer # | Purpose | Parent Domain | Key Fields | Relationships |
-|---|---|---|---|---|---|
-| **ai_security_finding** | L57 (planned) | Dedicated red-team vulnerability record | Domain 9: Observability | id, test_id, prompt_id, attack_tactic, severity (critical/high/medium), vulnerability_type, description, remediation, framework_mapping[], source="promptfoo", timestamp | evidence (parent), prompts (test target) |
-| **attack_tactic_catalog** | L50 (planned) | OWASP + ATLAS + NIST attack taxonomy | Domain 6: Governance | id, name, category (injection, jailbreak, privacy, hallucination, harmful_content, compliance), frameworks[] (ATLAS.AML.Txxx, OWASP-LLM-01, NIST-AI-01), description, references[], severity_profile, detection_difficulty | security_controls (map to controls) |
-| **red_team_test_suite** | L51 (planned) | Promptfoo test pack definition + metadata | Domain 3: AI Runtime | id, name, test_cases[], provider_config, assertion_rules[], coverage_frameworks[], test_count, estimated_duration_minutes, template_type (smoke, golden, framework_pack) | prompts, validation_rules, security_controls |
-| **framework_evidence_mapping** | L58 (planned) | Maps test → control → finding crosswalk | Domain 6: Governance | id, framework (ATLAS, OWASP-LLM, NIST-AI-RMF, ITSG-33, EU-AI-Act), control_id, control_name, ai_security_findings[], test_coverage_count, gap_status (full, partial, none), certification_date | ai_security_finding, security_controls |
-| **ai_security_metrics** | L59 (planned) | Test suite performance + coverage metrics | Domain 9: Observability | id, suite_id, run_timestamp, test_count, pass_count, fail_count, pass_rate_pct, coverage_by_framework {}, api_cost_usd, duration_minutes, tokens_used, false_positive_count | red_team_test_suite, evidence |
+| Schema Name | Purpose | Parent Domain |
+|---|---|---|
+| **test_definitions_for_red_team** | Promptfoo test pack: test cases, prompts, attack tactics, assertion rules, coverage mapping | Domain 3 & 6 (AI Runtime + Governance) |
+| **attack_tactic_catalog** | OWASP + ATLAS + NIST attack taxonomy (50+ attack types with framework mappings) | Domain 6: Governance |
+| **air_security_results** | Promptfoo evaluation output: per-test pass/fail, attack tactic, severity, framework mapping | Domain 9: Observability |
+| **assertions_catalog** | Custom assertion definitions (is-bilingual, has-pii, latency-under-threshold, etc.) | Domain 6: Governance |
+| **ai_security_metrics** | Test suite performance: test_count, pass_rate, false_positive_count, coverage_by_framework, api_cost, duration | Domain 9: Observability |
 
-**P36 Schema Fit**: Each schema ~200-300 lines JSON Schema Draft-07 with examples. Total: ~1,500 lines. 
+#### **Schemas for P58 (Infrastructure Vulnerability Management)** [5 new]
 
-**Production Readiness**: 
-- ✅ No compromise (not forcing P36 Data into P58 containers)
-- ✅ Framework-native (each schema designed for 5-framework alignment)
-- ✅ Composable (can orchestrate Promptfoo → ai_security_finding → framework_evidence_mapping via relationships)
-- ✅ Auditable (full lineage from test → finding → control → remediation)
+| Schema Name | Purpose | Parent Domain |
+|---|---|---|
+| **vulnerability_scan_results** | Network scan execution: scan_type (Nmap, Nessus, Azure Security Center), timestamp, target scope, host/service counts | Domain 8: DevOps & Delivery |
+| **infrastructure_cve_findings** | Individual CVE record: cve_id, cvss_score, cvss_vector, exploitability_score, affected_host, affected_port, affected_service, cpe_match, patch_availability | Domain 9: Observability |
+| **risk_ranking_analysis** | Pareto analysis output: risk scores, percentile ranking, top_20_percent grouping, risk_reduction_potential | Domain 9: Observability |
+| **remediation_tasks** | Prioritized fix actions: severity, assigned_to, due_date, sla_status, remediation_type, patches_available, runbooks | Domain 7: Project & PM |
+| **remediation_effectiveness_metrics** | Progress tracking: findings_closed, risk_reduction_pct, sla_compliance_pct, velocity, backlog_size | Domain 9: Observability |
 
 ---
 
-#### **Schemas Tier 2: P58-Specific (Infrastructure Vulnerability Management)** [7 new schemas]
+#### **Cross-Project Shared** [0 new - using existing]
 
-| Schema ID | Layer # | Purpose | Parent Domain | Key Fields | Relationships |
-|---|---|---|---|---|---|
-| **vulnerability_scan_result** | L52 (planned) | Network scan execution record | Domain 8: DevOps | id, scan_id, scan_type (nmap, nessus, azure_security_center), timestamp, target_scope (cidr_ranges, cloud_subscription), host_count, service_count, vulnerability_count, duration_minutes, tool_version | infrastructure (targets) |
-| **cve_finding** | L53 (planned) | Individual vulnerability with CVE + CVSS + exploitability | Domain 9: Observability | id, cve_id, cvss_score (0-10), cvss_vector, exploitability_score (default: CVSS exploitability; enriched: threat intel adjustment), asset_criticality (1-5 scale), affected_host, affected_port, affected_service, cpe_match, patch_available, patch_version, nist_cwe_category, first_detected, last_detected | vulnerability_scan_result (parent), threat_intelligence (enrichment) |
-| **risk_ranking** | L54 (planned) | Pareto-ranked vulnerability output | Domain 9: Observability | id, ranking_run_timestamp, risk_scores[] { cve_id, risk_score, percentile, pareto_group (top_20_percent, next_30_percent, long_tail) }, total_risk_units, top_20_count, risk_reduction_if_remediate_top_20_pct, pareto_distribution_fit | cve_finding (input) |
-| **remediation_task** | L55 (planned) | Prioritized fix action with SLA tracking | Domain 7: Project & PM | id, cve_id, severity (critical/high/medium/low), fix_priority (1-5, derived from risk_ranking), assigned_to (persona), due_date, sla_status (on_track, at_risk, overdue), remediation_type (patch, mitigate, accept, decommission), estimated_effort_hours, patches_available[], runbooks[], status (not_started, in_progress, completed, cancelled), completion_date, notes | wbs/tasks (parent), cve_finding, risk_ranking |
-| **remediation_effectiveness** | L56 (planned) | Metrics on remediation execution | Domain 9: Observability | id, period (start_date, end_date), cve_count_remediated, severity_distribution_before, severity_distribution_after, risk_score_before, risk_score_after, risk_reduction_pct, sla_compliance_pct (% of tasks completed on time), velocity (findings_closed_per_week), backlog_size, remediation_time_avg_hours | remediation_task (aggregation) |
-| **compliance_gap_mapping** | L60 (planned) | Framework control → CVE/finding → remediation linker | Domain 6: Governance | id, framework (PCI-DSS, SOC2, HIPAA, ISO27001, CIS, custom), control_id, control_name, findings_violating[] (cve_id[]), remediation_tasks_required[], gap_status (critical, high, medium, low, resolved), certification_date | security_controls, cve_finding, remediation_task |
-| **threat_intelligence_context** | L61 (planned) | CVE enrichment + exploitability trending | Domain 6: Governance | id, cve_id, threat_intel_source (NVD, CISA, Shodan, GreyNoise, proprietary), exploit_availability (none, proof_of_concept, functional, active_in_wild), active_exploitation (yes/no), exploit_popularity (number of public exploits), trending (no, emerging, hot), asset_exposure_count (how many customers affected), incident_count (tracked exploits in the wild) | cve_finding (enrichment source) |
+| Existing Schema | Purpose |
+|---|---|
+| **security_controls** | Framework mapping: control_id, framework, satisfied_by[], status, eval_suite_id (linker to test suites + findings) |
+| **agent_performance_metrics** | Execution metrics (reused for both test suites + scan runs) |
 
-**P58 Schema Fit**: Each schema ~250-350 lines JSON Schema Draft-07 with examples. Total: ~2,000 lines.
+---
 
-**Production Readiness**:
-- ✅ No compromise (not squeezing P58 vulnerability data into P36 red-team findings)
-- ✅ Pareto-native (risk_ranking and remediation_effectiveness designed around 80/20 principle)
-- ✅ Compliance-aware (direct mapping framework control → CVE → remediation)
-- ✅ Enterprise-grade (SLA tracking, velocity metrics, threat intel integration)
+## Summary: 10 New Layers + 2 Existing = 12 Total
 
 ---
 
@@ -459,119 +456,84 @@
 
 ## Part 6: Interdependencies & Orchestration
 
-### P36 Data Flow (Red-Teaming)
+### P36 Data Flow (Unified)
 
 ```
-prompts (L21) 
-  ↓ test definitions
-red_team_test_suite (L51-new)
-  ↓ execute via Promptfoo provider
-evidence (L33) + ai_security_finding (L57-new)
-  ↓ aggregate results
-ai_security_metrics (L59-new)
-  ↓ map controls
-framework_evidence_mapping (L58-new)
-  ↓ generate ATO evidence pack
-compliance_audit (L45) + security_controls (L22)
+test_definitions_for_red_team (test cases, tactics, providers, assertions)
+  ↓ execute Promptfoo
+ai_security_results (per-test pass/fail, attack tactic, severity)
+  ↓ aggregate
+ai_security_metrics (test_count, pass_rate, coverage, cost)
+  ↓ map to controls
+security_controls (framework control ← test ← finding)
+  ↓ publish
+attack_tactic_catalog (all tactics used, discovery index)
+assertions_catalog (all assertions used, reusability index)
 ```
 
-**Dependency Chain**: `prompts → red_team_test_suite → [execute] → evidence + ai_security_finding → framework_evidence_mapping → compliance_audit`
-
-**Key Insight**: Evidence + findings are immutable (audit trail). Framework mapping is derived + regenerable. Control attestation comes from evidence layer.
+**Dependency**: `test_definitions → [execute] → ai_security_results → ai_security_metrics → security_controls`
 
 ---
 
-### P58 Data Flow (Infrastructure Scanning)
+### P58 Data Flow (Unified)
 
 ```
-azure_infrastructure (L44)
-  ↓ scan targets
-vulnerability_scan_result (L52-new)
-  ↓ parse raw scan output
-cve_finding (L53-new) + threat_intelligence_context (L61-new)
+vulnerability_scan_results (scan metadata, target scope)
+  ↓ parse output
+infrastructure_cve_findings (per-CVE: id, CVSS, exploitability, host, service)
   ↓ rank by risk
-risk_ranking (L54-new)
-  ↓ create remediation backlog
-remediation_task (L55-new) + compliance_gap_mapping (L60-new)
+risk_ranking_analysis (Pareto: top 20% driving 80% of risk)
+  ↓ create tasks
+remediation_tasks (severity, assigned_to, sla_status, due_date)
   ↓ track completion
-remediation_effectiveness (L56-new)
-  ↓ map controls
-security_controls (L22) + compliance_audit (L45)
+remediation_effectiveness_metrics (closed_count, risk_reduction_%, sla_compliance_%)
+  ↓ map to controls
+security_controls (framework control ← CVE ← remediation ← scan)
 ```
 
-**Dependency Chain**: `infrastructure → scan → cve_finding → risk_ranking → remediation_task → remediation_effectiveness + compliance_gap_mapping → security_controls`
-
-**Key Insight**: Pareto ranking (top 20%) becomes filter for remediation_task creation. SLA tracking happens in remediation_effectiveness.
+**Dependency**: `scan_results → [parse] → cve_findings → risk_ranking → remediation_tasks → remediation_effectiveness + security_controls`
 
 ---
 
 ### Cross-Project Integration (P36 ↔ P58)
 
-**Only One Integration Point**: `security_controls (L22) + compliance_audit (L45)`
+**Single Integration Point**: `security_controls` (shared layer)
 
-Both projects map findings → controls → audit trail. P36 adds "AI security" controls (ATLAS, OWASP-LLM). P58 adds "Infrastructure" controls (PCI, HIPAA). Framework enum in security_controls expands to:
+Both projects map findings → controls → audit trail:
+- P36: test_id → ai_security_finding → control_id
+- P58: cve_id → infrastructure_cve_finding → control_id
 
+Framework enum in security_controls handles both:
 ```json
 "framework": [
-  "ITSG-33", "OWASP-LLM", "MITRE-ATLAS", "NIST-AI-RMF", "ISO-42001",  // P36
-  "SOC2", "PCI-DSS", "HIPAA", "GDPR", "CSA", "ISO27001", "CIS", "NIST",  // P58 (existing)
-  "OWASP-CSR",  // P58 new
+  "ATLAS", "OWASP-LLM", "NIST-AI-RMF", "ITSG-33", "ISO-42001",    // P36 domains
+  "PCI-DSS", "SOC2", "HIPAA", "GDPR", "CSA", "ISO27001", "CIS", "NIST",  // P58 domains
   "custom"
 ]
 ```
 
-**Benefit**: Single control attestation report can show both AI vulnerabilities + Infrastructure vulnerabilities under same framework (e.g., "NIST AI RMF" + "NIST Cybersecurity Framework").
+**Benefit**: Unified compliance reporting (single report shows AI + Infrastructure security posture)
 
 ---
 
-## Part 7: Implementation Sequencing
-
-### Phase 1: MVP (14 days) - Start immediately
-
-**Use existing schemas** for bridging workloads:
-
-| Day | Team | Task | Output |
-|---|---|---|---|
-| 1-2 | P36 | Implement Promptfoo core + custom HTTP provider | Working eval harness |
-| 2-3 | P36 | Wire evidence layer for Promptfoo results (store as JSON in artifacts) | Prompts → Results → Evidence records |
-| 3-5 | P58 | Stand up Nmap scanning infrastructure + Azure Security Center integration | Raw scan results parsable |
-| 5-7 | P58 | Map scan results to compliance_audit layer (audit_type="vulnerability") | CVE findings stored + queryable |
-| 7-10 | Both | Framework mapping validation (controls + security_controls layer alignment) | Can generate compliance matrices |
-| 10-14 | Both | ATO evidence packs + sprint close validation | MTI > 70, all tests passing |
-
-**Phase 1 Acceptance**: 
-- ✅ P36 produces 60+ test results, stores as evidence
-- ✅ P58 produces 100+ CVE findings, stores as compliance_audit
-- ✅ Both projects map to security_controls
-- ✅ Evidence complete, MTI gate passed
-- ✅ No new schemas created (reuse existing + documented workarounds)
-
 ---
 
-### Phase 2: Production Schemas (10 days) - Start after Sprint 1 closes
+## Part 7: Implementation Sequencing (Unified Deployment)
 
-**Create 12 new schemas** for optimized data structures:
+**Timeline**: All 10 layers designed + deployed together (no staging). Data Model team assigns L-numbers during integration.
 
-| Week | Team | Task | Output |
-|---|---|---|---|
-| 1 (3 days) | Data Modeler | Design 12 JSON schemas + write examples | Complete schema definitions |
-| 1-2 (3 days parallel) | Backend Eng | Implement API routes, CRUD, indexes in FastAPI + Cosmos DB | All 12 schemas deployed + tested |
-| 2 (2 days parallel) | QA Eng | Write 50+ integration tests | Test suite complete, all passing |
-| 2 (1 day parallel) | Migration Eng | Build data transformer (compliance_audit → ai_security_finding, evidence → ai_security_metrics) | Migration script tested |
-| 2 (1 day) | Tech Writer | Documentation + query examples | README + runbooks |
+### Workstreams (Parallel)
 
-**Phase 2 Deployment**: 
-- Push 12 new schemas + API routes
-- Run migration script (data moved, old fields preserved for backcompat)
-- P36 Sprint 2 uses new ai_security_finding layer
-- P58 Sprint 2 uses new cve_finding + risk_ranking layers
-- Cleanup: Deprecate compliance_audit for P36 work (P58 keeps for audit trail)
+| Workstream | Lead | Duration | Effort | Deliverable |
+|---|---|---|---|---|
+| **P36 Schema Design** (5 layers) | Data Modeler | 2 days | JSON Schema DR-07 + examples for: test_definitions_for_red_team, attack_tactic_catalog, ai_security_results, assertions_catalog, ai_security_metrics | 5 schemas ready for API integration |
+| **P58 Schema Design** (5 layers) | Data Modeler | 2 days | JSON Schema DR-07 + examples for: vulnerability_scan_results, infrastructure_cve_findings, risk_ranking_analysis, remediation_tasks, remediation_effectiveness_metrics | 5 schemas ready for API integration |
+| **API Integration** (10 layers + existing 2) | Backend Eng | 3 days | FastAPI routes (POST/GET/PUT/DELETE per layer), Cosmos DB indexes, relationships (foreign keys), CRUD operations | All 12 layers queryable via REST |
+| **Integration Tests** (120+ tests) | QA Eng | 2 days | Test CRUD + relationships for each layer, edge cases, validation | All tests passing |
+| **Data Migration Scripts** (if backfilling Phase 1 data) | Migration Eng | 1 day | N/A (P36/P58 start fresh on new layers) | — |
+| **Documentation** | Tech Writer | 1 day | README, query examples, relationship diagrams, integration runbooks | Complete |
 
-**Phase 2 Benefits**:
-- 90% query efficiency gain (no more filtering generic findings arrays)
-- Type-safe validation (JSON Schema prevents malformed records)
-- Framework-native data structures (no impedance mismatch)
-- Enterprise SLA tracking (remediation_effectiveness layer)
+**Total**: ~9 days (parallel). All layers deployed atomically in single commit.
 
 ---
 
@@ -609,6 +571,36 @@ For each new schema to be "production-ready":
 
 ---
 
+## Next Steps
+
+### For Project 36 (Red-Teaming)
+
+**At Unified Deployment**: Use dedicated layers immediately
+- `test_definitions_for_red_team` (test cases, attack tactics, providers, assertions)
+- `ai_security_results` (per-test pass/fail, attack tactic, severity)
+- `attack_tactic_catalog` (OWASP/ATLAS/NIST taxonomy index)
+- `assertions_catalog` (assertion reusability index)
+- `ai_security_metrics` (performance tracking)
+- Leverage `security_controls` (framework mapping)
+
+Deliverable: **Type-safe, queryable red-team data store** with complete audit trail from test → finding → control
+
+---
+
+### For Project 58 (Security Factory)
+
+**At Unified Deployment**: Use dedicated layers immediately
+- `vulnerability_scan_results` (scan metadata)
+- `infrastructure_cve_findings` (per-CVE data with exploitability)
+- `risk_ranking_analysis` (Pareto output: top 20% findings)
+- `remediation_tasks` (SLA-tracked fix actions)
+- `remediation_effectiveness_metrics` (progress tracking)
+- Leverage `security_controls` (framework mapping)
+
+Deliverable: **Enterprise-grade vulnerability management** with SLA tracking and Pareto prioritization
+
+---
+
 ## Part 9: Glossary of Terms
 
 | Term | Definition | Context |
@@ -633,53 +625,55 @@ For each new schema to be "production-ready":
 
 **Recommendation**: 
 
-✅ **CREATE 12 NEW SCHEMAS** (L50-L61 in 44-layer expansion)
+✅ **CREATE 10 NEW LAYERS** (deployment unified, layer numbering by Data Model team)
 
-Rather than forcing P36 and P58 workloads into existing schemas, dedicated schemas provide:
-- Framework-native data structures (no compromises)
-- Type safety (JSON Schema validation)
-- Query efficiency (90% faster for common operations)
-- Enterprise SLA tracking (P58 remediation effectiveness)
-- Immutable audit trails (evidence → findings → controls)
-- Clear lineage (framework control ← CVE ← scan → remediation task)
+**Rejected Workarounds → Dedicated Layers**:
+- prompts (L21) workaround → **test_definitions_for_red_team** (fresh design)
+- evidence (L33) workaround → **ai_security_results** (fresh design)
+- validation_rules (L41) workaround → **assertions_catalog** (fresh design)
+- compliance_audit (L45) generic findings → **ai_security_findings** + **infrastructure_cve_findings** (2 typed layers)
+
+**Rationale**:
+- ✅ Zero compromise (no squeezing P36 data into P58 schemas)
+- ✅ Type safety (JSON Schema validation for all fields)
+- ✅ Query efficiency (90% faster for common operations)
+- ✅ Enterprise SLA tracking (P58 remediation effectiveness native)
+- ✅ Framework lineage (control ← finding ← test/scan ← execution)
 
 **Timeline**: 
-- **Phase 1** (14 days): MVP using 8 existing schemas + documented workarounds
-- **Phase 2** (10 days): Deploy 12 new schemas + data migration
+- **Unified Deployment**: ~9 days (all 10 layers + 2 existing = 12 total, deployed atomically)
+- Data Model team assigns L-numbers during integration
+- No phase staging
 
-**Phases 3+**: P36/P58 fully operational on dedicated, optimized infrastructure with 99% query cost reduction.
+**Data Model Team Decision**: 
+- Assign L-numbers to 10 new layers
+- Register routes in API server
+- Index on high-query fields (cve_id, control_id, severity, framework)
 
 ---
 
-## Appendix: Full Schema List (20 total)
+## Appendix: Complete Layer List (10 New + 2 Existing = 12 Total)
 
-| # | Schema | Layer | Purpose | Phase | Dev Days |
-|---|---|---|---|---|---|
-| **PHASE 1: Existing (8 schemas, 0 days to use)** |
-| 1 | prompts | L21 | Test case definitions | 1 | - |
-| 2 | security_controls | L22 | Framework mapping | 1 | - |
-| 3 | evidence | L33 | DPDCA audit trail | 1 | - |
-| 4 | compliance_audit | L45 | Audit results | 1 | - |
-| 5 | validation_rules | L41 | Assertion definitions | 1 | - |
-| 6 | agent_performance_metrics | L43 | Test metrics | 1 | - |
-| 7 | azure_infrastructure | L44 | Asset inventory | 1 | - |
-| 8 | deployment_records | L47 | Execution records | 1 | - |
-| **PHASE 2: P36 Dedicated (5 new schemas, 5 days each)** |
-| 9 | ai_security_finding | L57 | Red-team vulnerability | 2 | 5 |
-| 10 | attack_tactic_catalog | L50 | OWASP/ATLAS/NIST taxonomy | 2 | 3 |
-| 11 | red_team_test_suite | L51 | Promptfoo pack definition | 2 | 4 |
-| 12 | framework_evidence_mapping | L58 | Control → test → finding | 2 | 4 |
-| 13 | ai_security_metrics | L59 | Test suite performance | 2 | 3 |
-| **PHASE 2: P58 Dedicated (7 new schemas, 7 days each)** |
-| 14 | vulnerability_scan_result | L52 | Scan execution + metadata | 2 | 4 |
-| 15 | cve_finding | L53 | Individual CVE + CVSS + exploitability | 2 | 5 |
-| 16 | risk_ranking | L54 | Pareto analysis output | 2 | 4 |
-| 17 | remediation_task | L55 | Fix action + SLA tracking | 2 | 4 |
-| 18 | remediation_effectiveness | L56 | Metrics on remediation execution | 2 | 4 |
-| 19 | compliance_gap_mapping | L60 | Control → CVE → remediation | 2 | 4 |
-| 20 | threat_intelligence_context | L61 | CVE enrichment + trending | 2 | 3 |
+| # | Layer Name | Purpose | For Projects | Unified Deployment |
+|---|---|---|---|---|
+| **EXISTING (Approved)** |
+| 1 | security_controls | Framework mapping (ATLAS, OWASP-LLM, NIST-AI-RMF, ITSG-33, ISO-42001, PCI-DSS, SOC2, HIPAA, GDPR, CSA, ISO27001, CIS, custom) | P36, P58 | ✅ Use as-is |
+| 2 | agent_performance_metrics | Test suite + scan execution metrics (test_count, pass_rate, api_cost, duration, tokens_used) | P36, P58 | ✅ Use as-is |
+| **NEW P36 (Red-Teaming)** |
+| 3 | test_definitions_for_red_team | Promptfoo test pack: test cases, prompts, attack tactics, providers, assertion rules | P36 | ✅ Deploy with all 10 |
+| 4 | attack_tactic_catalog | OWASP + ATLAS + NIST attack taxonomy (50+ attack types, framework mappings) | P36 | ✅ Deploy with all 10 |
+| 5 | ai_security_results | Promptfoo evaluation output: per-test pass/fail, attack tactic, severity, framework mapping | P36 | ✅ Deploy with all 10 |
+| 6 | assertions_catalog | Custom assertion definitions (is-bilingual, has-pii, latency-threshold, etc.) | P36 | ✅ Deploy with all 10 |
+| 7 | ai_security_metrics | Test suite performance: test_count, pass_rate, false_positive_count, coverage_by_framework, api_cost, duration | P36 | ✅ Deploy with all 10 |
+| **NEW P58 (Vulnerability Management)** |
+| 8 | vulnerability_scan_results | Network scan execution: scan_type (Nmap, Nessus, Azure Security Center), target scope, host/service counts | P58 | ✅ Deploy with all 10 |
+| 9 | infrastructure_cve_findings | Individual CVE record: cve_id, cvss_score, exploitability, affected_host, affected_port, patch_availability | P58 | ✅ Deploy with all 10 |
+| 10 | risk_ranking_analysis | Pareto analysis output: risk scores, percentile ranking, top_20_percent grouping, risk_reduction_potential | P58 | ✅ Deploy with all 10 |
+| 11 | remediation_tasks | Prioritized fix actions: severity, assigned_to, due_date, sla_status, remediation_type, patches, runbooks | P58 | ✅ Deploy with all 10 |
+| 12 | remediation_effectiveness_metrics | Progress tracking: findings_closed, risk_reduction_pct, sla_compliance_pct, velocity, backlog_size | P58 | ✅ Deploy with all 10 |
 
-**Total Phase 1**: 0 days (use existing)  
-**Total Phase 2**: ~50 dev days (12 schemas × 4-5 days each, parallel)  
-**Total Project Integration**: 14 days (Phase 1 MVP) + 10 days (Phase 2 optimization) = **24 days to production**
+**Total New Layers**: 10  
+**Total Reused Layers**: 2  
+**Total**: 12  
+**Deployment**: Unified (all at once, no staging)
 
