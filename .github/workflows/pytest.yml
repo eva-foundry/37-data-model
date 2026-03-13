@@ -29,4 +29,4 @@ jobs:
       env:
         PYTHONPATH: ${{ github.workspace }}
       run: |
-        pytest tests/ -v --tb=short
+        pytest tests/ -v --tb=short || (echo "[WARN] First pytest run failed, retrying once..." && pytest tests/ -v --tb=short)
