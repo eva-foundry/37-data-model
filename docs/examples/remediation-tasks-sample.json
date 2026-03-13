@@ -1,0 +1,32 @@
+[
+  {
+    "assigned_to": "security-team@eva.dev",
+    "cve_id": "CVE-2024-1234",
+    "id": "task_remedy_cve_2024_1234",
+    "due_date": "2026-03-14T01:28:19.7139431Z",
+    "remediation_type": "patch",
+    "sla_hours": 24,
+    "severity": "critical",
+    "status": "open"
+  },
+  {
+    "assigned_to": "ops-team@eva.dev",
+    "cve_id": "CVE-2024-5678",
+    "id": "task_remedy_cve_2024_5678",
+    "due_date": "2026-03-16T01:28:19.7139578Z",
+    "remediation_type": "patch",
+    "sla_hours": 72,
+    "severity": "high",
+    "status": "open"
+  },
+  {
+    "assigned_to": "ops-team@eva.dev",
+    "cve_id": "CVE-2024-9999",
+    "id": "task_remedy_cve_2024_9999",
+    "due_date": "2026-03-27T01:28:19.7139632Z",
+    "remediation_type": "monitor",
+    "sla_hours": 336,
+    "severity": "medium",
+    "status": "open"
+  }
+]

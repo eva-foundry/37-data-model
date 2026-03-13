@@ -1,0 +1,72 @@
+{
+  "total_seed_records": 21,
+  "seed_files_created": 10,
+  "status": "SUCCESS",
+  "phase": "DO.3-SeedDataLoading",
+  "part": 1,
+  "timestamp": "2026-03-13T01:28:19.7075968Z",
+  "exit_code": 0,
+  "seed_details": [
+    {
+      "layer_name": "red_team_test_suites",
+      "status": "CREATED",
+      "record_count": 2,
+      "file": "red-team-test-suites-seed.json"
+    },
+    {
+      "layer_name": "attack_tactic_catalog",
+      "status": "CREATED",
+      "record_count": 3,
+      "file": "attack-tactics-master.json"
+    },
+    {
+      "layer_name": "ai_security_findings",
+      "status": "CREATED",
+      "record_count": 1,
+      "file": "ai-security-findings-examples.json"
+    },
+    {
+      "layer_name": "assertions_catalog",
+      "status": "CREATED",
+      "record_count": 3,
+      "file": "assertions-examples.json"
+    },
+    {
+      "layer_name": "ai_security_metrics",
+      "status": "CREATED",
+      "record_count": 1,
+      "file": "ai-security-metrics-sample.json"
+    },
+    {
+      "layer_name": "vulnerability_scan_results",
+      "status": "CREATED",
+      "record_count": 1,
+      "file": "vulnerability-scan-sample.json"
+    },
+    {
+      "layer_name": "infrastructure_cve_findings",
+      "status": "CREATED",
+      "record_count": 5,
+      "file": "cve-findings-sample.json"
+    },
+    {
+      "layer_name": "risk_ranking_analysis",
+      "status": "CREATED",
+      "record_count": 1,
+      "file": "risk-ranking-sample.json"
+    },
+    {
+      "layer_name": "remediation_tasks",
+      "status": "CREATED",
+      "record_count": 3,
+      "file": "remediation-tasks-sample.json"
+    },
+    {
+      "layer_name": "remediation_effectiveness_metrics",
+      "status": "CREATED",
+      "record_count": 1,
+      "file": "remediation-metrics-sample.json"
+    }
+  ],
+  "errors": []
+}

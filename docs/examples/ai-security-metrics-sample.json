@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-03-13T01:28:19.7083980Z",
+  "pass_count": 10,
+  "framework_coverage": {
+    "OWASP-LLM": 0.92,
+    "MITRE-ATLAS": 0.88
+  },
+  "test_count": 12,
+  "fail_count": 2,
+  "suite_id": "suite_prompt_injection_001",
+  "api_cost_usd": 0.15,
+  "pass_rate": 0.833,
+  "id": "metrics_suite_001_run_20260312",
+  "duration_seconds": 45
+}

@@ -1,0 +1,129 @@
+[
+  {
+    "schema_file": "red_team_test_suite.schema.json",
+    "domain": "Domain 3 (AI Runtime) + Domain 6 (Governance)",
+    "name": "red_team_test_suites",
+    "layer_id": "L112",
+    "child_layers": [
+      "L114/ai_security_findings"
+    ],
+    "status": "operational",
+    "startup_seed_count": 2,
+    "parent_layers": [
+      "L9/agents",
+      "L21/prompts",
+      "L36/agent_policies",
+      "L22/security_controls"
+    ]
+  },
+  {
+    "schema_file": "attack_tactic_catalog.schema.json",
+    "domain": "Domain 6 (Governance)",
+    "name": "attack_tactic_catalog",
+    "layer_id": "L113",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 3,
+    "parent_layers": [
+      "L22/security_controls"
+    ]
+  },
+  {
+    "schema_file": "ai_security_finding.schema.json",
+    "domain": "Domain 9 (Observability)",
+    "name": "ai_security_findings",
+    "layer_id": "L114",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 1,
+    "parent_layers": [
+      "L33/evidence",
+      "L112/red_team_test_suites"
+    ]
+  },
+  {
+    "schema_file": "assertions_catalog.schema.json",
+    "domain": "Domain 6 (Governance)",
+    "name": "assertions_catalog",
+    "layer_id": "L115",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 3,
+    "parent_layers": [
+      "L41/validation_rules"
+    ]
+  },
+  {
+    "schema_file": "ai_security_metrics.schema.json",
+    "domain": "Domain 9 (Observability)",
+    "name": "ai_security_metrics",
+    "layer_id": "L116",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 1,
+    "parent_layers": [
+      "L43/agent_performance_metrics"
+    ]
+  },
+  {
+    "schema_file": "vulnerability_scan_result.schema.json",
+    "domain": "Domain 8 (DevOps & Delivery)",
+    "name": "vulnerability_scan_results",
+    "layer_id": "L117",
+    "child_layers": [
+      "L118/infrastructure_cve_findings"
+    ],
+    "status": "operational",
+    "startup_seed_count": 1,
+    "parent_layers": []
+  },
+  {
+    "schema_file": "cve_finding.schema.json",
+    "domain": "Domain 9 (Observability)",
+    "name": "infrastructure_cve_findings",
+    "layer_id": "L118",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 5,
+    "parent_layers": [
+      "L117/vulnerability_scan_results"
+    ]
+  },
+  {
+    "schema_file": "risk_ranking.schema.json",
+    "domain": "Domain 9 (Observability)",
+    "name": "risk_ranking_analysis",
+    "layer_id": "L119",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 1,
+    "parent_layers": [
+      "L118/infrastructure_cve_findings"
+    ]
+  },
+  {
+    "schema_file": "remediation_task.schema.json",
+    "domain": "Domain 7 (Project & PM)",
+    "name": "remediation_tasks",
+    "layer_id": "L120",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 3,
+    "parent_layers": [
+      "L27/wbs",
+      "L29/tasks"
+    ]
+  },
+  {
+    "schema_file": "remediation_effectiveness.schema.json",
+    "domain": "Domain 9 (Observability)",
+    "name": "remediation_effectiveness_metrics",
+    "layer_id": "L121",
+    "child_layers": [],
+    "status": "operational",
+    "startup_seed_count": 1,
+    "parent_layers": [
+      "L120/remediation_tasks"
+    ]
+  }
+]

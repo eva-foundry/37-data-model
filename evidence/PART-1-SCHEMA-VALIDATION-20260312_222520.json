@@ -1,0 +1,18 @@
+{
+  "part": 1,
+  "status": "PARTIAL FAIL",
+  "timestamp": "2026-03-13T01:25:20.7142573Z",
+  "phase": "DO.1-SchemaValidation",
+  "schemas_found": 9,
+  "schemas_invalid": [
+    "remediation_effectiveness.schema.json"
+  ],
+  "exit_code": 1,
+  "schemas_valid": 8,
+  "errors": [
+    "Missing required fields: $id=False, title=True, properties=True"
+  ],
+  "schemas_missing": [
+    "assertions_catalog.schema.json"
+  ]
+}

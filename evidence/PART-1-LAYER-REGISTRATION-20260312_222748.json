@@ -1,0 +1,62 @@
+{
+  "payloads_created": 10,
+  "layer_details": [
+    {
+      "name": "red_team_test_suites",
+      "layer_id": "L112",
+      "status": "PREPARED"
+    },
+    {
+      "name": "attack_tactic_catalog",
+      "layer_id": "L113",
+      "status": "PREPARED"
+    },
+    {
+      "name": "ai_security_findings",
+      "layer_id": "L114",
+      "status": "PREPARED"
+    },
+    {
+      "name": "assertions_catalog",
+      "layer_id": "L115",
+      "status": "PREPARED"
+    },
+    {
+      "name": "ai_security_metrics",
+      "layer_id": "L116",
+      "status": "PREPARED"
+    },
+    {
+      "name": "vulnerability_scan_results",
+      "layer_id": "L117",
+      "status": "PREPARED"
+    },
+    {
+      "name": "infrastructure_cve_findings",
+      "layer_id": "L118",
+      "status": "PREPARED"
+    },
+    {
+      "name": "risk_ranking_analysis",
+      "layer_id": "L119",
+      "status": "PREPARED"
+    },
+    {
+      "name": "remediation_tasks",
+      "layer_id": "L120",
+      "status": "PREPARED"
+    },
+    {
+      "name": "remediation_effectiveness_metrics",
+      "layer_id": "L121",
+      "status": "PREPARED"
+    }
+  ],
+  "layers_defined": 10,
+  "status": "SUCCESS",
+  "phase": "DO.2-LayerRegistration",
+  "part": 1,
+  "timestamp": "2026-03-13T01:27:48.5650813Z",
+  "exit_code": 0,
+  "errors": []
+}

@@ -1,0 +1,17 @@
+{
+  "verification_details": [],
+  "schemas_verified": 7,
+  "phase": "CHECK-QueryValidation",
+  "status": "FAILED",
+  "part": 1,
+  "exit_code": 1,
+  "errors": [
+    "Schema not found for layer: infrastructure_cve_findings",
+    "Schema not found for layer: risk_ranking_analysis",
+    "Schema not found for layer: remediation_effectiveness_metrics"
+  ],
+  "layer_definitions_verified": 0,
+  "seed_files_verified": 1,
+  "timestamp": "2026-03-13T01:28:43.7022477Z",
+  "total_seed_records": 2
+}

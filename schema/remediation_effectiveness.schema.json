@@ -1,5 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://eva-model.azure.com/schema/remediation_effectiveness.schema.json",
   "title": "Remediation Effectiveness",
   "description": "Aggregate system-wide effectiveness metrics and continuous improvement insights",
   "type": "object",
